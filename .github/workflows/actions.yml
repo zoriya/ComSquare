@@ -1,0 +1,48 @@
+name: Build commit artifact
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  Building:
+    runs-on: [ubuntu-latest]
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Build Makefile with CMake
+        run: cmake .
+      - name: Build with Makefile
+        run: make
+      - name: Archive production artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: ComSquare
+          path: ComSquare
+      
+  Testing:
+    runs-on: [ubuntu-latest]
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Set up Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: '3.x'
+      - name: Install Criterion
+        run: sudo add-apt-repository ppa:snaipewastaken/ppa &&
+          sudo apt-get update &&
+          sudo apt-get install --yes criterion-dev
+      - name: Install Gcovr
+        run: python -m pip install --upgrade pip gcovr
+      - name: Build Makefile with CMake
+        run: cmake -DTEST=on .
+      - name: Build with Makefile
+        run: make
+      - name: Execute tests
+        run: ./unit_tests
+      - name: Output coverage
+        run: gcovr -e tests/ -o coverage.xml --xml
+      - name: Publish to CodeCov
+        run: bash <(curl -s https://codecov.io/bash) -f coverage.xml || echo "Codecov did not collect coverage reports"
