@@ -45,4 +45,4 @@ jobs:
       - name: Output coverage
         run: gcovr -e tests/ -o coverage.xml --xml
       - name: Publish to CodeCov
-        run: bash <(curl -s https://codecov.io/bash) -f coverage.xml || echo "Codecov did not collect coverage reports"
+        run: bash <(curl -s https://codecov.io/bash) -f coverage.xml -t ${{ secrets.CODECOV_TOKEN }} || echo "Codecov did not collect coverage reports"
