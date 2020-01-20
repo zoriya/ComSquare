@@ -9,7 +9,7 @@ add_compile_options(-W -Wall -Wextra -Wshadow)
 
 if (TEST)
     # make unit tests
-    add_executable(unit_tests sources/hello.cpp tests/test_test.cpp)
+    add_executable(unit_tests sources/hello.cpp tests/hello.cpp)
 
     # include criterion & coverage
     target_link_libraries(unit_tests criterion -lgcov)
