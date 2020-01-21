@@ -1,4 +1,4 @@
-name: Build commit artifact
+name: Testing current commit
 
 on:
   push:
@@ -6,21 +6,6 @@ on:
       - master
 
 jobs:
-  Building:
-    runs-on: [ubuntu-latest]
-
-    steps:
-      - uses: actions/checkout@v1
-      - name: Build Makefile with CMake
-        run: cmake .
-      - name: Build with Makefile
-        run: make
-      - name: Archive production artifact
-        uses: actions/upload-artifact@v1
-        with:
-          name: ComSquare
-          path: ComSquare
-      
   Testing:
     runs-on: [ubuntu-latest]
 
