@@ -26,7 +26,7 @@ jobs:
       - name: Build with Makefile
         run: make -C build unit_tests
       - name: Execute tests
-        run: .build/unit_tests
+        run: build/unit_tests
       - name: Output coverage
         run: gcovr -e tests/ -o coverage.xml --xml
       - name: Publish to CodeCov
