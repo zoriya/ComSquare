@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Build Makefile with CMake
-        run: cmake -S . -B build
+        run: mkdir -p build && cmake -S . -B build
       - name: Build with Makefile
         run: make -C build ComSquare
       - name: Archive production artifact
