@@ -15,4 +15,4 @@ target_link_libraries(unit_tests criterion -lgcov)
 target_compile_options(unit_tests PUBLIC -fprofile-arcs -ftest-coverage)
 
 # make app
-add_executable(ComSquare main.cpp sources/hello.cpp)
+add_executable(ComSquare main.cpp sources/hello.cpp sources/Memory/MemoryBus.cpp sources/Memory/MemoryBus.hpp sources/Memory/IMemory.hpp sources/Memory/IMemory.cpp)
