@@ -2,6 +2,7 @@
 // Created by anonymus-raccoon on 1/23/20.
 //
 
+#include <algorithm>
 #include <iostream>
 #include "MemoryBus.hpp"
 
