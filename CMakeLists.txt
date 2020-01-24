@@ -8,11 +8,20 @@ project(ComSquare)
 add_compile_options(-W -Wall -Wextra -Wshadow)
 
 # make unit tests
-add_executable(unit_tests sources/hello.cpp tests/hello.cpp)
+add_executable(unit_tests
+        tests/testCPU.cpp
+)
 
 # include criterion & coverage
 target_link_libraries(unit_tests criterion -lgcov)
 target_compile_options(unit_tests PUBLIC -fprofile-arcs -ftest-coverage)
 
 # make app
-add_executable(ComSquare main.cpp sources/hello.cpp sources/Memory/MemoryBus.cpp sources/Memory/MemoryBus.hpp sources/Memory/IMemory.hpp sources/Memory/IMemory.cpp)
+add_executable(ComSquare
+    main.cpp
+    sources/Memory/MemoryBus.cpp
+    sources/Memory/MemoryBus.hpp
+    sources/Memory/IMemory.hpp
+    sources/Memory/IMemory.cpp
+    sources/CPU/Cpu.cpp
+    sources/CPU/Cpu.hpp)
