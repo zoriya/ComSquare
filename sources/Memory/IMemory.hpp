@@ -13,8 +13,8 @@ namespace ComSquare
 {
 	class IMemory {
 	private:
-		uint32_t _start;
-		uint32_t _end;
+		uint32_t _start = 0;
+		uint32_t _end = 0;
 	public:
 		virtual uint8_t read(uint32_t addr) = 0;
 		virtual void write(uint32_t addr, uint8_t data) = 0;
