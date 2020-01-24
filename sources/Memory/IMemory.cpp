@@ -13,7 +13,7 @@ namespace ComSquare
 		this->_end = end;
 	}
 
-	bool IMemory::hasMemorydAt(uint32_t addr)
+	bool IMemory::hasMemoryAt(uint32_t addr)
 	{
 		return this->_start <= addr && addr <= this->_end;
 	}

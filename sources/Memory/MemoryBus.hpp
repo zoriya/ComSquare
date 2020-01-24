@@ -7,14 +7,15 @@
 
 #include <cstdint>
 #include <vector>
+#include <memory>
 #include "IMemory.hpp"
 
 namespace ComSquare
 {
 	class MemoryBus {
 	private:
-		std::vector<IMemory> _memoryAccessors;
-		IMemory * getAccessor(uint32_t addr);
+		std::vector<std::shared_ptr<IMemory>> _memoryAccessors;
+		std::shared_ptr<IMemory> getAccessor(uint32_t addr);
 		uint8_t _openbus;
 	public:
 		uint8_t read(uint32_t addr);

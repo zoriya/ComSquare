@@ -19,7 +19,7 @@ namespace ComSquare
 		virtual uint8_t read(uint32_t addr) = 0;
 		virtual void write(uint32_t addr, uint8_t data) = 0;
 		void setMemoryRegion(uint32_t start, uint32_t end);
-		bool hasMemorydAt(uint32_t addr);
+		bool hasMemoryAt(uint32_t addr);
 		uint32_t getStart();
 	};
 };
