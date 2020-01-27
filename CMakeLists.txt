@@ -10,6 +10,8 @@ add_compile_options(-W -Wall -Wextra -Wshadow)
 # make unit tests
 add_executable(unit_tests
         tests/testCPU.cpp
+        sources/PPU/Ppu.cpp
+        sources/PPU/Ppu.hpp
 )
 
 # include criterion & coverage
@@ -23,10 +25,15 @@ add_executable(ComSquare
     sources/Memory/MemoryBus.hpp
     sources/Memory/IMemory.hpp
     sources/Memory/IMemory.cpp
-        sources/CPU/CPU.cpp
-        sources/CPU/CPU.hpp
-        sources/SNES.cpp
-        sources/SNES.hpp
+    sources/CPU/CPU.cpp
+    sources/CPU/CPU.hpp
+    sources/SNES.cpp
+    sources/SNES.hpp
     sources/Cartridge/Cartridge.cpp
     sources/Cartridge/Cartridge.hpp
-        sources/Exceptions/NotImplementedException.hpp)
+    sources/Exceptions/NotImplementedException.hpp
+    sources/PPU/Ppu.cpp
+    sources/PPU/Ppu.hpp
+    sources/APU/APU.hpp
+    sources/APU/APU.cpp
+)
