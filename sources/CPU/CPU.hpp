@@ -65,8 +65,6 @@ namespace ComSquare::CPU
 			unsigned short y;
 		};
 
-		//!	@brief The Emulation mode flag
-		bool e;
 		//! @brief The Processor status register;
 		union p {
 			//!	@brief The Negative flag
