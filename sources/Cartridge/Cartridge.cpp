@@ -15,7 +15,7 @@ namespace ComSquare::Cartridge
 		struct stat info;
 
 		if (stat(romPath.c_str(), &info) < 0)
-			throw InvalidRomException("File not found.");
+			throw InvalidRomException("Could not stat the rom file at " + romPath + ". " + strerror(errno));
 		return info.st_size;
 	}
 

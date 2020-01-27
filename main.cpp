@@ -13,6 +13,6 @@ int main(int argc, char **argv)
 		return 1;
 	}
 	ComSquare::MemoryBus bus;
-	ComSquare::SNES snes(std::make_shared<ComSquare::MemoryBus>(bus), std::string(argv[1]));
-    return 0;
+	ComSquare::SNES snes(std::make_shared<ComSquare::MemoryBus>(bus), argv[1]);
+	return 0;
 }
