@@ -23,5 +23,10 @@ add_executable(ComSquare
     sources/Memory/MemoryBus.hpp
     sources/Memory/IMemory.hpp
     sources/Memory/IMemory.cpp
-    sources/CPU/Cpu.cpp
-    sources/CPU/Cpu.hpp)
+        sources/CPU/CPU.cpp
+        sources/CPU/CPU.hpp
+        sources/SNES.cpp
+        sources/SNES.hpp
+    sources/Cartridge/Cartridge.cpp
+    sources/Cartridge/Cartridge.hpp
+        sources/Exceptions/NotImplementedException.hpp)
