@@ -3,3 +3,10 @@
 //
 
 #include "Cpu.hpp"
+
+namespace ComSquare::CPU
+{
+	CPU::CPU(std::shared_ptr<ComSquare::MemoryBus> bus)
+		: _bus(bus)
+	{ }
+}

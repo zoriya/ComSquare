@@ -6,6 +6,7 @@
 #define COMSQUARE_CPU_HPP
 
 #include "../Memory/IMemory.hpp"
+#include "../Memory/MemoryBus.hpp"
 
 namespace ComSquare::CPU
 {
@@ -91,9 +92,22 @@ namespace ComSquare::CPU
 		};
 	};
 
+	//! @brief The main CPU
 	class CPU : IMemory {
 	private:
+		//! @brief All the registers of the CPU
 		Registers _registers;
+		//! @brief Is the CPU running in emulation mode (in 8bits)
+		bool _isEmulationMode;
+		//! @brief The memory bus to use for read/write.
+		std::shared_ptr<MemoryBus> _bus;
+
+		//! @brief Execute a single instruction and return the number of cycles tooked.
+		int executreInstruction();
+	public:
+		explicit CPU(std::shared_ptr<MemoryBus> bus);
+		//! @brief This function continue to execute the Cartridge code and return the number of CPU cycles that elapsed.
+		int update();
 	};
 }
 
