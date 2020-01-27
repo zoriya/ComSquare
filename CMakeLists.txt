@@ -36,4 +36,4 @@ add_executable(ComSquare
     sources/PPU/Ppu.hpp
     sources/APU/APU.hpp
     sources/APU/APU.cpp
-)
+        sources/Exceptions/InvalidAddress.hpp)

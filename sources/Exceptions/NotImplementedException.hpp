@@ -9,6 +9,7 @@
 
 namespace ComSquare
 {
+	//! @brief When this is thrown, it means that we should work more.
 	class NotImplementedException : std::exception {
 	public:
 		explicit NotImplementedException() = default;
