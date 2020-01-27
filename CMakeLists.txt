@@ -10,8 +10,8 @@ add_compile_options(-W -Wall -Wextra -Wshadow)
 # make unit tests
 add_executable(unit_tests
         tests/testCPU.cpp
-        sources/PPU/Ppu.cpp
-        sources/PPU/Ppu.hpp
+        sources/PPU/PPU.cpp
+        sources/PPU/PPU.hpp
 )
 
 # include criterion & coverage
@@ -27,7 +27,7 @@ add_executable(ComSquare
     sources/Memory/IMemory.cpp
     sources/CPU/Cpu.cpp
     sources/CPU/Cpu.hpp
-    sources/PPU/Ppu.cpp
-    sources/PPU/Ppu.hpp
+        sources/PPU/PPU.cpp
+        sources/PPU/PPU.hpp
     sources/APU/APU.hpp
     sources/APU/APU.cpp)

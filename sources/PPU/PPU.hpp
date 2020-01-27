@@ -9,9 +9,6 @@ namespace ComSquare::PPU
 {
     //! @brief The struct containing all the registers the PPU
     class PPU {
-    public:
-        PPU(unsigned char raw);
-
     private:
         //! @brief INIDISP Register (F-blank and Brightness)
         union {
@@ -39,8 +36,8 @@ namespace ComSquare::PPU
                 unsigned short oamAddress: 9;
             };
             struct {
-                unsigned char oamaddl;
                 unsigned char oamaddh;
+                unsigned char oamaddl;
             };
             unsigned short raw;
         } oamadd;
@@ -161,11 +158,58 @@ namespace ComSquare::PPU
         //! @brief BG4VOFS Register (BG4 Vertical Scroll)
         union {
             struct {
-                unsigned char _ : 6;
+                unsigned char _ : 3;
                 unsigned short offsetBg: 10;
             };
             unsigned char raw;
         } bg4ofs;
+        //! @brief VMAIN Register (Video Port Control)
+        union {
+            struct {
+                bool address: 1;
+                unsigned char _ : 3;
+                unsigned char addressRemapping: 2;
+                unsigned char incrementCount: 2;
+            };
+            unsigned char raw;
+        } vmain;
+        //! @brief VMADD Register (VRAM Address)
+        union {
+            struct {
+                unsigned char vmaddh;
+                unsigned char vmaddl;
+            };
+            unsigned short vmadd;
+        } vmadd;
+        //! @brief VMDATA Register (VRAM Data Write)
+        union {
+            struct {
+                unsigned char vmdatah;
+                unsigned char vmdatal;
+            };
+            unsigned short vmdata;
+        } vmdata;
+        //! @brief M7SEL Register (Mode 7 Settings)
+        union {
+            struct {
+                bool playingFieldSize: 1;
+                bool emptySpaceFill: 1;
+                unsigned char _: 4;
+                bool horizontalMirroring: 1;
+                bool verticalMirroring: 1;
+            };
+            unsigned char raw;
+        } m7sel;
+        //! M7A M7B M7C M7D i didn't understand how they works so they will be add later.
+        //! @brief M7X Register (Mode 7 Center X)
+        //! @brief M7Y Register (Mode 7 Center Y)
+        union {
+            struct {
+                unsigned char _: 3;
+                unsigned char value: 13;
+            };
+            unsigned short center;
+        } M7X;
     };
 }
 #endif //COMSQUARE_PPU_HPP
