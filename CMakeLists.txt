@@ -25,10 +25,8 @@ add_executable(ComSquare
     sources/Memory/MemoryBus.hpp
     sources/Memory/IMemory.hpp
     sources/Memory/IMemory.cpp
-<<<<<<< HEAD
-        sources/PPU/PPU.cpp
-        sources/PPU/PPU.hpp
-=======
+    sources/PPU/PPU.cpp
+    sources/PPU/PPU.hpp
     sources/CPU/CPU.cpp
     sources/CPU/CPU.hpp
     sources/SNES.cpp
@@ -36,7 +34,7 @@ add_executable(ComSquare
     sources/Cartridge/Cartridge.cpp
     sources/Cartridge/Cartridge.hpp
     sources/Exceptions/NotImplementedException.hpp
->>>>>>> ab71231fd81dc87baa4956df0a81568d64db50ee
     sources/APU/APU.hpp
     sources/APU/APU.cpp
-        sources/Exceptions/InvalidAddress.hpp)
+    sources/Exceptions/InvalidAddress.hpp
+)

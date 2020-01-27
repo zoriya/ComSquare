@@ -206,7 +206,7 @@ namespace ComSquare::PPU
         union {
             struct {
                 unsigned char _: 3;
-                unsigned char value: em 
+                unsigned char value;
             };
             unsigned short center;
         } M7X;
