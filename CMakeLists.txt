@@ -29,4 +29,5 @@ add_executable(ComSquare
     sources/CPU/Cpu.hpp
     sources/PPU/Ppu.cpp
     sources/PPU/Ppu.hpp
-)
+    sources/APU/APU.hpp
+    sources/APU/APU.cpp)
