@@ -15,8 +15,8 @@ namespace ComSquare::CPU
 		//! @brief The Accumulator
 		union {
 			struct {
-				unsigned char al;
 				unsigned char ah;
+				unsigned char al;
 			};
 			unsigned short a;
 		};
@@ -25,8 +25,8 @@ namespace ComSquare::CPU
 		//! @brief The Direct register;
 		union {
 			struct {
-				unsigned char dl;
 				unsigned char dh;
+				unsigned char dl;
 			};
 			unsigned short d;
 		};
@@ -35,65 +35,63 @@ namespace ComSquare::CPU
 		//! @brief The Program Counter;
 		union {
 			struct {
-				unsigned char pcl;
 				unsigned char pch;
+				unsigned char pcl;
 			};
 			unsigned short pc;
 		};
 		//! @brief The Stack pointer
 		union {
 			struct {
-				unsigned char sl;
 				unsigned char sh;
+				unsigned char sl;
 			};
 			unsigned short s;
 		};
 		//! @brief The X index register
 		union {
 			struct {
-				unsigned char xl;
 				unsigned char xh;
+				unsigned char xl;
 			};
 			unsigned short x;
 		};
 		//! @brief The Y index register
 		union {
 			struct {
-				unsigned char yl;
 				unsigned char yh;
+				unsigned char yl;
 			};
 			unsigned short y;
 		};
 
-		//!	@brief The Emulation mode flag
-		bool e;
 		//! @brief The Processor status register;
 		union p {
-			//!	@brief The Carry flag
-			bool c : 1;
-			//! @brief The Zero flag
-			bool z : 1;
-			//!	@brief The Interrupt disable flag
-			bool i : 1;
-			//!	@brief The Decimal mode flag
-			bool d : 1;
+			//!	@brief The Negative flag
+			bool n : 1;
+			//! @brief The oVerflow flag
+			bool v : 1;
+			//! @brief The accumulator and Memory width flag (in native mode only)
+			bool m : 1;
 			union {
 				//!	@brief The indeX register width flag (in native mode only)
 				bool x : 1;
 				//! @brief The Break flag (in emulation mode only)
 				bool b : 1;
 			};
-			//! @brief The accumulator and Memory width flag (in native mode only)
-			bool m : 1;
-			//! @brief The oVerflow flag
-			bool v : 1;
-			//!	@brief The Negative flag
-			bool n : 1;
+			//!	@brief The Decimal mode flag
+			bool d : 1;
+			//!	@brief The Interrupt disable flag
+			bool i : 1;
+			//! @brief The Zero flag
+			bool z : 1;
+			//!	@brief The Carry flag
+			bool c : 1;
 		};
 	};
 
 	//! @brief The main CPU
-	class CPU : IMemory {
+	class CPU {
 	private:
 		//! @brief All the registers of the CPU
 		Registers _registers;
@@ -102,11 +100,13 @@ namespace ComSquare::CPU
 		//! @brief The memory bus to use for read/write.
 		std::shared_ptr<MemoryBus> _bus;
 
-		//! @brief Execute a single instruction and return the number of cycles tooked.
+		//! @brief Execute a single instruction.
+		//! @return The number of CPU cycles that the instruction took.
 		int executreInstruction();
 	public:
 		explicit CPU(std::shared_ptr<MemoryBus> bus);
-		//! @brief This function continue to execute the Cartridge code and return the number of CPU cycles that elapsed.
+		//! @brief This function continue to execute the Cartridge code.
+		//! @return The number of CPU cycles that elapsed
 		int update();
 	};
 }
