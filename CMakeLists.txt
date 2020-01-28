@@ -44,4 +44,6 @@ add_executable(ComSquare
     sources/Ram/Ram.hpp
     sources/Memory/MemoryShadow.cpp
     sources/Memory/MemoryShadow.hpp
-)
+    sources/DSP/DSP.cpp
+    sources/DSP/DSP.hpp
+    )
