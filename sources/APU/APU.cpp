@@ -39,7 +39,7 @@ namespace ComSquare::APU
 		case 0xFF:
 			return this->_registers.counter2;
 		default:
-			throw InvalidAddress("APU Internal Registers read", addr);
+			throw InvalidAddress("APU Registers read", addr);
 		}
 	}
 
@@ -86,7 +86,7 @@ namespace ComSquare::APU
 			this->_registers.timer2 = data;
 			break;
 		default:
-			throw InvalidAddress("APU Internal Registers write", addr);
+			throw InvalidAddress("APU Registers write", addr);
 		}
 	}
 

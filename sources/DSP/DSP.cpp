@@ -222,7 +222,7 @@ namespace ComSquare::APU::DSP
 		case 0x7F:
 			return this->_registers.coeff[7];
 		default:
-			throw InvalidAddress("DSP Internal Registers read", addr);
+			throw InvalidAddress("DSP Registers read", addr);
 		}
 	}
 
@@ -542,7 +542,7 @@ namespace ComSquare::APU::DSP
 			this->_registers.coeff[7] = data;
 			break;
 		default:
-			throw InvalidAddress("DSP Internal Registers write", addr);
+			throw InvalidAddress("DSP Registers write", addr);
 		}
 	}
 }
