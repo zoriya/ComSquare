@@ -102,12 +102,19 @@ namespace ComSquare::APU
 
 	};
 
+	class DSP {
+	};
 
 	class APU : IMemory {
 	private:
 		Registers _registers;
 		InternalRegisters _internalRegisters{};
 	public:
+		explicit APU(std::shared_ptr<DSP> dsp);
+
+		//! @brief The DSP component used to produce sound
+		std::shared_ptr<DSP> _dsp;
+
 		//! @brief Read from the internal APU register.
 		//! @param addr The address to read from. The address 0xF0 should refer to the first byte of the register.
 		//! @throw InvalidAddress will be thrown if the address is more than $FF (the number of register).
