@@ -71,10 +71,10 @@ namespace ComSquare
 		// TODO implement DMA & HDMA (4220 to 4300)
 		// TODO implement Joys.
 
-		// Map to the quarter 1.
+		// Mirror to the quarter 1.
 		for (uint24_t i = 0; i < 0x400000; i += 0x10000)
 			this->_mirrorComponents(console, i);
-		// Map to the quarter 3.
+		// Mirror to the quarter 3.
 		for (uint24_t i = 0x800000; i < 0xC00000; i += 0x10000)
 			this->_mirrorComponents(console, i);
 
