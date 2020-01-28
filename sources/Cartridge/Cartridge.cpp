@@ -6,23 +6,15 @@
 #include <iostream>
 #include <cstring>
 #include "Cartridge.hpp"
-#include "../Exceptions/NotImplementedException.hpp"
+#include "../Exceptions/InvalidAddress.hpp"
+#include "../Exceptions/InvalidRom.hpp"
 
 namespace ComSquare::Cartridge
 {
-	size_t Cartridge::getRomSize(const std::string &romPath)
-	{
-		struct stat info;
-
-		if (stat(romPath.c_str(), &info) < 0)
-			throw InvalidRomException("Could not stat the rom file at " + romPath + ". " + strerror(errno));
-		return info.st_size;
-	}
-
 	Cartridge::Cartridge(const std::string &romPath)
 	{
 		try {
-			size_t size = this->getRomSize(romPath);
+			size_t size = Cartridge::getRomSize(romPath);
 			FILE *rom = fopen(romPath.c_str(), "rb");
 
 			if (!rom)
@@ -36,16 +28,32 @@ namespace ComSquare::Cartridge
 		}
 	}
 
-	uint8_t Cartridge::read(uint32_t addr)
+	Cartridge::~Cartridge()
 	{
-		(void)addr;
-		throw NotImplementedException();
+		delete[] this->_data;
 	}
 
-	void Cartridge::write(uint32_t addr, uint8_t data)
+	size_t Cartridge::getRomSize(const std::string &romPath)
 	{
-		(void)addr;
-		(void)data;
-		throw NotImplementedException();
+		struct stat info;
+
+		if (stat(romPath.c_str(), &info) < 0)
+			throw InvalidRomException("Could not stat the rom file at " + romPath + ". " + strerror(errno));
+		return info.st_size;
+	}
+
+
+	uint8_t Cartridge::read(uint24_t addr)
+	{
+		if (addr >= this->_size)
+			throw InvalidAddress("Cartridge read", addr);
+		return this->_data[addr];
+	}
+
+	void Cartridge::write(uint24_t addr, uint8_t data)
+	{
+		if (addr >= this->_size)
+			throw InvalidAddress("Cartridge write", addr);
+		this->_data[addr] = data;
 	}
 }

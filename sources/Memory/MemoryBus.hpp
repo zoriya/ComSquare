@@ -12,14 +12,26 @@
 
 namespace ComSquare
 {
+	//! @brief The memory bus is the component responsible of mapping addresses to components address and transmitting the data.
 	class MemoryBus {
 	private:
+		//! @brief The list of components registered inside the bus. Every components that can read/write to a public address should be in this vector.
 		std::vector<std::shared_ptr<IMemory>> _memoryAccessors;
-		std::shared_ptr<IMemory> getAccessor(uint32_t addr);
-		uint8_t _openbus;
+		//! @brief Helper function to get the components that is responsible of read/write at an address.
+		//! @param addr The address you want to look for.
+		//! @return The components responsible for the address param or nullptr if none was found.
+		std::shared_ptr<IMemory> getAccessor(uint24_t addr);
+		//! @brief The last value read via the memory bus.
+		uint8_t _openbus = 0;
 	public:
-		uint8_t read(uint32_t addr);
-		void write(uint32_t addr, uint8_t data);
+		//! @brief Read data at a global address.
+		//! @param addr The address to read from.
+		//! @return The value that the component returned for this address. If the address was mapped to ram, it simply returned the value. If the address was mapped to a register the component returned the register.
+		uint8_t read(uint24_t addr);
+		//! @brief Write a data to a global address.
+		//! @param addr The address to write to.
+		//! @param data The data to write.
+		void write(uint24_t addr, uint8_t data);
 	};
 }
 

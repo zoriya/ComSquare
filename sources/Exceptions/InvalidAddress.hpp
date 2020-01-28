@@ -7,6 +7,8 @@
 
 #include <exception>
 #include <string>
+#include <ios>
+#include <sstream>
 
 namespace ComSquare
 {
@@ -15,7 +17,12 @@ namespace ComSquare
 	private:
 		std::string _msg;
 	public:
-		explicit InvalidAddress(const std::string &msg) : _msg(msg) {}
+		InvalidAddress(std::string where, int32_t addr)
+		{
+			std::stringstream stream;
+			stream << "Could not read/write data at address: 0x" << std::hex << addr << " from " << where;
+			this->_msg = stream.str();
+		}
 		const char *what() const noexcept override { return this->_msg.c_str(); }
 	};
 }

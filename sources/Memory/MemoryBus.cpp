@@ -8,15 +8,18 @@
 
 namespace ComSquare
 {
-	std::shared_ptr<IMemory> MemoryBus::getAccessor(uint32_t addr)
+	std::shared_ptr<IMemory> MemoryBus::getAccessor(uint24_t addr)
 	{
-		return *std::find_if(this->_memoryAccessors.begin(), this->_memoryAccessors.end(), [addr](std::shared_ptr<IMemory> &accessor)
+		auto it = std::find_if(this->_memoryAccessors.begin(), this->_memoryAccessors.end(), [addr](std::shared_ptr<IMemory> &accessor)
 		{
 			return accessor->hasMemoryAt(addr);
 		});
+		if (it == this->_memoryAccessors.end())
+			return nullptr;
+		return *it;
 	}
 
-	uint8_t MemoryBus::read(uint32_t addr)
+	uint8_t MemoryBus::read(uint24_t addr)
 	{
 		std::shared_ptr<IMemory> handler = this->getAccessor(addr);
 
@@ -29,7 +32,7 @@ namespace ComSquare
 		return data;
 	}
 
-	void MemoryBus::write(uint32_t addr, uint8_t data)
+	void MemoryBus::write(uint24_t addr, uint8_t data)
 	{
 		std::shared_ptr<IMemory> handler = this->getAccessor(addr);
 
