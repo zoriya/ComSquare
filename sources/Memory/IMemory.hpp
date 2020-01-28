@@ -8,19 +8,20 @@
 
 #include <cstdint>
 #include <vector>
+#include "../Models/Ints.hpp"
 
 namespace ComSquare
 {
 	class IMemory {
 	private:
-		uint32_t _start = 0;
-		uint32_t _end = 0;
+		uint24_t _start = 0;
+		uint24_t _end = 0;
 	public:
-		virtual uint8_t read(uint32_t addr) = 0;
-		virtual void write(uint32_t addr, uint8_t data) = 0;
-		void setMemoryRegion(uint32_t start, uint32_t end);
-		bool hasMemoryAt(uint32_t addr);
-		uint32_t getStart();
+		virtual uint8_t read(uint24_t addr) = 0;
+		virtual void write(uint24_t addr, uint8_t data) = 0;
+		void setMemoryRegion(uint24_t start, uint24_t end);
+		bool hasMemoryAt(uint24_t addr);
+		uint24_t getStart();
 	};
 };
 

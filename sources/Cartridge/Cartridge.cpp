@@ -6,7 +6,8 @@
 #include <iostream>
 #include <cstring>
 #include "Cartridge.hpp"
-#include "../Exceptions/NotImplementedException.hpp"
+#include "../Exceptions/InvalidAddress.hpp"
+#include "../Exceptions/InvalidRom.hpp"
 
 namespace ComSquare::Cartridge
 {
@@ -36,16 +37,17 @@ namespace ComSquare::Cartridge
 		}
 	}
 
-	uint8_t Cartridge::read(uint32_t addr)
+	uint8_t Cartridge::read(uint24_t addr)
 	{
-		(void)addr;
-		throw NotImplementedException();
+		if (addr >= this->_size)
+			throw InvalidAddress(addr);
+		return this->_data[addr];
 	}
 
-	void Cartridge::write(uint32_t addr, uint8_t data)
+	void Cartridge::write(uint24_t addr, uint8_t data)
 	{
-		(void)addr;
-		(void)data;
-		throw NotImplementedException();
+		if (addr >= this->_size)
+			throw InvalidAddress(addr);
+		this->_data[addr] = data;
 	}
 }

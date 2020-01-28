@@ -15,11 +15,11 @@ namespace ComSquare
 	class MemoryBus {
 	private:
 		std::vector<std::shared_ptr<IMemory>> _memoryAccessors;
-		std::shared_ptr<IMemory> getAccessor(uint32_t addr);
+		std::shared_ptr<IMemory> getAccessor(uint24_t addr);
 		uint8_t _openbus;
 	public:
-		uint8_t read(uint32_t addr);
-		void write(uint32_t addr, uint8_t data);
+		uint8_t read(uint24_t addr);
+		void write(uint24_t addr, uint8_t data);
 	};
 }
 
