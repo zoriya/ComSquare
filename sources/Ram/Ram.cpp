@@ -13,6 +13,11 @@ namespace ComSquare::Ram
 		this->_data = new uint8_t[size];
 	}
 
+	Ram::~Ram()
+	{
+		delete[] this->_data;
+	}
+
 	uint8_t Ram::read(uint24_t addr)
 	{
 		if (addr >= this->_size)

@@ -18,6 +18,8 @@ namespace ComSquare::Ram
 	public:
 		//! @brief Load a rom from it's path.
 		explicit Ram(size_t size);
+		//! @brief Destructor that free the ram.
+		~Ram();
 		//! @brief Read from the ram.
 		//! @param addr The address to read from. The address 0x0 should refer to the first byte of this ram.
 		//! @throw InvalidAddress will be thrown if the address is more than the size of the ram.

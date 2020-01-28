@@ -25,6 +25,8 @@ namespace ComSquare::Cartridge
 	public:
 		//! @brief Load a rom from it's path.
 		explicit Cartridge(const std::string &romPath);
+		//! @brief Destructor that free the cartridge data.
+		~Cartridge();
 		//! @brief Read from the rom.
 		//! @param addr The address to read from. The address 0x0 should refer to the first byte of the rom's memory.
 		//! @throw InvalidAddress will be thrown if the address is more than the size of the rom's memory.

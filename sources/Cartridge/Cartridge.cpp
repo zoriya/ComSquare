@@ -11,19 +11,10 @@
 
 namespace ComSquare::Cartridge
 {
-	size_t Cartridge::getRomSize(const std::string &romPath)
-	{
-		struct stat info;
-
-		if (stat(romPath.c_str(), &info) < 0)
-			throw InvalidRomException("Could not stat the rom file at " + romPath + ". " + strerror(errno));
-		return info.st_size;
-	}
-
 	Cartridge::Cartridge(const std::string &romPath)
 	{
 		try {
-			size_t size = this->getRomSize(romPath);
+			size_t size = Cartridge::getRomSize(romPath);
 			FILE *rom = fopen(romPath.c_str(), "rb");
 
 			if (!rom)
@@ -36,6 +27,21 @@ namespace ComSquare::Cartridge
 			std::cerr << "Invalid Rom Error: " << ex.what() << std::endl;
 		}
 	}
+
+	Cartridge::~Cartridge()
+	{
+		delete[] this->_data;
+	}
+
+	size_t Cartridge::getRomSize(const std::string &romPath)
+	{
+		struct stat info;
+
+		if (stat(romPath.c_str(), &info) < 0)
+			throw InvalidRomException("Could not stat the rom file at " + romPath + ". " + strerror(errno));
+		return info.st_size;
+	}
+
 
 	uint8_t Cartridge::read(uint24_t addr)
 	{
