@@ -44,6 +44,8 @@ namespace ComSquare::CPU
 			return this->_internalRegisters.mdmaen;
 		case 0xC:
 			return this->_internalRegisters.hdmaen;
+		case 0xD:
+			return this->_internalRegisters.memsel;
 		case 0x10:
 			return this->_internalRegisters.rdnmi;
 		case 0x11:
@@ -123,6 +125,9 @@ namespace ComSquare::CPU
 		case 0xC:
 			this->_internalRegisters.hdmaen = data;
 			break;
+		case 0xD:
+			this->_internalRegisters.memsel = data;
+			break;
 		case 0x10:
 			this->_internalRegisters.rdnmi = data;
 			break;
@@ -178,7 +183,11 @@ namespace ComSquare::CPU
 
 	int CPU::update()
 	{
-		throw NotImplementedException();
+		int cycles = 0;
+
+		for (int i = 0; i < 0xFF; i++)
+			cycles += this->executeInstruction();
+		return cycles;
 	}
 
 	int CPU::executeInstruction()
