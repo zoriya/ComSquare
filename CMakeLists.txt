@@ -21,6 +21,8 @@ target_compile_options(unit_tests PUBLIC -fprofile-arcs -ftest-coverage)
 # make app
 add_executable(ComSquare
     main.cpp
+    sources/SNES.cpp
+    sources/SNES.hpp
     sources/Memory/MemoryBus.cpp
     sources/Memory/MemoryBus.hpp
     sources/Memory/IMemory.hpp
@@ -29,11 +31,17 @@ add_executable(ComSquare
     sources/PPU/PPU.hpp
     sources/CPU/CPU.cpp
     sources/CPU/CPU.hpp
-    sources/SNES.cpp
-    sources/SNES.hpp
     sources/Cartridge/Cartridge.cpp
     sources/Cartridge/Cartridge.hpp
     sources/Exceptions/NotImplementedException.hpp
     sources/APU/APU.hpp
     sources/APU/APU.cpp
-        sources/Exceptions/InvalidAddress.hpp sources/Exceptions/InvalidRom.hpp sources/Models/Ints.hpp sources/Models/Ints.hpp sources/Ram/Ram.cpp sources/Ram/Ram.hpp sources/Memory/MemoryShadow.cpp sources/Memory/MemoryShadow.hpp)
+    sources/Exceptions/InvalidAddress.hpp
+    sources/Exceptions/InvalidRom.hpp
+    sources/Models/Ints.hpp
+    sources/Models/Ints.hpp
+    sources/Ram/Ram.cpp
+    sources/Ram/Ram.hpp
+    sources/Memory/MemoryShadow.cpp
+    sources/Memory/MemoryShadow.hpp
+)

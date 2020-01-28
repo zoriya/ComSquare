@@ -14,5 +14,6 @@ int main(int argc, char **argv)
 	}
 	ComSquare::MemoryBus bus;
 	ComSquare::SNES snes(std::make_shared<ComSquare::MemoryBus>(bus), argv[1]);
+	bus.mapComponents(snes);
 	return 0;
 }

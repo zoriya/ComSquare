@@ -23,6 +23,10 @@ namespace ComSquare
 		std::shared_ptr<IMemory> getAccessor(uint24_t addr);
 		//! @brief The last value read via the memory bus.
 		uint8_t _openbus = 0;
+		//! @brief Mirror components to other banks. (Used by the mapComponents method).
+		//! @param console All the components.
+		//! @param i Base address for the mirrors.
+		inline void _mirrorComponents(struct SNES &console, int i);
 	public:
 		//! @brief Read data at a global address.
 		//! @param addr The address to read from.
@@ -32,6 +36,9 @@ namespace ComSquare
 		//! @param addr The address to write to.
 		//! @param data The data to write.
 		void write(uint24_t addr, uint8_t data);
+		//! @brief Map components to the address space using the currently loaded cartridge to set the right mapping mode.
+		//! @param console All the components.
+		void mapComponents(struct SNES &console);
 	};
 }
 

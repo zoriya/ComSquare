@@ -8,9 +8,16 @@
 
 namespace ComSquare::Memory
 {
-	MemoryShadow::MemoryShadow(std::shared_ptr<IMemory> initial)
+	MemoryShadow::MemoryShadow(std::shared_ptr<IMemory> initial, uint24_t start, uint24_t end)
 		: _initial(std::move(initial))
-	{ }
+	{
+		this->setMemoryRegion(start, end);
+	}
+
+	std::shared_ptr<IMemory> MemoryShadow::createShadow(std::shared_ptr<IMemory> initial, uint24_t start, uint24_t end)
+	{
+		return static_cast<std::shared_ptr<IMemory>>(new MemoryShadow(std::move(initial), start, end));
+	}
 
 	uint8_t MemoryShadow::read(uint24_t addr)
 	{

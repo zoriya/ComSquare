@@ -10,13 +10,15 @@
 
 namespace ComSquare::Memory
 {
-	class MemoryShadow : IMemory {
+	class MemoryShadow : public IMemory {
 	private:
 		//! @brief Memory to shadow from.
 		std::shared_ptr<IMemory> _initial;
 	public:
 		//! @brief Create a shadow for the memory given as parameter.
-		explicit MemoryShadow(std::shared_ptr<IMemory> initial);
+		explicit MemoryShadow(std::shared_ptr<IMemory> initial, uint24_t start, uint24_t end);
+
+		static std::shared_ptr<IMemory> createShadow(std::shared_ptr<IMemory> initial, uint24_t start, uint24_t end);
 		//! @brief Read from the initial IMemory given.
 		//! @param addr The address to read from. The address 0x0 should refer to the first byte of the initial IMemory.
 		//! @throw InvalidAddress will be thrown if the address is more than the size of the initial IMemory.

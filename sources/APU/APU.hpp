@@ -105,12 +105,12 @@ namespace ComSquare::APU
 	class DSP {
 	};
 
-	class APU : IMemory {
+	class APU : public IMemory {
 	private:
 		Registers _registers;
 		InternalRegisters _internalRegisters{};
 	public:
-		explicit APU(std::shared_ptr<DSP> dsp);
+		explicit APU();
 
 		//! @brief The DSP component used to produce sound
 		std::shared_ptr<DSP> _dsp;

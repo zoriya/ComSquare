@@ -9,7 +9,7 @@
 
 namespace ComSquare::Ram
 {
-	class Ram : IMemory {
+	class Ram : public IMemory {
 	private:
 		//! @brief The ram. (Can be used for WRam, SRam, VRam etc)
 		uint8_t *_data;

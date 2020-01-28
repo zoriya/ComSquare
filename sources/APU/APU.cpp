@@ -8,9 +8,9 @@
 
 namespace ComSquare::APU
 {
-	APU::APU(std::shared_ptr<DSP> dsp)
-			: _dsp(std::move(dsp))
-	{ }
+	APU::APU()
+	{
+	}
 
 	uint8_t APU::read(uint24_t addr)
 	{
