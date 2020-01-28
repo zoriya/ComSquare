@@ -128,7 +128,7 @@ namespace ComSquare::PPU
 				uint8_t _ : 6;
 				uint32_t offsetBg: 10;
 			};
-			uint8_t raw;
+			uint16_t raw;
 		} bg1ofs;
 		//! @brief M7HOFS Register (Mode 7 BG Horizontal Scroll)
 		//! @brief M7VOFS Register (Mode 7 BG Vertical Scroll)
