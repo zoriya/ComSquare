@@ -177,11 +177,11 @@ namespace ComSquare::CPU
 	class CPU : IMemory {
 	private:
 		//! @brief All the registers of the CPU
-		Registers _registers;
+		Registers _registers{};
 		//! @brief Is the CPU running in emulation mode (in 8bits)
-		bool _isEmulationMode;
+		bool _isEmulationMode{};
 		//! @brief Internal registers of the CPU (accessible from the bus via addr $4200 to $421F).
-		InternalRegisters _internalRegisters;
+		InternalRegisters _internalRegisters{};
 		//! @brief The memory bus to use for read/write.
 		std::shared_ptr<MemoryBus> _bus;
 

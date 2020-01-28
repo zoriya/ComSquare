@@ -17,10 +17,10 @@ namespace ComSquare
 	private:
 		std::string _msg;
 	public:
-		explicit InvalidAddress(int32_t addr)
+		InvalidAddress(std::string where, int32_t addr)
 		{
 			std::stringstream stream;
-			stream << "Could not read/write data at address: 0x" << std::hex << addr;
+			stream << "Could not read/write data at address: 0x" << std::hex << addr << " from " << where;
 			this->_msg = stream.str();
 		}
 		const char *what() const noexcept override { return this->_msg.c_str(); }
