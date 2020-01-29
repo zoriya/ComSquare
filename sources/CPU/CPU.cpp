@@ -10,7 +10,7 @@
 
 namespace ComSquare::CPU
 {
-	CPU::CPU(std::shared_ptr<ComSquare::MemoryBus> bus)
+	CPU::CPU(std::shared_ptr<Memory::MemoryBus> bus)
 		: _bus(std::move(bus))
 	{ }
 

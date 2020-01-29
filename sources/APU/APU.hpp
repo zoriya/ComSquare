@@ -105,7 +105,7 @@ namespace ComSquare::APU
 	class DSP {
 	};
 
-	class APU : public IMemory {
+	class APU : public Memory::IMemory {
 	private:
 		Registers _registers;
 		InternalRegisters _internalRegisters{};

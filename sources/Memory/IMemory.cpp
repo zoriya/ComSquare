@@ -5,7 +5,7 @@
 #include "IMemory.hpp"
 #include <algorithm>
 
-namespace ComSquare
+namespace ComSquare::Memory
 {
 	void IMemory::setMemoryRegion(uint24_t start, uint24_t end)
 	{

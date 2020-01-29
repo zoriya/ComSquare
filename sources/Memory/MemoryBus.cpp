@@ -8,7 +8,7 @@
 #include "../SNES.hpp"
 #include "MemoryShadow.hpp"
 
-namespace ComSquare
+namespace ComSquare::Memory
 {
 	std::shared_ptr<IMemory> MemoryBus::getAccessor(uint24_t addr)
 	{
@@ -78,6 +78,6 @@ namespace ComSquare
 		for (uint24_t i = 0x800000; i < 0xC00000; i += 0x10000)
 			this->_mirrorComponents(console, i);
 
-		// TODO should map sram, cartridge etc via the mapping mode of the cartridge.
+		// TODO should map SRam, cartridge etc via the mapping mode of the cartridge.
 	}
 }

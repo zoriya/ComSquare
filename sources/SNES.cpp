@@ -6,7 +6,7 @@
 
 namespace ComSquare
 {
-	SNES::SNES(const std::shared_ptr<MemoryBus> &bus, const std::string &romPath) :
+	SNES::SNES(const std::shared_ptr<Memory::MemoryBus> &bus, const std::string &romPath) :
 		cpu(new CPU::CPU(bus)),
 		ppu(new PPU::PPU()),
 		apu(new APU::APU()),

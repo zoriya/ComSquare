@@ -23,7 +23,7 @@ namespace ComSquare
 		std::shared_ptr<Cartridge::Cartridge> cartridge;
 		std::shared_ptr<Ram::Ram> wram;
 		//! @brief Create all the components using a common memory bus for all of them.
-		SNES(const std::shared_ptr<MemoryBus> &bus, const std::string &ramPath);
+		SNES(const std::shared_ptr<Memory::MemoryBus> &bus, const std::string &ramPath);
 	};
 }
 
