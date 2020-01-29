@@ -22,6 +22,28 @@ namespace ComSquare::Cartridge
 		FastHiRom
 	};
 
+	struct Header
+	{
+		//! @brief The name of the game
+		std::string gameName;
+		//! @brief The memory mapping of the ROM.
+		MappingMode mappingMode;
+		//! @brief The rom type (special information about the rom, still don't know what).
+		uint8_t romType;
+		//! @brief The size (in bytes) of the ram
+		uint8_t romSize;
+		//! @brief The size of the SRom inside the cartridge.
+		uint8_t sramSize;
+		//! @brief Creator license ID code.
+		uint8_t creatorID;
+		//! @brief The version of the game
+		uint8_t version;
+		//! @brief Checksum complement
+		uint8_t checksumComplement;
+		//! @brief Checksum
+		uint8_t checksum;
+	};
+
 	//! @brief Contains the rom's memory/instructions.
 	class Cartridge : Memory::IRectangleMemory {
 	private:
@@ -40,11 +62,8 @@ namespace ComSquare::Cartridge
 		//! @brief Destructor that free the cartridge data.
 		~Cartridge();
 
-		//! @brief The name of the game
-		std::string gameName;
-		//! @brief The memory mapping of the ROM.
-		MappingMode mappingMode;
-
+		//! @brief The header of the cartridge.
+		Header header;
 		//! @brief Read from the rom.
 		//! @param addr The address to read from. The address 0x0 should refer to the first byte of the rom's memory.
 		//! @throw InvalidAddress will be thrown if the address is more than the size of the rom's memory.
