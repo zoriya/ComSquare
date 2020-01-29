@@ -174,7 +174,7 @@ namespace ComSquare::CPU
 	};
 
 	//! @brief The main CPU
-	class CPU : public IMemory {
+	class CPU : public Memory::IMemory {
 	private:
 		//! @brief All the registers of the CPU
 		Registers _registers{};
@@ -183,13 +183,13 @@ namespace ComSquare::CPU
 		//! @brief Internal registers of the CPU (accessible from the bus via addr $4200 to $421F).
 		InternalRegisters _internalRegisters{};
 		//! @brief The memory bus to use for read/write.
-		std::shared_ptr<MemoryBus> _bus;
+		std::shared_ptr<Memory::MemoryBus> _bus;
 
 		//! @brief Execute a single instruction.
 		//! @return The number of CPU cycles that the instruction took.
 		int executeInstruction();
 	public:
-		explicit CPU(std::shared_ptr<MemoryBus> bus);
+		explicit CPU(std::shared_ptr<Memory::MemoryBus> bus);
 		//! @brief This function continue to execute the Cartridge code.
 		//! @return The number of CPU cycles that elapsed
 		int update();

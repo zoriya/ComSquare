@@ -10,7 +10,7 @@
 #include <vector>
 #include "../Models/Ints.hpp"
 
-namespace ComSquare
+namespace ComSquare::Memory
 {
 	//! @brief Common interface implemented by all components mapping memory.
 	class IMemory {
@@ -38,10 +38,10 @@ namespace ComSquare
 		//! @brief Return true if this component has mapped the address.
 		//! @param addr The address to check.
 		//! @return True if this address is mapped to the component. False otherwise.
-		bool hasMemoryAt(uint24_t addr);
+		virtual bool hasMemoryAt(uint24_t addr);
 		//! @brief Get the first address mapped to this component.
 		//! @return the _start value.
-		uint24_t getStart();
+		virtual uint24_t getStart();
 	};
 };
 

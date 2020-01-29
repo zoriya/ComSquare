@@ -43,14 +43,14 @@ namespace ComSquare::Cartridge
 	}
 
 
-	uint8_t Cartridge::read(uint24_t addr)
+	uint8_t Cartridge::read_internal(uint24_t addr)
 	{
 		if (addr >= this->_size)
 			throw InvalidAddress("Cartridge read", addr);
 		return this->_data[addr];
 	}
 
-	void Cartridge::write(uint24_t addr, uint8_t data)
+	void Cartridge::write_internal(uint24_t addr, uint8_t data)
 	{
 		if (addr >= this->_size)
 			throw InvalidAddress("Cartridge write", addr);

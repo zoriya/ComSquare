@@ -6,11 +6,12 @@
 #define COMSQUARE_APU_HPP
 
 #include <memory>
+#include "../DSP/DSP.hpp"
 #include "../Memory/IMemory.hpp"
 
 namespace ComSquare::APU
 {
-	struct Registers {
+	struct InternalRegisters {
 
 		//! @brief The X index register
 		uint8_t x;
@@ -59,7 +60,7 @@ namespace ComSquare::APU
 		};
 	};
 
-	struct InternalRegisters
+	struct Registers
 	{
 		//! @brief An undocumented register
 		uint8_t unknown;
@@ -102,25 +103,24 @@ namespace ComSquare::APU
 
 	};
 
-	class DSP {
-	};
-
-	class APU : public IMemory {
+	class APU : public Memory::IMemory {
 	private:
+		//! @brief All the registers of the APU CPU
 		Registers _registers;
-		InternalRegisters _internalRegisters{};
-	public:
-		explicit APU();
+		//! @brief Internal registers of the CPU (accessible from the bus via addr $4200 to $421F).
+		InternalRegisters _internalRegisters;
 
 		//! @brief The DSP component used to produce sound
-		std::shared_ptr<DSP> _dsp;
+		std::shared_ptr<DSP::DSP> _dsp;
+	public:
+		explicit APU();
 
 		//! @brief Read from the internal APU register.
 		//! @param addr The address to read from. The address 0xF0 should refer to the first byte of the register.
 		//! @throw InvalidAddress will be thrown if the address is more than $FF (the number of register).
 		//! @return Return the value of the register.
 		uint8_t read(uint24_t addr) override;
-		//! @brief Write data to the internal APY register.
+		//! @brief Write data to the internal APU register.
 		//! @param addr The address to write to. The address 0xF0 should refer to the first byte of register.
 		//! @param data The new value of the register.
 		//! @throw InvalidAddress will be thrown if the address is more than $FF (the number of register).
