@@ -62,9 +62,13 @@ namespace ComSquare::PPU
 		case 0x0C:
 			this->bg34nba.raw = data;
 			break;
-		//TODO adding the rest of the registers. ooof !
+		//TODO adding the rest of the registers. oaf !
 		default:
 			throw InvalidAddress("PPU Internal Registers write", addr);
 		}
+	}
+
+	void PPU::update(int cycles) {
+
 	}
 }

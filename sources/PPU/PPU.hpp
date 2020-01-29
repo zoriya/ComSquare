@@ -390,6 +390,9 @@ namespace ComSquare::PPU
 		//! @param data The new data to write.
 		//! @throw This function should thrown an InvalidAddress for address that are not mapped to the component.
 		void write(uint24_t addr, uint8_t data) override;
+		//! @brief Update the PPU of n cycles.
+		//! @param The number of cycles to update.
+		void update(int cycles);
 	};
 }
 #endif //COMSQUARE_PPU_HPP
