@@ -8,39 +8,38 @@
 
 namespace ComSquare::APU
 {
-	APU::APU()
-	{
-	}
+	APU::APU() : _dsp(new DSP::DSP)
+	{ }
 
 	uint8_t APU::read(uint24_t addr)
 	{
 		switch (addr) {
 		case 0xF0:
-			return this->_internalRegisters.unknown;
+			return this->_registers.unknown;
 		case 0xF2:
-			return this->_internalRegisters.dspregAddr;
+			return this->_registers.dspregAddr;
 		case 0xF3:
-			return this->_internalRegisters.dspregData;
+			return this->_registers.dspregData;
 		case 0xF4:
-			return this->_internalRegisters.port0;
+			return this->_registers.port0;
 		case 0xF5:
-			return this->_internalRegisters.port1;
+			return this->_registers.port1;
 		case 0xF6:
-			return this->_internalRegisters.port2;
+			return this->_registers.port2;
 		case 0xF7:
-			return this->_internalRegisters.port3;
+			return this->_registers.port3;
 		case 0xF8:
-			return this->_internalRegisters.regmem1;
+			return this->_registers.regmem1;
 		case 0xF9:
-			return this->_internalRegisters.regmem2;
+			return this->_registers.regmem2;
 		case 0xFD:
-			return this->_internalRegisters.counter0;
+			return this->_registers.counter0;
 		case 0xFE:
-			return this->_internalRegisters.counter1;
+			return this->_registers.counter1;
 		case 0xFF:
-			return this->_internalRegisters.counter2;
+			return this->_registers.counter2;
 		default:
-			throw InvalidAddress("APU Internal Registers read", addr);
+			throw InvalidAddress("APU Registers read", addr);
 		}
 	}
 
@@ -48,46 +47,46 @@ namespace ComSquare::APU
 	{
 		switch (addr) {
 		case 0xF0:
-			this->_internalRegisters.unknown = data;
+			this->_registers.unknown = data;
 			break;
 		case 0xF1:
-			this->_internalRegisters.ctrlreg = data;
+			this->_registers.ctrlreg = data;
 			break;
 		case 0xF2:
-			this->_internalRegisters.dspregAddr = data;
+			this->_registers.dspregAddr = data;
 			break;
 		case 0xF3:
-			this->_internalRegisters.dspregData = data;
+			this->_registers.dspregData = data;
 			break;
 		case 0xF4:
-			this->_internalRegisters.port0 = data;
+			this->_registers.port0 = data;
 			break;
 		case 0xF5:
-			this->_internalRegisters.port1 = data;
+			this->_registers.port1 = data;
 			break;
 		case 0xF6:
-			this->_internalRegisters.port2 = data;
+			this->_registers.port2 = data;
 			break;
 		case 0xF7:
-			this->_internalRegisters.port3 = data;
+			this->_registers.port3 = data;
 			break;
 		case 0xF8:
-			this->_internalRegisters.regmem1 = data;
+			this->_registers.regmem1 = data;
 			break;
 		case 0xF9:
-			this->_internalRegisters.regmem2 = data;
+			this->_registers.regmem2 = data;
 			break;
 		case 0xFA:
-			this->_internalRegisters.timer0 = data;
+			this->_registers.timer0 = data;
 			break;
 		case 0xFB:
-			this->_internalRegisters.timer1 = data;
+			this->_registers.timer1 = data;
 			break;
 		case 0xFC:
-			this->_internalRegisters.timer2 = data;
+			this->_registers.timer2 = data;
 			break;
 		default:
-			throw InvalidAddress("APU Internal Registers write", addr);
+			throw InvalidAddress("APU Registers write", addr);
 		}
 	}
 

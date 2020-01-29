@@ -46,4 +46,6 @@ add_executable(ComSquare
         sources/Memory/MemoryShadow.hpp
         sources/Memory/IRectangleMemory.cpp
         sources/Memory/IRectangleMemory.hpp
+        sources/DSP/DSP.cpp
+        sources/DSP/DSP.hpp
 )
