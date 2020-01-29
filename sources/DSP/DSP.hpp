@@ -153,7 +153,7 @@ namespace ComSquare::APU::DSP
 		uint8_t coeff[8];
 	};
 
-	class DSP : public IMemory {
+	class DSP : public Memory::IMemory {
 	private:
 		Registers _registers{};
 	public:
