@@ -8,7 +8,8 @@
 
 namespace ComSquare::PPU
 {
-	uint8_t PPU::read(uint24_t addr) {
+	uint8_t PPU::read(uint24_t addr)
+	{
 		switch (addr) {
 		case 0x34:
 			return this->mpy.mpyl;
@@ -21,7 +22,8 @@ namespace ComSquare::PPU
 		}
 	}
 
-	void PPU::write(uint24_t addr, uint8_t data) {
+	void PPU::write(uint24_t addr, uint8_t data)
+	{
 		switch (addr) {
 		case 0x00:
 			this->inidisp.raw = data;
@@ -62,9 +64,14 @@ namespace ComSquare::PPU
 		case 0x0C:
 			this->bg34nba.raw = data;
 			break;
-		//TODO adding the rest of the registers. ooof !
+		//TODO adding the rest of the registers. oaf !
 		default:
 			throw InvalidAddress("PPU Internal Registers write", addr);
 		}
+	}
+
+	void PPU::update(int cycles)
+	{
+		(void)cycles;
 	}
 }
