@@ -61,7 +61,20 @@ namespace ComSquare::Cartridge
 
 	uint32_t Cartridge::_getHeaderAddress()
 	{
-		return 0x81c0;
+		uint32_t address[] = {0x7FC0, 0xFFC0, 0x81C0, 0x101C0};
+		int bestScore = -1;
+		uint32_t bestAddress = 0;
+
+		for (uint32_t addr : address) {
+			int score = 0;
+
+			// TODO Implement a scoring system for the address here.
+			if (score > bestScore) {
+				bestScore = score;
+				bestAddress = addr;
+			}
+		}
+		return bestAddress;
 	}
 
 	bool Cartridge::_loadHeader()
