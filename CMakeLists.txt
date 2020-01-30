@@ -75,4 +75,5 @@ add_executable(ComSquare
         sources/Memory/IRectangleMemory.hpp
         sources/DSP/DSP.cpp
         sources/DSP/DSP.hpp
+        sources/Exceptions/InvalidAcction.hpp
 )

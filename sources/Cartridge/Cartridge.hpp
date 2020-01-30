@@ -12,14 +12,13 @@
 
 namespace ComSquare::Cartridge
 {
+	#define ADDMAPPINGMODE(flag) (this->header.mappingMode = static_cast<MappingMode>(this->header.mappingMode | (flag)))
 	enum MappingMode {
-		LowRom,
-		HiRom,
-		ExLowRom,
-		EwHiRom,
-		SA1Rom, // unimplemented
-		FastLoRom,
-		FastHiRom
+		LoRom = 1u << 0u,
+		HiRom = 1u << 1u,
+		SlowRom = 1u << 2u,
+		FastRom = 1u << 3u,
+		ExRom = 1u << 4u,
 	};
 
 	struct Header
@@ -56,6 +55,12 @@ namespace ComSquare::Cartridge
 		//! @param romPath The path of the rom to get info from.
 		//! @return The size of the rom.
 		static size_t getRomSize(const std::string &romPath);
+		//! @brief Set the public variable header by parsing the header in the ROM.
+		//! @return True if this cartridge has a SCM header, false otherwise.
+		bool _loadHeader();
+		//! @brief Get the address of the header.
+		//! @return The address of this cartridge header.
+		uint32_t _getHeaderAddress();
 	public:
 		//! @brief Load a rom from it's path.
 		explicit Cartridge(const std::string &romPath);
