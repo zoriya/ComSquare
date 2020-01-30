@@ -75,4 +75,7 @@ add_executable(ComSquare
         sources/Memory/IRectangleMemory.hpp
         sources/DSP/DSP.cpp
         sources/DSP/DSP.hpp
+        sources/Renderer/IRenderer.hpp
+        sources/Renderer/SFRenderer.hpp
+        sources/Renderer/SFRenderer.cpp
 )
