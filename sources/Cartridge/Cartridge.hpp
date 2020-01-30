@@ -30,9 +30,9 @@ namespace ComSquare::Cartridge
 		//! @brief The rom type (special information about the rom, still don't know what).
 		uint8_t romType;
 		//! @brief The size (in bytes) of the ram
-		uint8_t romSize;
+		unsigned romSize;
 		//! @brief The size of the SRom inside the cartridge.
-		uint8_t sramSize;
+		unsigned sramSize;
 		//! @brief Creator license ID code.
 		uint8_t creatorID;
 		//! @brief The version of the game

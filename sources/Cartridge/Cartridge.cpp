@@ -76,6 +76,13 @@ namespace ComSquare::Cartridge
 		ADDMAPPINGMODE(this->_data[headerAddress + 21] & 0x1u  ? HiRom : LoRom);
 		if (this->_data[headerAddress + 21] & 0x2u || this->_data[headerAddress + 210] & 0x4u)
 			ADDMAPPINGMODE(ExRom);
+		this->header.romType = this->_data[headerAddress + 22];
+		this->header.romSize = 0x400u << this->_data[headerAddress + 23];
+		this->header.sramSize = 0x400u << this->_data[headerAddress + 24];
+		this->header.creatorID = this->_data[headerAddress + 25];
+		this->header.version = this->_data[headerAddress + 27];
+		this->header.checksumComplement = this->_data[headerAddress + 28];
+		this->header.checksum = this->_data[headerAddress + 29];
 		return headerAddress & 0x200u;
 	}
 }
