@@ -15,6 +15,9 @@ jobs:
         uses: actions/setup-python@v1
         with:
           python-version: '3.x'
+      - name: Install the SFML.
+        run: sudo apt-get update &&
+            sudo apt-get install --yes libsfml-dev
       - name: Install Criterion
         run: sudo add-apt-repository ppa:snaipewastaken/ppa &&
           sudo apt-get update &&
