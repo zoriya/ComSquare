@@ -15,6 +15,11 @@
 namespace ComSquare::Renderer
 {
 	class SFRenderer : public IRenderer {
+	private:
+		//! @brief The main Window.
+		sf::Window window;
+		//! @brief Video Mode containing the height and width of the window.
+		sf::VideoMode videoMode;
 	public:
 		//! @brief Set a new name to the window, if there is already a name it will be overwrite.
 		//! @param A new title for the window.
