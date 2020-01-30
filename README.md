@@ -20,7 +20,7 @@ You can use an artifact from latest commit by selecting ✔️ and ``Build commi
 
 Overwhise, you can build yourself the program by cloning the repository : ``git clone https://github.com/AnonymusRaccoon/ComSquare.git``
 
-You need the [SDL library](https://www.libsdl.org/).
+You need the [SFML library](https://www.sfml-dev.org/download.php).
 
 After going inside the repository directory, create a build folder ``mkdir build``, go inside and make ``cmake ..`` to finally make ``make``. If you've done nothing wrong, you should have the program compiled!
 
