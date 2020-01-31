@@ -18,6 +18,9 @@ namespace ComSquare::Renderer
 		//! @brief Render the buffer to the window
 		virtual void drawScreen() = 0;
 		//! @brief Set a pixel to the coordinates x, y with the color rgba
+		//! @param x The x position of the window (0, 0 is the top left corner).
+		//! @param y The y position of the window (0, 0 is the top left corner).
+		//! @param rgba The color of the pixel (red, green, blue, alpha).
 		virtual void putPixel(int x, int y, uint8_t rgba) = 0;
 	};
 }

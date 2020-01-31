@@ -10,7 +10,7 @@
 
 namespace ComSquare::PPU
 {
-	//! @brief The struct containing all the registers the PPU
+	//! @brief The class containing all the registers the PPU
 	class PPU : public Memory::IMemory {
 	private:
 		//! @brief INIDISP Register (F-blank and Brightness)
