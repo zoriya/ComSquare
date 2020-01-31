@@ -106,9 +106,9 @@ namespace ComSquare::APU
 	class APU : public Memory::IMemory {
 	private:
 		//! @brief All the registers of the APU CPU
-		Registers _registers;
+		Registers _registers{};
 		//! @brief Internal registers of the CPU (accessible from the bus via addr $4200 to $421F).
-		InternalRegisters _internalRegisters;
+		InternalRegisters _internalRegisters{};
 
 		//! @brief The DSP component used to produce sound
 		std::shared_ptr<DSP::DSP> _dsp;

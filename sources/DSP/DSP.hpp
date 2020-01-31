@@ -6,6 +6,7 @@
 #define COMSQUARE_DSP_HPP
 
 #include <cstdint>
+#include <SFML/Audio.hpp>
 #include "../Memory/IMemory.hpp"
 
 namespace ComSquare::APU::DSP
@@ -155,7 +156,14 @@ namespace ComSquare::APU::DSP
 
 	class DSP : public Memory::IMemory {
 	private:
+		//! @brief All registers of the DSP
 		Registers _registers{};
+
+		//! @brief 8x channels of sample used to make sound
+		sf::Sound _channels[8];
+
+		//! @brief A buffer containing current wave
+		sf::SoundBuffer _soundBuffer;
 	public:
 		explicit DSP();
 

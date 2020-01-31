@@ -8,7 +8,13 @@
 namespace ComSquare::APU::DSP
 {
 	DSP::DSP()
-	{ }
+	{
+		for (auto & _channel : this->_channels) {
+			_channel.setBuffer(this->_soundBuffer);
+			_channel.setLoop(true);
+			_channel.play();
+		}
+	}
 
 	uint8_t DSP::read(uint24_t addr)
 	{

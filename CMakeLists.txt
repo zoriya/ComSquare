@@ -45,6 +45,9 @@ add_executable(unit_tests
 target_link_libraries(unit_tests criterion -lgcov)
 target_compile_options(unit_tests PUBLIC -fprofile-arcs -ftest-coverage)
 
+#include SFML
+add_link_options(-lsfml-graphics -lsfml-window -lsfml-audio -lsfml-network -lsfml-system)
+
 # make app
 add_executable(ComSquare
         main.cpp
