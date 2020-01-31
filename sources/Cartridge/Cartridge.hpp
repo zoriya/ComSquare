@@ -9,10 +9,11 @@
 #include "../Memory/IMemory.hpp"
 #include "../Models/Ints.hpp"
 #include "../Memory/IRectangleMemory.hpp"
+#include "InterruptVectors.hpp"
 
 namespace ComSquare::Cartridge
 {
-	#define ADDMAPPINGMODE(flag) (this->header.mappingMode = static_cast<MappingMode>(this->header.mappingMode | (flag)))
+	#define ADDMAPPINGMODE(x, flag) (x = static_cast<MappingMode>(x | (flag)))
 	enum MappingMode {
 		LoRom = 1u << 0u,
 		HiRom = 1u << 1u,
@@ -34,13 +35,26 @@ namespace ComSquare::Cartridge
 		//! @brief The size of the SRom inside the cartridge.
 		unsigned sramSize;
 		//! @brief Creator license ID code.
-		uint8_t creatorID;
+		union {
+			uint8_t creatorIDs[2];
+			uint16_t creatorID;
+		};
 		//! @brief The version of the game
 		uint8_t version;
 		//! @brief Checksum complement
-		uint8_t checksumComplement;
+		union {
+			uint8_t checksumComplements[2];
+			uint16_t checksumComplement;
+		};
 		//! @brief Checksum
-		uint8_t checksum;
+		union {
+			uint8_t checksums[2];
+			uint16_t checksum;
+		};
+		//! @brief The interrupt vectors used to halt the CPU in native mode
+		InterruptVectors nativeInterrupts;
+		//! @brief The interrupt vectors used to halt the CPU in emulation mode
+		InterruptVectors emulationInterrupts;
 	};
 
 	//! @brief Contains the rom's memory/instructions.
@@ -61,6 +75,10 @@ namespace ComSquare::Cartridge
 		//! @brief Get the address of the header.
 		//! @return The address of this cartridge header.
 		uint32_t _getHeaderAddress();
+		//! @brief Parse the memory to get a readable header.
+		//! @param headerAddress The address you want to parse.
+		//! @return A header struct representing the data at the memory address you passed.
+		Header _mapHeader(uint32_t headerAddress);
 	public:
 		//! @brief Load a rom from it's path.
 		explicit Cartridge(const std::string &romPath);

@@ -79,7 +79,7 @@ add_executable(ComSquare
         sources/Renderer/SFRenderer.hpp
         sources/Renderer/SFRenderer.cpp
         sources/Exceptions/InvalidAction.hpp
-)
+        sources/Cartridge/InterruptVectors.hpp)
 
 target_link_libraries(ComSquare
         sfml-graphics
