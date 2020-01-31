@@ -1,0 +1,156 @@
+\hypertarget{classComSquare_1_1APU_1_1APU}{}\doxysection{Com\+Square\+::A\+PU\+::A\+PU Class Reference}
+\label{classComSquare_1_1APU_1_1APU}\index{ComSquare::APU::APU@{ComSquare::APU::APU}}
+
+
+{\ttfamily \#include $<$A\+P\+U.\+hpp$>$}
+
+
+
+Inheritance diagram for Com\+Square\+::A\+PU\+::A\+PU\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=205pt]{classComSquare_1_1APU_1_1APU__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Com\+Square\+::A\+PU\+::A\+PU\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classComSquare_1_1APU_1_1APU__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classComSquare_1_1APU_1_1APU_af94d2f262bb9114bdd022da37f8ec5b3}{A\+PU}} ()
+\item 
+uint8\+\_\+t \mbox{\hyperlink{classComSquare_1_1APU_1_1APU_acf11685da76ce208cf57a4209cdbd0c2}{read}} (\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} addr) override
+\begin{DoxyCompactList}\small\item\em Read from the internal \mbox{\hyperlink{classComSquare_1_1APU_1_1APU}{A\+PU}} register. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSquare_1_1APU_1_1APU_ab77224524520cbad442e89f3663cf67f}{write}} (\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} addr, uint8\+\_\+t data) override
+\begin{DoxyCompactList}\small\item\em Write data to the internal \mbox{\hyperlink{classComSquare_1_1APU_1_1APU}{A\+PU}} register. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classComSquare_1_1APU_1_1APU_a5cea0122578d14d4ff3a9aead1322bba}{update}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structComSquare_1_1APU_1_1Registers}{Registers}} \mbox{\hyperlink{classComSquare_1_1APU_1_1APU_a31a0eee6623c22ecc1ba891fefec8e3f}{\+\_\+registers}} \{\}
+\begin{DoxyCompactList}\small\item\em All the registers of the \mbox{\hyperlink{classComSquare_1_1APU_1_1APU}{A\+PU}} \mbox{\hyperlink{namespaceComSquare_1_1CPU}{C\+PU}}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structComSquare_1_1APU_1_1InternalRegisters}{Internal\+Registers}} \mbox{\hyperlink{classComSquare_1_1APU_1_1APU_a6f6c534e0f850c7882cefdc5455aedca}{\+\_\+internal\+Registers}} \{\}
+\begin{DoxyCompactList}\small\item\em Internal registers of the \mbox{\hyperlink{namespaceComSquare_1_1CPU}{C\+PU}} (accessible from the bus via addr \$4200 to \$421F). \end{DoxyCompactList}\item 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classComSquare_1_1APU_1_1DSP_1_1DSP}{D\+S\+P\+::\+D\+SP}} $>$ \mbox{\hyperlink{classComSquare_1_1APU_1_1APU_a08e24ceee57a5b40da0fcd31652c858b}{\+\_\+dsp}}
+\begin{DoxyCompactList}\small\item\em The \mbox{\hyperlink{namespaceComSquare_1_1APU_1_1DSP}{D\+SP}} component used to produce sound. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classComSquare_1_1APU_1_1APU_af94d2f262bb9114bdd022da37f8ec5b3}\label{classComSquare_1_1APU_1_1APU_af94d2f262bb9114bdd022da37f8ec5b3}} 
+\index{ComSquare::APU::APU@{ComSquare::APU::APU}!APU@{APU}}
+\index{APU@{APU}!ComSquare::APU::APU@{ComSquare::APU::APU}}
+\doxysubsubsection{\texorpdfstring{APU()}{APU()}}
+{\footnotesize\ttfamily Com\+Square\+::\+A\+P\+U\+::\+A\+P\+U\+::\+A\+PU (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classComSquare_1_1APU_1_1APU_acf11685da76ce208cf57a4209cdbd0c2}\label{classComSquare_1_1APU_1_1APU_acf11685da76ce208cf57a4209cdbd0c2}} 
+\index{ComSquare::APU::APU@{ComSquare::APU::APU}!read@{read}}
+\index{read@{read}!ComSquare::APU::APU@{ComSquare::APU::APU}}
+\doxysubsubsection{\texorpdfstring{read()}{read()}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+A\+P\+U\+::\+A\+P\+U\+::read (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}}}]{addr }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Read from the internal \mbox{\hyperlink{classComSquare_1_1APU_1_1APU}{A\+PU}} register. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em addr} & The address to read from. The address 0x\+F0 should refer to the first byte of the register. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \mbox{\hyperlink{classComSquare_1_1InvalidAddress}{Invalid\+Address}}} & will be thrown if the address is more than \$\+FF (the number of register). \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyReturn}{Returns}
+Return the value of the register. 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{classComSquare_1_1Memory_1_1IMemory_a8459ed12c4172ee29ecdc84330f99ff7}{Com\+Square\+::\+Memory\+::\+I\+Memory}}.
+
+\mbox{\Hypertarget{classComSquare_1_1APU_1_1APU_a5cea0122578d14d4ff3a9aead1322bba}\label{classComSquare_1_1APU_1_1APU_a5cea0122578d14d4ff3a9aead1322bba}} 
+\index{ComSquare::APU::APU@{ComSquare::APU::APU}!update@{update}}
+\index{update@{update}!ComSquare::APU::APU@{ComSquare::APU::APU}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily bool Com\+Square\+::\+A\+P\+U\+::\+A\+P\+U\+::update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classComSquare_1_1APU_1_1APU_ab77224524520cbad442e89f3663cf67f}\label{classComSquare_1_1APU_1_1APU_ab77224524520cbad442e89f3663cf67f}} 
+\index{ComSquare::APU::APU@{ComSquare::APU::APU}!write@{write}}
+\index{write@{write}!ComSquare::APU::APU@{ComSquare::APU::APU}}
+\doxysubsubsection{\texorpdfstring{write()}{write()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+A\+P\+U\+::\+A\+P\+U\+::write (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}}}]{addr,  }\item[{uint8\+\_\+t}]{data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Write data to the internal \mbox{\hyperlink{classComSquare_1_1APU_1_1APU}{A\+PU}} register. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em addr} & The address to write to. The address 0x\+F0 should refer to the first byte of register. \\
+\hline
+{\em data} & The new value of the register. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \mbox{\hyperlink{classComSquare_1_1InvalidAddress}{Invalid\+Address}}} & will be thrown if the address is more than \$\+FF (the number of register). \\
+\hline
+\end{DoxyExceptions}
+
+
+Implements \mbox{\hyperlink{classComSquare_1_1Memory_1_1IMemory_a449bc89798a0b86028bb0413106514d9}{Com\+Square\+::\+Memory\+::\+I\+Memory}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classComSquare_1_1APU_1_1APU_a08e24ceee57a5b40da0fcd31652c858b}\label{classComSquare_1_1APU_1_1APU_a08e24ceee57a5b40da0fcd31652c858b}} 
+\index{ComSquare::APU::APU@{ComSquare::APU::APU}!\_dsp@{\_dsp}}
+\index{\_dsp@{\_dsp}!ComSquare::APU::APU@{ComSquare::APU::APU}}
+\doxysubsubsection{\texorpdfstring{\_dsp}{\_dsp}}
+{\footnotesize\ttfamily std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{classComSquare_1_1APU_1_1DSP_1_1DSP}{D\+S\+P\+::\+D\+SP}}$>$ Com\+Square\+::\+A\+P\+U\+::\+A\+P\+U\+::\+\_\+dsp\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The \mbox{\hyperlink{namespaceComSquare_1_1APU_1_1DSP}{D\+SP}} component used to produce sound. 
+
+\mbox{\Hypertarget{classComSquare_1_1APU_1_1APU_a6f6c534e0f850c7882cefdc5455aedca}\label{classComSquare_1_1APU_1_1APU_a6f6c534e0f850c7882cefdc5455aedca}} 
+\index{ComSquare::APU::APU@{ComSquare::APU::APU}!\_internalRegisters@{\_internalRegisters}}
+\index{\_internalRegisters@{\_internalRegisters}!ComSquare::APU::APU@{ComSquare::APU::APU}}
+\doxysubsubsection{\texorpdfstring{\_internalRegisters}{\_internalRegisters}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structComSquare_1_1APU_1_1InternalRegisters}{Internal\+Registers}} Com\+Square\+::\+A\+P\+U\+::\+A\+P\+U\+::\+\_\+internal\+Registers \{\}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Internal registers of the \mbox{\hyperlink{namespaceComSquare_1_1CPU}{C\+PU}} (accessible from the bus via addr \$4200 to \$421F). 
+
+\mbox{\Hypertarget{classComSquare_1_1APU_1_1APU_a31a0eee6623c22ecc1ba891fefec8e3f}\label{classComSquare_1_1APU_1_1APU_a31a0eee6623c22ecc1ba891fefec8e3f}} 
+\index{ComSquare::APU::APU@{ComSquare::APU::APU}!\_registers@{\_registers}}
+\index{\_registers@{\_registers}!ComSquare::APU::APU@{ComSquare::APU::APU}}
+\doxysubsubsection{\texorpdfstring{\_registers}{\_registers}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structComSquare_1_1APU_1_1Registers}{Registers}} Com\+Square\+::\+A\+P\+U\+::\+A\+P\+U\+::\+\_\+registers \{\}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+All the registers of the \mbox{\hyperlink{classComSquare_1_1APU_1_1APU}{A\+PU}} \mbox{\hyperlink{namespaceComSquare_1_1CPU}{C\+PU}}. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+sources/\+A\+P\+U/\mbox{\hyperlink{APU_8hpp}{A\+P\+U.\+hpp}}\item 
+sources/\+A\+P\+U/\mbox{\hyperlink{APU_8cpp}{A\+P\+U.\+cpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,103 @@
+\hypertarget{classComSquare_1_1Renderer_1_1IRenderer}{}\doxysection{Com\+Square\+::Renderer\+::I\+Renderer Class Reference}
+\label{classComSquare_1_1Renderer_1_1IRenderer}\index{ComSquare::Renderer::IRenderer@{ComSquare::Renderer::IRenderer}}
+
+
+{\ttfamily \#include $<$I\+Renderer.\+hpp$>$}
+
+
+
+Inheritance diagram for Com\+Square\+::Renderer\+::I\+Renderer\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=203pt]{classComSquare_1_1Renderer_1_1IRenderer__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Com\+Square\+::Renderer\+::I\+Renderer\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=203pt]{classComSquare_1_1Renderer_1_1IRenderer__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \mbox{\hyperlink{classComSquare_1_1Renderer_1_1IRenderer_ae0b7871e27c4d7596efd49a66bcf43ec}{set\+Window\+Name}} (std\+::string)=0
+\begin{DoxyCompactList}\small\item\em Set a new name to the window, if there is already a name it will be overwrite. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classComSquare_1_1Renderer_1_1IRenderer_a371328d98efeded3a12adf92267b1287}{draw\+Screen}} ()=0
+\begin{DoxyCompactList}\small\item\em Render the buffer to the window. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classComSquare_1_1Renderer_1_1IRenderer_a397dfb4eebf6ebf7425c6022d4c3c32a}{put\+Pixel}} (\mbox{\hyperlink{CMakeCache_8txt_a79a3d8790b2588b09777910863574e09}{int}} x, \mbox{\hyperlink{CMakeCache_8txt_a79a3d8790b2588b09777910863574e09}{int}} y, uint8\+\_\+t rgba)=0
+\begin{DoxyCompactList}\small\item\em Set a pixel to the coordinates x, y with the color rgba. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{classComSquare_1_1Renderer_1_1IRenderer_aff55e56ae1bac1e205c819b400d46cca}{should\+Exit}}
+\begin{DoxyCompactList}\small\item\em Tells to the program if the window has been closed, and therefore if he should stop. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classComSquare_1_1Renderer_1_1IRenderer_a371328d98efeded3a12adf92267b1287}\label{classComSquare_1_1Renderer_1_1IRenderer_a371328d98efeded3a12adf92267b1287}} 
+\index{ComSquare::Renderer::IRenderer@{ComSquare::Renderer::IRenderer}!drawScreen@{drawScreen}}
+\index{drawScreen@{drawScreen}!ComSquare::Renderer::IRenderer@{ComSquare::Renderer::IRenderer}}
+\doxysubsubsection{\texorpdfstring{drawScreen()}{drawScreen()}}
+{\footnotesize\ttfamily virtual void Com\+Square\+::\+Renderer\+::\+I\+Renderer\+::draw\+Screen (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Render the buffer to the window. 
+
+
+
+Implemented in \mbox{\hyperlink{classComSquare_1_1Renderer_1_1SFRenderer_a9487851a2313bb0e4e8ebccbc6f839e6}{Com\+Square\+::\+Renderer\+::\+S\+F\+Renderer}}.
+
+\mbox{\Hypertarget{classComSquare_1_1Renderer_1_1IRenderer_a397dfb4eebf6ebf7425c6022d4c3c32a}\label{classComSquare_1_1Renderer_1_1IRenderer_a397dfb4eebf6ebf7425c6022d4c3c32a}} 
+\index{ComSquare::Renderer::IRenderer@{ComSquare::Renderer::IRenderer}!putPixel@{putPixel}}
+\index{putPixel@{putPixel}!ComSquare::Renderer::IRenderer@{ComSquare::Renderer::IRenderer}}
+\doxysubsubsection{\texorpdfstring{putPixel()}{putPixel()}}
+{\footnotesize\ttfamily virtual void Com\+Square\+::\+Renderer\+::\+I\+Renderer\+::put\+Pixel (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{CMakeCache_8txt_a79a3d8790b2588b09777910863574e09}{int}}}]{x,  }\item[{\mbox{\hyperlink{CMakeCache_8txt_a79a3d8790b2588b09777910863574e09}{int}}}]{y,  }\item[{uint8\+\_\+t}]{rgba }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Set a pixel to the coordinates x, y with the color rgba. 
+
+
+
+Implemented in \mbox{\hyperlink{classComSquare_1_1Renderer_1_1SFRenderer_a103480c82b522e4497bb078eb8eade47}{Com\+Square\+::\+Renderer\+::\+S\+F\+Renderer}}.
+
+\mbox{\Hypertarget{classComSquare_1_1Renderer_1_1IRenderer_ae0b7871e27c4d7596efd49a66bcf43ec}\label{classComSquare_1_1Renderer_1_1IRenderer_ae0b7871e27c4d7596efd49a66bcf43ec}} 
+\index{ComSquare::Renderer::IRenderer@{ComSquare::Renderer::IRenderer}!setWindowName@{setWindowName}}
+\index{setWindowName@{setWindowName}!ComSquare::Renderer::IRenderer@{ComSquare::Renderer::IRenderer}}
+\doxysubsubsection{\texorpdfstring{setWindowName()}{setWindowName()}}
+{\footnotesize\ttfamily virtual void Com\+Square\+::\+Renderer\+::\+I\+Renderer\+::set\+Window\+Name (\begin{DoxyParamCaption}\item[{std\+::string}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Set a new name to the window, if there is already a name it will be overwrite. 
+
+
+
+Implemented in \mbox{\hyperlink{classComSquare_1_1Renderer_1_1SFRenderer_a72a26c80dbd8008825a809a3cc22918b}{Com\+Square\+::\+Renderer\+::\+S\+F\+Renderer}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classComSquare_1_1Renderer_1_1IRenderer_aff55e56ae1bac1e205c819b400d46cca}\label{classComSquare_1_1Renderer_1_1IRenderer_aff55e56ae1bac1e205c819b400d46cca}} 
+\index{ComSquare::Renderer::IRenderer@{ComSquare::Renderer::IRenderer}!shouldExit@{shouldExit}}
+\index{shouldExit@{shouldExit}!ComSquare::Renderer::IRenderer@{ComSquare::Renderer::IRenderer}}
+\doxysubsubsection{\texorpdfstring{shouldExit}{shouldExit}}
+{\footnotesize\ttfamily bool Com\+Square\+::\+Renderer\+::\+I\+Renderer\+::should\+Exit}
+
+
+
+Tells to the program if the window has been closed, and therefore if he should stop. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+sources/\+Renderer/\mbox{\hyperlink{IRenderer_8hpp}{I\+Renderer.\+hpp}}\end{DoxyCompactItemize}

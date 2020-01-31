@@ -1,0 +1,11 @@
+<map id="ComSquare::Memory::IMemory" name="ComSquare::Memory::IMemory">
+<area shape="rect" id="node1" title="Common interface implemented by all components mapping memory." alt="" coords="611,5,777,171"/>
+<area shape="rect" id="node2" href="$classComSquare_1_1APU_1_1APU.html" title=" " alt="" coords="5,358,172,509"/>
+<area shape="rect" id="node3" href="$classComSquare_1_1APU_1_1DSP_1_1DSP.html" title=" " alt="" coords="197,365,397,501"/>
+<area shape="rect" id="node4" href="$classComSquare_1_1CPU_1_1CPU.html" title="The main CPU." alt="" coords="420,343,587,523"/>
+<area shape="rect" id="node5" href="$classComSquare_1_1Memory_1_1IRectangleMemory.html" title="Superset of the IMemory to map non continuous rectangle to the memory. (A rectangle that spam across ..." alt="" coords="611,321,777,545"/>
+<area shape="rect" id="node7" href="$classComSquare_1_1Memory_1_1MemoryShadow.html" title=" " alt="" coords="801,365,968,501"/>
+<area shape="rect" id="node8" href="$classComSquare_1_1PPU_1_1PPU.html" title="The struct containing all the registers the PPU." alt="" coords="992,219,1180,648"/>
+<area shape="rect" id="node9" href="$classComSquare_1_1Ram_1_1Ram.html" title=" " alt="" coords="1205,365,1378,501"/>
+<area shape="rect" id="node6" href="$classComSquare_1_1Cartridge_1_1Cartridge.html" title="Contains the rom&#39;s memory/instructions." alt="" coords="610,696,778,920"/>
+</map>

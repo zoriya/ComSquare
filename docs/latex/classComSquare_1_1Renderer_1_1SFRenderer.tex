@@ -1,0 +1,131 @@
+\hypertarget{classComSquare_1_1Renderer_1_1SFRenderer}{}\doxysection{Com\+Square\+::Renderer\+::S\+F\+Renderer Class Reference}
+\label{classComSquare_1_1Renderer_1_1SFRenderer}\index{ComSquare::Renderer::SFRenderer@{ComSquare::Renderer::SFRenderer}}
+
+
+{\ttfamily \#include $<$S\+F\+Renderer.\+hpp$>$}
+
+
+
+Inheritance diagram for Com\+Square\+::Renderer\+::S\+F\+Renderer\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=203pt]{classComSquare_1_1Renderer_1_1SFRenderer__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Com\+Square\+::Renderer\+::S\+F\+Renderer\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=203pt]{classComSquare_1_1Renderer_1_1SFRenderer__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classComSquare_1_1Renderer_1_1SFRenderer_a72a26c80dbd8008825a809a3cc22918b}{set\+Window\+Name}} (std\+::string) override
+\begin{DoxyCompactList}\small\item\em Set a new name to the window, if there is already a name it will be overwrite. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSquare_1_1Renderer_1_1SFRenderer_a9487851a2313bb0e4e8ebccbc6f839e6}{draw\+Screen}} () override
+\begin{DoxyCompactList}\small\item\em Update the screen by printing the buffer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSquare_1_1Renderer_1_1SFRenderer_a103480c82b522e4497bb078eb8eade47}{put\+Pixel}} (\mbox{\hyperlink{CMakeCache_8txt_a79a3d8790b2588b09777910863574e09}{int}} x, \mbox{\hyperlink{CMakeCache_8txt_a79a3d8790b2588b09777910863574e09}{int}} y, uint8\+\_\+t rgba) override
+\begin{DoxyCompactList}\small\item\em Add a pixel to the buffer to the coordinates x, y with the color rgba. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+sf\+::\+Window \mbox{\hyperlink{classComSquare_1_1Renderer_1_1SFRenderer_a8f0a8fb3bba373624d4a264ae7cb4b24}{window}}
+\begin{DoxyCompactList}\small\item\em The main Window. \end{DoxyCompactList}\item 
+sf\+::\+Video\+Mode \mbox{\hyperlink{classComSquare_1_1Renderer_1_1SFRenderer_a3a272535b5348bed457f0d06d7ec25d6}{video\+Mode}}
+\begin{DoxyCompactList}\small\item\em Video Mode containing the height and width of the window. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classComSquare_1_1Renderer_1_1SFRenderer_a9487851a2313bb0e4e8ebccbc6f839e6}\label{classComSquare_1_1Renderer_1_1SFRenderer_a9487851a2313bb0e4e8ebccbc6f839e6}} 
+\index{ComSquare::Renderer::SFRenderer@{ComSquare::Renderer::SFRenderer}!drawScreen@{drawScreen}}
+\index{drawScreen@{drawScreen}!ComSquare::Renderer::SFRenderer@{ComSquare::Renderer::SFRenderer}}
+\doxysubsubsection{\texorpdfstring{drawScreen()}{drawScreen()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+Renderer\+::\+S\+F\+Renderer\+::draw\+Screen (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Update the screen by printing the buffer. 
+
+
+
+Implements \mbox{\hyperlink{classComSquare_1_1Renderer_1_1IRenderer_a371328d98efeded3a12adf92267b1287}{Com\+Square\+::\+Renderer\+::\+I\+Renderer}}.
+
+\mbox{\Hypertarget{classComSquare_1_1Renderer_1_1SFRenderer_a103480c82b522e4497bb078eb8eade47}\label{classComSquare_1_1Renderer_1_1SFRenderer_a103480c82b522e4497bb078eb8eade47}} 
+\index{ComSquare::Renderer::SFRenderer@{ComSquare::Renderer::SFRenderer}!putPixel@{putPixel}}
+\index{putPixel@{putPixel}!ComSquare::Renderer::SFRenderer@{ComSquare::Renderer::SFRenderer}}
+\doxysubsubsection{\texorpdfstring{putPixel()}{putPixel()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+Renderer\+::\+S\+F\+Renderer\+::put\+Pixel (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{CMakeCache_8txt_a79a3d8790b2588b09777910863574e09}{int}}}]{x,  }\item[{\mbox{\hyperlink{CMakeCache_8txt_a79a3d8790b2588b09777910863574e09}{int}}}]{y,  }\item[{uint8\+\_\+t}]{rgba }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Add a pixel to the buffer to the coordinates x, y with the color rgba. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em X} & horizontal index. \\
+\hline
+{\em Y} & vertical index. \\
+\hline
+{\em rgba} & \+: The color of the pixel. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{classComSquare_1_1Renderer_1_1IRenderer_a397dfb4eebf6ebf7425c6022d4c3c32a}{Com\+Square\+::\+Renderer\+::\+I\+Renderer}}.
+
+\mbox{\Hypertarget{classComSquare_1_1Renderer_1_1SFRenderer_a72a26c80dbd8008825a809a3cc22918b}\label{classComSquare_1_1Renderer_1_1SFRenderer_a72a26c80dbd8008825a809a3cc22918b}} 
+\index{ComSquare::Renderer::SFRenderer@{ComSquare::Renderer::SFRenderer}!setWindowName@{setWindowName}}
+\index{setWindowName@{setWindowName}!ComSquare::Renderer::SFRenderer@{ComSquare::Renderer::SFRenderer}}
+\doxysubsubsection{\texorpdfstring{setWindowName()}{setWindowName()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+Renderer\+::\+S\+F\+Renderer\+::set\+Window\+Name (\begin{DoxyParamCaption}\item[{std\+::string}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Set a new name to the window, if there is already a name it will be overwrite. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em A} & new title for the window. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{classComSquare_1_1Renderer_1_1IRenderer_ae0b7871e27c4d7596efd49a66bcf43ec}{Com\+Square\+::\+Renderer\+::\+I\+Renderer}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classComSquare_1_1Renderer_1_1SFRenderer_a3a272535b5348bed457f0d06d7ec25d6}\label{classComSquare_1_1Renderer_1_1SFRenderer_a3a272535b5348bed457f0d06d7ec25d6}} 
+\index{ComSquare::Renderer::SFRenderer@{ComSquare::Renderer::SFRenderer}!videoMode@{videoMode}}
+\index{videoMode@{videoMode}!ComSquare::Renderer::SFRenderer@{ComSquare::Renderer::SFRenderer}}
+\doxysubsubsection{\texorpdfstring{videoMode}{videoMode}}
+{\footnotesize\ttfamily sf\+::\+Video\+Mode Com\+Square\+::\+Renderer\+::\+S\+F\+Renderer\+::video\+Mode\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Video Mode containing the height and width of the window. 
+
+\mbox{\Hypertarget{classComSquare_1_1Renderer_1_1SFRenderer_a8f0a8fb3bba373624d4a264ae7cb4b24}\label{classComSquare_1_1Renderer_1_1SFRenderer_a8f0a8fb3bba373624d4a264ae7cb4b24}} 
+\index{ComSquare::Renderer::SFRenderer@{ComSquare::Renderer::SFRenderer}!window@{window}}
+\index{window@{window}!ComSquare::Renderer::SFRenderer@{ComSquare::Renderer::SFRenderer}}
+\doxysubsubsection{\texorpdfstring{window}{window}}
+{\footnotesize\ttfamily sf\+::\+Window Com\+Square\+::\+Renderer\+::\+S\+F\+Renderer\+::window\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The main Window. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+sources/\+Renderer/\mbox{\hyperlink{SFRenderer_8hpp}{S\+F\+Renderer.\+hpp}}\item 
+sources/\+Renderer/\mbox{\hyperlink{SFRenderer_8cpp}{S\+F\+Renderer.\+cpp}}\end{DoxyCompactItemize}

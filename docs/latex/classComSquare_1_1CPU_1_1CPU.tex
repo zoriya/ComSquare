@@ -1,0 +1,203 @@
+\hypertarget{classComSquare_1_1CPU_1_1CPU}{}\doxysection{Com\+Square\+::C\+PU\+::C\+PU Class Reference}
+\label{classComSquare_1_1CPU_1_1CPU}\index{ComSquare::CPU::CPU@{ComSquare::CPU::CPU}}
+
+
+The main \mbox{\hyperlink{classComSquare_1_1CPU_1_1CPU}{C\+PU}}.  
+
+
+
+
+{\ttfamily \#include $<$C\+P\+U.\+hpp$>$}
+
+
+
+Inheritance diagram for Com\+Square\+::C\+PU\+::C\+PU\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=205pt]{classComSquare_1_1CPU_1_1CPU__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Com\+Square\+::C\+PU\+::C\+PU\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classComSquare_1_1CPU_1_1CPU__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classComSquare_1_1CPU_1_1CPU_ae5cb2a71ebba5f4519793582880f31f2}{C\+PU}} (std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classComSquare_1_1Memory_1_1MemoryBus}{Memory\+::\+Memory\+Bus}} $>$ bus)
+\item 
+\mbox{\hyperlink{CMakeCache_8txt_a79a3d8790b2588b09777910863574e09}{int}} \mbox{\hyperlink{classComSquare_1_1CPU_1_1CPU_a47ccd3b85569b89baa73679eac513ab0}{update}} ()
+\begin{DoxyCompactList}\small\item\em This function continue to execute the \mbox{\hyperlink{namespaceComSquare_1_1Cartridge}{Cartridge}} code. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{classComSquare_1_1CPU_1_1CPU_a2f5e100896256e62f1995a0172f3a5e5}{read}} (\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} addr) override
+\begin{DoxyCompactList}\small\item\em Read from the internal \mbox{\hyperlink{classComSquare_1_1CPU_1_1CPU}{C\+PU}} register. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSquare_1_1CPU_1_1CPU_a98d7a910393934e63f4ea479cea49f2e}{write}} (\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} addr, uint8\+\_\+t data) override
+\begin{DoxyCompactList}\small\item\em Write data to the internal \mbox{\hyperlink{classComSquare_1_1CPU_1_1CPU}{C\+PU}} register. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{CMakeCache_8txt_a79a3d8790b2588b09777910863574e09}{int}} \mbox{\hyperlink{classComSquare_1_1CPU_1_1CPU_acb160633242110e7b285ee5a5d5f6ff9}{execute\+Instruction}} ()
+\begin{DoxyCompactList}\small\item\em Execute a single instruction. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structComSquare_1_1CPU_1_1Registers}{Registers}} \mbox{\hyperlink{classComSquare_1_1CPU_1_1CPU_a579c0dd2e1cafca0dd3617c05a33d1f7}{\+\_\+registers}} \{\}
+\begin{DoxyCompactList}\small\item\em All the registers of the \mbox{\hyperlink{classComSquare_1_1CPU_1_1CPU}{C\+PU}}. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classComSquare_1_1CPU_1_1CPU_ac9c6fa76bf7171654b0b52896f699927}{\+\_\+is\+Emulation\+Mode}} = true
+\begin{DoxyCompactList}\small\item\em Is the \mbox{\hyperlink{classComSquare_1_1CPU_1_1CPU}{C\+PU}} running in emulation mode (in 8bits) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structComSquare_1_1CPU_1_1InternalRegisters}{Internal\+Registers}} \mbox{\hyperlink{classComSquare_1_1CPU_1_1CPU_a4566720e2cf2ce891a1332932c2f1e0e}{\+\_\+internal\+Registers}} \{\}
+\begin{DoxyCompactList}\small\item\em Internal registers of the \mbox{\hyperlink{classComSquare_1_1CPU_1_1CPU}{C\+PU}} (accessible from the bus via addr \$4200 to \$421F). \end{DoxyCompactList}\item 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classComSquare_1_1Memory_1_1MemoryBus}{Memory\+::\+Memory\+Bus}} $>$ \mbox{\hyperlink{classComSquare_1_1CPU_1_1CPU_a7118a772fbf88584fc671eba1d5c2e3f}{\+\_\+bus}}
+\begin{DoxyCompactList}\small\item\em The memory bus to use for read/write. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The main \mbox{\hyperlink{classComSquare_1_1CPU_1_1CPU}{C\+PU}}. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classComSquare_1_1CPU_1_1CPU_ae5cb2a71ebba5f4519793582880f31f2}\label{classComSquare_1_1CPU_1_1CPU_ae5cb2a71ebba5f4519793582880f31f2}} 
+\index{ComSquare::CPU::CPU@{ComSquare::CPU::CPU}!CPU@{CPU}}
+\index{CPU@{CPU}!ComSquare::CPU::CPU@{ComSquare::CPU::CPU}}
+\doxysubsubsection{\texorpdfstring{CPU()}{CPU()}}
+{\footnotesize\ttfamily Com\+Square\+::\+C\+P\+U\+::\+C\+P\+U\+::\+C\+PU (\begin{DoxyParamCaption}\item[{std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classComSquare_1_1Memory_1_1MemoryBus}{Memory\+::\+Memory\+Bus}} $>$}]{bus }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classComSquare_1_1CPU_1_1CPU_acb160633242110e7b285ee5a5d5f6ff9}\label{classComSquare_1_1CPU_1_1CPU_acb160633242110e7b285ee5a5d5f6ff9}} 
+\index{ComSquare::CPU::CPU@{ComSquare::CPU::CPU}!executeInstruction@{executeInstruction}}
+\index{executeInstruction@{executeInstruction}!ComSquare::CPU::CPU@{ComSquare::CPU::CPU}}
+\doxysubsubsection{\texorpdfstring{executeInstruction()}{executeInstruction()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{CMakeCache_8txt_a79a3d8790b2588b09777910863574e09}{int}} Com\+Square\+::\+C\+P\+U\+::\+C\+P\+U\+::execute\+Instruction (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Execute a single instruction. 
+
+\begin{DoxyReturn}{Returns}
+The number of \mbox{\hyperlink{classComSquare_1_1CPU_1_1CPU}{C\+PU}} cycles that the instruction took. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classComSquare_1_1CPU_1_1CPU_a2f5e100896256e62f1995a0172f3a5e5}\label{classComSquare_1_1CPU_1_1CPU_a2f5e100896256e62f1995a0172f3a5e5}} 
+\index{ComSquare::CPU::CPU@{ComSquare::CPU::CPU}!read@{read}}
+\index{read@{read}!ComSquare::CPU::CPU@{ComSquare::CPU::CPU}}
+\doxysubsubsection{\texorpdfstring{read()}{read()}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+C\+P\+U\+::\+C\+P\+U\+::read (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}}}]{addr }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Read from the internal \mbox{\hyperlink{classComSquare_1_1CPU_1_1CPU}{C\+PU}} register. 
+
+@bref The \mbox{\hyperlink{classComSquare_1_1CPU_1_1CPU}{C\+PU}}\textquotesingle{}s internal registers starts at \$4200 and finish at \$421F.
+
+
+\begin{DoxyParams}{Parameters}
+{\em addr} & The address to read from. The address 0x0 should refer to the first byte of the register. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \mbox{\hyperlink{classComSquare_1_1InvalidAddress}{Invalid\+Address}}} & will be thrown if the address is more than \$1F (the number of register). \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyReturn}{Returns}
+Return the value of the register. 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{classComSquare_1_1Memory_1_1IMemory_a8459ed12c4172ee29ecdc84330f99ff7}{Com\+Square\+::\+Memory\+::\+I\+Memory}}.
+
+\mbox{\Hypertarget{classComSquare_1_1CPU_1_1CPU_a47ccd3b85569b89baa73679eac513ab0}\label{classComSquare_1_1CPU_1_1CPU_a47ccd3b85569b89baa73679eac513ab0}} 
+\index{ComSquare::CPU::CPU@{ComSquare::CPU::CPU}!update@{update}}
+\index{update@{update}!ComSquare::CPU::CPU@{ComSquare::CPU::CPU}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{CMakeCache_8txt_a79a3d8790b2588b09777910863574e09}{int}} Com\+Square\+::\+C\+P\+U\+::\+C\+P\+U\+::update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+This function continue to execute the \mbox{\hyperlink{namespaceComSquare_1_1Cartridge}{Cartridge}} code. 
+
+\begin{DoxyReturn}{Returns}
+The number of \mbox{\hyperlink{classComSquare_1_1CPU_1_1CPU}{C\+PU}} cycles that elapsed 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classComSquare_1_1CPU_1_1CPU_a98d7a910393934e63f4ea479cea49f2e}\label{classComSquare_1_1CPU_1_1CPU_a98d7a910393934e63f4ea479cea49f2e}} 
+\index{ComSquare::CPU::CPU@{ComSquare::CPU::CPU}!write@{write}}
+\index{write@{write}!ComSquare::CPU::CPU@{ComSquare::CPU::CPU}}
+\doxysubsubsection{\texorpdfstring{write()}{write()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+C\+P\+U\+::\+C\+P\+U\+::write (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}}}]{addr,  }\item[{uint8\+\_\+t}]{data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Write data to the internal \mbox{\hyperlink{classComSquare_1_1CPU_1_1CPU}{C\+PU}} register. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em addr} & The address to write to. The address 0x0 should refer to the first byte of register. \\
+\hline
+{\em data} & The new value of the register. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \mbox{\hyperlink{classComSquare_1_1InvalidAddress}{Invalid\+Address}}} & will be thrown if the address is more than \$1F (the number of register). \\
+\hline
+\end{DoxyExceptions}
+
+
+Implements \mbox{\hyperlink{classComSquare_1_1Memory_1_1IMemory_a449bc89798a0b86028bb0413106514d9}{Com\+Square\+::\+Memory\+::\+I\+Memory}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classComSquare_1_1CPU_1_1CPU_a7118a772fbf88584fc671eba1d5c2e3f}\label{classComSquare_1_1CPU_1_1CPU_a7118a772fbf88584fc671eba1d5c2e3f}} 
+\index{ComSquare::CPU::CPU@{ComSquare::CPU::CPU}!\_bus@{\_bus}}
+\index{\_bus@{\_bus}!ComSquare::CPU::CPU@{ComSquare::CPU::CPU}}
+\doxysubsubsection{\texorpdfstring{\_bus}{\_bus}}
+{\footnotesize\ttfamily std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{classComSquare_1_1Memory_1_1MemoryBus}{Memory\+::\+Memory\+Bus}}$>$ Com\+Square\+::\+C\+P\+U\+::\+C\+P\+U\+::\+\_\+bus\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The memory bus to use for read/write. 
+
+\mbox{\Hypertarget{classComSquare_1_1CPU_1_1CPU_a4566720e2cf2ce891a1332932c2f1e0e}\label{classComSquare_1_1CPU_1_1CPU_a4566720e2cf2ce891a1332932c2f1e0e}} 
+\index{ComSquare::CPU::CPU@{ComSquare::CPU::CPU}!\_internalRegisters@{\_internalRegisters}}
+\index{\_internalRegisters@{\_internalRegisters}!ComSquare::CPU::CPU@{ComSquare::CPU::CPU}}
+\doxysubsubsection{\texorpdfstring{\_internalRegisters}{\_internalRegisters}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structComSquare_1_1CPU_1_1InternalRegisters}{Internal\+Registers}} Com\+Square\+::\+C\+P\+U\+::\+C\+P\+U\+::\+\_\+internal\+Registers \{\}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Internal registers of the \mbox{\hyperlink{classComSquare_1_1CPU_1_1CPU}{C\+PU}} (accessible from the bus via addr \$4200 to \$421F). 
+
+\mbox{\Hypertarget{classComSquare_1_1CPU_1_1CPU_ac9c6fa76bf7171654b0b52896f699927}\label{classComSquare_1_1CPU_1_1CPU_ac9c6fa76bf7171654b0b52896f699927}} 
+\index{ComSquare::CPU::CPU@{ComSquare::CPU::CPU}!\_isEmulationMode@{\_isEmulationMode}}
+\index{\_isEmulationMode@{\_isEmulationMode}!ComSquare::CPU::CPU@{ComSquare::CPU::CPU}}
+\doxysubsubsection{\texorpdfstring{\_isEmulationMode}{\_isEmulationMode}}
+{\footnotesize\ttfamily bool Com\+Square\+::\+C\+P\+U\+::\+C\+P\+U\+::\+\_\+is\+Emulation\+Mode = true\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Is the \mbox{\hyperlink{classComSquare_1_1CPU_1_1CPU}{C\+PU}} running in emulation mode (in 8bits) 
+
+\mbox{\Hypertarget{classComSquare_1_1CPU_1_1CPU_a579c0dd2e1cafca0dd3617c05a33d1f7}\label{classComSquare_1_1CPU_1_1CPU_a579c0dd2e1cafca0dd3617c05a33d1f7}} 
+\index{ComSquare::CPU::CPU@{ComSquare::CPU::CPU}!\_registers@{\_registers}}
+\index{\_registers@{\_registers}!ComSquare::CPU::CPU@{ComSquare::CPU::CPU}}
+\doxysubsubsection{\texorpdfstring{\_registers}{\_registers}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structComSquare_1_1CPU_1_1Registers}{Registers}} Com\+Square\+::\+C\+P\+U\+::\+C\+P\+U\+::\+\_\+registers \{\}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+All the registers of the \mbox{\hyperlink{classComSquare_1_1CPU_1_1CPU}{C\+PU}}. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+sources/\+C\+P\+U/\mbox{\hyperlink{CPU_8hpp}{C\+P\+U.\+hpp}}\item 
+sources/\+C\+P\+U/\mbox{\hyperlink{CPU_8cpp}{C\+P\+U.\+cpp}}\end{DoxyCompactItemize}

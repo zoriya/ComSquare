@@ -1,0 +1,6 @@
+<map id="ComSquare::APU::APU" name="ComSquare::APU::APU">
+<area shape="rect" id="node1" title=" " alt="" coords="208,292,375,413"/>
+<area shape="rect" id="node2" href="$classComSquare_1_1Memory_1_1IMemory.html" title="Common interface implemented by all components mapping memory." alt="" coords="5,35,172,200"/>
+<area shape="rect" id="node3" href="$structComSquare_1_1APU_1_1InternalRegisters.html" title=" " alt="" coords="196,5,387,229"/>
+<area shape="rect" id="node4" href="$structComSquare_1_1APU_1_1Registers.html" title=" " alt="" coords="411,5,612,229"/>
+</map>

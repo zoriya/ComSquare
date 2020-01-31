@@ -1,0 +1,11 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classComSquare_1_1Memory_1_1IMemory.html" title="Common interface implemented by all components mapping memory." alt="" coords="5,158,172,199"/>
+<area shape="rect" id="node2" href="$classComSquare_1_1APU_1_1APU.html" title=" " alt="" coords="237,5,403,32"/>
+<area shape="rect" id="node3" href="$classComSquare_1_1APU_1_1DSP_1_1DSP.html" title=" " alt="" coords="220,56,420,83"/>
+<area shape="rect" id="node4" href="$classComSquare_1_1CPU_1_1CPU.html" title="The main CPU." alt="" coords="237,107,403,133"/>
+<area shape="rect" id="node5" href="$classComSquare_1_1Memory_1_1IRectangleMemory.html" title="Superset of the IMemory to map non continuous rectangle to the memory. (A rectangle that spam across ..." alt="" coords="237,158,403,199"/>
+<area shape="rect" id="node7" href="$classComSquare_1_1Memory_1_1MemoryShadow.html" title=" " alt="" coords="237,223,403,265"/>
+<area shape="rect" id="node8" href="$classComSquare_1_1PPU_1_1PPU.html" title="The struct containing all the registers the PPU." alt="" coords="237,289,403,316"/>
+<area shape="rect" id="node9" href="$classComSquare_1_1Ram_1_1Ram.html" title=" " alt="" coords="233,340,407,367"/>
+<area shape="rect" id="node6" href="$classComSquare_1_1Cartridge_1_1Cartridge.html" title="Contains the rom&#39;s memory/instructions." alt="" coords="468,158,633,199"/>
+</map>

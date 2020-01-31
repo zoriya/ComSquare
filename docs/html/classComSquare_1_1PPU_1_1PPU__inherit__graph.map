@@ -1,0 +1,4 @@
+<map id="ComSquare::PPU::PPU" name="ComSquare::PPU::PPU">
+<area shape="rect" id="node1" title="The struct containing all the registers the PPU." alt="" coords="5,219,193,648"/>
+<area shape="rect" id="node2" href="$classComSquare_1_1Memory_1_1IMemory.html" title="Common interface implemented by all components mapping memory." alt="" coords="16,5,183,171"/>
+</map>
