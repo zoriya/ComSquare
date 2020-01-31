@@ -27,8 +27,8 @@ namespace ComSquare::Renderer
 		//! @brief Update the screen by printing the buffer.
 		void drawScreen() override;
 		//! @brief Add a pixel to the buffer to the coordinates x, y with the color rgba.
-		//! @param X : horizontal index.
-		//! @param Y : vertical index.
+		//! @param X horizontal index.
+		//! @param Y vertical index.
 		//! @param rgba : The color of the pixel.
 		void putPixel(int x, int y, uint8_t rgba) override ;
 	};

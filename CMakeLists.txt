@@ -78,5 +78,13 @@ add_executable(ComSquare
         sources/Renderer/IRenderer.hpp
         sources/Renderer/SFRenderer.hpp
         sources/Renderer/SFRenderer.cpp
-        sources/Exceptions/InvalidAcction.hpp
+        sources/Exceptions/InvalidAction.hpp
+)
+
+target_link_libraries(ComSquare
+        sfml-graphics
+        sfml-window
+        sfml-system
+        sfml-audio
+        sfml-network
 )

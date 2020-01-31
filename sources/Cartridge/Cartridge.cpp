@@ -8,7 +8,7 @@
 #include "Cartridge.hpp"
 #include "../Exceptions/InvalidAddress.hpp"
 #include "../Exceptions/InvalidRom.hpp"
-#include "../Exceptions/InvalidAcction.hpp"
+#include "../Exceptions/InvalidAction.hpp"
 
 namespace ComSquare::Cartridge
 {
@@ -56,7 +56,7 @@ namespace ComSquare::Cartridge
 	{
 		(void)addr;
 		(void)data;
-		throw InvalidAcction("Witting to the ROM is not allowed.");
+		throw InvalidAction("Witting to the ROM is not allowed.");
 	}
 
 	uint32_t Cartridge::_getHeaderAddress()
