@@ -28,6 +28,7 @@ After going inside the repository directory, create a build folder ``mkdir build
 ## Informations
 
 During the development we will update and create documentations about the SNES and the emulator, we will use [GitHub Projects](https://github.com/AnonymusRaccoon/ComSquare/projects) page and [GitHub Wiki](https://github.com/AnonymusRaccoon/ComSquare/wiki) to inform you about "everything".
+The documentation can be found to [ComSquare Documentation](https://anonymusraccoon.github.io/ComSquare/) 
 
 ### Licence
 
