@@ -131,7 +131,32 @@ namespace ComSquare::Cartridge
 
 			if (info.emulationInterrupts.reset <= 0x8000u) // The reset vector is the first thing called by the SNES so It must execute the code inside the ROM (the rom starts at 0x8000).
 				continue;
-
+			uint8_t resetOpCode = this->_data[info.emulationInterrupts.reset - 0x8000u];
+			switch (resetOpCode) {
+			case 0x18: //CLI
+			case 0x78: //SEI
+			case 0x4C: //JMP
+			case 0x5C: //JMP
+			case 0x20: //JSR
+			case 0x22: //JSL
+			case 0x9C: //STZ
+				score+= 8;
+				break;
+			case 0xC2: //REP
+			case 0xE2: //SEP
+			case 0xA9: //LDA
+			case 0xA2: //LDX
+			case 0xA0: //LDY
+				score += 4;
+				break;
+			case 0x00: //BRK
+			case 0xFF: //SBC
+			case 0xCC: //CPY
+				score -= 8;
+				break;
+			default:
+				break;
+			}
 
 			if (score > bestScore) {
 				bestScore = score;
