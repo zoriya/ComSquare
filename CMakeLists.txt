@@ -37,8 +37,8 @@ add_executable(unit_tests
         sources/Memory/MemoryShadow.hpp
         sources/Memory/IRectangleMemory.cpp
         sources/Memory/IRectangleMemory.hpp
-        sources/DSP/DSP.cpp
-        sources/DSP/DSP.hpp
+        sources/APU/DSP/DSP.cpp
+        sources/APU/DSP/DSP.hpp
 )
 
 # include criterion & coverage
@@ -73,8 +73,8 @@ add_executable(ComSquare
         sources/Memory/MemoryShadow.hpp
         sources/Memory/IRectangleMemory.cpp
         sources/Memory/IRectangleMemory.hpp
-        sources/DSP/DSP.cpp
-        sources/DSP/DSP.hpp
+        sources/APU/DSP/DSP.cpp
+        sources/APU/DSP/DSP.hpp
         sources/Renderer/IRenderer.hpp
         sources/Renderer/SFRenderer.hpp
         sources/Renderer/SFRenderer.cpp

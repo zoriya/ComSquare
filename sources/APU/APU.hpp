@@ -6,7 +6,7 @@
 #define COMSQUARE_APU_HPP
 
 #include <memory>
-#include "../DSP/DSP.hpp"
+#include "DSP/DSP.hpp"
 #include "../Memory/IMemory.hpp"
 
 namespace ComSquare::APU
