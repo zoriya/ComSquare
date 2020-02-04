@@ -7,6 +7,7 @@
 #include "MemoryBus.hpp"
 #include "../SNES.hpp"
 #include "MemoryShadow.hpp"
+#include "RectangleShadow.hpp"
 
 namespace ComSquare::Memory
 {
@@ -83,6 +84,7 @@ namespace ComSquare::Memory
 		if (console.cartridge->header.mappingMode & Cartridge::LoRom) {
 			console.cartridge->setMemoryRegion(0x80, 0xFF, 0x8000, 0xFFFF);
 			this->_memoryAccessors.push_back(console.cartridge);
+			this->_memoryAccessors.push_back(Memory::RectangleShadow::createShadow(console.cartridge, 0x0, 0x7D, 0x8000, 0xFFFF));
 		}
 	}
 }

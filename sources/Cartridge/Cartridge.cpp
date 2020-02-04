@@ -173,7 +173,7 @@ namespace ComSquare::Cartridge
 
 		this->header = this->_mapHeader(headerAddress);
 		char name[22];
-		std::memcpy(name, &this->_data[headerAddress + 0xC0u], 21);
+		std::memcpy(name, &this->_data[headerAddress], 21);
 		name[21] = '\0';
 		this->header.gameName = std::string(name);
 		if (headerAddress & 0x200u) {

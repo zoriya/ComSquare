@@ -17,11 +17,10 @@ int main(int argc, char **argv)
 		return 1;
 	}
 	Memory::MemoryBus bus;
-	SNES snes(std::make_shared<Memory::MemoryBus>(bus), argv[1]);
+	Renderer::SFRenderer renderer(600, 800, 60);
+	SNES snes(std::make_shared<Memory::MemoryBus>(bus), argv[1], renderer);
 	bus.mapComponents(snes);
 
-	Renderer::SFRenderer renderer(600, 800, 60);
-	renderer.setWindowName("Fire Emblem : Three Houses");
 	while (!renderer.shouldExit) {
 		renderer.getEvents();
 	}

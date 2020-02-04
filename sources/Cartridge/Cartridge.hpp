@@ -67,7 +67,7 @@ namespace ComSquare::Cartridge
 		//! @brief The size of the rom data.
 		size_t _size;
 		//! @brief Sometime the rom's data has an offset for a SMC header. This value indicate the start of the real rom discarding this header.
-		uint16_t _romStart;
+		uint16_t _romStart = 0;
 
 		//! @brief Get the size of a rom from it's path.
 		//! @param romPath The path of the rom to get info from.
