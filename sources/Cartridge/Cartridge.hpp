@@ -27,34 +27,36 @@ namespace ComSquare::Cartridge
 		//! @brief The name of the game
 		std::string gameName;
 		//! @brief The memory mapping of the ROM.
-		MappingMode mappingMode;
+		MappingMode mappingMode{};
 		//! @brief The rom type (special information about the rom, still don't know what).
-		uint8_t romType;
+		uint8_t romType = 0;
 		//! @brief The size (in bytes) of the ram
-		unsigned romSize;
+		unsigned romSize = 0;
 		//! @brief The size of the SRom inside the cartridge.
-		unsigned sramSize;
+		unsigned sramSize = 0;
 		//! @brief Creator license ID code.
 		union {
 			uint8_t creatorIDs[2];
-			uint16_t creatorID;
+			uint16_t creatorID = 0;
 		};
 		//! @brief The version of the game
-		uint8_t version;
+		uint8_t version = 0;
 		//! @brief Checksum complement
 		union {
 			uint8_t checksumComplements[2];
-			uint16_t checksumComplement;
+			uint16_t checksumComplement = 0;
 		};
 		//! @brief Checksum
 		union {
 			uint8_t checksums[2];
-			uint16_t checksum;
+			uint16_t checksum = 0;
 		};
 		//! @brief The interrupt vectors used to halt the CPU in native mode
-		InterruptVectors nativeInterrupts;
+		InterruptVectors nativeInterrupts{};
 		//! @brief The interrupt vectors used to halt the CPU in emulation mode
-		InterruptVectors emulationInterrupts;
+		InterruptVectors emulationInterrupts{};
+
+		Header() = default;
 	};
 
 	//! @brief Contains the rom's memory/instructions.

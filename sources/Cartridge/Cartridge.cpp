@@ -109,7 +109,7 @@ namespace ComSquare::Cartridge
 
 	uint32_t Cartridge::_getHeaderAddress()
 	{
-		uint32_t address[] = {0x7FC0, 0xFFC0, 0x81C0, 0x101C0};
+		std::vector<uint32_t> address = {0x7FC0, 0xFFC0, 0x81C0, 0x101C0};
 		int bestScore = -1;
 		uint32_t bestAddress = 0;
 
@@ -129,7 +129,8 @@ namespace ComSquare::Cartridge
 			if (info.checksum + info.checksumComplement == 0xFFFF && info.checksum != 0 && info.checksumComplement != 0)
 				score += 8;
 
-			if (info.emulationInterrupts.reset <= 0x8000u) // The reset vector is the first thing called by the SNES so It must execute the code inside the ROM (the rom starts at 0x8000).
+			//Fail here
+			if (info.emulationInterrupts.reset < 0x8000u) // The reset vector is the first thing called by the SNES so It must execute the code inside the ROM (the rom starts at 0x8000).
 				continue;
 			uint8_t resetOpCode = this->_data[info.emulationInterrupts.reset - 0x8000u];
 			switch (resetOpCode) {
@@ -172,7 +173,7 @@ namespace ComSquare::Cartridge
 
 		this->header = this->_mapHeader(headerAddress);
 		char name[22];
-		std::memcpy(name, &this->_data[headerAddress], 21);
+		std::memcpy(name, &this->_data[headerAddress + 0xC0u], 21);
 		name[21] = '\0';
 		this->header.gameName = std::string(name);
 		return headerAddress & 0x200u;
