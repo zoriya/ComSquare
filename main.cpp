@@ -20,8 +20,17 @@ int main(int argc, char **argv)
 	Renderer::SFRenderer renderer(600, 800, 60);
 	SNES snes(std::make_shared<Memory::MemoryBus>(bus), argv[1], renderer);
 	bus.mapComponents(snes);
+	int incx = 0;
+	int incy = 0;
+	uint32_t pixel = 0xFF0000FF;
 
 	while (!renderer.shouldExit) {
+		renderer.putPixel(incy, incx++, pixel);
+		if (incx >= 800) {
+			incx = 0;
+			incy++;
+		}
+		renderer.drawScreen();
 		renderer.getEvents();
 	}
 

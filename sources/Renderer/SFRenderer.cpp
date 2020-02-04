@@ -14,37 +14,43 @@ namespace ComSquare::Renderer
 {
 	void SFRenderer::setWindowName(std::string newWindowName)
 	{
-		this->window.setTitle(newWindowName + " - ComSquare");
+		this->renderer.setTitle(newWindowName + " - ComSquare");
 	}
 
 	void SFRenderer::drawScreen()
 	{
-		this->texture.update(this->pixelBuffer);
-		this->sprite.setTexture(this->texture, false);
+		this->texture.update(reinterpret_cast<sf::Uint8 *>(this->pixelBuffer));
+		this->sprite.setTexture(this->texture);
 		this->renderer.draw(this->sprite);
+		this->renderer.display();
 	}
 
-	void SFRenderer::putPixel(int x, int y, uint8_t rgba)
+	void SFRenderer::putPixel(int x, int y, uint32_t rgba)
 	{
-		this->pixelBuffer[this->videoMode.width * x + y] = rgba;
+		sf::Color pixels;
+		pixels.r = rgba >> 24U;
+		pixels.g = rgba >> 16U;
+		pixels.b = rgba >> 8U;
+		pixels.a = rgba >> 0U;
+		this->pixelBuffer[this->videoMode.width * x + y] = pixels;
 	}
 
 	SFRenderer::SFRenderer(unsigned int height, unsigned int width, int maxFPS)
 	{
+		sf::Color color(0, 0, 0);
 		this->shouldExit = false;
-		this->videoMode = {static_cast<unsigned int>(width), static_cast<unsigned int>(height), 32};
-		// note 32 is the BitsPerPixel.
-		this->pixelBuffer = new sf::Uint8[height * width * 4];
-		// note the size of the buffer is multiplied by 4 due to rgba values
-		this->window.create(this->videoMode, "ComSquare Emulator", sf::Style::Default);
-		this->window.setFramerateLimit(maxFPS);
+		this->videoMode = {width, height, 32};
+		this->renderer.create(this->videoMode, "ComSquare Emulator", sf::Style::Default);
+		this->renderer.setFramerateLimit(maxFPS);
 		this->texture.create(width, height);
+		this->sprite.setTexture(this->texture);
+		this->pixelBuffer = new sf::Color[height * width];
 	}
 
 	void SFRenderer::getEvents()
 	{
 		sf::Event event;
-		while (this->window.pollEvent(event)) {
+		while (this->renderer.pollEvent(event)) {
 			if (event.type == sf::Event::Closed) {
 				this->shouldExit = true;
 				break;
