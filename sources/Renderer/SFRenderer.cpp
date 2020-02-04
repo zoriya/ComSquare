@@ -8,12 +8,13 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/Graphics//RenderWindow.hpp>
+#include <iostream>
 
 namespace ComSquare::Renderer
 {
 	void SFRenderer::setWindowName(std::string newWindowName)
 	{
-		this->window.setTitle(newWindowName);
+		this->window.setTitle(newWindowName + " - ComSquare");
 	}
 
 	void SFRenderer::drawScreen()
@@ -38,6 +39,17 @@ namespace ComSquare::Renderer
 		this->window.create(this->videoMode, "ComSquare Emulator", sf::Style::Default);
 		this->window.setFramerateLimit(maxFPS);
 		this->texture.create(width, height);
+	}
+
+	void SFRenderer::getEvents()
+	{
+		sf::Event event;
+		while (this->window.pollEvent(event)) {
+			if (event.type == sf::Event::Closed) {
+				this->shouldExit = true;
+				break;
+			}
+		}
 	}
 
 }

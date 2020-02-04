@@ -21,6 +21,10 @@ int main(int argc, char **argv)
 	bus.mapComponents(snes);
 
 	Renderer::SFRenderer renderer(600, 800, 60);
+	renderer.setWindowName("Fire Emblem : Three Houses");
+	while (!renderer.shouldExit) {
+		renderer.getEvents();
+	}
 
 	return 0;
 }
