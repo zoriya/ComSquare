@@ -16,6 +16,5 @@ int main(int argc, char **argv)
 	}
 	Memory::MemoryBus bus;
 	SNES snes(std::make_shared<Memory::MemoryBus>(bus), argv[1]);
-	bus.mapComponents(snes);
 	return 0;
 }

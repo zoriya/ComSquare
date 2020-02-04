@@ -79,5 +79,10 @@ namespace ComSquare::Memory
 			this->_mirrorComponents(console, i);
 
 		// TODO should map SRam, cartridge etc via the mapping mode of the cartridge.
+
+		if (console.cartridge->header.mappingMode & Cartridge::LoRom) {
+			console.cartridge->setMemoryRegion(0x80, 0xFF, 0x8000, 0xFFFF);
+			this->_memoryAccessors.push_back(console.cartridge);
+		}
 	}
 }

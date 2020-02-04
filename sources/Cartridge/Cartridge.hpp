@@ -60,12 +60,14 @@ namespace ComSquare::Cartridge
 	};
 
 	//! @brief Contains the rom's memory/instructions.
-	class Cartridge : Memory::IRectangleMemory {
+	class Cartridge : public Memory::IRectangleMemory {
 	private:
 		//! @brief The rom data (contains all the instructions).
 		uint8_t *_data;
 		//! @brief The size of the rom data.
 		size_t _size;
+		//! @brief Sometime the rom's data has an offset for a SMC header. This value indicate the start of the real rom discarding this header.
+		uint16_t _romStart;
 
 		//! @brief Get the size of a rom from it's path.
 		//! @param romPath The path of the rom to get info from.

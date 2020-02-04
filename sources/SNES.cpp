@@ -12,5 +12,7 @@ namespace ComSquare
 		apu(new APU::APU()),
 		cartridge(new Cartridge::Cartridge(romPath)),
 		wram(new Ram::Ram(16384))
-	{ }
+	{
+		bus->mapComponents(*this);
+	}
 }

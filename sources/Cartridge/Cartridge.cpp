@@ -49,7 +49,7 @@ namespace ComSquare::Cartridge
 	{
 		if (addr >= this->_size)
 			throw InvalidAddress("Cartridge read", addr);
-		return this->_data[addr];
+		return this->_data[addr + this->_romStart];
 	}
 
 	void Cartridge::write_internal(uint24_t addr, uint8_t data)
@@ -109,7 +109,7 @@ namespace ComSquare::Cartridge
 
 	uint32_t Cartridge::_getHeaderAddress()
 	{
-		std::vector<uint32_t> address = {0x7FC0, 0xFFC0, 0x81C0, 0x101C0};
+		const std::vector<uint32_t> address = {0x7FC0, 0xFFC0, 0x81C0, 0x101C0};
 		int bestScore = -1;
 		uint32_t bestAddress = 0;
 
@@ -176,6 +176,11 @@ namespace ComSquare::Cartridge
 		std::memcpy(name, &this->_data[headerAddress + 0xC0u], 21);
 		name[21] = '\0';
 		this->header.gameName = std::string(name);
-		return headerAddress & 0x200u;
+		if (headerAddress & 0x200u) {
+			this->_romStart = 0x200u;
+			this->_size -= 0x200u;
+			return true;
+		}
+		return false;
 	}
 }
