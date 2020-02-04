@@ -18,21 +18,14 @@ namespace ComSquare::Renderer
 
 	void SFRenderer::drawScreen()
 	{
-		sf::Sprite sprite;
-		sf::Image image;
-		image.loadFromMemory(this->pixelBuffer, sizeof(sf::Uint8 *) * this->videoMode.height * this->videoMode.width * 4);
-
-		//image.LoadFromPixels(800, 600, this->pixelBuffer);
-		//sprite.SetImage(image);
-		//window.Draw(sprite);
-		//window.Display();
+		this->texture.update(this->pixelBuffer);
+		this->sprite.setTexture(this->texture, false);
+		this->renderer.draw(this->sprite);
 	}
 
 	void SFRenderer::putPixel(int x, int y, uint8_t rgba)
 	{
-		(void) x;
-		(void) y;
-		(void) rgba;
+		this->pixelBuffer[this->videoMode.width * x + y] = rgba;
 	}
 
 	SFRenderer::SFRenderer(unsigned int height, unsigned int width, int maxFPS)
@@ -44,6 +37,7 @@ namespace ComSquare::Renderer
 		// note the size of the buffer is multiplied by 4 due to rgba values
 		this->window.create(this->videoMode, "ComSquare Emulator", sf::Style::Default);
 		this->window.setFramerateLimit(maxFPS);
+		this->texture.create(width, height);
 	}
 
 }

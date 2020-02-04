@@ -4,7 +4,9 @@
 
 #include <iostream>
 #include <string>
+#include "sources/Renderer/IRenderer.hpp"
 #include "sources/SNES.hpp"
+#include "sources/Renderer/SFRenderer.hpp"
 
 using namespace ComSquare;
 
@@ -16,5 +18,9 @@ int main(int argc, char **argv)
 	}
 	Memory::MemoryBus bus;
 	SNES snes(std::make_shared<Memory::MemoryBus>(bus), argv[1]);
+	bus.mapComponents(snes);
+
+	Renderer::SFRenderer renderer(600, 800, 60);
+
 	return 0;
 }

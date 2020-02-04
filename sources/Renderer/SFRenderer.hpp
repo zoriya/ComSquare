@@ -18,10 +18,16 @@ namespace ComSquare::Renderer
 	private:
 		//! @brief The main Window.
 		sf::Window window;
+		//! @brief The Renderer for the window.
+		sf::RenderWindow renderer;
 		//! @brief Video Mode containing the height and width of the window.
 		sf::VideoMode videoMode;
 		//! @brief The buffer containing all of our pixels
 		sf::Uint8 *pixelBuffer;
+		//! @brief The texture to render the array of pixels
+		sf::Texture texture;
+		//! @brief The sprite to render the array of pixels
+		sf::Sprite sprite;
 	public:
 		//! @brief Set a new name to the window, if there is already a name it will be overwrite.
 		//! @param newWindowName new title for the window.
