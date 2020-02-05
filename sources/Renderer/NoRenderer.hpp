@@ -9,6 +9,7 @@
 
 namespace ComSquare::Renderer
 {
+	//! @brief A renderer that discard everything you give. (Used for tests).
 	class NoRenderer : public IRenderer {
 	public:
 		//! @brief Set a new name to the window, if there is already a name it will be overwrite.
