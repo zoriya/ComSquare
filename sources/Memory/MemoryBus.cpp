@@ -28,10 +28,10 @@ namespace ComSquare::Memory
 
 		if (!handler) {
 			std::cout << "Unknown memory accessor for address " << std::hex << addr << ". Using open bus." << std::endl;
-			return this->_openbus;
+			return this->_openBus;
 		}
 		uint8_t data =  handler->read(addr - handler->getStart());
-		this->_openbus = data;
+		this->_openBus = data;
 		return data;
 	}
 
