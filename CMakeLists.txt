@@ -41,7 +41,7 @@ add_executable(unit_tests
         sources/APU/DSP/DSP.hpp
         sources/Memory/RectangleShadow.cpp
         sources/Memory/RectangleShadow.hpp
-)
+        sources/Renderer/NoRenderer.cpp sources/Renderer/NoRenderer.hpp)
 
 # include criterion & coverage
 target_link_libraries(unit_tests criterion -lgcov)
