@@ -37,9 +37,12 @@ namespace ComSquare::Renderer
 
 	SFRenderer::SFRenderer(unsigned int height, unsigned int width, int maxFPS)
 	{
+		sf::Image icon;
 		this->shouldExit = false;
 		this->videoMode = {width, height, 32};
 		this->window.create(this->videoMode, "ComSquare Emulator", sf::Style::Default);
+		if (icon.loadFromFile("../ressources/Logo.png"))
+			this->window.setIcon(314, 314, icon.getPixelsPtr());
 		this->window.setFramerateLimit(maxFPS);
 		this->texture.create(width, height);
 		this->sprite.setTexture(this->texture);
