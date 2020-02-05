@@ -14,6 +14,8 @@ namespace ComSquare::Cartridge
 {
 	Cartridge::Cartridge(const std::string &romPath)
 	{
+		if (romPath.empty())
+			return;
 		try {
 			size_t size = Cartridge::getRomSize(romPath);
 			FILE *rom = fopen(romPath.c_str(), "rb");
