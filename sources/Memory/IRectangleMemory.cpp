@@ -2,6 +2,7 @@
 // Created by anonymus-raccoon on 1/29/20.
 //
 
+#include <iostream>
 #include "IRectangleMemory.hpp"
 #include "../Exceptions/InvalidAddress.hpp"
 
@@ -44,8 +45,8 @@ namespace ComSquare::Memory
 		uint8_t bank = addr >> 16u;
 		uint16_t page = addr;
 
-		if (this->_startBank <= bank && bank < this->_endBank)
-			if (this->_startPage <= page && page < this->_endPage)
+		if (this->_startBank <= bank && bank <= this->_endBank)
+			if (this->_startPage <= page && page <= this->_endPage)
 				return true;
 		return false;
 	}

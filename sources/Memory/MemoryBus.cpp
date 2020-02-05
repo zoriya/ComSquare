@@ -15,6 +15,7 @@ namespace ComSquare::Memory
 	{
 		auto it = std::find_if(this->_memoryAccessors.begin(), this->_memoryAccessors.end(), [addr](std::shared_ptr<IMemory> &accessor)
 		{
+//			std::cout << "Accessor: " << std::hex << accessor->getStart() << " Has access:: " << accessor->hasMemoryAt(addr) << std::endl;
 			return accessor->hasMemoryAt(addr);
 		});
 		if (it == this->_memoryAccessors.end())
