@@ -36,7 +36,7 @@ namespace ComSquare::Renderer
 		//! @param X horizontal index.
 		//! @param Y vertical index.
 		//! @param rgba The color of the pixel.
-		void putPixel(int x, int y, uint32_t rgba) override ;
+		void putPixel(int y, int x, uint32_t rgba) override ;
 		//! @brief Get the inputs from the Window
 		void getEvents();
 		//! @brief Constructor that return the window component of the SFML.

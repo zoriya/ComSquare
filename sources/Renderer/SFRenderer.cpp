@@ -25,14 +25,14 @@ namespace ComSquare::Renderer
 		this->renderer.display();
 	}
 
-	void SFRenderer::putPixel(int x, int y, uint32_t rgba)
+	void SFRenderer::putPixel(int y, int x, uint32_t rgba)
 	{
 		sf::Color pixels;
 		pixels.r = rgba >> 24U;
 		pixels.g = rgba >> 16U;
 		pixels.b = rgba >> 8U;
 		pixels.a = rgba >> 0U;
-		this->pixelBuffer[this->videoMode.width * x + y] = pixels;
+		this->pixelBuffer[this->videoMode.width * y + x] = pixels;
 	}
 
 	SFRenderer::SFRenderer(unsigned int height, unsigned int width, int maxFPS)

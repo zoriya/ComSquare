@@ -22,7 +22,7 @@ int main(int argc, char **argv)
 	bus.mapComponents(snes);
 	int incx = 0;
 	int incy = 0;
-	uint32_t pixel = 0xFF0000FF;
+	uint32_t pixel = 0xFFFF00FF;
 
 	while (!renderer.shouldExit) {
 		renderer.putPixel(incy, incx++, pixel);
