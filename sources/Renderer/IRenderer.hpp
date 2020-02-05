@@ -21,7 +21,7 @@ namespace ComSquare::Renderer
 		//! @param x The x position of the window (0, 0 is the top left corner).
 		//! @param y The y position of the window (0, 0 is the top left corner).
 		//! @param rgba The color of the pixel (red, green, blue, alpha).
-		virtual void putPixel(int x, int y, uint32_t rgba) = 0;
+		virtual void putPixel(unsigned x, unsigned y, uint32_t rgba) = 0;
 	};
 }
 

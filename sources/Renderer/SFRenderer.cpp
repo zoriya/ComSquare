@@ -25,8 +25,13 @@ namespace ComSquare::Renderer
 		this->window.display();
 	}
 
-	void SFRenderer::putPixel(int y, int x, uint32_t rgba)
+	void SFRenderer::putPixel(unsigned y, unsigned x, uint32_t rgba)
 	{
+		if (x >= this->videoMode.width)
+			throw InvalidPixelPosition("Width", x, this->videoMode.width);
+		if (y >= this->videoMode.height)
+			throw InvalidPixelPosition("Height", y, this->videoMode.height);
+
 		sf::Color pixels;
 		pixels.r = rgba >> 24U;
 		pixels.g = rgba >> 16U;

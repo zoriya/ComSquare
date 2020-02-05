@@ -14,6 +14,15 @@
 
 namespace ComSquare::Renderer
 {
+	class InvalidPixelPosition : public std::exception {
+	private:
+		std::string _msg;
+	public:
+		explicit InvalidPixelPosition(const std::string &name, unsigned int x, unsigned int width)
+			: _msg("Trying to place a pixel at an invalid " + name + " (" + std::to_string(x) + ">=" + std::to_string(width) + ")") {}
+		const char *what() const noexcept override { return this->_msg.c_str(); }
+	};
+
 	class SFRenderer : public IRenderer {
 	private:
 		//! @brief The Renderer for the window.
@@ -36,7 +45,7 @@ namespace ComSquare::Renderer
 		//! @param X horizontal index.
 		//! @param Y vertical index.
 		//! @param rgba The color of the pixel.
-		void putPixel(int y, int x, uint32_t rgba) override ;
+		void putPixel(unsigned y, unsigned x, uint32_t rgba) override ;
 		//! @brief Get the inputs from the Window
 		void getEvents();
 		//! @brief Constructor that return the window component of the SFML.

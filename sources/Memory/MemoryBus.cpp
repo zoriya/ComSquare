@@ -48,10 +48,10 @@ namespace ComSquare::Memory
 
 	void MemoryBus::_mirrorComponents(SNES &console, int i)
 	{
-		this->_memoryAccessors.push_back(Memory::MemoryShadow::createShadow(console.wram, i, i + 0x2000));
-		this->_memoryAccessors.push_back(Memory::MemoryShadow::createShadow(console.ppu, i + 0x2100, i + 0x2140));
-		this->_memoryAccessors.push_back(Memory::MemoryShadow::createShadow(console.apu, i + 0x2140, i + 0x2144));
-		this->_memoryAccessors.push_back(Memory::MemoryShadow::createShadow(console.cpu, i + 0x4200, i + 0x4220));
+		this->_memoryAccessors.emplace_back(new Memory::MemoryShadow(console.wram, i, i + 0x2000));
+		this->_memoryAccessors.emplace_back(new Memory::MemoryShadow(console.ppu, i + 0x2100, i + 0x2140));
+		this->_memoryAccessors.emplace_back(new Memory::MemoryShadow(console.apu, i + 0x2140, i + 0x2144));
+		this->_memoryAccessors.emplace_back(new Memory::MemoryShadow(console.cpu, i + 0x4200, i + 0x4220));
 	}
 
 	void MemoryBus::mapComponents(SNES &console)
@@ -84,7 +84,10 @@ namespace ComSquare::Memory
 		if (console.cartridge->header.mappingMode & Cartridge::LoRom) {
 			console.cartridge->setMemoryRegion(0x80, 0xFF, 0x8000, 0xFFFF);
 			this->_memoryAccessors.push_back(console.cartridge);
-			this->_memoryAccessors.push_back(Memory::RectangleShadow::createShadow(console.cartridge, 0x0, 0x7D, 0x8000, 0xFFFF));
+			// Mirror on the Q1 and Q2.
+			this->_memoryAccessors.emplace_back(new Memory::RectangleShadow(console.cartridge, 0x00, 0x7D, 0x8000, 0xFFFF));
+			// Mirror on the lower half of the Q2.
+			this->_memoryAccessors.emplace_back((new Memory::RectangleShadow(console.cartridge, 0x40, 0x6F, 0x0000, 0x7FFF))->setBankOffset(0x40));
 		}
 	}
 }

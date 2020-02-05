@@ -172,10 +172,7 @@ namespace ComSquare::Cartridge
 		uint32_t headerAddress = this->_getHeaderAddress();
 
 		this->header = this->_mapHeader(headerAddress);
-		char name[22];
-		std::memcpy(name, &this->_data[headerAddress], 21);
-		name[21] = '\0';
-		this->header.gameName = std::string(name);
+		this->header.gameName = std::string(reinterpret_cast<char *>(&this->_data[headerAddress]), 21);
 		if (headerAddress & 0x200u) {
 			this->_romStart = 0x200u;
 			this->_size -= 0x200u;

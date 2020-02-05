@@ -14,11 +14,12 @@ namespace ComSquare::Memory
 	private:
 		//! @brief Memory to shadow from.
 		std::shared_ptr<IRectangleMemory> _initial;
+		//! @brief The number of banks to add to the memory before accessing it from the initial data.
+		uint8_t _bankOffset;
 	public:
 		//! @brief Create a shadow for the memory given as parameter.
 		explicit RectangleShadow(std::shared_ptr<IRectangleMemory> initial, uint8_t startBank, uint8_t endBank, uint16_t startPage, uint16_t endPage);
 
-		static std::shared_ptr<IMemory> createShadow(std::shared_ptr<IRectangleMemory> initial, uint8_t startBank, uint8_t endBank, uint16_t startPage, uint16_t endPage);
 		//! @brief Internal component read. Implement this as you would implement a basic IMemory's read.
 		//! @param addr The local address to read from. 0x0 refer to the first byte of your data and the address is in the component's space. That means that you can consider this address as continuous
 		//! @throw This function should thrown an InvalidAddress for address that are not mapped to the component.
@@ -29,6 +30,9 @@ namespace ComSquare::Memory
 		//! @param data The new data to write.
 		//! @throw This function should thrown an InvalidAddress for address that are not mapped to the component.
 		void write_internal(uint24_t addr, uint8_t data) override;
+
+
+		RectangleShadow *setBankOffset(uint8_t bankOffset);
 	};
 }
 
