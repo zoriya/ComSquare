@@ -61,13 +61,13 @@ namespace ComSquare::Memory
 		console.wram->setMemoryRegion(0x7E, 0x7F, 0x0000, 0xFFFF);
 		this->_memoryAccessors.push_back(console.wram);
 
-		console.ppu->setMemoryRegion(0x2100, 0x2140);
+		console.ppu->setMemoryRegion(0x2100, 0x213F);
 		this->_memoryAccessors.push_back(console.ppu);
 
-		console.apu->setMemoryRegion(0x2140, 0x2144);
+		console.apu->setMemoryRegion(0x2140, 0x2143);
 		this->_memoryAccessors.push_back(console.apu);
 
-		console.cpu->setMemoryRegion(0x4200, 0x4220);
+		console.cpu->setMemoryRegion(0x4200, 0x421F);
 		this->_memoryAccessors.push_back(console.cpu);
 
 		// TODO implement DMA & HDMA (4220 to 4300)
