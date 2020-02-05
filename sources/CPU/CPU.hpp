@@ -8,6 +8,7 @@
 #include "../Memory/IMemory.hpp"
 #include "../Memory/MemoryBus.hpp"
 #include "../Models/Ints.hpp"
+#include "CommonCpu.hpp"
 
 namespace ComSquare::CPU
 {
@@ -174,7 +175,7 @@ namespace ComSquare::CPU
 	};
 
 	//! @brief The main CPU
-	class CPU : public Memory::IMemory {
+	class CPU : public CommonCPU, public Memory::IMemory {
 	private:
 		//! @brief All the registers of the CPU
 		Registers _registers{};
