@@ -39,6 +39,8 @@ add_executable(unit_tests
         sources/Memory/IRectangleMemory.hpp
         sources/APU/DSP/DSP.cpp
         sources/APU/DSP/DSP.hpp
+        sources/Memory/RectangleShadow.cpp
+        sources/Memory/RectangleShadow.hpp
 )
 
 # include criterion & coverage
@@ -79,7 +81,10 @@ add_executable(ComSquare
         sources/Renderer/SFRenderer.hpp
         sources/Renderer/SFRenderer.cpp
         sources/Exceptions/InvalidAction.hpp
-        sources/Cartridge/InterruptVectors.hpp sources/Memory/RectangleShadow.cpp sources/Memory/RectangleShadow.hpp)
+        sources/Cartridge/InterruptVectors.hpp
+        sources/Memory/RectangleShadow.cpp
+        sources/Memory/RectangleShadow.hpp
+)
 
 target_link_libraries(ComSquare
         sfml-graphics
