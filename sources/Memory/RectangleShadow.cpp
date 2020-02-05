@@ -16,12 +16,13 @@ namespace ComSquare::Memory
 
 	uint8_t RectangleShadow::read_internal(uint24_t addr)
 	{
-		// TODO implement read/write bank offset.
+		addr += this->_bankOffset << 16u;
 		return this->_initial->read_internal(addr);
 	}
 
 	void RectangleShadow::write_internal(uint24_t addr, uint8_t data)
 	{
+		addr += this->_bankOffset << 16u;
 		this->_initial->write_internal(addr, data);
 	}
 

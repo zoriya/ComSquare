@@ -57,7 +57,7 @@ namespace ComSquare::Memory
 	void MemoryBus::mapComponents(SNES &console)
 	{
 		// The WRam and PU registers are always mapped at the same address no matter the mapping mode.
-		console.wram->setMemoryRegion(0x7E0000, 0x7FFFFF);
+		console.wram->setMemoryRegion(0x7E, 0x7F, 0x0000, 0xFFFF);
 		this->_memoryAccessors.push_back(console.wram);
 
 		console.ppu->setMemoryRegion(0x2100, 0x2140);
@@ -88,6 +88,10 @@ namespace ComSquare::Memory
 			this->_memoryAccessors.emplace_back(new Memory::RectangleShadow(console.cartridge, 0x00, 0x7D, 0x8000, 0xFFFF));
 			// Mirror on the lower half of the Q2.
 			this->_memoryAccessors.emplace_back((new Memory::RectangleShadow(console.cartridge, 0x40, 0x6F, 0x0000, 0x7FFF))->setBankOffset(0x40));
+
+			console.sram->setMemoryRegion(0x70, 0x7D, 0x0000, 0x7FFF);
+			this->_memoryAccessors.push_back(console.sram);
+			this->_memoryAccessors.emplace_back(new Memory::RectangleShadow(console.sram, 0xFE, 0xFF, 0x0000, 0x7FFF));
 		}
 	}
 }

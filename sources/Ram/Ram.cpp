@@ -18,14 +18,14 @@ namespace ComSquare::Ram
 		delete[] this->_data;
 	}
 
-	uint8_t Ram::read(uint24_t addr)
+	uint8_t Ram::read_internal(uint24_t addr)
 	{
 		if (addr >= this->_size)
 			throw InvalidAddress("Ram read", addr);
 		return this->_data[addr];
 	}
 
-	void Ram::write(uint24_t addr, uint8_t data)
+	void Ram::write_internal(uint24_t addr, uint8_t data)
 	{
 		if (addr >= this->_size)
 			throw InvalidAddress("Ram write", addr);
