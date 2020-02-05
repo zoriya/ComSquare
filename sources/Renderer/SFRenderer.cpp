@@ -14,15 +14,15 @@ namespace ComSquare::Renderer
 {
 	void SFRenderer::setWindowName(std::string newWindowName)
 	{
-		this->renderer.setTitle(newWindowName + " - ComSquare");
+		this->window.setTitle(newWindowName + " - ComSquare");
 	}
 
 	void SFRenderer::drawScreen()
 	{
 		this->texture.update(reinterpret_cast<sf::Uint8 *>(this->pixelBuffer));
 		this->sprite.setTexture(this->texture);
-		this->renderer.draw(this->sprite);
-		this->renderer.display();
+		this->window.draw(this->sprite);
+		this->window.display();
 	}
 
 	void SFRenderer::putPixel(int y, int x, uint32_t rgba)
@@ -37,11 +37,10 @@ namespace ComSquare::Renderer
 
 	SFRenderer::SFRenderer(unsigned int height, unsigned int width, int maxFPS)
 	{
-		sf::Color color(0, 0, 0);
 		this->shouldExit = false;
 		this->videoMode = {width, height, 32};
-		this->renderer.create(this->videoMode, "ComSquare Emulator", sf::Style::Default);
-		this->renderer.setFramerateLimit(maxFPS);
+		this->window.create(this->videoMode, "ComSquare Emulator", sf::Style::Default);
+		this->window.setFramerateLimit(maxFPS);
 		this->texture.create(width, height);
 		this->sprite.setTexture(this->texture);
 		this->pixelBuffer = new sf::Color[height * width];
@@ -50,7 +49,7 @@ namespace ComSquare::Renderer
 	void SFRenderer::getEvents()
 	{
 		sf::Event event;
-		while (this->renderer.pollEvent(event)) {
+		while (this->window.pollEvent(event)) {
 			if (event.type == sf::Event::Closed) {
 				this->shouldExit = true;
 				break;

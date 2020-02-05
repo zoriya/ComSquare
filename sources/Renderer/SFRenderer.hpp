@@ -17,7 +17,7 @@ namespace ComSquare::Renderer
 	class SFRenderer : public IRenderer {
 	private:
 		//! @brief The Renderer for the window.
-		sf::RenderWindow renderer;
+		sf::RenderWindow window;
 		//! @brief Video Mode containing the height and width of the window.
 		sf::VideoMode videoMode;
 		//! @brief The image that contain all of the pixels

@@ -22,7 +22,7 @@ int main(int argc, char **argv)
 	bus.mapComponents(snes);
 	int incx = 0;
 	int incy = 0;
-	uint32_t pixel = 0xFFFF00FF;
+	uint32_t pixel = 0x000000FF;
 
 	while (!renderer.shouldExit) {
 		renderer.putPixel(incy, incx++, pixel);
@@ -30,7 +30,13 @@ int main(int argc, char **argv)
 			incx = 0;
 			incy++;
 		}
-		renderer.drawScreen();
+		if (incy >= 600) {
+			incy = 0;
+		}
+		if (incx == 0) {
+			renderer.drawScreen();
+			pixel += 0xFF00FF00;
+		}
 		renderer.getEvents();
 	}
 
