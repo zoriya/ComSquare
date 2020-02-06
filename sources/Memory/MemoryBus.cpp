@@ -80,8 +80,6 @@ namespace ComSquare::Memory
 		for (uint24_t i = 0x800000; i < 0xC00000; i += 0x10000)
 			this->_mirrorComponents(console, i);
 
-		// TODO should map SRam, cartridge etc via the mapping mode of the cartridge.
-
 		if (console.cartridge->header.mappingMode & Cartridge::LoRom) {
 			console.cartridge->setMemoryRegion(0x80, 0xFF, 0x8000, 0xFFFF);
 			this->_memoryAccessors.push_back(console.cartridge);
@@ -94,5 +92,6 @@ namespace ComSquare::Memory
 			this->_memoryAccessors.push_back(console.sram);
 			this->_memoryAccessors.emplace_back(new Memory::RectangleShadow(console.sram, 0xFE, 0xFF, 0x0000, 0x7FFF));
 		}
+		// TODO should implement HiRom.
 	}
 }

@@ -1,0 +1,31 @@
+name: Build for windows
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  Building:
+    runs-on: [windows-latest]
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install the SFML.
+        run: |
+           Invoke-WebRequest -Uri https://www.sfml-dev.org/files/SFML-2.5.1-windows-gcc-7.3.0-mingw-64-bit.zip -OutFile sfml.zip
+           Expand-Archive sfml.zip -DestinationPath . -Force
+           Move-Item -Path SFML-2.5.1 -Destination build
+      - name: Build Makefile with CMake
+        run: |
+          Set-Location build
+          cmake -DCMAKE_CXX_FLAGS=-isystem\ include .. -G "MinGW Makefiles" -DCMAKE_SH="CMAKE_SH-NOTFOUND"
+      - name: Build with Makefile
+        run: mingw32-make -C build ComSquare
+      - name: Copy shared libs
+        run: Copy-Item -Path 'C:\Program Files\Git\mingw64\bin\*.dll' -Destination build
+      - name: Archive production artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: ComSquare-Windows
+          path: build/
