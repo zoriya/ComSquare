@@ -7,6 +7,7 @@
 
 #include <memory>
 #include "IRectangleMemory.hpp"
+#include "MemoryShadow.hpp"
 
 namespace ComSquare::Memory
 {

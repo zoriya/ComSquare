@@ -3,11 +3,14 @@
 //
 
 #include <criterion/criterion.h>
+#include <iostream>
 #include "communism.hpp"
 #include "../sources/Memory/MemoryBus.hpp"
 #include "../sources/Memory/IMemory.hpp"
 #include "../sources/SNES.hpp"
 #include "../sources/Renderer/NoRenderer.hpp"
+#include "../sources/Memory/MemoryShadow.hpp"
+#include "../sources/Memory/RectangleShadow.hpp"
 
 
 using namespace ComSquare;
@@ -51,10 +54,10 @@ Test(BusAccessor, GetWramEnd)
 Test(BusAccessor, GetWramMirror)
 {
 	auto pair = Init();
-	std::shared_ptr<Memory::IMemory> accessor = nullptr;
+	std::shared_ptr<Memory::MemoryShadow> accessor = nullptr;
 
-	accessor = pair.first.getAccessor(0x2F11FF);
-	cr_assert_eq(accessor.get(), pair.second.wram.get());
+	accessor = std::static_pointer_cast<Memory::MemoryShadow>(pair.first.getAccessor(0x2F11FF));
+	cr_assert_eq(accessor->_initial.get(), pair.second.wram.get());
 }
 
 Test(BusAccessor, GetWramMirror2)
@@ -123,10 +126,10 @@ Test(BusAccessor, GetAPUEnd)
 Test(BusAccessor, GetAPUMirror)
 {
 	auto pair = Init();
-	std::shared_ptr<Memory::IMemory> accessor = nullptr;
+	std::shared_ptr<Memory::MemoryShadow> accessor = nullptr;
 
-	accessor = pair.first.getAccessor(0xAB2143);
-	cr_assert_eq(accessor.get(), pair.second.apu.get());
+	accessor = std::static_pointer_cast<Memory::MemoryShadow>(pair.first.getAccessor(0xAB2143));
+	cr_assert_eq(accessor->_initial.get(), pair.second.apu.get());
 }
 
 Test(BusAccessor, GetCPUStart)
@@ -165,31 +168,31 @@ Test(BusAccessor, GetPPU1End)
 	cr_assert_eq(accessor.get(), pair.second.ppu.get());
 }
 
-Test(BusAccessor, GetPPU2)
+Test(BusAccessor, GetCPU)
 {
 	auto pair = Init();
 	std::shared_ptr<Memory::IMemory> accessor = nullptr;
 
 	accessor = pair.first.getAccessor(0x004212);
-	cr_assert_eq(accessor.get(), pair.second.ppu.get());
+	cr_assert_eq(accessor.get(), pair.second.cpu.get());
 }
 
 Test(BusAccessor, GetPPU1Mirror)
 {
 	auto pair = Init();
-	std::shared_ptr<Memory::IMemory> accessor = nullptr;
+	std::shared_ptr<Memory::MemoryShadow> accessor = nullptr;
 
-	accessor = pair.first.getAccessor(0x80213F);
-	cr_assert_eq(accessor.get(), pair.second.ppu.get());
+	accessor = std::static_pointer_cast<Memory::MemoryShadow>(pair.first.getAccessor(0x80213F));
+	cr_assert_eq(accessor->_initial.get(), pair.second.ppu.get());
 }
 
-Test(BusAccessor, GetPPU2Mirror)
+Test(BusAccessor, GetCPU2Mirror)
 {
 	auto pair = Init();
-	std::shared_ptr<Memory::IMemory> accessor = nullptr;
+	std::shared_ptr<Memory::MemoryShadow> accessor = nullptr;
 
-	accessor = pair.first.getAccessor(0x804212);
-	cr_assert_eq(accessor.get(), pair.second.ppu.get());
+	accessor = std::static_pointer_cast<Memory::MemoryShadow>(pair.first.getAccessor(0x804212));
+	cr_assert_eq(accessor->_initial.get(), pair.second.cpu.get());
 }
 
 Test(BusAccessor, GetRomStart)
@@ -213,10 +216,10 @@ Test(BusAccessor, GetRomEnd)
 Test(BusAccessor, GetRomMirror)
 {
 	auto pair = Init();
-	std::shared_ptr<Memory::IMemory> accessor = nullptr;
+	std::shared_ptr<Memory::RectangleShadow> accessor = nullptr;
 
-	accessor = pair.first.getAccessor(0x694200);
-	cr_assert_eq(accessor.get(), pair.second.cartridge.get());
+	accessor = std::static_pointer_cast<Memory::RectangleShadow>(pair.first.getAccessor(0x694200));
+	cr_assert_eq(accessor->_initial.get(), pair.second.cartridge.get());
 }
 
 Test(BusAccessor, GetRomMirror2)
