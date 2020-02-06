@@ -1,4 +1,4 @@
-name: Build commit artifact
+name: Build for windows
 
 on:
   push:
@@ -21,7 +21,7 @@ jobs:
           Set-Location build
           cmake .. -G "MinGW Makefiles" -DCMAKE_SH="CMAKE_SH-NOTFOUND"
       - name: Build with Makefile
-        run: mingw32-make -C build ComSquare
+        run: mingw32-make -C build ComSquare -L build/lib -I build/include
       - name: Copy shared libs
         run: Copy-Item -Path 'C:\Program Files\Git\mingw64\bin\*.dll' -Destination build
       - name: Archive production artifact
