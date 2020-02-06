@@ -23,10 +23,10 @@ jobs:
       - name: Build with Makefile
         run: |
           mingw32-make -C build ComSquare
-     - name: Clean up
-       run: |
-         Set-Location build
-         Remove-Item -Recurse -Path * -Exclude ComSquare.exe,bin/*
+      - name: Clean up
+        run: |
+          Set-Location build
+          Remove-Item -Recurse -Path * -Exclude ComSquare.exe,bin/*
       - name: Copy shared libs
         run: |
           Copy-Item -Path build\bin\*.dll -Destination build
