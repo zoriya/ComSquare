@@ -13,6 +13,16 @@ namespace ComSquare::PPU
 	//! @brief The class containing all the registers the PPU
 	class PPU : public Memory::IMemory {
 	private:
+		struct {
+			unsigned int height;
+			unsigned int width;
+			bool verticalMirroring;
+			bool horizontalMirroring;
+			int verticalOffset;
+			int horizontalOffset;
+			unsigned char characterHeight;
+			unsigned char characterWidth;
+		} BG[4];
 		//! @brief INIDISP Register (F-blank and Brightness)
 		union {
 			struct {
