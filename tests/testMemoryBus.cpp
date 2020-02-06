@@ -24,6 +24,12 @@ std::pair<Memory::MemoryBus, SNES> Init()
 	return std::make_pair(bus, snes);
 }
 
+//////////////////////////////////
+//								//
+// MemoryBus::getAccessor tests //
+//								//
+//////////////////////////////////
+
 Test(BusAccessor, GetWramStart)
 {
 	auto pair = Init();
@@ -51,25 +57,88 @@ Test(BusAccessor, GetWramMirror)
 	cr_assert_eq(accessor.get(), pair.second.wram.get());
 }
 
-Test(BusAccessor, GetSram)
+Test(BusAccessor, GetWramMirror2)
 {
 	auto pair = Init();
 	std::shared_ptr<Memory::IMemory> accessor = nullptr;
 
-	accessor = pair.first.getAccessor(0x700123);
+	accessor = pair.first.getAccessor(0x897654);
+	cr_assert_eq(accessor.get(), pair.second.wram.get());
+}
+
+Test(BusAccessor, GetSramStart)
+{
+	auto pair = Init();
+	std::shared_ptr<Memory::IMemory> accessor = nullptr;
+
+	accessor = pair.first.getAccessor(0x700000);
 	cr_assert_eq(accessor.get(), pair.second.sram.get());
 }
 
-Test(BusAccessor, GetAPU)
+Test(BusAccessor, GetSramEnd)
 {
 	auto pair = Init();
 	std::shared_ptr<Memory::IMemory> accessor = nullptr;
 
-	accessor = pair.first.getAccessor(0x002142);
+	accessor = pair.first.getAccessor(0x7D7FFF);
+	cr_assert_eq(accessor.get(), pair.second.sram.get());
+}
+
+Test(BusAccessor, GetSramMirror)
+{
+	auto pair = Init();
+	std::shared_ptr<Memory::IMemory> accessor = nullptr;
+
+	accessor = pair.first.getAccessor(0xF00123);
+	cr_assert_eq(accessor.get(), pair.second.sram.get());
+}
+
+Test(BusAccessor, GetSramMirror2)
+{
+	auto pair = Init();
+	std::shared_ptr<Memory::IMemory> accessor = nullptr;
+
+	accessor = pair.first.getAccessor(0xFE0123);
+	cr_assert_eq(accessor.get(), pair.second.sram.get());
+}
+
+Test(BusAccessor, GetAPUStart)
+{
+	auto pair = Init();
+	std::shared_ptr<Memory::IMemory> accessor = nullptr;
+
+	accessor = pair.first.getAccessor(0x002140);
 	cr_assert_eq(accessor.get(), pair.second.apu.get());
 }
 
-Test(BusAccessor, GetCPU)
+Test(BusAccessor, GetAPUEnd)
+{
+	auto pair = Init();
+	std::shared_ptr<Memory::IMemory> accessor = nullptr;
+
+	accessor = pair.first.getAccessor(0x002143);
+	cr_assert_eq(accessor.get(), pair.second.apu.get());
+}
+
+Test(BusAccessor, GetAPUMirror)
+{
+	auto pair = Init();
+	std::shared_ptr<Memory::IMemory> accessor = nullptr;
+
+	accessor = pair.first.getAccessor(0xAB2143);
+	cr_assert_eq(accessor.get(), pair.second.apu.get());
+}
+
+Test(BusAccessor, GetCPUStart)
+{
+	auto pair = Init();
+	std::shared_ptr<Memory::IMemory> accessor = nullptr;
+
+	accessor = pair.first.getAccessor(0x004200);
+	cr_assert_eq(accessor.get(), pair.second.cpu.get());
+}
+
+Test(BusAccessor, GetCPUEnd)
 {
 	auto pair = Init();
 	std::shared_ptr<Memory::IMemory> accessor = nullptr;
@@ -78,7 +147,16 @@ Test(BusAccessor, GetCPU)
 	cr_assert_eq(accessor.get(), pair.second.cpu.get());
 }
 
-Test(BusAccessor, GetPPU)
+Test(BusAccessor, GetPPU1Start)
+{
+	auto pair = Init();
+	std::shared_ptr<Memory::IMemory> accessor = nullptr;
+
+	accessor = pair.first.getAccessor(0x00213E);
+	cr_assert_eq(accessor.get(), pair.second.ppu.get());
+}
+
+Test(BusAccessor, GetPPU1End)
 {
 	auto pair = Init();
 	std::shared_ptr<Memory::IMemory> accessor = nullptr;
@@ -87,29 +165,116 @@ Test(BusAccessor, GetPPU)
 	cr_assert_eq(accessor.get(), pair.second.ppu.get());
 }
 
-Test(BusAccessor, GetRom)
+Test(BusAccessor, GetPPU2)
 {
 	auto pair = Init();
 	std::shared_ptr<Memory::IMemory> accessor = nullptr;
 
-	accessor = pair.first.getAccessor(0XFFFFFF);
+	accessor = pair.first.getAccessor(0x004212);
+	cr_assert_eq(accessor.get(), pair.second.ppu.get());
+}
+
+Test(BusAccessor, GetPPU1Mirror)
+{
+	auto pair = Init();
+	std::shared_ptr<Memory::IMemory> accessor = nullptr;
+
+	accessor = pair.first.getAccessor(0x80213F);
+	cr_assert_eq(accessor.get(), pair.second.ppu.get());
+}
+
+Test(BusAccessor, GetPPU2Mirror)
+{
+	auto pair = Init();
+	std::shared_ptr<Memory::IMemory> accessor = nullptr;
+
+	accessor = pair.first.getAccessor(0x804212);
+	cr_assert_eq(accessor.get(), pair.second.ppu.get());
+}
+
+Test(BusAccessor, GetRomStart)
+{
+	auto pair = Init();
+	std::shared_ptr<Memory::IMemory> accessor = nullptr;
+
+	accessor = pair.first.getAccessor(0x808000);
 	cr_assert_eq(accessor.get(), pair.second.cartridge.get());
 }
+
+Test(BusAccessor, GetRomEnd)
+{
+	auto pair = Init();
+	std::shared_ptr<Memory::IMemory> accessor = nullptr;
+
+	accessor = pair.first.getAccessor(0xFFFFFF);
+	cr_assert_eq(accessor.get(), pair.second.cartridge.get());
+}
+
+Test(BusAccessor, GetRomMirror)
+{
+	auto pair = Init();
+	std::shared_ptr<Memory::IMemory> accessor = nullptr;
+
+	accessor = pair.first.getAccessor(0x694200);
+	cr_assert_eq(accessor.get(), pair.second.cartridge.get());
+}
+
+Test(BusAccessor, GetRomMirror2)
+{
+	auto pair = Init();
+	std::shared_ptr<Memory::IMemory> accessor = nullptr;
+
+	accessor = pair.first.getAccessor(0x01FEDC);
+	cr_assert_eq(accessor.get(), pair.second.cartridge.get());
+}
+
+Test(BusAccessor, GetRomMirror3)
+{
+	auto pair = Init();
+	std::shared_ptr<Memory::IMemory> accessor = nullptr;
+
+	accessor = pair.first.getAccessor(0xDE1248);
+	cr_assert_eq(accessor.get(), pair.second.cartridge.get());
+}
+
+////////////////////////////
+//						  //
+// MemoryBus::write tests //
+//						  //
+////////////////////////////
 
 Test(BusWrite, )
 {
 
 }
 
+///////////////////////////
+//						 //
+// MemoryBus::read tests //
+//						 //
+///////////////////////////
+
 Test(BusRead, )
 {
 
 }
 
+////////////////////////////////////
+//								  //
+// MemoryBus::mapComponents tests //
+//								  //
+////////////////////////////////////
+
 Test(BusMapping, )
 {
 
 }
+
+////////////////////////////////////////
+//									  //
+// MemoryBus::_mirrorComponents tests //
+//									  //
+////////////////////////////////////////
 
 Test(BusMirror, )
 {
