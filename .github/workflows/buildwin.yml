@@ -19,7 +19,7 @@ jobs:
       - name: Build Makefile with CMake
         run: |
           Set-Location build
-          cmake -DCMAKE_CXX_FLAGS=-isystem\ build/include .. -G "MinGW Makefiles" -DCMAKE_SH="CMAKE_SH-NOTFOUND"
+          cmake .. -G "MinGW Makefiles" -DCMAKE_SH="CMAKE_SH-NOTFOUND" -DGITBUILD=true
       - name: Build with Makefile
         run: mingw32-make -C build ComSquare
       - name: Copy shared libs
