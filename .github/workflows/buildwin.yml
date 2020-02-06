@@ -26,7 +26,7 @@ jobs:
       - name: Clean up
         run: |
           Set-Location build
-          Remove-Item -Recurse -Path * -Exclude ComSquare.exe,bin/*
+          Remove-Item -Recurse -Path * -Exclude ComSquare.exe,bin,bin/*
       - name: Copy shared libs
         run: |
           Copy-Item -Path build\bin\*.dll -Destination build
