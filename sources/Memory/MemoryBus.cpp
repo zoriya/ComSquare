@@ -74,7 +74,7 @@ namespace ComSquare::Memory
 		// TODO implement Joys.
 
 		// Mirror to the quarter 1.
-		for (uint24_t i = 0; i < 0x400000; i += 0x10000)
+		for (uint24_t i = 0; i < 0x400000; i += 0x010000)
 			this->_mirrorComponents(console, i);
 		// Mirror to the quarter 3.
 		for (uint24_t i = 0x800000; i < 0xC00000; i += 0x10000)

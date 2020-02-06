@@ -21,7 +21,7 @@ jobs:
           Set-Location build
           cmake .. -G "MinGW Makefiles" -DCMAKE_SH="CMAKE_SH-NOTFOUND" -DGITBUILD=true
       - name: Build with Makefile
-        run: mingw32-make -C build ComSquare
+         run: mingw32-make -C build ComSquare
      - name: Clean up
        run: |
          Set-Location build
