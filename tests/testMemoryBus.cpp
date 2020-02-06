@@ -60,13 +60,11 @@ Test(BusAccessor, GetWramMirror)
 	cr_assert_eq(accessor->_initial.get(), pair.second.wram.get());
 }
 
-Test(BusAccessor, GetWramMirror2)
+Test(BusAccessor, GetOpenBus)
 {
 	auto pair = Init();
-	std::shared_ptr<Memory::IMemory> accessor = nullptr;
-
-	accessor = pair.first.getAccessor(0x897654);
-	cr_assert_eq(accessor.get(), pair.second.wram.get());
+	std::shared_ptr<Memory::IMemory> accessor = pair.first.getAccessor(0x897654);
+	cr_assert_eq(accessor.get(), nullptr);
 }
 
 Test(BusAccessor, GetSramStart)
@@ -90,19 +88,24 @@ Test(BusAccessor, GetSramEnd)
 Test(BusAccessor, GetSramMirror)
 {
 	auto pair = Init();
-	std::shared_ptr<Memory::IMemory> accessor = nullptr;
+	std::shared_ptr<Memory::RectangleShadow> accessor = nullptr;
 
-	accessor = pair.first.getAccessor(0xF00123);
-	cr_assert_eq(accessor.get(), pair.second.sram.get());
+	accessor = std::static_pointer_cast<Memory::RectangleShadow>(pair.first.getAccessor(0xF00123));
+	// TODO the page of the rectangle accessor seems a bit buggy and here the rom is returned as the accessor.
+	std::cout << std::hex << accessor->_initial->getStart() << std::endl;
+	std::cout << std::hex << pair.second.sram.get() << std::endl;
+	cr_assert_eq(accessor->_initial.get(), pair.second.sram.get());
 }
 
 Test(BusAccessor, GetSramMirror2)
 {
 	auto pair = Init();
-	std::shared_ptr<Memory::IMemory> accessor = nullptr;
+	std::shared_ptr<Memory::RectangleShadow> accessor = nullptr;
 
-	accessor = pair.first.getAccessor(0xFE0123);
-	cr_assert_eq(accessor.get(), pair.second.sram.get());
+	// TODO implement the SRam accessor for the FE/FF.
+	std::cout << pair.first.getAccessor(0xFE0123) << std::endl;
+	accessor = std::static_pointer_cast<Memory::RectangleShadow>(pair.first.getAccessor(0xFE0123));
+	cr_assert_eq(accessor->_initial.get(), pair.second.sram.get());
 }
 
 Test(BusAccessor, GetAPUStart)
@@ -225,19 +228,19 @@ Test(BusAccessor, GetRomMirror)
 Test(BusAccessor, GetRomMirror2)
 {
 	auto pair = Init();
-	std::shared_ptr<Memory::IMemory> accessor = nullptr;
+	std::shared_ptr<Memory::RectangleShadow> accessor = nullptr;
 
-	accessor = pair.first.getAccessor(0x01FEDC);
-	cr_assert_eq(accessor.get(), pair.second.cartridge.get());
+	accessor = std::static_pointer_cast<Memory::RectangleShadow>(pair.first.getAccessor(0x01FEDC));
+	cr_assert_eq(accessor->_initial.get(), pair.second.cartridge.get());
 }
 
 Test(BusAccessor, GetRomMirror3)
 {
 	auto pair = Init();
-	std::shared_ptr<Memory::IMemory> accessor = nullptr;
+	std::shared_ptr<Memory::RectangleShadow> accessor = nullptr;
 
-	accessor = pair.first.getAccessor(0xDE1248);
-	cr_assert_eq(accessor.get(), pair.second.cartridge.get());
+	accessor = std::static_pointer_cast<Memory::RectangleShadow>(pair.first.getAccessor(0xDE1248));
+	cr_assert_eq(accessor->_initial.get(), pair.second.cartridge.get());
 }
 
 ////////////////////////////
