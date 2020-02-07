@@ -53,7 +53,7 @@ namespace ComSquare::Memory
 
 	uint24_t IRectangleMemory::getStart()
 	{
-		return this->_startBank + this->_startPage;
+		return (this->_startBank << 16u) + this->_startPage;
 	}
 
 	void IRectangleMemory::setMemoryRegion(uint8_t startBank, uint8_t endBank, uint16_t startPage, uint16_t endPage)

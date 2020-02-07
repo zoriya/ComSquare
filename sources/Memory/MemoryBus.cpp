@@ -88,11 +88,11 @@ namespace ComSquare::Memory
 			// Mirror on the lower half of the Q2.
 			this->_memoryAccessors.emplace_back((new Memory::RectangleShadow(console.cartridge, 0x40, 0x6F, 0x0000, 0x7FFF))->setBankOffset(0x40));
 			// Mirror on the lower half of the Q4
-			this->_memoryAccessors.emplace_back((new Memory::RectangleShadow(console.cartridge, 0xC0, 0xF0, 0x0000, 0x7FFF))->setBankOffset(0x40));
+			this->_memoryAccessors.emplace_back((new Memory::RectangleShadow(console.cartridge, 0xC0, 0xEF, 0x0000, 0x7FFF))->setBankOffset(0x40));
 
-			console.sram->setMemoryRegion(0x70, 0x7D, 0x0000, 0x7FFF);
+			console.sram->setMemoryRegion(0xF0, 0xFD, 0x0000, 0x7FFF);
 			this->_memoryAccessors.push_back(console.sram);
-			this->_memoryAccessors.emplace_back(new Memory::RectangleShadow(console.sram, 0xF0, 0xFD, 0x0000, 0x7FFF));
+			this->_memoryAccessors.emplace_back(new Memory::RectangleShadow(console.sram, 0x70, 0x7D, 0x0000, 0x7FFF));
 		}
 		// TODO should implement HiRom.
 	}

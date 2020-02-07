@@ -70,31 +70,28 @@ Test(BusAccessor, GetOpenBus)
 Test(BusAccessor, GetSramStart)
 {
 	auto pair = Init();
-	std::shared_ptr<Memory::IMemory> accessor = nullptr;
+	std::shared_ptr<Memory::RectangleShadow> accessor = nullptr;
 
-	accessor = pair.first.getAccessor(0x700000);
-	cr_assert_eq(accessor.get(), pair.second.sram.get());
+	accessor = std::static_pointer_cast<Memory::RectangleShadow>(pair.first.getAccessor(0x700000));
+	cr_assert_eq(accessor->_initial.get(), pair.second.sram.get());
 }
 
 Test(BusAccessor, GetSramEnd)
 {
 	auto pair = Init();
-	std::shared_ptr<Memory::IMemory> accessor = nullptr;
+	std::shared_ptr<Memory::RectangleShadow> accessor = nullptr;
 
-	accessor = pair.first.getAccessor(0x7D7FFF);
-	cr_assert_eq(accessor.get(), pair.second.sram.get());
+	accessor = std::static_pointer_cast<Memory::RectangleShadow>(pair.first.getAccessor(0x7D7FFF));
+	cr_assert_eq(accessor->_initial.get(), pair.second.sram.get());
 }
 
 Test(BusAccessor, GetSramMirror)
 {
 	auto pair = Init();
-	std::shared_ptr<Memory::RectangleShadow> accessor = nullptr;
+	std::shared_ptr<Memory::IRectangleMemory> accessor = nullptr;
 
-	accessor = std::static_pointer_cast<Memory::RectangleShadow>(pair.first.getAccessor(0xF00123));
-	// TODO the page of the rectangle accessor seems a bit buggy and here the rom is returned as the accessor.
-	std::cout << std::hex << accessor->_initial->getStart() << std::endl;
-	std::cout << std::hex << pair.second.sram.get() << std::endl;
-	cr_assert_eq(accessor->_initial.get(), pair.second.sram.get());
+	accessor = std::static_pointer_cast<Memory::IRectangleMemory>(pair.first.getAccessor(0xF00123));
+	cr_assert_eq(accessor.get(), pair.second.sram.get());
 }
 
 Test(BusAccessor, GetSramMirror2)
@@ -103,7 +100,7 @@ Test(BusAccessor, GetSramMirror2)
 	std::shared_ptr<Memory::RectangleShadow> accessor = nullptr;
 
 	// TODO implement the SRam accessor for the FE/FF.
-	std::cout << pair.first.getAccessor(0xFE0123) << std::endl;
+	//std::cout << pair.first.getAccessor(0xFE0123) << std::endl;
 	accessor = std::static_pointer_cast<Memory::RectangleShadow>(pair.first.getAccessor(0xFE0123));
 	cr_assert_eq(accessor->_initial.get(), pair.second.sram.get());
 }
