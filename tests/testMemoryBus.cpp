@@ -11,6 +11,7 @@
 #include "../sources/Renderer/NoRenderer.hpp"
 #include "../sources/Memory/MemoryShadow.hpp"
 #include "../sources/Memory/RectangleShadow.hpp"
+#include "../sources/PPU/PPU.hpp"
 
 
 using namespace ComSquare;
@@ -23,6 +24,10 @@ std::pair<Memory::MemoryBus, SNES> Init()
 	snes.cartridge->_size = 10;
 	snes.cartridge->_data = new uint8_t[snes.cartridge->_size];
 	snes.cartridge->header.mappingMode = Cartridge::LoRom;
+	snes.sram->_size = 10;
+	snes.sram->_data = new uint8_t[snes.cartridge->_size];
+	snes.wram->_size = 10;
+	snes.wram->_data = new uint8_t[snes.cartridge->_size];
 	bus.mapComponents(snes);
 	return std::make_pair(bus, snes);
 }
@@ -240,6 +245,102 @@ Test(BusAccessor, GetRomMirror3)
 	cr_assert_eq(accessor->_initial.get(), pair.second.cartridge.get());
 }
 
+///////////////////////////
+//						 //
+// MemoryBus::read tests //
+//						 //
+///////////////////////////
+
+Test(BusRead, ReadOutside)
+{
+	auto pair = Init();
+	uint8_t data;
+
+	pair.first._openBus = 123;
+	data = pair.first.read(0x002000);
+	cr_assert_eq(data, 123);
+}
+
+Test(BusRead, ReadOutside2)
+{
+	auto pair = Init();
+	uint8_t data;
+
+	pair.first._openBus = 123;
+	data = pair.first.read(0xBF2FFF);
+	cr_assert_eq(data, 123);
+}
+
+Test(BusRead, ReadOutside3)
+{
+	auto pair = Init();
+	uint8_t data;
+
+	pair.first._openBus = 123;
+	data = pair.first.read(0x127654);
+	cr_assert_eq(data, 123);
+}
+
+Test(BusRead, ReadAPU)
+{
+	auto pair = Init();
+	uint8_t data;
+
+	pair.second.apu->_registers.port0 = 123;
+	data = pair.first.read(0x002140);
+	cr_assert_eq(data, 123);
+}
+
+Test(BusRead, ReadROM)
+{
+	auto pair = Init();
+	uint8_t data;
+
+	pair.second.cartridge->_data[5] = 123;
+	data = pair.first.read(0x808005);
+	cr_assert_eq(data, 123);
+}
+
+Test(BusRead, ReadCPU)
+{
+	auto pair = Init();
+	uint8_t data;
+
+	pair.second.cpu->_internalRegisters.wrio = 123;
+	data = pair.first.read(0x004201);
+	cr_assert_eq(data, 123);
+}
+
+Test(BusRead, ReadPPU)
+{
+	auto pair = Init();
+	uint8_t data;
+
+	pair.second.ppu->mpy.mpyl = 123;
+	data = pair.first.read(0x002134);
+	cr_assert_eq(data, 123);
+}
+
+Test(BusRead, ReadSRAM)
+{
+	auto pair = Init();
+	uint8_t data;
+
+	pair.second.sram->_data[7] = 123;
+	data = pair.first.read(0x700007);
+	cr_assert_eq(data, 123);
+}
+
+Test(BusRead, ReadWRAM)
+{
+	auto pair = Init();
+	uint8_t data;
+
+	pair.second.wram->_data[3] = 123;
+	data = pair.first.read(0x7E0003);
+	cr_assert_eq(data, 123);
+}
+
 ////////////////////////////
 //						  //
 // MemoryBus::write tests //
@@ -247,17 +348,6 @@ Test(BusAccessor, GetRomMirror3)
 ////////////////////////////
 
 Test(BusWrite, )
-{
-
-}
-
-///////////////////////////
-//						 //
-// MemoryBus::read tests //
-//						 //
-///////////////////////////
-
-Test(BusRead, )
 {
 
 }
