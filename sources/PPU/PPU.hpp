@@ -8,6 +8,10 @@
 #include <stdint-gcc.h>
 #include "../Memory/IMemory.hpp"
 
+#define max2BitTiles		4096
+#define max4BitTiles		2048
+#define max8BitTiles		1024
+
 namespace ComSquare::PPU
 {
 	//! @brief The class containing all the registers the PPU
@@ -20,9 +24,41 @@ namespace ComSquare::PPU
 			bool horizontalMirroring;
 			int verticalOffset;
 			int horizontalOffset;
+			//! @brief A Character is the base unit of the background it can be 16x16 or 8x8 (16x8 under certain circumstances)
 			unsigned char characterHeight;
 			unsigned char characterWidth;
-		} BG[4];
+		} _BG[4];
+		struct object {
+			bool verticalMirroring;
+			bool horizontalMirroring;
+			bool priority;
+			unsigned short graphicAddress;
+		};
+
+		//! @brief INIDISP variables (F-blank and Brightness)
+		bool _fBlank;
+		unsigned short _brightness; //! @brief F=max, 0="off".
+
+		//! @brief OBSEL variables (Object Size and Character Address)
+		unsigned char _objectSize; //! @brief "OamMode" this contains the size of the Objects (ex: 8x8 and 16x16)
+		unsigned char _baseSelect; //! @brief "OamBaseAddress"
+		unsigned char _nameSelect; //! @brief "OamAddressOffset"
+
+		//! @brief OAMADD variables (OAM Address and Obj Priority)
+		uint16_t _oamAddress;
+		bool _objPriority;
+
+
+
+
+
+
+
+		/// OLD to stuff to refactor
+
+
+
+
 		//! @brief INIDISP Register (F-blank and Brightness)
 		union {
 			struct {
@@ -140,8 +176,8 @@ namespace ComSquare::PPU
 			};
 			uint16_t raw;
 		} bg1ofs;
-		//! @brief M7HOFS Register (Mode 7 BG Horizontal Scroll)
-		//! @brief M7VOFS Register (Mode 7 BG Vertical Scroll)
+		//! @brief M7HOFS Register (Mode 7 _BG Horizontal Scroll)
+		//! @brief M7VOFS Register (Mode 7 _BG Vertical Scroll)
 		union {
 			struct {
 				uint8_t _ : 3;

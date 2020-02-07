@@ -25,17 +25,29 @@ namespace ComSquare::PPU
 	void PPU::write(uint24_t addr, uint8_t data)
 	{
 		switch (addr) {
-		case 0x00:
-			this->inidisp.raw = data;
+		case 0x00: //! @brief $2100 INIDISP Register (F-blank and Brightness)
+			//! @brief Take the first bit to set the bool.
+			this->_fBlank = data >> 7U;
+			//! @brief Take the 4 last bits representing the brightness.
+			this->_brightness = data & 0xFU;
 			break;
-		case 0x01:
-			this->obsel.raw = data;
+		case 0x01: //! @brief $2101 OBSEL Register (Object Size and Character Address)
+			//! @brief The first 3 bits.
+			this->_objectSize = (data & 0xE0U) >> 5U;
+			//! @brief The last 3 bits;
+			this->_baseSelect = data & 0x07U;
+			//! @brief th 2 center bits.
+			this->_nameSelect = (data & 0x18U) >> 3U;
 			break;
-		case 0x02:
-			this->oamadd.oamaddl = data;
+		case 0x02: //! @brief $2102 OAMADDL (OAM Address low byte).
+			//! @brief we recreate the oamAddress with the previous oamAddress because there is one bit missing (given by the register $2103)
+			this->_oamAddress = (this->_oamAddress & 0x100U) | data;
 			break;
-		case 0x03:
-			this->oamadd.oamaddh = data;
+		case 0x03: //! @brief $2103 OAMADDH (OAM Address high bit and Obj Priority)
+			//! @brief Same as $2102 we recreate the oamAddress with the previous oamAddress because there are 8 bits missing (given by the register $2102)
+			this->_oamAddress = (this->_oamAddress & 0xFFU) | ((data & 0x01U) << 8U);
+			//! @brief The objPriority is given by the first bit of the data
+ 			this->_objPriority = (data & 0x80U) >> 7U;
 			break;
 		case 0x04:
 			this->oamdata = data;
