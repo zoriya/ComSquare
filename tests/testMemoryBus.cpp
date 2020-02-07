@@ -393,25 +393,3 @@ Test(BusWrite, WriteSRAM)
 	pair.first.write(0x700009, 123);
 	cr_assert_eq(pair.second.sram->_data[9], 123);
 }
-
-////////////////////////////////////
-//								  //
-// MemoryBus::mapComponents tests //
-//								  //
-////////////////////////////////////
-
-Test(BusMapping, )
-{
-
-}
-
-////////////////////////////////////////
-//									  //
-// MemoryBus::_mirrorComponents tests //
-//									  //
-////////////////////////////////////////
-
-Test(BusMirror, )
-{
-
-}
