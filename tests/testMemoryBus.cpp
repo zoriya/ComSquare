@@ -3,6 +3,7 @@
 //
 
 #include <criterion/criterion.h>
+#include <criterion/redirect.h>
 #include <iostream>
 #include "communism.hpp"
 #include "../sources/Memory/MemoryBus.hpp"
@@ -26,8 +27,6 @@ std::pair<Memory::MemoryBus, SNES> Init()
 	snes.cartridge->header.mappingMode = Cartridge::LoRom;
 	snes.sram->_size = 10;
 	snes.sram->_data = new uint8_t[snes.cartridge->_size];
-	snes.wram->_size = 10;
-	snes.wram->_data = new uint8_t[snes.cartridge->_size];
 	bus.mapComponents(snes);
 	return std::make_pair(bus, snes);
 }
@@ -251,7 +250,7 @@ Test(BusAccessor, GetRomMirror3)
 //						 //
 ///////////////////////////
 
-Test(BusRead, ReadOutside)
+Test(BusRead, ReadOutside, .init = cr_redirect_stdout)
 {
 	auto pair = Init();
 	uint8_t data;
@@ -261,7 +260,7 @@ Test(BusRead, ReadOutside)
 	cr_assert_eq(data, 123);
 }
 
-Test(BusRead, ReadOutside2)
+Test(BusRead, ReadOutside2, .init = cr_redirect_stdout)
 {
 	auto pair = Init();
 	uint8_t data;
@@ -271,7 +270,7 @@ Test(BusRead, ReadOutside2)
 	cr_assert_eq(data, 123);
 }
 
-Test(BusRead, ReadOutside3)
+Test(BusRead, ReadOutside3, .init = cr_redirect_stdout)
 {
 	auto pair = Init();
 	uint8_t data;
