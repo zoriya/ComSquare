@@ -7,6 +7,7 @@
 
 #include <memory>
 #include "IRectangleMemory.hpp"
+#include "MemoryShadow.hpp"
 
 namespace ComSquare::Memory
 {
@@ -15,7 +16,7 @@ namespace ComSquare::Memory
 		//! @brief Memory to shadow from.
 		std::shared_ptr<IRectangleMemory> _initial;
 		//! @brief The number of banks to add to the memory before accessing it from the initial data.
-		uint8_t _bankOffset;
+		uint8_t _bankOffset = 0;
 	public:
 		//! @brief Create a shadow for the memory given as parameter.
 		explicit RectangleShadow(std::shared_ptr<IRectangleMemory> initial, uint8_t startBank, uint8_t endBank, uint16_t startPage, uint16_t endPage);

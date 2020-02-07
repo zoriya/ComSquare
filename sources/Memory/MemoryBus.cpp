@@ -49,10 +49,10 @@ namespace ComSquare::Memory
 
 	void MemoryBus::_mirrorComponents(SNES &console, int i)
 	{
-		this->_memoryAccessors.emplace_back(new Memory::MemoryShadow(console.wram, i, i + 0x2000));
-		this->_memoryAccessors.emplace_back(new Memory::MemoryShadow(console.ppu, i + 0x2100, i + 0x2140));
-		this->_memoryAccessors.emplace_back(new Memory::MemoryShadow(console.apu, i + 0x2140, i + 0x2144));
-		this->_memoryAccessors.emplace_back(new Memory::MemoryShadow(console.cpu, i + 0x4200, i + 0x4220));
+		this->_memoryAccessors.emplace_back(new Memory::MemoryShadow(console.wram, i, i + 0x1FFF));
+		this->_memoryAccessors.emplace_back(new Memory::MemoryShadow(console.ppu, i + 0x2100, i + 0x213F));
+		this->_memoryAccessors.emplace_back(new Memory::MemoryShadow(console.apu, i + 0x2140, i + 0x2143));
+		this->_memoryAccessors.emplace_back(new Memory::MemoryShadow(console.cpu, i + 0x4200, i + 0x421F));
 	}
 
 	void MemoryBus::mapComponents(SNES &console)
@@ -74,7 +74,7 @@ namespace ComSquare::Memory
 		// TODO implement Joys.
 
 		// Mirror to the quarter 1.
-		for (uint24_t i = 0; i < 0x400000; i += 0x10000)
+		for (uint24_t i = 0; i < 0x400000; i += 0x010000)
 			this->_mirrorComponents(console, i);
 		// Mirror to the quarter 3.
 		for (uint24_t i = 0x800000; i < 0xC00000; i += 0x10000)
@@ -87,10 +87,14 @@ namespace ComSquare::Memory
 			this->_memoryAccessors.emplace_back(new Memory::RectangleShadow(console.cartridge, 0x00, 0x7D, 0x8000, 0xFFFF));
 			// Mirror on the lower half of the Q2.
 			this->_memoryAccessors.emplace_back((new Memory::RectangleShadow(console.cartridge, 0x40, 0x6F, 0x0000, 0x7FFF))->setBankOffset(0x40));
+			// Mirror on the lower half of the Q4
+			this->_memoryAccessors.emplace_back((new Memory::RectangleShadow(console.cartridge, 0xC0, 0xEF, 0x0000, 0x7FFF))->setBankOffset(0x40));
 
-			console.sram->setMemoryRegion(0x70, 0x7D, 0x0000, 0x7FFF);
+			console.sram->setMemoryRegion(0xF0, 0xFD, 0x0000, 0x7FFF);
 			this->_memoryAccessors.push_back(console.sram);
-			this->_memoryAccessors.emplace_back(new Memory::RectangleShadow(console.sram, 0xFE, 0xFF, 0x0000, 0x7FFF));
+			this->_memoryAccessors.emplace_back(new Memory::RectangleShadow(console.sram, 0x70, 0x7D, 0x0000, 0x7FFF));
+
+			// TODO implement the SRam accessor for the FE/FF
 		}
 		// TODO should implement HiRom.
 	}
