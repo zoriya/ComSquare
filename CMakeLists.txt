@@ -10,8 +10,8 @@ add_compile_options(-W -Wall -Wextra -Wshadow)
 # make unit tests
 add_executable(unit_tests
         tests/testCPU.cpp
-        sources/PPU/PPU.cpp
-        sources/PPU/PPU.hpp
+        tests/testMemoryBus.cpp
+        tests/communism.hpp
         sources/SNES.cpp
         sources/SNES.hpp
         sources/Memory/MemoryBus.cpp
@@ -39,6 +39,11 @@ add_executable(unit_tests
         sources/Memory/IRectangleMemory.hpp
         sources/APU/DSP/DSP.cpp
         sources/APU/DSP/DSP.hpp
+        sources/Renderer/IRenderer.hpp
+        sources/Renderer/NoRenderer.hpp
+        sources/Renderer/NoRenderer.cpp
+        sources/Exceptions/InvalidAction.hpp
+        sources/Cartridge/InterruptVectors.hpp
         sources/Memory/RectangleShadow.cpp
         sources/Memory/RectangleShadow.hpp
         sources/CPU/CommonCpu.cpp sources/CPU/CommonCpu.hpp)
@@ -46,6 +51,12 @@ add_executable(unit_tests
 # include criterion & coverage
 target_link_libraries(unit_tests criterion -lgcov)
 target_compile_options(unit_tests PUBLIC -fprofile-arcs -ftest-coverage)
+
+if ("${GITBUILD}" STREQUAL true)
+    include_directories(ComSquare build/include)
+    link_directories(ComSquare build/lib)
+    message("Git build is true")
+endif ()
 
 # make app
 add_executable(ComSquare

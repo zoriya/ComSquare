@@ -23,12 +23,12 @@ namespace ComSquare::Memory
 		uint16_t _endPage = 0;
 	public:
 		//! @brief Read data from the component using the same method as the basic IMemory.
-		//! @param addr The local address to read from. 0x0 should refer to the first byte of this component on the fist bank. This method is responsible of mapping to the component's read.
+		//! @param addr The global 24 bits address. This method is responsible of mapping to the component's read.
 		//! @throw InvalidAddress if the address is not mapped to the component.
 		//! @return Return the data at the address given as parameter.
 		uint8_t read(uint24_t addr) override;
 		//! @brief Write data to this component using the same method as the basic IMemory.
-		//! @param addr The local address to write data 0x0 should refer to the first byte of this component on the fist bank. This method is responsible of mapping to the component's write.
+		//! @param addr The global 24 bits address. This method is responsible of mapping to the component's write.
 		//! @param data The new data to write.
 		//! @throw InvalidAddress if the address is not mapped to the component.
 		void write(uint24_t addr, uint8_t data) override;
@@ -46,8 +46,8 @@ namespace ComSquare::Memory
 		//! @param addr The address to check.
 		//! @return True if this address is mapped to the component. False otherwise.
 		bool hasMemoryAt(uint24_t addr) override;
-		//! @brief Get the first address mapped to this component.
-		//! @return the _start value.
+		//! @brief This override the getStart of the IMemory to return 0 since the read and write of the rectangle memory take a 24 bit global address and not a component's address..
+		//! @return always 0.
 		uint24_t getStart() override;
 		//! @brief Change starting and ending points of this mapped memory.
 		//! @param startBank The first bank mapped to this component.

@@ -15,6 +15,7 @@ namespace ComSquare::Memory
 	{
 		auto it = std::find_if(this->_memoryAccessors.begin(), this->_memoryAccessors.end(), [addr](std::shared_ptr<IMemory> &accessor)
 		{
+//			std::cout << "Accessor: " << std::hex << accessor->getStart() << " Has access:: " << accessor->hasMemoryAt(addr) << std::endl;
 			return accessor->hasMemoryAt(addr);
 		});
 		if (it == this->_memoryAccessors.end())
@@ -28,10 +29,10 @@ namespace ComSquare::Memory
 
 		if (!handler) {
 			std::cout << "Unknown memory accessor for address " << std::hex << addr << ". Using open bus." << std::endl;
-			return this->_openbus;
+			return this->_openBus;
 		}
 		uint8_t data =  handler->read(addr - handler->getStart());
-		this->_openbus = data;
+		this->_openBus = data;
 		return data;
 	}
 
@@ -48,10 +49,10 @@ namespace ComSquare::Memory
 
 	void MemoryBus::_mirrorComponents(SNES &console, int i)
 	{
-		this->_memoryAccessors.emplace_back(new Memory::MemoryShadow(console.wram, i, i + 0x2000));
-		this->_memoryAccessors.emplace_back(new Memory::MemoryShadow(console.ppu, i + 0x2100, i + 0x2140));
-		this->_memoryAccessors.emplace_back(new Memory::MemoryShadow(console.apu, i + 0x2140, i + 0x2144));
-		this->_memoryAccessors.emplace_back(new Memory::MemoryShadow(console.cpu, i + 0x4200, i + 0x4220));
+		this->_memoryAccessors.emplace_back(new Memory::MemoryShadow(console.wram, i, i + 0x1FFF));
+		this->_memoryAccessors.emplace_back(new Memory::MemoryShadow(console.ppu, i + 0x2100, i + 0x213F));
+		this->_memoryAccessors.emplace_back(new Memory::MemoryShadow(console.apu, i + 0x2140, i + 0x2143));
+		this->_memoryAccessors.emplace_back(new Memory::MemoryShadow(console.cpu, i + 0x4200, i + 0x421F));
 	}
 
 	void MemoryBus::mapComponents(SNES &console)
@@ -60,26 +61,24 @@ namespace ComSquare::Memory
 		console.wram->setMemoryRegion(0x7E, 0x7F, 0x0000, 0xFFFF);
 		this->_memoryAccessors.push_back(console.wram);
 
-		console.ppu->setMemoryRegion(0x2100, 0x2140);
+		console.ppu->setMemoryRegion(0x2100, 0x213F);
 		this->_memoryAccessors.push_back(console.ppu);
 
-		console.apu->setMemoryRegion(0x2140, 0x2144);
+		console.apu->setMemoryRegion(0x2140, 0x2143);
 		this->_memoryAccessors.push_back(console.apu);
 
-		console.cpu->setMemoryRegion(0x4200, 0x4220);
+		console.cpu->setMemoryRegion(0x4200, 0x421F);
 		this->_memoryAccessors.push_back(console.cpu);
 
 		// TODO implement DMA & HDMA (4220 to 4300)
 		// TODO implement Joys.
 
 		// Mirror to the quarter 1.
-		for (uint24_t i = 0; i < 0x400000; i += 0x10000)
+		for (uint24_t i = 0; i < 0x400000; i += 0x010000)
 			this->_mirrorComponents(console, i);
 		// Mirror to the quarter 3.
 		for (uint24_t i = 0x800000; i < 0xC00000; i += 0x10000)
 			this->_mirrorComponents(console, i);
-
-		// TODO should map SRam, cartridge etc via the mapping mode of the cartridge.
 
 		if (console.cartridge->header.mappingMode & Cartridge::LoRom) {
 			console.cartridge->setMemoryRegion(0x80, 0xFF, 0x8000, 0xFFFF);
@@ -88,10 +87,15 @@ namespace ComSquare::Memory
 			this->_memoryAccessors.emplace_back(new Memory::RectangleShadow(console.cartridge, 0x00, 0x7D, 0x8000, 0xFFFF));
 			// Mirror on the lower half of the Q2.
 			this->_memoryAccessors.emplace_back((new Memory::RectangleShadow(console.cartridge, 0x40, 0x6F, 0x0000, 0x7FFF))->setBankOffset(0x40));
+			// Mirror on the lower half of the Q4
+			this->_memoryAccessors.emplace_back((new Memory::RectangleShadow(console.cartridge, 0xC0, 0xEF, 0x0000, 0x7FFF))->setBankOffset(0x40));
 
-			console.sram->setMemoryRegion(0x70, 0x7D, 0x0000, 0x7FFF);
+			console.sram->setMemoryRegion(0xF0, 0xFD, 0x0000, 0x7FFF);
 			this->_memoryAccessors.push_back(console.sram);
-			this->_memoryAccessors.emplace_back(new Memory::RectangleShadow(console.sram, 0xFE, 0xFF, 0x0000, 0x7FFF));
+			this->_memoryAccessors.emplace_back(new Memory::RectangleShadow(console.sram, 0x70, 0x7D, 0x0000, 0x7FFF));
+
+			// TODO implement the SRam accessor for the FE/FF
 		}
+		// TODO should implement HiRom.
 	}
 }

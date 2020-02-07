@@ -28,9 +28,9 @@ namespace ComSquare
 			std::shared_ptr<IMemory> getAccessor(uint24_t addr);
 
 			//! @brief The last value read via the memory bus.
-			uint8_t _openbus = 0;
+			uint8_t _openBus = 0;
 
-			//! @brief WRam, CPU, PPU & ALU registers are mirrored to all banks of Q1 & Q3. This function is used for the mirroring.
+			//! @brief WRam, CPU, PPU & APU registers are mirrored to all banks of Q1 & Q3. This function is used for the mirroring.
 			//! @param console All the components.
 			//! @param i Base address for the mirrors.
 			inline void _mirrorComponents(SNES &console, int i);
