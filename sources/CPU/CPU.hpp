@@ -188,9 +188,24 @@ namespace ComSquare::CPU
 		//! @brief The cartridge header (stored for interrupt vectors..
 		Cartridge::Header &_cartridgeHeader;
 
+		//! @brief Immediate address mode is specified with a value. (This functions returns the 24bit space address of the value).
+		uint24_t _GetImmediateAddr();
+		//! @brief The destination is formed by adding the direct page register with the 8-bit address to form an effective address. (This functions returns the 24bit space address of the value).
+		uint24_t _GetDirectAddr();
+		//! @brief The effective address is formed by DBR:<16-bit exp>. (This functions returns the 24bit space address of the value).
+		uint24_t _GetAbsoluteAddr();
+		//! @brief The effective address is the expression. (This functions returns the 24bit space address of the value).
+		uint24_t _GetAbsoluteLongAddr();
+
+
 		//! @brief Execute a single instruction.
 		//! @return The number of CPU cycles that the instruction took.
 		int executeInstruction();
+
+		//! @brief Break instruction (0x00) - Causes a software break. The PC is loaded from a vector table.
+		int BRK();
+		//! @brief Add with carry (0x61, 0x63, 0x65, 0x67, 0x69, 0x6D, 0x6F, 0x71, 0x72, 0x73, 0x75, 0x77, 0x79, 0x7D, 0x7F) - Adds operand to the Accumulator; adds an additional 1 if carry is set.
+		int ADC();
 	public:
 		explicit CPU(std::shared_ptr<Memory::MemoryBus> bus, Cartridge::Header &cartridgeHeader);
 		//! @brief This function continue to execute the Cartridge code.
@@ -206,10 +221,6 @@ namespace ComSquare::CPU
 		//! @param data The new value of the register.
 		//! @throw InvalidAddress will be thrown if the address is more than $1F (the number of register).
 		void write(uint24_t addr, uint8_t data) override;
-
-	private:
-		//! @brief Break instruction (0x00) - Causes a software break. The PC is loaded from a vector table.
-		int BRK();
 	};
 }
 

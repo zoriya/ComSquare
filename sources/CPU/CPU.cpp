@@ -195,18 +195,66 @@ namespace ComSquare::CPU
 
 	int CPU::executeInstruction()
 	{
-		uint8_t opcode = this->_bus->read(this->_registers.pc++);
+		uint8_t opcode = this->_bus->read(this->_registers.pc);
 
 		switch (opcode) {
-		case 0x0: return this->BRK();
+		case 0x0:
+			return this->BRK();
+		case 0x61:
+		case 0x63:
+		case 0x65:
+		case 0x67:
+		case 0x69:
+		case 0x6D:
+		case 0x6F:
+		case 0x71:
+		case 0x72:
+		case 0x73:
+		case 0x75:
+		case 0x77:
+		case 0x79:
+		case 0x7D:
+		case 0x7F:
+			return this->ADC();
 		default:
 			throw InvalidOpcode("CPU", opcode);
 		}
 	}
 
+	////////////////////////////////////////////////////////////////////
+	/// Addressing modes
+	////////////////////////////////////////////////////////////////////
+
+	uint24_t CPU::_GetImmediateAddr()
+	{
+		return this->_registers.pc++;
+	}
+
+	uint24_t CPU::_GetDirectAddr()
+	{
+		uint8_t addr = this->_bus->read(this->_registers.pc++);
+		return this->_registers.d + addr;
+	}
+
+	uint24_t CPU::_GetAbsoluteAddr()
+	{
+		uint24_t addr = this->_registers.dbr << 16u;
+		addr += this->_bus->read(this->_registers.pc++) << 8u;
+		addr += this->_bus->read(this->_registers.pc++);
+		return addr;
+	}
+
+	uint24_t CPU::_GetAbsoluteLongAddr()
+	{
+		return 0;
+	}
+
+
 
 	int CPU::BRK()
 	{
+		this->_registers.pc += 2;
+
 		this->_registers.p.i = true;
 		if (this->_isEmulationMode)
 			this->_registers.pc = this->_cartridgeHeader.emulationInterrupts.brk;
@@ -214,5 +262,15 @@ namespace ComSquare::CPU
 			this->_registers.pc = this->_cartridgeHeader.nativeInterrupts.brk;
 		this->_registers.p.d = false;
 		return 7 + !this->_isEmulationMode;
+	}
+
+
+	////////////////////////////////////////////////////////////////////
+	/// Mathematical operations
+	////////////////////////////////////////////////////////////////////
+
+	int CPU::ADC()
+	{
+//		this->_registers.a +=
 	}
 }
