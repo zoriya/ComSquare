@@ -49,10 +49,10 @@ namespace ComSquare::Memory
 
 	void MemoryBus::_mirrorComponents(SNES &console, int i)
 	{
-		this->_memoryAccessors.emplace_back(new Memory::MemoryShadow(console.wram, i, i + 0x2000));
-		this->_memoryAccessors.emplace_back(new Memory::MemoryShadow(console.ppu, i + 0x2100, i + 0x2140));
-		this->_memoryAccessors.emplace_back(new Memory::MemoryShadow(console.apu, i + 0x2140, i + 0x2144));
-		this->_memoryAccessors.emplace_back(new Memory::MemoryShadow(console.cpu, i + 0x4200, i + 0x4220));
+		this->_memoryAccessors.emplace_back(new Memory::MemoryShadow(console.wram, i, i + 0x1FFF));
+		this->_memoryAccessors.emplace_back(new Memory::MemoryShadow(console.ppu, i + 0x2100, i + 0x213F));
+		this->_memoryAccessors.emplace_back(new Memory::MemoryShadow(console.apu, i + 0x2140, i + 0x2143));
+		this->_memoryAccessors.emplace_back(new Memory::MemoryShadow(console.cpu, i + 0x4200, i + 0x421F));
 	}
 
 	void MemoryBus::mapComponents(SNES &console)
