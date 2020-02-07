@@ -93,6 +93,8 @@ namespace ComSquare::Memory
 			console.sram->setMemoryRegion(0xF0, 0xFD, 0x0000, 0x7FFF);
 			this->_memoryAccessors.push_back(console.sram);
 			this->_memoryAccessors.emplace_back(new Memory::RectangleShadow(console.sram, 0x70, 0x7D, 0x0000, 0x7FFF));
+
+			// TODO implement the SRam accessor for the FE/FF
 		}
 		// TODO should implement HiRom.
 	}
