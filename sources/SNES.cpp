@@ -7,10 +7,10 @@
 namespace ComSquare
 {
 	SNES::SNES(const std::shared_ptr<Memory::MemoryBus> &bus, const std::string &romPath, Renderer::IRenderer &renderer) :
-		cpu(new CPU::CPU(bus)),
+		cartridge(new Cartridge::Cartridge(romPath)),
+		cpu(new CPU::CPU(bus, cartridge->header)),
 		ppu(new PPU::PPU()),
 		apu(new APU::APU()),
-		cartridge(new Cartridge::Cartridge(romPath)),
 		wram(new Ram::Ram(16384)),
 		sram(new Ram::Ram(this->cartridge->header.sramSize))
 	{

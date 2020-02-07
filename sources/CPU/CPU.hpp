@@ -8,7 +8,8 @@
 #include "../Memory/IMemory.hpp"
 #include "../Memory/MemoryBus.hpp"
 #include "../Models/Ints.hpp"
-#include "CommonCpu.hpp"
+#include "Instructions/CommonInstructions.hpp"
+#include "../Cartridge/Cartridge.hpp"
 
 namespace ComSquare::CPU
 {
@@ -68,28 +69,27 @@ namespace ComSquare::CPU
 		};
 
 		//! @brief The Processor status register;
-		union p {
-			//!	@brief The Negative flag
-			bool n : 1;
-			//! @brief The oVerflow flag
-			bool v : 1;
-			//! @brief The accumulator and Memory width flag (in native mode only)
-			bool m : 1;
-			union {
-				//!	@brief The indeX register width flag (in native mode only)
-				bool x : 1;
-				//! @brief The Break flag (in emulation mode only)
-				bool b : 1;
+		union {
+			struct {
+				//!	@brief The Negative flag
+				bool n : 1;
+				//! @brief The oVerflow flag
+				bool v : 1;
+				//! @brief The accumulator and Memory width flag (in native mode only)
+				bool m : 1;
+				//!	@brief The indeX register width flag (in native mode only) OR the Break flag (in emulation mode only)
+				bool x_b : 1;
+				//!	@brief The Decimal mode flag
+				bool d : 1;
+				//!	@brief The Interrupt request disable flag
+				bool i : 1;
+				//! @brief The Zero flag
+				bool z : 1;
+				//!	@brief The Carry flag
+				bool c : 1;
 			};
-			//!	@brief The Decimal mode flag
-			bool d : 1;
-			//!	@brief The Interrupt disable flag
-			bool i : 1;
-			//! @brief The Zero flag
-			bool z : 1;
-			//!	@brief The Carry flag
-			bool c : 1;
-		};
+			uint8_t flags;
+		} p;
 	};
 
 	//! @brief Struct containing internal registers of the CPU.
@@ -175,7 +175,7 @@ namespace ComSquare::CPU
 	};
 
 	//! @brief The main CPU
-	class CPU : public CommonCPU, public Memory::IMemory {
+	class CPU : public CommonInstructions, public Memory::IMemory {
 	private:
 		//! @brief All the registers of the CPU
 		Registers _registers{};
@@ -185,12 +185,14 @@ namespace ComSquare::CPU
 		InternalRegisters _internalRegisters{};
 		//! @brief The memory bus to use for read/write.
 		std::shared_ptr<Memory::MemoryBus> _bus;
+		//! @brief The cartridge header (stored for interrupt vectors..
+		Cartridge::Header &_cartridgeHeader;
 
 		//! @brief Execute a single instruction.
 		//! @return The number of CPU cycles that the instruction took.
 		int executeInstruction();
 	public:
-		explicit CPU(std::shared_ptr<Memory::MemoryBus> bus);
+		explicit CPU(std::shared_ptr<Memory::MemoryBus> bus, Cartridge::Header &cartridgeHeader);
 		//! @brief This function continue to execute the Cartridge code.
 		//! @return The number of CPU cycles that elapsed
 		int update();
@@ -204,6 +206,10 @@ namespace ComSquare::CPU
 		//! @param data The new value of the register.
 		//! @throw InvalidAddress will be thrown if the address is more than $1F (the number of register).
 		void write(uint24_t addr, uint8_t data) override;
+
+	private:
+		//! @brief Break instruction (0x00) - Causes a software break. The PC is loaded from a vector table.
+		int BRK();
 	};
 }
 

@@ -46,7 +46,10 @@ add_executable(unit_tests
         sources/Cartridge/InterruptVectors.hpp
         sources/Memory/RectangleShadow.cpp
         sources/Memory/RectangleShadow.hpp
-        sources/CPU/CommonCpu.cpp sources/CPU/CommonCpu.hpp)
+        sources/CPU/Instructions/CommonInstructions.cpp
+        sources/CPU/Instructions/CommonInstructions.hpp
+        sources/Exceptions/InvalidOpcode.hpp
+        )
 
 # include criterion & coverage
 target_link_libraries(unit_tests criterion -lgcov)
@@ -95,7 +98,10 @@ add_executable(ComSquare
         sources/Cartridge/InterruptVectors.hpp
         sources/Memory/RectangleShadow.cpp
         sources/Memory/RectangleShadow.hpp
-        sources/CPU/CommonCpu.cpp sources/CPU/CommonCpu.hpp)
+        sources/CPU/Instructions/CommonInstructions.cpp
+        sources/CPU/Instructions/CommonInstructions.hpp
+        sources/Exceptions/InvalidOpcode.hpp
+        )
 
 target_link_libraries(ComSquare
         sfml-graphics

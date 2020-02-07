@@ -7,12 +7,15 @@
 #include <utility>
 #include "../Exceptions/NotImplementedException.hpp"
 #include "../Exceptions/InvalidAddress.hpp"
+#include "../Exceptions/InvalidOpcode.hpp"
 
 namespace ComSquare::CPU
 {
-	CPU::CPU(std::shared_ptr<Memory::MemoryBus> bus)
-		: _bus(std::move(bus))
-	{ }
+	CPU::CPU(std::shared_ptr<Memory::MemoryBus> bus, Cartridge::Header &cartridgeHeader)
+		: _bus(std::move(bus)), _cartridgeHeader(cartridgeHeader)
+	{
+		this->_registers.pc = this->_cartridgeHeader.emulationInterrupts.reset;
+	}
 
 	//! @bref The CPU's internal registers starts at $4200	and finish at $421F.
 	uint8_t CPU::read(uint24_t addr)
@@ -192,6 +195,24 @@ namespace ComSquare::CPU
 
 	int CPU::executeInstruction()
 	{
-		throw NotImplementedException();
+		uint8_t opcode = this->_bus->read(this->_registers.pc++);
+
+		switch (opcode) {
+		case 0x0: return this->BRK();
+		default:
+			throw InvalidOpcode("CPU", opcode);
+		}
+	}
+
+
+	int CPU::BRK()
+	{
+		this->_registers.p.i = true;
+		if (this->_isEmulationMode)
+			this->_registers.pc = this->_cartridgeHeader.emulationInterrupts.brk;
+		else
+			this->_registers.pc = this->_cartridgeHeader.nativeInterrupts.brk;
+		this->_registers.p.d = false;
+		return 7 + !this->_isEmulationMode;
 	}
 }

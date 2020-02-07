@@ -2,15 +2,15 @@
 // Created by anonymus-raccoon on 2/5/20.
 //
 
-#ifndef COMSQUARE_COMMONCPU_HPP
-#define COMSQUARE_COMMONCPU_HPP
+#ifndef COMSQUARE_COMMONINSTRUCTIONS_HPP
+#define COMSQUARE_COMMONINSTRUCTIONS_HPP
 
 namespace ComSquare::CPU
 {
 	//! @brief The shared states of the Main's CPU and the APU's CPU.
-	class CommonCPU {
+	class CommonInstructions {
 
 	};
 }
 
-#endif //COMSQUARE_COMMONCPU_HPP
+#endif //COMSQUARE_COMMONINSTRUCTIONS_HPP

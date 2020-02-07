@@ -18,14 +18,14 @@ namespace ComSquare
 	//! @brief Container of all the components of the SNES.
 	struct SNES {
 	public:
+		//! @brief Cartridge containing instructions (ROM).
+		std::shared_ptr<Cartridge::Cartridge> cartridge;
 		//! @brief Central Processing Unit of the SNES.
 		std::shared_ptr<CPU::CPU> cpu;
 		//! @brief Picture Processing Unit of the SNES
 		std::shared_ptr<PPU::PPU> ppu;
 		//! @brief Audio Processing Unit if the SNES
 		std::shared_ptr<APU::APU> apu;
-		//! @brief Cartridge containing instructions (ROM).
-		std::shared_ptr<Cartridge::Cartridge> cartridge;
 		//! @brief Work Ram shared by all the components.
 		std::shared_ptr<Ram::Ram> wram;
 		//! @brief Save Ram residing inside the Cartridge in a real SNES.
