@@ -13,6 +13,7 @@
 #include "../sources/Memory/MemoryShadow.hpp"
 #include "../sources/Memory/RectangleShadow.hpp"
 #include "../sources/PPU/PPU.hpp"
+#include "../sources/Exceptions/InvalidAction.hpp"
 
 
 using namespace ComSquare;
@@ -352,6 +353,45 @@ Test(BusWrite, WriteAPU)
 
 	pair.first.write(0x002143, 123);
 	cr_assert_eq(pair.second.apu->_registers.port3, 123);
+}
+
+Test(BusWrite, WritePPU)
+{
+	auto pair = Init();
+
+	pair.first.write(0x002106, 123);
+	cr_assert_eq(pair.second.ppu->mosaic.raw, 123);
+}
+
+Test(BusWrite, WriteCPU)
+{
+	auto pair = Init();
+
+	pair.first.write(0x00420D, 123);
+	cr_assert_eq(pair.second.cpu->_internalRegisters.memsel, 123);
+}
+
+Test(BusWrite, WriteROM)
+{
+	auto pair = Init();
+
+	cr_assert_throw(pair.first.write(0x808005, 123), InvalidAction);
+}
+
+Test(BusWrite, WriteWRAM)
+{
+	auto pair = Init();
+
+	pair.first.write(0x7E0002, 123);
+	cr_assert_eq(pair.second.wram->_data[2], 123);
+}
+
+Test(BusWrite, WriteSRAM)
+{
+	auto pair = Init();
+
+	pair.first.write(0x700009, 123);
+	cr_assert_eq(pair.second.sram->_data[9], 123);
 }
 
 ////////////////////////////////////
