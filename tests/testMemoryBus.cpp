@@ -346,9 +346,12 @@ Test(BusRead, ReadWRAM)
 //						  //
 ////////////////////////////
 
-Test(BusWrite, )
+Test(BusWrite, WriteAPU)
 {
+	auto pair = Init();
 
+	pair.first.write(0x002143, 123);
+	cr_assert_eq(pair.second.apu->_registers.port3, 123);
 }
 
 ////////////////////////////////////
