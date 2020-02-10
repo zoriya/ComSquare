@@ -26,55 +26,47 @@ namespace ComSquare::PPU
 	{
 		switch (addr) {
 		case 0x00: //! @brief $2100 INIDISP Register (F-blank and Brightness)
-			//! @brief Take the first bit to set the bool.
-			this->_fBlank = data >> 7U;
-			//! @brief Take the 4 last bits representing the brightness.
-			this->_brightness = data & 0xFU;
+			this->_inidisp.raw = data;
 			break;
 		case 0x01: //! @brief $2101 OBSEL Register (Object Size and Character Address)
-			//! @brief The first 3 bits.
-			this->_objectSize = (data & 0xE0U) >> 5U;
-			//! @brief The last 3 bits;
-			this->_baseSelect = data & 0x07U;
-			//! @brief th 2 center bits.
-			this->_nameSelect = (data & 0x18U) >> 3U;
+			this->_obsel.raw = data;
 			break;
 		case 0x02: //! @brief $2102 OAMADDL (OAM Address low byte).
+			this->_oamadd.oamaddl = data;
 			//! @brief we recreate the oamAddress with the previous oamAddress because there is one bit missing (given by the register $2103)
-			this->_oamAddress = (this->_oamAddress & 0x100U) | data;
 			break;
 		case 0x03: //! @brief $2103 OAMADDH (OAM Address high bit and Obj Priority)
+			this->_oamadd.oamaddh = data;
 			//! @brief Same as $2102 we recreate the oamAddress with the previous oamAddress because there are 8 bits missing (given by the register $2102)
-			this->_oamAddress = (this->_oamAddress & 0xFFU) | ((data & 0x01U) << 8U);
-			//! @brief The objPriority is given by the first bit of the data
- 			this->_objPriority = (data & 0x80U) >> 7U;
 			break;
-		case 0x04:
-			this->oamdata = data;
+		case 0x04: //! @brief $2104 OAMDATA (Data for OAM write).
+			//! @brief not implemented yet.
+		//	throw InvalidAddress("PPU Internal Registers write", addr);
+			this->_oamdata = data;
 			break;
-		case 0x05:
-			this->bgmode.raw = data;
+		case 0x05: //! @brief $2105 BGMODE (BG Mode and Character Size).
+			this->_bgmode.raw = data;
 			break;
 		case 0x06:
-			this->mosaic.raw = data;
+			this->_mosaic.raw = data;
 			break;
 		case 0x07:
-			this->bg1sc.raw = data;
+			this->_bg1sc.raw = data;
 			break;
 		case 0x08:
-			this->bg2sc.raw = data;
+			this->_bg2sc.raw = data;
 			break;
 		case 0x09:
-			this->bg3sc.raw = data;
+			this->_bg3sc.raw = data;
 			break;
 		case 0x0A:
-			this->bg4sc.raw = data;
+			this->_bg4sc.raw = data;
 			break;
 		case 0x0B:
-			this->bg12nba.raw = data;
+			this->_bg12nba.raw = data;
 			break;
 		case 0x0C:
-			this->bg34nba.raw = data;
+			this->_bg34nba.raw = data;
 			break;
 		//TODO adding the rest of the registers. oaf !
 		default:

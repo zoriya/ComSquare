@@ -52,7 +52,9 @@ add_executable(unit_tests
         sources/CPU/Instructions/Interrupts.cpp
         sources/CPU/Instructions/MathematicalOperations.cpp
         tests/CPU/testAddressingMode.cpp
-        tests/tests.cpp)
+        tests/tests.cpp
+        tests/PPU/testPpuWrite.cpp
+)
 
 # include criterion & coverage
 target_link_libraries(unit_tests criterion -lgcov)

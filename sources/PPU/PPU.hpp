@@ -17,6 +17,10 @@ namespace ComSquare::PPU
 	//! @brief The class containing all the registers the PPU
 	class PPU : public Memory::IMemory {
 	private:
+	/*	struct _layerInfo {
+			bool _characterSize;
+		};
+
 		struct {
 			unsigned int height;
 			unsigned int width;
@@ -28,6 +32,7 @@ namespace ComSquare::PPU
 			unsigned char characterHeight;
 			unsigned char characterWidth;
 		} _BG[4];
+
 		struct object {
 			bool verticalMirroring;
 			bool horizontalMirroring;
@@ -36,25 +41,34 @@ namespace ComSquare::PPU
 		};
 
 		//! @brief INIDISP variables (F-blank and Brightness)
-		bool _fBlank;
-		unsigned short _brightness; //! @brief F=max, 0="off".
+		struct {
+			bool _fBlank;
+			//! @brief F=max, 0="off".
+			unsigned short _brightness;
+		} _inidisp;
 
 		//! @brief OBSEL variables (Object Size and Character Address)
-		unsigned char _objectSize; //! @brief "OamMode" this contains the size of the Objects (ex: 8x8 and 16x16)
-		unsigned char _baseSelect; //! @brief "OamBaseAddress"
-		unsigned char _nameSelect; //! @brief "OamAddressOffset"
+		struct {
+			//! @brief "OamMode" this contains the size of the Objects (ex: 8x8 and 16x16)
+			unsigned char _objectSize;
+			//! @brief "OamBaseAddress"
+			unsigned char _baseSelect;
+			//! @brief "OamAddressOffset"
+			unsigned char _nameSelect;
+		} _obsel;
 
 		//! @brief OAMADD variables (OAM Address and Obj Priority)
-		uint16_t _oamAddress;
-		bool _objPriority;
+		struct {
+			uint16_t _oamAddress;
+			bool _objPriority;
+		} _oamadd;
 
-
-
-
-
-
-
-		/// OLD to stuff to refactor
+		//! @brief BGMODE (BG Mode and Character Size)
+		struct {
+			unsigned char _bgMode;
+			bool _mode1Bg3Priority;
+			_layerInfo layers[4];
+		} _bgmode;*/
 
 
 
@@ -62,48 +76,48 @@ namespace ComSquare::PPU
 		//! @brief INIDISP Register (F-blank and Brightness)
 		union {
 			struct {
-				bool fblank: 1;
-				bool _: 3;
 				uint8_t brightness: 4;
+				bool _: 3;
+				bool fblank: 1;
 			};
 			uint8_t raw;
-		} inidisp;
+		} _inidisp;
 		//! @brief OBSEL Register (Object Size and Character Address)
 		union {
 			struct {
-				uint8_t objectSize: 3;
-				bool nameSelect: 2;
 				uint8_t baseSelect: 3;
+				bool nameSelect: 2;
+				uint8_t objectSize: 3;
 			};
 			uint8_t raw;
-		} obsel;
+		} _obsel;
 		//! @brief OAMADD Register (OAM Address and Obj Priority)
 		union {
 			struct {
-				bool objPriorityActivationBit: 1;
-				uint8_t _: 6;
 				uint32_t oamAddress: 9;
+				uint8_t _: 6;
+				bool objPriorityActivationBit: 1;
 			};
 			struct {
-				uint8_t oamaddh;
 				uint8_t oamaddl;
+				uint8_t oamaddh;
 			};
 			uint32_t raw;
-		} oamadd;
+		} _oamadd;
 		//! @brief OAMDATA Register (Data for OAM write)
-		uint8_t oamdata;
+		uint8_t _oamdata;
 		//! @brief BGMODE Register (OAM Address and Obj Priority)
 		union {
 			struct {
-				bool characterSizeBg4: 1;
-				bool characterSizeBg3: 1;
-				bool characterSizeBg2: 1;
-				bool characterSizeBg1: 1;
-				bool mode1Bg3PriorityBit: 1;
 				uint8_t bgMode: 3;
+				bool mode1Bg3PriorityBit: 1;
+				bool characterSizeBg1: 1;
+				bool characterSizeBg2: 1;
+				bool characterSizeBg3: 1;
+				bool characterSizeBg4: 1;
 			};
 			uint8_t raw;
-		} bgmode;
+		} _bgmode;
 		//! @brief MOSAIC Register (Screen Pixelation)
 		union {
 			struct {
@@ -114,7 +128,7 @@ namespace ComSquare::PPU
 				bool affectBg1: 1;
 			};
 			uint8_t raw;
-		} mosaic;
+		} _mosaic;
 		//! @brief BG1SC Register (BG1 Tilemap Address and Size)
 		union {
 			struct {
@@ -123,7 +137,7 @@ namespace ComSquare::PPU
 				bool tilemapVerticalMirroring: 1;
 			};
 			uint8_t raw;
-		} bg1sc;	
+		} _bg1sc;
 		//! @brief BG2SC Register (BG2 Tilemap Address and Size)
 		union {
 			struct {
@@ -132,7 +146,7 @@ namespace ComSquare::PPU
 				bool tilemapVerticalMirroring: 1;
 			};
 			uint8_t raw;
-		} bg2sc;
+		} _bg2sc;
 		//! @brief BG3SC Register (BG3 Tilemap Address and Size)
 		union {
 			struct {
@@ -141,7 +155,7 @@ namespace ComSquare::PPU
 				bool tilemapVerticalMirroring: 1;
 			};
 			uint8_t raw;
-		} bg3sc;
+		} _bg3sc;
 		//! @brief BG4SC Register (BG4 Tilemap Address and Size)
 		union {
 			struct {
@@ -150,7 +164,7 @@ namespace ComSquare::PPU
 				bool tilemapVerticalMirroring: 1;
 			};
 			uint8_t raw;
-		} bg4sc;
+		} _bg4sc;
 		//! @brief BG12NBA Register (BG1 and 2 Chr Address)
 		union {
 			struct {
@@ -158,7 +172,7 @@ namespace ComSquare::PPU
 				uint8_t baseAddressBg1a3: 4;
 			};
 			uint8_t raw;
-		} bg12nba;
+		} _bg12nba;
 		//! @brief BG34NBA Register (BG3 and 4 Chr Address)
 		union {
 			struct {
@@ -166,7 +180,7 @@ namespace ComSquare::PPU
 				uint8_t baseAddressBg1a3: 4;
 			};
 			uint8_t raw;
-		} bg34nba;
+		} _bg34nba;
 		//! @brief BG1HOFS Register (BG1 Horizontal Scroll)
 		//! @brief BG1VOFS Register (BG1 Vertical Scroll)
 		union {
@@ -175,7 +189,7 @@ namespace ComSquare::PPU
 				uint32_t offsetBg: 10;
 			};
 			uint16_t raw;
-		} bg1ofs;
+		} _bg1ofs;
 		//! @brief M7HOFS Register (Mode 7 _BG Horizontal Scroll)
 		//! @brief M7VOFS Register (Mode 7 _BG Vertical Scroll)
 		union {
@@ -184,7 +198,7 @@ namespace ComSquare::PPU
 				uint32_t offsetBg : 13;
 			};
 			uint8_t raw;
-		} m7ofs;
+		} _m7ofs;
 		//! @brief BG2HOFS Register (BG2 Horizontal Scroll)
 		//! @brief BG2VOFS Register (BG2 Vertical Scroll)
 		union {
@@ -193,7 +207,7 @@ namespace ComSquare::PPU
 				uint32_t offsetBg: 10;
 			};
 			uint8_t raw;
-		} bg2ofs;
+		} _bg2ofs;
 		//! @brief BG3HOFS Register (BG3 Horizontal Scroll)
 		//! @brief BG3VOFS Register (BG3 Vertical Scroll)
 		union {
@@ -202,7 +216,7 @@ namespace ComSquare::PPU
 				uint32_t offsetBg: 10;
 			};
 			uint8_t raw;
-		} bg3ofs;
+		} _bg3ofs;
 		//! @brief BG4HOFS Register (BG4 Horizontal Scroll)
 		//! @brief BG4VOFS Register (BG4 Vertical Scroll)
 		union {
@@ -211,7 +225,7 @@ namespace ComSquare::PPU
 				uint32_t offsetBg: 10;
 			};
 			uint8_t raw;
-		} bg4ofs;
+		} _bg4ofs;
 		//! @brief VMAIN Register (Video Port Control)
 		union {
 			struct {
@@ -221,7 +235,7 @@ namespace ComSquare::PPU
 				uint8_t incrementCount: 2;
 			};
 			uint8_t raw;
-		} vmain;
+		} _vmain;
 		//! @brief VMADD Register (VRAM Address)
 		union {
 			struct {
@@ -229,7 +243,7 @@ namespace ComSquare::PPU
 				uint8_t vmaddl;
 			};
 			uint32_t vmadd;
-		} vmadd;
+		} _vmadd;
 		//! @brief VMDATA Register (VRAM Data Write)
 		union {
 			struct {
@@ -237,7 +251,7 @@ namespace ComSquare::PPU
 				uint8_t vmdatal;
 			};
 			uint32_t vmdata;
-		} vmdata;
+		} _vmdata;
 		//! @brief M7SEL Register (Mode 7 Settings)
 		union {
 			struct {
@@ -248,7 +262,7 @@ namespace ComSquare::PPU
 				bool verticalMirroring: 1;
 			};
 			uint8_t raw;
-		} m7sel;
+		} _m7sel;
 		//! M7A M7B M7C M7D i didn't understand how they works so they will be added later.
 		//! @brief M7X Register (Mode 7 Center X)
 		union {
@@ -257,7 +271,7 @@ namespace ComSquare::PPU
 				uint8_t value;
 			};
 			uint32_t center;
-		} m7x;
+		} _m7x;
 		//! @brief M7Y Register (Mode 7 Center Y)
 		union {
 			struct {
@@ -265,9 +279,9 @@ namespace ComSquare::PPU
 				uint8_t value;
 			};
 			uint32_t center;
-		} m7y;
+		} _m7y;
 		//! @brief CGADD Register (CGRAM Address)
-		uint8_t cgadd;
+		uint8_t _cgadd;
 		//! @brief CGDATA Register (CGRAM Data write)
 		union {
 			struct {
@@ -277,7 +291,7 @@ namespace ComSquare::PPU
 				uint8_t red: 5;
 			};
 			uint16_t raw;
-		} cgdata;
+		} _cgdata;
 		//! @brief W12SEL - W34SEL Registers (Window Mask Settings for BGs) and WOBJSEL Register (Window Mask Settings for OBJ and Color Window)
 		union {
 			struct {
@@ -291,7 +305,7 @@ namespace ComSquare::PPU
 				bool window1InversionForBg1Bg2Obj: 1;
 			};
 			uint8_t raw;
-		} wsel;
+		} _wsel;
 		//! @brief WH0 Register (CWindow 1 Left Position)
 		uint8_t wh0;
 		//! @brief WH1 Register (CWindow 1 Right Position)
