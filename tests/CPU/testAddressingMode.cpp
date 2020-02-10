@@ -9,6 +9,12 @@
 using namespace ComSquare;
 
 
+Test(AddrModeInit, LegitBus)
+{
+	auto pair = Init();
+	cr_assert_eq(pair.first.get(), pair.second.cpu->_bus.get(), "Warning, the CPU's bus is not the same the SNES's bus. Next tests of the CPU may fail.");
+}
+
 Test(AddrMode, Immediate)
 {
 	auto pair = Init();

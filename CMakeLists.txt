@@ -9,6 +9,8 @@ add_compile_options(-W -Wall -Wextra -Wshadow)
 
 # make unit tests
 add_executable(unit_tests
+        tests/CPU/testAddressingMode.cpp
+        tests/tests.cpp
         tests/CPU/testCPU.cpp
         tests/testMemoryBus.cpp
         tests/tests.hpp
@@ -50,9 +52,7 @@ add_executable(unit_tests
         sources/CPU/Instructions/CommonInstructions.hpp
         sources/Exceptions/InvalidOpcode.hpp
         sources/CPU/Instructions/Interrupts.cpp
-        sources/CPU/Instructions/MathematicalOperations.cpp
-        tests/CPU/testAddressingMode.cpp
-        tests/tests.cpp)
+        sources/CPU/Instructions/MathematicalOperations.cpp)
 
 # include criterion & coverage
 target_link_libraries(unit_tests criterion -lgcov)

@@ -10,6 +10,6 @@
 #define class struct
 
 #include "../sources/Memory/MemoryBus.hpp"
-std::pair<ComSquare::Memory::MemoryBus, ComSquare::SNES> Init();
+std::pair<std::shared_ptr<ComSquare::Memory::MemoryBus>, ComSquare::SNES> Init();
 
 #endif //COMSQUARE_TESTS_HPP
