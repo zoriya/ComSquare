@@ -7,12 +7,15 @@
 #include <utility>
 #include "../Exceptions/NotImplementedException.hpp"
 #include "../Exceptions/InvalidAddress.hpp"
+#include "../Exceptions/InvalidOpcode.hpp"
 
 namespace ComSquare::CPU
 {
-	CPU::CPU(std::shared_ptr<Memory::MemoryBus> bus)
-		: _bus(std::move(bus))
-	{ }
+	CPU::CPU(std::shared_ptr<Memory::MemoryBus> bus, Cartridge::Header &cartridgeHeader)
+		: _bus(std::move(bus)), _cartridgeHeader(cartridgeHeader)
+	{
+		this->_registers.pc = this->_cartridgeHeader.emulationInterrupts.reset;
+	}
 
 	//! @bref The CPU's internal registers starts at $4200	and finish at $421F.
 	uint8_t CPU::read(uint24_t addr)
@@ -192,6 +195,57 @@ namespace ComSquare::CPU
 
 	int CPU::executeInstruction()
 	{
-		throw NotImplementedException();
+		uint8_t opcode = this->_bus->read(this->_registers.pc);
+
+		switch (opcode) {
+		case 0x0:
+			return this->BRK();
+		case 0x61:
+		case 0x63:
+		case 0x65:
+		case 0x67:
+		case 0x69:
+		case 0x6D:
+		case 0x6F:
+		case 0x71:
+		case 0x72:
+		case 0x73:
+		case 0x75:
+		case 0x77:
+		case 0x79:
+		case 0x7D:
+		case 0x7F:
+			return this->ADC();
+		default:
+			throw InvalidOpcode("CPU", opcode);
+		}
+	}
+
+	////////////////////////////////////////////////////////////////////
+	/// Addressing modes
+	////////////////////////////////////////////////////////////////////
+
+	uint24_t CPU::_GetImmediateAddr()
+	{
+		return this->_registers.pac++;
+	}
+
+	uint24_t CPU::_GetDirectAddr()
+	{
+		uint8_t addr = this->_bus->read(this->_registers.pac++);
+		return this->_registers.d + addr;
+	}
+
+	uint24_t CPU::_GetAbsoluteAddr()
+	{
+		uint24_t addr = this->_registers.dbr << 16u;
+		addr += this->_bus->read(this->_registers.pac++) << 8u;
+		addr += this->_bus->read(this->_registers.pac++);
+		return addr;
+	}
+
+	uint24_t CPU::_GetAbsoluteLongAddr()
+	{
+		return 0;
 	}
 }

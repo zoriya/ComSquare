@@ -49,6 +49,7 @@ namespace ComSquare::Cartridge
 
 	uint8_t Cartridge::read_internal(uint24_t addr)
 	{
+		std::cout << "Reading a addr: " << std::hex << addr << " romStart: " << std::hex << _romStart << std::endl;
 		if (addr >= this->_size)
 			throw InvalidAddress("Cartridge read", addr);
 		return this->_data[addr + this->_romStart];

@@ -5,7 +5,7 @@
 #include <criterion/criterion.h>
 #include <criterion/redirect.h>
 #include <iostream>
-#include "communism.hpp"
+#include "tests.hpp"
 #include "../sources/Memory/MemoryBus.hpp"
 #include "../sources/Memory/IMemory.hpp"
 #include "../sources/SNES.hpp"
@@ -13,23 +13,10 @@
 #include "../sources/Memory/MemoryShadow.hpp"
 #include "../sources/Memory/RectangleShadow.hpp"
 #include "../sources/PPU/PPU.hpp"
+#include "../sources/Exceptions/InvalidAction.hpp"
 
 
 using namespace ComSquare;
-
-std::pair<Memory::MemoryBus, SNES> Init()
-{
-	Memory::MemoryBus bus;
-	Renderer::NoRenderer norenderer(0, 0, 0);
-	SNES snes(std::make_shared<Memory::MemoryBus>(bus), "", norenderer);
-	snes.cartridge->_size = 10;
-	snes.cartridge->_data = new uint8_t[snes.cartridge->_size];
-	snes.cartridge->header.mappingMode = Cartridge::LoRom;
-	snes.sram->_size = 10;
-	snes.sram->_data = new uint8_t[snes.cartridge->_size];
-	bus.mapComponents(snes);
-	return std::make_pair(bus, snes);
-}
 
 //////////////////////////////////
 //								//
@@ -300,6 +287,16 @@ Test(BusRead, ReadROM)
 	cr_assert_eq(data, 123);
 }
 
+Test(BusRead, ReadROMStart)
+{
+	auto pair = Init();
+	uint8_t data;
+
+	pair.second.cartridge->_data[0] = 123;
+	data = pair.first.read(0x808000);
+	cr_assert_eq(data, 123);
+}
+
 Test(BusRead, ReadCPU)
 {
 	auto pair = Init();
@@ -354,24 +351,41 @@ Test(BusWrite, WriteAPU)
 	cr_assert_eq(pair.second.apu->_registers.port3, 123);
 }
 
-////////////////////////////////////
-//								  //
-// MemoryBus::mapComponents tests //
-//								  //
-////////////////////////////////////
-
-Test(BusMapping, )
+Test(BusWrite, WritePPU)
 {
+	auto pair = Init();
 
+	pair.first.write(0x002106, 123);
+	cr_assert_eq(pair.second.ppu->mosaic.raw, 123);
 }
 
-////////////////////////////////////////
-//									  //
-// MemoryBus::_mirrorComponents tests //
-//									  //
-////////////////////////////////////////
-
-Test(BusMirror, )
+Test(BusWrite, WriteCPU)
 {
+	auto pair = Init();
 
+	pair.first.write(0x00420D, 123);
+	cr_assert_eq(pair.second.cpu->_internalRegisters.memsel, 123);
+}
+
+Test(BusWrite, WriteROM)
+{
+	auto pair = Init();
+
+	cr_assert_throw(pair.first.write(0x808005, 123), InvalidAction);
+}
+
+Test(BusWrite, WriteWRAM)
+{
+	auto pair = Init();
+
+	pair.first.write(0x7E0002, 123);
+	cr_assert_eq(pair.second.wram->_data[2], 123);
+}
+
+Test(BusWrite, WriteSRAM)
+{
+	auto pair = Init();
+
+	pair.first.write(0x700009, 123);
+	cr_assert_eq(pair.second.sram->_data[9], 123);
 }

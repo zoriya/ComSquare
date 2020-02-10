@@ -2,7 +2,6 @@
 // Created by anonymus-raccoon on 1/29/20.
 //
 
-#include <iostream>
 #include "IRectangleMemory.hpp"
 #include "../Exceptions/InvalidAddress.hpp"
 
