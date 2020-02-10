@@ -25,12 +25,12 @@ Test(AddrMode, ImmediateBankChange)
 	cr_assert_eq(pair.second.cpu->_registers.pac, 0x010000);
 }
 
-Test(AddrMode, Direct)
-{
-	auto pair = Init();
-	pair.second.cartridge->_data[0] = 0x15;
-	pair.second.cpu->_registers.pac = 0x808000;
-	pair.second.cpu->_registers.d = 0x1000;
-	cr_assert_eq(pair.second.cpu->_GetDirectAddr(), 0x1015, "Returned address was %i but was expecting 0x1015.");
-	cr_assert_eq(pair.second.cpu->_registers.pac, 0x808001);
-}
+//Test(AddrMode, Direct)
+//{
+//	auto pair = Init();
+//	pair.second.cartridge->_data[0] = 0x15;
+//	pair.second.cpu->_registers.pac = 0x808000;
+//	pair.second.cpu->_registers.d = 0x1000;
+//	cr_assert_eq(pair.second.cpu->_GetDirectAddr(), 0x1015, "Returned address was %i but was expecting 0x1015.");
+//	cr_assert_eq(pair.second.cpu->_registers.pac, 0x808001);
+//}
