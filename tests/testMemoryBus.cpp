@@ -287,6 +287,16 @@ Test(BusRead, ReadROM)
 	cr_assert_eq(data, 123);
 }
 
+Test(BusRead, ReadROMStart)
+{
+	auto pair = Init();
+	uint8_t data;
+
+	pair.second.cartridge->_data[0] = 123;
+	data = pair.first.read(0x808000);
+	cr_assert_eq(data, 123);
+}
+
 Test(BusRead, ReadCPU)
 {
 	auto pair = Init();

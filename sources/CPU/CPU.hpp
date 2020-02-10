@@ -33,15 +33,21 @@ namespace ComSquare::CPU
 			};
 			uint16_t d;
 		};
-		//! @brief The program banK register;
-		uint8_t k;
-		//! @brief The Program Counter;
 		union {
 			struct {
-				uint8_t pch;
-				uint8_t pcl;
+				//! @brief The Program Bank Register;
+				uint8_t pbr;
+				//! @brief The Program Counter;
+				union {
+					struct {
+						uint8_t pch;
+						uint8_t pcl;
+					};
+					uint16_t pc;
+				};
 			};
-			uint16_t pc;
+			//! @brief The current Program Address Counter (does not exist in a snes but is useful here).
+			uint24_t pac;
 		};
 		//! @brief The Stack pointer
 		union {

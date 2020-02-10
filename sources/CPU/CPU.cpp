@@ -227,20 +227,20 @@ namespace ComSquare::CPU
 
 	uint24_t CPU::_GetImmediateAddr()
 	{
-		return this->_registers.pc++;
+		return this->_registers.pac++;
 	}
 
 	uint24_t CPU::_GetDirectAddr()
 	{
-		uint8_t addr = this->_bus->read(this->_registers.pc++);
+		uint8_t addr = this->_bus->read(this->_registers.pac++);
 		return this->_registers.d + addr;
 	}
 
 	uint24_t CPU::_GetAbsoluteAddr()
 	{
 		uint24_t addr = this->_registers.dbr << 16u;
-		addr += this->_bus->read(this->_registers.pc++) << 8u;
-		addr += this->_bus->read(this->_registers.pc++);
+		addr += this->_bus->read(this->_registers.pac++) << 8u;
+		addr += this->_bus->read(this->_registers.pac++);
 		return addr;
 	}
 
