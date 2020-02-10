@@ -3,22 +3,24 @@
 //
 
 #include <criterion/criterion.h>
+#include <iostream>
+#include <zconf.h>
 #include "tests.hpp"
 #include "../sources/Renderer/NoRenderer.hpp"
 #include "../sources/SNES.hpp"
 
 using namespace ComSquare;
 
-std::pair<Memory::MemoryBus, SNES> Init()
+std::pair<std::shared_ptr<Memory::MemoryBus>, SNES> Init()
 {
-	Memory::MemoryBus bus;
+	std::shared_ptr<Memory::MemoryBus> bus = std::make_shared<Memory::MemoryBus>();
 	Renderer::NoRenderer norenderer(0, 0, 0);
-	SNES snes(std::make_shared<Memory::MemoryBus>(bus), "", norenderer);
+	SNES snes(bus, "../tests/my_cartridge", norenderer);
 	snes.cartridge->_size = 100;
 	snes.cartridge->_data = new uint8_t[snes.cartridge->_size];
 	snes.cartridge->header.mappingMode = Cartridge::LoRom;
 	snes.sram->_size = 10;
 	snes.sram->_data = new uint8_t[snes.cartridge->_size];
-	bus.mapComponents(snes);
+	bus->mapComponents(snes);
 	return std::make_pair(bus, snes);
 }

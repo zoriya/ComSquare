@@ -14,9 +14,9 @@ namespace ComSquare::Cartridge
 {
 	Cartridge::Cartridge(const std::string &romPath)
 	{
-		if (romPath.empty())
-			return;
 		try {
+			if (romPath.empty())
+				throw InvalidRomException("Path is empty.");
 			size_t size = Cartridge::getRomSize(romPath);
 			FILE *rom = fopen(romPath.c_str(), "rb");
 
@@ -49,7 +49,6 @@ namespace ComSquare::Cartridge
 
 	uint8_t Cartridge::read_internal(uint24_t addr)
 	{
-		std::cout << "Reading a addr: " << std::hex << addr << " romStart: " << std::hex << _romStart << std::endl;
 		if (addr >= this->_size)
 			throw InvalidAddress("Cartridge read", addr);
 		return this->_data[addr + this->_romStart];
