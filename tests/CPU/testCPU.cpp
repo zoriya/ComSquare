@@ -5,12 +5,10 @@
 #include <criterion/criterion.h>
 #include <iostream>
 #include <bitset>
-#include "communism.hpp"
-#include "../sources/SNES.hpp"
-#include "../sources/Memory/MemoryBus.hpp"
+#include "../tests.hpp"
+#include "../../sources/SNES.hpp"
+#include "../../sources/Memory/MemoryBus.hpp"
 using namespace ComSquare;
-
-std::pair<Memory::MemoryBus, SNES> Init();
 
 Test(CPU_emulated, BRK)
 {

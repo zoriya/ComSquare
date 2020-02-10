@@ -9,9 +9,9 @@ add_compile_options(-W -Wall -Wextra -Wshadow)
 
 # make unit tests
 add_executable(unit_tests
-        tests/testCPU.cpp
+        tests/CPU/testCPU.cpp
         tests/testMemoryBus.cpp
-        tests/communism.hpp
+        tests/tests.hpp
         sources/SNES.cpp
         sources/SNES.hpp
         sources/Memory/MemoryBus.cpp
@@ -49,7 +49,10 @@ add_executable(unit_tests
         sources/CPU/Instructions/CommonInstructions.cpp
         sources/CPU/Instructions/CommonInstructions.hpp
         sources/Exceptions/InvalidOpcode.hpp
-        )
+        sources/CPU/Instructions/Interrupts.cpp
+        sources/CPU/Instructions/MathematicalOperations.cpp
+        tests/CPU/testAddressingMode.cpp
+        tests/tests.cpp)
 
 # include criterion & coverage
 target_link_libraries(unit_tests criterion -lgcov)
@@ -101,7 +104,8 @@ add_executable(ComSquare
         sources/CPU/Instructions/CommonInstructions.cpp
         sources/CPU/Instructions/CommonInstructions.hpp
         sources/Exceptions/InvalidOpcode.hpp
-        )
+        sources/CPU/Instructions/Interrupts.cpp
+        sources/CPU/Instructions/MathematicalOperations.cpp)
 
 target_link_libraries(ComSquare
         sfml-graphics
