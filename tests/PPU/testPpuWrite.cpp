@@ -128,3 +128,60 @@ Test(PPU_write, oamaddlh_oamAdress_11_priorityBit_on)
 	cr_assert_eq(pair.second.ppu->_oamadd.objPriorityActivationBit, true);
 	cr_assert_eq(pair.second.ppu->_oamadd.oamAddress, 11);
 }
+
+Test(PPU_write, bgmode_data_full)
+{
+	auto pair = Init();
+	pair.first.write(0x2105, 0b11111111);
+	cr_assert_eq(pair.second.ppu->_bgmode.bgMode, 7);
+	cr_assert_eq(pair.second.ppu->_bgmode.characterSizeBg1, true);
+	cr_assert_eq(pair.second.ppu->_bgmode.characterSizeBg2, true);
+	cr_assert_eq(pair.second.ppu->_bgmode.characterSizeBg3, true);
+	cr_assert_eq(pair.second.ppu->_bgmode.characterSizeBg4, true);
+	cr_assert_eq(pair.second.ppu->_bgmode.mode1Bg3PriorityBit, true);
+}
+
+Test(PPU_write, bgmode_bgmode_5_and_bg24_on)
+{
+	auto pair = Init();
+	pair.first.write(0x2105, 0b10100101);
+	cr_assert_eq(pair.second.ppu->_bgmode.bgMode, 5);
+	cr_assert_eq(pair.second.ppu->_bgmode.characterSizeBg1, false);
+	cr_assert_eq(pair.second.ppu->_bgmode.characterSizeBg2, true);
+	cr_assert_eq(pair.second.ppu->_bgmode.characterSizeBg3, false);
+	cr_assert_eq(pair.second.ppu->_bgmode.characterSizeBg4, true);
+	cr_assert_eq(pair.second.ppu->_bgmode.mode1Bg3PriorityBit, false);
+}
+
+Test(PPU_write, mosaic_data_full)
+{
+auto pair = Init();
+pair.first.write(0x2106, 0b11111111);
+cr_assert_eq(pair.second.ppu->_mosaic.affectBg1, true);
+cr_assert_eq(pair.second.ppu->_mosaic.affectBg2, true);
+cr_assert_eq(pair.second.ppu->_mosaic.affectBg3, true);
+cr_assert_eq(pair.second.ppu->_mosaic.affectBg4, true);
+cr_assert_eq(pair.second.ppu->_mosaic.pixelSize, 0xF);
+}
+
+Test(PPU_write, mosaic_affectbg23_w_1x1_size)
+{
+auto pair = Init();
+pair.first.write(0x2106, 0b00000110);
+cr_assert_eq(pair.second.ppu->_mosaic.affectBg1, false);
+cr_assert_eq(pair.second.ppu->_mosaic.affectBg2, true);
+cr_assert_eq(pair.second.ppu->_mosaic.affectBg3, true);
+cr_assert_eq(pair.second.ppu->_mosaic.affectBg4, false);
+cr_assert_eq(pair.second.ppu->_mosaic.pixelSize, 0x0);
+}
+
+Test(PPU_write, mosaic_affectbg14_w_2x2_size)
+{
+auto pair = Init();
+pair.first.write(0x2106, 0b00101001);
+cr_assert_eq(pair.second.ppu->_mosaic.affectBg1, true);
+cr_assert_eq(pair.second.ppu->_mosaic.affectBg2, false);
+cr_assert_eq(pair.second.ppu->_mosaic.affectBg3, false);
+cr_assert_eq(pair.second.ppu->_mosaic.affectBg4, true);
+cr_assert_eq(pair.second.ppu->_mosaic.pixelSize, 0x2);
+}

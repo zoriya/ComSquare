@@ -121,11 +121,11 @@ namespace ComSquare::PPU
 		//! @brief MOSAIC Register (Screen Pixelation)
 		union {
 			struct {
-				uint8_t pixelSize: 4;
-				bool affectBg4: 1;
-				bool affectBg3: 1;
-				bool affectBg2: 1;
 				bool affectBg1: 1;
+				bool affectBg2: 1;
+				bool affectBg3: 1;
+				bool affectBg4: 1;
+				uint8_t pixelSize: 4;
 			};
 			uint8_t raw;
 		} _mosaic;
