@@ -225,18 +225,18 @@ namespace ComSquare::CPU
 	/// Addressing modes
 	////////////////////////////////////////////////////////////////////
 
-	uint24_t CPU::_GetImmediateAddr()
+	uint24_t CPU::_getImmediateAddr()
 	{
 		return this->_registers.pac++;
 	}
 
-	uint24_t CPU::_GetDirectAddr()
+	uint24_t CPU::_getDirectAddr()
 	{
 		uint8_t addr = this->_bus->read(this->_registers.pac++);
 		return this->_registers.d + addr;
 	}
 
-	uint24_t CPU::_GetAbsoluteAddr()
+	uint24_t CPU::_getAbsoluteAddr()
 	{
 		uint24_t addr = this->_registers.dbr << 16u;
 		addr += this->_bus->read(this->_registers.pac++) << 8u;
@@ -244,7 +244,12 @@ namespace ComSquare::CPU
 		return addr;
 	}
 
-	uint24_t CPU::_GetAbsoluteLongAddr()
+	uint24_t CPU::_getAbsoluteLongAddr()
+	{
+		return 0;
+	}
+
+	uint24_t CPU::_getDirectIndirectIndexedAddr()
 	{
 		return 0;
 	}

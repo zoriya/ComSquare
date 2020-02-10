@@ -195,13 +195,15 @@ namespace ComSquare::CPU
 		Cartridge::Header &_cartridgeHeader;
 
 		//! @brief Immediate address mode is specified with a value. (This functions returns the 24bit space address of the value).
-		uint24_t _GetImmediateAddr();
+		uint24_t _getImmediateAddr();
 		//! @brief The destination is formed by adding the direct page register with the 8-bit address to form an effective address. (This functions returns the 24bit space address of the value).
-		uint24_t _GetDirectAddr();
+		uint24_t _getDirectAddr();
 		//! @brief The effective address is formed by DBR:<16-bit exp>. (This functions returns the 24bit space address of the value).
-		uint24_t _GetAbsoluteAddr();
+		uint24_t _getAbsoluteAddr();
 		//! @brief The effective address is the expression. (This functions returns the 24bit space address of the value).
-		uint24_t _GetAbsoluteLongAddr();
+		uint24_t _getAbsoluteLongAddr();
+		//! @brief The address is DBR:$(read($($Value + D)) + Y). (This functions returns the 24bit space address of the value).
+		uint24_t _getDirectIndirectIndexedAddr();
 
 
 		//! @brief Execute a single instruction.
