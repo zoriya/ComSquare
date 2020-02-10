@@ -5,6 +5,7 @@
 #include "APU.hpp"
 #include "../Exceptions/NotImplementedException.hpp"
 #include "../Exceptions/InvalidAddress.hpp"
+#include "../Exceptions/InvalidOpcode.hpp"
 
 namespace ComSquare::APU
 {
@@ -47,8 +48,21 @@ namespace ComSquare::APU
 		}
 	}
 
-	bool APU::update()
+	int APU::executeInstruction()
 	{
-		throw NotImplementedException();
+		uint8_t opcode = read(this->_internalRegisters.pc++);
+
+		switch (opcode) {
+		default:
+			throw InvalidOpcode("APU", opcode);
+		}
+	}
+
+	int APU::update()
+	{
+		int cycles = 0;
+
+		cycles += executeInstruction();
+		return cycles;
 	}
 }

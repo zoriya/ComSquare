@@ -112,6 +112,10 @@ namespace ComSquare::APU
 
 		//! @brief The DSP component used to produce sound
 		std::shared_ptr<DSP::DSP> _dsp;
+
+		//! @brief Execute a single instruction.
+		//! @return The number of cycles that the instruction took.
+		int executeInstruction();
 	public:
 		explicit APU();
 
@@ -125,7 +129,9 @@ namespace ComSquare::APU
 		//! @param data The new value of the register.
 		//! @throw InvalidAddress will be thrown if the address is more than $FF (the number of register).
 		void write(uint24_t addr, uint8_t data) override;
-		bool update();
+		//! @brief This function execute the instructions received.
+		//! @return The number of cycles that elapsed.
+		int update();
 	};
 }
 
