@@ -155,33 +155,111 @@ Test(PPU_write, bgmode_bgmode_5_and_bg24_on)
 
 Test(PPU_write, mosaic_data_full)
 {
-auto pair = Init();
-pair.first->write(0x2106, 0b11111111);
-cr_assert_eq(pair.second.ppu->_mosaic.affectBg1, true);
-cr_assert_eq(pair.second.ppu->_mosaic.affectBg2, true);
-cr_assert_eq(pair.second.ppu->_mosaic.affectBg3, true);
-cr_assert_eq(pair.second.ppu->_mosaic.affectBg4, true);
-cr_assert_eq(pair.second.ppu->_mosaic.pixelSize, 0xF);
+	auto pair = Init();
+	pair.first->write(0x2106, 0b11111111);
+	cr_assert_eq(pair.second.ppu->_mosaic.affectBg1, true);
+	cr_assert_eq(pair.second.ppu->_mosaic.affectBg2, true);
+	cr_assert_eq(pair.second.ppu->_mosaic.affectBg3, true);
+	cr_assert_eq(pair.second.ppu->_mosaic.affectBg4, true);
+	cr_assert_eq(pair.second.ppu->_mosaic.pixelSize, 0xF);
 }
 
 Test(PPU_write, mosaic_affectbg23_w_1x1_size)
 {
-auto pair = Init();
-pair.first->write(0x2106, 0b00000110);
-cr_assert_eq(pair.second.ppu->_mosaic.affectBg1, false);
-cr_assert_eq(pair.second.ppu->_mosaic.affectBg2, true);
-cr_assert_eq(pair.second.ppu->_mosaic.affectBg3, true);
-cr_assert_eq(pair.second.ppu->_mosaic.affectBg4, false);
-cr_assert_eq(pair.second.ppu->_mosaic.pixelSize, 0x0);
+	auto pair = Init();
+	pair.first->write(0x2106, 0b00000110);
+	cr_assert_eq(pair.second.ppu->_mosaic.affectBg1, false);
+	cr_assert_eq(pair.second.ppu->_mosaic.affectBg2, true);
+	cr_assert_eq(pair.second.ppu->_mosaic.affectBg3, true);
+	cr_assert_eq(pair.second.ppu->_mosaic.affectBg4, false);
+	cr_assert_eq(pair.second.ppu->_mosaic.pixelSize, 0x0);
 }
 
 Test(PPU_write, mosaic_affectbg14_w_2x2_size)
 {
-auto pair = Init();
-pair.first->write(0x2106, 0b00101001);
-cr_assert_eq(pair.second.ppu->_mosaic.affectBg1, true);
-cr_assert_eq(pair.second.ppu->_mosaic.affectBg2, false);
-cr_assert_eq(pair.second.ppu->_mosaic.affectBg3, false);
-cr_assert_eq(pair.second.ppu->_mosaic.affectBg4, true);
-cr_assert_eq(pair.second.ppu->_mosaic.pixelSize, 0x2);
+	auto pair = Init();
+	pair.first->write(0x2106, 0b00101001);
+	cr_assert_eq(pair.second.ppu->_mosaic.affectBg1, true);
+	cr_assert_eq(pair.second.ppu->_mosaic.affectBg2, false);
+	cr_assert_eq(pair.second.ppu->_mosaic.affectBg3, false);
+	cr_assert_eq(pair.second.ppu->_mosaic.affectBg4, true);
+	cr_assert_eq(pair.second.ppu->_mosaic.pixelSize, 0x2);
+}
+
+Test(PPU_write, bg1sc_data_full)
+{
+	auto pair = Init();
+	pair.first->write(0x2107, 0b11111111);
+	cr_assert_eq(pair.second.ppu->_bgsc[0].tilemapAddress, 0b111111);
+	cr_assert_eq(pair.second.ppu->_bgsc[0].tilemapHorizontalMirroring, true);
+	cr_assert_eq(pair.second.ppu->_bgsc[0].tilemapVerticalMirroring, true);
+}
+
+Test(PPU_write, bg2sc_data_full)
+{
+	auto pair = Init();
+	pair.first->write(0x2108, 0b11111111);
+	cr_assert_eq(pair.second.ppu->_bgsc[1].tilemapAddress, 0b111111);
+	cr_assert_eq(pair.second.ppu->_bgsc[1].tilemapHorizontalMirroring, true);
+	cr_assert_eq(pair.second.ppu->_bgsc[1].tilemapVerticalMirroring, true);
+}
+
+Test(PPU_write, bg3sc_data_full)
+{
+	auto pair = Init();
+	pair.first->write(0x2109, 0b11111111);
+	cr_assert_eq(pair.second.ppu->_bgsc[2].tilemapAddress, 0b111111);
+	cr_assert_eq(pair.second.ppu->_bgsc[2].tilemapHorizontalMirroring, true);
+	cr_assert_eq(pair.second.ppu->_bgsc[2].tilemapVerticalMirroring, true);
+}
+
+Test(PPU_write, bg4sc_data_full)
+{
+	auto pair = Init();
+	pair.first->write(0x210A, 0b11111111);
+	cr_assert_eq(pair.second.ppu->_bgsc[3].tilemapAddress, 0b111111);
+	cr_assert_eq(pair.second.ppu->_bgsc[3].tilemapHorizontalMirroring, true);
+	cr_assert_eq(pair.second.ppu->_bgsc[3].tilemapVerticalMirroring, true);
+}
+
+Test(PPU_write, bg4sc_data_null)
+{
+	auto pair = Init();
+	pair.first->write(0x210A, 0b00000000);
+	cr_assert_eq(pair.second.ppu->_bgsc[3].tilemapAddress, 0);
+	cr_assert_eq(pair.second.ppu->_bgsc[3].tilemapHorizontalMirroring, false);
+	cr_assert_eq(pair.second.ppu->_bgsc[3].tilemapVerticalMirroring, false);
+}
+
+Test(PPU_write, bg4sc_horizontal_off_vertical_on_random_tilemapAdress)
+{
+	auto pair = Init();
+	pair.first->write(0x210A, 0b11000110);
+	cr_assert_eq(pair.second.ppu->_bgsc[3].tilemapAddress, 0b110001);
+	cr_assert_eq(pair.second.ppu->_bgsc[3].tilemapHorizontalMirroring, false);
+	cr_assert_eq(pair.second.ppu->_bgsc[3].tilemapVerticalMirroring, true);
+}
+
+Test(PPU_write, bg12nba_data_full)
+{
+	auto pair = Init();
+	pair.first->write(0x210B, 0b11111111);
+	cr_assert_eq(pair.second.ppu->_bgnba[0].baseAddressBg1a3, 0b1111);
+	cr_assert_eq(pair.second.ppu->_bgnba[0].baseAddressBg2a4, 0b1111);
+}
+
+Test(PPU_write, bg34nba_data_full)
+{
+	auto pair = Init();
+	pair.first->write(0x210C, 0b11111111);
+	cr_assert_eq(pair.second.ppu->_bgnba[1].baseAddressBg1a3, 0b1111);
+	cr_assert_eq(pair.second.ppu->_bgnba[1].baseAddressBg2a4, 0b1111);
+}
+
+Test(PPU_write, bg12nba_data_random_data)
+{
+	auto pair = Init();
+	pair.first->write(0x210B, 0b10101010);
+	cr_assert_eq(pair.second.ppu->_bgnba[0].baseAddressBg1a3, 0b1010);
+	cr_assert_eq(pair.second.ppu->_bgnba[0].baseAddressBg2a4, 0b1010);
 }

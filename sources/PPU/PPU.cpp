@@ -47,26 +47,18 @@ namespace ComSquare::PPU
 		case 0x05: //! @brief $2105 BGMODE (BG Mode and Character Size).
 			this->_bgmode.raw = data;
 			break;
-		case 0x06:
+		case 0x06: //! $2106 MOSAIC (Screen Pixelation)
 			this->_mosaic.raw = data;
 			break;
-		case 0x07:
-			this->_bg1sc.raw = data;
+		case 0x07: // BG1SC (BG1 Tilemap Address and Size)
+		case 0x08: // BG2SC (BG2 Tilemap Address and Size)
+		case 0x09: //! @brief BG3SC (BG3 Tilemap Address and Size)
+		case 0x0A: //! @brief BG4SC (BG4 Tilemap Address and Size)
+			this->_bgsc[addr - 0x07].raw = data;
 			break;
-		case 0x08:
-			this->_bg2sc.raw = data;
-			break;
-		case 0x09:
-			this->_bg3sc.raw = data;
-			break;
-		case 0x0A:
-			this->_bg4sc.raw = data;
-			break;
-		case 0x0B:
-			this->_bg12nba.raw = data;
-			break;
-		case 0x0C:
-			this->_bg34nba.raw = data;
+		case 0x0B: //! @brief BG12NBA (BG1 and 2 Chr Address)
+		case 0x0C: //! @brief BG34NBA (BG3 and 4 Chr Address)
+			this->_bgnba[addr - 0x0B].raw = data;
 			break;
 		//TODO adding the rest of the registers. oaf !
 		default:

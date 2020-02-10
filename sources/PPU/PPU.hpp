@@ -129,50 +129,23 @@ namespace ComSquare::PPU
 			};
 			uint8_t raw;
 		} _mosaic;
-		//! @brief BG1SC Register (BG1 Tilemap Address and Size)
+		//! @brief BGSC Registers (BG Tilemap Address and Size)
 		union {
 			struct {
-				uint8_t tilemapAddress: 6;
 				bool tilemapHorizontalMirroring: 1;
 				bool tilemapVerticalMirroring: 1;
-			};
-			uint8_t raw;
-		} _bg1sc;
-		//! @brief BG2SC Register (BG2 Tilemap Address and Size)
-		union {
-			struct {
 				uint8_t tilemapAddress: 6;
-				bool tilemapHorizontalMirroring: 1;
-				bool tilemapVerticalMirroring: 1;
 			};
 			uint8_t raw;
-		} _bg2sc;
-		//! @brief BG3SC Register (BG3 Tilemap Address and Size)
+		} _bgsc[4];
+		//! @brief BGNBA Registers (BG1/2/3/4 Chr Address)
 		union {
 			struct {
-				uint8_t tilemapAddress: 6;
-				bool tilemapHorizontalMirroring: 1;
-				bool tilemapVerticalMirroring: 1;
-			};
-			uint8_t raw;
-		} _bg3sc;
-		//! @brief BG4SC Register (BG4 Tilemap Address and Size)
-		union {
-			struct {
-				uint8_t tilemapAddress: 6;
-				bool tilemapHorizontalMirroring: 1;
-				bool tilemapVerticalMirroring: 1;
-			};
-			uint8_t raw;
-		} _bg4sc;
-		//! @brief BG12NBA Register (BG1 and 2 Chr Address)
-		union {
-			struct {
-				uint8_t baseAddressBg2a4: 4;
 				uint8_t baseAddressBg1a3: 4;
+				uint8_t baseAddressBg2a4: 4;
 			};
 			uint8_t raw;
-		} _bg12nba;
+		} _bgnba[2];
 		//! @brief BG34NBA Register (BG3 and 4 Chr Address)
 		union {
 			struct {
