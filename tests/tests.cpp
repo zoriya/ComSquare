@@ -19,8 +19,8 @@ std::pair<std::shared_ptr<Memory::MemoryBus>, SNES> Init()
 	snes.cartridge->_size = 100;
 	snes.cartridge->_data = new uint8_t[snes.cartridge->_size];
 	snes.cartridge->header.mappingMode = Cartridge::LoRom;
-	snes.sram->_size = 0x2000;
+	snes.sram->_size = 100;
 	snes.sram->_data = new uint8_t[snes.cartridge->_size];
-	bus->mapComponents(snes);
+//	bus->mapComponents(snes);
 	return std::make_pair(bus, snes);
 }

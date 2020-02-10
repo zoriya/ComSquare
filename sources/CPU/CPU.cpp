@@ -5,6 +5,7 @@
 #include "CPU.hpp"
 
 #include <utility>
+#include <iostream>
 #include "../Exceptions/NotImplementedException.hpp"
 #include "../Exceptions/InvalidAddress.hpp"
 #include "../Exceptions/InvalidOpcode.hpp"
@@ -239,18 +240,27 @@ namespace ComSquare::CPU
 	uint24_t CPU::_getAbsoluteAddr()
 	{
 		uint24_t addr = this->_registers.dbr << 16u;
-		addr += this->_bus->read(this->_registers.pac++) << 8u;
 		addr += this->_bus->read(this->_registers.pac++);
+		addr += this->_bus->read(this->_registers.pac++) << 8u;
 		return addr;
 	}
 
 	uint24_t CPU::_getAbsoluteLongAddr()
 	{
-		return 0;
+		uint24_t addr = this->_bus->read(this->_registers.pac++);
+		addr += this->_bus->read(this->_registers.pac++) << 8u;
+		addr += this->_bus->read(this->_registers.pac++) << 16u;
+		return addr;
 	}
 
 	uint24_t CPU::_getDirectIndirectIndexedAddr()
 	{
-		return 0;
+		uint16_t dp = this->_bus->read(this->_registers.pac++) + this->_registers.d;
+		std::cout << "DP: " << std::hex << dp << std::endl;
+		uint24_t base = this->_bus->read(dp);
+		std::cout << "Base: " << std::hex << base << std::endl;
+		base += this->_bus->read(dp + 1) << 8u;
+		base += this->_registers.dbr << 16u;
+		return base + this->_registers.y;
 	}
 }
