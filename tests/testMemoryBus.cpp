@@ -355,13 +355,8 @@ Test(BusWrite, WritePPU)
 {
 	auto pair = Init();
 
-<<<<<<< HEAD
-	pair.first.write(0x002106, 123);
-	cr_assert_eq(pair.second.ppu->_mosaic.raw, 123);
-=======
 	pair.first->write(0x002106, 123);
-	cr_assert_eq(pair.second.ppu->mosaic.raw, 123);
->>>>>>> aeb1e127f381998d0a572712afb43ef657f5024d
+	cr_assert_eq(pair.second.ppu->_mosaic.raw, 123);
 }
 
 Test(BusWrite, WriteCPU)
