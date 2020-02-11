@@ -212,6 +212,12 @@ namespace ComSquare::CPU
 		uint24_t _getDirectIndexedByXAddr();
 		//! @brief The DP address is added to Y to form the effective address. The effective address is always in bank 0.
 		uint24_t _getDirectIndexedByYAddr();
+		//! @brief The absolute expression is added with X and combined with DBR to form the effective address.
+		uint24_t _getAbsoluteIndexedByXAddr();
+		//! @brief The absolute expression is added with Y and combined with DBR to form the effective address.
+		uint24_t _getAbsoluteIndexedByYAddr();
+		//! @brief The effective address is formed by adding the <long exp> with X.
+		uint24_t _getAbsoluteLongIndexedByXAddr();
 
 
 		//! @brief Execute a single instruction.

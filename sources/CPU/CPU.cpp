@@ -294,4 +294,28 @@ namespace ComSquare::CPU
 		dp += this->_registers.y;
 		return dp;
 	}
+
+	uint24_t CPU::_getAbsoluteIndexedByXAddr()
+	{
+		uint16_t abs = this->_bus->read(this->_registers.pac++);
+		abs += this->_bus->read(this->_registers.pac++) << 8u;
+		uint24_t effective = abs + (this->_registers.dbr << 16u);
+		return effective + this->_registers.x;
+	}
+
+	uint24_t CPU::_getAbsoluteIndexedByYAddr()
+	{
+		uint16_t abs = this->_bus->read(this->_registers.pac++);
+		abs += this->_bus->read(this->_registers.pac++) << 8u;
+		uint24_t effective = abs + (this->_registers.dbr << 16u);
+		return effective + this->_registers.y;
+	}
+
+	uint24_t CPU::_getAbsoluteLongIndexedByXAddr()
+	{
+		uint24_t lng = this->_bus->read(this->_registers.pac++);
+		lng += this->_bus->read(this->_registers.pac++) << 8u;
+		lng += this->_bus->read(this->_registers.pac++) << 16u;
+		return lng + this->_registers.x;
+	}
 }
