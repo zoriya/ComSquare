@@ -125,7 +125,7 @@ namespace ComSquare::APU
 		//! @param data The new value of the register.
 		//! @throw InvalidAddress will be thrown if the address is more than $FF (the number of register).
 		void write(uint24_t addr, uint8_t data) override;
-		bool update(unsigned cycles);
+		void update(unsigned cycles);
 	};
 }
 

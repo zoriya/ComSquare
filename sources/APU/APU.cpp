@@ -47,7 +47,7 @@ namespace ComSquare::APU
 		}
 	}
 
-	bool APU::update(unsigned cycles)
+	void APU::update(unsigned cycles)
 	{
 		(void)cycles;
 	}

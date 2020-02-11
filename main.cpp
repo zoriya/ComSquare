@@ -4,7 +4,6 @@
 
 #include <iostream>
 #include <string>
-#include "sources/Renderer/IRenderer.hpp"
 #include "sources/SNES.hpp"
 #include "sources/Renderer/SFRenderer.hpp"
 
@@ -23,6 +22,8 @@ int main(int argc, char **argv)
 			unsigned cycleCount = snes.cpu->update();
 			snes.ppu->update(cycleCount);
 			snes.apu->update(cycleCount);
+
+			renderer.getEvents();
 		}
 	} catch (std::exception &e) {
 		std::cerr << "An error occurred: " << e.what() << std::endl;

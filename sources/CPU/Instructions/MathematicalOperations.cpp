@@ -9,5 +9,7 @@ namespace ComSquare::CPU
 	int CPU::ADC(uint24_t valueAddr)
 	{
 //		this->_registers.a +=
+		(void)valueAddr;
+		return (0);
 	}
 }

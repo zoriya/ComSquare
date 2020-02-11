@@ -218,7 +218,8 @@ namespace ComSquare::CPU
 		case Instructions::ADC_ABSXl:return this->ADC(this->_getAbsoluteIndexedByXLongAddr());
 
 		default:
-			throw InvalidOpcode("CPU", opcode);
+			return 0;
+			//throw InvalidOpcode("CPU", opcode);
 		}
 	}
 
