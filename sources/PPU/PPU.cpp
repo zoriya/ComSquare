@@ -25,40 +25,43 @@ namespace ComSquare::PPU
 	void PPU::write(uint24_t addr, uint8_t data)
 	{
 		switch (addr) {
-		case 0x00: //! @brief $2100 INIDISP Register (F-blank and Brightness)
+		case ppuRegisters::inidisp:
 			this->_inidisp.raw = data;
 			break;
-		case 0x01: //! @brief $2101 OBSEL Register (Object Size and Character Address)
+		case ppuRegisters::obsel:
 			this->_obsel.raw = data;
 			break;
-		case 0x02: //! @brief $2102 OAMADDL (OAM Address low byte).
+		case ppuRegisters::oamaddl:
 			this->_oamadd.oamaddl = data;
-			//! @brief we recreate the oamAddress with the previous oamAddress because there is one bit missing (given by the register $2103)
 			break;
-		case 0x03: //! @brief $2103 OAMADDH (OAM Address high bit and Obj Priority)
+		case ppuRegisters::oamaddh:
 			this->_oamadd.oamaddh = data;
-			//! @brief Same as $2102 we recreate the oamAddress with the previous oamAddress because there are 8 bits missing (given by the register $2102)
 			break;
-		case 0x04: //! @brief $2104 OAMDATA (Data for OAM write).
+		case ppuRegisters::oamdata:
 			//! @brief not implemented yet.
-		//	throw InvalidAddress("PPU Internal Registers write", addr);
 			this->_oamdata = data;
 			break;
-		case 0x05: //! @brief $2105 BGMODE (BG Mode and Character Size).
+		case ppuRegisters::bgmode:
 			this->_bgmode.raw = data;
 			break;
-		case 0x06: //! $2106 MOSAIC (Screen Pixelation)
+		case ppuRegisters::mosaic:
 			this->_mosaic.raw = data;
 			break;
-		case 0x07: // BG1SC (BG1 Tilemap Address and Size)
-		case 0x08: // BG2SC (BG2 Tilemap Address and Size)
-		case 0x09: //! @brief BG3SC (BG3 Tilemap Address and Size)
-		case 0x0A: //! @brief BG4SC (BG4 Tilemap Address and Size)
+		case ppuRegisters::bg1sc:
+		case ppuRegisters::bg2sc:
+		case ppuRegisters::bg3sc:
+		case ppuRegisters::bg4sc:
 			this->_bgsc[addr - 0x07].raw = data;
 			break;
-		case 0x0B: //! @brief BG12NBA (BG1 and 2 Chr Address)
-		case 0x0C: //! @brief BG34NBA (BG3 and 4 Chr Address)
+		case ppuRegisters::bg12nba:
+		case ppuRegisters::bg34nba:
 			this->_bgnba[addr - 0x0B].raw = data;
+			break;
+		case ppuRegisters::bg1hofs:
+			this->_bgofs[0].raw = data;
+			break;
+		case ppuRegisters::vmain:
+			this->_vmain.raw = data;
 			break;
 		//TODO adding the rest of the registers. oaf !
 		default:
@@ -66,7 +69,7 @@ namespace ComSquare::PPU
 		}
 	}
 
-	void PPU::update(unsigned cycles)
+	void PPU::update(int cycles)
 	{
 		(void)cycles;
 	}
