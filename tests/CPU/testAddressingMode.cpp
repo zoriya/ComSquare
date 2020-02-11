@@ -163,3 +163,21 @@ Test(AddrMode, AbsoluteLongIndexByX)
 	cr_assert_eq(pair.second.cpu->_getAbsoluteLongIndexedByXAddr(), 0xEFAC15, "Returned address was %x but was expecting 0xEFAC15.", pair.second.cpu->_getAbsoluteLongIndexedByXAddr());
 	cr_assert_eq(pair.second.cpu->_registers.pac, 0x808003);
 }
+
+Test(AddrMode, ProgramCounterRelativePositive)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.pac = 0x808010;
+	pair.second.cartridge->_data[0x10] = 0x15;
+	cr_assert_eq(pair.second.cpu->_getProgramCounterRelativeAddr(), 0x808025, "Returned address was %x but was expecting 0x808025.", pair.second.cpu->_getProgramCounterRelativeAddr());
+	cr_assert_eq(pair.second.cpu->_registers.pac, 0x808011);
+}
+
+Test(AddrMode, ProgramCounterRelativeNegative)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.pac = 0x808010;
+	pair.second.cartridge->_data[0x10] = -0x15;
+	cr_assert_eq(pair.second.cpu->_getProgramCounterRelativeAddr(), 0x807FFB, "Returned address was %x but was expecting 0x807FFB.", pair.second.cpu->_getProgramCounterRelativeAddr());
+	cr_assert_eq(pair.second.cpu->_registers.pac, 0x808011);
+}

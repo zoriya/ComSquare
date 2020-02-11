@@ -318,4 +318,11 @@ namespace ComSquare::CPU
 		lng += this->_bus->read(this->_registers.pac++) << 16u;
 		return lng + this->_registers.x;
 	}
+
+	uint24_t CPU::_getProgramCounterRelativeAddr()
+	{
+		uint24_t pc = this->_registers.pac;
+		int8_t mod = this->_bus->read(this->_registers.pac++);
+		return pc + mod;
+	}
 }
