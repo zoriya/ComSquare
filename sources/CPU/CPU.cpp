@@ -5,6 +5,7 @@
 #include "CPU.hpp"
 
 #include <utility>
+#include <iostream>
 #include "../Exceptions/NotImplementedException.hpp"
 #include "../Exceptions/InvalidAddress.hpp"
 #include "../Exceptions/InvalidOpcode.hpp"
@@ -184,9 +185,9 @@ namespace ComSquare::CPU
 		}
 	}
 
-	int CPU::update()
+	unsigned CPU::update()
 	{
-		int cycles = 0;
+		unsigned cycles = 0;
 
 		for (int i = 0; i < 0xFF; i++)
 			cycles += this->executeInstruction();
@@ -198,26 +199,27 @@ namespace ComSquare::CPU
 		uint8_t opcode = this->_bus->read(this->_registers.pc);
 
 		switch (opcode) {
-		case 0x0:
-			return this->BRK();
-		case 0x61:
-		case 0x63:
-		case 0x65:
-		case 0x67:
-		case 0x69:
-		case 0x6D:
-		case 0x6F:
-		case 0x71:
-		case 0x72:
-		case 0x73:
-		case 0x75:
-		case 0x77:
-		case 0x79:
-		case 0x7D:
-		case 0x7F:
-			return this->ADC();
+		case Instructions::BRK: return this->BRK();
+
+		case Instructions::ADC_DPXi: return this->ADC(this->_getDirectIndirectIndexedXAddr());
+		case Instructions::ADC_SR:   return this->ADC(this->_getStackRelativeAddr());
+		case Instructions::ADC_DP:   return this->ADC(this->_getDirectAddr());
+		case Instructions::ADC_DPil: return this->ADC(this->_getDirectIndirectLongAddr());
+		case Instructions::ADC_IM:   return this->ADC(this->_getImmediateAddr());
+		case Instructions::ADC_ABS:  return this->ADC(this->_getAbsoluteAddr());
+		case Instructions::ADC_ABSl: return this->ADC(this->_getAbsoluteLongAddr());
+		case Instructions::ADC_DPYi: return this->ADC(this->_getDirectIndirectIndexedYAddr());
+		case Instructions::ADC_DPi:  return this->ADC(this->_getDirectIndirectAddr());
+		case Instructions::ADC_SRYi: return this->ADC(this->_getStackRelativeIndirectIndexedYAddr());
+		case Instructions::ADC_DPX:  return this->ADC(this->_getDirectIndexedByXAddr());
+		case Instructions::ADC_DPYil:return this->ADC(this->_getDirectIndirectIndexedYLongAddr());
+		case Instructions::ADC_ABSY: return this->ADC(this->_getAbsoluteIndexedByYAddr());
+		case Instructions::ADC_ABSX: return this->ADC(this->_getAbsoluteIndexedByXAddr());
+		case Instructions::ADC_ABSXl:return this->ADC(this->_getAbsoluteIndexedByXLongAddr());
+
 		default:
-			throw InvalidOpcode("CPU", opcode);
+			return 0;
+			//throw InvalidOpcode("CPU", opcode);
 		}
 	}
 
@@ -225,27 +227,161 @@ namespace ComSquare::CPU
 	/// Addressing modes
 	////////////////////////////////////////////////////////////////////
 
-	uint24_t CPU::_GetImmediateAddr()
+	uint24_t CPU::_getImmediateAddr()
 	{
 		return this->_registers.pac++;
 	}
 
-	uint24_t CPU::_GetDirectAddr()
+	uint24_t CPU::_getDirectAddr()
 	{
 		uint8_t addr = this->_bus->read(this->_registers.pac++);
 		return this->_registers.d + addr;
 	}
 
-	uint24_t CPU::_GetAbsoluteAddr()
+	uint24_t CPU::_getAbsoluteAddr()
 	{
 		uint24_t addr = this->_registers.dbr << 16u;
-		addr += this->_bus->read(this->_registers.pac++) << 8u;
 		addr += this->_bus->read(this->_registers.pac++);
+		addr += this->_bus->read(this->_registers.pac++) << 8u;
 		return addr;
 	}
 
-	uint24_t CPU::_GetAbsoluteLongAddr()
+	uint24_t CPU::_getAbsoluteLongAddr()
 	{
-		return 0;
+		uint24_t addr = this->_bus->read(this->_registers.pac++);
+		addr += this->_bus->read(this->_registers.pac++) << 8u;
+		addr += this->_bus->read(this->_registers.pac++) << 16u;
+		return addr;
+	}
+
+	uint24_t CPU::_getDirectIndirectIndexedYAddr()
+	{
+		uint16_t dp = this->_bus->read(this->_registers.pac++) + this->_registers.d;
+		uint24_t base = this->_bus->read(dp);
+		base += this->_bus->read(dp + 1) << 8u;
+		base += this->_registers.dbr << 16u;
+		return base + this->_registers.y;
+	}
+
+	uint24_t CPU::_getDirectIndirectIndexedYLongAddr()
+	{
+		uint16_t dp = this->_bus->read(this->_registers.pac++) + this->_registers.d;
+		uint24_t base = this->_bus->read(dp);
+		base += this->_bus->read(dp + 1) << 8u;
+		base += this->_bus->read(dp + 2) << 16u;
+		return base;
+	}
+
+	uint24_t CPU::_getDirectIndirectIndexedXAddr()
+	{
+		uint16_t dp = this->_bus->read(this->_registers.pac++) + this->_registers.d;
+		dp += this->_registers.x;
+		uint24_t base = this->_bus->read(dp);
+		base += this->_bus->read(dp + 1) << 8u;
+		base += this->_registers.dbr << 16u;
+		return base;
+	}
+
+	uint24_t CPU::_getDirectIndexedByXAddr()
+	{
+		uint16_t dp = this->_bus->read(this->_registers.pac++) + this->_registers.d;
+		dp += this->_registers.x;
+		return dp;
+	}
+
+	uint24_t CPU::_getDirectIndexedByYAddr()
+	{
+		uint16_t dp = this->_bus->read(this->_registers.pac++) + this->_registers.d;
+		dp += this->_registers.y;
+		return dp;
+	}
+
+	uint24_t CPU::_getAbsoluteIndexedByXAddr()
+	{
+		uint16_t abs = this->_bus->read(this->_registers.pac++);
+		abs += this->_bus->read(this->_registers.pac++) << 8u;
+		uint24_t effective = abs + (this->_registers.dbr << 16u);
+		return effective + this->_registers.x;
+	}
+
+	uint24_t CPU::_getAbsoluteIndexedByYAddr()
+	{
+		uint16_t abs = this->_bus->read(this->_registers.pac++);
+		abs += this->_bus->read(this->_registers.pac++) << 8u;
+		uint24_t effective = abs + (this->_registers.dbr << 16u);
+		return effective + this->_registers.y;
+	}
+
+	uint24_t CPU::_getAbsoluteIndexedByXLongAddr()
+	{
+		uint24_t lng = this->_bus->read(this->_registers.pac++);
+		lng += this->_bus->read(this->_registers.pac++) << 8u;
+		lng += this->_bus->read(this->_registers.pac++) << 16u;
+		return lng + this->_registers.x;
+	}
+
+	uint24_t CPU::_getProgramCounterRelativeAddr()
+	{
+		uint24_t pc = this->_registers.pac;
+		int8_t mod = this->_bus->read(this->_registers.pac++);
+		return pc + mod;
+	}
+
+	uint24_t CPU::_getProgramCounterRelativeLongAddr()
+	{
+		uint24_t pc = this->_registers.pac;
+		uint8_t val1 = this->_bus->read(this->_registers.pac++);
+		uint8_t val2 = this->_bus->read(this->_registers.pac++);
+		int16_t mod = val2 > 0x7F ? (static_cast<char>(val2) * 256 - val1) : (val1 | val2 << 8u);
+		return pc + mod;
+	}
+
+	uint24_t CPU::_getAbsoluteIndirectAddr()
+	{
+		uint16_t abs = this->_bus->read(this->_registers.pac++);
+		abs += this->_bus->read(this->_registers.pac++) << 8u;
+		uint24_t effective = this->_bus->read(abs);
+		effective += this->_bus->read(abs + 1) << 8u;
+		return effective;
+	}
+
+	uint24_t CPU::_getAbsoluteIndexedIndirectAddr()
+	{
+		uint24_t abs = this->_bus->read(this->_registers.pac++);
+		abs += this->_bus->read(this->_registers.pac++) << 8u;
+		abs += this->_registers.x;
+		uint24_t effective = this->_bus->read(abs);
+		effective += this->_bus->read(abs + 1) << 8u;
+		return effective;
+	}
+
+	uint24_t CPU::_getDirectIndirectAddr()
+	{
+		uint16_t dp = this->_bus->read(this->_registers.pac++) + this->_registers.d;
+		uint24_t effective = this->_bus->read(dp);
+		effective += this->_bus->read(dp + 1) << 8u;
+		effective += this->_registers.dbr << 16u;
+		return effective;
+	}
+
+	uint24_t CPU::_getDirectIndirectLongAddr()
+	{
+		uint16_t dp = this->_bus->read(this->_registers.pac++) + this->_registers.d;
+		uint24_t effective = this->_bus->read(dp);
+		effective += this->_bus->read(++dp) << 8u;
+		effective += this->_bus->read(++dp) << 16u;
+		return effective;
+	}
+
+	uint24_t CPU::_getStackRelativeAddr()
+	{
+		return this->_bus->read(this->_registers.pac++) + this->_registers.s;
+	}
+
+	uint24_t CPU::_getStackRelativeIndirectIndexedYAddr()
+	{
+		uint24_t base = this->_bus->read(this->_registers.pac++) + this->_registers.s;
+		base += this->_registers.dbr << 16u;
+		return base + this->_registers.y;
 	}
 }

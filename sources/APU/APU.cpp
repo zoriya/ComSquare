@@ -47,8 +47,8 @@ namespace ComSquare::APU
 		}
 	}
 
-	bool APU::update()
+	void APU::update(unsigned cycles)
 	{
-		throw NotImplementedException();
+		(void)cycles;
 	}
 }

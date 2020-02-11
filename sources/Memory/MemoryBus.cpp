@@ -46,12 +46,12 @@ namespace ComSquare::Memory
 		handler->write(addr - handler->getStart(), data);
 	}
 
-	void MemoryBus::_mirrorComponents(SNES &console, int i)
+	void MemoryBus::_mirrorComponents(SNES &console, unsigned i)
 	{
-		this->_memoryAccessors.emplace_back(new Memory::MemoryShadow(console.wram, i, i + 0x1FFF));
-		this->_memoryAccessors.emplace_back(new Memory::MemoryShadow(console.ppu, i + 0x2100, i + 0x213F));
-		this->_memoryAccessors.emplace_back(new Memory::MemoryShadow(console.apu, i + 0x2140, i + 0x2143));
-		this->_memoryAccessors.emplace_back(new Memory::MemoryShadow(console.cpu, i + 0x4200, i + 0x421F));
+		this->_memoryAccessors.emplace_back(new Memory::RectangleShadow(console.wram, i, i, 0x0000, 0x1FFF));
+		this->_memoryAccessors.emplace_back(new Memory::MemoryShadow(console.ppu, (i << 16u) + 0x2100, (i << 16u) + 0x213F));
+		this->_memoryAccessors.emplace_back(new Memory::MemoryShadow(console.apu, (i << 16u) + 0x2140, (i << 16u) + 0x2143));
+		this->_memoryAccessors.emplace_back(new Memory::MemoryShadow(console.cpu, (i << 16u) + 0x4200, (i << 16u) + 0x421F));
 	}
 
 	void MemoryBus::mapComponents(SNES &console)
@@ -73,10 +73,10 @@ namespace ComSquare::Memory
 		// TODO implement Joys.
 
 		// Mirror to the quarter 1.
-		for (uint24_t i = 0; i < 0x400000; i += 0x010000)
+		for (uint8_t i = 0x00; i < 0x40; i += 0x01)
 			this->_mirrorComponents(console, i);
 		// Mirror to the quarter 3.
-		for (uint24_t i = 0x800000; i < 0xC00000; i += 0x10000)
+		for (uint8_t i = 0x80; i < 0xC0; i += 0x01)
 			this->_mirrorComponents(console, i);
 
 		if (console.cartridge->header.mappingMode & Cartridge::LoRom) {

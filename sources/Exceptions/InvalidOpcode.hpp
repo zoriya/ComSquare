@@ -7,19 +7,19 @@
 
 #include <exception>
 #include <string>
-#include <ios>
+#include <sstream>
 
 namespace ComSquare
 {
 	//! @brief Exception thrown when someone tries to load an invalid rom.
-	class InvalidOpcode : std::exception {
+	class InvalidOpcode : public std::exception {
 	private:
 		std::string _msg;
 	public:
 		explicit InvalidOpcode(const std::string &pu, unsigned opcode)
 		{
 			std::stringstream stream;
-			stream << "The " + pu + ": 0x" << std::hex << opcode;
+			stream << "The " + pu + " got an invalid opcode: 0x" << std::hex << opcode;
 			this->_msg = stream.str();
 		}
 		const char *what() const noexcept override { return this->_msg.c_str(); }

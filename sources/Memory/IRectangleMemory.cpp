@@ -2,6 +2,7 @@
 // Created by anonymus-raccoon on 1/29/20.
 //
 
+#include <iostream>
 #include "IRectangleMemory.hpp"
 #include "../Exceptions/InvalidAddress.hpp"
 
@@ -14,9 +15,9 @@ namespace ComSquare::Memory
 		unsigned bankCount = bank - this->_startBank;
 		unsigned pageCount = this->_endPage - this->_startPage;
 
-		if (bank < this->_startBank || bank >= this->_endBank)
+		if (bank < this->_startBank || bank > this->_endBank)
 			throw InvalidAddress("Rectangle memory read Invalid Bank", addr);
-		if (page < this->_startPage || page >= this->_endPage)
+		if (page < this->_startPage || page > this->_endPage)
 			throw InvalidAddress("Rectangle memory read Invalid Page", addr);
 		page -= this->_startPage;
 		page += pageCount * bankCount;
