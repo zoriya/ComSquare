@@ -187,6 +187,7 @@ namespace ComSquare::CPU
 	enum Instructions
 	{
 		BRK = 0x00,
+
 		ADC_DPXi = 0x61,
 		ADC_SR = 0x63,
 		ADC_DP = 0x65,
@@ -201,7 +202,7 @@ namespace ComSquare::CPU
 		ADC_DPYil = 0x77,
 		ADC_ABSY = 0x79,
 		ADC_ABSX = 0x7D,
-		ADC_ABSXl = 0x7F
+		ADC_ABSXl = 0x7F,
 	};
 
 	//! @brief The main CPU

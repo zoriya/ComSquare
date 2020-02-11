@@ -229,7 +229,10 @@ namespace ComSquare::CPU
 
 	uint24_t CPU::_getImmediateAddr()
 	{
-		return this->_registers.pac++;
+		uint24_t effective = this->_registers.pac++;
+		if (this->_registers.p.m)
+			this->_registers.pac++;
+		return effective;
 	}
 
 	uint24_t CPU::_getDirectAddr()

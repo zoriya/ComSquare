@@ -24,6 +24,15 @@ Test(AddrMode, Immediate)
 	cr_assert_eq(pair.second.cpu->_registers.pac, 0x000016);
 }
 
+Test(AddrMode, ImmediateMemoryFlag)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.pac = 0x000015;
+	pair.second.cpu->_registers.p.m = true;
+	cr_assert_eq(pair.second.cpu->_getImmediateAddr(), 0x000015, "Got %x, Expected 0x000015");
+	cr_assert_eq(pair.second.cpu->_registers.pac, 0x000017);
+}
+
 Test(AddrMode, ImmediateBankChange)
 {
 	auto pair = Init();

@@ -10,6 +10,8 @@ namespace ComSquare::CPU
 	int CPU::ADC(uint24_t valueAddr)
 	{
 		unsigned value = this->_bus->read(valueAddr) + this->_registers.p.c;
+		if (this->_registers.p.m)
+			value += this->_bus->read(valueAddr + 1) << 8u;
 		unsigned negativeMask = this->_isEmulationMode ? 0xF0u : 0xF000u;
 		unsigned maxValue = this->_isEmulationMode ? UINT8_MAX : UINT16_MAX;
 
