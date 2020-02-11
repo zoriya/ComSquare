@@ -80,3 +80,17 @@ Test(ADC, signedOverflow)
 	cr_assert_eq(pair.second.cpu->_registers.p.n, true, "The negative flags should be set.");
 	cr_assert_eq(pair.second.cpu->_registers.p.z, false, "The zero flags should not be set.");
 }
+
+Test(ADC, signedOverflowEmulated)
+{
+	auto pair = Init();
+	pair.second.cpu->_isEmulationMode = true;
+	pair.second.cpu->_registers.a = 0x000F;
+	pair.second.wram->_data[0] = 0x1;
+	pair.second.cpu->ADC(0x0);
+	cr_assert_eq(pair.second.cpu->_registers.a, 0x0010, "The accumulator's value should be 0xF000 but it was 0x%x.", pair.second.cpu->_registers.a);
+	cr_assert_eq(pair.second.cpu->_registers.p.c, false, "The carry flags should not be set.");
+	cr_assert_eq(pair.second.cpu->_registers.p.v, true, "The overflow flags should be set.");
+	cr_assert_eq(pair.second.cpu->_registers.p.n, true, "The negative flags should be set.");
+	cr_assert_eq(pair.second.cpu->_registers.p.z, false, "The zero flags should not be set.");
+}
