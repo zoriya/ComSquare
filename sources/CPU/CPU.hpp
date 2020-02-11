@@ -25,7 +25,7 @@ namespace ComSquare::CPU
 		};
 		//! @brief The Data Bank Register;
 		uint8_t dbr;
-		//! @brief The Direct register;
+		//! @brief The Direct Page register;
 		union {
 			struct {
 				uint8_t dh;
@@ -202,7 +202,7 @@ namespace ComSquare::CPU
 		ADC_DPYil = 0x77,
 		ADC_ABSY = 0x79,
 		ADC_ABSX = 0x7D,
-		ADC_ABSXl = 0x7F,
+		ADC_ABSXl = 0x7F
 	};
 
 	//! @brief The main CPU
@@ -218,6 +218,9 @@ namespace ComSquare::CPU
 		std::shared_ptr<Memory::MemoryBus> _bus;
 		//! @brief The cartridge header (stored for interrupt vectors..
 		Cartridge::Header &_cartridgeHeader;
+
+		//! @brief An additional number of cycles that the current running instruction took to run. (Used for address modes that take longer to run than others).
+		unsigned _extraMemoryCycles = 0;
 
 		//! @brief Immediate address mode is specified with a value. (This functions returns the 24bit space address of the value).
 		uint24_t _getImmediateAddr();
@@ -263,12 +266,13 @@ namespace ComSquare::CPU
 
 		//! @brief Execute a single instruction.
 		//! @return The number of CPU cycles that the instruction took.
-		int executeInstruction();
+		unsigned executeInstruction();
 
 		//! @brief Break instruction - Causes a software break. The PC is loaded from a vector table.
-		int BRK();
+		unsigned BRK();
 		//! @brief Add with carry - Adds operand to the Accumulator; adds an additional 1 if carry is set.
-		int ADC(uint24_t valueAddr);
+		//! @return The number of extra cycles that this operation took.
+		unsigned ADC(uint24_t valueAddr);
 	public:
 		explicit CPU(std::shared_ptr<Memory::MemoryBus> bus, Cartridge::Header &cartridgeHeader);
 		//! @brief This function continue to execute the Cartridge code.

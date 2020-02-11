@@ -6,7 +6,7 @@
 
 namespace ComSquare::CPU
 {
-	int CPU::BRK()
+	unsigned CPU::BRK()
 	{
 		this->_registers.pc += 2;
 
@@ -16,6 +16,6 @@ namespace ComSquare::CPU
 		else
 			this->_registers.pc = this->_cartridgeHeader.nativeInterrupts.brk;
 		this->_registers.p.d = false;
-		return 7 + !this->_isEmulationMode;
+		return !this->_isEmulationMode;
 	}
 }

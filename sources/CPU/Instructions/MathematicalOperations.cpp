@@ -7,7 +7,7 @@
 
 namespace ComSquare::CPU
 {
-	int CPU::ADC(uint24_t valueAddr)
+	unsigned CPU::ADC(uint24_t valueAddr)
 	{
 		unsigned value = this->_bus->read(valueAddr) + this->_registers.p.c;
 		if (this->_registers.p.m)
@@ -25,6 +25,6 @@ namespace ComSquare::CPU
 			this->_registers.a %= 0x100;
 		this->_registers.p.z = this->_registers.a == 0;
 		this->_registers.p.n = this->_registers.a & negativeMask;
-		return (0);
+		return this->_extraMemoryCycles + !this->_registers.p.m;
 	}
 }
