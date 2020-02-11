@@ -6,7 +6,7 @@
 
 namespace ComSquare::CPU
 {
-	int CPU::ADC()
+	int CPU::ADC(uint24_t valueAddr)
 	{
 //		this->_registers.a +=
 	}

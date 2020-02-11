@@ -180,6 +180,30 @@ namespace ComSquare::CPU
 		uint8_t joy4h;
 	};
 
+	//! @brief All the instructions opcode of the main CPI.
+	//! @info The name of the instruction followed by their parameters (after an underscore) if any.
+	//! @info Addr mode with an i at the end means indirect.
+	//! @info Addr mode with an l at the end means long.
+	enum Instructions
+	{
+		BRK = 0x00,
+		ADC_DPXi = 0x61,
+		ADC_SR = 0x63,
+		ADC_DP = 0x65,
+		ADC_DPil = 0x67,
+		ADC_IM = 0x69,
+		ADC_ABS = 0x6D,
+		ADC_ABSl = 0x6F,
+		ADC_DPYi = 0x71,
+		ADC_DPi = 0x72,
+		ADC_SRYi = 0x73,
+		ADC_DPX = 0x75,
+		ADC_DPYil = 0x77,
+		ADC_ABSY = 0x79,
+		ADC_ABSX = 0x7D,
+		ADC_ABSXl = 0x7F
+	};
+
 	//! @brief The main CPU
 	class CPU : public CommonInstructions, public Memory::IMemory {
 	private:
@@ -195,23 +219,55 @@ namespace ComSquare::CPU
 		Cartridge::Header &_cartridgeHeader;
 
 		//! @brief Immediate address mode is specified with a value. (This functions returns the 24bit space address of the value).
-		uint24_t _GetImmediateAddr();
+		uint24_t _getImmediateAddr();
 		//! @brief The destination is formed by adding the direct page register with the 8-bit address to form an effective address. (This functions returns the 24bit space address of the value).
-		uint24_t _GetDirectAddr();
+		uint24_t _getDirectAddr();
 		//! @brief The effective address is formed by DBR:<16-bit exp>. (This functions returns the 24bit space address of the value).
-		uint24_t _GetAbsoluteAddr();
+		uint24_t _getAbsoluteAddr();
 		//! @brief The effective address is the expression. (This functions returns the 24bit space address of the value).
-		uint24_t _GetAbsoluteLongAddr();
+		uint24_t _getAbsoluteLongAddr();
+		//! @brief The address is DBR:$(read($($Value + D)) + Y). (This functions returns the 24bit space address of the value).
+		uint24_t _getDirectIndirectIndexedYAddr();
+		//! @brief This mode is like the previous addressing mode, but the difference is that rather than pulling 2 bytes from the DP address, it pulls 3 bytes to form the effective address.
+		uint24_t _getDirectIndirectIndexedYLongAddr();
+		//! @brief The direct page address is calculated and added with x. 2 bytes from the dp address combined with DBR will form the effective address.
+		uint24_t _getDirectIndirectIndexedXAddr();
+		//! @brief The DP address is added to X to form the effective address. The effective address is always in bank 0.
+		uint24_t _getDirectIndexedByXAddr();
+		//! @brief The DP address is added to Y to form the effective address. The effective address is always in bank 0.
+		uint24_t _getDirectIndexedByYAddr();
+		//! @brief The absolute expression is added with X and combined with DBR to form the effective address.
+		uint24_t _getAbsoluteIndexedByXAddr();
+		//! @brief The absolute expression is added with Y and combined with DBR to form the effective address.
+		uint24_t _getAbsoluteIndexedByYAddr();
+		//! @brief The effective address is formed by adding the <long exp> with X.
+		uint24_t _getAbsoluteIndexedByXLongAddr();
+		//! @brief The <8-bit signed exp> is added to PC (program counter) to form the new location.
+		uint24_t _getProgramCounterRelativeAddr();
+		//! @brief The <16-bit signed exp> is added to PC (program counter) to form the new location.
+		uint24_t _getProgramCounterRelativeLongAddr();
+		//! @brief 2 bytes are pulled from the <abs exp> to form the effective address.
+		uint24_t _getAbsoluteIndirectAddr();
+		//! @brief The <abs exp> is added with X, then 2 bytes are pulled from that address to form the new location.
+		uint24_t _getAbsoluteIndexedIndirectAddr();
+		//! @brief 2 bytes are pulled from the direct page address to form the 16-bit address. It is combined with DBR to form a 24-bit effective address.
+		uint24_t _getDirectIndirectAddr();
+		//! @brief 3 bytes are pulled from the direct page address to form an effective address.
+		uint24_t _getDirectIndirectLongAddr();
+		//! @brief The stack register is added to the <8-bit exp> to form the effective address.
+		uint24_t _getStackRelativeAddr();
+		//! @brief The <8-bit exp> is added to S and combined with DBR to form the base address. Y is added to the base address to form the effective address.
+		uint24_t _getStackRelativeIndirectIndexedYAddr();
 
 
 		//! @brief Execute a single instruction.
 		//! @return The number of CPU cycles that the instruction took.
 		int executeInstruction();
 
-		//! @brief Break instruction (0x00) - Causes a software break. The PC is loaded from a vector table.
+		//! @brief Break instruction - Causes a software break. The PC is loaded from a vector table.
 		int BRK();
-		//! @brief Add with carry (0x61, 0x63, 0x65, 0x67, 0x69, 0x6D, 0x6F, 0x71, 0x72, 0x73, 0x75, 0x77, 0x79, 0x7D, 0x7F) - Adds operand to the Accumulator; adds an additional 1 if carry is set.
-		int ADC();
+		//! @brief Add with carry - Adds operand to the Accumulator; adds an additional 1 if carry is set.
+		int ADC(uint24_t valueAddr);
 	public:
 		explicit CPU(std::shared_ptr<Memory::MemoryBus> bus, Cartridge::Header &cartridgeHeader);
 		//! @brief This function continue to execute the Cartridge code.
