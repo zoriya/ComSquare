@@ -52,7 +52,10 @@ add_executable(unit_tests
         sources/CPU/Instructions/CommonInstructions.hpp
         sources/Exceptions/InvalidOpcode.hpp
         sources/CPU/Instructions/Interrupts.cpp
-        sources/CPU/Instructions/MathematicalOperations.cpp)
+        sources/CPU/Instructions/MathematicalOperations.cpp
+        sources/APU/Instructions/Standbys.cpp
+        tests/APU/testAPUInstructions.cpp
+)
 
 # include criterion & coverage
 target_link_libraries(unit_tests criterion -lgcov)
@@ -105,7 +108,9 @@ add_executable(ComSquare
         sources/CPU/Instructions/CommonInstructions.hpp
         sources/Exceptions/InvalidOpcode.hpp
         sources/CPU/Instructions/Interrupts.cpp
-        sources/CPU/Instructions/MathematicalOperations.cpp)
+        sources/CPU/Instructions/MathematicalOperations.cpp
+        sources/APU/Instructions/Standbys.cpp
+)
 
 target_link_libraries(ComSquare
         sfml-graphics

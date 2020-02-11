@@ -53,6 +53,12 @@ namespace ComSquare::APU
 		uint8_t opcode = read(this->_internalRegisters.pc++);
 
 		switch (opcode) {
+		case 0x00:
+			return NOP();
+		case 0xEF:
+			return SLEEP();
+		case 0xFF:
+			return STOP();
 		default:
 			throw InvalidOpcode("APU", opcode);
 		}
@@ -62,7 +68,8 @@ namespace ComSquare::APU
 	{
 		int cycles = 0;
 
-		cycles += executeInstruction();
+		while (this->_state == Running)
+			cycles += executeInstruction();
 		return cycles;
 	}
 }

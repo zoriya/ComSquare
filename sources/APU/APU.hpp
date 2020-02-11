@@ -103,6 +103,13 @@ namespace ComSquare::APU
 
 	};
 
+	enum StateMode
+	{
+		Running,
+		Sleeping,
+		Stopped
+	};
+
 	class APU : public Memory::IMemory {
 	private:
 		//! @brief All the registers of the APU CPU
@@ -113,9 +120,18 @@ namespace ComSquare::APU
 		//! @brief The DSP component used to produce sound
 		std::shared_ptr<DSP::DSP> _dsp;
 
+		StateMode _state = Running;
+
 		//! @brief Execute a single instruction.
 		//! @return The number of cycles that the instruction took.
 		int executeInstruction();
+
+		//! @brief No Operation instruction, do nothing than delay
+		int NOP();
+		//! @brief Sleep instruction, halts the processor with SLEEP mode
+		int SLEEP();
+		//! @brief Stop instruction, halts the processor with STOP mode
+		int STOP();
 	public:
 		explicit APU();
 
