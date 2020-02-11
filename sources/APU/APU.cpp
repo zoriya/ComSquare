@@ -55,6 +55,20 @@ namespace ComSquare::APU
 		switch (opcode) {
 		case 0x00:
 			return NOP();
+		case 0x20:
+			return CLRP();
+		case 0x40:
+			return SETP();
+		case 0x60:
+			return CLRC();
+		case 0x80:
+			return SETC();
+		case 0xA0:
+			return EI();
+		case 0xC0:
+			return DI();
+		case 0xED:
+			return NOTC();
 		case 0xEF:
 			return SLEEP();
 		case 0xFF:
@@ -64,12 +78,14 @@ namespace ComSquare::APU
 		}
 	}
 
-	int APU::update()
+	void APU::update(uint8_t cycles)
 	{
-		int cycles = 0;
+		int total = 0;
 
-		while (this->_state == Running)
-			cycles += executeInstruction();
-		return cycles;
+		cycles -= this->_paddingCycles;
+		while (total < cycles && this->_state == Running)
+			total += executeInstruction();
+		if (this->_state == Running)
+			this->_paddingCycles = total - cycles;
 	}
 }

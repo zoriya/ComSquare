@@ -55,6 +55,7 @@ add_executable(unit_tests
         sources/CPU/Instructions/MathematicalOperations.cpp
         sources/APU/Instructions/Standbys.cpp
         tests/APU/testAPUInstructions.cpp
+        sources/APU/Instructions/ProgramStatusWord.cpp
 )
 
 # include criterion & coverage
@@ -110,6 +111,7 @@ add_executable(ComSquare
         sources/CPU/Instructions/Interrupts.cpp
         sources/CPU/Instructions/MathematicalOperations.cpp
         sources/APU/Instructions/Standbys.cpp
+        sources/APU/Instructions/ProgramStatusWord.cpp
 )
 
 target_link_libraries(ComSquare

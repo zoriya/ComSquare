@@ -40,23 +40,26 @@ namespace ComSquare::APU
 		};
 
 		//! @brief Program Status Word register
-		union psw {
-			//! @brief Negative flag
-			bool n : 1;
-			//! @brief Overflow flag
-			bool v : 1;
-			//! @brief Direct page flag
-			bool p : 1;
-			//! @brief Break flag
-			bool b : 1;
-			//! @brief Half carry flag
-			bool h : 1;
-			//! @brief Interrupt enabled flag
-			bool i : 1;
-			//! @brief Zero flag
-			bool z : 1;
-			//! @brief Carry flag
-			bool c : 1;
+		union {
+			struct {
+				//! @brief Negative flag
+				bool n : 1;
+				//! @brief Overflow flag
+				bool v : 1;
+				//! @brief Direct page flag
+				bool p : 1;
+				//! @brief Break flag
+				bool b : 1;
+				//! @brief Half carry flag
+				bool h : 1;
+				//! @brief Interrupt enabled flag
+				bool i : 1;
+				//! @brief Zero flag
+				bool z : 1;
+				//! @brief Carry flag
+				bool c : 1;
+			};
+			uint8_t psw;
 		};
 	};
 
@@ -120,7 +123,11 @@ namespace ComSquare::APU
 		//! @brief The DSP component used to produce sound
 		std::shared_ptr<DSP::DSP> _dsp;
 
+		//! @brief Current state of APU CPU
 		StateMode _state = Running;
+
+		//! @brief Keep the number of excess cycles executed to pad the next update
+		int _paddingCycles = 0;
 
 		//! @brief Execute a single instruction.
 		//! @return The number of cycles that the instruction took.
@@ -132,6 +139,23 @@ namespace ComSquare::APU
 		int SLEEP();
 		//! @brief Stop instruction, halts the processor with STOP mode
 		int STOP();
+
+		//! @brief Clear Carry instruction, set Carry flag to 0
+		int CLRC();
+		//! @brief Set Carry instruction, Set Carry flag to 1
+		int SETC();
+		//! @brief Complement Carry instruction, invert Carry flag value
+		int NOTC();
+		//! @brief Clear Overflow instruction, Set Overflow & Half Carry flags to 0
+		int CLRV();
+		//! @brief Clear Direct Page instruction, Set Direct Page flag to 0
+		int CLRP();
+		//! @brief Set Direct Page instruction, Set Direct Page flag to 1
+		int SETP();
+		//! @brief Enable interrupts instruction, Set Zero flag to 1
+		int EI();
+		//! @brief Disable interrupts instruction, Set Zero flag to 0
+		int DI();
 	public:
 		explicit APU();
 
@@ -145,9 +169,9 @@ namespace ComSquare::APU
 		//! @param data The new value of the register.
 		//! @throw InvalidAddress will be thrown if the address is more than $FF (the number of register).
 		void write(uint24_t addr, uint8_t data) override;
-		//! @brief This function execute the instructions received.
+		//! @brief This function execute the instructions received until the maximum number of cycles is reached.
 		//! @return The number of cycles that elapsed.
-		int update();
+		void update(uint8_t cycles);
 	};
 }
 
