@@ -325,4 +325,13 @@ namespace ComSquare::CPU
 		int8_t mod = this->_bus->read(this->_registers.pac++);
 		return pc + mod;
 	}
+
+	uint24_t CPU::_getProgramCounterRelativeLongAddr()
+	{
+		uint24_t pc = this->_registers.pac;
+		uint8_t val1 = this->_bus->read(this->_registers.pac++);
+		uint8_t val2 = this->_bus->read(this->_registers.pac++);
+		int16_t mod = val2 > 0x7F ? (static_cast<char>(val2) * 256 - val1) : (val1 | val2 << 8u);
+		return pc + mod;
+	}
 }
