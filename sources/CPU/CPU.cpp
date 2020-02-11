@@ -261,4 +261,37 @@ namespace ComSquare::CPU
 		base += this->_registers.dbr << 16u;
 		return base + this->_registers.y;
 	}
+
+	uint24_t CPU::_getDirectIndirectIndexedLongAddr()
+	{
+		uint16_t dp = this->_bus->read(this->_registers.pac++) + this->_registers.d;
+		uint24_t base = this->_bus->read(dp);
+		base += this->_bus->read(dp + 1) << 8u;
+		base += this->_bus->read(dp + 2) << 16u;
+		return base;
+	}
+
+	uint24_t CPU::_getDirectIndexedIndirectAddr()
+	{
+		uint16_t dp = this->_bus->read(this->_registers.pac++) + this->_registers.d;
+		dp += this->_registers.x;
+		uint24_t base = this->_bus->read(dp);
+		base += this->_bus->read(dp + 1) << 8u;
+		base += this->_registers.dbr << 16u;
+		return base;
+	}
+
+	uint24_t CPU::_getDirectIndexedByXAddr()
+	{
+		uint16_t dp = this->_bus->read(this->_registers.pac++) + this->_registers.d;
+		dp += this->_registers.x;
+		return dp;
+	}
+
+	uint24_t CPU::_getDirectIndexedByYAddr()
+	{
+		uint16_t dp = this->_bus->read(this->_registers.pac++) + this->_registers.d;
+		dp += this->_registers.y;
+		return dp;
+	}
 }

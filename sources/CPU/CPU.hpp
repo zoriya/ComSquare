@@ -204,6 +204,14 @@ namespace ComSquare::CPU
 		uint24_t _getAbsoluteLongAddr();
 		//! @brief The address is DBR:$(read($($Value + D)) + Y). (This functions returns the 24bit space address of the value).
 		uint24_t _getDirectIndirectIndexedAddr();
+		//! @brief This mode is like the previous addressing mode, but the difference is that rather than pulling 2 bytes from the DP address, it pulls 3 bytes to form the effective address.
+		uint24_t _getDirectIndirectIndexedLongAddr();
+		//! @brief The direct page address is calculated and added with x. 2 bytes from the dp address combined with DBR will form the effective address.
+		uint24_t _getDirectIndexedIndirectAddr();
+		//! @brief The DP address is added to X to form the effective address. The effective address is always in bank 0.
+		uint24_t _getDirectIndexedByXAddr();
+		//! @brief The DP address is added to Y to form the effective address. The effective address is always in bank 0.
+		uint24_t _getDirectIndexedByYAddr();
 
 
 		//! @brief Execute a single instruction.
