@@ -8,12 +8,115 @@
 #include <stdint-gcc.h>
 #include "../Memory/IMemory.hpp"
 
-#define max2BitTiles		4096
-#define max4BitTiles		2048
-#define max8BitTiles		1024
+//#define max2BitTiles		4096
+//#define max4BitTiles		2048
+//#define max8BitTiles		1024
+
+
 
 namespace ComSquare::PPU
 {
+
+	enum ppuRegisters {
+	//! @brief INIDISP Register (F-blank and Brightness)
+	inidisp = 0x00,
+	//! @brief OBSEL Register (Object Size and Character Address)
+	obsel = 0x01,
+	//! @brief OAMADDL (OAM Address low byte)
+	oamaddl = 0x02,
+	//! @brief OAMADDH (OAM Address high bit and Obj Priority)
+	oamaddh = 0x03,
+	//! @brief OAMDATA (Data for OAM write)
+	oamdata = 0x04,
+	//! @brief BGMODE (BG Mode and Character Size)
+	bgmode = 0x05,
+	//! @brief MOSAIC (Screen Pixelation)
+	mosaic = 0x06,
+	//! @brief BG1SC (BG1 Tilemap Address and Size)
+	bg1sc = 0x07,
+	//! @brief BG2SC (BG2 Tilemap Address and Size)
+	bg2sc = 0x08,
+	//! @brief BG3SC (BG3 Tilemap Address and Size)
+	bg3sc = 0x09,
+	//! @brief BG4SC (BG4 Tilemap Address and Size)
+	bg4sc = 0x0A,
+	//! @brief BG12NBA (BG1 and 2 Chr Address)
+	bg12nba = 0x0B,
+	//! @brief BG34NBA (BG3 and 4 Chr Address)
+	bg34nba = 0x0C,
+	//! @info When bg mode is 7 the register is used as M7HOFS
+	bg1hofs = 0x0D,
+	//! @info When bg mode is 7 the register is used as M7VOFS
+	bg1vofs = 0x0E,
+	bg2hofs = 0x0F,
+	bg2vofs = 0x10,
+	bg3hofs = 0x11,
+	bg3vofs = 0x12,
+	bg4hofs = 0x13,
+	bg4vofs = 0x14,
+	vmain = 0x15,
+	vmaddl = 0x16,
+	vamddh = 0x17,
+	vmdatal = 0x18,
+	vmdatah = 0x19,
+	m7sel = 0x1A,
+	m7a = 0x1B,
+	m7b = 0x1C,
+	m7c = 0x1D,
+	m7d = 0x1E,
+	m7x = 0x1F,
+	m7y = 0x20,
+	cgadd = 0x21,
+	cgdata = 0x22,
+	w12sel = 0x23,
+	w34sel = 0x24,
+	wobjsel = 0x25,
+	wh0 = 0x26,
+	wh1 = 0x27,
+	wh2 = 0x28,
+	wh3 = 0x29,
+	wbjlog = 0x2A,
+	wobjlog = 0x2B,
+	tm = 0x2C,
+	ts = 0x2D,
+	//! @brief TMW (Window Mask Designation for the Main Screen)
+	tmw = 0x2E,
+	//! @brief TSW (Window Mask Designation for the Subscreen)
+	tsw = 0x2F,
+	//! @brief CGWSEL (Color Addition Select)
+	cgwsel = 0x30,
+	//! @brief CGADSUB (Color math designation)
+	cgadsub = 0x31,
+	//! @brief COLDATA (Fixed Color Data)
+	coldata = 0x32,
+	//! @brief SETINI (Screen Mode/Video Select)
+	setini = 0x33,
+	//! @brief MPYL (Multiplication Result low byte)
+	mpyl = 0x34,
+	//! @brief MPYM (Multiplication Result middle byte)
+	mpum = 0x35,
+	//! @brief MPYH (Multiplication Result high byte)
+	mpyh = 0x36,
+	//! @brief SLHV (Software Latch for H/V Counter)
+	slhv = 0x37,
+	//! @brief OAMDATAREAD (Data for OAM read)
+	oamdataread = 0x38,
+	//! @brief VMDATALREAD (VRAM Data Read low byte)
+	vmdatalread = 0x39,
+	//! @brief VMDATAHREAD (VRAM Data Read high byte)
+	vmdatahread = 0x3A,
+	//! @brief CGDATAREAD (CGRAM Data read)
+	cgdataread = 0x3B,
+	//! @brief OPHCT (Horizontal Scanline Location)
+	ophct = 0x3C,
+	//! @brief OPVCT (Vertical Scanline Location)
+	opcvt = 0x3D,
+	//! @brief STAT77 (PPU Status Flag and Version)
+	stat77 = 0x3E,
+	//! @brief STAT78 (PPU Status Flag and Version)
+	stat78 = 0x3F
+	};
+
 	//! @brief The class containing all the registers the PPU
 	class PPU : public Memory::IMemory {
 	private:
@@ -146,29 +249,21 @@ namespace ComSquare::PPU
 			};
 			uint8_t raw;
 		} _bgnba[2];
-		//! @brief BG34NBA Register (BG3 and 4 Chr Address)
-		union {
-			struct {
-				uint8_t baseAddressBg2a4: 4;
-				uint8_t baseAddressBg1a3: 4;
-			};
-			uint8_t raw;
-		} _bg34nba;
 		//! @brief BG1HOFS Register (BG1 Horizontal Scroll)
 		//! @brief BG1VOFS Register (BG1 Vertical Scroll)
 		union {
 			struct {
+				uint16_t offsetBg: 10;
 				uint8_t _ : 6;
-				uint32_t offsetBg: 10;
 			};
 			uint16_t raw;
-		} _bg1ofs;
+		} _bgofs[4];
 		//! @brief M7HOFS Register (Mode 7 _BG Horizontal Scroll)
 		//! @brief M7VOFS Register (Mode 7 _BG Vertical Scroll)
 		union {
 			struct {
+				uint16_t offsetBg : 13;
 				uint8_t _ : 3;
-				uint32_t offsetBg : 13;
 			};
 			uint8_t raw;
 		} _m7ofs;
@@ -199,13 +294,16 @@ namespace ComSquare::PPU
 			};
 			uint8_t raw;
 		} _bg4ofs;
+
+		// <check>
+
 		//! @brief VMAIN Register (Video Port Control)
 		union {
 			struct {
-				bool address: 1;
-				uint8_t _ : 3;
+				uint8_t incrementAmount: 2;
 				uint8_t addressRemapping: 2;
-				uint8_t incrementCount: 2;
+				uint8_t _ : 3;
+				bool incrementMode: 1;
 			};
 			uint8_t raw;
 		} _vmain;
