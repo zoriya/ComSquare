@@ -334,4 +334,41 @@ namespace ComSquare::CPU
 		int16_t mod = val2 > 0x7F ? (static_cast<char>(val2) * 256 - val1) : (val1 | val2 << 8u);
 		return pc + mod;
 	}
+
+	uint24_t CPU::_getAbsoluteIndirectAddr()
+	{
+		uint16_t abs = this->_bus->read(this->_registers.pac++);
+		abs += this->_bus->read(this->_registers.pac++) << 8u;
+		uint24_t effective = this->_bus->read(abs);
+		effective += this->_bus->read(abs + 1) << 8u;
+		return effective;
+	}
+
+	uint24_t CPU::_getAbsoluteIndexedIndirectAddr()
+	{
+		uint24_t abs = this->_bus->read(this->_registers.pac++);
+		abs += this->_bus->read(this->_registers.pac++) << 8u;
+		abs += this->_registers.x;
+		uint24_t effective = this->_bus->read(abs);
+		effective += this->_bus->read(abs + 1) << 8u;
+		return effective;
+	}
+
+	uint24_t CPU::_getDirectIndirectAddr()
+	{
+		uint16_t dp = this->_bus->read(this->_registers.pac++) + this->_registers.d;
+		uint24_t effective = this->_bus->read(dp);
+		effective += this->_bus->read(dp + 1) << 8u;
+		effective += this->_registers.dbr << 16u;
+		return effective;
+	}
+
+	uint24_t CPU::_getDirectIndirectLongAddr()
+	{
+		uint16_t dp = this->_bus->read(this->_registers.pac++) + this->_registers.d;
+		uint24_t effective = this->_bus->read(dp);
+		effective += this->_bus->read(++dp) << 8u;
+		effective += this->_bus->read(++dp) << 16u;
+		return effective;
+	}
 }

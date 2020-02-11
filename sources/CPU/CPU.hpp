@@ -222,6 +222,14 @@ namespace ComSquare::CPU
 		uint24_t _getProgramCounterRelativeAddr();
 		//! @brief The <16-bit signed exp> is added to PC (program counter) to form the new location.
 		uint24_t _getProgramCounterRelativeLongAddr();
+		//! @brief 2 bytes are pulled from the <abs exp> to form the effective address.
+		uint24_t _getAbsoluteIndirectAddr();
+		//! @brief The <abs exp> is added with X, then 2 bytes are pulled from that address to form the new location.
+		uint24_t _getAbsoluteIndexedIndirectAddr();
+		//! @brief 2 bytes are pulled from the direct page address to form the 16-bit address. It is combined with DBR to form a 24-bit effective address.
+		uint24_t _getDirectIndirectAddr();
+		//! @brief 3 bytes are pulled from the direct page address to form an effective address.
+		uint24_t _getDirectIndirectLongAddr();
 
 
 		//! @brief Execute a single instruction.
