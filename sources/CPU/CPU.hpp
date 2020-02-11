@@ -216,7 +216,7 @@ namespace ComSquare::CPU
 		explicit CPU(std::shared_ptr<Memory::MemoryBus> bus, Cartridge::Header &cartridgeHeader);
 		//! @brief This function continue to execute the Cartridge code.
 		//! @return The number of CPU cycles that elapsed
-		int update();
+		unsigned update();
 		//! @brief Read from the internal CPU register.
 		//! @param addr The address to read from. The address 0x0 should refer to the first byte of the register.
 		//! @throw InvalidAddress will be thrown if the address is more than $1F (the number of register).

@@ -184,9 +184,9 @@ namespace ComSquare::CPU
 		}
 	}
 
-	int CPU::update()
+	unsigned CPU::update()
 	{
-		int cycles = 0;
+		unsigned cycles = 0;
 
 		for (int i = 0; i < 0xFF; i++)
 			cycles += this->executeInstruction();
