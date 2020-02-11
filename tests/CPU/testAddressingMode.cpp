@@ -75,7 +75,8 @@ Test(AddrMode, DirectIndirectIndexed)
 	pair.second.cpu->_registers.dbr = 0x80;
 	pair.second.cpu->_registers.y = 0x0001;
 	pair.second.cpu->_registers.d = 0x1000;
-	cr_assert_eq(pair.second.cpu->_getDirectIndirectIndexedAddr(), 0x804031, "Returned address was %x but was expecting 0x804031.", pair.second.cpu->_getDirectIndirectIndexedAddr());
+	cr_assert_eq(pair.second.cpu->_getDirectIndirectIndexedYAddr(), 0x804031, "Returned address was %x but was expecting 0x804031.",
+				 pair.second.cpu->_getDirectIndirectIndexedYAddr());
 	cr_assert_eq(pair.second.cpu->_registers.pac, 0x808001);
 }
 
@@ -88,7 +89,8 @@ Test(AddrMode, DirectIndirectIndexedLong)
 	pair.second.wram->_data[0x1010] = 0x30;
 	pair.second.wram->_data[0x1011] = 0x40;
 	pair.second.wram->_data[0x1012] = 0x23;
-	cr_assert_eq(pair.second.cpu->_getDirectIndirectIndexedLongAddr(), 0x234030, "Returned address was %x but was expecting 0x234030.", pair.second.cpu->_getDirectIndirectIndexedLongAddr());
+	cr_assert_eq(pair.second.cpu->_getDirectIndirectIndexedYLongAddr(), 0x234030, "Returned address was %x but was expecting 0x234030.",
+				 pair.second.cpu->_getDirectIndirectIndexedYLongAddr());
 	cr_assert_eq(pair.second.cpu->_registers.pac, 0x808001);
 }
 
@@ -102,7 +104,8 @@ Test(AddrMode, DirectIndexedIndirect)
 	pair.second.wram->_data[0x1013] = 0x40;
 	pair.second.cpu->_registers.dbr = 0x80;
 	pair.second.cpu->_registers.pac = 0x808000;
-	cr_assert_eq(pair.second.cpu->_getDirectIndexedIndirectAddr(), 0x804030, "Returned address was %x but was expecting 0x804030.", pair.second.cpu->_getDirectIndexedIndirectAddr());
+	cr_assert_eq(pair.second.cpu->_getDirectIndirectIndexedXAddr(), 0x804030, "Returned address was %x but was expecting 0x804030.",
+				 pair.second.cpu->_getDirectIndirectIndexedXAddr());
 	cr_assert_eq(pair.second.cpu->_registers.pac, 0x808001);
 }
 
@@ -160,7 +163,8 @@ Test(AddrMode, AbsoluteLongIndexByX)
 	pair.second.cartridge->_data[1] = 0xAC;
 	pair.second.cartridge->_data[2] = 0xEF;
 	pair.second.cpu->_registers.x = 0x0005;
-	cr_assert_eq(pair.second.cpu->_getAbsoluteLongIndexedByXAddr(), 0xEFAC15, "Returned address was %x but was expecting 0xEFAC15.", pair.second.cpu->_getAbsoluteLongIndexedByXAddr());
+	cr_assert_eq(pair.second.cpu->_getAbsoluteIndexedByXLongAddr(), 0xEFAC15, "Returned address was %x but was expecting 0xEFAC15.",
+				 pair.second.cpu->_getAbsoluteIndexedByXLongAddr());
 	cr_assert_eq(pair.second.cpu->_registers.pac, 0x808003);
 }
 
@@ -278,7 +282,7 @@ Test(AddrMode, StackRelativeIndirectIndexed)
 	pair.second.cpu->_registers.s = 0x1010;
 	pair.second.cpu->_registers.y = 0x5;
 	pair.second.cpu->_registers.dbr = 0x88;
-	auto addr = pair.second.cpu->_getStackRelativeIndirectIndexedAddr();
+	auto addr = pair.second.cpu->_getStackRelativeIndirectIndexedYAddr();
 	cr_assert_eq(addr, 0x88101B, "Returned address was %x but was expecting 0x88101B.", addr);
 	cr_assert_eq(pair.second.cpu->_registers.pac, 0x808001);
 }
