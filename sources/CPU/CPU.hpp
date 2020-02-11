@@ -230,6 +230,10 @@ namespace ComSquare::CPU
 		uint24_t _getDirectIndirectAddr();
 		//! @brief 3 bytes are pulled from the direct page address to form an effective address.
 		uint24_t _getDirectIndirectLongAddr();
+		//! @brief The stack register is added to the <8-bit exp> to form the effective address.
+		uint24_t _getStackRelativeAddr();
+		//! @brief The <8-bit exp> is added to S and combined with DBR to form the base address. Y is added to the base address to form the effective address.
+		uint24_t _getStackRelativeIndirectIndexedAddr();
 
 
 		//! @brief Execute a single instruction.

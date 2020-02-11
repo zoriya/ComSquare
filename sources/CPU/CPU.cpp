@@ -371,4 +371,16 @@ namespace ComSquare::CPU
 		effective += this->_bus->read(++dp) << 16u;
 		return effective;
 	}
+
+	uint24_t CPU::_getStackRelativeAddr()
+	{
+		return this->_bus->read(this->_registers.pac++) + this->_registers.s;
+	}
+
+	uint24_t CPU::_getStackRelativeIndirectIndexedAddr()
+	{
+		uint24_t base = this->_bus->read(this->_registers.pac++) + this->_registers.s;
+		base += this->_registers.dbr << 16u;
+		return base + this->_registers.y;
+	}
 }

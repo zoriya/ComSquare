@@ -258,3 +258,27 @@ Test(AddrMode, DirectIndirectLong)
 	cr_assert_eq(addr, 0x8801EF, "Returned address was %x but was expecting 0x8801EF.", addr);
 	cr_assert_eq(pair.second.cpu->_registers.pac, 0x808001);
 }
+
+Test(AddrMode, StackRelative)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.pac = 0x808000;
+	pair.second.cartridge->_data[0] = 0x06;
+	pair.second.cpu->_registers.s = 0x1010;
+	auto addr = pair.second.cpu->_getStackRelativeAddr();
+	cr_assert_eq(addr, 0x1016, "Returned address was %x but was expecting 0x1016.", addr);
+	cr_assert_eq(pair.second.cpu->_registers.pac, 0x808001);
+}
+
+Test(AddrMode, StackRelativeIndirectIndexed)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.pac = 0x808000;
+	pair.second.cartridge->_data[0] = 0x06;
+	pair.second.cpu->_registers.s = 0x1010;
+	pair.second.cpu->_registers.y = 0x5;
+	pair.second.cpu->_registers.dbr = 0x88;
+	auto addr = pair.second.cpu->_getStackRelativeIndirectIndexedAddr();
+	cr_assert_eq(addr, 0x88101B, "Returned address was %x but was expecting 0x88101B.", addr);
+	cr_assert_eq(pair.second.cpu->_registers.pac, 0x808001);
+}
