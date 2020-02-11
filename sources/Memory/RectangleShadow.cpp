@@ -5,6 +5,7 @@
 #include "RectangleShadow.hpp"
 
 #include <utility>
+#include <iostream>
 
 namespace ComSquare::Memory
 {

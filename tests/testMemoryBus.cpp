@@ -45,9 +45,30 @@ Test(BusAccessor, GetWramEnd)
 Test(BusAccessor, GetWramMirror)
 {
 	auto pair = Init();
-	std::shared_ptr<Memory::MemoryShadow> accessor = nullptr;
+	std::shared_ptr<Memory::RectangleShadow> accessor = nullptr;
 
-	accessor = std::static_pointer_cast<Memory::MemoryShadow>(pair.first->getAccessor(0x2F11FF));
+	accessor = std::static_pointer_cast<Memory::RectangleShadow>(pair.first->getAccessor(0x2F11FF));
+	cr_assert_neq(accessor, nullptr);
+	cr_assert_eq(accessor->_initial.get(), pair.second.wram.get());
+}
+
+Test(BusAccessor, GetWramMirror2)
+{
+	auto pair = Init();
+	std::shared_ptr<Memory::RectangleShadow> accessor = nullptr;
+
+	accessor = std::static_pointer_cast<Memory::RectangleShadow>(pair.first->getAccessor(0x100000));
+	cr_assert_neq(accessor, nullptr);
+	cr_assert_eq(accessor->_initial.get(), pair.second.wram.get());
+}
+
+Test(BusAccessor, GetWramMirror3)
+{
+	auto pair = Init();
+	std::shared_ptr<Memory::RectangleShadow> accessor = nullptr;
+
+	accessor = std::static_pointer_cast<Memory::RectangleShadow>(pair.first->getAccessor(0x1010));
+	cr_assert_neq(accessor, nullptr);
 	cr_assert_eq(accessor->_initial.get(), pair.second.wram.get());
 }
 
@@ -120,6 +141,15 @@ Test(BusAccessor, GetAPUMirror)
 	std::shared_ptr<Memory::MemoryShadow> accessor = nullptr;
 
 	accessor = std::static_pointer_cast<Memory::MemoryShadow>(pair.first->getAccessor(0xAB2143));
+	cr_assert_eq(accessor->_initial.get(), pair.second.apu.get());
+}
+
+Test(BusAccessor, GetAPUMirrorFirstHalf)
+{
+	auto pair = Init();
+	std::shared_ptr<Memory::MemoryShadow> accessor = nullptr;
+
+	accessor = std::static_pointer_cast<Memory::MemoryShadow>(pair.first->getAccessor(0x052143));
 	cr_assert_eq(accessor->_initial.get(), pair.second.apu.get());
 }
 
@@ -334,6 +364,27 @@ Test(BusRead, ReadWRAM)
 
 	pair.second.wram->_data[3] = 123;
 	data = pair.first->read(0x7E0003);
+	cr_assert_eq(data, 123);
+}
+
+Test(BusRead, ReadWRAM2)
+{
+	auto pair = Init();
+	uint8_t data;
+
+	pair.second.wram->_data[0x1010] = 123;
+	data = pair.first->read(0x7E1010);
+	cr_assert_eq(data, 123);
+}
+
+
+Test(BusRead, ReadWRAMMirror)
+{
+	auto pair = Init();
+	uint8_t data;
+
+	pair.second.wram->_data[0x1010] = 123;
+	data = pair.first->read(0x1010);
 	cr_assert_eq(data, 123);
 }
 

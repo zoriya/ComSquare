@@ -256,9 +256,7 @@ namespace ComSquare::CPU
 	uint24_t CPU::_getDirectIndirectIndexedAddr()
 	{
 		uint16_t dp = this->_bus->read(this->_registers.pac++) + this->_registers.d;
-		std::cout << "DP: " << std::hex << dp << std::endl;
 		uint24_t base = this->_bus->read(dp);
-		std::cout << "Base: " << std::hex << base << std::endl;
 		base += this->_bus->read(dp + 1) << 8u;
 		base += this->_registers.dbr << 16u;
 		return base + this->_registers.y;
