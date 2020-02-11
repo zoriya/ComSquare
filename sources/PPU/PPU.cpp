@@ -58,10 +58,24 @@ namespace ComSquare::PPU
 			this->_bgnba[addr - 0x0B].raw = data;
 			break;
 		case ppuRegisters::bg1hofs:
+			// Work in progress ! Non functional !
 			this->_bgofs[0].raw = data;
 			break;
 		case ppuRegisters::vmain:
 			this->_vmain.raw = data;
+			break;
+		case ppuRegisters::vmaddl:
+			this->_vmadd.vmaddl = data;
+			break;
+		case ppuRegisters::vmaddh:
+			this->_vmadd.vmaddh = data;
+			break;
+		//! @info should must be in vblank for the write (and write it to the screen )? and increment vram address after;
+		case ppuRegisters::vmdatal:
+			this->_vmdata.vmdatal = data;
+			break;
+		case ppuRegisters::vmdatah:
+			this->_vmdata.vmdatah = data;
 			break;
 		//TODO adding the rest of the registers. oaf !
 		default:
@@ -72,5 +86,16 @@ namespace ComSquare::PPU
 	void PPU::update(unsigned cycles)
 	{
 		(void)cycles;
+		uint32_t pixelTmp = 0xFFFFFF00;
+		pixelTmp |= this->_inidisp.brightness;
+		if (!this->_inidisp.fblank)
+			this->_renderer.putPixel(0, 0,pixelTmp);
+		this->_renderer.drawScreen();
+	}
+
+	PPU::PPU(const std::shared_ptr<Memory::MemoryBus> &bus, Renderer::IRenderer &renderer):
+		_bus(std::move(bus)),
+		_renderer(renderer)
+	{
 	}
 }

@@ -56,6 +56,7 @@ add_executable(unit_tests
         tests/CPU/testAddressingMode.cpp
         tests/tests.cpp
         tests/PPU/testPpuWrite.cpp
+        tests/PPU/testPpuWriteFromVmain.cpp
 )
 
 # include criterion & coverage
