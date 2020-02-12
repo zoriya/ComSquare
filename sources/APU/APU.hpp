@@ -156,6 +156,9 @@ namespace ComSquare::APU
 		//! @brief Keep the number of excess cycles executed to pad the next update
 		unsigned int _paddingCycles = 0;
 
+		//! @brief Get direct page offset
+		uint24_t _getDirectAddr();
+
 		//! @brief Execute a single instruction.
 		//! @return The number of cycles that the instruction took.
 		int executeInstruction();
@@ -183,6 +186,9 @@ namespace ComSquare::APU
 		int EI();
 		//! @brief Disable interrupts instruction, Set Zero flag to 0
 		int DI();
+
+		//! @brief Set 1-bit instruction, set a bit in direct page
+		int SET1(uint24_t dp, uint8_t bit);
 	public:
 		explicit APU();
 

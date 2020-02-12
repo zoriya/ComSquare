@@ -157,18 +157,34 @@ namespace ComSquare::APU
 		switch (opcode) {
 		case 0x00:
 			return this->NOP();
+		case 0x02:
+			return SET1(_getDirectAddr(), 0);
 		case 0x20:
 			return this->CLRP();
+		case 0x22:
+			return SET1(_getDirectAddr(), 1);
 		case 0x40:
 			return this->SETP();
+		case 0x42:
+			return SET1(_getDirectAddr(), 2);
 		case 0x60:
 			return this->CLRC();
+		case 0x62:
+			return SET1(_getDirectAddr(), 3);
 		case 0x80:
 			return this->SETC();
+		case 0x82:
+			return SET1(_getDirectAddr(), 4);
 		case 0xA0:
 			return this->EI();
+		case 0xA2:
+			return SET1(_getDirectAddr(), 5);
 		case 0xC0:
 			return this->DI();
+		case 0xC2:
+			return SET1(_getDirectAddr(), 6);
+		case 0x32:
+			return SET1(_getDirectAddr(), 7);
 		case 0xED:
 			return this->NOTC();
 		case 0xEF:
@@ -189,5 +205,14 @@ namespace ComSquare::APU
 			total += this->executeInstruction();
 		if (this->_state == Running)
 			this->_paddingCycles = total - cycles;
+	}
+
+	uint24_t APU::_getDirectAddr()
+	{
+		uint8_t addr = read(this->_internalRegisters.pc++);
+
+		if (this->_internalRegisters.p)
+			addr += 0x100;
+		return addr;
 	}
 }
