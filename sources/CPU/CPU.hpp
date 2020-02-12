@@ -202,7 +202,7 @@ namespace ComSquare::CPU
 		ADC_DPYil = 0x77,
 		ADC_ABSY = 0x79,
 		ADC_ABSX = 0x7D,
-		ADC_ABSXl = 0x7F
+		ADC_ABSXl = 0x7F,
 	};
 
 	//! @brief The main CPU
@@ -264,10 +264,22 @@ namespace ComSquare::CPU
 		uint24_t _getStackRelativeIndirectIndexedYAddr();
 
 
+		//! @brief Push 8 bits of data to the stack.
+		void push(uint8_t data);
+		//! @brief Push 16 bits of data to the stack.
+		void push(uint16_t data);
+		//! @brief Pop 8 bits of data from the stack.
+		uint8_t pop();
+		//! @brief Pop 16 bits of data from the stack.
+		uint16_t pop16();
+
+
 		//! @brief Execute a single instruction.
 		//! @return The number of CPU cycles that the instruction took.
 		unsigned executeInstruction();
 
+		//! @brief Reset interrupt - Called on boot and when the reset button is pressed.
+		unsigned RESB();
 		//! @brief Break instruction - Causes a software break. The PC is loaded from a vector table.
 		unsigned BRK();
 		//! @brief Add with carry - Adds operand to the Accumulator; adds an additional 1 if carry is set.

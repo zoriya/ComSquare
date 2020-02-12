@@ -15,7 +15,7 @@ namespace ComSquare::CPU
 	CPU::CPU(std::shared_ptr<Memory::MemoryBus> bus, Cartridge::Header &cartridgeHeader)
 		: _bus(std::move(bus)), _cartridgeHeader(cartridgeHeader)
 	{
-		this->_registers.pc = this->_cartridgeHeader.emulationInterrupts.reset;
+		this->RESB();
 	}
 
 	//! @bref The CPU's internal registers starts at $4200	and finish at $421F.
@@ -220,9 +220,29 @@ namespace ComSquare::CPU
 		case Instructions::ADC_SRYi: return 7 + this->ADC(this->_getStackRelativeIndirectIndexedYAddr());
 
 		default:
-			return 0;
-			//throw InvalidOpcode("CPU", opcode);
+			throw InvalidOpcode("CPU", opcode);
 		}
+	}
+
+	void CPU::push(uint8_t data)
+	{
+		this->_bus->write(this->_registers.s--, data);
+	}
+
+	void CPU::push(uint16_t data)
+	{
+		this->_bus->write(this->_registers.s--, data);
+		this->_bus->write(this->_registers.s--, data << 8u);
+	}
+
+	uint8_t CPU::pop()
+	{
+		return this->_bus->read(this->_registers.s++);
+	}
+
+	uint16_t CPU::pop16()
+	{
+		return this->_bus->read(this->_registers.s++) + (this->_bus->read(this->_registers.s++) << 8u);
 	}
 
 	////////////////////////////////////////////////////////////////////
