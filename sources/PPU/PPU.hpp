@@ -332,17 +332,20 @@ namespace ComSquare::PPU
 		//! @brief TODO M7SEL Register (Mode 7 Settings)
 		union {
 			struct {
-				bool playingFieldSize: 1;
-				bool emptySpaceFill: 1;
-				uint8_t _: 4;
 				bool horizontalMirroring: 1;
 				bool verticalMirroring: 1;
+				uint8_t _: 4;
+				bool emptySpaceFill: 1;
+				bool playingFieldSize: 1;
 			};
 			uint8_t raw;
 		} _m7sel;
 		//! M7A M7B M7C M7D i didn't understand how they works so they will be added later.
+
+		// <to work>
+
 		//! @brief M7X Register (Mode 7 Center X)
-		union {
+		union { // Not sure if it is done correctly
 			struct {
 				uint8_t _: 3;
 				uint8_t value;
@@ -350,7 +353,7 @@ namespace ComSquare::PPU
 			uint32_t center;
 		} _m7x;
 		//! @brief M7Y Register (Mode 7 Center Y)
-		union {
+		union { // Not sure if it is done correctly
 			struct {
 				uint8_t _: 3;
 				uint8_t value;
@@ -389,58 +392,46 @@ namespace ComSquare::PPU
 				bool window1InversionForBg1Bg2Obj: 1;
 			};
 			uint8_t raw;
-		} _wsel;
+		} _wsel[3];
 		//! @brief WH0 Register (CWindow 1 Left Position)
-		uint8_t wh0;
+		uint8_t _wh0;
 		//! @brief WH1 Register (CWindow 1 Right Position)
-		uint8_t wh1;
+		uint8_t _wh1;
 		//! @brief WH2 Register (CWindow 2 Left Position)
-		uint8_t wh2;
+		uint8_t _wh2;
 		//! @brief WH3 Register (CWindow 2 Right Position)
-		uint8_t wh3;
+		uint8_t _wh3;
 		//! @brief WBGLOG Register (Window mask logic for BGs)
 		union {
 			struct {
-				uint8_t maskLogicBg1: 2;
-				uint8_t maskLogicBg2: 2;
-				uint8_t maskLogicBg3: 2;
 				uint8_t maskLogicBg4: 2;
+				uint8_t maskLogicBg3: 2;
+				uint8_t maskLogicBg2: 2;
+				uint8_t maskLogicBg1: 2;
 			};
 			uint8_t raw;
-		} wbglog;
+		} _wbglog;
 		//! @brief WOBJLOG Register (Window mask logic for OBJs and Color Window)
 		union {
 			struct {
-				uint8_t _: 4;
 				uint8_t maskLogicObj: 2;
 				uint8_t maskLogicColor: 2;
+				uint8_t _: 4;
 			};
 			uint8_t raw;
-		} wobjlog;
-		//! @brief TM Register (Main Screen Designation)
+		} _wobjlog;
+		//! @brief TM - TS Registers (Main & Sub Screen Designation)
 		union {
 			struct {
-				uint8_t _: 3;
-				bool enableWindowDisplayObj: 1;
-				bool enableWindowDisplayBg4: 1;
-				bool enableWindowDisplayBg3: 1;
-				bool enableWindowDisplayBg2: 1;
 				bool enableWindowDisplayBg1: 1;
+				bool enableWindowDisplayBg2: 1;
+				bool enableWindowDisplayBg3: 1;
+				bool enableWindowDisplayBg4: 1;
+				bool enableWindowDisplayObj: 1;
+				uint8_t _: 3;
 			};
 			uint8_t raw;
-		} tm;
-		//! @brief TS Register (Sub Screen Designation)
-		union {
-			struct {
-				uint8_t _: 3;
-				bool enableWindowDisplayObj: 1;
-				bool enableWindowDisplayBg4: 1;
-				bool enableWindowDisplayBg3: 1;
-				bool enableWindowDisplayBg2: 1;
-				bool enableWindowDisplayBg1: 1;
-			};
-			uint8_t raw;
-		} ts;
+		} _t[2];
 		//! @brief TMW Register (Window Mask Designation for the Main Screen)
 		union {
 			struct {
@@ -452,7 +443,7 @@ namespace ComSquare::PPU
 				bool enableWindowMaskingBg1: 1;
 			};
 			uint8_t raw;
-		} tmw;
+		} _tmw;
 		//! @brief TSW Register (Window Mask Designation for the Sub Screen)
 		union {
 			struct {
@@ -464,7 +455,7 @@ namespace ComSquare::PPU
 				bool enableWindowMaskingBg1: 1;
 			};
 			uint8_t raw;
-		} tsw;
+		} _tsw;
 		//! @brief CGWSEL Register (Color Addition Select)
 		union {
 			struct {
@@ -475,7 +466,7 @@ namespace ComSquare::PPU
 				bool directColorMode: 1;
 			};
 			uint8_t raw;
-		} cgwsel;
+		} _cgwsel;
 		//! @brief CGADSUB Register (Color Math designation)
 		union {
 			struct {
@@ -489,7 +480,7 @@ namespace ComSquare::PPU
 				bool enableColorMathBg1: 1;
 			};
 			uint8_t raw;
-		} cgadsub;
+		} _cgadsub;
 		//! @brief COLDATA Register (Fixed Color Data)
 		union {
 			struct {
@@ -499,7 +490,7 @@ namespace ComSquare::PPU
 				uint8_t colorIntensity: 5;
 			};
 			uint8_t raw;
-		} coldata;
+		} _coldata;
 		//! @brief SETINI Register (Screen Mode/Video Select)
 		union {
 			struct {
@@ -512,7 +503,7 @@ namespace ComSquare::PPU
 				bool screenInterlace: 1;
 			};
 			uint8_t raw;
-		} setini;
+		} _setini;
 		//! @brief MPYL - MPYM - MPYH Registers (Multiplication Result)
 		union {
 			struct {

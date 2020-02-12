@@ -83,7 +83,7 @@ namespace ComSquare::PPU
 		case ppuRegisters::vmdatal:
 			if (!this->_inidisp.fblank) {
 				this->_vmdata.vmdatal = data;
-				this->_vram[getVramAddress()] = this->_vmdata.vmdata;
+				//this->_vram[getVramAddress()] = this->_vmdata.vmdata;
 			}
 			if (!this->_vmain.incrementMode)
 				this->_vmadd.vmadd += this->_vmain.incrementAmount;
@@ -91,10 +91,13 @@ namespace ComSquare::PPU
 		case ppuRegisters::vmdatah:
 			if (!this->_inidisp.fblank) {
 				this->_vmdata.vmdatah = data;
-				this->_vram[getVramAddress()] = this->_vmdata.vmdata;
+				//this->_vram[getVramAddress()] = this->_vmdata.vmdata;
 			}
 			if (this->_vmain.incrementMode)
 				this->_vmadd.vmadd += this->_vmain.incrementAmount;
+			break;
+		case ppuRegisters::m7sel:
+			this->_m7sel.raw = data;
 			break;
 		case ppuRegisters::cgadd:
 			this->_cgadd = data;
@@ -111,6 +114,33 @@ namespace ComSquare::PPU
 			}
 			this->_isLowByte = !this->_isLowByte;
 			this->_cgadd++;
+			break;
+		case ppuRegisters::w12sel:
+		case ppuRegisters::w34sel:
+		case ppuRegisters::wobjsel:
+			this->_wsel[addr - ppuRegisters::w12sel].raw = data;
+			break;
+		case ppuRegisters::wh0:
+			this->_wh0 = data;
+			break;
+		case ppuRegisters::wh1:
+			this->_wh1 = data;
+			break;
+		case ppuRegisters::wh2:
+			this->_wh2 = data;
+			break;
+		case ppuRegisters::wh3:
+			this->_wh3 = data;
+			break;
+		case ppuRegisters::wbjlog:
+			this->_wbglog.raw = data;
+			break;
+		case ppuRegisters::wobjlog:
+			this->_wobjlog.raw = data;
+			break;
+		case ppuRegisters::tm:
+		case ppuRegisters::ts:
+			this->_t[addr - ppuRegisters::tm].raw = data;
 			break;
 		//TODO adding the rest of the registers. oaf !
 		default:
@@ -155,6 +185,7 @@ namespace ComSquare::PPU
 		_bus(std::move(bus)),
 		_renderer(renderer)
 	{
+		this->_isLowByte = true;
 		//_vram = new uint16_t[32000];
 	}
 }
