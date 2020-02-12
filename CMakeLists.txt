@@ -56,7 +56,7 @@ add_executable(unit_tests
         sources/APU/Instructions/Standbys.cpp
         tests/APU/testAPUInstructions.cpp
         sources/APU/Instructions/ProgramStatusWord.cpp
-)
+        tests/APU/testAPU.cpp sources/APU/Instructions/Bit.cpp)
 
 # include criterion & coverage
 target_link_libraries(unit_tests criterion -lgcov)
@@ -112,7 +112,7 @@ add_executable(ComSquare
         sources/CPU/Instructions/MathematicalOperations.cpp
         sources/APU/Instructions/Standbys.cpp
         sources/APU/Instructions/ProgramStatusWord.cpp
-)
+        sources/APU/Instructions/Bit.cpp)
 
 target_link_libraries(ComSquare
         sfml-graphics

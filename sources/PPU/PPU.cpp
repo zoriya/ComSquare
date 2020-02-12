@@ -70,7 +70,7 @@ namespace ComSquare::PPU
 		}
 	}
 
-	void PPU::update(int cycles)
+	void PPU::update(unsigned cycles)
 	{
 		(void)cycles;
 	}

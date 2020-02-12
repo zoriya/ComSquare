@@ -392,7 +392,7 @@ namespace ComSquare::PPU
 		void write(uint24_t addr, uint8_t data) override;
 		//! @brief Update the PPU of n cycles.
 		//! @param The number of cycles to update.
-		void update(int cycles);
+		void update(unsigned cycles);
 	};
 }
 #endif //COMSQUARE_PPU_HPP

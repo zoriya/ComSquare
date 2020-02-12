@@ -10,7 +10,109 @@
 namespace ComSquare::APU
 {
 	APU::APU() : _dsp(new DSP::DSP)
-	{ }
+	{
+		this->_map.Page0 = std::make_shared<Ram::Ram>(Ram::Ram(0x00F0));
+		this->_map.Page1 = std::make_shared<Ram::Ram>(Ram::Ram(0x0100));
+		this->_map.Memory = std::make_shared<Ram::Ram>(Ram::Ram(0xFDC0));
+		this->_map.IPL = std::make_shared<Ram::Ram>(Ram::Ram(0x0040));
+	}
+
+	uint8_t APU::_internalRead(uint24_t addr) {
+		switch (addr) {
+		case 0x0000 ... 0x00EF:
+			return this->_map.Page0->read_internal(addr);
+		case 0xF0:
+			return this->_registers.unknown;
+		case 0xF2:
+			return this->_registers.dspregAddr;
+		case 0xF3:
+			return this->_registers.dspregData;
+		case 0xF4:
+			return this->_registers.port0;
+		case 0xF5:
+			return this->_registers.port1;
+		case 0xF6:
+			return this->_registers.port2;
+		case 0xF7:
+			return this->_registers.port3;
+		case 0xF8:
+			return this->_registers.regmem1;
+		case 0xF9:
+			return this->_registers.regmem2;
+		case 0xFD:
+			return this->_registers.counter0;
+		case 0xFE:
+			return this->_registers.counter1;
+		case 0xFF:
+			return this->_registers.counter2;
+		case 0x0100 ... 0x01FF:
+			return this->_map.Page1->read_internal(addr - 0x0100);
+		case 0x0200 ... 0xFFBF:
+			return this->_map.Memory->read_internal(addr - 0x200);
+		case 0xFFC0 ... 0xFFFF:
+			return this->_map.IPL->read_internal(addr - 0xFFC0);
+		default:
+			throw InvalidAddress("APU Registers read", addr);
+		}
+	}
+
+	void APU::_internalWrite(uint24_t addr, uint8_t data) {
+		switch (addr) {
+		case 0x0000 ... 0x00EF:
+			this->_map.Page0->write_internal(addr, data);
+			break;
+		case 0xF0:
+			this->_registers.unknown = data;
+			break;
+		case 0xF1:
+			this->_registers.ctrlreg = data;
+			break;
+		case 0xF2:
+			this->_registers.dspregAddr = data;
+			break;
+		case 0xF3:
+			this->_registers.dspregData = data;
+			break;
+		case 0xF4:
+			this->_registers.port0 = data;
+			break;
+		case 0xF5:
+			this->_registers.port1 = data;
+			break;
+		case 0xF6:
+			this->_registers.port2 = data;
+			break;
+		case 0xF7:
+			this->_registers.port3 = data;
+			break;
+		case 0xF8:
+			this->_registers.regmem1 = data;
+			break;
+		case 0xF9:
+			this->_registers.regmem2 = data;
+			break;
+		case 0xFA:
+			this->_registers.timer0 = data;
+			break;
+		case 0xFB:
+			this->_registers.timer1 = data;
+			break;
+		case 0xFC:
+			this->_registers.timer2 = data;
+			break;
+		case 0x0100 ... 0x01FF:
+			this->_map.Page1->write_internal(addr - 0x0100, data);
+			break;
+		case 0x0200 ... 0xFFBF:
+			this->_map.Memory->write_internal(addr - 0x200, data);
+			break;
+		case 0xFFC0 ... 0xFFFF:
+			this->_map.IPL->write_internal(addr - 0xFFC0, data);
+			break;
+		default:
+			throw InvalidAddress("APU Registers write", addr);
+		}
+	}
 
 	uint8_t APU::read(uint24_t addr)
 	{
@@ -50,41 +152,41 @@ namespace ComSquare::APU
 
 	int APU::executeInstruction()
 	{
-		uint8_t opcode = read(this->_internalRegisters.pc++);
+		uint8_t opcode = this->_internalRead(this->_internalRegisters.pc++);
 
 		switch (opcode) {
 		case 0x00:
-			return NOP();
+			return this->NOP();
 		case 0x20:
-			return CLRP();
+			return this->CLRP();
 		case 0x40:
-			return SETP();
+			return this->SETP();
 		case 0x60:
-			return CLRC();
+			return this->CLRC();
 		case 0x80:
-			return SETC();
+			return this->SETC();
 		case 0xA0:
-			return EI();
+			return this->EI();
 		case 0xC0:
-			return DI();
+			return this->DI();
 		case 0xED:
-			return NOTC();
+			return this->NOTC();
 		case 0xEF:
-			return SLEEP();
+			return this->SLEEP();
 		case 0xFF:
-			return STOP();
+			return this->STOP();
 		default:
 			throw InvalidOpcode("APU", opcode);
 		}
 	}
 
-	void APU::update(uint8_t cycles)
+	void APU::update(unsigned cycles)
 	{
-		int total = 0;
+		unsigned total = 0;
 
 		cycles -= this->_paddingCycles;
 		while (total < cycles && this->_state == Running)
-			total += executeInstruction();
+			total += this->executeInstruction();
 		if (this->_state == Running)
 			this->_paddingCycles = total - cycles;
 	}

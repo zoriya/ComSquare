@@ -4,7 +4,6 @@
 
 #include <iostream>
 #include <string>
-#include "sources/Renderer/IRenderer.hpp"
 #include "sources/SNES.hpp"
 #include "sources/Renderer/SFRenderer.hpp"
 
@@ -16,29 +15,18 @@ int main(int argc, char **argv)
 		std::cout << "ComSquare:" << std::endl << "\tUsage: " << argv[0] << " rom_path" << std::endl;
 		return 1;
 	}
-	Memory::MemoryBus bus;
-	Renderer::SFRenderer renderer(600, 800, 60);
-	SNES snes(std::make_shared<Memory::MemoryBus>(bus), argv[1], renderer);
-	bus.mapComponents(snes);
-	int incx = 0;
-	int incy = 0;
-	uint32_t pixel = 0x000000FF;
+	try {
+		Renderer::SFRenderer renderer(600, 800, 60);
+		SNES snes(std::make_shared<Memory::MemoryBus>(), argv[1], renderer);
+		while (!renderer.shouldExit) {
+			unsigned cycleCount = snes.cpu->update();
+			snes.ppu->update(cycleCount);
+			snes.apu->update(cycleCount);
 
-	while (!renderer.shouldExit) {
-		renderer.putPixel(incy, incx++, pixel);
-		if (incx >= 800) {
-			incx = 0;
-			incy++;
+			renderer.getEvents();
 		}
-		if (incy >= 600) {
-			incy = 0;
-		}
-		if (incx == 0) {
-			renderer.drawScreen();
-			pixel += 0xFF00FF00;
-		}
-		renderer.getEvents();
+	} catch (std::exception &e) {
+		std::cerr << "An error occurred: " << e.what() << std::endl;
 	}
-
 	return 0;
 }

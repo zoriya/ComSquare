@@ -8,6 +8,7 @@
 #include <memory>
 #include "DSP/DSP.hpp"
 #include "../Memory/IMemory.hpp"
+#include "../Ram/Ram.hpp"
 
 namespace ComSquare::APU
 {
@@ -28,7 +29,7 @@ namespace ComSquare::APU
 		};
 
 		//! @brief The Stack pointer register
-		uint8_t sp;
+		uint8_t sp = 0x00FF;
 
 		//! @brief The Program counter register
 		union {
@@ -113,6 +114,18 @@ namespace ComSquare::APU
 		Stopped
 	};
 
+	struct MemoryMap
+	{
+		//! @brief Zero page memory
+		std::shared_ptr<Ram::Ram> Page0;
+		//! @brief Stack space memory
+		std::shared_ptr<Ram::Ram> Page1;
+		//! @brief Any-use memory
+		std::shared_ptr<Ram::Ram> Memory;
+		//! @brief IPL ROM
+		std::shared_ptr<Ram::Ram> IPL;
+	};
+
 	class APU : public Memory::IMemory {
 	private:
 		//! @brief All the registers of the APU CPU
@@ -120,14 +133,28 @@ namespace ComSquare::APU
 		//! @brief Internal registers of the CPU (accessible from the bus via addr $4200 to $421F).
 		InternalRegisters _internalRegisters{};
 
+		//! @brief Internal APU memory separated according to their utility
+		MemoryMap _map;
+
 		//! @brief The DSP component used to produce sound
 		std::shared_ptr<DSP::DSP> _dsp;
+
+		//! @brief Read from the APU ram.
+		//! @param addr The address to read from. The address 0x0000 should refer to the first byte of the register.
+		//! @throw InvalidAddress will be thrown if the address is more than $FFFF (the number of register).
+		//! @return Return the data.
+		uint8_t _internalRead(uint24_t addr);
+		//! @brief Write data to the APU ram.
+		//! @param addr The address to write to. The address 0x0000 should refer to the first byte of register.
+		//! @param data The new value of the register.
+		//! @throw InvalidAddress will be thrown if the address is more than $FFFF (the number of register).
+		void _internalWrite(uint24_t addr, uint8_t data);
 
 		//! @brief Current state of APU CPU
 		StateMode _state = Running;
 
 		//! @brief Keep the number of excess cycles executed to pad the next update
-		int _paddingCycles = 0;
+		unsigned int _paddingCycles = 0;
 
 		//! @brief Execute a single instruction.
 		//! @return The number of cycles that the instruction took.
@@ -160,18 +187,18 @@ namespace ComSquare::APU
 		explicit APU();
 
 		//! @brief Read from the internal APU register.
-		//! @param addr The address to read from. The address 0xF0 should refer to the first byte of the register.
-		//! @throw InvalidAddress will be thrown if the address is more than $FF (the number of register).
+		//! @param addr The address to read from. The address 0x00 should refer to the first byte of the register.
+		//! @throw InvalidAddress will be thrown if the address is more than $0F (the number of register).
 		//! @return Return the value of the register.
 		uint8_t read(uint24_t addr) override;
 		//! @brief Write data to the internal APU register.
-		//! @param addr The address to write to. The address 0xF0 should refer to the first byte of register.
+		//! @param addr The address to write to. The address 0x00 should refer to the first byte of register.
 		//! @param data The new value of the register.
-		//! @throw InvalidAddress will be thrown if the address is more than $FF (the number of register).
+		//! @throw InvalidAddress will be thrown if the address is more than $0F (the number of register).
 		void write(uint24_t addr, uint8_t data) override;
 		//! @brief This function execute the instructions received until the maximum number of cycles is reached.
 		//! @return The number of cycles that elapsed.
-		void update(uint8_t cycles);
+		void update(unsigned cycles);
 	};
 }
 
