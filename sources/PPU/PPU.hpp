@@ -286,7 +286,7 @@ namespace ComSquare::PPU
 			};
 			uint8_t raw;
 		} _bgnba[2];
-		//! @brief BGXXOFS Register (BG1/2/3/4 Horizontal and Vertical Scroll)
+		//! @brief BGXXOFS Register (BG1/2/3/4 Horizontal and Vertical Scrolls)
 		union {
 			struct {
 				uint16_t offsetBg: 10;

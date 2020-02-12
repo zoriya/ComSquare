@@ -80,7 +80,6 @@ namespace ComSquare::PPU
 		case ppuRegisters::vmaddh:
 			this->_vmadd.vmaddh = data;
 			break;
-		//! @info should must be in vblank for the write (and write it to the screen )? and increment vram address after;
 		case ppuRegisters::vmdatal:
 			if (!this->_inidisp.fblank) {
 				this->_vmdata.vmdatal = data;
@@ -138,13 +137,14 @@ namespace ComSquare::PPU
 	void PPU::update(unsigned cycles)
 	{
 		(void)cycles;
-		int inc = 0;
+		int inc = getVramAddress();
 		uint32_t pixelTmp = 0xFFFFFFFF;
 		//pixelTmp |= this->_inidisp.brightness;
 		if (!this->_inidisp.fblank) {
 			for (int x = 0; x < 448; x++) {
 				for (int y = 0; y < 512; y++) {
-					this->_renderer.putPixel(x, y, (uint32_t)_vram[inc++] << 8U + 0xFFU);
+					//this->_renderer.putPixel(x, y, ((uint32_t)_vram[inc++] << 8U) + 0xFFU);
+					this->_renderer.putPixel(x, y, (uint32_t)this->_bus->read(inc++));
 				}
 			}
 		}
