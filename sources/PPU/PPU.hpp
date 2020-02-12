@@ -286,54 +286,23 @@ namespace ComSquare::PPU
 			};
 			uint8_t raw;
 		} _bgnba[2];
-		//! @brief BG1HOFS Register (BG1 Horizontal Scroll)
-		//! @brief BG1VOFS Register (BG1 Vertical Scroll)
+		//! @brief BGXXOFS Register (BG1/2/3/4 Horizontal and Vertical Scroll)
 		union {
 			struct {
 				uint16_t offsetBg: 10;
 				uint8_t _ : 6;
 			};
 			uint16_t raw;
-		} _bgofs[4];
-		//! @brief M7HOFS Register (Mode 7 _BG Horizontal Scroll)
-		//! @brief M7VOFS Register (Mode 7 _BG Vertical Scroll)
+		} _bgofs[8];
+		//! @brief M7HOFS Register (Mode 7 BG Horizontal Scroll)
+		//! @brief M7VOFS Register (Mode 7 BG Vertical Scroll)
 		union {
 			struct {
 				uint16_t offsetBg : 13;
 				uint8_t _ : 3;
 			};
 			uint8_t raw;
-		} _m7ofs;
-	/*	//! @brief BG2HOFS Register (BG2 Horizontal Scroll)
-		//! @brief BG2VOFS Register (BG2 Vertical Scroll)
-		union {
-			struct {
-				uint8_t _ : 6;
-				uint32_t offsetBg: 10;
-			};
-			uint8_t raw;
-		} _bg2ofs;
-		//! @brief BG3HOFS Register (BG3 Horizontal Scroll)
-		//! @brief BG3VOFS Register (BG3 Vertical Scroll)
-		union {
-			struct {
-				uint8_t _ : 6;
-				uint32_t offsetBg: 10;
-			};
-			uint8_t raw;
-		} _bg3ofs;
-		//! @brief BG4HOFS Register (BG4 Horizontal Scroll)
-		//! @brief BG4VOFS Register (BG4 Vertical Scroll)
-		union {
-			struct {
-				uint8_t _ : 3;
-				uint32_t offsetBg: 10;
-			};
-			uint8_t raw;
-		} _bg4ofs;*/
-
-		// <check>
-
+		} _m7ofs[2];
 		//! @brief VMAIN Register (Video Port Control)
 		union {
 			struct {
@@ -360,7 +329,7 @@ namespace ComSquare::PPU
 			};
 			uint16_t vmdata;
 		} _vmdata;
-		//! @brief M7SEL Register (Mode 7 Settings)
+		//! @brief TODO M7SEL Register (Mode 7 Settings)
 		union {
 			struct {
 				bool playingFieldSize: 1;
@@ -393,13 +362,20 @@ namespace ComSquare::PPU
 		//! @brief CGDATA Register (CGRAM Data write)
 		union {
 			struct {
-				bool _: 1;
-				uint8_t blue: 5;
-				uint8_t green: 5;
 				uint8_t red: 5;
+				uint8_t green: 5;
+				uint8_t blue: 5;
+				bool _: 1;
+			};
+			struct {
+				uint8_t cgdatal;
+				uint8_t cgdatah;
 			};
 			uint16_t raw;
 		} _cgdata;
+		//! @brief This bool is used for writing either the low byte of the data (first call) or the high byte of the data (second call)
+		//! @info This bool is set to True when writing to $2121 (CGADD)
+		bool _isLowByte;
 		//! @brief W12SEL - W34SEL Registers (Window Mask Settings for BGs) and WOBJSEL Register (Window Mask Settings for OBJ and Color Window)
 		union {
 			struct {
@@ -548,6 +524,7 @@ namespace ComSquare::PPU
 		} mpy;
 		Renderer::IRenderer &_renderer;
 		std::shared_ptr<Memory::MemoryBus> _bus;
+		uint16_t *_vram;
 	public:
 		PPU(const std::shared_ptr<Memory::MemoryBus> &bus, Renderer::IRenderer &renderer);
 		//! @brief Read data from the component.
@@ -563,6 +540,8 @@ namespace ComSquare::PPU
 		//! @brief Update the PPU of n cycles.
 		//! @param The number of cycles to update.
 		void update(unsigned cycles);
+		//! @brief Give the Vram Address with the right Address remapping
+		uint8_t getVramAddress();
 	};
 }
 #endif //COMSQUARE_PPU_HPP
