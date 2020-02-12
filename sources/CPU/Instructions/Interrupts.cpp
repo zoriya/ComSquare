@@ -35,4 +35,16 @@ namespace ComSquare::CPU
 		this->_registers.p.d = false;
 		return !this->_isEmulationMode;
 	}
+
+	unsigned CPU::RTI()
+	{
+		this->_registers.p.flags = this->pop();
+		this->_registers.pc = this->pop16();
+
+		if (!this->_isEmulationMode) {
+			this->_registers.pbr = this->pop16();
+			return 1;
+		}
+		return 0;
+	}
 }

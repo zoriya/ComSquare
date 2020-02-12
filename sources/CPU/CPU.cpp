@@ -203,6 +203,8 @@ namespace ComSquare::CPU
 		switch (opcode) {
 		case Instructions::BRK:      return 7 + this->BRK();
 
+		case Instructions::RTI:	     return 6 + this->RTI();
+
 		case Instructions::ADC_IM:   return 2 + this->ADC(this->_getImmediateAddr());
 		case Instructions::ADC_ABS:  return 4 + this->ADC(this->_getAbsoluteAddr());
 		case Instructions::ADC_ABSl: return 5 + this->ADC(this->_getAbsoluteLongAddr());

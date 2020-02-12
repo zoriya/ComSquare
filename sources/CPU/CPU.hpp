@@ -187,6 +187,7 @@ namespace ComSquare::CPU
 	enum Instructions
 	{
 		BRK = 0x00,
+		RTI = 0x40,
 
 		ADC_DPXi = 0x61,
 		ADC_SR = 0x63,
@@ -282,6 +283,8 @@ namespace ComSquare::CPU
 		unsigned RESB();
 		//! @brief Break instruction - Causes a software break. The PC is loaded from a vector table.
 		unsigned BRK();
+		//! @brief Return from Interrupt - Used to return from a interrupt handler.
+		unsigned RTI();
 		//! @brief Add with carry - Adds operand to the Accumulator; adds an additional 1 if carry is set.
 		//! @return The number of extra cycles that this operation took.
 		unsigned ADC(uint24_t valueAddr);
