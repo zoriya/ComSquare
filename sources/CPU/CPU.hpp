@@ -7,7 +7,7 @@
 
 #include "../Memory/IMemory.hpp"
 #include "../Memory/MemoryBus.hpp"
-#include "../Models/Ints.hpp"
+#include "../Models/Int24.hpp"
 #include "Instructions/CommonInstructions.hpp"
 #include "../Cartridge/Cartridge.hpp"
 
@@ -18,8 +18,8 @@ namespace ComSquare::CPU
 		//! @brief The Accumulator
 		union {
 			struct {
-				uint8_t ah;
 				uint8_t al;
+				uint8_t ah;
 			};
 			uint16_t a;
 		};
@@ -28,8 +28,8 @@ namespace ComSquare::CPU
 		//! @brief The Direct Page register;
 		union {
 			struct {
-				uint8_t dh;
 				uint8_t dl;
+				uint8_t dh;
 			};
 			uint16_t d;
 		};
@@ -40,8 +40,8 @@ namespace ComSquare::CPU
 				//! @brief The Program Counter;
 				union {
 					struct {
-						uint8_t pch;
 						uint8_t pcl;
+						uint8_t pch;
 					};
 					uint16_t pc;
 				};
@@ -52,24 +52,24 @@ namespace ComSquare::CPU
 		//! @brief The Stack pointer
 		union {
 			struct {
-				uint8_t sh;
 				uint8_t sl;
+				uint8_t sh;
 			};
 			uint16_t s;
 		};
 		//! @brief The X index register
 		union {
 			struct {
-				uint8_t xh;
 				uint8_t xl;
+				uint8_t xh;
 			};
 			uint16_t x;
 		};
 		//! @brief The Y index register
 		union {
 			struct {
-				uint8_t yh;
 				uint8_t yl;
+				uint8_t yh;
 			};
 			uint16_t y;
 		};
@@ -180,7 +180,7 @@ namespace ComSquare::CPU
 		uint8_t joy4h;
 	};
 
-	//! @brief All the instructions opcode of the main CPI.
+	//! @brief All the instructions opcode of the main CPU.
 	//! @info The name of the instruction followed by their parameters (after an underscore) if any.
 	//! @info Addr mode with an i at the end means indirect.
 	//! @info Addr mode with an l at the end means long.
@@ -204,6 +204,50 @@ namespace ComSquare::CPU
 		ADC_ABSY = 0x79,
 		ADC_ABSX = 0x7D,
 		ADC_ABSXl = 0x7F,
+
+		STA_ABS = 0x8D,
+		STA_ABSl = 0x8F,
+		STA_DP = 0x85,
+		STA_DPi = 0x92,
+		STA_DPil = 0x87,
+		STA_ABSX = 0x9D,
+		STA_ABSXl = 0x9F,
+		STA_ABSY = 0x99,
+		STA_DPX = 0x95,
+		STA_DPXi = 0x81,
+		STA_DPYi = 0x91,
+		STA_DPYil = 0x97,
+		STA_SR = 0x83,
+		STA_SRYi = 0x93,
+
+		STX_ABS = 0x8E,
+		STX_DP = 0x86,
+		STX_DPY = 0x96,
+
+		STY_ABS = 0x8C,
+		STY_DP = 0x84,
+		STY_DPX = 0x94,
+
+		STZ_ABS = 0x9C,
+		STZ_DP = 0x64,
+		STZ_ABSX = 0x9E,
+		STZ_DPX = 0x74,
+
+		LDA_IM = 0xA9,
+		LDA_ABS = 0xAD,
+		LDA_ABSl = 0xAF,
+		LDA_DP = 0xA5,
+		LDA_DPi = 0xB2,
+		LDA_DPil = 0xA7,
+		LDA_ABSX = 0xBD,
+		LDA_ABSXl = 0xBF,
+		LDA_ABSY = 0xB9,
+		LDA_DPX = 0xB5,
+		LDA_DPXi = 0xA1,
+		LDA_DPYi = 0xB1,
+		LDA_DPYil = 0xB7,
+		LDA_SR = 0xA3,
+		LDA_SRYi = 0xB3
 	};
 
 	//! @brief The main CPU
@@ -220,8 +264,8 @@ namespace ComSquare::CPU
 		//! @brief The cartridge header (stored for interrupt vectors..
 		Cartridge::Header &_cartridgeHeader;
 
-		//! @brief An additional number of cycles that the current running instruction took to run. (Used for address modes that take longer to run than others).
-		unsigned _extraMemoryCycles = 0;
+		//! @brief True if an addressing mode with an iterator (x, y) has crossed the page. (Used because crossing the page boundary take one more cycle to run certain instructions).
+		bool _hasIndexCrossedPageBoundary = false;
 
 		//! @brief Immediate address mode is specified with a value. (This functions returns the 24bit space address of the value).
 		uint24_t _getImmediateAddr();
@@ -266,32 +310,43 @@ namespace ComSquare::CPU
 
 
 		//! @brief Push 8 bits of data to the stack.
-		void push(uint8_t data);
+		void _push(uint8_t data);
 		//! @brief Push 16 bits of data to the stack.
-		void push(uint16_t data);
+		void _push(uint16_t data);
 		//! @brief Pop 8 bits of data from the stack.
-		uint8_t pop();
+		uint8_t _pop();
 		//! @brief Pop 16 bits of data from the stack.
-		uint16_t pop16();
+		uint16_t _pop16();
 
 
 		//! @brief Execute a single instruction.
 		//! @return The number of CPU cycles that the instruction took.
-		unsigned executeInstruction();
+		unsigned _executeInstruction();
 
 		//! @brief Reset interrupt - Called on boot and when the reset button is pressed.
-		unsigned RESB();
+		void RESB();
 		//! @brief Break instruction - Causes a software break. The PC is loaded from a vector table.
-		unsigned BRK();
+		void BRK();
 		//! @brief Return from Interrupt - Used to return from a interrupt handler.
-		unsigned RTI();
+		void RTI();
 		//! @brief Add with carry - Adds operand to the Accumulator; adds an additional 1 if carry is set.
 		//! @return The number of extra cycles that this operation took.
-		unsigned ADC(uint24_t valueAddr);
+		void ADC(uint24_t valueAddr);
 		//! @brief Store the accumulator to memory.
-		unsigned STA(uint24_t addr);
+		void STA(uint24_t addr);
+		//! @brief Store the index register X to memory.
+		void STX(uint24_t addr);
+		//! @brief Store the index register Y to memory.
+		void STY(uint24_t addr);
+		//! @brief Store zero to the memory.
+		void STZ(uint24_t addr);
+		//! @brief Load the accumulator from memory.
+		void LDA(uint24_t addr);
 	public:
 		explicit CPU(std::shared_ptr<Memory::MemoryBus> bus, Cartridge::Header &cartridgeHeader);
+		CPU(const CPU &) = default;
+		CPU &operator=(const CPU &) = delete;
+		~CPU() = default;
 		//! @brief This function continue to execute the Cartridge code.
 		//! @return The number of CPU cycles that elapsed
 		unsigned update();

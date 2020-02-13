@@ -32,7 +32,7 @@ Test(_internalRead, Page0)
 	auto apu = Init().second.apu;
 	uint8_t result = 0;
 
-	apu->_map.Page0->_data[0x0010] = 123;
+	apu->_map.Page0._data[0x0010] = 123;
 	result = apu->_internalRead(0x0010);
 	cr_assert_eq(result, 123);
 }
@@ -42,7 +42,7 @@ Test(_internalRead, Page1)
 	auto apu = Init().second.apu;
 	uint8_t result = 0;
 
-	apu->_map.Page1->_data[0x0042] = 123;
+	apu->_map.Page1._data[0x0042] = 123;
 	result = apu->_internalRead(0x0142);
 	cr_assert_eq(result, 123);
 }
@@ -52,7 +52,7 @@ Test(_internalRead, Memory)
 	auto apu = Init().second.apu;
 	uint8_t result = 0;
 
-	apu->_map.Memory->_data[0xFCDC] = 123;
+	apu->_map.Memory._data[0xFCDC] = 123;
 	result = apu->_internalRead(0xFEDC);
 	cr_assert_eq(result, 123);
 }
@@ -62,7 +62,7 @@ Test(_internalRead, IPL)
 	auto apu = Init().second.apu;
 	uint8_t result = 0;
 
-	apu->_map.IPL->_data[0x001F] = 123;
+	apu->_map.IPL._data[0x001F] = 123;
 	result = apu->_internalRead(0xFFDF);
 	cr_assert_eq(result, 123);
 }
@@ -85,7 +85,7 @@ Test(_internalWrite, Page0)
 	auto apu = Init().second.apu;
 
 	apu->_internalWrite(0x0001, 123);
-	cr_assert_eq(apu->_map.Page0->_data[0x0001], 123);
+	cr_assert_eq(apu->_map.Page0._data[0x0001], 123);
 }
 
 Test(_internalWrite, register)
@@ -101,7 +101,7 @@ Test(_internalWrite, Page1)
 	auto apu = Init().second.apu;
 
 	apu->_internalWrite(0x01FF, 123);
-	cr_assert_eq(apu->_map.Page1->_data[0x00FF], 123);
+	cr_assert_eq(apu->_map.Page1._data[0x00FF], 123);
 }
 
 Test(_internalWrite, Memory)
@@ -109,7 +109,7 @@ Test(_internalWrite, Memory)
 	auto apu = Init().second.apu;
 
 	apu->_internalWrite(0x0789, 123);
-	cr_assert_eq(apu->_map.Memory->_data[0x0589], 123);
+	cr_assert_eq(apu->_map.Memory._data[0x0589], 123);
 }
 
 Test(_internalWrite, IPL)
@@ -117,7 +117,7 @@ Test(_internalWrite, IPL)
 	auto apu = Init().second.apu;
 
 	apu->_internalWrite(0xFFF0, 123);
-	cr_assert_eq(apu->_map.Memory->_data[0x0030], 123);
+	cr_assert_eq(apu->_map.IPL._data[0x0030], 123);
 }
 
 Test(_internalWrite, Invalid)

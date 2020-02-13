@@ -117,13 +117,15 @@ namespace ComSquare::APU
 	struct MemoryMap
 	{
 		//! @brief Zero page memory
-		std::shared_ptr<Ram::Ram> Page0;
+		Ram::Ram Page0;
 		//! @brief Stack space memory
-		std::shared_ptr<Ram::Ram> Page1;
+		Ram::Ram Page1;
 		//! @brief Any-use memory
-		std::shared_ptr<Ram::Ram> Memory;
+		Ram::Ram Memory;
 		//! @brief IPL ROM
-		std::shared_ptr<Ram::Ram> IPL;
+		Ram::Ram IPL;
+
+		MemoryMap();
 	};
 
 	class APU : public Memory::IMemory {
@@ -197,6 +199,9 @@ namespace ComSquare::APU
 		int TSET1(uint24_t abs);
 	public:
 		explicit APU();
+		APU(const APU &) = default;
+		APU &operator=(const APU &) = default;
+		~APU() = default;
 
 		//! @brief Read from the internal APU register.
 		//! @param addr The address to read from. The address 0x00 should refer to the first byte of the register.

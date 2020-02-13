@@ -53,6 +53,9 @@ namespace ComSquare::Renderer
 		//! @param width width of the window.
 		//! @param maxFPS the number of maximum FPS for the window.
 		SFRenderer(unsigned int height, unsigned int width, int maxFPS);
+		SFRenderer(const SFRenderer &) = delete;
+		SFRenderer &operator=(const SFRenderer &) = delete;
+		~SFRenderer() = default;
 	};
 }
 

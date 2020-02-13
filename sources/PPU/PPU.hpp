@@ -521,6 +521,10 @@ namespace ComSquare::PPU
 		uint16_t *_vram;
 	public:
 		PPU(const std::shared_ptr<Memory::MemoryBus> &bus, Renderer::IRenderer &renderer);
+		PPU(const PPU &) = default;
+		PPU &operator=(const PPU &) = delete;
+		~PPU() = default;
+
 		//! @brief Read data from the component.
 		//! @param addr The local address to read from (0x0 should refer to the first byte of this component).
 		//! @throw This function should thrown an InvalidAddress for address that are not mapped to the component.

@@ -8,7 +8,7 @@
 
 #include <cstdint>
 #include <vector>
-#include "../Models/Ints.hpp"
+#include "../Models/Int24.hpp"
 
 namespace ComSquare::Memory
 {

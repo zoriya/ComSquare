@@ -198,8 +198,8 @@ namespace ComSquare::PPU
 	}
 
 	PPU::PPU(const std::shared_ptr<Memory::MemoryBus> &bus, Renderer::IRenderer &renderer):
-		_bus(std::move(bus)),
-		_renderer(renderer)
+		_renderer(renderer),
+		_bus(std::move(bus))
 	{
 		this->_isLowByte = true;
 		//_vram = new uint16_t[32000];
