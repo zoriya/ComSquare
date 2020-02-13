@@ -28,3 +28,23 @@ Test(STA, 16bits)
 	auto data = pair.second.wram->_data[0] + (pair.second.wram->_data[1] << 8u);
 	cr_assert_eq(data, 0x11AB, "The stored value should be 0x11AB but it was 0x%x.", data);
 }
+
+Test(STX, 8bits)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.p.x_b = true;
+	pair.second.cpu->_registers.x = 0x11;
+	pair.second.cpu->STX(0x0);
+	auto data = pair.second.wram->_data[0];
+	cr_assert_eq(data, 0x11, "The stored value should be 0x11 but it was 0x%x.", data);
+}
+
+Test(STX, 16bits)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.p.x_b = false;
+	pair.second.cpu->_registers.x = 0x11AB;
+	pair.second.cpu->STX(0x0);
+	auto data = pair.second.wram->_data[0] + (pair.second.wram->_data[1] << 8u);
+	cr_assert_eq(data, 0x11AB, "The stored value should be 0x11AB but it was 0x%x.", data);
+}

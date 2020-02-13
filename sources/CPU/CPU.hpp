@@ -218,7 +218,11 @@ namespace ComSquare::CPU
 		STA_DPYi = 0x91,
 		STA_DPYil = 0x97,
 		STA_SR = 0x83,
-		STA_SRYi = 0x93
+		STA_SRYi = 0x93,
+
+		STX_ABS = 0x8E,
+		STX_DP = 0x86,
+		STX_DPY = 0x96
 	};
 
 	//! @brief The main CPU
@@ -305,6 +309,8 @@ namespace ComSquare::CPU
 		void ADC(uint24_t valueAddr);
 		//! @brief Store the accumulator to memory.
 		void STA(uint24_t addr);
+		//! @brief Store the index register X to memory.
+		void STX(uint24_t addr);
 	public:
 		explicit CPU(std::shared_ptr<Memory::MemoryBus> bus, Cartridge::Header &cartridgeHeader);
 		//! @brief This function continue to execute the Cartridge code.

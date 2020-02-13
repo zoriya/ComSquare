@@ -15,4 +15,14 @@ namespace ComSquare::CPU
 			this->_bus->write(addr + 1, this->_registers.ah);
 		}
 	}
+
+	void CPU::STX(uint24_t addr)
+	{
+		if (this->_registers.p.x_b)
+			this->_bus->write(addr, this->_registers.xl);
+		else {
+			this->_bus->write(addr, this->_registers.xl);
+			this->_bus->write(addr + 1, this->_registers.xh);
+		}
+	}
 }

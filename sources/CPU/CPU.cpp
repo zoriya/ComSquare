@@ -236,6 +236,10 @@ namespace ComSquare::CPU
 		case Instructions::STA_SR:   this->STA(this->_getStackRelativeAddr()); 					return 4 + !this->_registers.p.m;
 		case Instructions::STA_SRYi: this->STA(this->_getStackRelativeIndirectIndexedYAddr()); 	return 7 + !this->_registers.p.m;
 
+		case Instructions::STX_ABS:  this->STX(this->_getAbsoluteAddr()); 	return 4 + !this->_registers.p.m;
+		case Instructions::STX_DP:  this->STX(this->_getAbsoluteAddr()); 		return 3 + !this->_registers.p.m + this->_registers.dl != 0;
+		case Instructions::STX_DPY:  this->STX(this->_getAbsoluteAddr());		return 4 + !this->_registers.p.m + this->_registers.dl != 0;
+
 		default:
 			throw InvalidOpcode("CPU", opcode);
 		}
