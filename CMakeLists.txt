@@ -11,7 +11,7 @@ add_compile_options(-W -Wall -Wextra -Wshadow)
 add_executable(unit_tests
         tests/CPU/testAddressingMode.cpp
         tests/tests.cpp
-        tests/CPU/testCPU.cpp
+        tests/CPU/testInterupts.cpp
         tests/testMemoryBus.cpp
         tests/tests.hpp
         sources/SNES.cpp
@@ -57,6 +57,9 @@ add_executable(unit_tests
         tests/tests.cpp
         tests/PPU/testPpuWrite.cpp
         tests/PPU/testPpuWriteFromVmain.cpp
+        sources/CPU/Instructions/MathematicalOperations.cpp
+        tests/CPU/Math/testADC.cpp
+        tests/CPU/testStore.cpp
 )
 
 # include criterion & coverage
