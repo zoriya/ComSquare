@@ -1,0 +1,28 @@
+name: Update the documentation
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  Building:
+    runs-on: [ubuntu-latest]
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install Doxygen
+        run: sudo apt-get install --yes doxygen
+      - name: Update the docs
+        run: doxygen Doxyfile
+      - name: Deploy
+        run:
+          git config --global user.email "${GITHUB_ACTOR}@github.com";
+          git config --global user.name "${GITHUB_ACTOR}";
+          git checkout -B gh-pages;
+          git add -A;
+          git commit -m "Deploying the doc";
+          git remote set-url --push origin https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/Gegel85/GameJam2020;
+          git push origin gh-pages --quiet --force;
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
