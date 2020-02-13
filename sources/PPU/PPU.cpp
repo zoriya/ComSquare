@@ -106,11 +106,11 @@ namespace ComSquare::PPU
 		case ppuRegisters::cgdata:
 			if (this->_isLowByte) {
 				this->_cgdata.cgdatal = data;
-				this->_bus->write(this->_cgadd, this->_cgdata.cgdatal);
+				this->_cgram.write(this->_cgadd, this->_cgdata.raw);
 			}
 			else {
 				this->_cgdata.cgdatah = data;
-				this->_bus->write(this->_cgadd, this->_cgdata.cgdatah);
+				this->_cgram.write(this->_cgadd, this->_cgdata.raw);
 			}
 			this->_isLowByte = !this->_isLowByte;
 			this->_cgadd++;
@@ -183,14 +183,14 @@ namespace ComSquare::PPU
 	void PPU::update(unsigned cycles)
 	{
 		(void)cycles;
-		int inc = getVramAddress();
+		int inc = 0;
 		//uint32_t pixelTmp = 0xFFFFFFFF;
 		//pixelTmp |= this->_inidisp.brightness;
 		if (!this->_inidisp.fblank) {
 			for (int x = 0; x < 448; x++) {
 				for (int y = 0; y < 512; y++) {
 					//this->_renderer.putPixel(x, y, ((uint32_t)_vram[inc++] << 8U) + 0xFFU);
-					this->_renderer.putPixel(x, y, (uint32_t)this->_bus->read(inc++));
+					this->_renderer.putPixel(x, y, (uint32_t)this->_vram.read(inc++));
 				}
 			}
 		}
@@ -198,6 +198,11 @@ namespace ComSquare::PPU
 	}
 
 	PPU::PPU(const std::shared_ptr<Memory::MemoryBus> &bus, Renderer::IRenderer &renderer):
+		_renderer(renderer),
+		_bus(std::move(bus)),
+		_vram(64000),
+		_oamram(544),
+		_cgram(512)
 		_renderer(renderer),
 		_bus(std::move(bus))
 	{

@@ -9,6 +9,7 @@
 #include "../Memory/IMemory.hpp"
 #include "../Memory/MemoryBus.hpp"
 #include "../Renderer/IRenderer.hpp"
+#include "../Ram/ExtendedRam.hpp"
 
 //#define max2BitTiles		4096
 //#define max4BitTiles		2048
@@ -518,7 +519,9 @@ namespace ComSquare::PPU
 		} mpy;
 		Renderer::IRenderer &_renderer;
 		std::shared_ptr<Memory::MemoryBus> _bus;
-		uint16_t *_vram;
+		Ram::ExtendedRam _vram;
+		Ram::ExtendedRam _oamram;
+		Ram::ExtendedRam _cgram;
 	public:
 		PPU(const std::shared_ptr<Memory::MemoryBus> &bus, Renderer::IRenderer &renderer);
 		PPU(const PPU &) = default;
