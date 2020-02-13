@@ -112,7 +112,7 @@ add_executable(ComSquare
         sources/Exceptions/InvalidOpcode.hpp
         sources/CPU/Instructions/Interrupts.cpp
         sources/CPU/Instructions/MathematicalOperations.cpp
-        sources/CPU/Instructions/MemoryInstructions.cpp sources/CPU/Instructions/InternalInstruction.cpp)
+        sources/CPU/Instructions/MemoryInstructions.cpp sources/CPU/Instructions/InternalInstruction.cpp sources/Ram/ExtendedRam.cpp sources/Ram/ExtendedRam.hpp)
 
 target_link_libraries(ComSquare
         sfml-graphics
