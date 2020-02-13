@@ -253,7 +253,13 @@ namespace ComSquare::CPU
 		LDX_ABS = 0xAE,
 		LDX_DP = 0xA6,
 		LDX_ABSY = 0xBE,
-		LDX_DPY = 0xB6
+		LDX_DPY = 0xB6,
+
+		LDY_IM = 0xA0,
+		LDY_ABS = 0xAC,
+		LDY_DP = 0xA4,
+		LDY_ABSY = 0xBC,
+		LDY_DPY = 0xB4
 	};
 
 	//! @brief The main CPU
@@ -350,6 +356,8 @@ namespace ComSquare::CPU
 		void LDA(uint24_t addr);
 		//! @brief Load the X index register from memory.
 		void LDX(uint24_t addr);
+		//! @brief Load the Y index register from memory.
+		void LDY(uint24_t addr);
 	public:
 		explicit CPU(std::shared_ptr<Memory::MemoryBus> bus, Cartridge::Header &cartridgeHeader);
 		CPU(const CPU &) = default;

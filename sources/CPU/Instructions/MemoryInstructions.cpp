@@ -68,4 +68,17 @@ namespace ComSquare::CPU
 		}
 		this->_registers.p.z = this->_registers.x == 0x0;
 	}
+
+	void CPU::LDY(uint24_t addr)
+	{
+		if (this->_registers.p.x_b) {
+			this->_registers.y = this->_bus->read(addr);
+			this->_registers.p.n = this->_registers.yl & 0xF0u;
+		} else {
+			this->_registers.yl = this->_bus->read(addr);
+			this->_registers.yh = this->_bus->read(addr + 1);
+			this->_registers.p.n = this->_registers.y & 0xF000u;
+		}
+		this->_registers.p.z = this->_registers.y == 0x0;
+	}
 }

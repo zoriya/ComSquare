@@ -271,6 +271,12 @@ namespace ComSquare::CPU
 		case Instructions::LDX_ABSY: this->LDX(this->_getAbsoluteIndexedByYAddr()); 	return 4 + !this->_registers.p.m + this->_hasIndexCrossedPageBoundary;
 		case Instructions::LDX_DPY:  this->LDX(this->_getDirectIndexedByYAddr()); 	return 4 + !this->_registers.p.m + this->_registers.dl != 0;
 
+		case Instructions::LDY_IM:   this->LDY(this->_getImmediateAddr()); 			return 2 + !this->_registers.p.m;
+		case Instructions::LDY_ABS:  this->LDY(this->_getAbsoluteAddr()); 			return 4 + !this->_registers.p.m;
+		case Instructions::LDY_DP:   this->LDY(this->_getDirectAddr()); 				return 3 + !this->_registers.p.m + this->_registers.dl != 0;
+		case Instructions::LDY_ABSY: this->LDY(this->_getAbsoluteIndexedByYAddr()); 	return 4 + !this->_registers.p.m + this->_hasIndexCrossedPageBoundary;
+		case Instructions::LDY_DPY:  this->LDY(this->_getDirectIndexedByYAddr()); 	return 4 + !this->_registers.p.m + this->_registers.dl != 0;
+
 		default:
 			throw InvalidOpcode("CPU", opcode);
 		}
