@@ -441,4 +441,15 @@ namespace ComSquare::CPU
 		base += this->_registers.dbr << 16u;
 		return base + this->_registers.y;
 	}
+
+	unsigned CPU::STA(uint24_t addr)
+	{
+		if (this->_registers.p.m)
+			this->_bus->write(addr, this->_registers.al);
+		else {
+			this->_bus->write(addr, this->_registers.al);
+			this->_bus->write(addr + 1, this->_registers.ah);
+		}
+		return 0;
+	}
 }

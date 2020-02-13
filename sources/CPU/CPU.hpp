@@ -288,6 +288,8 @@ namespace ComSquare::CPU
 		//! @brief Add with carry - Adds operand to the Accumulator; adds an additional 1 if carry is set.
 		//! @return The number of extra cycles that this operation took.
 		unsigned ADC(uint24_t valueAddr);
+		//! @brief Store the accumulator to memory.
+		unsigned STA(uint24_t addr);
 	public:
 		explicit CPU(std::shared_ptr<Memory::MemoryBus> bus, Cartridge::Header &cartridgeHeader);
 		//! @brief This function continue to execute the Cartridge code.

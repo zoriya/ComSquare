@@ -52,7 +52,7 @@ add_executable(unit_tests
         sources/CPU/Instructions/CommonInstructions.hpp
         sources/Exceptions/InvalidOpcode.hpp
         sources/CPU/Instructions/Interrupts.cpp
-        sources/CPU/Instructions/MathematicalOperations.cpp tests/CPU/Math/testADC.cpp)
+        sources/CPU/Instructions/MathematicalOperations.cpp tests/CPU/Math/testADC.cpp tests/CPU/testStore.cpp)
 
 # include criterion & coverage
 target_link_libraries(unit_tests criterion -lgcov)
