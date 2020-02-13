@@ -203,8 +203,6 @@ namespace ComSquare::PPU
 		_vram(64000),
 		_oamram(544),
 		_cgram(512)
-		_renderer(renderer),
-		_bus(std::move(bus))
 	{
 		this->_isLowByte = true;
 		//_vram = new uint16_t[32000];
