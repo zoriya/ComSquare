@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Install Doxygen
-        run: sudo apt-get install --yes doxygen
+        run: sudo apt-get install --yes doxygen graphviz
       - name: Update the docs
         run: doxygen Doxyfile
       - name: Deploy
@@ -22,7 +22,7 @@ jobs:
           git checkout -B gh-pages;
           git add -A;
           git commit -m "Deploying the doc";
-          git remote set-url --push origin https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/Gegel85/GameJam2020;
+          git remote set-url --push origin https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/AnonymusRaccoon/ComSquare;
           git push origin gh-pages --quiet --force;
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
