@@ -66,6 +66,7 @@ add_executable(unit_tests
         sources/CPU/Instructions/MathematicalOperations.cpp
         tests/CPU/Math/testADC.cpp
         tests/CPU/testStore.cpp
+        sources/APU/Instructions/Bit.cpp
 )
 
 # include criterion & coverage
