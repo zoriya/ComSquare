@@ -42,4 +42,17 @@ namespace ComSquare::CPU
 		if (!this->_registers.p.m)
 			this->_bus->write(addr + 1, 0x00);
 	}
+
+	void CPU::LDA(uint24_t addr)
+	{
+		if (this->_registers.p.m) {
+			this->_registers.a = this->_bus->read(addr);
+			this->_registers.p.n = this->_registers.al & 0xF0u;
+		} else {
+			this->_registers.al = this->_bus->read(addr);
+			this->_registers.ah = this->_bus->read(addr + 1);
+			this->_registers.p.n = this->_registers.a & 0xF000u;
+		}
+		this->_registers.p.z = this->_registers.a == 0x0;
+	}
 }

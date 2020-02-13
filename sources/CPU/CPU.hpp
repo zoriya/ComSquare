@@ -231,7 +231,23 @@ namespace ComSquare::CPU
 		STZ_ABS = 0x9C,
 		STZ_DP = 0x64,
 		STZ_ABSX = 0x9E,
-		STZ_DPX = 0x74
+		STZ_DPX = 0x74,
+
+		LDA_IM = 0xA9,
+		LDA_ABS = 0xAD,
+		LDA_ABSl = 0xAF,
+		LDA_DP = 0xA5,
+		LDA_DPi = 0xB2,
+		LDA_DPil = 0xA7,
+		LDA_ABSX = 0xBD,
+		LDA_ABSXl = 0xBF,
+		LDA_ABSY = 0xB9,
+		LDA_DPX = 0xB5,
+		LDA_DPXi = 0xA1,
+		LDA_DPYi = 0xB1,
+		LDA_DPYil = 0xB7,
+		LDA_SR = 0xA3,
+		LDA_SRYi = 0xB3
 	};
 
 	//! @brief The main CPU
@@ -324,6 +340,8 @@ namespace ComSquare::CPU
 		void STY(uint24_t addr);
 		//! @brief Store zero to the memory.
 		void STZ(uint24_t addr);
+		//! @brief Load the accumulator from memory.
+		void LDA(uint24_t addr);
 	public:
 		explicit CPU(std::shared_ptr<Memory::MemoryBus> bus, Cartridge::Header &cartridgeHeader);
 		//! @brief This function continue to execute the Cartridge code.

@@ -249,6 +249,22 @@ namespace ComSquare::CPU
 		case Instructions::STZ_ABSX: this->STX(this->_getAbsoluteIndexedByXAddr()); 	return 3 + !this->_registers.p.m + this->_registers.dl != 0;
 		case Instructions::STZ_DPX:  this->STX(this->_getDirectIndexedByXAddr());		return 4 + !this->_registers.p.m + this->_registers.dl != 0;
 
+		case Instructions::LDA_IM:   this->LDA(this->_getImmediateAddr()); 						return 2 + !this->_registers.p.m;
+		case Instructions::LDA_ABS:  this->LDA(this->_getAbsoluteAddr()); 						return 4 + !this->_registers.p.m;
+		case Instructions::LDA_ABSl: this->LDA(this->_getAbsoluteLongAddr()); 					return 5 + !this->_registers.p.m;
+		case Instructions::LDA_DP:   this->LDA(this->_getDirectAddr()); 							return 3 + !this->_registers.p.m + this->_registers.dl != 0;
+		case Instructions::LDA_DPi:  this->LDA(this->_getDirectIndirectAddr()); 					return 5 + !this->_registers.p.m + this->_registers.dl != 0;
+		case Instructions::LDA_DPil: this->LDA(this->_getDirectIndirectLongAddr()); 				return 6 + !this->_registers.p.m + this->_registers.dl != 0;
+		case Instructions::LDA_ABSX: this->LDA(this->_getAbsoluteIndexedByXAddr()); 				return 4 + !this->_registers.p.m + this->_hasIndexCrossedPageBoundary;
+		case Instructions::LDA_ABSXl:this->LDA(this->_getAbsoluteIndexedByXLongAddr()); 			return 5 + !this->_registers.p.m;
+		case Instructions::LDA_ABSY: this->LDA(this->_getAbsoluteIndexedByYAddr()); 				return 4 + !this->_registers.p.m + this->_hasIndexCrossedPageBoundary;
+		case Instructions::LDA_DPX:  this->LDA(this->_getDirectIndexedByXAddr()); 				return 4 + !this->_registers.p.m + this->_registers.dl != 0;
+		case Instructions::LDA_DPXi: this->LDA(this->_getDirectIndirectIndexedXAddr());			return 6 + !this->_registers.p.m + this->_registers.dl != 0;
+		case Instructions::LDA_DPYi: this->LDA(this->_getDirectIndirectIndexedYAddr()); 			return 5 + !this->_registers.p.m + this->_registers.dl != 0 + this->_hasIndexCrossedPageBoundary;
+		case Instructions::LDA_DPYil:this->LDA(this->_getDirectIndirectIndexedYLongAddr()); 		return 6 + !this->_registers.p.m + this->_registers.dl != 0;
+		case Instructions::LDA_SR:   this->LDA(this->_getStackRelativeAddr()); 					return 4 + !this->_registers.p.m;
+		case Instructions::LDA_SRYi: this->LDA(this->_getStackRelativeIndirectIndexedYAddr()); 	return 7 + !this->_registers.p.m;
+
 		default:
 			throw InvalidOpcode("CPU", opcode);
 		}
