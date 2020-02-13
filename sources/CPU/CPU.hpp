@@ -222,7 +222,16 @@ namespace ComSquare::CPU
 
 		STX_ABS = 0x8E,
 		STX_DP = 0x86,
-		STX_DPY = 0x96
+		STX_DPY = 0x96,
+
+		STY_ABS = 0x8C,
+		STY_DP = 0x84,
+		STY_DPX = 0x94,
+
+		STZ_ABS = 0x9C,
+		STZ_DP = 0x64,
+		STZ_ABSX = 0x9E,
+		STZ_DPX = 0x74
 	};
 
 	//! @brief The main CPU
@@ -311,6 +320,10 @@ namespace ComSquare::CPU
 		void STA(uint24_t addr);
 		//! @brief Store the index register X to memory.
 		void STX(uint24_t addr);
+		//! @brief Store the index register Y to memory.
+		void STY(uint24_t addr);
+		//! @brief Store zero to the memory.
+		void STZ(uint24_t addr);
 	public:
 		explicit CPU(std::shared_ptr<Memory::MemoryBus> bus, Cartridge::Header &cartridgeHeader);
 		//! @brief This function continue to execute the Cartridge code.
