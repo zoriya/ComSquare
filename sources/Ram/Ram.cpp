@@ -2,6 +2,7 @@
 // Created by anonymus-raccoon on 1/28/20.
 //
 
+#include <cstring>
 #include "Ram.hpp"
 #include "../Exceptions/InvalidAddress.hpp"
 
@@ -11,6 +12,7 @@ namespace ComSquare::Ram
 		: _size(size)
 	{
 		this->_data = new uint8_t[size];
+		std::memset(this->_data, 0, size * sizeof(uint8_t));
 	}
 
 	Ram::~Ram()

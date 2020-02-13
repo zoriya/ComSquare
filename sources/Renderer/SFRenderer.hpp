@@ -26,15 +26,15 @@ namespace ComSquare::Renderer
 	class SFRenderer : public IRenderer {
 	private:
 		//! @brief The Renderer for the window.
-		sf::RenderWindow window;
+		sf::RenderWindow _window;
 		//! @brief Video Mode containing the height and width of the window.
-		sf::VideoMode videoMode;
+		sf::VideoMode _videoMode;
 		//! @brief The image that contain all of the pixels
-		sf::Color *pixelBuffer;
+		sf::Color *_pixelBuffer;
 		//! @brief The sprite to render the array of pixels
-		sf::Sprite sprite;
+		sf::Sprite _sprite;
 		//! @brief The texture to render the array of pixels
-		sf::Texture texture;
+		sf::Texture _texture;
 	public:
 		//! @brief Set a new name to the window, if there is already a name it will be overwrite.
 		//! @param newWindowName new title for the window.
@@ -55,7 +55,7 @@ namespace ComSquare::Renderer
 		SFRenderer(unsigned int height, unsigned int width, int maxFPS);
 		SFRenderer(const SFRenderer &) = delete;
 		SFRenderer &operator=(const SFRenderer &) = delete;
-		~SFRenderer() = default;
+		~SFRenderer();
 	};
 }
 
