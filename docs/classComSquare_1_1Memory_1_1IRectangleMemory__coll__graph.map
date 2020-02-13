@@ -1,4 +1,0 @@
-<map id="ComSquare::Memory::IRectangleMemory" name="ComSquare::Memory::IRectangleMemory">
-<area shape="rect" id="node1" title="Superset of the IMemory to map non continuous rectangle to the memory. (A rectangle that spam across ..." alt="" coords="5,219,172,443"/>
-<area shape="rect" id="node2" href="$classComSquare_1_1Memory_1_1IMemory.html" title="Common interface implemented by all components mapping memory." alt="" coords="5,5,172,171"/>
-</map>

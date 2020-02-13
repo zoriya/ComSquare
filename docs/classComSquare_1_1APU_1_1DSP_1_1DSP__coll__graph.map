@@ -1,5 +1,0 @@
-<map id="ComSquare::APU::DSP::DSP" name="ComSquare::APU::DSP::DSP">
-<area shape="rect" id="node1" title=" " alt="" coords="83,307,283,428"/>
-<area shape="rect" id="node2" href="$classComSquare_1_1Memory_1_1IMemory.html" title="Common interface implemented by all components mapping memory." alt="" coords="5,42,172,207"/>
-<area shape="rect" id="node3" href="$structComSquare_1_1APU_1_1DSP_1_1Registers.html" title="All the registers of the DSP." alt="" coords="196,5,363,244"/>
-</map>
