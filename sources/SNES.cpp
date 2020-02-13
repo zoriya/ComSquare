@@ -13,8 +13,8 @@ namespace ComSquare
 		cpu(new CPU::CPU(bus, cartridge->header)),
 		ppu(new PPU::PPU(bus, renderer)),
 		apu(new APU::APU()),
-		wram(new Ram::Ram(16384)),
-		sram(new Ram::Ram(this->cartridge->header.sramSize))
+		wram(new Ram::BasicRam(16384)),
+		sram(new Ram::BasicRam(this->cartridge->header.sramSize))
 	{
 		bus->mapComponents(*this);
 		renderer.setWindowName(this->cartridge->header.gameName);

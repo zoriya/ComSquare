@@ -33,7 +33,6 @@ add_executable(unit_tests
         sources/Exceptions/InvalidRom.hpp
         sources/Models/Int24.hpp
         sources/Models/Int24.hpp
-        sources/Ram/Ram.cpp
         sources/Ram/Ram.hpp
         sources/Memory/MemoryShadow.cpp
         sources/Memory/MemoryShadow.hpp
@@ -48,8 +47,6 @@ add_executable(unit_tests
         sources/Cartridge/InterruptVectors.hpp
         sources/Memory/RectangleShadow.cpp
         sources/Memory/RectangleShadow.hpp
-        sources/CPU/Instructions/CommonInstructions.cpp
-        sources/CPU/Instructions/CommonInstructions.hpp
         sources/Exceptions/InvalidOpcode.hpp
         sources/CPU/Instructions/Interrupts.cpp
         sources/CPU/Instructions/MathematicalOperations.cpp
@@ -61,7 +58,8 @@ add_executable(unit_tests
         sources/CPU/Instructions/MemoryInstructions.cpp
         tests/CPU/Math/testADC.cpp
         tests/CPU/testStore.cpp
-)
+        sources/CPU/Instructions/InternalInstruction.cpp
+        tests/CPU/testInternal.cpp)
 
 # include criterion & coverage
 target_link_libraries(unit_tests criterion -lgcov)
@@ -95,7 +93,6 @@ add_executable(ComSquare
         sources/Exceptions/InvalidRom.hpp
         sources/Models/Int24.hpp
         sources/Models/Int24.hpp
-        sources/Ram/Ram.cpp
         sources/Ram/Ram.hpp
         sources/Memory/MemoryShadow.cpp
         sources/Memory/MemoryShadow.hpp
@@ -110,12 +107,10 @@ add_executable(ComSquare
         sources/Cartridge/InterruptVectors.hpp
         sources/Memory/RectangleShadow.cpp
         sources/Memory/RectangleShadow.hpp
-        sources/CPU/Instructions/CommonInstructions.cpp
-        sources/CPU/Instructions/CommonInstructions.hpp
         sources/Exceptions/InvalidOpcode.hpp
         sources/CPU/Instructions/Interrupts.cpp
         sources/CPU/Instructions/MathematicalOperations.cpp
-        sources/CPU/Instructions/MemoryInstructions.cpp)
+        sources/CPU/Instructions/MemoryInstructions.cpp sources/CPU/Instructions/InternalInstruction.cpp)
 
 target_link_libraries(ComSquare
         sfml-graphics

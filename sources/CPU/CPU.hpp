@@ -8,7 +8,6 @@
 #include "../Memory/IMemory.hpp"
 #include "../Memory/MemoryBus.hpp"
 #include "../Models/Int24.hpp"
-#include "Instructions/CommonInstructions.hpp"
 #include "../Cartridge/Cartridge.hpp"
 
 namespace ComSquare::CPU
@@ -263,7 +262,7 @@ namespace ComSquare::CPU
 	};
 
 	//! @brief The main CPU
-	class CPU : public CommonInstructions, public Memory::IMemory {
+	class CPU : public Memory::IMemory {
 	private:
 		//! @brief All the registers of the CPU
 		Registers _registers{};
@@ -358,6 +357,8 @@ namespace ComSquare::CPU
 		void LDX(uint24_t addr);
 		//! @brief Load the Y index register from memory.
 		void LDY(uint24_t addr);
+		//! @brief Set status bits.
+		void SEP(uint24_t addr);
 	public:
 		explicit CPU(std::shared_ptr<Memory::MemoryBus> bus, Cartridge::Header &cartridgeHeader);
 		CPU(const CPU &) = default;

@@ -27,9 +27,9 @@ namespace ComSquare
 		//! @brief Audio Processing Unit if the SNES
 		std::shared_ptr<APU::APU> apu;
 		//! @brief Work Ram shared by all the components.
-		std::shared_ptr<Ram::Ram> wram;
+		std::shared_ptr<Ram::BasicRam> wram;
 		//! @brief Save Ram residing inside the Cartridge in a real SNES.
-		std::shared_ptr<Ram::Ram> sram;
+		std::shared_ptr<Ram::BasicRam> sram;
 		//! @brief Create all the components using a common memory bus for all of them.
 		SNES(const std::shared_ptr<Memory::MemoryBus> &bus, const std::string &ramPath, Renderer::IRenderer &renderer);
 		SNES(const SNES &) = default;
