@@ -52,7 +52,15 @@ add_executable(unit_tests
         sources/CPU/Instructions/CommonInstructions.hpp
         sources/Exceptions/InvalidOpcode.hpp
         sources/CPU/Instructions/Interrupts.cpp
-        sources/CPU/Instructions/MathematicalOperations.cpp tests/CPU/Math/testADC.cpp tests/CPU/testStore.cpp)
+        sources/CPU/Instructions/MathematicalOperations.cpp
+        tests/CPU/testAddressingMode.cpp
+        tests/tests.cpp
+        tests/PPU/testPpuWrite.cpp
+        tests/PPU/testPpuWriteFromVmain.cpp
+        sources/CPU/Instructions/MathematicalOperations.cpp
+        tests/CPU/Math/testADC.cpp
+        tests/CPU/testStore.cpp
+)
 
 # include criterion & coverage
 target_link_libraries(unit_tests criterion -lgcov)
