@@ -11,7 +11,7 @@ add_compile_options(-W -Wall -Wextra -Wshadow)
 add_executable(unit_tests
         tests/CPU/testAddressingMode.cpp
         tests/tests.cpp
-        tests/CPU/testCPU.cpp
+        tests/CPU/testInterupts.cpp
         tests/testMemoryBus.cpp
         tests/tests.hpp
         sources/SNES.cpp
@@ -52,7 +52,7 @@ add_executable(unit_tests
         sources/CPU/Instructions/CommonInstructions.hpp
         sources/Exceptions/InvalidOpcode.hpp
         sources/CPU/Instructions/Interrupts.cpp
-        sources/CPU/Instructions/MathematicalOperations.cpp)
+        sources/CPU/Instructions/MathematicalOperations.cpp tests/CPU/Math/testADC.cpp tests/CPU/testStore.cpp)
 
 # include criterion & coverage
 target_link_libraries(unit_tests criterion -lgcov)
