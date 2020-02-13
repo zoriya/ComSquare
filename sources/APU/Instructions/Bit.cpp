@@ -22,8 +22,13 @@ namespace ComSquare::APU
 		return 4;
 	}
 
-	int APU::TSET1()
+	int APU::TSET1(uint24_t abs)
 	{
+		uint8_t data = this->_internalRead(abs);
+
+		this->_internalWrite(abs, data | this->_internalRegisters.a);
+		this->_internalRegisters.n = data & 0x80u;
+		this->_internalRegisters.z = !data;
 		return 6;
 	}
 }

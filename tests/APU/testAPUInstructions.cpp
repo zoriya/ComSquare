@@ -166,3 +166,22 @@ Test(Bit, CLR1)
 	cr_assert_eq(result, 4);
 	cr_assert_eq(apu->_internalRead(apu->_getDirectAddr()), 0b11111110);
 }
+
+Test(Bit, TSET1)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.a = 42;
+	apu->_internalRegisters.pc = 0x32;
+	apu->_internalWrite(0x32, 0b00001111);
+	apu->_internalWrite(0x33, 0b11110000);
+	apu->_internalWrite(apu->_getAbsoluteAddr(), 123);
+	apu->_internalRegisters.pc -= 2;
+	result = apu->TSET1(apu->_getAbsoluteAddr());
+	apu->_internalRegisters.pc -= 2;
+	cr_assert_eq(apu->_internalRead(apu->_getAbsoluteAddr()), 0x7B);
+	cr_assert_eq(apu->_internalRegisters.n, false);
+	cr_assert_eq(apu->_internalRegisters.z, false);
+	cr_assert_eq(result, 6);
+}

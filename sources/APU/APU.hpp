@@ -194,7 +194,7 @@ namespace ComSquare::APU
 		//! @brief Clear 1-bit instruction, clear a bit in direct page
 		int CLR1(uint24_t dp, uint8_t bit);
 		//! @brief test set 1-bit instruction, Test and set bits with absolute address
-		int TSET1();
+		int TSET1(uint24_t abs);
 	public:
 		explicit APU();
 

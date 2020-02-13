@@ -165,6 +165,8 @@ namespace ComSquare::APU
 			return this->NOP();
 		case 0x02:
 			return this->SET1(_getDirectAddr(), 0);
+		case 0x0E:
+			return this->TSET1(_getAbsoluteAddr());
 		case 0x12:
 			return this->CLR1(_getDirectAddr(), 0);
 		case 0x20:
