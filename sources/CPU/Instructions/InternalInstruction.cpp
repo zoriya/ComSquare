@@ -8,6 +8,6 @@ namespace ComSquare::CPU
 {
 	void CPU::SEP(uint24_t addr)
 	{
-
+		this->_registers.p.flags |= this->_bus->read(addr);
 	}
 }

@@ -258,7 +258,9 @@ namespace ComSquare::CPU
 		LDY_ABS = 0xAC,
 		LDY_DP = 0xA4,
 		LDY_ABSY = 0xBC,
-		LDY_DPY = 0xB4
+		LDY_DPY = 0xB4,
+
+		SEP = 0xE2
 	};
 
 	//! @brief The main CPU
