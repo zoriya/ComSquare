@@ -190,59 +190,74 @@ namespace ComSquare::CPU
 		unsigned cycles = 0;
 
 		for (int i = 0; i < 0xFF; i++)
-			cycles += this->executeInstruction();
+			cycles += this->_executeInstruction();
 		return cycles;
 	}
 
-	unsigned CPU::executeInstruction()
+	unsigned CPU::_executeInstruction()
 	{
 		uint8_t opcode = this->_bus->read(this->_registers.pc);
 
-		this->_extraMemoryCycles = 0;
+		this->_hasIndexCrossedPageBoundary = false;
 
 		switch (opcode) {
-		case Instructions::BRK:      return 7 + this->BRK();
+		case Instructions::BRK:      this->BRK(); return 7 + !this->_isEmulationMode;
 
-		case Instructions::RTI:	     return 6 + this->RTI();
+ 		case Instructions::RTI:	     this->RTI(); return 6 + !this->_isEmulationMode;
 
-		case Instructions::ADC_IM:   return 2 + this->ADC(this->_getImmediateAddr());
-		case Instructions::ADC_ABS:  return 4 + this->ADC(this->_getAbsoluteAddr());
-		case Instructions::ADC_ABSl: return 5 + this->ADC(this->_getAbsoluteLongAddr());
-		case Instructions::ADC_DP:   return 3 + this->ADC(this->_getDirectAddr());
-		case Instructions::ADC_DPi:  return 5 + this->ADC(this->_getDirectIndirectAddr());
-		case Instructions::ADC_DPil: return 6 + this->ADC(this->_getDirectIndirectLongAddr());
-		case Instructions::ADC_ABSX: return 4 + this->ADC(this->_getAbsoluteIndexedByXAddr());
-		case Instructions::ADC_ABSXl:return 5 + this->ADC(this->_getAbsoluteIndexedByXLongAddr());
-		case Instructions::ADC_ABSY: return 4 + this->ADC(this->_getAbsoluteIndexedByYAddr());
-		case Instructions::ADC_DPX:  return 4 + this->ADC(this->_getDirectIndexedByXAddr());
-		case Instructions::ADC_DPXi: return 6 + this->ADC(this->_getDirectIndirectIndexedXAddr());
-		case Instructions::ADC_DPYi: return 5 + this->ADC(this->_getDirectIndirectIndexedYAddr());
-		case Instructions::ADC_DPYil:return 6 + this->ADC(this->_getDirectIndirectIndexedYLongAddr());
-		case Instructions::ADC_SR:   return 4 + this->ADC(this->_getStackRelativeAddr());
-		case Instructions::ADC_SRYi: return 7 + this->ADC(this->_getStackRelativeIndirectIndexedYAddr());
+		case Instructions::ADC_IM:   this->ADC(this->_getImmediateAddr()); 						return 2 + !this->_registers.p.m;
+		case Instructions::ADC_ABS:  this->ADC(this->_getAbsoluteAddr()); 						return 4 + !this->_registers.p.m;
+		case Instructions::ADC_ABSl: this->ADC(this->_getAbsoluteLongAddr()); 					return 5 + !this->_registers.p.m;
+		case Instructions::ADC_DP:   this->ADC(this->_getDirectAddr()); 							return 3 + !this->_registers.p.m + this->_registers.dl != 0;
+		case Instructions::ADC_DPi:  this->ADC(this->_getDirectIndirectAddr()); 					return 5 + !this->_registers.p.m + this->_registers.dl != 0;
+		case Instructions::ADC_DPil: this->ADC(this->_getDirectIndirectLongAddr()); 				return 6 + !this->_registers.p.m + this->_registers.dl != 0;
+		case Instructions::ADC_ABSX: this->ADC(this->_getAbsoluteIndexedByXAddr()); 				return 4 + !this->_registers.p.m + this->_hasIndexCrossedPageBoundary;
+		case Instructions::ADC_ABSXl:this->ADC(this->_getAbsoluteIndexedByXLongAddr()); 			return 5 + !this->_registers.p.m;
+		case Instructions::ADC_ABSY: this->ADC(this->_getAbsoluteIndexedByYAddr()); 				return 4 + !this->_registers.p.m + this->_hasIndexCrossedPageBoundary;
+		case Instructions::ADC_DPX:  this->ADC(this->_getDirectIndexedByXAddr()); 				return 4 + !this->_registers.p.m + this->_registers.dl != 0;
+		case Instructions::ADC_DPXi: this->ADC(this->_getDirectIndirectIndexedXAddr()); 			return 6 + !this->_registers.p.m + this->_registers.dl != 0;
+		case Instructions::ADC_DPYi: this->ADC(this->_getDirectIndirectIndexedYAddr()); 			return 5 + !this->_registers.p.m + this->_registers.dl != 0 + this->_hasIndexCrossedPageBoundary;
+		case Instructions::ADC_DPYil:this->ADC(this->_getDirectIndirectIndexedYLongAddr()); 		return 6 + !this->_registers.p.m + this->_registers.dl != 0;
+		case Instructions::ADC_SR:   this->ADC(this->_getStackRelativeAddr()); 					return 4 + !this->_registers.p.m;
+		case Instructions::ADC_SRYi: this->ADC(this->_getStackRelativeIndirectIndexedYAddr()); 	return 7 + !this->_registers.p.m;
+
+		case Instructions::STA_ABS:  this->STA(this->_getAbsoluteAddr()); 						return 4 + !this->_registers.p.m;
+		case Instructions::STA_ABSl: this->STA(this->_getAbsoluteLongAddr()); 					return 5 + !this->_registers.p.m;
+		case Instructions::STA_DP:   this->STA(this->_getDirectAddr()); 							return 3 + !this->_registers.p.m + this->_registers.dl != 0;
+		case Instructions::STA_DPi:  this->STA(this->_getDirectIndirectAddr()); 					return 5 + !this->_registers.p.m + this->_registers.dl != 0;
+		case Instructions::STA_DPil: this->STA(this->_getDirectIndirectLongAddr()); 				return 6 + !this->_registers.p.m + this->_registers.dl != 0;
+		case Instructions::STA_ABSX: this->STA(this->_getAbsoluteIndexedByXAddr()); 				return 5 + !this->_registers.p.m;
+		case Instructions::STA_ABSXl:this->STA(this->_getAbsoluteIndexedByXLongAddr()); 			return 5 + !this->_registers.p.m;
+		case Instructions::STA_ABSY: this->STA(this->_getAbsoluteIndexedByYAddr()); 				return 5 + !this->_registers.p.m;
+		case Instructions::STA_DPX:  this->STA(this->_getDirectIndexedByXAddr()); 				return 4 + !this->_registers.p.m + this->_registers.dl != 0;
+		case Instructions::STA_DPXi: this->STA(this->_getDirectIndirectIndexedXAddr());			return 6 + !this->_registers.p.m + this->_registers.dl != 0;
+		case Instructions::STA_DPYi: this->STA(this->_getDirectIndirectIndexedYAddr()); 			return 6 + !this->_registers.p.m + this->_registers.dl != 0;
+		case Instructions::STA_DPYil:this->STA(this->_getDirectIndirectIndexedYLongAddr()); 		return 6 + !this->_registers.p.m + this->_registers.dl != 0;
+		case Instructions::STA_SR:   this->STA(this->_getStackRelativeAddr()); 					return 4 + !this->_registers.p.m;
+		case Instructions::STA_SRYi: this->STA(this->_getStackRelativeIndirectIndexedYAddr()); 	return 7 + !this->_registers.p.m;
 
 		default:
 			throw InvalidOpcode("CPU", opcode);
 		}
 	}
 
-	void CPU::push(uint8_t data)
+	void CPU::_push(uint8_t data)
 	{
 		this->_bus->write(this->_registers.s--, data);
 	}
 
-	void CPU::push(uint16_t data)
+	void CPU::_push(uint16_t data)
 	{
 		this->_bus->write(this->_registers.s--, data);
 		this->_bus->write(this->_registers.s--, data << 8u);
 	}
 
-	uint8_t CPU::pop()
+	uint8_t CPU::_pop()
 	{
 		return this->_bus->read(this->_registers.s++);
 	}
 
-	uint16_t CPU::pop16()
+	uint16_t CPU::_pop16()
 	{
 		return this->_bus->read(this->_registers.s++) + (this->_bus->read(this->_registers.s++) << 8u);
 	}
@@ -261,9 +276,6 @@ namespace ComSquare::CPU
 
 	uint24_t CPU::_getDirectAddr()
 	{
-		if (this->_registers.dl != 0)
-			this->_extraMemoryCycles++;
-
 		uint8_t addr = this->_bus->read(this->_registers.pac++);
 		return this->_registers.d + addr;
 	}
@@ -286,23 +298,17 @@ namespace ComSquare::CPU
 
 	uint24_t CPU::_getDirectIndirectIndexedYAddr()
 	{
-		if (this->_registers.dl != 0)
-			this->_extraMemoryCycles++;
-
 		uint16_t dp = this->_bus->read(this->_registers.pac++) + this->_registers.d;
 		uint24_t base = this->_bus->read(dp);
 		base += this->_bus->read(dp + 1) << 8u;
 		base += this->_registers.dbr << 16u;
 		if ((base & 0xF0000000u) == (((base + this->_registers.y) & 0xF0000000u)))
-			this->_extraMemoryCycles++;
+			this->_hasIndexCrossedPageBoundary = true;
 		return base + this->_registers.y;
 	}
 
 	uint24_t CPU::_getDirectIndirectIndexedYLongAddr()
 	{
-		if (this->_registers.dl != 0)
-			this->_extraMemoryCycles++;
-
 		uint16_t dp = this->_bus->read(this->_registers.pac++) + this->_registers.d;
 		uint24_t base = this->_bus->read(dp);
 		base += this->_bus->read(dp + 1) << 8u;
@@ -312,9 +318,6 @@ namespace ComSquare::CPU
 
 	uint24_t CPU::_getDirectIndirectIndexedXAddr()
 	{
-		if (this->_registers.dl != 0)
-			this->_extraMemoryCycles++;
-
 		uint16_t dp = this->_bus->read(this->_registers.pac++) + this->_registers.d;
 		dp += this->_registers.x;
 		uint24_t base = this->_bus->read(dp);
@@ -325,9 +328,6 @@ namespace ComSquare::CPU
 
 	uint24_t CPU::_getDirectIndexedByXAddr()
 	{
-		if (this->_registers.dl != 0)
-			this->_extraMemoryCycles++;
-
 		uint16_t dp = this->_bus->read(this->_registers.pac++) + this->_registers.d;
 		dp += this->_registers.x;
 		return dp;
@@ -335,9 +335,6 @@ namespace ComSquare::CPU
 
 	uint24_t CPU::_getDirectIndexedByYAddr()
 	{
-		if (this->_registers.dl != 0)
-			this->_extraMemoryCycles++;
-
 		uint16_t dp = this->_bus->read(this->_registers.pac++) + this->_registers.d;
 		dp += this->_registers.y;
 		return dp;
@@ -349,7 +346,7 @@ namespace ComSquare::CPU
 		abs += this->_bus->read(this->_registers.pac++) << 8u;
 		uint24_t effective = abs + (this->_registers.dbr << 16u);
 		if ((effective & 0xF0000000u) == (((effective + this->_registers.x) & 0xF0000000u)))
-			this->_extraMemoryCycles++;
+			this->_hasIndexCrossedPageBoundary = true;
 		return effective + this->_registers.x;
 	}
 
@@ -359,7 +356,7 @@ namespace ComSquare::CPU
 		abs += this->_bus->read(this->_registers.pac++) << 8u;
 		uint24_t effective = abs + (this->_registers.dbr << 16u);
 		if ((effective & 0xF0000000u) == (((effective + this->_registers.y) & 0xF0000000u)))
-			this->_extraMemoryCycles++;
+			this->_hasIndexCrossedPageBoundary = true;
 		return effective + this->_registers.y;
 	}
 
@@ -408,9 +405,6 @@ namespace ComSquare::CPU
 
 	uint24_t CPU::_getDirectIndirectAddr()
 	{
-		if (this->_registers.dl != 0)
-			this->_extraMemoryCycles++;
-
 		uint16_t dp = this->_bus->read(this->_registers.pac++) + this->_registers.d;
 		uint24_t effective = this->_bus->read(dp);
 		effective += this->_bus->read(dp + 1) << 8u;
@@ -420,9 +414,6 @@ namespace ComSquare::CPU
 
 	uint24_t CPU::_getDirectIndirectLongAddr()
 	{
-		if (this->_registers.dl != 0)
-			this->_extraMemoryCycles++;
-
 		uint16_t dp = this->_bus->read(this->_registers.pac++) + this->_registers.d;
 		uint24_t effective = this->_bus->read(dp);
 		effective += this->_bus->read(++dp) << 8u;
@@ -440,16 +431,5 @@ namespace ComSquare::CPU
 		uint24_t base = this->_bus->read(this->_registers.pac++) + this->_registers.s;
 		base += this->_registers.dbr << 16u;
 		return base + this->_registers.y;
-	}
-
-	unsigned CPU::STA(uint24_t addr)
-	{
-		if (this->_registers.p.m)
-			this->_bus->write(addr, this->_registers.al);
-		else {
-			this->_bus->write(addr, this->_registers.al);
-			this->_bus->write(addr + 1, this->_registers.ah);
-		}
-		return 0;
 	}
 }

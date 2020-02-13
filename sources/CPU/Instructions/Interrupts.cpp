@@ -6,7 +6,7 @@
 
 namespace ComSquare::CPU
 {
-	unsigned CPU::RESB()
+	void CPU::RESB()
 	{
 		this->_registers.p.i = true;
 		this->_registers.p.d = false;
@@ -18,10 +18,9 @@ namespace ComSquare::CPU
 		this->_registers.d = 0x0000;
 		this->_registers.sh = 0x01; // the low bit of the stack pointer is undefined on reset.
 		this->_registers.pc = this->_cartridgeHeader.emulationInterrupts.reset;
-		return 0;
 	}
 
-	unsigned CPU::BRK()
+	void CPU::BRK()
 	{
 		// TODO rework this. The PC should be pushed to the stack.
 		// Info here: http://softpixel.com/~cwright/sianse/docs/65816NFO.HTM at BRK Software Break
@@ -33,18 +32,14 @@ namespace ComSquare::CPU
 		else
 			this->_registers.pc = this->_cartridgeHeader.nativeInterrupts.brk;
 		this->_registers.p.d = false;
-		return !this->_isEmulationMode;
 	}
 
-	unsigned CPU::RTI()
+	void CPU::RTI()
 	{
-		this->_registers.p.flags = this->pop();
-		this->_registers.pc = this->pop16();
+		this->_registers.p.flags = this->_pop();
+		this->_registers.pc = this->_pop16();
 
-		if (!this->_isEmulationMode) {
-			this->_registers.pbr = this->pop16();
-			return 1;
-		}
-		return 0;
+		if (!this->_isEmulationMode)
+			this->_registers.pbr = this->_pop16();
 	}
 }

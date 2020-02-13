@@ -58,6 +58,7 @@ add_executable(unit_tests
         tests/PPU/testPpuWrite.cpp
         tests/PPU/testPpuWriteFromVmain.cpp
         sources/CPU/Instructions/MathematicalOperations.cpp
+        sources/CPU/Instructions/MemoryInstructions.cpp
         tests/CPU/Math/testADC.cpp
         tests/CPU/testStore.cpp
 )
@@ -113,7 +114,8 @@ add_executable(ComSquare
         sources/CPU/Instructions/CommonInstructions.hpp
         sources/Exceptions/InvalidOpcode.hpp
         sources/CPU/Instructions/Interrupts.cpp
-        sources/CPU/Instructions/MathematicalOperations.cpp)
+        sources/CPU/Instructions/MathematicalOperations.cpp
+        sources/CPU/Instructions/MemoryInstructions.cpp)
 
 target_link_libraries(ComSquare
         sfml-graphics
