@@ -3,6 +3,7 @@
 //
 
 #include <criterion/criterion.h>
+#include <iostream>
 #include "../tests.hpp"
 #include "../../sources/SNES.hpp"
 #include "../../sources/APU/APU.hpp"
@@ -130,4 +131,38 @@ Test(PSW, DI)
 	result = apu->DI();
 	cr_assert_eq(result, 3);
 	cr_assert_eq(apu->_internalRegisters.i, false);
+}
+
+///////////////
+//			 //
+// Bit tests //
+//			 //
+///////////////
+
+Test(Bit, SET1)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.pc = 0x32;
+	apu->_internalWrite(apu->_getDirectAddr(), 0b00000000);
+	apu->_internalRegisters.pc--;
+	result = apu->SET1(apu->_getDirectAddr(), 0);
+	apu->_internalRegisters.pc--;
+	cr_assert_eq(result, 4);
+	cr_assert_eq(apu->_internalRead(apu->_getDirectAddr()), 1);
+}
+
+Test(Bit, CLR1)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.pc = 0x32;
+	apu->_internalWrite(apu->_getDirectAddr(), 0b11111111);
+	apu->_internalRegisters.pc--;
+	result = apu->CLR1(apu->_getDirectAddr(), 0);
+	apu->_internalRegisters.pc--;
+	cr_assert_eq(result, 4);
+	cr_assert_eq(apu->_internalRead(apu->_getDirectAddr()), 0b11111110);
 }

@@ -1,0 +1,4 @@
+/home/vtrencic/CLionProjects/ComSquare/build/CMakeFiles/rebuild_cache.dir
+/home/vtrencic/CLionProjects/ComSquare/build/CMakeFiles/edit_cache.dir
+/home/vtrencic/CLionProjects/ComSquare/build/CMakeFiles/unit_tests.dir
+/home/vtrencic/CLionProjects/ComSquare/build/CMakeFiles/ComSquare.dir

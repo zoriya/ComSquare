@@ -31,10 +31,10 @@ namespace ComSquare::Memory
 		unsigned bankCount = bank - this->_startBank;
 		unsigned pageCount = this->_endPage - this->_startPage;
 
-		if (bank < this->_startBank || bank >= this->_endBank)
-			throw InvalidAddress("Rectangle memory write Invalid Bank", addr);
-		if (page < this->_startPage || page >= this->_endPage)
-			throw InvalidAddress("Rectangle memory write Invalid Page", addr);
+		if (bank < this->_startBank || bank > this->_endBank)
+			throw InvalidRectangleAddress("Rectangle memory write Invalid Bank", addr, bank, this->_startBank, this->_endBank);
+		if (page < this->_startPage || page > this->_endPage)
+			throw InvalidRectangleAddress("Rectangle memory write Invalid Page", addr, page, this->_startPage, this->_endPage);
 		page -= this->_startPage;
 		page += pageCount * bankCount;
 		this->write_internal(page, data);

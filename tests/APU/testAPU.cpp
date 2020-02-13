@@ -218,3 +218,28 @@ Test(update, stopped)
 	apu->update(1);
 	cr_assert_eq(apu->_paddingCycles, 0);
 }
+
+//////////////////////////
+//						//
+// APU::_get*Addr tests	//
+//						//
+//////////////////////////
+
+Test(_get, direct)
+{
+	auto apu = Init().second.apu;
+
+	apu->_internalRegisters.pc = 0x32;
+	apu->_internalWrite(0x32, 123);
+	cr_assert_eq(apu->_getDirectAddr(), 123);
+}
+
+Test(_get, absolute)
+{
+	auto apu = Init().second.apu;
+
+	apu->_internalRegisters.pc = 0x32;
+	apu->_internalWrite(0x32, 0b00001111);
+	apu->_internalWrite(0x33, 0b11110000);
+	cr_assert_eq(apu->_getAbsoluteAddr(), 61455);
+}

@@ -2,6 +2,7 @@
 // Created by Melefo on 27/01/2020.
 //
 
+#include <cstring>
 #include "APU.hpp"
 #include "../Exceptions/NotImplementedException.hpp"
 #include "../Exceptions/InvalidAddress.hpp"
@@ -15,6 +16,7 @@ namespace ComSquare::APU
 		this->_map.Page1 = std::make_shared<Ram::Ram>(Ram::Ram(0x0100));
 		this->_map.Memory = std::make_shared<Ram::Ram>(Ram::Ram(0xFDC0));
 		this->_map.IPL = std::make_shared<Ram::Ram>(Ram::Ram(0x0040));
+		this->reset();
 	}
 
 	uint8_t APU::_internalRead(uint24_t addr) {
@@ -150,6 +152,10 @@ namespace ComSquare::APU
 		}
 	}
 
+	void APU::reset()
+	{
+	}
+
 	int APU::executeInstruction()
 	{
 		uint8_t opcode = this->_internalRead(this->_internalRegisters.pc++);
@@ -159,32 +165,48 @@ namespace ComSquare::APU
 			return this->NOP();
 		case 0x02:
 			return this->SET1(_getDirectAddr(), 0);
+		case 0x12:
+			return this->CLR1(_getDirectAddr(), 0);
 		case 0x20:
 			return this->CLRP();
 		case 0x22:
 			return this->SET1(_getDirectAddr(), 1);
+		case 0x32:
+			return this->CLR1(_getDirectAddr(), 1);
 		case 0x40:
 			return this->SETP();
 		case 0x42:
 			return this->SET1(_getDirectAddr(), 2);
+		case 0x52:
+			return this->CLR1(_getDirectAddr(), 2);
 		case 0x60:
 			return this->CLRC();
 		case 0x62:
 			return this->SET1(_getDirectAddr(), 3);
+		case 0x72:
+			return this->CLR1(_getDirectAddr(), 3);
 		case 0x80:
 			return this->SETC();
 		case 0x82:
 			return this->SET1(_getDirectAddr(), 4);
+		case 0x92:
+			return this->CLR1(_getDirectAddr(), 4);
 		case 0xA0:
 			return this->EI();
 		case 0xA2:
 			return this->SET1(_getDirectAddr(), 5);
+		case 0xB2:
+			return this->CLR1(_getDirectAddr(), 5);
 		case 0xC0:
 			return this->DI();
 		case 0xC2:
 			return this->SET1(_getDirectAddr(), 6);
-		case 0x32:
+		case 0xD2:
+			return this->CLR1(_getDirectAddr(), 6);
+		case 0xE2:
 			return this->SET1(_getDirectAddr(), 7);
+		case 0xF2:
+			return this->CLR1(_getDirectAddr(), 7);
 		case 0xED:
 			return this->NOTC();
 		case 0xEF:
@@ -209,10 +231,18 @@ namespace ComSquare::APU
 
 	uint24_t APU::_getDirectAddr()
 	{
-		uint8_t addr = this->_internalRead(this->_internalRegisters.pc++);
+		uint24_t addr = this->_internalRead(this->_internalRegisters.pc++);
 
 		if (this->_internalRegisters.p)
 			addr += 0x100;
 		return addr;
+	}
+
+	uint24_t APU::_getAbsoluteAddr()
+	{
+		uint24_t addr1 = this->_internalRead(this->_internalRegisters.pc++);
+		uint24_t addr2 = this->_internalRead(this->_internalRegisters.pc++);
+
+		return (addr2 << 8u) | addr1;
 	}
 }

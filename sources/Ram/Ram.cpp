@@ -2,6 +2,7 @@
 // Created by anonymus-raccoon on 1/28/20.
 //
 
+#include <cstring>
 #include "Ram.hpp"
 #include "../Exceptions/InvalidAddress.hpp"
 
@@ -30,5 +31,14 @@ namespace ComSquare::Ram
 		if (addr >= this->_size)
 			throw InvalidAddress("Ram write", addr);
 		this->_data[addr] = data;
+	}
+
+	void Ram::memset(uint24_t start, uint24_t end, uint8_t value)
+	{
+		if (end >= this->_size)
+			throw InvalidAddress("Ram memset end", end);
+		if (start >= end)
+			throw InvalidAddress("Ram memset start", start);
+		std::memset(&this->_data[start], value, sizeof(uint8_t) * (end - start));
 	}
 }

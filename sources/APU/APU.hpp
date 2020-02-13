@@ -29,7 +29,7 @@ namespace ComSquare::APU
 		};
 
 		//! @brief The Stack pointer register
-		uint8_t sp = 0x00FF;
+		uint8_t sp;
 
 		//! @brief The Program counter register
 		union {
@@ -158,6 +158,8 @@ namespace ComSquare::APU
 
 		//! @brief Get direct page offset
 		uint24_t _getDirectAddr();
+		//! @brief Get absolute direct page offset
+		uint24_t _getAbsoluteAddr();
 
 		//! @brief Execute a single instruction.
 		//! @return The number of cycles that the instruction took.
@@ -189,6 +191,10 @@ namespace ComSquare::APU
 
 		//! @brief Set 1-bit instruction, set a bit in direct page
 		int SET1(uint24_t dp, uint8_t bit);
+		//! @brief Clear 1-bit instruction, clear a bit in direct page
+		int CLR1(uint24_t dp, uint8_t bit);
+		//! @brief test set 1-bit instruction, Test and set bits with absolute address
+		int TSET1();
 	public:
 		explicit APU();
 
@@ -205,6 +211,9 @@ namespace ComSquare::APU
 		//! @brief This function execute the instructions received until the maximum number of cycles is reached.
 		//! @return The number of cycles that elapsed.
 		void update(unsigned cycles);
+
+		//! @brief This function is executed when the SNES is powered on or the reset button is pushed.
+		void reset();
 	};
 }
 

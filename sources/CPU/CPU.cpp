@@ -15,7 +15,7 @@ namespace ComSquare::CPU
 	CPU::CPU(std::shared_ptr<Memory::MemoryBus> bus, Cartridge::Header &cartridgeHeader)
 		: _bus(std::move(bus)), _cartridgeHeader(cartridgeHeader)
 	{
-		this->_registers.pc = this->_cartridgeHeader.emulationInterrupts.reset;
+		this->RESB();
 	}
 
 	//! @bref The CPU's internal registers starts at $4200	and finish at $421F.
@@ -194,33 +194,57 @@ namespace ComSquare::CPU
 		return cycles;
 	}
 
-	int CPU::executeInstruction()
+	unsigned CPU::executeInstruction()
 	{
 		uint8_t opcode = this->_bus->read(this->_registers.pc);
 
-		switch (opcode) {
-		case Instructions::BRK: return this->BRK();
+		this->_extraMemoryCycles = 0;
 
-		case Instructions::ADC_DPXi: return this->ADC(this->_getDirectIndirectIndexedXAddr());
-		case Instructions::ADC_SR:   return this->ADC(this->_getStackRelativeAddr());
-		case Instructions::ADC_DP:   return this->ADC(this->_getDirectAddr());
-		case Instructions::ADC_DPil: return this->ADC(this->_getDirectIndirectLongAddr());
-		case Instructions::ADC_IM:   return this->ADC(this->_getImmediateAddr());
-		case Instructions::ADC_ABS:  return this->ADC(this->_getAbsoluteAddr());
-		case Instructions::ADC_ABSl: return this->ADC(this->_getAbsoluteLongAddr());
-		case Instructions::ADC_DPYi: return this->ADC(this->_getDirectIndirectIndexedYAddr());
-		case Instructions::ADC_DPi:  return this->ADC(this->_getDirectIndirectAddr());
-		case Instructions::ADC_SRYi: return this->ADC(this->_getStackRelativeIndirectIndexedYAddr());
-		case Instructions::ADC_DPX:  return this->ADC(this->_getDirectIndexedByXAddr());
-		case Instructions::ADC_DPYil:return this->ADC(this->_getDirectIndirectIndexedYLongAddr());
-		case Instructions::ADC_ABSY: return this->ADC(this->_getAbsoluteIndexedByYAddr());
-		case Instructions::ADC_ABSX: return this->ADC(this->_getAbsoluteIndexedByXAddr());
-		case Instructions::ADC_ABSXl:return this->ADC(this->_getAbsoluteIndexedByXLongAddr());
+		switch (opcode) {
+		case Instructions::BRK:      return 7 + this->BRK();
+
+		case Instructions::RTI:	     return 6 + this->RTI();
+
+		case Instructions::ADC_IM:   return 2 + this->ADC(this->_getImmediateAddr());
+		case Instructions::ADC_ABS:  return 4 + this->ADC(this->_getAbsoluteAddr());
+		case Instructions::ADC_ABSl: return 5 + this->ADC(this->_getAbsoluteLongAddr());
+		case Instructions::ADC_DP:   return 3 + this->ADC(this->_getDirectAddr());
+		case Instructions::ADC_DPi:  return 5 + this->ADC(this->_getDirectIndirectAddr());
+		case Instructions::ADC_DPil: return 6 + this->ADC(this->_getDirectIndirectLongAddr());
+		case Instructions::ADC_ABSX: return 4 + this->ADC(this->_getAbsoluteIndexedByXAddr());
+		case Instructions::ADC_ABSXl:return 5 + this->ADC(this->_getAbsoluteIndexedByXLongAddr());
+		case Instructions::ADC_ABSY: return 4 + this->ADC(this->_getAbsoluteIndexedByYAddr());
+		case Instructions::ADC_DPX:  return 4 + this->ADC(this->_getDirectIndexedByXAddr());
+		case Instructions::ADC_DPXi: return 6 + this->ADC(this->_getDirectIndirectIndexedXAddr());
+		case Instructions::ADC_DPYi: return 5 + this->ADC(this->_getDirectIndirectIndexedYAddr());
+		case Instructions::ADC_DPYil:return 6 + this->ADC(this->_getDirectIndirectIndexedYLongAddr());
+		case Instructions::ADC_SR:   return 4 + this->ADC(this->_getStackRelativeAddr());
+		case Instructions::ADC_SRYi: return 7 + this->ADC(this->_getStackRelativeIndirectIndexedYAddr());
 
 		default:
-			return 0;
-			//throw InvalidOpcode("CPU", opcode);
+			throw InvalidOpcode("CPU", opcode);
 		}
+	}
+
+	void CPU::push(uint8_t data)
+	{
+		this->_bus->write(this->_registers.s--, data);
+	}
+
+	void CPU::push(uint16_t data)
+	{
+		this->_bus->write(this->_registers.s--, data);
+		this->_bus->write(this->_registers.s--, data << 8u);
+	}
+
+	uint8_t CPU::pop()
+	{
+		return this->_bus->read(this->_registers.s++);
+	}
+
+	uint16_t CPU::pop16()
+	{
+		return this->_bus->read(this->_registers.s++) + (this->_bus->read(this->_registers.s++) << 8u);
 	}
 
 	////////////////////////////////////////////////////////////////////
@@ -229,11 +253,17 @@ namespace ComSquare::CPU
 
 	uint24_t CPU::_getImmediateAddr()
 	{
-		return this->_registers.pac++;
+		uint24_t effective = this->_registers.pac++;
+		if (this->_registers.p.m)
+			this->_registers.pac++;
+		return effective;
 	}
 
 	uint24_t CPU::_getDirectAddr()
 	{
+		if (this->_registers.dl != 0)
+			this->_extraMemoryCycles++;
+
 		uint8_t addr = this->_bus->read(this->_registers.pac++);
 		return this->_registers.d + addr;
 	}
@@ -256,15 +286,23 @@ namespace ComSquare::CPU
 
 	uint24_t CPU::_getDirectIndirectIndexedYAddr()
 	{
+		if (this->_registers.dl != 0)
+			this->_extraMemoryCycles++;
+
 		uint16_t dp = this->_bus->read(this->_registers.pac++) + this->_registers.d;
 		uint24_t base = this->_bus->read(dp);
 		base += this->_bus->read(dp + 1) << 8u;
 		base += this->_registers.dbr << 16u;
+		if ((base & 0xF0000000u) == (((base + this->_registers.y) & 0xF0000000u)))
+			this->_extraMemoryCycles++;
 		return base + this->_registers.y;
 	}
 
 	uint24_t CPU::_getDirectIndirectIndexedYLongAddr()
 	{
+		if (this->_registers.dl != 0)
+			this->_extraMemoryCycles++;
+
 		uint16_t dp = this->_bus->read(this->_registers.pac++) + this->_registers.d;
 		uint24_t base = this->_bus->read(dp);
 		base += this->_bus->read(dp + 1) << 8u;
@@ -274,6 +312,9 @@ namespace ComSquare::CPU
 
 	uint24_t CPU::_getDirectIndirectIndexedXAddr()
 	{
+		if (this->_registers.dl != 0)
+			this->_extraMemoryCycles++;
+
 		uint16_t dp = this->_bus->read(this->_registers.pac++) + this->_registers.d;
 		dp += this->_registers.x;
 		uint24_t base = this->_bus->read(dp);
@@ -284,6 +325,9 @@ namespace ComSquare::CPU
 
 	uint24_t CPU::_getDirectIndexedByXAddr()
 	{
+		if (this->_registers.dl != 0)
+			this->_extraMemoryCycles++;
+
 		uint16_t dp = this->_bus->read(this->_registers.pac++) + this->_registers.d;
 		dp += this->_registers.x;
 		return dp;
@@ -291,6 +335,9 @@ namespace ComSquare::CPU
 
 	uint24_t CPU::_getDirectIndexedByYAddr()
 	{
+		if (this->_registers.dl != 0)
+			this->_extraMemoryCycles++;
+
 		uint16_t dp = this->_bus->read(this->_registers.pac++) + this->_registers.d;
 		dp += this->_registers.y;
 		return dp;
@@ -301,6 +348,8 @@ namespace ComSquare::CPU
 		uint16_t abs = this->_bus->read(this->_registers.pac++);
 		abs += this->_bus->read(this->_registers.pac++) << 8u;
 		uint24_t effective = abs + (this->_registers.dbr << 16u);
+		if ((effective & 0xF0000000u) == (((effective + this->_registers.x) & 0xF0000000u)))
+			this->_extraMemoryCycles++;
 		return effective + this->_registers.x;
 	}
 
@@ -309,6 +358,8 @@ namespace ComSquare::CPU
 		uint16_t abs = this->_bus->read(this->_registers.pac++);
 		abs += this->_bus->read(this->_registers.pac++) << 8u;
 		uint24_t effective = abs + (this->_registers.dbr << 16u);
+		if ((effective & 0xF0000000u) == (((effective + this->_registers.y) & 0xF0000000u)))
+			this->_extraMemoryCycles++;
 		return effective + this->_registers.y;
 	}
 
@@ -357,6 +408,9 @@ namespace ComSquare::CPU
 
 	uint24_t CPU::_getDirectIndirectAddr()
 	{
+		if (this->_registers.dl != 0)
+			this->_extraMemoryCycles++;
+
 		uint16_t dp = this->_bus->read(this->_registers.pac++) + this->_registers.d;
 		uint24_t effective = this->_bus->read(dp);
 		effective += this->_bus->read(dp + 1) << 8u;
@@ -366,6 +420,9 @@ namespace ComSquare::CPU
 
 	uint24_t CPU::_getDirectIndirectLongAddr()
 	{
+		if (this->_registers.dl != 0)
+			this->_extraMemoryCycles++;
+
 		uint16_t dp = this->_bus->read(this->_registers.pac++) + this->_registers.d;
 		uint24_t effective = this->_bus->read(dp);
 		effective += this->_bus->read(++dp) << 8u;
@@ -383,5 +440,16 @@ namespace ComSquare::CPU
 		uint24_t base = this->_bus->read(this->_registers.pac++) + this->_registers.s;
 		base += this->_registers.dbr << 16u;
 		return base + this->_registers.y;
+	}
+
+	unsigned CPU::STA(uint24_t addr)
+	{
+		if (this->_registers.p.m)
+			this->_bus->write(addr, this->_registers.al);
+		else {
+			this->_bus->write(addr, this->_registers.al);
+			this->_bus->write(addr + 1, this->_registers.ah);
+		}
+		return 0;
 	}
 }

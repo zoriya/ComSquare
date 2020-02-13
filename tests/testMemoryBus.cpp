@@ -261,11 +261,30 @@ Test(BusAccessor, GetRomMirror3)
 	cr_assert_eq(accessor->_initial.get(), pair.second.cartridge.get());
 }
 
+Test(BusAccessor, Get0x0)
+{
+	auto pair = Init();
+	std::shared_ptr<Memory::RectangleShadow> accessor = nullptr;
+
+	accessor = std::static_pointer_cast<Memory::RectangleShadow>(pair.first->getAccessor(0x0));
+	cr_assert_eq(accessor->_initial.get(), pair.second.wram.get());
+}
+
 ///////////////////////////
 //						 //
 // MemoryBus::read tests //
 //						 //
 ///////////////////////////
+
+Test(BusRead, Read0x0)
+{
+	auto pair = Init();
+	uint8_t data;
+
+	pair.second.wram->_data[0] = 123;
+	data = pair.first->read(0x0);
+	cr_assert_eq(data, 123);
+}
 
 Test(BusRead, ReadOutside, .init = cr_redirect_stdout)
 {
@@ -394,6 +413,19 @@ Test(BusRead, ReadWRAMMirror)
 //						  //
 ////////////////////////////
 
+Test(BusWrite, Write0x0)
+{
+	auto pair = Init();
+
+	try {
+		pair.first->write(0x0, 123);
+	} catch (std::exception &ex) {
+		std::cout << ex.what() << std::endl;
+	}
+	cr_assert_eq(pair.second.wram->_data[0], 123);
+}
+
+
 Test(BusWrite, WriteAPU)
 {
 	auto pair = Init();
@@ -407,7 +439,7 @@ Test(BusWrite, WritePPU)
 	auto pair = Init();
 
 	pair.first->write(0x002106, 123);
-	cr_assert_eq(pair.second.ppu->mosaic.raw, 123);
+	cr_assert_eq(pair.second.ppu->_mosaic.raw, 123);
 }
 
 Test(BusWrite, WriteCPU)

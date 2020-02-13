@@ -11,7 +11,7 @@
 namespace ComSquare
 {
 	//! @brief Exception thrown when someone tries to load an invalid rom.
-	class InvalidAction : std::exception {
+	class InvalidAction : public std::exception {
 	private:
 		std::string _msg;
 	public:

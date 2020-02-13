@@ -13,4 +13,17 @@ namespace ComSquare::APU
 		this->_internalWrite(dp, data | (1u << bit));
 		return 4;
 	}
+
+	int APU::CLR1(uint24_t dp, uint8_t bit)
+	{
+		uint8_t data = this->_internalRead(dp);
+
+		this->_internalWrite(dp, data & ~(1u << bit));
+		return 4;
+	}
+
+	int APU::TSET1()
+	{
+		return 6;
+	}
 }
