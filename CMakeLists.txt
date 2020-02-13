@@ -33,6 +33,7 @@ add_executable(unit_tests
         sources/Exceptions/InvalidRom.hpp
         sources/Models/Int24.hpp
         sources/Models/Int24.hpp
+        sources/Ram/Ram.cpp
         sources/Ram/Ram.hpp
         sources/Memory/MemoryShadow.cpp
         sources/Memory/MemoryShadow.hpp
@@ -93,6 +94,7 @@ add_executable(ComSquare
         sources/Exceptions/InvalidRom.hpp
         sources/Models/Int24.hpp
         sources/Models/Int24.hpp
+        sources/Ram/Ram.cpp
         sources/Ram/Ram.hpp
         sources/Memory/MemoryShadow.cpp
         sources/Memory/MemoryShadow.hpp
