@@ -18,8 +18,8 @@ namespace ComSquare::CPU
 		//! @brief The Accumulator
 		union {
 			struct {
-				uint8_t ah;
 				uint8_t al;
+				uint8_t ah;
 			};
 			uint16_t a;
 		};
@@ -28,8 +28,8 @@ namespace ComSquare::CPU
 		//! @brief The Direct Page register;
 		union {
 			struct {
-				uint8_t dh;
 				uint8_t dl;
+				uint8_t dh;
 			};
 			uint16_t d;
 		};
@@ -40,8 +40,8 @@ namespace ComSquare::CPU
 				//! @brief The Program Counter;
 				union {
 					struct {
-						uint8_t pch;
 						uint8_t pcl;
+						uint8_t pch;
 					};
 					uint16_t pc;
 				};
@@ -52,24 +52,24 @@ namespace ComSquare::CPU
 		//! @brief The Stack pointer
 		union {
 			struct {
-				uint8_t sh;
 				uint8_t sl;
+				uint8_t sh;
 			};
 			uint16_t s;
 		};
 		//! @brief The X index register
 		union {
 			struct {
-				uint8_t xh;
 				uint8_t xl;
+				uint8_t xh;
 			};
 			uint16_t x;
 		};
 		//! @brief The Y index register
 		union {
 			struct {
-				uint8_t yh;
 				uint8_t yl;
+				uint8_t yh;
 			};
 			uint16_t y;
 		};
