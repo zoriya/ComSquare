@@ -76,22 +76,22 @@ namespace ComSquare::CPU
 		//! @brief The Processor status register;
 		union {
 			struct {
-				//!	@brief The Negative flag
-				bool n : 1;
-				//! @brief The oVerflow flag
-				bool v : 1;
-				//! @brief The accumulator and Memory width flag (in native mode only)
-				bool m : 1;
-				//!	@brief The indeX register width flag (in native mode only) OR the Break flag (in emulation mode only)
-				bool x_b : 1;
-				//!	@brief The Decimal mode flag
-				bool d : 1;
-				//!	@brief The Interrupt request disable flag
-				bool i : 1;
-				//! @brief The Zero flag
-				bool z : 1;
 				//!	@brief The Carry flag
 				bool c : 1;
+				//! @brief The Zero flag
+				bool z : 1;
+				//!	@brief The Interrupt request disable flag
+				bool i : 1;
+				//!	@brief The Decimal mode flag
+				bool d : 1;
+				//!	@brief The indeX register width flag (in native mode only) OR the Break flag (in emulation mode only)
+				bool x_b : 1;
+				//! @brief The accumulator and Memory width flag (in native mode only)
+				bool m : 1;
+				//! @brief The oVerflow flag
+				bool v : 1;
+				//!	@brief The Negative flag
+				bool n : 1;
 			};
 			uint8_t flags;
 		} p;
