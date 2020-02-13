@@ -31,10 +31,10 @@ namespace ComSquare::Ram
 		//! @throw InvalidAddress will be thrown if the address is more than the size of the ram.
 		void write_internal(uint24_t addr, uint8_t data) override;
 
-		//! @brief
-		//! @param start
-		//! @param end
-		//! @param value
+		//! @brief replace values between two addresses with a value
+		//! @param start start address to replace
+		//! @param end end address to replace
+		//! @param value replace value
 		void memset(uint24_t start, uint24_t end, uint8_t value);
 	};
 }
