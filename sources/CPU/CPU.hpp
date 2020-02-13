@@ -7,7 +7,7 @@
 
 #include "../Memory/IMemory.hpp"
 #include "../Memory/MemoryBus.hpp"
-#include "../Models/Ints.hpp"
+#include "../Models/Int24.hpp"
 #include "Instructions/CommonInstructions.hpp"
 #include "../Cartridge/Cartridge.hpp"
 
@@ -344,6 +344,9 @@ namespace ComSquare::CPU
 		void LDA(uint24_t addr);
 	public:
 		explicit CPU(std::shared_ptr<Memory::MemoryBus> bus, Cartridge::Header &cartridgeHeader);
+		CPU(const CPU &) = default;
+		CPU &operator=(const CPU &) = delete;
+		~CPU() = default;
 		//! @brief This function continue to execute the Cartridge code.
 		//! @return The number of CPU cycles that elapsed
 		unsigned update();

@@ -31,8 +31,8 @@ add_executable(unit_tests
         sources/APU/APU.cpp
         sources/Exceptions/InvalidAddress.hpp
         sources/Exceptions/InvalidRom.hpp
-        sources/Models/Ints.hpp
-        sources/Models/Ints.hpp
+        sources/Models/Int24.hpp
+        sources/Models/Int24.hpp
         sources/Ram/Ram.cpp
         sources/Ram/Ram.hpp
         sources/Memory/MemoryShadow.cpp
@@ -93,8 +93,8 @@ add_executable(ComSquare
         sources/APU/APU.cpp
         sources/Exceptions/InvalidAddress.hpp
         sources/Exceptions/InvalidRom.hpp
-        sources/Models/Ints.hpp
-        sources/Models/Ints.hpp
+        sources/Models/Int24.hpp
+        sources/Models/Int24.hpp
         sources/Ram/Ram.cpp
         sources/Ram/Ram.hpp
         sources/Memory/MemoryShadow.cpp

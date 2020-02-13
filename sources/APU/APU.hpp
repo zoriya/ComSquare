@@ -114,6 +114,9 @@ namespace ComSquare::APU
 		std::shared_ptr<DSP::DSP> _dsp;
 	public:
 		explicit APU();
+		APU(const APU &) = default;
+		APU &operator=(const APU &) = default;
+		~APU() = default;
 
 		//! @brief Read from the internal APU register.
 		//! @param addr The address to read from. The address 0xF0 should refer to the first byte of the register.

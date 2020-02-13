@@ -17,6 +17,9 @@ namespace ComSquare::Memory
 	public:
 		//! @brief Create a shadow for the memory given as parameter.
 		explicit MemoryShadow(std::shared_ptr<IMemory> initial, uint24_t start, uint24_t end);
+		MemoryShadow(const MemoryShadow &) = default;
+		MemoryShadow &operator=(const MemoryShadow &) = default;
+		~MemoryShadow() = default;
 
 		//! @brief Read from the initial IMemory given.
 		//! @param addr The address to read from. The address 0x0 should refer to the first byte of the initial IMemory.

@@ -112,6 +112,9 @@ namespace ComSquare::APU::DSP
 		std::array<Channel, 8> _channels{};
 	public:
 		explicit DSP();
+		DSP(const DSP &) = default;
+		DSP &operator=(const DSP &) = default;
+		~DSP() = default;
 
 		//! @brief Read from the internal DSP register.
 		//! @param addr The address to read from. The address 0x0 should refer to the first byte of the register.

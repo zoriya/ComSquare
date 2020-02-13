@@ -32,6 +32,9 @@ namespace ComSquare
 		std::shared_ptr<Ram::Ram> sram;
 		//! @brief Create all the components using a common memory bus for all of them.
 		SNES(const std::shared_ptr<Memory::MemoryBus> &bus, const std::string &ramPath, Renderer::IRenderer &renderer);
+		SNES(const SNES &) = default;
+		SNES &operator=(const SNES &) = default;
+		~SNES() = default;
 	};
 }
 

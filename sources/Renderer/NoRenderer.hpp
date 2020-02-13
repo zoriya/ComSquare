@@ -29,6 +29,9 @@ namespace ComSquare::Renderer
 		//! @param width width of the window.
 		//! @param maxFPS the number of maximum FPS for the window.
 		NoRenderer(unsigned int height, unsigned int width, int maxFPS);
+		NoRenderer(const NoRenderer &) = default;
+		NoRenderer &operator=(const NoRenderer &) = default;
+		~NoRenderer() = default;
 	};
 }
 

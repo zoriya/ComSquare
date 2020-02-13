@@ -18,6 +18,10 @@ namespace ComSquare::Ram
 	public:
 		//! @brief Load a rom from it's path.
 		explicit Ram(size_t size);
+		//! @brief The ram can't be copied.
+		Ram(const Ram &) = delete;
+		//! @brief The ram can't be assigned.
+		Ram &operator=(Ram &) = delete;
 		//! @brief Destructor that free the ram.
 		~Ram();
 		//! @brief Read from the ram.

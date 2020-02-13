@@ -7,7 +7,7 @@
 
 #include <string>
 #include "../Memory/IMemory.hpp"
-#include "../Models/Ints.hpp"
+#include "../Models/Int24.hpp"
 #include "../Memory/IRectangleMemory.hpp"
 #include "InterruptVectors.hpp"
 
@@ -57,6 +57,9 @@ namespace ComSquare::Cartridge
 		InterruptVectors emulationInterrupts{};
 
 		Header() = default;
+		Header(const Header &) = default;
+		Header &operator=(const Header &) = default;
+		~Header() = default;
 	};
 
 	//! @brief Contains the rom's memory/instructions.
@@ -86,6 +89,10 @@ namespace ComSquare::Cartridge
 	public:
 		//! @brief Load a rom from it's path.
 		explicit Cartridge(const std::string &romPath);
+		//! @brief The cartridge can't be copied.
+		Cartridge(const Cartridge &) = delete;
+		//! @brief The cartridge can't be assigned.
+		Cartridge &operator=(const Cartridge &) = delete;
 		//! @brief Destructor that free the cartridge data.
 		~Cartridge();
 
