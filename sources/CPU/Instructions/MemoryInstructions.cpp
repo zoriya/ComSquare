@@ -55,4 +55,17 @@ namespace ComSquare::CPU
 		}
 		this->_registers.p.z = this->_registers.a == 0x0;
 	}
+
+	void CPU::LDX(uint24_t addr)
+	{
+		if (this->_registers.p.x_b) {
+			this->_registers.x = this->_bus->read(addr);
+			this->_registers.p.n = this->_registers.xl & 0xF0u;
+		} else {
+			this->_registers.xl = this->_bus->read(addr);
+			this->_registers.xh = this->_bus->read(addr + 1);
+			this->_registers.p.n = this->_registers.x & 0xF000u;
+		}
+		this->_registers.p.z = this->_registers.x == 0x0;
+	}
 }

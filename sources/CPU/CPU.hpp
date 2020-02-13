@@ -247,7 +247,13 @@ namespace ComSquare::CPU
 		LDA_DPYi = 0xB1,
 		LDA_DPYil = 0xB7,
 		LDA_SR = 0xA3,
-		LDA_SRYi = 0xB3
+		LDA_SRYi = 0xB3,
+
+		LDX_IM = 0xA2,
+		LDX_ABS = 0xAE,
+		LDX_DP = 0xA6,
+		LDX_ABSY = 0xBE,
+		LDX_DPY = 0xB6
 	};
 
 	//! @brief The main CPU
@@ -342,6 +348,8 @@ namespace ComSquare::CPU
 		void STZ(uint24_t addr);
 		//! @brief Load the accumulator from memory.
 		void LDA(uint24_t addr);
+		//! @brief Load the X index register from memory.
+		void LDX(uint24_t addr);
 	public:
 		explicit CPU(std::shared_ptr<Memory::MemoryBus> bus, Cartridge::Header &cartridgeHeader);
 		CPU(const CPU &) = default;
