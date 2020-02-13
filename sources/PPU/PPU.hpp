@@ -432,18 +432,18 @@ namespace ComSquare::PPU
 			};
 			uint8_t raw;
 		} _t[2];
-		//! @brief TMW Register (Window Mask Designation for the Main Screen)
+		//! @brief TMW - TSW Registers (Window Mask Designation for the Main/Sub Screen)
 		union {
 			struct {
-				uint8_t _: 3;
-				bool enableWindowMaskingObj: 1;
-				bool enableWindowMaskingBg4: 1;
-				bool enableWindowMaskingBg3: 1;
-				bool enableWindowMaskingBg2: 1;
 				bool enableWindowMaskingBg1: 1;
+				bool enableWindowMaskingBg2: 1;
+				bool enableWindowMaskingBg3: 1;
+				bool enableWindowMaskingBg4: 1;
+				bool enableWindowMaskingObj: 1;
+				uint8_t _: 3;
 			};
 			uint8_t raw;
-		} _tmw;
+		} _tw[2];
 		//! @brief TSW Register (Window Mask Designation for the Sub Screen)
 		union {
 			struct {
@@ -459,51 +459,54 @@ namespace ComSquare::PPU
 		//! @brief CGWSEL Register (Color Addition Select)
 		union {
 			struct {
-				uint8_t clipColorToBlackBeforeMath: 2;
-				uint8_t preventColorMath: 2;
-				uint8_t _: 2;
-				bool addSubscreen: 1;
 				bool directColorMode: 1;
+				bool addSubscreen: 1;
+				uint8_t _: 2;
+				uint8_t preventColorMath: 2;
+				uint8_t clipColorToBlackBeforeMath: 2;
 			};
 			uint8_t raw;
 		} _cgwsel;
 		//! @brief CGADSUB Register (Color Math designation)
 		union {
 			struct {
-				bool addSubtractSelect: 1;
-				bool halfColorMath: 1;
-				bool enableColorMathBackdrop: 1;
-				bool enableColorMathObj: 1;
-				bool enableColorMathBg4: 1;
-				bool enableColorMathBg3: 1;
-				bool enableColorMathBg2: 1;
 				bool enableColorMathBg1: 1;
+				bool enableColorMathBg2: 1;
+				bool enableColorMathBg3: 1;
+				bool enableColorMathBg4: 1;
+				bool enableColorMathObj: 1;
+				bool enableColorMathBackdrop: 1;
+				bool halfColorMath: 1;
+				bool addSubtractSelect: 1;
 			};
 			uint8_t raw;
 		} _cgadsub;
 		//! @brief COLDATA Register (Fixed Color Data)
 		union {
 			struct {
-				bool blue: 1;
-				bool green: 1;
-				bool red: 1;
 				uint8_t colorIntensity: 5;
+				bool red: 1;
+				bool green: 1;
+				bool blue: 1;
 			};
 			uint8_t raw;
 		} _coldata;
 		//! @brief SETINI Register (Screen Mode/Video Select)
 		union {
 			struct {
-				bool externalSync: 1;
-				bool mode7ExtBg: 1;
-				uint8_t _: 2;
-				bool enablePseudoHiresMode: 1;
-				bool overscanMode: 1;
-				bool objInterlace: 1;
 				bool screenInterlace: 1;
+				bool objInterlace: 1;
+				bool overscanMode: 1;
+				bool enablePseudoHiresMode: 1;
+				uint8_t _: 2;
+				bool mode7ExtBg: 1;
+				bool externalSync: 1;
 			};
 			uint8_t raw;
 		} _setini;
+
+		// <READ registers> not in priority
+
 		//! @brief MPYL - MPYM - MPYH Registers (Multiplication Result)
 		union {
 			struct {

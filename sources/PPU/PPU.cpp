@@ -142,6 +142,22 @@ namespace ComSquare::PPU
 		case ppuRegisters::ts:
 			this->_t[addr - ppuRegisters::tm].raw = data;
 			break;
+		case ppuRegisters::tmw:
+		case ppuRegisters::tsw:
+			this->_tw[addr - ppuRegisters::tmw].raw = data;
+			break;
+		case ppuRegisters::cgwsel:
+			this->_cgwsel.raw = data;
+			break;
+		case ppuRegisters::cgadsub:
+			this->_cgadsub.raw = data;
+			break;
+		case ppuRegisters::coldata:
+			this->_coldata.raw = data;
+			break;
+		case ppuRegisters::setini:
+			this->_setini.raw = data;
+			break;
 		//TODO adding the rest of the registers. oaf !
 		default:
 			throw InvalidAddress("PPU Internal Registers write", addr);
@@ -168,7 +184,7 @@ namespace ComSquare::PPU
 	{
 		(void)cycles;
 		int inc = getVramAddress();
-		uint32_t pixelTmp = 0xFFFFFFFF;
+		//uint32_t pixelTmp = 0xFFFFFFFF;
 		//pixelTmp |= this->_inidisp.brightness;
 		if (!this->_inidisp.fblank) {
 			for (int x = 0; x < 448; x++) {

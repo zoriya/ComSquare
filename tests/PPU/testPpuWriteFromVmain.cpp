@@ -90,7 +90,7 @@ Test(PPU_write_2, cgadd_full_high_byte_null)
 Test(PPU_write_2, cgdata_data_full)
 {
 	auto pair = Init();
-	pair.first->write(0x2121, 0b11111111);
+	pair.first->write(0x2121, 0x0);
 	pair.first->write(0x2122, 0b11111111);
 	cr_assert_eq(pair.second.ppu->_cgdata.cgdatal, 0b11111111);
 	cr_assert_eq(pair.second.ppu->_isLowByte, false);
@@ -201,4 +201,72 @@ Test(PPU_write_2, ts_data_full)
 	cr_assert_eq(pair.second.ppu->_t[1].enableWindowDisplayBg3, true);
 	cr_assert_eq(pair.second.ppu->_t[1].enableWindowDisplayBg4, true);
 	cr_assert_eq(pair.second.ppu->_t[1].enableWindowDisplayObj, false);
+}
+
+Test(PPU_write_2, tmw_data_full)
+{
+	auto pair = Init();
+	pair.first->write(0x212E, 0b10101110);
+	cr_assert_eq(pair.second.ppu->_tw[0].enableWindowMaskingBg1, false);
+	cr_assert_eq(pair.second.ppu->_tw[0].enableWindowMaskingBg2, true);
+	cr_assert_eq(pair.second.ppu->_tw[0].enableWindowMaskingBg3, true);
+	cr_assert_eq(pair.second.ppu->_tw[0].enableWindowMaskingBg4, true);
+	cr_assert_eq(pair.second.ppu->_tw[0].enableWindowMaskingObj, false);
+}
+
+Test(PPU_write_2, tsw_data_full)
+{
+	auto pair = Init();
+	pair.first->write(0x212F, 0b10100011);
+	cr_assert_eq(pair.second.ppu->_tw[1].enableWindowMaskingBg1, true);
+	cr_assert_eq(pair.second.ppu->_tw[1].enableWindowMaskingBg2, true);
+	cr_assert_eq(pair.second.ppu->_tw[1].enableWindowMaskingBg3, false);
+	cr_assert_eq(pair.second.ppu->_tw[1].enableWindowMaskingBg4, false);
+	cr_assert_eq(pair.second.ppu->_tw[1].enableWindowMaskingObj, false);
+}
+
+Test(PPU_write_2, cgwsel_data_full)
+{
+	auto pair = Init();
+	pair.first->write(0x2130, 0b10111001);
+	cr_assert_eq(pair.second.ppu->_cgwsel.clipColorToBlackBeforeMath, 0b10);
+	cr_assert_eq(pair.second.ppu->_cgwsel.preventColorMath, 0b11);
+	cr_assert_eq(pair.second.ppu->_cgwsel.addSubscreen, false);
+	cr_assert_eq(pair.second.ppu->_cgwsel.directColorMode, true);
+}
+
+Test(PPU_write_2, cgadsub_data_full)
+{
+	auto pair = Init();
+	pair.first->write(0x2131, 0b10111001);
+	cr_assert_eq(pair.second.ppu->_cgadsub.addSubtractSelect, true);
+	cr_assert_eq(pair.second.ppu->_cgadsub.halfColorMath, false);
+	cr_assert_eq(pair.second.ppu->_cgadsub.enableColorMathBackdrop, true);
+	cr_assert_eq(pair.second.ppu->_cgadsub.enableColorMathObj, true);
+	cr_assert_eq(pair.second.ppu->_cgadsub.enableColorMathBg4, true);
+	cr_assert_eq(pair.second.ppu->_cgadsub.enableColorMathBg3, false);
+	cr_assert_eq(pair.second.ppu->_cgadsub.enableColorMathBg2, false);
+	cr_assert_eq(pair.second.ppu->_cgadsub.enableColorMathBg1, true);
+}
+
+Test(PPU_write_2, coldata_data_full)
+{
+	auto pair = Init();
+	pair.first->write(0x2132, 0b10111001);
+	cr_assert_eq(pair.second.ppu->_coldata.blue, true);
+	cr_assert_eq(pair.second.ppu->_coldata.green, false);
+	cr_assert_eq(pair.second.ppu->_coldata.red, true);
+	cr_assert_eq(pair.second.ppu->_coldata.colorIntensity, 0b11001);
+}
+
+Test(PPU_write_2, setini_data_full)
+{
+	auto pair = Init();
+	pair.first->write(0x2133, 0b10111001);
+	cr_assert_eq(pair.second.ppu->_setini.externalSync, true);
+	cr_assert_eq(pair.second.ppu->_setini.mode7ExtBg, false);
+	cr_assert_eq(pair.second.ppu->_setini.enablePseudoHiresMode, true);
+	cr_assert_eq(pair.second.ppu->_setini.overscanMode, false);
+	cr_assert_eq(pair.second.ppu->_setini.objInterlace, false);
+	cr_assert_eq(pair.second.ppu->_setini.screenInterlace, true);
 }
