@@ -217,3 +217,192 @@ Test(PLA, negative)
 	cr_assert_eq(pair.second.cpu->_registers.p.n, true, "The negative flag should be set.", pair.second.cpu->_registers.p.n);
 	cr_assert_eq(pair.second.cpu->_registers.s, 0x2, "The Stack pointer should be equal to 0x2 but it was %x", pair.second.cpu->_registers.s);
 }
+
+Test(PLX, basic)
+{
+	auto pair = Init();
+	pair.second.wram->_data[1] = 0xCD;
+	pair.second.wram->_data[2] = 0x7B;
+	pair.second.cpu->_registers.s = 0x00;
+	pair.second.cpu->PLX();
+	auto data = pair.second.cpu->_registers.x;
+	cr_assert_eq(data, 0x7BCD, "The X register should be 0x7BCD but it was %x", data);
+	cr_assert_eq(pair.second.cpu->_registers.p.z, false, "The zero flag should not be set.", pair.second.cpu->_registers.p.z);
+	cr_assert_eq(pair.second.cpu->_registers.p.n, false, "The negative flag should not be set.", pair.second.cpu->_registers.p.n);
+	cr_assert_eq(pair.second.cpu->_registers.s, 0x2, "The Stack pointer should be equal to 0x2 but it was %x", pair.second.cpu->_registers.s);
+}
+
+Test(PLX, zero)
+{
+	auto pair = Init();
+	pair.second.wram->_data[1] = 0x00;
+	pair.second.wram->_data[2] = 0x00;
+	pair.second.cpu->_registers.s = 0x00;
+	pair.second.cpu->PLX();
+	auto data = pair.second.cpu->_registers.x;
+	cr_assert_eq(data, 0x0000, "The x register should be 0x0000 but it was %x", data);
+	cr_assert_eq(pair.second.cpu->_registers.p.z, true, "The zero flag should be set.", pair.second.cpu->_registers.p.z);
+	cr_assert_eq(pair.second.cpu->_registers.p.n, false, "The negative flag should not be set.", pair.second.cpu->_registers.p.n);
+	cr_assert_eq(pair.second.cpu->_registers.s, 0x2, "The Stack pointer should be equal to 0x2 but it was %x", pair.second.cpu->_registers.s);
+}
+
+Test(PLX, negative)
+{
+	auto pair = Init();
+	pair.second.wram->_data[1] = 0x00;
+	pair.second.wram->_data[2] = 0xA0;
+	pair.second.cpu->_registers.s = 0x00;
+	pair.second.cpu->PLX();
+	auto data = pair.second.cpu->_registers.x;
+	cr_assert_eq(data, 0xA000, "The x register should be 0xA000 but it was %x", data);
+	cr_assert_eq(pair.second.cpu->_registers.p.z, false, "The zero flag not should be set.", pair.second.cpu->_registers.p.z);
+	cr_assert_eq(pair.second.cpu->_registers.p.n, true, "The negative flag should be set.", pair.second.cpu->_registers.p.n);
+	cr_assert_eq(pair.second.cpu->_registers.s, 0x2, "The Stack pointer should be equal to 0x2 but it was %x", pair.second.cpu->_registers.s);
+}
+
+Test(PLY, basic)
+{
+	auto pair = Init();
+	pair.second.wram->_data[1] = 0xCD;
+	pair.second.wram->_data[2] = 0x7B;
+	pair.second.cpu->_registers.s = 0x00;
+	pair.second.cpu->PLY();
+	auto data = pair.second.cpu->_registers.y;
+	cr_assert_eq(data, 0x7BCD, "The Y register should be 0x7BCD but it was %x", data);
+	cr_assert_eq(pair.second.cpu->_registers.p.z, false, "The zero flag should not be set.", pair.second.cpu->_registers.p.z);
+	cr_assert_eq(pair.second.cpu->_registers.p.n, false, "The negative flag should not be set.", pair.second.cpu->_registers.p.n);
+	cr_assert_eq(pair.second.cpu->_registers.s, 0x2, "The Stack pointer should be equal to 0x2 but it was %x", pair.second.cpu->_registers.s);
+}
+
+Test(PLY, zero)
+{
+	auto pair = Init();
+	pair.second.wram->_data[1] = 0x00;
+	pair.second.wram->_data[2] = 0x00;
+	pair.second.cpu->_registers.s = 0x00;
+	pair.second.cpu->PLY();
+	auto data = pair.second.cpu->_registers.y;
+	cr_assert_eq(data, 0x0000, "The y register should be 0x0000 but it was %x", data);
+	cr_assert_eq(pair.second.cpu->_registers.p.z, true, "The zero flag should be set.", pair.second.cpu->_registers.p.z);
+	cr_assert_eq(pair.second.cpu->_registers.p.n, false, "The negative flag should not be set.", pair.second.cpu->_registers.p.n);
+	cr_assert_eq(pair.second.cpu->_registers.s, 0x2, "The Stack pointer should be equal to 0x2 but it was %x", pair.second.cpu->_registers.s);
+}
+
+Test(PLY, negative)
+{
+	auto pair = Init();
+	pair.second.wram->_data[1] = 0x00;
+	pair.second.wram->_data[2] = 0xA0;
+	pair.second.cpu->_registers.s = 0x00;
+	pair.second.cpu->PLY();
+	auto data = pair.second.cpu->_registers.y;
+	cr_assert_eq(data, 0xA000, "The y register should be 0xA000 but it was %x", data);
+	cr_assert_eq(pair.second.cpu->_registers.p.z, false, "The zero flag not should be set.", pair.second.cpu->_registers.p.z);
+	cr_assert_eq(pair.second.cpu->_registers.p.n, true, "The negative flag should be set.", pair.second.cpu->_registers.p.n);
+	cr_assert_eq(pair.second.cpu->_registers.s, 0x2, "The Stack pointer should be equal to 0x2 but it was %x", pair.second.cpu->_registers.s);
+}
+
+Test(PLD, basic)
+{
+	auto pair = Init();
+	pair.second.wram->_data[1] = 0xCD;
+	pair.second.wram->_data[2] = 0x7B;
+	pair.second.cpu->_registers.s = 0x00;
+	pair.second.cpu->PLD();
+	auto data = pair.second.cpu->_registers.d;
+	cr_assert_eq(data, 0x7BCD, "The D register should be 0x7BCD but it was %x", data);
+	cr_assert_eq(pair.second.cpu->_registers.p.z, false, "The zero flag should not be set.", pair.second.cpu->_registers.p.z);
+	cr_assert_eq(pair.second.cpu->_registers.p.n, false, "The negative flag should not be set.", pair.second.cpu->_registers.p.n);
+	cr_assert_eq(pair.second.cpu->_registers.s, 0x2, "The Stack pointer should be equal to 0x2 but it was %x", pair.second.cpu->_registers.s);
+}
+
+Test(PLD, zero)
+{
+	auto pair = Init();
+	pair.second.wram->_data[1] = 0x00;
+	pair.second.wram->_data[2] = 0x00;
+	pair.second.cpu->_registers.s = 0x00;
+	pair.second.cpu->PLD();
+	auto data = pair.second.cpu->_registers.d;
+	cr_assert_eq(data, 0x0000, "The d register should be 0x0000 but it was %x", data);
+	cr_assert_eq(pair.second.cpu->_registers.p.z, true, "The zero flag should be set.", pair.second.cpu->_registers.p.z);
+	cr_assert_eq(pair.second.cpu->_registers.p.n, false, "The negative flag should not be set.", pair.second.cpu->_registers.p.n);
+	cr_assert_eq(pair.second.cpu->_registers.s, 0x2, "The Stack pointer should be equal to 0x2 but it was %x", pair.second.cpu->_registers.s);
+}
+
+Test(PLD, negative)
+{
+	auto pair = Init();
+	pair.second.wram->_data[1] = 0x00;
+	pair.second.wram->_data[2] = 0xA0;
+	pair.second.cpu->_registers.s = 0x00;
+	pair.second.cpu->PLD();
+	auto data = pair.second.cpu->_registers.d;
+	cr_assert_eq(data, 0xA000, "The D register should be 0xA000 but it was %x", data);
+	cr_assert_eq(pair.second.cpu->_registers.p.z, false, "The zero flag not should be set.", pair.second.cpu->_registers.p.z);
+	cr_assert_eq(pair.second.cpu->_registers.p.n, true, "The negative flag should be set.", pair.second.cpu->_registers.p.n);
+	cr_assert_eq(pair.second.cpu->_registers.s, 0x2, "The Stack pointer should be equal to 0x2 but it was %x", pair.second.cpu->_registers.s);
+}
+
+Test(PLB, basic)
+{
+	auto pair = Init();
+	pair.second.wram->_data[1] = 0x7D;
+	pair.second.cpu->_registers.s = 0x00;
+	pair.second.cpu->PLB();
+	auto data = pair.second.cpu->_registers.dbr;
+	cr_assert_eq(data, 0x7D, "The DBR should be 0x7D but it was %x", data);
+	cr_assert_eq(pair.second.cpu->_registers.p.z, false, "The zero flag should not be set.", pair.second.cpu->_registers.p.z);
+	cr_assert_eq(pair.second.cpu->_registers.p.n, false, "The negative flag should not be set.", pair.second.cpu->_registers.p.n);
+	cr_assert_eq(pair.second.cpu->_registers.s, 0x1, "The Stack pointer should be equal to 0x1 but it was %x", pair.second.cpu->_registers.s);
+}
+
+Test(PLB, zero)
+{
+	auto pair = Init();
+	pair.second.wram->_data[1] = 0x00;
+	pair.second.cpu->_registers.s = 0x00;
+	pair.second.cpu->PLB();
+	auto data = pair.second.cpu->_registers.dbr;
+	cr_assert_eq(data, 0x00, "The dbr should be 0x00 but it was %x", data);
+	cr_assert_eq(pair.second.cpu->_registers.p.z, true, "The zero flag should be set.", pair.second.cpu->_registers.p.z);
+	cr_assert_eq(pair.second.cpu->_registers.p.n, false, "The negative flag should not be set.", pair.second.cpu->_registers.p.n);
+	cr_assert_eq(pair.second.cpu->_registers.s, 0x1, "The Stack pointer should be equal to 0x1 but it was %x", pair.second.cpu->_registers.s);
+}
+
+Test(PLB, negative)
+{
+	auto pair = Init();
+	pair.second.wram->_data[1] = 0xA0;
+	pair.second.cpu->_registers.s = 0x00;
+	pair.second.cpu->PLB();
+	auto data = pair.second.cpu->_registers.dbr;
+	cr_assert_eq(data, 0xA0, "The D register should be 0xA0 but it was %x", data);
+	cr_assert_eq(pair.second.cpu->_registers.p.z, false, "The zero flag not should be set.", pair.second.cpu->_registers.p.z);
+	cr_assert_eq(pair.second.cpu->_registers.p.n, true, "The negative flag should be set.", pair.second.cpu->_registers.p.n);
+	cr_assert_eq(pair.second.cpu->_registers.s, 0x1, "The Stack pointer should be equal to 0x1 but it was %x", pair.second.cpu->_registers.s);
+}
+
+Test(PLP, basic)
+{
+	auto pair = Init();
+	pair.second.wram->_data[1] = 0x7D;
+	pair.second.cpu->_registers.s = 0x00;
+	pair.second.cpu->_isEmulationMode = false;
+	pair.second.cpu->PLP();
+	auto data = pair.second.cpu->_registers.p.flags;
+	cr_assert_eq(data, 0x7D, "The flags should be 0x7D but it was %x", data);
+	cr_assert_eq(pair.second.cpu->_registers.s, 0x1, "The Stack pointer should be equal to 0x1 but it was %x", pair.second.cpu->_registers.s);
+}
+
+Test(PLP, emulation)
+{
+	auto pair = Init();
+	pair.second.wram->_data[1] = 0x00;
+	pair.second.cpu->_registers.s = 0x00;
+	pair.second.cpu->_isEmulationMode = true;
+	pair.second.cpu->PLP();
+	auto data = pair.second.cpu->_registers.p.flags;
+	cr_assert_eq(data, 0b00110000, "The flags should be 0b00110000 but it was %x", data);
+	cr_assert_eq(pair.second.cpu->_registers.s, 0x1, "The Stack pointer should be equal to 0x1 but it was %x", pair.second.cpu->_registers.s);
+}

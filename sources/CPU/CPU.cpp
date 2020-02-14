@@ -289,6 +289,13 @@ namespace ComSquare::CPU
 		case Instructions::PHX: this->PHX(); return 3 + !this->_registers.p.x_b;
 		case Instructions::PHY: this->PHY(); return 3 + !this->_registers.p.x_b;
 
+		case Instructions::PLA: this->PLA(); return 4 + !this->_registers.p.m;
+		case Instructions::PLB: this->PLB(); return 4;
+		case Instructions::PLD: this->PLD(); return 5;
+		case Instructions::PLP: this->PLP(); return 4;
+		case Instructions::PLX: this->PLX(); return 4 + !this->_registers.p.x_b;
+		case Instructions::PLY: this->PLY(); return 4 + !this->_registers.p.x_b;
+
 		case Instructions::JSR_ABS:   this->JSR(this->_getAbsoluteAddr()); 				   return 6;
 		case Instructions::JSR_ABSXi: this->JSR(this->_getAbsoluteIndirectIndexedByXAddr()); return 8;
 

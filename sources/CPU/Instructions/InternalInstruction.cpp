@@ -78,31 +78,38 @@ namespace ComSquare::CPU
 
 	void CPU::PLB()
 	{
-
+		this->_registers.dbr = this->_pop();
+		this->_registers.p.z = this->_registers.dbr == 0;
+		this->_registers.p.n = this->_registers.dbr & 0x80u;
 	}
 
 	void CPU::PLD()
 	{
-
-	}
-
-	void CPU::PLK()
-	{
-
+		this->_registers.d = this->_pop16();
+		this->_registers.p.z = this->_registers.d == 0;
+		this->_registers.p.n = this->_registers.d & 0x8000u;
 	}
 
 	void CPU::PLP()
 	{
-
+		this->_registers.p.flags = this->_pop();
+		if (this->_isEmulationMode) {
+			this->_registers.p.m = true;
+			this->_registers.p.x_b = true;
+		}
 	}
 
 	void CPU::PLX()
 	{
-
+		this->_registers.x = this->_pop16();
+		this->_registers.p.z = this->_registers.x == 0;
+		this->_registers.p.n = this->_registers.x & 0x8000u;
 	}
 
 	void CPU::PLY()
 	{
-
+		this->_registers.y = this->_pop16();
+		this->_registers.p.z = this->_registers.y == 0;
+		this->_registers.p.n = this->_registers.y & 0x8000u;
 	}
 }

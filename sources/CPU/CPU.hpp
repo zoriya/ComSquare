@@ -272,8 +272,16 @@ namespace ComSquare::CPU
 		PHX = 0xDA,
 		PHY = 0x5A,
 
+		PLA = 0x68,
+		PLB = 0xAB,
+		PLD = 0x2B,
+		PLP = 0x28,
+		PLX = 0xFA,
+		PLY = 0x7A,
+
 		JSR_ABS = 0x20,
 		JSR_ABSXi = 0xFC,
+
 		JSL = 0x22
 	};
 
@@ -401,8 +409,6 @@ namespace ComSquare::CPU
 		void PLB();
 		//! @brief Pull the direct page register to the stack.
 		void PLD();
-		//! @brief Pull the program bank register to the stack.
-		void PLK();
 		//! @brief Pull the processor status register to the stack.
 		void PLP();
 		//! @brief Pull the x index register to the stack.
