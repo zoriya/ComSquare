@@ -119,7 +119,7 @@ add_executable(ComSquare
         sources/CPU/Instructions/InternalInstruction.cpp
         sources/Ram/ExtendedRam.cpp
         sources/Ram/ExtendedRam.hpp
-)
+sources/Debugger/DebugCpu.cpp sources/Debugger/DebugCpu.hpp)
 
 target_link_libraries(ComSquare
         sfml-graphics

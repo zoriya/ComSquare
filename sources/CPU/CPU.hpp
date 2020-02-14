@@ -292,7 +292,7 @@ namespace ComSquare::CPU
 
 	//! @brief The main CPU
 	class CPU : public Memory::IMemory {
-	private:
+	protected:
 		//! @brief All the registers of the CPU
 		Registers _registers{};
 		//! @brief Is the CPU running in emulation mode (in 8bits)
@@ -435,7 +435,7 @@ namespace ComSquare::CPU
 		~CPU() = default;
 		//! @brief This function continue to execute the Cartridge code.
 		//! @return The number of CPU cycles that elapsed
-		unsigned update();
+		virtual unsigned update();
 		//! @brief Read from the internal CPU register.
 		//! @param addr The address to read from. The address 0x0 should refer to the first byte of the register.
 		//! @throw InvalidAddress will be thrown if the address is more than $1F (the number of register).

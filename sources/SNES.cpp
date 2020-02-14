@@ -5,6 +5,7 @@
 #include <ios>
 #include <iostream>
 #include "SNES.hpp"
+#include "Debugger/DebugCpu.hpp"
 
 namespace ComSquare
 {
@@ -18,5 +19,15 @@ namespace ComSquare
 	{
 		bus->mapComponents(*this);
 		renderer.setWindowName(this->cartridge->header.gameName);
+	}
+
+	void SNES::enableCPUDebugging()
+	{
+		this->cpu = std::make_shared<Debugger::CPUDebug>(*this->cpu, *this);
+	}
+
+	void SNES::disableCPUDebugging()
+	{
+		this->cpu = std::make_shared<CPU::CPU>(*this->cpu);
 	}
 }
