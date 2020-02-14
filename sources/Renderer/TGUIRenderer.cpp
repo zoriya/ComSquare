@@ -11,6 +11,7 @@ namespace ComSquare::Renderer
 		SFRenderer(height, width, maxFPS),
 		_gui(this->_window)
 	{
+		_gui.loadWidgetsFromFile("../ressources/form.txt");
 	}
 
 	void TGUIRenderer::drawScreen()
