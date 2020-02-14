@@ -1,4 +1,0 @@
-<map id="ComSquare::CPU::CPU" name="ComSquare::CPU::CPU">
-<area shape="rect" id="node1" title="The main CPU." alt="" coords="5,219,172,399"/>
-<area shape="rect" id="node2" href="$classComSquare_1_1Memory_1_1IMemory.html" title="Common interface implemented by all components mapping memory." alt="" coords="5,5,172,171"/>
-</map>

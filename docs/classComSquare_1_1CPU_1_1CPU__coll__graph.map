@@ -1,6 +1,0 @@
-<map id="ComSquare::CPU::CPU" name="ComSquare::CPU::CPU">
-<area shape="rect" id="node1" title="The main CPU." alt="" coords="208,307,375,457"/>
-<area shape="rect" id="node2" href="$classComSquare_1_1Memory_1_1IMemory.html" title="Common interface implemented by all components mapping memory." alt="" coords="5,42,172,207"/>
-<area shape="rect" id="node3" href="$structComSquare_1_1CPU_1_1InternalRegisters.html" title="Struct containing internal registers of the CPU." alt="" coords="196,5,387,244"/>
-<area shape="rect" id="node4" href="$structComSquare_1_1CPU_1_1Registers.html" title="Struct containing registers for the main CPU." alt="" coords="411,13,612,237"/>
-</map>

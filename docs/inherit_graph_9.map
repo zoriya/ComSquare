@@ -1,7 +1,0 @@
-<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" title=" " alt="" coords="5,81,92,108"/>
-<area shape="rect" id="node2" href="$classComSquare_1_1InvalidAction.html" title="Exception thrown when someone tries to load an invalid rom." alt="" coords="166,5,357,32"/>
-<area shape="rect" id="node3" href="$classComSquare_1_1InvalidAddress.html" title="Exception thrown when trying to read/write to an invalid address." alt="" coords="161,56,362,83"/>
-<area shape="rect" id="node4" href="$classComSquare_1_1InvalidRomException.html" title="Exception thrown when someone tries to load an invalid rom." alt="" coords="140,107,383,133"/>
-<area shape="rect" id="node5" href="$classComSquare_1_1NotImplementedException.html" title="When this is thrown, it means that we should work more." alt="" coords="154,158,369,199"/>
-</map>

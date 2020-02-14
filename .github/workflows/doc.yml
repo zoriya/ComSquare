@@ -14,15 +14,17 @@ jobs:
       - name: Install Doxygen
         run: sudo apt-get install --yes doxygen graphviz
       - name: Update the docs
-        run: doxygen Doxyfile
-      - name: Deploy
-        run:
+        run: |
+          git clone -b gh-pages https://${GITHUB_REPO} docs
+          rm -rf docs/*
+          doxygen Doxyfile
+          cd docs
           git config --global user.email "${GITHUB_ACTOR}@github.com";
           git config --global user.name "${GITHUB_ACTOR}";
-          git checkout -B gh-pages;
           git add -A;
           git commit -m "Deploying the doc";
-          git remote set-url --push origin https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/AnonymusRaccoon/ComSquare;
-          git push origin gh-pages --quiet --force;
+          git remote set-url --push origin https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@${GITHUB_REPO};
+          git push origin gh-pages;
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPO: "github.com/AnonymusRaccoon/ComSquare"
