@@ -243,7 +243,7 @@ Test(AddrMode, AbsoluteIndexedIndirect)
 	pair.second.cpu->_registers.x = 2;
 	pair.second.wram->_data[0x01AD] = 0xEF;
 	pair.second.wram->_data[0x01AE] = 0x01;
-	auto addr = pair.second.cpu->_getAbsoluteIndexedIndirectAddr();
+	auto addr = pair.second.cpu->_getAbsoluteIndirectIndexedByXAddr();
 	cr_assert_eq(addr, 0x01EF, "Returned address was %x but was expecting 0x01EF.", addr);
 	cr_assert_eq(pair.second.cpu->_registers.pac, 0x808002);
 }
