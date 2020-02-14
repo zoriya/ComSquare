@@ -16,6 +16,12 @@ jobs:
            Invoke-WebRequest -Uri https://www.sfml-dev.org/files/SFML-2.5.1-windows-gcc-7.3.0-mingw-64-bit.zip -OutFile sfml.zip
            Expand-Archive sfml.zip -DestinationPath . -Force
            Move-Item -Path SFML-2.5.1 -Destination build
+      - name: Install TGUI.
+        run: |
+          Invoke-WebRequest -Uri https://github.com/texus/TGUI/releases/download/v0.8.6/TGUI-0.8.6-mingw-7.3.0-64bit-for-SFML-2.5.1.zip -OutFile tgui.zip
+          Expand-Archive tgui.zip -DestinationPath . -Force
+          Move-Item -Path TGUI-0.8/lib/lib* -Destination build/lib
+          Move-Item -Path TGUI-0.8/include/* -Destination build/include
       - name: Build Makefile with CMake
         run: |
           Set-Location build
