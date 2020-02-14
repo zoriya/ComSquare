@@ -282,7 +282,12 @@ namespace ComSquare::CPU
 		JSR_ABS = 0x20,
 		JSR_ABSXi = 0xFC,
 
-		JSL = 0x22
+		JSL = 0x22,
+
+		CLC = 0x18,
+		CLI = 0x58,
+		CLD = 0xD8,
+		CLV = 0xB8
 	};
 
 	//! @brief The main CPU
@@ -415,6 +420,14 @@ namespace ComSquare::CPU
 		void PLX();
 		//! @brief Pull the y index register to the stack.
 		void PLY();
+		//! @brief Clear the carry flag.
+		void CLC();
+		//! @brief Clear the Interrupt Disable flag.
+		void CLI();
+		//! @brief Clear the decimal flag.
+		void CLD();
+		//! @brief Clear the overflow flag.
+		void CLV();
 	public:
 		explicit CPU(std::shared_ptr<Memory::MemoryBus> bus, Cartridge::Header &cartridgeHeader);
 		CPU(const CPU &) = default;

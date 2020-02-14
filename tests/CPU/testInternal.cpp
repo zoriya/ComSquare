@@ -406,3 +406,35 @@ Test(PLP, emulation)
 	cr_assert_eq(data, 0b00110000, "The flags should be 0b00110000 but it was %x", data);
 	cr_assert_eq(pair.second.cpu->_registers.s, 0x1, "The Stack pointer should be equal to 0x1 but it was %x", pair.second.cpu->_registers.s);
 }
+
+Test(CLC, clear)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.p.flags = 0xFF;
+	pair.second.cpu->CLC();
+	cr_assert_eq(pair.second.cpu->_registers.p.c, false, "The carry flag should not be set");
+}
+
+Test(CLI, clear)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.p.flags = 0xFF;
+	pair.second.cpu->CLI();
+	cr_assert_eq(pair.second.cpu->_registers.p.i, false, "The interrupt flag should not be set");
+}
+
+Test(CLD, clear)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.p.flags = 0xFF;
+	pair.second.cpu->CLD();
+	cr_assert_eq(pair.second.cpu->_registers.p.d, false, "The decimal flag should not be set");
+}
+
+Test(CLV, clear)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.p.flags = 0xFF;
+	pair.second.cpu->CLV();
+	cr_assert_eq(pair.second.cpu->_registers.p.v, false, "The overflow flag should not be set");
+}

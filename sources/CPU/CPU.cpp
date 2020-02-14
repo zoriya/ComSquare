@@ -301,6 +301,11 @@ namespace ComSquare::CPU
 
 		case Instructions::JSL: this->JSR(this->_getAbsoluteLongAddr()); return 8;
 
+		case Instructions::CLC: this->CLC(); return 2;
+		case Instructions::CLI: this->CLI(); return 2;
+		case Instructions::CLD: this->CLD(); return 2;
+		case Instructions::CLV: this->CLV(); return 2;
+
 		default:
 			throw InvalidOpcode("CPU", opcode);
 		}
