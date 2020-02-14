@@ -57,7 +57,7 @@ Test(PPU_write, obsel_111_object_size_and_all_null)
 	pair.first->write(0x2101, 0b11100000);
 	cr_assert_eq(pair.second.ppu->_obsel.objectSize, 0b111);
 	cr_assert_eq(pair.second.ppu->_obsel.nameSelect, 0b00);
-	cr_assert_eq(pair.second.ppu->_obsel.baseSelect, 0b000);
+	cr_assert_eq(pair.second.ppu->_obsel.nameBaseSelect, 0b000);
 }
 
 Test(PPU_write, obsel_data_full)
@@ -66,7 +66,7 @@ Test(PPU_write, obsel_data_full)
 	pair.first->write(0x2101, 0b11111111);
 	cr_assert_eq(pair.second.ppu->_obsel.objectSize, 0b111);
 	cr_assert_eq(pair.second.ppu->_obsel.nameSelect, 0b11);
-	cr_assert_eq(pair.second.ppu->_obsel.baseSelect, 0b111);
+	cr_assert_eq(pair.second.ppu->_obsel.nameBaseSelect, 0b111);
 }
 
 Test(PPU_write, obsel_data_full_nameselect)
@@ -75,7 +75,7 @@ Test(PPU_write, obsel_data_full_nameselect)
 	pair.first->write(0x2101, 0b00011000);
 	cr_assert_eq(pair.second.ppu->_obsel.objectSize, 0b000);
 	cr_assert_eq(pair.second.ppu->_obsel.nameSelect, 0b11);
-	cr_assert_eq(pair.second.ppu->_obsel.baseSelect, 0b000);
+	cr_assert_eq(pair.second.ppu->_obsel.nameBaseSelect, 0b000);
 }
 
 Test(PPU_write, obsel_data_full_baseselect)
@@ -84,7 +84,7 @@ Test(PPU_write, obsel_data_full_baseselect)
 	pair.first->write(0x2101, 0b00000111);
 	cr_assert_eq(pair.second.ppu->_obsel.objectSize, 0b000);
 	cr_assert_eq(pair.second.ppu->_obsel.nameSelect, 0b00);
-	cr_assert_eq(pair.second.ppu->_obsel.baseSelect, 0b111);
+	cr_assert_eq(pair.second.ppu->_obsel.nameBaseSelect, 0b111);
 }
 
 Test(PPU_write, oamaddl_data_full)

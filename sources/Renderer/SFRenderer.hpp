@@ -24,7 +24,7 @@ namespace ComSquare::Renderer
 	};
 
 	class SFRenderer : public IRenderer {
-	private:
+ 	protected:
 		//! @brief The Renderer for the window.
 		sf::RenderWindow _window;
 		//! @brief Video Mode containing the height and width of the window.
@@ -45,9 +45,9 @@ namespace ComSquare::Renderer
 		//! @param X horizontal index.
 		//! @param Y vertical index.
 		//! @param rgba The color of the pixel.
-		void putPixel(unsigned y, unsigned x, uint32_t rgba) override ;
+		void putPixel(unsigned y, unsigned x, uint32_t rgba) override;
 		//! @brief Get the inputs from the Window
-		void getEvents();
+		virtual void getEvents();
 		//! @brief Constructor that return the window component of the SFML.
 		//! @param height height of the window.
 		//! @param width width of the window.

@@ -11,7 +11,6 @@ namespace ComSquare::Debugger
 		: CPU::CPU(basicCPU), _renderer(600, 1000, 60), _snes(snes)
 	{
 		this->_renderer.setWindowName("CPU's Debugger");
-		std::cout << "CPU debugging enabled!" << std::endl;
 	}
 
 	unsigned CPUDebug::update()

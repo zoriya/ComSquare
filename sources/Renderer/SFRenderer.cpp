@@ -28,7 +28,7 @@ namespace ComSquare::Renderer
 
 	SFRenderer::~SFRenderer()
 	{
-		delete []this->_pixelBuffer;
+		delete [] this->_pixelBuffer;
 	}
 
 

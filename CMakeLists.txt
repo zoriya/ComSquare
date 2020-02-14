@@ -119,7 +119,11 @@ add_executable(ComSquare
         sources/CPU/Instructions/InternalInstruction.cpp
         sources/Ram/ExtendedRam.cpp
         sources/Ram/ExtendedRam.hpp
-sources/Debugger/DebugCpu.cpp sources/Debugger/DebugCpu.hpp)
+        sources/Debugger/DebugCpu.cpp
+        sources/Debugger/DebugCpu.hpp
+        sources/Renderer/TGUIRenderer.cpp
+        sources/Renderer/TGUIRenderer.h
+)
 
 target_link_libraries(ComSquare
         sfml-graphics
@@ -127,4 +131,5 @@ target_link_libraries(ComSquare
         sfml-system
         sfml-audio
         sfml-network
+        tgui
 )

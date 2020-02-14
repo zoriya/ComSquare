@@ -8,6 +8,7 @@
 #include "../CPU/CPU.hpp"
 #include "../Renderer/SFRenderer.hpp"
 #include "../SNES.hpp"
+#include "../Renderer/TGUIRenderer.h"
 
 namespace ComSquare::Debugger
 {
@@ -15,7 +16,7 @@ namespace ComSquare::Debugger
 	class CPUDebug : public CPU::CPU {
 	private:
 		//! @brief The debug window.
-		Renderer::SFRenderer _renderer;
+		Renderer::TGUIRenderer _renderer;
 		//! @brief If this is set to true, the execution of the CPU will be paused.
 		bool _isPaused = true;
 		//! @brief A reference to the snes (to disable the debugger).
