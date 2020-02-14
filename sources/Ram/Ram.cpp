@@ -12,6 +12,7 @@ namespace ComSquare::Ram
 		: _size(size)
 	{
 		this->_data = new uint8_t[size];
+		std::memset(this->_data, 0, size * sizeof(uint8_t));
 	}
 
 	Ram::~Ram()
