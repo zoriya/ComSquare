@@ -34,8 +34,6 @@ namespace ComSquare::CPU
 		};
 		union {
 			struct {
-				//! @brief The Program Bank Register;
-				uint8_t pbr;
 				//! @brief The Program Counter;
 				union {
 					struct {
@@ -44,6 +42,8 @@ namespace ComSquare::CPU
 					};
 					uint16_t pc;
 				};
+				//! @brief The Program Bank Register;
+				uint8_t pbr;
 			};
 			//! @brief The current Program Address Counter (does not exist in a snes but is useful here).
 			uint24_t pac;
@@ -260,7 +260,34 @@ namespace ComSquare::CPU
 		LDY_ABSY = 0xBC,
 		LDY_DPY = 0xB4,
 
-		SEP = 0xE2
+		SEP = 0xE2,
+
+		REP = 0xC2,
+
+		PHA = 0x48,
+		PHB = 0x8B,
+		PHD = 0x0B,
+		PHK = 0x4B,
+		PHP = 0x08,
+		PHX = 0xDA,
+		PHY = 0x5A,
+
+		PLA = 0x68,
+		PLB = 0xAB,
+		PLD = 0x2B,
+		PLP = 0x28,
+		PLX = 0xFA,
+		PLY = 0x7A,
+
+		JSR_ABS = 0x20,
+		JSR_ABSXi = 0xFC,
+
+		JSL = 0x22,
+
+		CLC = 0x18,
+		CLI = 0x58,
+		CLD = 0xD8,
+		CLV = 0xB8
 	};
 
 	//! @brief The main CPU
@@ -311,7 +338,7 @@ namespace ComSquare::CPU
 		//! @brief 2 bytes are pulled from the <abs exp> to form the effective address.
 		uint24_t _getAbsoluteIndirectAddr();
 		//! @brief The <abs exp> is added with X, then 2 bytes are pulled from that address to form the new location.
-		uint24_t _getAbsoluteIndexedIndirectAddr();
+		uint24_t _getAbsoluteIndirectIndexedByXAddr();
 		//! @brief 2 bytes are pulled from the direct page address to form the 16-bit address. It is combined with DBR to form a 24-bit effective address.
 		uint24_t _getDirectIndirectAddr();
 		//! @brief 3 bytes are pulled from the direct page address to form an effective address.
@@ -360,7 +387,47 @@ namespace ComSquare::CPU
 		//! @brief Load the Y index register from memory.
 		void LDY(uint24_t addr);
 		//! @brief Set status bits.
-		void SEP(uint24_t addr);
+		void SEP(uint24_t valueAddr);
+		//! @brief Reset status bits.
+		void REP(uint24_t valueAddr);
+		//! @brief Jump to subroutine
+		void JSR(uint24_t addr);
+		//! @brief Jump to subroutine (long)
+		void JSL(uint24_t addr);
+		//! @brief Push the accumulator to the stack.
+		void PHA();
+		//! @brief Push the data bank register to the stack.
+		void PHB();
+		//! @brief Push the direct page register to the stack.
+		void PHD();
+		//! @brief Push the program bank register to the stack.
+		void PHK();
+		//! @brief Push the processor status register to the stack.
+		void PHP();
+		//! @brief Push the x index register to the stack.
+		void PHX();
+		//! @brief Push the y index register to the stack.
+		void PHY();
+		//! @brief Pull the accumulator to the stack.
+		void PLA();
+		//! @brief Pull the data bank register to the stack.
+		void PLB();
+		//! @brief Pull the direct page register to the stack.
+		void PLD();
+		//! @brief Pull the processor status register to the stack.
+		void PLP();
+		//! @brief Pull the x index register to the stack.
+		void PLX();
+		//! @brief Pull the y index register to the stack.
+		void PLY();
+		//! @brief Clear the carry flag.
+		void CLC();
+		//! @brief Clear the Interrupt Disable flag.
+		void CLI();
+		//! @brief Clear the decimal flag.
+		void CLD();
+		//! @brief Clear the overflow flag.
+		void CLV();
 	public:
 		explicit CPU(std::shared_ptr<Memory::MemoryBus> bus, Cartridge::Header &cartridgeHeader);
 		CPU(const CPU &) = default;

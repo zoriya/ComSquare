@@ -279,6 +279,33 @@ namespace ComSquare::CPU
 
 		case Instructions::SEP: this->SEP(this->_getImmediateAddr()); return 3;
 
+		case Instructions::REP: this->REP(this->_getImmediateAddr()); return 3;
+
+		case Instructions::PHA: this->PHA(); return 3 + !this->_registers.p.m;
+		case Instructions::PHB: this->PHB(); return 3;
+		case Instructions::PHD: this->PHD(); return 4;
+		case Instructions::PHK: this->PHK(); return 3;
+		case Instructions::PHP: this->PHP(); return 3;
+		case Instructions::PHX: this->PHX(); return 3 + !this->_registers.p.x_b;
+		case Instructions::PHY: this->PHY(); return 3 + !this->_registers.p.x_b;
+
+		case Instructions::PLA: this->PLA(); return 4 + !this->_registers.p.m;
+		case Instructions::PLB: this->PLB(); return 4;
+		case Instructions::PLD: this->PLD(); return 5;
+		case Instructions::PLP: this->PLP(); return 4;
+		case Instructions::PLX: this->PLX(); return 4 + !this->_registers.p.x_b;
+		case Instructions::PLY: this->PLY(); return 4 + !this->_registers.p.x_b;
+
+		case Instructions::JSR_ABS:   this->JSR(this->_getAbsoluteAddr()); 				   return 6;
+		case Instructions::JSR_ABSXi: this->JSR(this->_getAbsoluteIndirectIndexedByXAddr()); return 8;
+
+		case Instructions::JSL: this->JSR(this->_getAbsoluteLongAddr()); return 8;
+
+		case Instructions::CLC: this->CLC(); return 2;
+		case Instructions::CLI: this->CLI(); return 2;
+		case Instructions::CLD: this->CLD(); return 2;
+		case Instructions::CLV: this->CLV(); return 2;
+
 		default:
 			throw InvalidOpcode("CPU", opcode);
 		}
@@ -291,18 +318,18 @@ namespace ComSquare::CPU
 
 	void CPU::_push(uint16_t data)
 	{
+		this->_bus->write(this->_registers.s--, data >> 8u);
 		this->_bus->write(this->_registers.s--, data);
-		this->_bus->write(this->_registers.s--, data << 8u);
 	}
 
 	uint8_t CPU::_pop()
 	{
-		return this->_bus->read(this->_registers.s++);
+		return this->_bus->read(++this->_registers.s);
 	}
 
 	uint16_t CPU::_pop16()
 	{
-		return this->_bus->read(this->_registers.s++) + (this->_bus->read(this->_registers.s++) << 8u);
+		return this->_bus->read(++this->_registers.s) + (this->_bus->read(++this->_registers.s) << 8u);
 	}
 
 	////////////////////////////////////////////////////////////////////
@@ -345,7 +372,7 @@ namespace ComSquare::CPU
 		uint24_t base = this->_bus->read(dp);
 		base += this->_bus->read(dp + 1) << 8u;
 		base += this->_registers.dbr << 16u;
-		if ((base & 0xF0000000u) == (((base + this->_registers.y) & 0xF0000000u)))
+		if ((base & 0x80000000u) == (((base + this->_registers.y) & 0x80000000u)))
 			this->_hasIndexCrossedPageBoundary = true;
 		return base + this->_registers.y;
 	}
@@ -388,7 +415,7 @@ namespace ComSquare::CPU
 		uint16_t abs = this->_bus->read(this->_registers.pac++);
 		abs += this->_bus->read(this->_registers.pac++) << 8u;
 		uint24_t effective = abs + (this->_registers.dbr << 16u);
-		if ((effective & 0xF0000000u) == (((effective + this->_registers.x) & 0xF0000000u)))
+		if ((effective & 0x80000000u) == (((effective + this->_registers.x) & 0x80000000u)))
 			this->_hasIndexCrossedPageBoundary = true;
 		return effective + this->_registers.x;
 	}
@@ -398,7 +425,7 @@ namespace ComSquare::CPU
 		uint16_t abs = this->_bus->read(this->_registers.pac++);
 		abs += this->_bus->read(this->_registers.pac++) << 8u;
 		uint24_t effective = abs + (this->_registers.dbr << 16u);
-		if ((effective & 0xF0000000u) == (((effective + this->_registers.y) & 0xF0000000u)))
+		if ((effective & 0x80000000u) == (((effective + this->_registers.y) & 0x80000000u)))
 			this->_hasIndexCrossedPageBoundary = true;
 		return effective + this->_registers.y;
 	}
@@ -436,7 +463,7 @@ namespace ComSquare::CPU
 		return effective;
 	}
 
-	uint24_t CPU::_getAbsoluteIndexedIndirectAddr()
+	uint24_t CPU::_getAbsoluteIndirectIndexedByXAddr()
 	{
 		uint24_t abs = this->_bus->read(this->_registers.pac++);
 		abs += this->_bus->read(this->_registers.pac++) << 8u;
