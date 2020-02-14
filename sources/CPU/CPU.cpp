@@ -279,6 +279,8 @@ namespace ComSquare::CPU
 
 		case Instructions::SEP: this->SEP(this->_getImmediateAddr()); return 3;
 
+		case Instructions::REP: this->REP(this->_getImmediateAddr()); return 3;
+
 		default:
 			throw InvalidOpcode("CPU", opcode);
 		}

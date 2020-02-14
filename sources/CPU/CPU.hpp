@@ -260,7 +260,9 @@ namespace ComSquare::CPU
 		LDY_ABSY = 0xBC,
 		LDY_DPY = 0xB4,
 
-		SEP = 0xE2
+		SEP = 0xE2,
+
+		REP = 0xC2
 	};
 
 	//! @brief The main CPU
@@ -360,7 +362,9 @@ namespace ComSquare::CPU
 		//! @brief Load the Y index register from memory.
 		void LDY(uint24_t addr);
 		//! @brief Set status bits.
-		void SEP(uint24_t addr);
+		void SEP(uint24_t valueAddr);
+		//! @brief Reset status bits.
+		void REP(uint24_t valueAddr);
 	public:
 		explicit CPU(std::shared_ptr<Memory::MemoryBus> bus, Cartridge::Header &cartridgeHeader);
 		CPU(const CPU &) = default;
