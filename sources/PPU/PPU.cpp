@@ -39,8 +39,12 @@ namespace ComSquare::PPU
 			this->_oamadd.oamaddh = data;
 			break;
 		case ppuRegisters::oamdata:
-			//! @brief not implemented yet.
 			this->_oamdata = data;
+			throw InvalidAddress("oamdata", addr);
+			std::cout << "oamdata" << std::endl;
+			// the oamAddress have to be calculated if fblank or not (not implemented)
+			_oamram.write(this->_oamadd.oamAddress, this->_oamdata);
+			this->_oamadd.oamAddress++;
 			break;
 		case ppuRegisters::bgmode:
 			this->_bgmode.raw = data;
@@ -73,7 +77,17 @@ namespace ComSquare::PPU
 			break;
 		case ppuRegisters::vmain:
 			this->_vmain.raw = data;
-			break;
+			switch (this->_vmain.incrementAmount) {
+			case 0b00:
+				this->_incrementAmount = 1;
+				break;
+			case 0b01:
+				this->_incrementAmount = 32;
+				break;
+			case 0b10:
+			case 0b11:
+				this->_incrementAmount = 128;
+			}
 		case ppuRegisters::vmaddl:
 			this->_vmadd.vmaddl = data;
 			break;
@@ -81,20 +95,23 @@ namespace ComSquare::PPU
 			this->_vmadd.vmaddh = data;
 			break;
 		case ppuRegisters::vmdatal:
+			throw InvalidAddress("vmdata", addr);
+			std::cout << "vmdatal" << std::endl;
 			if (!this->_inidisp.fblank) {
 				this->_vmdata.vmdatal = data;
-				//this->_vram[getVramAddress()] = this->_vmdata.vmdata;
+				this->_vram.write(getVramAddress(), this->_vmdata.vmdata);
 			}
 			if (!this->_vmain.incrementMode)
-				this->_vmadd.vmadd += this->_vmain.incrementAmount;
+				this->_vmadd.vmadd += this->_incrementAmount;
 			break;
 		case ppuRegisters::vmdatah:
+			std::cout << "vmdatah" << std::endl;
 			if (!this->_inidisp.fblank) {
 				this->_vmdata.vmdatah = data;
-				//this->_vram[getVramAddress()] = this->_vmdata.vmdata;
+				this->_vram.write(getVramAddress(), this->_vmdata.vmdata);
 			}
 			if (this->_vmain.incrementMode)
-				this->_vmadd.vmadd += this->_vmain.incrementAmount;
+				this->_vmadd.vmadd += this->_incrementAmount;
 			break;
 		case ppuRegisters::m7sel:
 			this->_m7sel.raw = data;
@@ -104,13 +121,16 @@ namespace ComSquare::PPU
 			this->_isLowByte = true;
 			break;
 		case ppuRegisters::cgdata:
+			throw InvalidAddress("cgdata", addr);
 			if (this->_isLowByte) {
+				std::cout << "cgadatal" << std::endl;
 				this->_cgdata.cgdatal = data;
-				this->_bus->write(this->_cgadd, this->_cgdata.cgdatal);
+				this->_cgram.write(this->_cgadd, this->_cgdata.raw);
 			}
 			else {
+				std::cout << "cgadatah" << std::endl;
 				this->_cgdata.cgdatah = data;
-				this->_bus->write(this->_cgadd, this->_cgdata.cgdatah);
+				this->_cgram.write(this->_cgadd, this->_cgdata.raw);
 			}
 			this->_isLowByte = !this->_isLowByte;
 			this->_cgadd++;
@@ -183,25 +203,31 @@ namespace ComSquare::PPU
 	void PPU::update(unsigned cycles)
 	{
 		(void)cycles;
-		int inc = getVramAddress();
+		int inc = 0;
 		//uint32_t pixelTmp = 0xFFFFFFFF;
 		//pixelTmp |= this->_inidisp.brightness;
+		std::cout << "update" << std::endl;
 		if (!this->_inidisp.fblank) {
 			for (int x = 0; x < 448; x++) {
 				for (int y = 0; y < 512; y++) {
-					//this->_renderer.putPixel(x, y, ((uint32_t)_vram[inc++] << 8U) + 0xFFU);
-					this->_renderer.putPixel(x, y, (uint32_t)this->_bus->read(inc++));
+					if (inc == 0xFA00)
+						inc = 0;
+					//std::cout << "holy" << std::endl;
+					this->_renderer.putPixel(x, y, (uint32_t)this->_vram.read(inc++));
 				}
 			}
 		}
+		std::cout << "cgadata2" << std::endl;
 		this->_renderer.drawScreen();
 	}
 
 	PPU::PPU(const std::shared_ptr<Memory::MemoryBus> &bus, Renderer::IRenderer &renderer):
 		_renderer(renderer),
-		_bus(std::move(bus))
+		_bus(std::move(bus)),
+		_vram(64000),
+		_oamram(544),
+		_cgram(512)
 	{
 		this->_isLowByte = true;
-		//_vram = new uint16_t[32000];
 	}
 }

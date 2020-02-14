@@ -23,7 +23,7 @@ namespace ComSquare::Ram
 	uint16_t ExtendedRam::read(uint24_t addr)
 	{
 		if (addr >= this->_size)
-			throw InvalidAddress("ExtendedRam Write", addr);
+			throw InvalidAddress("ExtendedRam Read", addr);
 		return this->_data[addr];
 	}
 

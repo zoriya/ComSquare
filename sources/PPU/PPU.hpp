@@ -9,6 +9,7 @@
 #include "../Memory/IMemory.hpp"
 #include "../Memory/MemoryBus.hpp"
 #include "../Renderer/IRenderer.hpp"
+#include "../Ram/ExtendedRam.hpp"
 
 //#define max2BitTiles		4096
 //#define max4BitTiles		2048
@@ -216,75 +217,100 @@ namespace ComSquare::PPU
 		//! @brief INIDISP Register (F-blank and Brightness)
 		union {
 			struct {
+				//! @brief Store the brightness value (F = max, 0 = off)
 				uint8_t brightness: 4;
 				bool _: 3;
+				//! @brief Store the FBlank status
 				bool fblank: 1;
 			};
-			uint8_t raw;
+			uint8_t raw = 0;
 		} _inidisp;
 		//! @brief OBSEL Register (Object Size and Character Address)
 		union {
 			struct {
-				uint8_t baseSelect: 3;
-				bool nameSelect: 2;
+				//! @brief Stores the location of the first sprite table
+				uint8_t nameBaseSelect: 3;
+				//! @brief Stores the offset of the second sprite table
+				uint8_t nameSelect: 2;
+				//! @brief Stores the resolution preset of the sprites
 				uint8_t objectSize: 3;
 			};
-			uint8_t raw;
+			uint8_t raw = 0;
 		} _obsel;
 		//! @brief OAMADD Register (OAM Address and Obj Priority)
 		union {
 			struct {
+				//! @brief Stores the address to write with OAMDATA register
 				uint32_t oamAddress: 9;
 				uint8_t _: 6;
+				//! @brief When Obj Priority activation bit is set, an Obj other than Sprite 0 may be given priority
 				bool objPriorityActivationBit: 1;
 			};
 			struct {
+				//! @brief Stores the data written on the OAMADDL register
 				uint8_t oamaddl;
+				//! @brief Stores the data written on the OAMADDH register
 				uint8_t oamaddh;
 			};
-			uint32_t raw;
+			uint32_t raw = 0;
 		} _oamadd;
 		//! @brief OAMDATA Register (Data for OAM write)
 		uint8_t _oamdata;
 		//! @brief BGMODE Register (OAM Address and Obj Priority)
 		union {
 			struct {
+				//! @brief Stores the current BG Mode (0 - 7)
 				uint8_t bgMode: 3;
+				//! @brief When Mode 1 BG3 priority bit is set the BG3 is draw
 				bool mode1Bg3PriorityBit: 1;
+				//! @brief When The bit is set character size will 16x16 otherwise it is 8x8
 				bool characterSizeBg1: 1;
+				//! @brief When The bit is set character size will 16x16 otherwise it is 8x8
 				bool characterSizeBg2: 1;
+				//! @brief When The bit is set character size will 16x16 otherwise it is 8x8
 				bool characterSizeBg3: 1;
+				//! @brief When The bit is set character size will 16x16 otherwise it is 8x8
 				bool characterSizeBg4: 1;
 			};
-			uint8_t raw;
+			uint8_t raw = 0;
 		} _bgmode;
 		//! @brief MOSAIC Register (Screen Pixelation)
 		union {
 			struct {
+				//! @brief Apply mosaic to the BG1
 				bool affectBg1: 1;
+				//! @brief Apply mosaic to the BG2
 				bool affectBg2: 1;
+				//! @brief Apply mosaic to the BG3
 				bool affectBg3: 1;
+				//! @brief Apply mosaic to the BG4
 				bool affectBg4: 1;
+				//! @brief Stores the pixel size (0 = 1x1, F = 16x16)
 				uint8_t pixelSize: 4;
 			};
-			uint8_t raw;
+			uint8_t raw = 0;
 		} _mosaic;
 		//! @brief BGSC Registers (BG Tilemap Address and Size)
 		union {
 			struct {
+				//! @brief When tilemap horizontal mirroring bit is set the tilemap is mirrored horizontally
 				bool tilemapHorizontalMirroring: 1;
+				//! @brief When tilemap vertically mirroring bit is set the tilemap is mirrored vertically
 				bool tilemapVerticalMirroring: 1;
+				//! @brief Address of the tilemap Address (0, 0)
 				uint8_t tilemapAddress: 6;
 			};
-			uint8_t raw;
+			uint8_t raw = 0;
 		} _bgsc[4];
 		//! @brief BGNBA Registers (BG1/2/3/4 Chr Address)
 		union {
 			struct {
+				//! @brief The address let us know where to search for BG1/3 characters
 				uint8_t baseAddressBg1a3: 4;
+				//! @brief The address let us know where to search for BG2/4 characters
 				uint8_t baseAddressBg2a4: 4;
 			};
-			uint8_t raw;
+			uint8_t raw = 0;
 		} _bgnba[2];
 		//! @brief BGXXOFS Register (BG1/2/3/4 Horizontal and Vertical Scrolls)
 		union {
@@ -313,6 +339,8 @@ namespace ComSquare::PPU
 			};
 			uint8_t raw;
 		} _vmain;
+		//! @brief Store the real value of the increment Amount (1, 32, 128) instead of 0,1 or 2
+		uint8_t _incrementAmount;
 		//! @brief VMADD Register (VRAM Address)
 		union {
 			struct {
@@ -518,7 +546,9 @@ namespace ComSquare::PPU
 		} mpy;
 		Renderer::IRenderer &_renderer;
 		std::shared_ptr<Memory::MemoryBus> _bus;
-		uint16_t *_vram;
+		Ram::ExtendedRam _vram;
+		Ram::ExtendedRam _oamram;
+		Ram::ExtendedRam _cgram;
 	public:
 		PPU(const std::shared_ptr<Memory::MemoryBus> &bus, Renderer::IRenderer &renderer);
 		PPU(const PPU &) = default;

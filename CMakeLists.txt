@@ -60,7 +60,10 @@ add_executable(unit_tests
         tests/CPU/Math/testADC.cpp
         tests/CPU/testStore.cpp
         sources/CPU/Instructions/InternalInstruction.cpp
-        tests/CPU/testInternal.cpp)
+        tests/CPU/testInternal.cpp
+        sources/Ram/ExtendedRam.cpp
+        sources/Ram/ExtendedRam.hpp
+)
 
 # include criterion & coverage
 target_link_libraries(unit_tests criterion -lgcov)
@@ -112,7 +115,11 @@ add_executable(ComSquare
         sources/Exceptions/InvalidOpcode.hpp
         sources/CPU/Instructions/Interrupts.cpp
         sources/CPU/Instructions/MathematicalOperations.cpp
-        sources/CPU/Instructions/MemoryInstructions.cpp sources/CPU/Instructions/InternalInstruction.cpp sources/Ram/ExtendedRam.cpp sources/Ram/ExtendedRam.hpp)
+        sources/CPU/Instructions/MemoryInstructions.cpp
+        sources/CPU/Instructions/InternalInstruction.cpp
+        sources/Ram/ExtendedRam.cpp
+        sources/Ram/ExtendedRam.hpp
+)
 
 target_link_libraries(ComSquare
         sfml-graphics
