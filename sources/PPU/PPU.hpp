@@ -340,7 +340,7 @@ namespace ComSquare::PPU
 			uint8_t raw;
 		} _vmain;
 		//! @brief Store the real value of the increment Amount (1, 32, 128) instead of 0,1 or 2
-		uint8_t _incrementAmount;
+		uint8_t _incrementAmount = 1;
 		//! @brief VMADD Register (VRAM Address)
 		union {
 			struct {
