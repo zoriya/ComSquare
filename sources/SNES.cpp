@@ -33,7 +33,6 @@ namespace ComSquare
 
 	void SNES::disableCPUDebugging()
 	{
-		std::cout << "Disabling CPU debugger." << std::endl;
 		this->cpu = std::make_shared<CPU::CPU>(*this->cpu);
 	}
 

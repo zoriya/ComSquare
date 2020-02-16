@@ -9,6 +9,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <QtCore/QTimer>
 #include <QtWidgets/QMainWindow>
+#include <QtWidgets/QGridLayout>
 #include "../IRenderer.hpp"
 #include "../SFRenderer.hpp"
 #include "QtWidgetSFML.hpp"
@@ -22,6 +23,10 @@ namespace ComSquare::Renderer
 		SNES &_snes;
 		void _onUpdate() override;
 	public:
+		//! @brief Action called when clicking on the enable CPU button.
+		void enableDebugCPU();
+		//! @brief Action called when clicking on the reset button.
+		void reset();
 		QtFullSFML(SNES &snes, QWidget* parent, const QPoint& position, const QSize& size, int frameRate = 0);
 		QtFullSFML(const QtFullSFML &) = delete;
 		QtFullSFML &operator=(const QtFullSFML &) = delete;

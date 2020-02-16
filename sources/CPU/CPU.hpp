@@ -363,8 +363,6 @@ namespace ComSquare::CPU
 		//! @return The number of CPU cycles that the instruction took.
 		virtual unsigned _executeInstruction(uint8_t opcode);
 
-		//! @brief Reset interrupt - Called on boot and when the reset button is pressed.
-		void RESB();
 		//! @brief Break instruction - Causes a software break. The PC is loaded from a vector table.
 		void BRK();
 		//! @brief Return from Interrupt - Used to return from a interrupt handler.
@@ -446,6 +444,9 @@ namespace ComSquare::CPU
 		//! @param data The new value of the register.
 		//! @throw InvalidAddress will be thrown if the address is more than $1F (the number of register).
 		void write(uint24_t addr, uint8_t data) override;
+
+		//! @brief Reset interrupt - Called on boot and when the reset button is pressed.
+		void RESB();
 	};
 }
 
