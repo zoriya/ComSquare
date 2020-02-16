@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="resources">
+    <file>Logo.png</file>
+    <file>icons/play.svg</file>
+  </qresource>
+</RCC>

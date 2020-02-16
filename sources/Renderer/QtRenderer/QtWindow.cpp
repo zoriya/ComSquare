@@ -3,12 +3,14 @@
 //
 
 #include "QtWindow.hpp"
+#include <QIcon>
 
 namespace ComSquare::Renderer
 {
 	QtWindow::QtWindow(unsigned int height, unsigned int width) :
 		_frame(), _width(width), _height(height)
 	{
+		this->_frame.setWindowIcon(QIcon(":/resources/Logo.png"));
 		this->_frame.show();
 	}
 

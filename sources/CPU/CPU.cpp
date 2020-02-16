@@ -190,14 +190,12 @@ namespace ComSquare::CPU
 		unsigned cycles = 0;
 
 		for (int i = 0; i < 0xFF; i++)
-			cycles += this->_executeInstruction();
+			cycles += this->_executeInstruction(this->_bus->read(this->_registers.pac++));
 		return cycles;
 	}
 
-	unsigned CPU::_executeInstruction()
+	unsigned CPU::_executeInstruction(uint8_t opcode)
 	{
-		uint8_t opcode = this->_bus->read(this->_registers.pc);
-
 		this->_hasIndexCrossedPageBoundary = false;
 
 		switch (opcode) {

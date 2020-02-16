@@ -9,19 +9,26 @@
 #include "../Renderer/SFRenderer.hpp"
 #include "../SNES.hpp"
 #include "../Renderer/QtRenderer/QtWindow.hpp"
-#include "../../Ui/ui_cpu.h"
+#include "../../ui/ui_cpu.h"
 
 namespace ComSquare::Debugger
 {
 	//! @brief A custom CPU with a window that show it's registers and the disassembly.
-	class CPUDebug : public CPU::CPU, Ui::CPUView {
+	class CPUDebug : public CPU::CPU, public QMainWindow {
 	private:
 		//! @brief A widget that contain the whole UI.
-		QWidget _widget;
+		Ui::CPUView _ui;
 		//! @brief If this is set to true, the execution of the CPU will be paused.
 		bool _isPaused = true;
 		//! @brief A reference to the snes (to disable the debugger).
 		SNES &_snes;
+		//! @brief Reimplement the basic instruction execution method to log instructions inside the logger view.
+		unsigned _executeInstruction(uint8_t opcode) override;
+		//! @brief Get a printable string representing an instruction.
+		std::string _getInstructionString(uint8_t opcode);
+	public slots:
+		//! @brief Pause/Resume the CPU.
+		void pause();
 	public:
 		//! @brief Convert a basic CPU to a debugging CPU.
 		explicit CPUDebug(ComSquare::CPU::CPU &cpu, SNES &snes);

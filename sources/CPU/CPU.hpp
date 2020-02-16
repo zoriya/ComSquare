@@ -361,7 +361,7 @@ namespace ComSquare::CPU
 
 		//! @brief Execute a single instruction.
 		//! @return The number of CPU cycles that the instruction took.
-		unsigned _executeInstruction();
+		virtual unsigned _executeInstruction(uint8_t opcode);
 
 		//! @brief Reset interrupt - Called on boot and when the reset button is pressed.
 		void RESB();

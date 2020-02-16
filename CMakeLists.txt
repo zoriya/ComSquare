@@ -129,7 +129,8 @@ add_executable(ComSquare
         sources/Renderer/QtRenderer/QtSFML.hpp
         sources/Renderer/QtRenderer/QtWidgetSFML.cpp
         sources/Renderer/QtRenderer/QtWidgetSFML.hpp
-        Ui/cpu.ui
+        ui/cpu.ui
+        resources/appResources.qrc
         sources/Renderer/QtRenderer/QtWindow.cpp
         sources/Renderer/QtRenderer/QtWindow.hpp
 )
