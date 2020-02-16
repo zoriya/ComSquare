@@ -37,6 +37,8 @@ namespace ComSquare::Renderer
 		//! @brief The texture to render the array of pixels
 		sf::Texture _texture;
 	public:
+		//! @brief Tells to the program if the window has been closed, and therefore if he should stop
+		bool shouldExit = false;
 		//! @brief Set a new name to the window, if there is already a name it will be overwrite.
 		//! @param newWindowName new title for the window.
 		void setWindowName(std::string newWindowName) override;

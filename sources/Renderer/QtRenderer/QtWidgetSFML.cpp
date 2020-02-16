@@ -7,7 +7,7 @@
 namespace ComSquare::Renderer
 {
 	QtWidgetSFML::QtWidgetSFML(QWidget *parent, const QPoint &position, const QSize &size, int frameRate) :
-		QWidget(parent)
+		QWidget(parent), SFRenderer(size.height(), size.width())
 	{
 		this->setAttribute(Qt::WA_PaintOnScreen);
 		this->setAttribute(Qt::WA_OpaquePaintEvent);
@@ -29,7 +29,7 @@ namespace ComSquare::Renderer
 			#ifdef Q_WS_X11
 				XFlush(QX11Info::display());
 			#endif
-			this->sf::RenderWindow::create(this->winId());
+			this->_window.create(this->winId());
 			this->_onInit();
 
 			connect(&_timer, SIGNAL(timeout()), this, SLOT(repaint()));
@@ -45,9 +45,8 @@ namespace ComSquare::Renderer
 
 	void QtWidgetSFML::paintEvent(QPaintEvent *)
 	{
-		this->clear();
 		this->_onUpdate();
-		this->display();
+		this->drawScreen();
 	}
 
 	void QtWidgetSFML::_onInit(){ }

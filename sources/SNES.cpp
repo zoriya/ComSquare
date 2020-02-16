@@ -18,7 +18,6 @@ namespace ComSquare
 		sram(new Ram::Ram(this->cartridge->header.sramSize))
 	{
 		bus->mapComponents(*this);
-		renderer.setWindowName(this->cartridge->header.gameName);
 	}
 
 	void SNES::enableCPUDebugging()

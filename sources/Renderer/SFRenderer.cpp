@@ -14,20 +14,25 @@ namespace ComSquare::Renderer
 {
 	SFRenderer::SFRenderer(unsigned int height, unsigned int width)
 	{
-		this->shouldExit = false;
 		this->_videoMode = {width, height, 32};
 		this->_texture.create(width, height);
 		this->_sprite.setTexture(this->_texture);
 		this->_pixelBuffer = new sf::Color[height * width];
 	}
 
-	void SFRenderer::createWindow(SNES &, int maxFPS)
+	void SFRenderer::createWindow(SNES &snes, int maxFPS)
 	{
 		sf::Image icon;
 		this->_window.create(this->_videoMode, "ComSquare Emulator", sf::Style::Default);
-		if (icon.loadFromFile("../ressources/Logo.png"))
+		if (icon.loadFromFile("resources/Logo.png"))
 			this->_window.setIcon(314, 314, icon.getPixelsPtr());
 		this->_window.setFramerateLimit(maxFPS);
+		this->setWindowName(snes.cartridge->header.gameName);
+
+		while (!this->shouldExit) {
+			snes.update();
+			this->getEvents();
+		}
 	}
 
 	SFRenderer::~SFRenderer()

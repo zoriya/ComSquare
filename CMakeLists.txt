@@ -137,6 +137,5 @@ target_link_libraries(ComSquare
         sfml-system
         sfml-audio
         sfml-network
-        tgui
         Qt5::Widgets
 )

@@ -4,7 +4,7 @@
 
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QFrame>
-#include <QCloseEvent>
+#include <QIcon>
 #include <iostream>
 #include "QtSFML.hpp"
 
@@ -15,24 +15,37 @@
 
 namespace ComSquare::Renderer
 {
-	QtSFML::QtSFML(QApplication &app, unsigned int height, unsigned int width) :
-		SFRenderer(height, width), _app(app)
+	QtSFML::QtSFML(QApplication &app, unsigned int h, unsigned int w) :
+		_app(app), _sfWidget(nullptr), width(w), height(h)
 	{ }
 
 	void QtSFML::createWindow(SNES &snes, int maxFPS)
 	{
-		QFrame *frame = new QFrame();
-		frame->show();
-		MainQTWidget *sfView = new MainQTWidget(snes, frame, QPoint(0, 0), QSize(this->_videoMode.width, this->_videoMode.height), maxFPS);
-		sfView->show();
+		this->frame = new QFrame();
+		this->setWindowName(snes.cartridge->header.gameName);
+		this->frame->show();
+		this->_sfWidget = new QtFullSFML(snes, frame, QPoint(0, 0), QSize(this->width, this->height), maxFPS);
+		this->_sfWidget->show();
 	}
 
-	MainQTWidget::MainQTWidget(SNES &snes, QWidget *parent, const QPoint &position, const QSize &size, int frameRate) :
+	void QtSFML::setWindowName(std::string newWindowName)
+	{
+		this->frame->setWindowTitle((newWindowName + " - ComSquare").c_str());
+	}
+
+	void QtSFML::putPixel(unsigned y, unsigned x, uint32_t rgba)
+	{
+		this->_sfWidget->putPixel(y, x, rgba);
+	}
+
+	void QtSFML::drawScreen() { }
+
+	QtFullSFML::QtFullSFML(SNES &snes, QWidget *parent, const QPoint &position, const QSize &size, int frameRate) :
 		QtWidgetSFML(parent, position, size, frameRate),
 		_snes(snes)
 	{ }
 
-	void MainQTWidget::_onUpdate()
+	void QtFullSFML::_onUpdate()
 	{
 		this->_snes.update();
 	}
