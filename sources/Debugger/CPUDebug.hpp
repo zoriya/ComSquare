@@ -2,8 +2,8 @@
 // Created by anonymus-raccoon on 2/14/20.
 //
 
-#ifndef COMSQUARE_DEBUGCPU_HPP
-#define COMSQUARE_DEBUGCPU_HPP
+#ifndef COMSQUARE_CPUDEBUG_HPP
+#define COMSQUARE_CPUDEBUG_HPP
 
 #include "../CPU/CPU.hpp"
 #include "../Renderer/SFRenderer.hpp"
@@ -43,11 +43,11 @@ namespace ComSquare::Debugger
 		explicit CPUDebug(ComSquare::CPU::CPU &cpu, SNES &snes);
 		CPUDebug(const CPUDebug &) = delete;
 		CPUDebug &operator=(const CPUDebug &) = delete;
-		~CPUDebug() = default;
+		~CPUDebug() override = default;
 
 		//! @brief Override the basic cpu's update to allow pausing of the CPU only.
 		unsigned update() override;
 	};
 }
 
-#endif //COMSQUARE_DEBUGCPU_HPP
+#endif //COMSQUARE_CPUDEBUG_HPP

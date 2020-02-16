@@ -43,6 +43,10 @@ namespace ComSquare::Renderer
 		cpuDebugger->setShortcut(Qt::Key_F1);
 		QMainWindow::connect(cpuDebugger, &QAction::triggered, this->_sfWidget.get(), &QtFullSFML::enableDebugCPU);
 		debugger->addAction(cpuDebugger);
+		QAction *ramViewer = new QAction("Ram viewer", &this->_window);
+		ramViewer->setShortcut(Qt::Key_F2);
+		QMainWindow::connect(ramViewer, &QAction::triggered, this->_sfWidget.get(), &QtFullSFML::enableRamViewer);
+		debugger->addAction(ramViewer);
 
 		this->_window.show();
 	}
@@ -77,5 +81,10 @@ namespace ComSquare::Renderer
 	void QtFullSFML::reset()
 	{
 		this->_snes.cpu->RESB();
+	}
+
+	void QtFullSFML::enableRamViewer()
+	{
+		this->_snes.enableRamViewer();
 	}
 }

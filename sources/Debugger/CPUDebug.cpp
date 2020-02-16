@@ -2,7 +2,7 @@
 // Created by anonymus-raccoon on 2/14/20.
 //
 
-#include "DebugCpu.hpp"
+#include "CPUDebug.hpp"
 #include "../Utility/Utility.hpp"
 
 using namespace ComSquare::CPU;

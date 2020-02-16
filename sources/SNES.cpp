@@ -6,7 +6,7 @@
 #include <iostream>
 #include "SNES.hpp"
 #ifdef DEBUGGER_ENABLED
-	#include "Debugger/DebugCpu.hpp"
+	#include "Debugger/CPUDebug.hpp"
 #endif
 
 namespace ComSquare
@@ -34,6 +34,20 @@ namespace ComSquare
 	void SNES::disableCPUDebugging()
 	{
 		this->cpu = std::make_shared<CPU::CPU>(*this->cpu);
+	}
+
+	void SNES::enableRamViewer()
+	{
+		#ifdef DEBUGGER_ENABLED
+			this->_ramViewer = std::make_shared<Debugger::RamViewer>(*this);
+		#endif
+	}
+
+	void SNES::disableRamDebugging()
+	{
+		#ifdef DEBUGGER_ENABLED
+			this->_ramViewer = nullptr;
+		#endif
 	}
 
 	void SNES::update()

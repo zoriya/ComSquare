@@ -123,15 +123,15 @@ add_executable(ComSquare
         sources/CPU/Instructions/InternalInstruction.cpp
         sources/Ram/ExtendedRam.cpp
         sources/Ram/ExtendedRam.hpp
-        sources/Debugger/DebugCpu.cpp
-        sources/Debugger/DebugCpu.hpp
+        sources/Debugger/CPUDebug.cpp
+        sources/Debugger/CPUDebug.hpp
         sources/Renderer/QtRenderer/QtSFML.cpp
         sources/Renderer/QtRenderer/QtSFML.hpp
         sources/Renderer/QtRenderer/QtWidgetSFML.cpp
         sources/Renderer/QtRenderer/QtWidgetSFML.hpp
         ui/cpu.ui
         resources/appResources.qrc
-        sources/Utility/Utility.hpp)
+        sources/Utility/Utility.hpp sources/Debugger/RamViewer.cpp sources/Debugger/RamViewer.hpp)
 
 target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)
 
