@@ -37,6 +37,8 @@ namespace ComSquare::Debugger
 		//! @brief Step - Execute a single instruction.
 		void step();
 	public:
+		//! @brief Update the UI when reseting the CPU.
+		void RESB() override;
 		//! @brief Convert a basic CPU to a debugging CPU.
 		explicit CPUDebug(ComSquare::CPU::CPU &cpu, SNES &snes);
 		CPUDebug(const CPUDebug &) = delete;

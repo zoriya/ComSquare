@@ -212,4 +212,10 @@ namespace ComSquare::Debugger
 		default: return "Unknown";
 		}
 	}
+
+	void CPUDebug::RESB()
+	{
+		CPU::RESB();
+		this->_updateRegistersPanel();
+	}
 }

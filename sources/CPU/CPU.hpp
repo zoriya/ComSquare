@@ -446,7 +446,7 @@ namespace ComSquare::CPU
 		void write(uint24_t addr, uint8_t data) override;
 
 		//! @brief Reset interrupt - Called on boot and when the reset button is pressed.
-		void RESB();
+		virtual void RESB();
 	};
 }
 
