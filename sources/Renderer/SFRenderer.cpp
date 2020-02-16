@@ -40,7 +40,7 @@ namespace ComSquare::Renderer
 		delete [] this->_pixelBuffer;
 	}
 
-	void SFRenderer::setWindowName(std::string newWindowName)
+	void SFRenderer::setWindowName(std::string &newWindowName)
 	{
 		this->_window.setTitle(newWindowName + " - ComSquare");
 	}

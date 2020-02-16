@@ -19,9 +19,9 @@ int main(int argc, char **argv)
 		return 1;
 	}
 	QApplication app(argc, argv);
-	Renderer::QtSFML renderer(app, 600, 800);
+	Renderer::QtSFML renderer(600, 800);
 	SNES snes(std::make_shared<Memory::MemoryBus>(), argv[1], renderer);
 	renderer.createWindow(snes, 60);
-	//snes.enableCPUDebugging();
+	snes.enableCPUDebugging();
 	return QApplication::exec();
 }

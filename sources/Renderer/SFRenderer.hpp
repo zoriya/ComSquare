@@ -11,7 +11,7 @@
 #include <SFML/Audio.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
-#include <SFML/Graphics//RenderWindow.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 
 namespace ComSquare::Renderer
 {
@@ -28,7 +28,7 @@ namespace ComSquare::Renderer
 	protected:
 		//! @brief The Renderer for the window.
 		sf::RenderWindow _window;
-		//! @brief Video Mode containing the height and width of the window.
+		//! @brief Video Mode containing the _height and _width of the window.
 		sf::VideoMode _videoMode;
 		//! @brief The image that contain all of the pixels
 		sf::Color *_pixelBuffer;
@@ -41,7 +41,7 @@ namespace ComSquare::Renderer
 		bool shouldExit = false;
 		//! @brief Set a new name to the window, if there is already a name it will be overwrite.
 		//! @param newWindowName new title for the window.
-		void setWindowName(std::string newWindowName) override;
+		void setWindowName(std::string &newWindowName) override;
 		//! @brief Update the screen by printing the buffer.
 		void drawScreen() override;
 		//! @brief Add a pixel to the buffer to the coordinates x, y with the color rgba.
@@ -56,8 +56,8 @@ namespace ComSquare::Renderer
 		//! @param maxFPS The number of FPS you aim to run on.
 		void createWindow(SNES &snes, int maxFPS) override;
 		//! @brief Constructor that return the window component of the SFML.
-		//! @param height height of the window.
-		//! @param width width of the window.
+		//! @param height _height of the window.
+		//! @param width _width of the window.
 		SFRenderer(unsigned int height, unsigned int width);
 		SFRenderer(const SFRenderer &) = delete;
 		SFRenderer &operator=(const SFRenderer &) = delete;

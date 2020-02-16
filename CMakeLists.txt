@@ -75,6 +75,10 @@ if ("${GITBUILD}" STREQUAL true)
     message("Git build is true")
 endif ()
 
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
+
 # make app
 add_executable(ComSquare
         main.cpp
@@ -125,7 +129,8 @@ add_executable(ComSquare
         sources/Renderer/QtRenderer/QtSFML.hpp
         sources/Renderer/QtRenderer/QtWidgetSFML.cpp
         sources/Renderer/QtRenderer/QtWidgetSFML.hpp
-)
+        resources/debugger/cpu.ui
+        sources/Renderer/QtRenderer/QtWindow.cpp sources/Renderer/QtRenderer/QtWindow.hpp)
 
 target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)
 

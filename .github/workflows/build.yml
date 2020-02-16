@@ -13,15 +13,7 @@ jobs:
       - uses: actions/checkout@v1
       - name: Install the SFML.
         run: sudo apt-get update &&
-          sudo apt-get install --yes libsfml-dev
-      - name: Install TGUI.
-        run: |
-          git clone https://github.com/texus/TGUI -b 0.8 /tmp/tgui
-          cd /tmp/tgui
-          mkdir build
-          cd build
-          cmake ..
-          make -j 4 && sudo make install
+          sudo apt-get install --yes libsfml-dev qt5
       - name: Build Makefile with CMake
         run: mkdir -p build && cd build && cmake ..
       - name: Build with Makefile

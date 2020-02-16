@@ -15,7 +15,7 @@ namespace ComSquare
 		class IRenderer {
 		public:
 			//! @brief Set a new name to the window, if there is already a name it will be overwrite
-			virtual void setWindowName(std::string) = 0;
+			virtual void setWindowName(std::string &) = 0;
 
 			//! @brief Render the buffer to the window
 			virtual void drawScreen() = 0;

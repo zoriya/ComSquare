@@ -15,22 +15,15 @@
 
 namespace ComSquare::Renderer
 {
-	QtSFML::QtSFML(QApplication &app, unsigned int h, unsigned int w) :
-		_app(app), _sfWidget(nullptr), width(w), height(h)
+	QtSFML::QtSFML(unsigned int h, unsigned int w) :
+		QtWindow(h, w), _sfWidget(nullptr)
 	{ }
 
 	void QtSFML::createWindow(SNES &snes, int maxFPS)
 	{
-		this->frame = new QFrame();
 		this->setWindowName(snes.cartridge->header.gameName);
-		this->frame->show();
-		this->_sfWidget = new QtFullSFML(snes, frame, QPoint(0, 0), QSize(this->width, this->height), maxFPS);
+		this->_sfWidget = std::make_unique<QtFullSFML>(snes, &_frame, QPoint(0, 0), QSize(this->_width, this->_height), maxFPS);
 		this->_sfWidget->show();
-	}
-
-	void QtSFML::setWindowName(std::string newWindowName)
-	{
-		this->frame->setWindowTitle((newWindowName + " - ComSquare").c_str());
 	}
 
 	void QtSFML::putPixel(unsigned y, unsigned x, uint32_t rgba)
@@ -39,6 +32,11 @@ namespace ComSquare::Renderer
 	}
 
 	void QtSFML::drawScreen() { }
+
+	void QtSFML::setWindowName(std::string &newWindowName)
+	{
+		QtWindow::setWindowName(newWindowName);
+	}
 
 	QtFullSFML::QtFullSFML(SNES &snes, QWidget *parent, const QPoint &position, const QSize &size, int frameRate) :
 		QtWidgetSFML(parent, position, size, frameRate),

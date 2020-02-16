@@ -24,6 +24,8 @@ namespace ComSquare
 	{
 		#ifdef DEBUGGER_ENABLED
 			this->cpu = std::make_shared<Debugger::CPUDebug>(*this->cpu, *this);
+		#else
+			std::cerr << "Debugging features are not enabled. You can't enable the debugger." << std::endl;
 		#endif
 	}
 

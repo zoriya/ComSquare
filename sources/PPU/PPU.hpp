@@ -163,8 +163,8 @@ namespace ComSquare::PPU
 		};
 
 		struct {
-			unsigned int height;
-			unsigned int width;
+			unsigned int _height;
+			unsigned int _width;
 			bool verticalMirroring;
 			bool horizontalMirroring;
 			int verticalOffset;

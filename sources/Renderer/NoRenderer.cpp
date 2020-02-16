@@ -6,7 +6,7 @@
 
 namespace ComSquare::Renderer
 {
-	void NoRenderer::setWindowName(std::string newWindowName)
+	void NoRenderer::setWindowName(std::string &newWindowName)
 	{
 		(void)newWindowName;
 	}
