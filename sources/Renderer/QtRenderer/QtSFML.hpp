@@ -8,10 +8,10 @@
 #include <QtWidgets/QWidget>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <QtCore/QTimer>
+#include <QtWidgets/QMainWindow>
 #include "../IRenderer.hpp"
 #include "../SFRenderer.hpp"
 #include "QtWidgetSFML.hpp"
-#include "QtWindow.hpp"
 
 namespace ComSquare::Renderer
 {
@@ -29,8 +29,10 @@ namespace ComSquare::Renderer
 	};
 
 	//! @brief A SFML renderer inside a QT window.
-	class QtSFML : public IRenderer, public QtWindow {
+	class QtSFML : public IRenderer {
 	private:
+		//! @brief The main window that the app reside on.
+		QMainWindow _window;
 		//! @brief The SFML widget.
 		std::unique_ptr<QtFullSFML> _sfWidget = nullptr;
 	public:

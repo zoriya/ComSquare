@@ -8,7 +8,6 @@
 #include "../CPU/CPU.hpp"
 #include "../Renderer/SFRenderer.hpp"
 #include "../SNES.hpp"
-#include "../Renderer/QtRenderer/QtWindow.hpp"
 #include "../../ui/ui_cpu.h"
 
 namespace ComSquare::Debugger

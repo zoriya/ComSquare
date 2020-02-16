@@ -131,8 +131,6 @@ add_executable(ComSquare
         sources/Renderer/QtRenderer/QtWidgetSFML.hpp
         ui/cpu.ui
         resources/appResources.qrc
-        sources/Renderer/QtRenderer/QtWindow.cpp
-        sources/Renderer/QtRenderer/QtWindow.hpp
         sources/Utility/Utility.hpp)
 
 target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)
