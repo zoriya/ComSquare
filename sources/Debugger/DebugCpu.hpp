@@ -9,14 +9,17 @@
 #include "../Renderer/SFRenderer.hpp"
 #include "../SNES.hpp"
 #include "../Renderer/QtRenderer/QtWindow.hpp"
+#include "../../Ui/ui_cpu.h"
 
 namespace ComSquare::Debugger
 {
 	//! @brief A custom CPU with a window that show it's registers and the disassembly.
 	class CPUDebug : public CPU::CPU {
 	private:
-		//! @brief The debug window.
-		Renderer::QtWindow _renderer;
+		//! @brief A widget that contain the whole UI.
+		QWidget _widget;
+		//! @brief The ui that reside inside the window.
+		Ui::CPU _ui;
 		//! @brief If this is set to true, the execution of the CPU will be paused.
 		bool _isPaused = true;
 		//! @brief A reference to the snes (to disable the debugger).

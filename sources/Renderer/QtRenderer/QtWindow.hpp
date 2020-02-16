@@ -5,7 +5,7 @@
 #ifndef COMSQUARE_QTWINDOW_HPP
 #define COMSQUARE_QTWINDOW_HPP
 
-#include <QtWidgets/QApplication>
+
 #include <QtWidgets/QFrame>
 
 namespace ComSquare::Renderer

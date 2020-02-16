@@ -8,18 +8,18 @@
 namespace ComSquare::Debugger
 {
 	CPUDebug::CPUDebug(ComSquare::CPU::CPU &basicCPU, SNES &snes)
-		: CPU::CPU(basicCPU), _renderer(600, 1000), _snes(snes)
+		: CPU::CPU(basicCPU), _snes(snes)
 	{
-		std::string name = "CPU's Debugger";
-		this->_renderer.setWindowName(name);
+		this->_ui.setupUi(&this->_widget);
+		this->_widget.show();
 	}
 
 	unsigned CPUDebug::update()
 	{
-//		if (this->_renderer.shouldExit) {
-//			this->_snes.disableCPUDebugging ();
-//			return 0;
-//		}
+		if (!this->_widget.isVisible()) {
+			this->_snes.disableCPUDebugging();
+			return 0;
+		}
 
 //		this->_renderer.drawScreen();
 //		this->_renderer.getEvents();
