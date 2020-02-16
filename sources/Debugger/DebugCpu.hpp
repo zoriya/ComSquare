@@ -25,7 +25,7 @@ namespace ComSquare::Debugger
 		//! @brief Reimplement the basic instruction execution method to log instructions inside the logger view.
 		unsigned _executeInstruction(uint8_t opcode) override;
 		//! @brief Get a printable string representing an instruction.
-		std::string _getInstructionString(uint8_t opcode);
+		static std::string _getInstructionString(uint8_t opcode);
 	public slots:
 		//! @brief Pause/Resume the CPU.
 		void pause();
