@@ -30,4 +30,15 @@ namespace ComSquare
 	{
 		this->cpu = std::make_shared<CPU::CPU>(*this->cpu);
 	}
+
+	void SNES::update()
+	{
+		try {
+			unsigned cycleCount = this->cpu->update();
+			this->ppu->update(cycleCount);
+			this->apu->update(cycleCount);
+		} catch (std::exception &e) {
+			std::cerr << "An error occurred: " << e.what() << std::endl;
+		}
+	}
 }

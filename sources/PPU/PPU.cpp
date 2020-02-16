@@ -204,9 +204,9 @@ namespace ComSquare::PPU
 	{
 		(void)cycles;
 		int inc = 0;
-		//uint32_t pixelTmp = 0xFFFFFFFF;
-		//pixelTmp |= this->_inidisp.brightness;
-		//std::cout << "update" << std::endl;
+		uint32_t pixelTmp = 0xFFFFFFFF;
+		pixelTmp |= this->_inidisp.brightness;
+		std::cout << "update" << std::endl;
 		if (!this->_inidisp.fblank) {
 			for (int x = 0; x < 448; x++) {
 				for (int y = 0; y < 512; y++) {

@@ -28,4 +28,9 @@ namespace ComSquare::Renderer
 		(void)width;
 		(void)maxFPS;
 	}
+
+	void NoRenderer::createWindow(int maxFPS)
+	{
+		(void)maxFPS.
+	}
 }

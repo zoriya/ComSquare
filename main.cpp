@@ -4,8 +4,11 @@
 
 #include <iostream>
 #include <string>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QFrame>
 #include "sources/SNES.hpp"
 #include "sources/Renderer/SFRenderer.hpp"
+#include "sources/Renderer/QtRenderer/QtSFML.h"
 
 using namespace ComSquare;
 
@@ -15,19 +18,10 @@ int main(int argc, char **argv)
 		std::cout << "ComSquare:" << std::endl << "\tUsage: " << argv[0] << " rom_path" << std::endl;
 		return 1;
 	}
-	try {
-		Renderer::SFRenderer renderer(600, 800, 60);
-		SNES snes(std::make_shared<Memory::MemoryBus>(), argv[1], renderer);
-		snes.enableCPUDebugging();
-		while (!renderer.shouldExit) {
-			unsigned cycleCount = snes.cpu->update();
-			snes.ppu->update(cycleCount);
-			snes.apu->update(cycleCount);
-
-			renderer.getEvents();
-		}
-	} catch (std::exception &e) {
-		std::cerr << "An error occurred: " << e.what() << std::endl;
-	}
-	return 0;
+	QApplication app(argc, argv);
+	Renderer::QtSFML renderer(app, 600, 800);
+	SNES snes(std::make_shared<Memory::MemoryBus>(), argv[1], renderer);
+	renderer.createWindow(snes, 60);
+	snes.enableCPUDebugging();
+	return QApplication::exec();
 }

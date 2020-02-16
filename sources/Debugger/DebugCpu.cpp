@@ -8,7 +8,7 @@
 namespace ComSquare::Debugger
 {
 	CPUDebug::CPUDebug(ComSquare::CPU::CPU &basicCPU, SNES &snes)
-		: CPU::CPU(basicCPU), _renderer(600, 1000, 60), _snes(snes)
+		: CPU::CPU(basicCPU), _renderer(600, 1000), _snes(snes)
 	{
 		this->_renderer.setWindowName("CPU's Debugger");
 	}

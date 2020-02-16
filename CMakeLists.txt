@@ -121,9 +121,9 @@ add_executable(ComSquare
         sources/Ram/ExtendedRam.hpp
         sources/Debugger/DebugCpu.cpp
         sources/Debugger/DebugCpu.hpp
-        sources/Renderer/TGUIRenderer.cpp
-        sources/Renderer/TGUIRenderer.h
-)
+        sources/Renderer/QtRenderer/QtSFML.cpp sources/Renderer/QtRenderer/QtSFML.h sources/Renderer/QtRenderer/QtWidgetSFML.cpp sources/Renderer/QtRenderer/QtWidgetSFML.h)
+
+find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
 target_link_libraries(ComSquare
         sfml-graphics
@@ -132,4 +132,5 @@ target_link_libraries(ComSquare
         sfml-audio
         sfml-network
         tgui
+        Qt5::Widgets
 )

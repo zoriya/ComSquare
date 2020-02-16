@@ -24,6 +24,9 @@ namespace ComSquare::Renderer
 		void putPixel(unsigned y, unsigned x, uint32_t rgba) override ;
 		//! @brief Get the inputs from the Window
 		void getEvents();
+		//! @brief Use this function to create the window.
+		//! @param maxFPS The number of FPS you aim to run on.
+		void createWindow(int maxFPS) override;
 		//! @brief Constructor that return the window component of the SFML.
 		//! @param height height of the window.
 		//! @param width width of the window.

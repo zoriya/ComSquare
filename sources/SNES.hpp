@@ -16,7 +16,7 @@
 namespace ComSquare
 {
 	//! @brief Container of all the components of the SNES.
-	struct SNES {
+	class SNES {
 	public:
 		//! @brief Cartridge containing instructions (ROM).
 		std::shared_ptr<Cartridge::Cartridge> cartridge;
@@ -31,10 +31,14 @@ namespace ComSquare
 		//! @brief Save Ram residing inside the Cartridge in a real SNES.
 		std::shared_ptr<Ram::Ram> sram;
 
-		//! @brief Enable the CPU's debugging window.
-		void enableCPUDebugging();
+		//! @brief Call this function to update all the components
+		void update();
+
 		//! @brief Disable the CPU's debugging window.
 		void disableCPUDebugging();
+		//! @brief Enable the CPU's debugging window.
+		void enableCPUDebugging();
+
 		//! @brief Create all the components using a common memory bus for all of them.
 		SNES(const std::shared_ptr<Memory::MemoryBus> &bus, const std::string &ramPath, Renderer::IRenderer &renderer);
 		SNES(const SNES &) = default;

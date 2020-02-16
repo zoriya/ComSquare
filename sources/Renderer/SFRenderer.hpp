@@ -6,6 +6,7 @@
 #define COMSQUARE_SFRENDERER_HPP
 
 #include "IRenderer.hpp"
+#include "../SNES.hpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/System.hpp>
@@ -24,7 +25,7 @@ namespace ComSquare::Renderer
 	};
 
 	class SFRenderer : public IRenderer {
- 	protected:
+	protected:
 		//! @brief The Renderer for the window.
 		sf::RenderWindow _window;
 		//! @brief Video Mode containing the height and width of the window.
@@ -47,12 +48,15 @@ namespace ComSquare::Renderer
 		//! @param rgba The color of the pixel.
 		void putPixel(unsigned y, unsigned x, uint32_t rgba) override;
 		//! @brief Get the inputs from the Window
-		virtual void getEvents();
+		void getEvents();
+		//! @brief Use this function to create the window.
+		//! @param snes The snes for the update (not implemented here).
+		//! @param maxFPS The number of FPS you aim to run on.
+		void createWindow(SNES &snes, int maxFPS) override;
 		//! @brief Constructor that return the window component of the SFML.
 		//! @param height height of the window.
 		//! @param width width of the window.
-		//! @param maxFPS the number of maximum FPS for the window.
-		SFRenderer(unsigned int height, unsigned int width, int maxFPS);
+		SFRenderer(unsigned int height, unsigned int width);
 		SFRenderer(const SFRenderer &) = delete;
 		SFRenderer &operator=(const SFRenderer &) = delete;
 		~SFRenderer();
