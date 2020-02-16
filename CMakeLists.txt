@@ -63,7 +63,7 @@ add_executable(unit_tests
         tests/CPU/testInternal.cpp
         sources/Ram/ExtendedRam.cpp
         sources/Ram/ExtendedRam.hpp
-)
+        sources/Utility/Utility.hpp)
 
 # include criterion & coverage
 target_link_libraries(unit_tests criterion -lgcov)
@@ -133,7 +133,7 @@ add_executable(ComSquare
         resources/appResources.qrc
         sources/Renderer/QtRenderer/QtWindow.cpp
         sources/Renderer/QtRenderer/QtWindow.hpp
-)
+        sources/Utility/Utility.hpp)
 
 target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)
 

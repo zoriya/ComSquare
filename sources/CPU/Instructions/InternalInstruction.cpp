@@ -71,6 +71,7 @@ namespace ComSquare::CPU
 
 	void CPU::PLA()
 	{
+		// TODO this register should be poped by 8 if the m flag is 1
 		this->_registers.a = this->_pop16();
 		this->_registers.p.z = this->_registers.a == 0;
 		this->_registers.p.n = this->_registers.a & 0x8000u;
@@ -101,6 +102,7 @@ namespace ComSquare::CPU
 
 	void CPU::PLX()
 	{
+		// TODO this register should be poped by 8 if the x_b is 1
 		this->_registers.x = this->_pop16();
 		this->_registers.p.z = this->_registers.x == 0;
 		this->_registers.p.n = this->_registers.x & 0x8000u;
@@ -108,6 +110,7 @@ namespace ComSquare::CPU
 
 	void CPU::PLY()
 	{
+		// TODO this register should be poped by 8 if the x_b is 1
 		this->_registers.y = this->_pop16();
 		this->_registers.p.z = this->_registers.y == 0;
 		this->_registers.p.n = this->_registers.y & 0x8000u;

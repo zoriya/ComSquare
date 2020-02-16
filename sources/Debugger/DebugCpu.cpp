@@ -3,6 +3,7 @@
 //
 
 #include "DebugCpu.hpp"
+#include "../Utility/Utility.hpp"
 
 using namespace ComSquare::CPU;
 
@@ -18,6 +19,7 @@ namespace ComSquare::Debugger
 		QMainWindow::connect(this->_ui.actionPause, &QAction::triggered, this, &CPUDebug::pause);
 		QMainWindow::connect(this->_ui.actionStep, &QAction::triggered, this, &CPUDebug::step);
 		this->show();
+		this->_updateRegistersPanel();
 	}
 
 	unsigned CPUDebug::update()
@@ -41,6 +43,7 @@ namespace ComSquare::Debugger
 			this->_isPaused = true;
 		}
 		this->_ui.logger->append(CPUDebug::_getInstructionString(opcode).c_str());
+		this->_updateRegistersPanel();
 		return CPU::_executeInstruction(opcode);
 	}
 
@@ -57,6 +60,45 @@ namespace ComSquare::Debugger
 	{
 		this->_isStepping = true;
 		this->_isPaused = false;
+	}
+
+	void CPUDebug::_updateRegistersPanel()
+	{
+		if (!this->_registers.p.m)
+			this->_ui.accumulatorLineEdit->setText(Utility::to_hex(this->_registers.a).c_str());
+		else
+			this->_ui.accumulatorLineEdit->setText(Utility::to_hex(this->_registers.al).c_str());
+		this->_ui.programBankRegisterLineEdit->setText(Utility::to_hex(this->_registers.pbr).c_str());
+		this->_ui.programCounterLineEdit->setText(Utility::to_hex(this->_registers.pc).c_str());
+		this->_ui.directBankLineEdit->setText(Utility::to_hex(this->_registers.dbr).c_str());
+		this->_ui.directPageLineEdit->setText(Utility::to_hex(this->_registers.d).c_str());
+		this->_ui.stackPointerLineEdit->setText(Utility::to_hex(this->_registers.s).c_str());
+		if (this->_registers.p.x_b) {
+			this->_ui.xIndexLineEdit->setText(Utility::to_hex(this->_registers.x).c_str());
+			this->_ui.yIndexLineEdit->setText(Utility::to_hex(this->_registers.y).c_str());
+		} else {
+			this->_ui.xIndexLineEdit->setText(Utility::to_hex(this->_registers.xl).c_str());
+			this->_ui.yIndexLineEdit->setText(Utility::to_hex(this->_registers.yl).c_str());
+		}
+		this->_ui.flagsLineEdit->setText(this->_getFlagsString().c_str());
+		this->_ui.emulationModeCheckBox->setCheckState(this->_isEmulationMode ? Qt::CheckState::Checked : Qt::CheckState::Unchecked);
+	}
+
+	std::string CPUDebug::_getFlagsString()
+	{
+		std::string str;
+		str += this->_registers.p.n ? "n" : "-";
+		str += this->_registers.p.v ? "v" : "-";
+		str += this->_registers.p.m ? "m" : "-";
+		if (this->_isEmulationMode)
+			str += this->_registers.p.x_b ? "b" : "-";
+		else
+			str += this->_registers.p.x_b ? "x" : "-";
+		str += this->_registers.p.d ? "d" : "-";
+		str += this->_registers.p.i ? "i" : "-";
+		str += this->_registers.p.z ? "z" : "-";
+		str += this->_registers.p.c ? "c" : "-";
+		return str;
 	}
 
 	std::string CPUDebug::_getInstructionString(uint8_t opcode)

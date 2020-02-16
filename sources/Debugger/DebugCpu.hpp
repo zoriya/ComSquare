@@ -28,6 +28,10 @@ namespace ComSquare::Debugger
 		unsigned _executeInstruction(uint8_t opcode) override;
 		//! @brief Get a printable string representing an instruction.
 		static std::string _getInstructionString(uint8_t opcode);
+		//! @brief Get a printable string representing the flags.
+		std::string _getFlagsString();
+		//! @brief Update the register's panel (accumulator, stack pointer...)
+		void _updateRegistersPanel();
 	public slots:
 		//! @brief Pause/Resume the CPU.
 		void pause();
