@@ -14,12 +14,10 @@
 namespace ComSquare::Debugger
 {
 	//! @brief A custom CPU with a window that show it's registers and the disassembly.
-	class CPUDebug : public CPU::CPU {
+	class CPUDebug : public CPU::CPU, Ui::CPUView {
 	private:
 		//! @brief A widget that contain the whole UI.
 		QWidget _widget;
-		//! @brief The ui that reside inside the window.
-		Ui::CPU _ui;
 		//! @brief If this is set to true, the execution of the CPU will be paused.
 		bool _isPaused = true;
 		//! @brief A reference to the snes (to disable the debugger).

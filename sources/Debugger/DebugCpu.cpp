@@ -2,15 +2,14 @@
 // Created by anonymus-raccoon on 2/14/20.
 //
 
-#include <iostream>
 #include "DebugCpu.hpp"
 
 namespace ComSquare::Debugger
 {
 	CPUDebug::CPUDebug(ComSquare::CPU::CPU &basicCPU, SNES &snes)
-		: CPU::CPU(basicCPU), _snes(snes)
+		: CPU::CPU(basicCPU), Ui::CPUView(), _snes(snes)
 	{
-		this->_ui.setupUi(&this->_widget);
+		this->setupUi(&this->_widget);
 		this->_widget.show();
 	}
 
@@ -21,8 +20,7 @@ namespace ComSquare::Debugger
 			return 0;
 		}
 
-//		this->_renderer.drawScreen();
-//		this->_renderer.getEvents();
+		this->logger->append("Update");
 		if (this->_isPaused)
 			return 0xFF;
 		return CPU::update();
