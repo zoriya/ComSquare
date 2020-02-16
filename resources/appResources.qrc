@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="resources">
+    <file>icons/step.svg</file>
     <file>Logo.png</file>
     <file>icons/play.svg</file>
   </qresource>

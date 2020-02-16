@@ -20,6 +20,8 @@ namespace ComSquare::Debugger
 		Ui::CPUView _ui;
 		//! @brief If this is set to true, the execution of the CPU will be paused.
 		bool _isPaused = true;
+		//! @brief If this is set to true, the CPU will execute one instruction and pause itself.
+		bool _isStepping = false;
 		//! @brief A reference to the snes (to disable the debugger).
 		SNES &_snes;
 		//! @brief Reimplement the basic instruction execution method to log instructions inside the logger view.
@@ -29,6 +31,8 @@ namespace ComSquare::Debugger
 	public slots:
 		//! @brief Pause/Resume the CPU.
 		void pause();
+		//! @brief Step - Execute a single instruction.
+		void step();
 	public:
 		//! @brief Convert a basic CPU to a debugging CPU.
 		explicit CPUDebug(ComSquare::CPU::CPU &cpu, SNES &snes);

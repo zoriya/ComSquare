@@ -84,6 +84,7 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionPause"/>
+   <addaction name="actionStep"/>
   </widget>
   <action name="actionPause">
    <property name="icon">
@@ -98,6 +99,21 @@
    </property>
    <property name="shortcut">
     <string>P</string>
+   </property>
+  </action>
+  <action name="actionStep">
+   <property name="icon">
+    <iconset resource="../resources/appResources.qrc">
+     <normaloff>:/resources/icons/step.svg</normaloff>:/resources/icons/step.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Step</string>
+   </property>
+   <property name="toolTip">
+    <string>Execute a single instruction</string>
+   </property>
+   <property name="shortcut">
+    <string>S</string>
    </property>
   </action>
  </widget>

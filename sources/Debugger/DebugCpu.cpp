@@ -16,6 +16,7 @@ namespace ComSquare::Debugger
 
 		this->_ui.setupUi(this);
 		QMainWindow::connect(this->_ui.actionPause, &QAction::triggered, this, &CPUDebug::pause);
+		QMainWindow::connect(this->_ui.actionStep, &QAction::triggered, this, &CPUDebug::step);
 		this->show();
 	}
 
@@ -33,6 +34,12 @@ namespace ComSquare::Debugger
 
 	unsigned CPUDebug::_executeInstruction(uint8_t opcode)
 	{
+		if (this->_isPaused)
+			return 0;
+		if (this->_isStepping) {
+			this->_isStepping = false;
+			this->_isPaused = true;
+		}
 		this->_ui.logger->append(CPUDebug::_getInstructionString(opcode).c_str());
 		return CPU::_executeInstruction(opcode);
 	}
@@ -44,6 +51,12 @@ namespace ComSquare::Debugger
 			this->_ui.actionPause->setText("Resume");
 		else
 			this->_ui.actionPause->setText("Pause");
+	}
+
+	void CPUDebug::step()
+	{
+		this->_isStepping = true;
+		this->_isPaused = false;
 	}
 
 	std::string CPUDebug::_getInstructionString(uint8_t opcode)
