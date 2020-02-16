@@ -2,7 +2,7 @@
 // Created by anonymus-raccoon on 2/16/20.
 //
 
-#include "QtWidgetSFML.h"
+#include "QtWidgetSFML.hpp"
 
 namespace ComSquare::Renderer
 {

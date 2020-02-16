@@ -26,7 +26,7 @@ namespace ComSquare::Renderer
 		void getEvents();
 		//! @brief Use this function to create the window.
 		//! @param maxFPS The number of FPS you aim to run on.
-		void createWindow(int maxFPS) override;
+		void createWindow(SNES &snes, int maxFPS) override;
 		//! @brief Constructor that return the window component of the SFML.
 		//! @param height height of the window.
 		//! @param width width of the window.

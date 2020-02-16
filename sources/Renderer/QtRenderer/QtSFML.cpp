@@ -6,7 +6,7 @@
 #include <QtWidgets/QFrame>
 #include <QCloseEvent>
 #include <iostream>
-#include "QtSFML.h"
+#include "QtSFML.hpp"
 
 #ifdef Q_WS_X11
 	#include <Qt/qx11info_x11.h>

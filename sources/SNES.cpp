@@ -23,7 +23,9 @@ namespace ComSquare
 
 	void SNES::enableCPUDebugging()
 	{
-		this->cpu = std::make_shared<Debugger::CPUDebug>(*this->cpu, *this);
+		#ifdef DEBUGGER_ENABLED
+			this->cpu = std::make_shared<Debugger::CPUDebug>(*this->cpu, *this);
+		#endif
 	}
 
 	void SNES::disableCPUDebugging()

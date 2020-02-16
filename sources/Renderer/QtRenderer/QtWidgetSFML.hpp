@@ -2,8 +2,8 @@
 // Created by anonymus-raccoon on 2/16/20.
 //
 
-#ifndef COMSQUARE_QTWIDGETSFML_H
-#define COMSQUARE_QTWIDGETSFML_H
+#ifndef COMSQUARE_QTWIDGETSFML_HPP
+#define COMSQUARE_QTWIDGETSFML_HPP
 
 #include <QtWidgets/QWidget>
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -30,4 +30,4 @@ namespace ComSquare::Renderer
 	};
 }
 
-#endif //COMSQUARE_QTWIDGETSFML_H
+#endif //COMSQUARE_QTWIDGETSFML_HPP

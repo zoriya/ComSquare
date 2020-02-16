@@ -121,7 +121,13 @@ add_executable(ComSquare
         sources/Ram/ExtendedRam.hpp
         sources/Debugger/DebugCpu.cpp
         sources/Debugger/DebugCpu.hpp
-        sources/Renderer/QtRenderer/QtSFML.cpp sources/Renderer/QtRenderer/QtSFML.h sources/Renderer/QtRenderer/QtWidgetSFML.cpp sources/Renderer/QtRenderer/QtWidgetSFML.h)
+        sources/Renderer/QtRenderer/QtSFML.cpp
+        sources/Renderer/QtRenderer/QtSFML.hpp
+        sources/Renderer/QtRenderer/QtWidgetSFML.cpp
+        sources/Renderer/QtRenderer/QtWidgetSFML.hpp
+)
+
+target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)
 
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 

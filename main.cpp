@@ -8,7 +8,7 @@
 #include <QtWidgets/QFrame>
 #include "sources/SNES.hpp"
 #include "sources/Renderer/SFRenderer.hpp"
-#include "sources/Renderer/QtRenderer/QtSFML.h"
+#include "sources/Renderer/QtRenderer/QtSFML.hpp"
 
 using namespace ComSquare;
 
@@ -22,6 +22,6 @@ int main(int argc, char **argv)
 	Renderer::QtSFML renderer(app, 600, 800);
 	SNES snes(std::make_shared<Memory::MemoryBus>(), argv[1], renderer);
 	renderer.createWindow(snes, 60);
-	snes.enableCPUDebugging();
+	//snes.enableCPUDebugging();
 	return QApplication::exec();
 }

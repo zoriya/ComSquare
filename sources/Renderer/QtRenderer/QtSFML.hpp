@@ -2,15 +2,15 @@
 // Created by anonymus-raccoon on 2/15/20.
 //
 
-#ifndef COMSQUARE_QTSFML_H
-#define COMSQUARE_QTSFML_H
+#ifndef COMSQUARE_QTSFML_HPP
+#define COMSQUARE_QTSFML_HPP
 
 #include <QtWidgets/QWidget>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <QtCore/QTimer>
 #include "../IRenderer.hpp"
 #include "../SFRenderer.hpp"
-#include "QtWidgetSFML.h"
+#include "QtWidgetSFML.hpp"
 
 namespace ComSquare::Renderer
 {
@@ -45,4 +45,4 @@ namespace ComSquare::Renderer
 	};
 }
 
-#endif //COMSQUARE_QTSFML_H
+#endif //COMSQUARE_QTSFML_HPP

@@ -29,8 +29,9 @@ namespace ComSquare::Renderer
 		(void)maxFPS;
 	}
 
-	void NoRenderer::createWindow(int maxFPS)
+	void NoRenderer::createWindow(SNES &snes, int maxFPS)
 	{
-		(void)maxFPS.
+		(void)snes;
+		(void)maxFPS;
 	}
 }
