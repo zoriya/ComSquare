@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
+    <width>422</width>
     <height>399</height>
    </rect>
   </property>
@@ -24,8 +24,8 @@
    <widget class="QTextBrowser" name="logger">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>25</y>
+      <x>220</x>
+      <y>30</y>
       <width>200</width>
       <height>305</height>
      </rect>
@@ -34,7 +34,7 @@
    <widget class="QLabel" name="loggerLabel">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>220</x>
       <y>0</y>
       <width>200</width>
       <height>25</height>
@@ -50,10 +50,10 @@
    <widget class="QWidget" name="formLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>390</x>
+      <x>0</x>
       <y>0</y>
-      <width>201</width>
-      <height>291</height>
+      <width>211</width>
+      <height>361</height>
      </rect>
     </property>
     <layout class="QFormLayout" name="formLayout">
@@ -167,16 +167,6 @@
      </item>
     </layout>
    </widget>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>600</width>
-     <height>30</height>
-    </rect>
-   </property>
   </widget>
   <widget class="QToolBar" name="toolBar">
    <property name="minimumSize">
