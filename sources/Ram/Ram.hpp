@@ -13,10 +13,10 @@ namespace ComSquare::Ram
 	private:
 		//! @brief The ram. (Can be used for WRam, SRam, VRam etc)
 		uint8_t *_data;
-		//! @brief The size of the ram.
+		//! @brief The size of the ram (iny bytes).
 		size_t _size;
 	public:
-		//! @brief Load a rom from it's path.
+		//! @brief Create a ram of a given size in bytes.
 		explicit Ram(size_t size);
 		//! @brief The ram can't be copied.
 		Ram(const Ram &) = delete;
@@ -40,6 +40,9 @@ namespace ComSquare::Ram
 		//! @param end end address to replace
 		//! @param value replace value
 		void memset(uint24_t start, uint24_t end, uint8_t value);
+
+		//! @brief Get the size of the ram in bytes.
+		size_t getSize();
 	};
 }
 

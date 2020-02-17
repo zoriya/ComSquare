@@ -63,7 +63,7 @@ add_executable(unit_tests
         tests/CPU/testInternal.cpp
         sources/Ram/ExtendedRam.cpp
         sources/Ram/ExtendedRam.hpp
-        sources/Utility/Utility.hpp)
+        sources/Utility/Utility.hpp sources/Utility/Utility.cpp)
 
 # include criterion & coverage
 target_link_libraries(unit_tests criterion -lgcov)
@@ -130,8 +130,12 @@ add_executable(ComSquare
         sources/Renderer/QtRenderer/QtWidgetSFML.cpp
         sources/Renderer/QtRenderer/QtWidgetSFML.hpp
         ui/cpu.ui
+        ui/ramView.ui
         resources/appResources.qrc
-        sources/Utility/Utility.hpp sources/Debugger/RamViewer.cpp sources/Debugger/RamViewer.hpp)
+        sources/Utility/Utility.hpp
+        sources/Debugger/MemoryViewer.cpp
+        sources/Debugger/MemoryViewer.hpp
+        sources/Utility/Utility.cpp)
 
 target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)
 

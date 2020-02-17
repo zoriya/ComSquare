@@ -42,4 +42,9 @@ namespace ComSquare::Ram
 			throw InvalidAddress("Ram memset start", start);
 		std::memset(&this->_data[start], value, sizeof(uint8_t) * (end - start));
 	}
+
+	size_t Ram::getSize()
+	{
+		return this->_size;
+	}
 }

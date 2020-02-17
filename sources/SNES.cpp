@@ -39,7 +39,7 @@ namespace ComSquare
 	void SNES::enableRamViewer()
 	{
 		#ifdef DEBUGGER_ENABLED
-			this->_ramViewer = std::make_shared<Debugger::RamViewer>(*this);
+			this->_ramViewer = std::make_shared<Debugger::MemoryViewer>(*this);
 		#endif
 	}
 

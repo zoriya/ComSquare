@@ -43,7 +43,7 @@ namespace ComSquare::Renderer
 		cpuDebugger->setShortcut(Qt::Key_F1);
 		QMainWindow::connect(cpuDebugger, &QAction::triggered, this->_sfWidget.get(), &QtFullSFML::enableDebugCPU);
 		debugger->addAction(cpuDebugger);
-		QAction *ramViewer = new QAction("Ram viewer", &this->_window);
+		QAction *ramViewer = new QAction("Memory viewer", &this->_window);
 		ramViewer->setShortcut(Qt::Key_F2);
 		QMainWindow::connect(ramViewer, &QAction::triggered, this->_sfWidget.get(), &QtFullSFML::enableRamViewer);
 		debugger->addAction(ramViewer);

@@ -13,7 +13,7 @@
 #include "APU/APU.hpp"
 #include "Renderer/IRenderer.hpp"
 #ifdef DEBUGGER_ENABLED
-#include "Debugger/RamViewer.hpp"
+#include "Debugger/MemoryViewer.hpp"
 #endif
 
 namespace ComSquare
@@ -22,7 +22,7 @@ namespace ComSquare
 	class SNES {
 #ifdef DEBUGGER_ENABLED
 	private:
-		std::shared_ptr<Debugger::RamViewer> _ramViewer;
+		std::shared_ptr<Debugger::MemoryViewer> _ramViewer;
 #endif
 	public:
 		//! @brief Cartridge containing instructions (ROM).
