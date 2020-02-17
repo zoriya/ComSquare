@@ -12,7 +12,7 @@ namespace ComSquare::CPU
 		unsigned value = this->_bus->read(valueAddr) + this->_registers.p.c;
 		if (this->_registers.p.m)
 			value += this->_bus->read(valueAddr + 1) << 8u;
-		unsigned negativeMask = this->_isEmulationMode ? 0xF0u : 0xF000u;
+		unsigned negativeMask = this->_isEmulationMode ? 0x80u : 0x8000u;
 		unsigned maxValue = this->_isEmulationMode ? UINT8_MAX : UINT16_MAX;
 
 		this->_registers.p.c = static_cast<unsigned>(this->_registers.a) + value > maxValue;
