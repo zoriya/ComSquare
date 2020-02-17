@@ -52,6 +52,7 @@ namespace ComSquare::Debugger
 
 		this->_ui.setupUi(this);
 		this->_ui.tableView->setModel(&this->_model);
+		this->_ui.tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 		this->show();
 	}
 }
