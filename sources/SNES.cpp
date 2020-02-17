@@ -52,12 +52,8 @@ namespace ComSquare
 
 	void SNES::update()
 	{
-		try {
-			unsigned cycleCount = this->cpu->update();
-			this->ppu->update(cycleCount);
-			this->apu->update(cycleCount);
-		} catch (std::exception &e) {
-			std::cerr << "An error occurred: " << e.what() << std::endl;
-		}
+		unsigned cycleCount = this->cpu->update();
+		this->ppu->update(cycleCount);
+		this->apu->update(cycleCount);
 	}
 }

@@ -70,7 +70,12 @@ namespace ComSquare::Renderer
 
 	void QtFullSFML::_onUpdate()
 	{
-		this->_snes.update();
+		try {
+			this->_snes.update();
+		} catch (std::exception &e) {
+			std::cerr << "An error occurred: " << e.what() << std::endl;
+			QApplication::quit();
+		}
 	}
 
 	void QtFullSFML::enableDebugCPU()
