@@ -22,22 +22,30 @@ void parseArguments(int argc, char **argv, SNES &snes)
 		int this_option_optind = optind ? optind : 1;
 		int option_index = 0;
 		static struct option long_options[] = {
-			{"cpu-debug",     no_argument, 0,  'c' },
+			{"cpu",     no_argument, 0,  'c' },
+			{"memory",     no_argument, 0,  'm' },
+			{"header",     no_argument, 0,  'h' },
 			{0,         0,                 0,  0 }
 		};
 
-		char c = getopt_long(argc, argv, "c", long_options, &option_index);
+		char c = getopt_long(argc, argv, "cmh", long_options, &option_index);
 		if (c == -1)
 			break;
 		switch (c) {
-			case 0:
-				usage(argv[0]);
-				break;
-			case 'c':
-				snes.enableCPUDebugging();
-				break;
-			default:
-				break;
+		case 0:
+			usage(argv[0]);
+			break;
+		case 'c':
+			snes.enableCPUDebugging();
+			break;
+		case 'm':
+			snes.enableRamViewer();
+			break;
+		case 'h':
+			snes.enableHeaderViewer();
+			break;
+		default:
+			break;
 		}
 	}
 }

@@ -47,6 +47,10 @@ namespace ComSquare::Renderer
 		ramViewer->setShortcut(Qt::Key_F2);
 		QMainWindow::connect(ramViewer, &QAction::triggered, this->_sfWidget.get(), &QtFullSFML::enableRamViewer);
 		debugger->addAction(ramViewer);
+		QAction *headerViewer = new QAction("Header viewer", &this->_window);
+		headerViewer->setShortcut(Qt::Key_F3);
+		QMainWindow::connect(headerViewer, &QAction::triggered, this->_sfWidget.get(), &QtFullSFML::enableHeaderViewer);
+		debugger->addAction(headerViewer);
 
 		this->_window.show();
 	}
@@ -91,5 +95,10 @@ namespace ComSquare::Renderer
 	void QtFullSFML::enableRamViewer()
 	{
 		this->_snes.enableRamViewer();
+	}
+
+	void QtFullSFML::enableHeaderViewer()
+	{
+		this->_snes.enableHeaderViewer();
 	}
 }

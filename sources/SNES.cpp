@@ -43,7 +43,7 @@ namespace ComSquare
 		#endif
 	}
 
-	void SNES::disableRamDebugging()
+	void SNES::disableRamViewer()
 	{
 		#ifdef DEBUGGER_ENABLED
 			this->_ramViewer = nullptr;
@@ -55,5 +55,19 @@ namespace ComSquare
 		unsigned cycleCount = this->cpu->update();
 		this->ppu->update(cycleCount);
 		this->apu->update(cycleCount);
+	}
+
+	void SNES::enableHeaderViewer()
+	{
+		#ifdef DEBUGGER_ENABLED
+			this->_headerViewer = std::make_shared<Debugger::HeaderViewer>(*this->cartridge);
+		#endif
+	}
+
+	void SNES::disableHeaderViewer()
+	{
+		#ifdef DEBUGGER_ENABLED
+			this->_headerViewer = nullptr;
+		#endif
 	}
 }

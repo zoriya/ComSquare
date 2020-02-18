@@ -131,11 +131,12 @@ add_executable(ComSquare
         sources/Renderer/QtRenderer/QtWidgetSFML.hpp
         ui/cpu.ui
         ui/ramView.ui
+        ui/cartridgeView.ui
         resources/appResources.qrc
         sources/Utility/Utility.hpp
         sources/Debugger/MemoryViewer.cpp
         sources/Debugger/MemoryViewer.hpp
-        sources/Utility/Utility.cpp)
+        sources/Utility/Utility.cpp sources/Debugger/HeaderViewer.cpp sources/Debugger/HeaderViewer.hpp)
 
 target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)
 

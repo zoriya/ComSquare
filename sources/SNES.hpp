@@ -14,6 +14,8 @@
 #include "Renderer/IRenderer.hpp"
 #ifdef DEBUGGER_ENABLED
 #include "Debugger/MemoryViewer.hpp"
+#include "Debugger/HeaderViewer.hpp"
+
 #endif
 
 namespace ComSquare
@@ -22,7 +24,10 @@ namespace ComSquare
 	class SNES {
 #ifdef DEBUGGER_ENABLED
 	private:
+		//! @brief The window that allow the user to view a memory.
 		std::shared_ptr<Debugger::MemoryViewer> _ramViewer;
+		//! @brief The window that allow the user to view the cartridge's header.
+		std::shared_ptr<Debugger::HeaderViewer> _headerViewer;
 #endif
 	public:
 		//! @brief Cartridge containing instructions (ROM).
@@ -46,9 +51,13 @@ namespace ComSquare
 		//! @brief Enable the CPU's debugging window.
 		void enableCPUDebugging();
 		//! @brief Disable the Ram's debugging window.
-		void disableRamDebugging();
+		void disableRamViewer();
 		//! @brief Enable the Ram's debugging window.
 		void enableRamViewer();
+		//! @brief Disable the Header's debugging window.
+		void disableHeaderViewer();
+		//! @brief Enable the Header's debugging window.
+		void enableHeaderViewer();
 
 		//! @brief Create all the components using a common memory bus for all of them.
 		SNES(const std::shared_ptr<Memory::MemoryBus> &bus, const std::string &ramPath, Renderer::IRenderer &renderer);
