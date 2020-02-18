@@ -8,6 +8,7 @@
 #include <QtWidgets/QMainWindow>
 #include "../../ui/ui_ramView.h"
 #include "../Ram/Ram.hpp"
+#include <memory>
 
 using ComSquare::Ram::Ram;
 
