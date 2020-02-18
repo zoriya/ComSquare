@@ -11,9 +11,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-      - name: Install the Qt5.
+      - name: Install Qt5 and the dependencies of the SFML.
         run: sudo apt-get update &&
-          sudo apt-get install --yes qt5-default
+          sudo apt-get install --yes qt5-default libfreetype6-dev libxrandr-dev libudev-dev libogg-dev libflac-dev libvorbis-dev libopenal-dev freeglut3-dev
       - name: Install the SFML.
         run: |
           git clone https://github.com/SFML/SFML -b 2.5.x /tmp/sfml
