@@ -11,9 +11,16 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-      - name: Install the SFML and QT.
+      - name: Install the Qt5.
         run: sudo apt-get update &&
-          sudo apt-get install --yes libsfml-dev qt5-default
+          sudo apt-get install --yes qt5-default
+      - name: Install the SFML.
+        run: |
+          git clone https://github.com/SFML/SFML -b 2.5.x /tmp/sfml
+          cd /tmp/sfml
+          mkdir build
+          cd build
+          cmake .. && make -j 4 && sudo make install
       - name: Build Makefile with CMake
         run: mkdir -p build && cd build && cmake ..
       - name: Build with Makefile
