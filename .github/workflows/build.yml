@@ -1,4 +1,4 @@
-name: Build commit artifact
+name: Build for linux
 
 on:
   push:
@@ -11,9 +11,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-      - name: Install the SFML.
+      - name: Install the SFML and QT.
         run: sudo apt-get update &&
-          sudo apt-get install --yes libsfml-dev qt5
+          sudo apt-get install --yes libsfml-dev qt5-default
       - name: Build Makefile with CMake
         run: mkdir -p build && cd build && cmake ..
       - name: Build with Makefile
