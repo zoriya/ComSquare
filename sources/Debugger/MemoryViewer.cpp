@@ -26,26 +26,44 @@ int MemoryViewerModel::columnCount(const QModelIndex &parent) const
 
 QVariant MemoryViewerModel::data(const QModelIndex &index, int role) const
 {
+	if (role == Qt::TextAlignmentRole)
+		return Qt::AlignCenter;
 	if (role != Qt::DisplayRole)
 		return QVariant();
-	return QString(ComSquare::Utility::to_hex(this->_memory->read_internal((index.row() << 4u) + index.column())).c_str());
+	char buf[3];
+	snprintf(buf, 3, "%02X", this->_memory->read_internal((index.row() << 4u) + index.column()));
+	return QString(buf);
 }
 
 QVariant MemoryViewerModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
 	if (role != Qt::DisplayRole)
 		return QVariant();
-	if (orientation == Qt::Horizontal)
-		return QString(ComSquare::Utility::to_hex(static_cast<uint8_t>(section)).c_str());
-	else
-		return QString(ComSquare::Utility::to_hex(static_cast<uint16_t>(section)).c_str());
+	if (orientation == Qt::Horizontal) {
+		char buf[2];
+		snprintf(buf, 2, "%1X", section);
+		return QString(buf);
+	} else {
+		char buf[5];
+		snprintf(buf, 5, "%03Xx", section);
+		return QString(buf);
+	}
+}
+
+void MemoryViewerModel::setMemory(std::shared_ptr<Ram> memory)
+{
+	this->_memory = std::move(memory);
+	emit this->layoutChanged();
 }
 
 
 namespace ComSquare::Debugger
 {
 	MemoryViewer::MemoryViewer(ComSquare::SNES &snes) :
-		QMainWindow(), _snes(snes), _ui(), _model(snes.wram)
+		QMainWindow(),
+		_snes(snes),
+		_ui(),
+		_model(snes.wram)
 	{
 		this->setContextMenuPolicy(Qt::NoContextMenu);
 		this->setAttribute(Qt::WA_QuitOnClose, false);
@@ -53,6 +71,30 @@ namespace ComSquare::Debugger
 		this->_ui.setupUi(this);
 		this->_ui.tableView->setModel(&this->_model);
 		this->_ui.tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+		this->_ui.tabs->addTab("&WRam");
+		this->_ui.tabs->addTab("&SRam");
+		this->_ui.tabs->addTab("&Rom");
+//		this->_ui.tabs->addTab("&VRam");
+		QObject::connect(this->_ui.tabs, &QTabBar::currentChanged, this, &MemoryViewer::changeRam);
 		this->show();
+	}
+
+	void MemoryViewer::changeRam(int id)
+	{
+		switch (id) {
+		default:
+		case 0:
+			this->_model.setMemory(this->_snes.wram);
+			break;
+		case 1:
+			this->_model.setMemory(this->_snes.sram);
+			break;
+		case 2:
+			this->_model.setMemory(this->_snes.cartridge);
+			break;
+//		case 3:
+//			this->_model.setMemory(this->_snes.vram);
+//			break;
+		}
 	}
 }

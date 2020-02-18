@@ -16,15 +16,24 @@ class MemoryViewerModel : public QAbstractTableModel
 {
 Q_OBJECT
 private:
+	//! @brief The ram to watch.
 	std::shared_ptr<Ram> _memory;
 public:
+	//! @brief Change the ram currently watched.
+	void setMemory(std::shared_ptr<Ram> memory);
+
 	explicit MemoryViewerModel(std::shared_ptr<Ram> memory, QObject *parent = nullptr);
 	MemoryViewerModel(const MemoryViewerModel &) = delete;
 	const MemoryViewerModel &operator=(const MemoryViewerModel &) = delete;
 	~MemoryViewerModel() override = default;
+
+	//! @brief The number of row the table has.
 	int rowCount(const QModelIndex &parent) const override;
+	//! @brief The number of column the table has.
 	int columnCount(const QModelIndex &parent) const override;
+	//! @brief Return a data represneting the table cell.
 	QVariant data(const QModelIndex &index, int role) const override;
+	//! @brief Override the headers to use hex values.
 	QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
 };
 
@@ -44,6 +53,9 @@ namespace ComSquare
 			//! @brief The Ram visualizer model for QT.
 			MemoryViewerModel _model;
 		public:
+			//! @brief Callback called when a memory tab is selected.
+			void changeRam(int id);
+
 			explicit MemoryViewer(SNES &snes);
 			MemoryViewer(const MemoryViewer &) = delete;
 			MemoryViewer &operator=(const MemoryViewer &) = delete;

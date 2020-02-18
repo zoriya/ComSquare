@@ -10,7 +10,7 @@
 namespace ComSquare::Ram
 {
 	class Ram : public Memory::IRectangleMemory {
-	private:
+	protected:
 		//! @brief The ram. (Can be used for WRam, SRam, VRam etc)
 		uint8_t *_data;
 		//! @brief The size of the ram (iny bytes).

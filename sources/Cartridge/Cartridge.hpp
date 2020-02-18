@@ -10,6 +10,7 @@
 #include "../Models/Int24.hpp"
 #include "../Memory/IRectangleMemory.hpp"
 #include "InterruptVectors.hpp"
+#include "../Ram/Ram.hpp"
 
 namespace ComSquare::Cartridge
 {
@@ -63,12 +64,8 @@ namespace ComSquare::Cartridge
 	};
 
 	//! @brief Contains the rom's memory/instructions.
-	class Cartridge : public Memory::IRectangleMemory {
+	class Cartridge : public Ram::Ram {
 	private:
-		//! @brief The rom data (contains all the instructions).
-		uint8_t *_data;
-		//! @brief The size of the rom data.
-		size_t _size;
 		//! @brief Sometime the rom's data has an offset for a SMC header. This value indicate the start of the real rom discarding this header.
 		uint16_t _romStart = 0;
 
