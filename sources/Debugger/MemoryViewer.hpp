@@ -18,6 +18,8 @@ Q_OBJECT
 private:
 	//! @brief The ram to watch.
 	std::shared_ptr<Ram> _memory;
+	//! @brief The number of char inside the left header number.
+	int _headerIndentSize = 3;
 public:
 	//! @brief Change the ram currently watched.
 	void setMemory(std::shared_ptr<Ram> memory);

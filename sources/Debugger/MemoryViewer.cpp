@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <cmath>
 #include "MemoryViewer.hpp"
 #include "../SNES.hpp"
 #include "../Utility/Utility.hpp"
@@ -44,8 +45,8 @@ QVariant MemoryViewerModel::headerData(int section, Qt::Orientation orientation,
 		snprintf(buf, 2, "%1X", section);
 		return QString(buf);
 	} else {
-		char buf[5];
-		snprintf(buf, 5, "%03Xx", section);
+		char buf[6];
+		snprintf(buf, 6, "%0*Xx", this->_headerIndentSize, section);
 		return QString(buf);
 	}
 }
@@ -53,6 +54,7 @@ QVariant MemoryViewerModel::headerData(int section, Qt::Orientation orientation,
 void MemoryViewerModel::setMemory(std::shared_ptr<Ram> memory)
 {
 	this->_memory = std::move(memory);
+	this->_headerIndentSize = this->_memory->getSize() >= 0x10000 ? 4 : 3;
 	emit this->layoutChanged();
 }
 

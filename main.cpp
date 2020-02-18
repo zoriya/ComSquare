@@ -26,7 +26,7 @@ void parseArguments(int argc, char **argv, SNES &snes)
 			{0,         0,                 0,  0 }
 		};
 
-		char c = getopt_long(argc, argv, "c:pu-debug", long_options, &option_index);
+		char c = getopt_long(argc, argv, "c", long_options, &option_index);
 		if (c == -1)
 			break;
 		switch (c) {
