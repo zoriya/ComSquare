@@ -22,16 +22,25 @@ namespace ComSquare::CPU
 
 	void CPU::BRK()
 	{
-		// TODO rework this. The PC should be pushed to the stack.
-		// Info here: http://softpixel.com/~cwright/sianse/docs/65816NFO.HTM at BRK Software Break
-		this->_registers.pc += 2;
-
-		this->_registers.p.i = true;
-		if (this->_isEmulationMode)
+		if (this->_isEmulationMode) {
+			this->_registers.pc += 2;
+			this->_push(this->_registers.pc);
+			this->_registers.p.x_b = true;
+			this->_push(this->_registers.p.flags);
+			this->_registers.p.i = true;
+			this->_registers.p.d = false;
 			this->_registers.pc = this->_cartridgeHeader.emulationInterrupts.brk;
-		else
+
+		} else {
+			this->_push(this->_registers.pbr);
+			this->_registers.pc += 2;
+			this->_push(this->_registers.pc);
+			this->_push(this->_registers.p.flags);
+			this->_registers.p.i = true;
+			this->_registers.p.d = false;
+			this->_registers.pbr = 0x0;
 			this->_registers.pc = this->_cartridgeHeader.nativeInterrupts.brk;
-		this->_registers.p.d = false;
+		}
 	}
 
 	void CPU::RTI()

@@ -33,11 +33,6 @@ namespace ComSquare::Cartridge
 		}
 	}
 
-	Cartridge::~Cartridge()
-	{
-		delete[] this->_data;
-	}
-
 	size_t Cartridge::getRomSize(const std::string &romPath)
 	{
 		struct stat info;

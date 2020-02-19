@@ -91,7 +91,7 @@ namespace ComSquare::Cartridge
 		//! @brief The cartridge can't be assigned.
 		Cartridge &operator=(const Cartridge &) = delete;
 		//! @brief Destructor that free the cartridge data.
-		~Cartridge();
+		~Cartridge() = default;
 
 		//! @brief The header of the cartridge.
 		Header header;
