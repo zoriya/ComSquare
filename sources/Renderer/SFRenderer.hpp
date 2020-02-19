@@ -6,11 +6,12 @@
 #define COMSQUARE_SFRENDERER_HPP
 
 #include "IRenderer.hpp"
+#include "../SNES.hpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
-#include <SFML/Graphics//RenderWindow.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 
 namespace ComSquare::Renderer
 {
@@ -24,38 +25,43 @@ namespace ComSquare::Renderer
 	};
 
 	class SFRenderer : public IRenderer {
-	private:
+	protected:
 		//! @brief The Renderer for the window.
-		sf::RenderWindow window;
-		//! @brief Video Mode containing the height and width of the window.
-		sf::VideoMode videoMode;
+		sf::RenderWindow _window;
+		//! @brief Video Mode containing the _height and _width of the window.
+		sf::VideoMode _videoMode;
 		//! @brief The image that contain all of the pixels
-		sf::Color *pixelBuffer;
+		sf::Color *_pixelBuffer;
 		//! @brief The sprite to render the array of pixels
-		sf::Sprite sprite;
+		sf::Sprite _sprite;
 		//! @brief The texture to render the array of pixels
-		sf::Texture texture;
+		sf::Texture _texture;
 	public:
+		//! @brief Tells to the program if the window has been closed, and therefore if he should stop
+		bool shouldExit = false;
 		//! @brief Set a new name to the window, if there is already a name it will be overwrite.
 		//! @param newWindowName new title for the window.
-		void setWindowName(std::string newWindowName) override;
+		void setWindowName(std::string &newWindowName) override;
 		//! @brief Update the screen by printing the buffer.
 		void drawScreen() override;
 		//! @brief Add a pixel to the buffer to the coordinates x, y with the color rgba.
 		//! @param X horizontal index.
 		//! @param Y vertical index.
 		//! @param rgba The color of the pixel.
-		void putPixel(unsigned y, unsigned x, uint32_t rgba) override ;
+		void putPixel(unsigned y, unsigned x, uint32_t rgba) override;
 		//! @brief Get the inputs from the Window
 		void getEvents();
+		//! @brief Use this function to create the window.
+		//! @param snes The snes for the update (not implemented here).
+		//! @param maxFPS The number of FPS you aim to run on.
+		void createWindow(SNES &snes, int maxFPS) override;
 		//! @brief Constructor that return the window component of the SFML.
-		//! @param height height of the window.
-		//! @param width width of the window.
-		//! @param maxFPS the number of maximum FPS for the window.
-		SFRenderer(unsigned int height, unsigned int width, int maxFPS);
+		//! @param height _height of the window.
+		//! @param width _width of the window.
+		SFRenderer(unsigned int height, unsigned int width);
 		SFRenderer(const SFRenderer &) = delete;
 		SFRenderer &operator=(const SFRenderer &) = delete;
-		~SFRenderer() = default;
+		~SFRenderer();
 	};
 }
 

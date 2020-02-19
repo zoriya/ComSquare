@@ -96,7 +96,7 @@ namespace ComSquare::APU::DSP
 		uint8_t gain;
 		//! @brief Envelope value register
 		uint8_t envx;
-		//! @brief Wave height register
+		//! @brief Wave _height register
 		uint8_t outx;
 
 		//! @brief Echo FIR filter coefficients

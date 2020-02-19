@@ -1,4 +1,4 @@
-<p align="center"><img src="./ressources/Black.svg" width="400"></p>
+<p align="center"><img src="./resources/Black.svg" width="400"></p>
 
 <p align="center">
   <a href="./LICENSE"><img src="https://img.shields.io/github/license/AnonymusRaccoon/ComSquare?style=flat-square" alt="License"></a>

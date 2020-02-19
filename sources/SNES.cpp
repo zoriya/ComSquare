@@ -5,6 +5,9 @@
 #include <ios>
 #include <iostream>
 #include "SNES.hpp"
+#ifdef DEBUGGER_ENABLED
+	#include "Debugger/CPUDebug.hpp"
+#endif
 
 namespace ComSquare
 {
@@ -17,6 +20,54 @@ namespace ComSquare
 		sram(new Ram::Ram(this->cartridge->header.sramSize))
 	{
 		bus->mapComponents(*this);
-		renderer.setWindowName(this->cartridge->header.gameName);
+	}
+
+	void SNES::enableCPUDebugging()
+	{
+		#ifdef DEBUGGER_ENABLED
+			this->cpu = std::make_shared<Debugger::CPUDebug>(*this->cpu, *this);
+		#else
+			std::cerr << "Debugging features are not enabled. You can't enable the debugger." << std::endl;
+		#endif
+	}
+
+	void SNES::disableCPUDebugging()
+	{
+		this->cpu = std::make_shared<CPU::CPU>(*this->cpu);
+	}
+
+	void SNES::enableRamViewer()
+	{
+		#ifdef DEBUGGER_ENABLED
+			this->_ramViewer = std::make_shared<Debugger::MemoryViewer>(*this);
+		#endif
+	}
+
+	void SNES::disableRamViewer()
+	{
+		#ifdef DEBUGGER_ENABLED
+			this->_ramViewer = nullptr;
+		#endif
+	}
+
+	void SNES::update()
+	{
+		unsigned cycleCount = this->cpu->update();
+		this->ppu->update(cycleCount);
+		this->apu->update(cycleCount);
+	}
+
+	void SNES::enableHeaderViewer()
+	{
+		#ifdef DEBUGGER_ENABLED
+			this->_headerViewer = std::make_shared<Debugger::HeaderViewer>(*this->cartridge);
+		#endif
+	}
+
+	void SNES::disableHeaderViewer()
+	{
+		#ifdef DEBUGGER_ENABLED
+			this->_headerViewer = nullptr;
+		#endif
 	}
 }

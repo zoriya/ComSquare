@@ -12,7 +12,7 @@
 
 namespace ComSquare
 {
-	struct SNES;
+	class SNES;
 
 	namespace Memory
 	{

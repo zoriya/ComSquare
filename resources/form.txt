@@ -1,0 +1,35 @@
+Label.CPU {
+    HorizontalAlignment = Center;
+    Position = (320, 198.064);
+    ScrollbarPolicy = Never;
+    Size = (227.2, 109.935);
+    Text = "CPU Debugger ";
+    TextSize = 13;
+    VerticalAlignment = Center;
+
+    Renderer {
+        backgroundcolor = transparent;
+        bordercolor = #3C3C3C;
+        borders = (0, 0, 0, 0);
+        textcolor = #3C3C3C;
+        texturebackground = None;
+
+        scrollbar {
+            arrowbackgroundcolor = #F5F5F5;
+            arrowbackgroundcolorhover = white;
+            arrowcolor = #3C3C3C;
+            arrowcolorhover = black;
+            texturearrowdown = None;
+            texturearrowdownhover = None;
+            texturearrowup = None;
+            texturearrowuphover = None;
+            texturethumb = None;
+            texturethumbhover = None;
+            texturetrack = None;
+            texturetrackhover = None;
+            thumbcolor = #DCDCDC;
+            thumbcolorhover = #E6E6E6;
+            trackcolor = #F5F5F5;
+        }
+    }
+}

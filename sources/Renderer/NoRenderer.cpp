@@ -6,7 +6,7 @@
 
 namespace ComSquare::Renderer
 {
-	void NoRenderer::setWindowName(std::string newWindowName)
+	void NoRenderer::setWindowName(std::string &newWindowName)
 	{
 		(void)newWindowName;
 	}
@@ -26,6 +26,12 @@ namespace ComSquare::Renderer
 	{
 		(void)height;
 		(void)width;
+		(void)maxFPS;
+	}
+
+	void NoRenderer::createWindow(SNES &snes, int maxFPS)
+	{
+		(void)snes;
 		(void)maxFPS;
 	}
 }

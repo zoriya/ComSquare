@@ -11,7 +11,12 @@ namespace ComSquare::Ram
 	Ram::Ram(size_t size)
 		: _size(size)
 	{
-		this->_data = new uint8_t[size];
+		if (size == 0)
+			this->_data = nullptr;
+		else {
+			this->_data = new uint8_t[size];
+			std::memset(this->_data, 0, size * sizeof(uint8_t));
+		}
 	}
 
 	Ram::~Ram()
@@ -40,5 +45,10 @@ namespace ComSquare::Ram
 		if (start >= end)
 			throw InvalidAddress("Ram memset start", start);
 		std::memset(&this->_data[start], value, sizeof(uint8_t) * (end - start));
+	}
+
+	size_t Ram::getSize()
+	{
+		return this->_size;
 	}
 }

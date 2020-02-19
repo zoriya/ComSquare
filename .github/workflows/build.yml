@@ -1,4 +1,4 @@
-name: Build commit artifact
+name: Build for linux
 
 on:
   push:
@@ -11,9 +11,16 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-      - name: Install the SFML.
+      - name: Install Qt5 and the dependencies of the SFML.
         run: sudo apt-get update &&
-          sudo apt-get install --yes libsfml-dev
+          sudo apt-get install --yes qt5-default libfreetype6-dev libxrandr-dev libudev-dev libogg-dev libflac-dev libvorbis-dev libopenal-dev freeglut3-dev
+      - name: Install the SFML.
+        run: |
+          git clone https://github.com/SFML/SFML -b 2.5.x /tmp/sfml
+          cd /tmp/sfml
+          mkdir build
+          cd build
+          cmake .. && make -j 4 && sudo make install
       - name: Build Makefile with CMake
         run: mkdir -p build && cd build && cmake ..
       - name: Build with Makefile

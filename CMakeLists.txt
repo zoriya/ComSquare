@@ -48,8 +48,6 @@ add_executable(unit_tests
         sources/Cartridge/InterruptVectors.hpp
         sources/Memory/RectangleShadow.cpp
         sources/Memory/RectangleShadow.hpp
-        sources/CPU/Instructions/CommonInstructions.cpp
-        sources/CPU/Instructions/CommonInstructions.hpp
         sources/Exceptions/InvalidOpcode.hpp
         sources/CPU/Instructions/Interrupts.cpp
         sources/CPU/Instructions/MathematicalOperations.cpp
@@ -67,6 +65,11 @@ add_executable(unit_tests
         sources/CPU/Instructions/MemoryInstructions.cpp
         tests/CPU/Math/testADC.cpp
         tests/CPU/testStore.cpp
+        sources/CPU/Instructions/InternalInstruction.cpp
+        tests/CPU/testInternal.cpp
+        sources/Ram/ExtendedRam.cpp
+        sources/Ram/ExtendedRam.hpp
+        sources/Utility/Utility.hpp sources/Utility/Utility.cpp
         sources/APU/Instructions/Bit.cpp
 )
 
@@ -79,6 +82,10 @@ if ("${GITBUILD}" STREQUAL true)
     link_directories(ComSquare build/lib)
     message("Git build is true")
 endif ()
+
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
 
 # make app
 add_executable(ComSquare
@@ -117,8 +124,6 @@ add_executable(ComSquare
         sources/Cartridge/InterruptVectors.hpp
         sources/Memory/RectangleShadow.cpp
         sources/Memory/RectangleShadow.hpp
-        sources/CPU/Instructions/CommonInstructions.cpp
-        sources/CPU/Instructions/CommonInstructions.hpp
         sources/Exceptions/InvalidOpcode.hpp
         sources/CPU/Instructions/Interrupts.cpp
         sources/CPU/Instructions/MathematicalOperations.cpp
@@ -126,7 +131,28 @@ add_executable(ComSquare
         sources/APU/Instructions/ProgramStatusWord.cpp
         sources/APU/Instructions/Bit.cpp
         sources/CPU/Instructions/MathematicalOperations.cpp
-        sources/CPU/Instructions/MemoryInstructions.cpp)
+        sources/CPU/Instructions/MemoryInstructions.cpp
+        sources/CPU/Instructions/InternalInstruction.cpp
+        sources/Ram/ExtendedRam.cpp
+        sources/Ram/ExtendedRam.hpp
+        sources/Debugger/CPUDebug.cpp
+        sources/Debugger/CPUDebug.hpp
+        sources/Renderer/QtRenderer/QtSFML.cpp
+        sources/Renderer/QtRenderer/QtSFML.hpp
+        sources/Renderer/QtRenderer/QtWidgetSFML.cpp
+        sources/Renderer/QtRenderer/QtWidgetSFML.hpp
+        ui/cpu.ui
+        ui/ramView.ui
+        ui/cartridgeView.ui
+        resources/appResources.qrc
+        sources/Utility/Utility.hpp
+        sources/Debugger/MemoryViewer.cpp
+        sources/Debugger/MemoryViewer.hpp
+        sources/Utility/Utility.cpp sources/Debugger/HeaderViewer.cpp sources/Debugger/HeaderViewer.hpp)
+
+target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)
+
+find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
 target_link_libraries(ComSquare
         sfml-graphics
@@ -134,4 +160,5 @@ target_link_libraries(ComSquare
         sfml-system
         sfml-audio
         sfml-network
+        Qt5::Widgets
 )
