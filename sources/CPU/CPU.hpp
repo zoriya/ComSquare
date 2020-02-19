@@ -186,6 +186,7 @@ namespace ComSquare::CPU
 	enum Instructions
 	{
 		BRK = 0x00,
+		COP = 0x02,
 		RTI = 0x40,
 
 		ADC_DPXi = 0x61,
@@ -365,6 +366,8 @@ namespace ComSquare::CPU
 
 		//! @brief Break instruction - Causes a software break. The PC is loaded from a vector table.
 		void BRK();
+		//! @brief Co-Processor Enable instruction - Causes a software break. The PC is loaded from a vector table.
+		void COP();
 		//! @brief Return from Interrupt - Used to return from a interrupt handler.
 		void RTI();
 		//! @brief Add with carry - Adds operand to the Accumulator; adds an additional 1 if carry is set.

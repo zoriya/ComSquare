@@ -201,6 +201,8 @@ namespace ComSquare::CPU
 		switch (opcode) {
 		case Instructions::BRK:      this->BRK(); return 7 + !this->_isEmulationMode;
 
+		case Instructions::COP:      this->COP(); return 7 + !this->_isEmulationMode;
+
  		case Instructions::RTI:	     this->RTI(); return 6 + !this->_isEmulationMode;
 
 		case Instructions::ADC_IM:   this->ADC(this->_getImmediateAddr()); 						return 2 + !this->_registers.p.m;
