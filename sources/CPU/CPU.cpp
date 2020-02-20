@@ -306,6 +306,22 @@ namespace ComSquare::CPU
 		case Instructions::CLD: this->CLD(); return 2;
 		case Instructions::CLV: this->CLV(); return 2;
 
+		case Instructions::AND_IM:   this->AND(this->_getImmediateAddr()); 						return 2 + !this->_registers.p.m;
+		case Instructions::AND_ABS:  this->AND(this->_getAbsoluteAddr()); 						return 4 + !this->_registers.p.m;
+		case Instructions::AND_ABSl: this->AND(this->_getAbsoluteLongAddr()); 					return 5 + !this->_registers.p.m;
+		case Instructions::AND_DP:   this->AND(this->_getDirectAddr()); 							return 3 + !this->_registers.p.m + this->_registers.dl != 0;
+		case Instructions::AND_DPi:  this->AND(this->_getDirectIndirectAddr()); 					return 5 + !this->_registers.p.m + this->_registers.dl != 0;
+		case Instructions::AND_DPil: this->AND(this->_getDirectIndirectLongAddr()); 				return 6 + !this->_registers.p.m + this->_registers.dl != 0;
+		case Instructions::AND_ABSX: this->AND(this->_getAbsoluteIndexedByXAddr()); 				return 4 + !this->_registers.p.m + this->_hasIndexCrossedPageBoundary;
+		case Instructions::AND_ABSXl:this->AND(this->_getAbsoluteIndexedByXLongAddr()); 			return 5 + !this->_registers.p.m;
+		case Instructions::AND_ABSY: this->AND(this->_getAbsoluteIndexedByYAddr()); 				return 4 + !this->_registers.p.m + this->_hasIndexCrossedPageBoundary;
+		case Instructions::AND_DPX:  this->AND(this->_getDirectIndexedByXAddr()); 				return 4 + !this->_registers.p.m + this->_registers.dl != 0;
+		case Instructions::AND_DPXi: this->AND(this->_getDirectIndirectIndexedXAddr());			return 6 + !this->_registers.p.m + this->_registers.dl != 0;
+		case Instructions::AND_DPYi: this->AND(this->_getDirectIndirectIndexedYAddr()); 			return 5 + !this->_registers.p.m + this->_registers.dl != 0 + this->_hasIndexCrossedPageBoundary;
+		case Instructions::AND_DPYil:this->AND(this->_getDirectIndirectIndexedYLongAddr()); 		return 6 + !this->_registers.p.m + this->_registers.dl != 0;
+		case Instructions::AND_SR:   this->AND(this->_getStackRelativeAddr()); 					return 4 + !this->_registers.p.m;
+		case Instructions::AND_SRYi: this->AND(this->_getStackRelativeIndirectIndexedYAddr()); 	return 7 + !this->_registers.p.m;
+
 		default:
 			throw InvalidOpcode("CPU", opcode);
 		}

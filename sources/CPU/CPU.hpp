@@ -288,7 +288,23 @@ namespace ComSquare::CPU
 		CLC = 0x18,
 		CLI = 0x58,
 		CLD = 0xD8,
-		CLV = 0xB8
+		CLV = 0xB8,
+
+		AND_IM = 0x29,
+		AND_ABS = 0x2D,
+		AND_ABSl = 0x2F,
+		AND_DP = 0x25,
+		AND_DPi = 0x32,
+		AND_DPil = 0x27,
+		AND_ABSX = 0x3D,
+		AND_ABSXl = 0x3F,
+		AND_ABSY = 0x39,
+		AND_DPX = 0x35,
+		AND_DPXi = 0x21,
+		AND_DPYi = 0x31,
+		AND_DPYil = 0x37,
+		AND_SR = 0x23,
+		AND_SRYi = 0x33
 	};
 
 	//! @brief The main CPU
@@ -429,6 +445,8 @@ namespace ComSquare::CPU
 		void CLD();
 		//! @brief Clear the overflow flag.
 		void CLV();
+		//! @brief And accumulator with memory.
+		void AND(uint24_t valueAddr);
 	public:
 		explicit CPU(std::shared_ptr<Memory::MemoryBus> bus, Cartridge::Header &cartridgeHeader);
 		CPU(const CPU &) = default;

@@ -63,7 +63,7 @@ add_executable(unit_tests
         tests/CPU/testInternal.cpp
         sources/Ram/ExtendedRam.cpp
         sources/Ram/ExtendedRam.hpp
-        sources/Utility/Utility.hpp sources/Utility/Utility.cpp)
+        sources/Utility/Utility.hpp sources/Utility/Utility.cpp sources/CPU/Instructions/BitsInstructions.cpp tests/CPU/testBits.cpp)
 
 # include criterion & coverage
 target_link_libraries(unit_tests criterion -lgcov)
@@ -136,7 +136,7 @@ add_executable(ComSquare
         sources/Utility/Utility.hpp
         sources/Debugger/MemoryViewer.cpp
         sources/Debugger/MemoryViewer.hpp
-        sources/Utility/Utility.cpp sources/Debugger/HeaderViewer.cpp sources/Debugger/HeaderViewer.hpp)
+        sources/Utility/Utility.cpp sources/Debugger/HeaderViewer.cpp sources/Debugger/HeaderViewer.hpp sources/CPU/Instructions/BitsInstructions.cpp)
 
 target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)
 
