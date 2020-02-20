@@ -218,6 +218,22 @@ namespace ComSquare::Debugger
 		case Instructions::CLD: return "CLD";
 		case Instructions::CLV: return "CLV";
 
+		case Instructions::AND_IM:   return "AND";
+		case Instructions::AND_ABS:  return "AND";
+		case Instructions::AND_ABSl: return "AND";
+		case Instructions::AND_DP:   return "AND";
+		case Instructions::AND_DPi:  return "AND";
+		case Instructions::AND_DPil: return "AND";
+		case Instructions::AND_ABSX: return "AND";
+		case Instructions::AND_ABSXl:return "AND";
+		case Instructions::AND_ABSY: return "AND";
+		case Instructions::AND_DPX:  return "AND";
+		case Instructions::AND_DPXi: return "AND";
+		case Instructions::AND_DPYi: return "AND";
+		case Instructions::AND_DPYil:return "AND";
+		case Instructions::AND_SR:   return "AND";
+		case Instructions::AND_SRYi: return "AND";
+
 		default: return "Unknown";
 		}
 	}
