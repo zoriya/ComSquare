@@ -64,10 +64,15 @@ namespace ComSquare::APU::DSP
 		//! @brief Left channel volume register
 		uint8_t volR;
 
-		//! @brief Lower 8 bits of pitch register
-		uint8_t pitchL;
-		//! @brief Higher 8 bits of pitch register
-		uint8_t pitchH;
+		union {
+			struct {
+				//! @brief Lower 8 bits of pitch register
+				uint8_t pitchL;
+				//! @brief Higher 8 bits of pitch register
+				uint8_t pitchH;
+			};
+			uint16_t pitch;
+		};
 
 		//! @brief Key On register
 		bool kon : 1;
@@ -88,15 +93,20 @@ namespace ComSquare::APU::DSP
 		//! @brief Source number register
 		uint8_t srcn;
 
-		//! @brief Envelope register
-		uint8_t adsr1;
-		//! @brief Envelope controllers register
-		uint8_t adsr2;
+		union {
+			struct {
+				//! @brief Envelope register
+				uint8_t adsr1;
+				//! @brief Envelope controllers register
+				uint8_t adsr2;
+			};
+			uint16_t envelope;
+		};
 		//! @brief Gain register
 		uint8_t gain;
 		//! @brief Envelope value register
 		uint8_t envx;
-		//! @brief Wave _height register
+		//! @brief Wave height register
 		uint8_t outx;
 
 		//! @brief Echo FIR filter coefficients
@@ -115,6 +125,10 @@ namespace ComSquare::APU::DSP
 		DSP(const DSP &) = default;
 		DSP &operator=(const DSP &) = default;
 		~DSP() = default;
+
+		Registers getRegisters();
+
+		std::array<Channel, 8> getChannels();
 
 		//! @brief Read from the internal DSP register.
 		//! @param addr The address to read from. The address 0x0 should refer to the first byte of the register.

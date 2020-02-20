@@ -144,11 +144,17 @@ add_executable(ComSquare
         ui/cpu.ui
         ui/ramView.ui
         ui/cartridgeView.ui
+        ui/apuView.ui
         resources/appResources.qrc
         sources/Utility/Utility.hpp
         sources/Debugger/MemoryViewer.cpp
         sources/Debugger/MemoryViewer.hpp
-        sources/Utility/Utility.cpp sources/Debugger/HeaderViewer.cpp sources/Debugger/HeaderViewer.hpp)
+        sources/Utility/Utility.cpp
+        sources/Debugger/HeaderViewer.cpp
+        sources/Debugger/HeaderViewer.hpp
+        sources/Debugger/APUDebug.hpp
+        sources/Debugger/APUDebug.cpp
+)
 
 target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)
 

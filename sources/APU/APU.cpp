@@ -3,6 +3,7 @@
 //
 
 #include <cstring>
+#include <iostream>
 #include "APU.hpp"
 #include "../Exceptions/NotImplementedException.hpp"
 #include "../Exceptions/InvalidAddress.hpp"
@@ -10,7 +11,9 @@
 
 namespace ComSquare::APU
 {
-	APU::APU() : _dsp(new DSP::DSP)
+	APU::APU(std::shared_ptr<MemoryMap> &map) :
+		_map(map),
+		_dsp(new DSP::DSP)
 	{
 		this->reset();
 	}
@@ -18,7 +21,7 @@ namespace ComSquare::APU
 	uint8_t APU::_internalRead(uint24_t addr) {
 		switch (addr) {
 		case 0x0000 ... 0x00EF:
-			return this->_map.Page0.read_internal(addr);
+			return this->_map->Page0.read_internal(addr);
 		case 0xF0:
 			return this->_registers.unknown;
 		case 0xF2:
@@ -44,11 +47,11 @@ namespace ComSquare::APU
 		case 0xFF:
 			return this->_registers.counter2;
 		case 0x0100 ... 0x01FF:
-			return this->_map.Page1.read_internal(addr - 0x0100);
+			return this->_map->Page1.read_internal(addr - 0x0100);
 		case 0x0200 ... 0xFFBF:
-			return this->_map.Memory.read_internal(addr - 0x200);
+			return this->_map->Memory.read_internal(addr - 0x200);
 		case 0xFFC0 ... 0xFFFF:
-			return this->_map.IPL.read_internal(addr - 0xFFC0);
+			return this->_map->IPL.read_internal(addr - 0xFFC0);
 		default:
 			throw InvalidAddress("APU Registers read", addr);
 		}
@@ -57,7 +60,7 @@ namespace ComSquare::APU
 	void APU::_internalWrite(uint24_t addr, uint8_t data) {
 		switch (addr) {
 		case 0x0000 ... 0x00EF:
-			this->_map.Page0.write_internal(addr, data);
+			this->_map->Page0.write_internal(addr, data);
 			break;
 		case 0xF0:
 			this->_registers.unknown = data;
@@ -99,13 +102,13 @@ namespace ComSquare::APU
 			this->_registers.timer2 = data;
 			break;
 		case 0x0100 ... 0x01FF:
-			this->_map.Page1.write_internal(addr - 0x0100, data);
+			this->_map->Page1.write_internal(addr - 0x0100, data);
 			break;
 		case 0x0200 ... 0xFFBF:
-			this->_map.Memory.write_internal(addr - 0x200, data);
+			this->_map->Memory.write_internal(addr - 0x200, data);
 			break;
 		case 0xFFC0 ... 0xFFFF:
-			this->_map.IPL.write_internal(addr - 0xFFC0, data);
+			this->_map->IPL.write_internal(addr - 0xFFC0, data);
 			break;
 		default:
 			throw InvalidAddress("APU Registers write", addr);
@@ -152,9 +155,9 @@ namespace ComSquare::APU
 	{
 	}
 
-	int APU::executeInstruction()
+	int APU::_executeInstruction()
 	{
-		uint8_t opcode = this->_internalRead(this->_internalRegisters.pc++);
+		uint8_t opcode = this->_internalRead(this->_internalRegisters.pc);
 
 		switch (opcode) {
 		case 0x00:
@@ -222,7 +225,7 @@ namespace ComSquare::APU
 
 		cycles -= this->_paddingCycles;
 		while (total < cycles && this->_state == Running)
-			total += this->executeInstruction();
+			total += this->_executeInstruction();
 		if (this->_state == Running)
 			this->_paddingCycles = total - cycles;
 	}

@@ -51,6 +51,10 @@ namespace ComSquare::Renderer
 		headerViewer->setShortcut(Qt::Key_F3);
 		QMainWindow::connect(headerViewer, &QAction::triggered, this->_sfWidget.get(), &QtFullSFML::enableHeaderViewer);
 		debugger->addAction(headerViewer);
+		QAction *apuDebugger = new QAction("APU's Debugger", &this->_window);
+		apuDebugger->setShortcut(Qt::Key_F4);
+		QMainWindow::connect(apuDebugger, &QAction::triggered, this->_sfWidget.get(), &QtFullSFML::enableDebugAPU);
+		debugger->addAction(apuDebugger);
 
 		this->_window.show();
 	}
@@ -100,5 +104,10 @@ namespace ComSquare::Renderer
 	void QtFullSFML::enableHeaderViewer()
 	{
 		this->_snes.enableHeaderViewer();
+	}
+
+	void QtFullSFML::enableDebugAPU()
+	{
+		this->_snes.enableAPUDebugging();
 	}
 }

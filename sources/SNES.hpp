@@ -32,16 +32,18 @@ namespace ComSquare
 	public:
 		//! @brief Cartridge containing instructions (ROM).
 		std::shared_ptr<Cartridge::Cartridge> cartridge;
+		//! @brief Work Ram shared by all the components.
+		std::shared_ptr<Ram::Ram> wram;
+		//! @brief Save Ram residing inside the Cartridge in a real SNES.
+		std::shared_ptr<Ram::Ram> sram;
+		//! @brief External Ram used only by the Audio Processing Unit
+		std::shared_ptr<APU::MemoryMap> apuRam;
 		//! @brief Central Processing Unit of the SNES.
 		std::shared_ptr<CPU::CPU> cpu;
 		//! @brief Picture Processing Unit of the SNES
 		std::shared_ptr<PPU::PPU> ppu;
 		//! @brief Audio Processing Unit if the SNES
 		std::shared_ptr<APU::APU> apu;
-		//! @brief Work Ram shared by all the components.
-		std::shared_ptr<Ram::Ram> wram;
-		//! @brief Save Ram residing inside the Cartridge in a real SNES.
-		std::shared_ptr<Ram::Ram> sram;
 
 		//! @brief Call this function to update all the components
 		void update();
@@ -58,6 +60,10 @@ namespace ComSquare
 		void disableHeaderViewer();
 		//! @brief Enable the Header's debugging window.
 		void enableHeaderViewer();
+		//! @brief Disable the APU's debugging window.
+		void disableAPUDebugging();
+		//! @brief Enable the APU's debugging window.
+		void enableAPUDebugging();
 
 		//! @brief Create all the components using a common memory bus for all of them.
 		SNES(const std::shared_ptr<Memory::MemoryBus> &bus, const std::string &ramPath, Renderer::IRenderer &renderer);

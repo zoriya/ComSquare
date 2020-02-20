@@ -126,17 +126,20 @@ namespace ComSquare::APU
 		Ram::Ram IPL;
 
 		MemoryMap();
+		MemoryMap(const MemoryMap &) = delete;
+		MemoryMap &operator=(const MemoryMap &) = delete;
+		~MemoryMap() = default;
 	};
 
 	class APU : public Memory::IMemory {
-	private:
+	protected:
 		//! @brief All the registers of the APU CPU
 		Registers _registers{};
 		//! @brief Internal registers of the CPU (accessible from the bus via addr $4200 to $421F).
 		InternalRegisters _internalRegisters{};
 
 		//! @brief Internal APU memory separated according to their utility
-		MemoryMap _map;
+		std::shared_ptr<MemoryMap> _map;
 
 		//! @brief The DSP component used to produce sound
 		std::shared_ptr<DSP::DSP> _dsp;
@@ -165,7 +168,7 @@ namespace ComSquare::APU
 
 		//! @brief Execute a single instruction.
 		//! @return The number of cycles that the instruction took.
-		int executeInstruction();
+		virtual int _executeInstruction();
 
 		//! @brief No Operation instruction, do nothing than delay
 		int NOP();
@@ -198,7 +201,7 @@ namespace ComSquare::APU
 		//! @brief test set 1-bit instruction, Test and set bits with absolute address
 		int TSET1(uint24_t abs);
 	public:
-		explicit APU();
+		explicit APU(std::shared_ptr<MemoryMap> &map);
 		APU(const APU &) = default;
 		APU &operator=(const APU &) = default;
 		~APU() = default;
@@ -215,7 +218,7 @@ namespace ComSquare::APU
 		void write(uint24_t addr, uint8_t data) override;
 		//! @brief This function execute the instructions received until the maximum number of cycles is reached.
 		//! @return The number of cycles that elapsed.
-		void update(unsigned cycles);
+		virtual void update(unsigned cycles);
 
 		//! @brief This function is executed when the SNES is powered on or the reset button is pushed.
 		void reset();
