@@ -183,7 +183,7 @@ Test(executeInstruction, Valid)
 	uint8_t result = 0;
 
 	apu->_internalRegisters.pc = 0x00;
-	result = apu->executeInstruction();
+	result = apu->_executeInstruction();
 	cr_assert_eq(result, 2);
 }
 
@@ -192,7 +192,7 @@ Test(executeInstruction, Invalid)
 	auto apu = Init().second.apu;
 
 	apu->_internalRegisters.pc = 0xFFFF;
-	cr_assert_throw(apu->executeInstruction(), InvalidOpcode);
+	cr_assert_throw(apu->_executeInstruction(), InvalidOpcode);
 }
 
 ///////////////////////

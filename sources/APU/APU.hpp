@@ -165,6 +165,8 @@ namespace ComSquare::APU
 		uint24_t _getDirectAddr();
 		//! @brief Get absolute direct page offset
 		uint24_t _getAbsoluteAddr();
+		//! @brief Get absolute offset and separate its bits
+		std::pair<uint24_t, uint24_t> _getAbsoluteBit();
 
 		//! @brief Execute a single instruction.
 		//! @return The number of cycles that the instruction took.
@@ -200,6 +202,18 @@ namespace ComSquare::APU
 		int CLR1(uint24_t dp, uint8_t bit);
 		//! @brief test set 1-bit instruction, Test and set bits with absolute address
 		int TSET1(uint24_t abs);
+		//! @brief test clear 1-bit instruction, Test and clear bits with absolute address
+		int TCLR1(uint24_t abs);
+		//! @brief Performs a bitwise AND on the value or inverse value of the specified bit with Carry flag and stores the result in the Carry flag.
+		int AND1(std::pair<uint24_t, uint24_t> operand, bool invert = false);
+		//! @brief Performs a bitwise OR on the value or inverse value of the specified bit with Carry flag and stores the result in the Carry flag.
+		int OR1(std::pair<uint24_t, uint24_t> operand, bool invert = false);
+		//! @brief Performs a exclusive OR on the value of the bit specified with Carry flag and stores the result in the Carry flag.
+		int EOR1(std::pair<uint24_t, uint24_t> operand);
+		//! @brief Performs a logical NOT on the value of the specified bit and stores the result.
+		int NOT1(std::pair<uint24_t, uint24_t> operand);
+		//! @brief Either moves the specified bit into carry or moves carry into the specified bit.
+		int MOV1(std::pair<uint24_t, uint24_t> operand, bool to_carry = false);
 	public:
 		explicit APU(std::shared_ptr<MemoryMap> &map);
 		APU(const APU &) = default;

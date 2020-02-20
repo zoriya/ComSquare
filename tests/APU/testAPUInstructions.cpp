@@ -185,3 +185,158 @@ Test(Bit, TSET1)
 	cr_assert_eq(apu->_internalRegisters.z, false);
 	cr_assert_eq(result, 6);
 }
+
+Test(Bit, TCLR1)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.a = 0x80;
+	apu->_internalRegisters.pc = 0x32;
+	apu->_internalWrite(0x32, 0b00001111);
+	apu->_internalWrite(0x33, 0b11110000);
+	apu->_internalWrite(apu->_getAbsoluteAddr(), 0x80);
+	apu->_internalRegisters.pc -= 2;
+	result = apu->TCLR1(apu->_getAbsoluteAddr());
+	apu->_internalRegisters.pc -= 2;
+	cr_assert_eq(apu->_internalRead(apu->_getAbsoluteAddr()), 0x00);
+	cr_assert_eq(apu->_internalRegisters.n, true);
+	cr_assert_eq(apu->_internalRegisters.z, false);
+	cr_assert_eq(result, 6);
+}
+
+Test(Bit, AND1)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.a = 42;
+	apu->_internalRegisters.pc = 0x32;
+	apu->_internalWrite(0x32, 0b00001111);
+	apu->_internalWrite(0x33, 0b11110000);
+	apu->_internalWrite(apu->_getAbsoluteAddr() & 0x1FFFu, 123);
+	apu->_internalRegisters.pc -= 2;
+	result = apu->AND1(apu->_getAbsoluteBit());
+	apu->_internalRegisters.pc -= 2;
+	cr_assert_eq(apu->_internalRegisters.c, false);
+	cr_assert_eq(result, 4);
+}
+
+Test(Bit, AND1_invert)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.a = 42;
+	apu->_internalRegisters.pc = 0x32;
+	apu->_internalWrite(0x32, 0b00001111);
+	apu->_internalWrite(0x33, 0b11110000);
+	apu->_internalWrite(apu->_getAbsoluteAddr() & 0x1FFFu, 123);
+	apu->_internalRegisters.pc -= 2;
+	result = apu->AND1(apu->_getAbsoluteBit(), true);
+	apu->_internalRegisters.pc -= 2;
+	cr_assert_eq(apu->_internalRegisters.c, false);
+	cr_assert_eq(result, 4);
+}
+
+Test(Bit, OR1)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.a = 42;
+	apu->_internalRegisters.pc = 0x32;
+	apu->_internalWrite(0x32, 0b00001111);
+	apu->_internalWrite(0x33, 0b11110000);
+	apu->_internalWrite(apu->_getAbsoluteAddr() & 0x1FFFu, 123);
+	apu->_internalRegisters.pc -= 2;
+	result = apu->OR1(apu->_getAbsoluteBit());
+	apu->_internalRegisters.pc -= 2;
+	cr_assert_eq(apu->_internalRegisters.c, false);
+	cr_assert_eq(result, 5);
+}
+
+Test(Bit, OR1_invert)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.a = 42;
+	apu->_internalRegisters.pc = 0x32;
+	apu->_internalWrite(0x32, 0b00001111);
+	apu->_internalWrite(0x33, 0b11110000);
+	apu->_internalWrite(apu->_getAbsoluteAddr() & 0x1FFFu, 123);
+	apu->_internalRegisters.pc -= 2;
+	result = apu->OR1(apu->_getAbsoluteBit(), true);
+	apu->_internalRegisters.pc -= 2;
+	cr_assert_eq(apu->_internalRegisters.c, true);
+	cr_assert_eq(result, 5);
+}
+
+Test(Bit, EOR1)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.a = 42;
+	apu->_internalRegisters.pc = 0x32;
+	apu->_internalWrite(0x32, 0b00001111);
+	apu->_internalWrite(0x33, 0b11110000);
+	apu->_internalWrite(apu->_getAbsoluteAddr() & 0x1FFFu, 123);
+	apu->_internalRegisters.pc -= 2;
+	result = apu->EOR1(apu->_getAbsoluteBit());
+	apu->_internalRegisters.pc -= 2;
+	cr_assert_eq(apu->_internalRegisters.c, false);
+	cr_assert_eq(result, 5);
+}
+
+Test(Bit, NOT1)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.a = 42;
+	apu->_internalRegisters.pc = 0x32;
+	apu->_internalWrite(0x32, 0b00001111);
+	apu->_internalWrite(0x33, 0b11110000);
+	apu->_internalWrite(apu->_getAbsoluteAddr() & 0x1FFFu, 123);
+	apu->_internalRegisters.pc -= 2;
+	result = apu->NOT1(apu->_getAbsoluteBit());
+	apu->_internalRegisters.pc -= 2;
+	cr_assert_eq(apu->_internalRegisters.c, false);
+	cr_assert_eq(result, 5);
+}
+
+Test(Bit, MOV1)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.a = 42;
+	apu->_internalRegisters.pc = 0x32;
+	apu->_internalWrite(0x32, 0b00001111);
+	apu->_internalWrite(0x33, 0b11110000);
+	apu->_internalWrite(apu->_getAbsoluteAddr() & 0x1FFFu, 123);
+	apu->_internalRegisters.pc -= 2;
+	result = apu->MOV1(apu->_getAbsoluteBit());
+	apu->_internalRegisters.pc -= 2;
+	cr_assert_eq(apu->_internalRead(apu->_getAbsoluteAddr() & 0x1FFFu), 123);
+	cr_assert_eq(result, 6);
+}
+
+Test(Bit, MOV1_carry)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.a = 42;
+	apu->_internalRegisters.pc = 0x32;
+	apu->_internalWrite(0x32, 0b00001111);
+	apu->_internalWrite(0x33, 0b11110000);
+	apu->_internalWrite(apu->_getAbsoluteAddr() & 0x1FFFu, 123);
+	apu->_internalRegisters.pc -= 2;
+	result = apu->MOV1(apu->_getAbsoluteBit(), true);
+	apu->_internalRegisters.pc -= 2;
+	cr_assert_eq(apu->_internalRegisters.c, false);
+	cr_assert_eq(result, 4);
+}
