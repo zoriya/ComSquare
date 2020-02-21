@@ -72,6 +72,7 @@ add_executable(unit_tests
         sources/Utility/Utility.hpp sources/Utility/Utility.cpp
         sources/APU/Instructions/Bit.cpp
         sources/APU/Instructions/Stack.cpp
+        sources/APU/Instructions/Subroutine.cpp
 )
 
 # include criterion & coverage
@@ -156,6 +157,7 @@ add_executable(ComSquare
         sources/Debugger/APUDebug.hpp
         sources/Debugger/APUDebug.cpp
         sources/APU/Instructions/Stack.cpp
+        sources/APU/Instructions/Subroutine.cpp
 )
 
 target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)

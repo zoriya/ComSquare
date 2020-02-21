@@ -219,6 +219,19 @@ namespace ComSquare::APU
 		int PUSH(uint8_t value);
 		//! @brief Increment SP Register and pop a single value from the stack.
 		int POP(uint8_t &destination);
+
+		//! @brief Push PC of the next instruction on the stack, then jump to the address at the specified location.
+		int CALL(uint24_t abs);
+		//! @brief Perform a call in the upper page of memory, read PC Register and add 0xFF00 to it.
+		int PCALL();
+		//! @brief Performs a call on one of the 16 vectors in the memory range of $FFC0 to $FFDF.
+		int TCALL(uint8_t bit);
+		//! @brief Cause a software interrupt.
+		int BRK();
+		//! @brief Return from subroutine.
+		int RET();
+		//! @brief Return from interrupt.
+		int RETI();
 	public:
 		explicit APU(std::shared_ptr<MemoryMap> &map);
 		APU(const APU &) = default;

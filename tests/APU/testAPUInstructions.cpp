@@ -4,9 +4,11 @@
 
 #include <criterion/criterion.h>
 #include <iostream>
+#include <bitset>
 #include "../tests.hpp"
 #include "../../sources/SNES.hpp"
 #include "../../sources/APU/APU.hpp"
+#include "../../sources/Utility/Utility.hpp"
 
 using namespace ComSquare;
 
@@ -347,7 +349,7 @@ Test(Bit, MOV1_carry)
 //			   //
 /////////////////
 
-Test(Stack, push)
+Test(Stack, PUSH)
 {
 	auto apu = Init().second.apu;
 	int result = 0;
@@ -359,7 +361,7 @@ Test(Stack, push)
 	cr_assert_eq(apu->_internalRead(apu->_internalRegisters.sp | 0x100u), 56);
 }
 
-Test(Stack, pop)
+Test(Stack, POP)
 {
 	auto apu = Init().second.apu;
 	int result = 0;
@@ -369,4 +371,97 @@ Test(Stack, pop)
 	result = apu->POP(apu->_internalRegisters.y);
 	cr_assert_eq(result, 4);
 	cr_assert_eq(apu->_internalRegisters.y, 82);
+}
+
+//////////////////////
+//					//
+// Subroutine tests //
+//					//
+//////////////////////
+
+Test(Subroutine, CALL)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalWrite(apu->_getAbsoluteAddr(), 23);
+	apu->_internalRegisters.pc -= 2;
+	result = apu->CALL(apu->_getAbsoluteAddr());
+	cr_assert_eq(result, 8);
+	cr_assert_eq(apu->_internalRegisters.pc, 23);
+	cr_assert_eq(apu->_internalRead(++apu->_internalRegisters.sp + 0x0100u), 2);
+	cr_assert_eq(apu->_internalRead(++apu->_internalRegisters.sp + 0x0100u), 0);
+}
+
+Test(Subroutine, PCALL)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalWrite(apu->_internalRegisters.pc, 123);
+	result = apu->PCALL();
+	cr_assert_eq(result, 6);
+	cr_assert_eq(apu->_internalRegisters.pc, 65403);
+}
+
+Test(Subroutine, TCALL)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalWrite(0xFFD0, 45);
+	result = apu->TCALL(7);
+	cr_assert_eq(result, 8);
+	cr_assert_eq(apu->_internalRegisters.pc, 45);
+}
+
+Test(Subroutine, BRK)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.pch = 0xFF;
+	apu->_internalRegisters.pcl = 0xEE;
+	apu->_internalRegisters.psw = 0xDD;
+	apu->_internalWrite(0xFFDF, 0xAA);
+	apu->_internalWrite(0xFFDE, 0xBB);
+	result = apu->BRK();
+	apu->_internalRegisters.sp += 3;
+	cr_assert_eq(result, 8);
+	cr_assert_eq(apu->_internalRegisters.i, false);
+	cr_assert_eq(apu->_internalRegisters.b, true);
+	cr_assert_eq(apu->_internalRegisters.pc, 0xAABB);
+	cr_assert_eq(apu->_internalRead(apu->_internalRegisters.sp-- | 0x100u), 0xFF);
+	cr_assert_eq(apu->_internalRead(apu->_internalRegisters.sp-- | 0x100u), 0xEE);
+	cr_assert_eq(apu->_internalRead(apu->_internalRegisters.sp | 0x100u), 0xDD);
+}
+
+Test(Subroutine, RET)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalWrite(++apu->_internalRegisters.sp | 0x100u, 0x12);
+	apu->_internalWrite(++apu->_internalRegisters.sp | 0x100u, 0x34);
+	apu->_internalRegisters.sp -= 2;
+	result = apu->RET();
+	cr_assert_eq(result, 5);
+	cr_assert_eq(apu->_internalRegisters.pch, 0x12);
+	cr_assert_eq(apu->_internalRegisters.pcl, 0x34);
+}
+
+Test(Subroutine, RETI)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalWrite(++apu->_internalRegisters.sp | 0x100u, 0x12);
+	apu->_internalWrite(++apu->_internalRegisters.sp | 0x100u, 0x34);
+	apu->_internalWrite(++apu->_internalRegisters.sp | 0x100u, 0x56);
+	apu->_internalRegisters.sp -= 3;
+	result = apu->RETI();
+	cr_assert_eq(result, 6);
+	cr_assert_eq(apu->_internalRegisters.psw, 0x12);
+	cr_assert_eq(apu->_internalRegisters.pch, 0x34);
+	cr_assert_eq(apu->_internalRegisters.pcl, 0x56);
 }
