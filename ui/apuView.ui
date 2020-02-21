@@ -1,0 +1,2033 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>APUView</class>
+ <widget class="QMainWindow" name="APUView">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>740</width>
+    <height>868</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>APU'S Debugger</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../resources/appResources.qrc">
+    <normaloff>:/resources/Logo.png</normaloff>:/resources/Logo.png</iconset>
+  </property>
+  <property name="windowOpacity">
+   <double>1.000000000000000</double>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="0" column="0">
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="tabPosition">
+       <enum>QTabWidget::North</enum>
+      </property>
+      <property name="tabShape">
+       <enum>QTabWidget::Rounded</enum>
+      </property>
+      <property name="currentIndex">
+       <number>2</number>
+      </property>
+      <widget class="QWidget" name="APU">
+       <attribute name="title">
+        <string>APU</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_4">
+        <item row="0" column="0">
+         <layout class="QGridLayout" name="gridLayout_14">
+          <item row="13" column="0">
+           <widget class="QLabel" name="counter2Label">
+            <property name="text">
+             <string>Counter 2</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="2">
+           <widget class="QLineEdit" name="timer0LineEdit"/>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="name">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>25</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Register</string>
+            </property>
+            <property name="scaledContents">
+             <bool>false</bool>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+            <property name="wordWrap">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QLineEdit" name="port1LineEdit"/>
+          </item>
+          <item row="13" column="2">
+           <widget class="QLineEdit" name="counter2LineEdit"/>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLabel" name="hexa">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Hexadecimal value</string>
+            </property>
+            <property name="scaledContents">
+             <bool>false</bool>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+            <property name="wordWrap">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="2">
+           <widget class="QLineEdit" name="dSPRegAddressLineEdit"/>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="port1hexaLineEdit"/>
+          </item>
+          <item row="15" column="1">
+           <widget class="QLineEdit" name="regMemhexaLineEdit_2"/>
+          </item>
+          <item row="6" column="1">
+           <widget class="QLineEdit" name="dSPRegAddresshexaLineEdit"/>
+          </item>
+          <item row="1" column="2">
+           <widget class="QLineEdit" name="port0LineEdit"/>
+          </item>
+          <item row="7" column="0">
+           <widget class="QLabel" name="dSPRegDataLabel">
+            <property name="text">
+             <string>DSP Reg Data</string>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="0">
+           <widget class="QLabel" name="counter0Label">
+            <property name="text">
+             <string>Counter 0</string>
+            </property>
+           </widget>
+          </item>
+          <item row="16" column="1">
+           <widget class="QLineEdit" name="unknownhexaLineEdit"/>
+          </item>
+          <item row="9" column="0">
+           <widget class="QLabel" name="timer1Label">
+            <property name="text">
+             <string>Timer 1</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0">
+           <widget class="QLabel" name="timer0Label">
+            <property name="text">
+             <string>Timer 0</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="1">
+           <widget class="QLineEdit" name="timer0hexaLineEdit"/>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="dSPRegAddressLabel">
+            <property name="text">
+             <string>DSP Reg Address</string>
+            </property>
+           </widget>
+          </item>
+          <item row="15" column="0">
+           <widget class="QLabel" name="regMemLabel_2">
+            <property name="text">
+             <string>Reg Mem</string>
+            </property>
+           </widget>
+          </item>
+          <item row="15" column="2">
+           <widget class="QLineEdit" name="regMemLineEdit_2"/>
+          </item>
+          <item row="3" column="2">
+           <widget class="QLineEdit" name="port2LineEdit"/>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="port2Label">
+            <property name="text">
+             <string>Port 2</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="controlLabel">
+            <property name="text">
+             <string>Control</string>
+            </property>
+           </widget>
+          </item>
+          <item row="16" column="2">
+           <widget class="QLineEdit" name="unknownLineEdit"/>
+          </item>
+          <item row="5" column="1">
+           <widget class="QLineEdit" name="controlhexaLineEdit"/>
+          </item>
+          <item row="11" column="1">
+           <widget class="QLineEdit" name="counter0hexaLineEdit"/>
+          </item>
+          <item row="4" column="2">
+           <widget class="QLineEdit" name="port3LineEdit"/>
+          </item>
+          <item row="4" column="1">
+           <widget class="QLineEdit" name="port3hexaLineEdit"/>
+          </item>
+          <item row="11" column="2">
+           <widget class="QLineEdit" name="counter0LineEdit"/>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="port3Label">
+            <property name="text">
+             <string>Port 3</string>
+            </property>
+           </widget>
+          </item>
+          <item row="12" column="0">
+           <widget class="QLabel" name="counter1Label">
+            <property name="text">
+             <string>Counter 1</string>
+            </property>
+           </widget>
+          </item>
+          <item row="14" column="0">
+           <widget class="QLabel" name="regMemLabel">
+            <property name="text">
+             <string>Reg Mem</string>
+            </property>
+           </widget>
+          </item>
+          <item row="14" column="2">
+           <widget class="QLineEdit" name="regMemLineEdit"/>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="port1Label">
+            <property name="text">
+             <string>Port 1</string>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="1">
+           <widget class="QLineEdit" name="timer2hexaLineEdit"/>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="port0hexaLineEdit"/>
+          </item>
+          <item row="9" column="1">
+           <widget class="QLineEdit" name="timer1hexaLineEdit"/>
+          </item>
+          <item row="7" column="1">
+           <widget class="QLineEdit" name="dSPRegDatahexaLineEdit"/>
+          </item>
+          <item row="16" column="0">
+           <widget class="QLabel" name="unknownLabel">
+            <property name="text">
+             <string>Unknown</string>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="0">
+           <widget class="QLabel" name="timer2Label">
+            <property name="text">
+             <string>Timer 2</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QLabel" name="binary">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Binary value</string>
+            </property>
+            <property name="scaledContents">
+             <bool>false</bool>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+            <property name="wordWrap">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="2">
+           <widget class="QLineEdit" name="controlLineEdit"/>
+          </item>
+          <item row="7" column="2">
+           <widget class="QLineEdit" name="dSPRegDataLineEdit"/>
+          </item>
+          <item row="13" column="1">
+           <widget class="QLineEdit" name="counter2hexaLineEdit"/>
+          </item>
+          <item row="12" column="2">
+           <widget class="QLineEdit" name="counter1LineEdit"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="port0Label">
+            <property name="text">
+             <string>Port 0</string>
+            </property>
+           </widget>
+          </item>
+          <item row="12" column="1">
+           <widget class="QLineEdit" name="counter1hexaLineEdit"/>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLineEdit" name="port2hexaLineEdit"/>
+          </item>
+          <item row="9" column="2">
+           <widget class="QLineEdit" name="timer1LineEdit"/>
+          </item>
+          <item row="10" column="2">
+           <widget class="QLineEdit" name="timer2LineEdit"/>
+          </item>
+          <item row="14" column="1">
+           <widget class="QLineEdit" name="regMemhexaLineEdit"/>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="CPU">
+       <attribute name="title">
+        <string>CPU</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_3">
+        <item row="0" column="0">
+         <layout class="QGridLayout" name="gridLayout_15">
+          <item row="0" column="0">
+           <widget class="QLabel" name="stackPointerLabel">
+            <property name="text">
+             <string>Stack Pointer</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QLineEdit" name="programStatusWordLineEdit"/>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="yIndexLineEdit"/>
+          </item>
+          <item row="4" column="1">
+           <widget class="QLineEdit" name="programCounterLineEdit"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="xIndexLabel">
+            <property name="text">
+             <string>X Index</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="accumlatorLabel">
+            <property name="text">
+             <string>Accumlator</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="stackPointerLineEdit"/>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLineEdit" name="accumlatorLineEdit"/>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="xIndexLineEdit"/>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="yIndexLabel">
+            <property name="text">
+             <string>Y Index</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="programCounterLabel">
+            <property name="text">
+             <string>Program Counter</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="programStatusWordLabel">
+            <property name="text">
+             <string>Program Status Word</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="loggerLabel">
+          <property name="text">
+           <string>Instructions History</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QTextBrowser" name="logger"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="DSP">
+       <attribute name="title">
+        <string>DSP</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_5">
+        <item row="0" column="0" rowspan="2" colspan="2">
+         <layout class="QFormLayout" name="Master">
+          <item row="0" column="0">
+           <widget class="QLabel" name="mvolLlabel">
+            <property name="text">
+             <string>Main Volume Left</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QProgressBar" name="mvolLprogressBar">
+            <property name="value">
+             <number>0</number>
+            </property>
+            <property name="textVisible">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="mvolRlabel">
+            <property name="text">
+             <string>Main Volume Right</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QProgressBar" name="mvolRprogressBar">
+            <property name="value">
+             <number>0</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="evolLlabel">
+            <property name="text">
+             <string>Echo Volume Left</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QProgressBar" name="evolLprogressBar">
+            <property name="value">
+             <number>0</number>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="evolRlabel">
+            <property name="text">
+             <string>Echo Volume Right</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QProgressBar" name="evolRprogressBar">
+            <property name="value">
+             <number>0</number>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="flagslabel">
+            <property name="text">
+             <string>Flags</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QLineEdit" name="flagslineEdit"/>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="sourceDirectoryLabel">
+            <property name="text">
+             <string>Source Dir Offset</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="QLineEdit" name="sourceDirectoryLineEdit"/>
+          </item>
+          <item row="7" column="0">
+           <widget class="QLabel" name="echoBufferOffsetLabel">
+            <property name="text">
+             <string>Echo buffer Offset</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="1">
+           <widget class="QLineEdit" name="echoBufferOffsetLineEdit"/>
+          </item>
+          <item row="8" column="0">
+           <widget class="QLabel" name="echoDelayLabel">
+            <property name="text">
+             <string>Echo Delay</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="1">
+           <widget class="QLineEdit" name="echoDelayLineEdit"/>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="echolabel">
+            <property name="text">
+             <string>Echo Feedback</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QProgressBar" name="echoprogressBar">
+            <property name="value">
+             <number>0</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="2" column="0" colspan="2">
+         <widget class="QLabel" name="Channels">
+          <property name="text">
+           <string>Channels</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0" colspan="2">
+         <widget class="QTabWidget" name="ChannelsTabs">
+          <property name="currentIndex">
+           <number>7</number>
+          </property>
+          <widget class="QWidget" name="Channel1">
+           <attribute name="title">
+            <string>1</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_6">
+            <item row="0" column="0">
+             <layout class="QFormLayout" name="formLayout_4">
+              <property name="fieldGrowthPolicy">
+               <enum>QFormLayout::ExpandingFieldsGrow</enum>
+              </property>
+              <property name="rowWrapPolicy">
+               <enum>QFormLayout::DontWrapRows</enum>
+              </property>
+              <property name="labelAlignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+              <property name="formAlignment">
+               <set>Qt::AlignHCenter|Qt::AlignTop</set>
+              </property>
+              <item row="0" column="0">
+               <widget class="QLabel" name="VolumeLlabel">
+                <property name="text">
+                 <string>Volume Left</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QProgressBar" name="VolumeLprogressBar">
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="VolumeRlabel">
+                <property name="text">
+                 <string>Volume Right</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QProgressBar" name="VolumeRprogressBar">
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="WaveHeightlabel">
+                <property name="text">
+                 <string>Wave height</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QProgressBar" name="WaveHeightprogressBar">
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="EchoFIRCoefflabel">
+                <property name="text">
+                 <string>Echo FIR coeff</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QProgressBar" name="EchoFIRCoeffprogressBar">
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="0">
+               <widget class="QLabel" name="Pitchlabel">
+                <property name="text">
+                 <string>Pitch</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="1">
+               <widget class="QLineEdit" name="PitchlineEdit"/>
+              </item>
+              <item row="5" column="0">
+               <widget class="QLabel" name="sourceNumberLabel">
+                <property name="text">
+                 <string>Source Number</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="1">
+               <widget class="QLineEdit" name="sourceNumberLineEdit"/>
+              </item>
+              <item row="6" column="0">
+               <widget class="QLabel" name="Gainlabel">
+                <property name="text">
+                 <string>Gain</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="1">
+               <widget class="QLineEdit" name="GainlineEdit"/>
+              </item>
+              <item row="7" column="0">
+               <widget class="QLabel" name="Envelopelabel">
+                <property name="text">
+                 <string>Envelope</string>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="1">
+               <widget class="QLineEdit" name="EnvelopelineEdit"/>
+              </item>
+              <item row="8" column="0">
+               <widget class="QLabel" name="EnvelopeValueLabel">
+                <property name="text">
+                 <string>Envelope value</string>
+                </property>
+               </widget>
+              </item>
+              <item row="8" column="1">
+               <widget class="QLineEdit" name="EnvelopeValueLineEdit"/>
+              </item>
+              <item row="9" column="0" colspan="2">
+               <layout class="QGridLayout" name="ChannelRegisters">
+                <item row="0" column="0">
+                 <widget class="QCheckBox" name="KeyOncheckBox">
+                  <property name="layoutDirection">
+                   <enum>Qt::RightToLeft</enum>
+                  </property>
+                  <property name="text">
+                   <string>Key On</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QCheckBox" name="KeyOffcheckBox">
+                  <property name="text">
+                   <string>Key Off</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QCheckBox" name="NoisecheckBox">
+                  <property name="layoutDirection">
+                   <enum>Qt::RightToLeft</enum>
+                  </property>
+                  <property name="text">
+                   <string>Noise</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="1">
+                 <widget class="QCheckBox" name="EchocheckBox">
+                  <property name="text">
+                   <string>Echo</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QCheckBox" name="PitchModulationcheckBox">
+                  <property name="layoutDirection">
+                   <enum>Qt::RightToLeft</enum>
+                  </property>
+                  <property name="text">
+                   <string>pitch Modulation</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="1">
+                 <widget class="QCheckBox" name="SampleEndcheckBox">
+                  <property name="text">
+                   <string>Sample End</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="Channel2">
+           <attribute name="title">
+            <string>2</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_7">
+            <item row="0" column="0">
+             <layout class="QFormLayout" name="formLayout_6">
+              <property name="fieldGrowthPolicy">
+               <enum>QFormLayout::ExpandingFieldsGrow</enum>
+              </property>
+              <property name="rowWrapPolicy">
+               <enum>QFormLayout::DontWrapRows</enum>
+              </property>
+              <property name="labelAlignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+              <property name="formAlignment">
+               <set>Qt::AlignHCenter|Qt::AlignTop</set>
+              </property>
+              <item row="0" column="0">
+               <widget class="QLabel" name="VolumeLlabel_2">
+                <property name="text">
+                 <string>Volume Left</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QProgressBar" name="VolumeLprogressBar_2">
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="VolumeRlabel_2">
+                <property name="text">
+                 <string>Volume Right</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QProgressBar" name="VolumeRprogressBar_2">
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="WaveHeightlabel_2">
+                <property name="text">
+                 <string>Wave height</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QProgressBar" name="WaveHeightprogressBar_2">
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="EchoFIRCoefflabel_2">
+                <property name="text">
+                 <string>Echo FIR coeff</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QProgressBar" name="EchoFIRCoeffprogressBar_2">
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="0">
+               <widget class="QLabel" name="Pitchlabel_2">
+                <property name="text">
+                 <string>Pitch</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="1">
+               <widget class="QLineEdit" name="PitchlineEdit_2"/>
+              </item>
+              <item row="5" column="0">
+               <widget class="QLabel" name="sourceNumberLabel_2">
+                <property name="text">
+                 <string>Source Number</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="1">
+               <widget class="QLineEdit" name="sourceNumberLineEdit_2"/>
+              </item>
+              <item row="6" column="0">
+               <widget class="QLabel" name="Gainlabel_2">
+                <property name="text">
+                 <string>Gain</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="1">
+               <widget class="QLineEdit" name="GainlineEdit_2"/>
+              </item>
+              <item row="7" column="0">
+               <widget class="QLabel" name="Envelopelabel_2">
+                <property name="text">
+                 <string>Envelope</string>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="1">
+               <widget class="QLineEdit" name="EnvelopelineEdit_2"/>
+              </item>
+              <item row="8" column="0">
+               <widget class="QLabel" name="EnvelopeValueLabel_2">
+                <property name="text">
+                 <string>Envelope value</string>
+                </property>
+               </widget>
+              </item>
+              <item row="8" column="1">
+               <widget class="QLineEdit" name="EnvelopeValueLineEdit_2"/>
+              </item>
+              <item row="9" column="0" colspan="2">
+               <layout class="QGridLayout" name="ChannelRegisters_2">
+                <item row="0" column="0">
+                 <widget class="QCheckBox" name="KeyOncheckBox_2">
+                  <property name="layoutDirection">
+                   <enum>Qt::RightToLeft</enum>
+                  </property>
+                  <property name="text">
+                   <string>Key On</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QCheckBox" name="KeyOffcheckBox_2">
+                  <property name="text">
+                   <string>Key Off</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QCheckBox" name="NoisecheckBox_2">
+                  <property name="layoutDirection">
+                   <enum>Qt::RightToLeft</enum>
+                  </property>
+                  <property name="text">
+                   <string>Noise</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="1">
+                 <widget class="QCheckBox" name="EchocheckBox_2">
+                  <property name="text">
+                   <string>Echo</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QCheckBox" name="PitchModulationcheckBox_2">
+                  <property name="layoutDirection">
+                   <enum>Qt::RightToLeft</enum>
+                  </property>
+                  <property name="text">
+                   <string>pitch Modulation</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="1">
+                 <widget class="QCheckBox" name="SampleEndcheckBox_2">
+                  <property name="text">
+                   <string>Sample End</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="Channel3">
+           <attribute name="title">
+            <string>3</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_8">
+            <item row="0" column="0">
+             <layout class="QFormLayout" name="formLayout_7">
+              <property name="fieldGrowthPolicy">
+               <enum>QFormLayout::ExpandingFieldsGrow</enum>
+              </property>
+              <property name="rowWrapPolicy">
+               <enum>QFormLayout::DontWrapRows</enum>
+              </property>
+              <property name="labelAlignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+              <property name="formAlignment">
+               <set>Qt::AlignHCenter|Qt::AlignTop</set>
+              </property>
+              <item row="0" column="0">
+               <widget class="QLabel" name="VolumeLlabel_3">
+                <property name="text">
+                 <string>Volume Left</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QProgressBar" name="VolumeLprogressBar_3">
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="VolumeRlabel_3">
+                <property name="text">
+                 <string>Volume Right</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QProgressBar" name="VolumeRprogressBar_3">
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="WaveHeightlabel_3">
+                <property name="text">
+                 <string>Wave height</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QProgressBar" name="WaveHeightprogressBar_3">
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="EchoFIRCoefflabel_3">
+                <property name="text">
+                 <string>Echo FIR coeff</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QProgressBar" name="EchoFIRCoeffprogressBar_3">
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="0">
+               <widget class="QLabel" name="Pitchlabel_3">
+                <property name="text">
+                 <string>Pitch</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="1">
+               <widget class="QLineEdit" name="PitchlineEdit_3"/>
+              </item>
+              <item row="5" column="0">
+               <widget class="QLabel" name="sourceNumberLabel_3">
+                <property name="text">
+                 <string>Source Number</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="1">
+               <widget class="QLineEdit" name="sourceNumberLineEdit_3"/>
+              </item>
+              <item row="6" column="0">
+               <widget class="QLabel" name="Gainlabel_3">
+                <property name="text">
+                 <string>Gain</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="1">
+               <widget class="QLineEdit" name="GainlineEdit_3"/>
+              </item>
+              <item row="7" column="0">
+               <widget class="QLabel" name="Envelopelabel_3">
+                <property name="text">
+                 <string>Envelope</string>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="1">
+               <widget class="QLineEdit" name="EnvelopelineEdit_3"/>
+              </item>
+              <item row="8" column="0">
+               <widget class="QLabel" name="EnvelopeValueLabel_3">
+                <property name="text">
+                 <string>Envelope value</string>
+                </property>
+               </widget>
+              </item>
+              <item row="8" column="1">
+               <widget class="QLineEdit" name="EnvelopeValueLineEdit_3"/>
+              </item>
+              <item row="9" column="0" colspan="2">
+               <layout class="QGridLayout" name="ChannelRegisters_3">
+                <item row="0" column="0">
+                 <widget class="QCheckBox" name="KeyOncheckBox_3">
+                  <property name="layoutDirection">
+                   <enum>Qt::RightToLeft</enum>
+                  </property>
+                  <property name="text">
+                   <string>Key On</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QCheckBox" name="KeyOffcheckBox_3">
+                  <property name="text">
+                   <string>Key Off</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QCheckBox" name="NoisecheckBox_3">
+                  <property name="layoutDirection">
+                   <enum>Qt::RightToLeft</enum>
+                  </property>
+                  <property name="text">
+                   <string>Noise</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="1">
+                 <widget class="QCheckBox" name="EchocheckBox_3">
+                  <property name="text">
+                   <string>Echo</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QCheckBox" name="PitchModulationcheckBox_3">
+                  <property name="layoutDirection">
+                   <enum>Qt::RightToLeft</enum>
+                  </property>
+                  <property name="text">
+                   <string>pitch Modulation</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="1">
+                 <widget class="QCheckBox" name="SampleEndcheckBox_3">
+                  <property name="text">
+                   <string>Sample End</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="Channel4">
+           <attribute name="title">
+            <string>4</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_9">
+            <item row="0" column="0">
+             <layout class="QFormLayout" name="formLayout_8">
+              <property name="fieldGrowthPolicy">
+               <enum>QFormLayout::ExpandingFieldsGrow</enum>
+              </property>
+              <property name="rowWrapPolicy">
+               <enum>QFormLayout::DontWrapRows</enum>
+              </property>
+              <property name="labelAlignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+              <property name="formAlignment">
+               <set>Qt::AlignHCenter|Qt::AlignTop</set>
+              </property>
+              <item row="0" column="0">
+               <widget class="QLabel" name="VolumeLlabel_4">
+                <property name="text">
+                 <string>Volume Left</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QProgressBar" name="VolumeLprogressBar_4">
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="VolumeRlabel_4">
+                <property name="text">
+                 <string>Volume Right</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QProgressBar" name="VolumeRprogressBar_4">
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="WaveHeightlabel_4">
+                <property name="text">
+                 <string>Wave height</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QProgressBar" name="WaveHeightprogressBar_4">
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="EchoFIRCoefflabel_4">
+                <property name="text">
+                 <string>Echo FIR coeff</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QProgressBar" name="EchoFIRCoeffprogressBar_4">
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="0">
+               <widget class="QLabel" name="Pitchlabel_4">
+                <property name="text">
+                 <string>Pitch</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="1">
+               <widget class="QLineEdit" name="PitchlineEdit_4"/>
+              </item>
+              <item row="5" column="0">
+               <widget class="QLabel" name="sourceNumberLabel_4">
+                <property name="text">
+                 <string>Source Number</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="1">
+               <widget class="QLineEdit" name="sourceNumberLineEdit_4"/>
+              </item>
+              <item row="6" column="0">
+               <widget class="QLabel" name="Gainlabel_4">
+                <property name="text">
+                 <string>Gain</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="1">
+               <widget class="QLineEdit" name="GainlineEdit_4"/>
+              </item>
+              <item row="7" column="0">
+               <widget class="QLabel" name="Envelopelabel_4">
+                <property name="text">
+                 <string>Envelope</string>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="1">
+               <widget class="QLineEdit" name="EnvelopelineEdit_4"/>
+              </item>
+              <item row="8" column="0">
+               <widget class="QLabel" name="EnvelopeValueLabel_4">
+                <property name="text">
+                 <string>Envelope value</string>
+                </property>
+               </widget>
+              </item>
+              <item row="8" column="1">
+               <widget class="QLineEdit" name="EnvelopeValueLineEdit_4"/>
+              </item>
+              <item row="9" column="0" colspan="2">
+               <layout class="QGridLayout" name="ChannelRegisters_4">
+                <item row="0" column="0">
+                 <widget class="QCheckBox" name="KeyOncheckBox_4">
+                  <property name="layoutDirection">
+                   <enum>Qt::RightToLeft</enum>
+                  </property>
+                  <property name="text">
+                   <string>Key On</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QCheckBox" name="KeyOffcheckBox_4">
+                  <property name="text">
+                   <string>Key Off</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QCheckBox" name="NoisecheckBox_4">
+                  <property name="layoutDirection">
+                   <enum>Qt::RightToLeft</enum>
+                  </property>
+                  <property name="text">
+                   <string>Noise</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="1">
+                 <widget class="QCheckBox" name="EchocheckBox_4">
+                  <property name="text">
+                   <string>Echo</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QCheckBox" name="PitchModulationcheckBox_4">
+                  <property name="layoutDirection">
+                   <enum>Qt::RightToLeft</enum>
+                  </property>
+                  <property name="text">
+                   <string>pitch Modulation</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="1">
+                 <widget class="QCheckBox" name="SampleEndcheckBox_4">
+                  <property name="text">
+                   <string>Sample End</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="Channel5">
+           <attribute name="title">
+            <string>5</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_10">
+            <item row="0" column="0">
+             <layout class="QFormLayout" name="formLayout_9">
+              <property name="fieldGrowthPolicy">
+               <enum>QFormLayout::ExpandingFieldsGrow</enum>
+              </property>
+              <property name="rowWrapPolicy">
+               <enum>QFormLayout::DontWrapRows</enum>
+              </property>
+              <property name="labelAlignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+              <property name="formAlignment">
+               <set>Qt::AlignHCenter|Qt::AlignTop</set>
+              </property>
+              <item row="0" column="0">
+               <widget class="QLabel" name="VolumeLlabel_5">
+                <property name="text">
+                 <string>Volume Left</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QProgressBar" name="VolumeLprogressBar_5">
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="VolumeRlabel_5">
+                <property name="text">
+                 <string>Volume Right</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QProgressBar" name="VolumeRprogressBar_5">
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="WaveHeightlabel_5">
+                <property name="text">
+                 <string>Wave height</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QProgressBar" name="WaveHeightprogressBar_5">
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="EchoFIRCoefflabel_5">
+                <property name="text">
+                 <string>Echo FIR coeff</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QProgressBar" name="EchoFIRCoeffprogressBar_5">
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="0">
+               <widget class="QLabel" name="Pitchlabel_5">
+                <property name="text">
+                 <string>Pitch</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="1">
+               <widget class="QLineEdit" name="PitchlineEdit_5"/>
+              </item>
+              <item row="5" column="0">
+               <widget class="QLabel" name="sourceNumberLabel_5">
+                <property name="text">
+                 <string>Source Number</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="1">
+               <widget class="QLineEdit" name="sourceNumberLineEdit_5"/>
+              </item>
+              <item row="6" column="0">
+               <widget class="QLabel" name="Gainlabel_5">
+                <property name="text">
+                 <string>Gain</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="1">
+               <widget class="QLineEdit" name="GainlineEdit_5"/>
+              </item>
+              <item row="7" column="0">
+               <widget class="QLabel" name="Envelopelabel_5">
+                <property name="text">
+                 <string>Envelope</string>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="1">
+               <widget class="QLineEdit" name="EnvelopelineEdit_5"/>
+              </item>
+              <item row="8" column="0">
+               <widget class="QLabel" name="EnvelopeValueLabel_5">
+                <property name="text">
+                 <string>Envelope value</string>
+                </property>
+               </widget>
+              </item>
+              <item row="8" column="1">
+               <widget class="QLineEdit" name="EnvelopeValueLineEdit_5"/>
+              </item>
+              <item row="9" column="0" colspan="2">
+               <layout class="QGridLayout" name="ChannelRegisters_5">
+                <item row="0" column="0">
+                 <widget class="QCheckBox" name="KeyOncheckBox_5">
+                  <property name="layoutDirection">
+                   <enum>Qt::RightToLeft</enum>
+                  </property>
+                  <property name="text">
+                   <string>Key On</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QCheckBox" name="KeyOffcheckBox_5">
+                  <property name="text">
+                   <string>Key Off</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QCheckBox" name="NoisecheckBox_5">
+                  <property name="layoutDirection">
+                   <enum>Qt::RightToLeft</enum>
+                  </property>
+                  <property name="text">
+                   <string>Noise</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="1">
+                 <widget class="QCheckBox" name="EchocheckBox_5">
+                  <property name="text">
+                   <string>Echo</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QCheckBox" name="PitchModulationcheckBox_5">
+                  <property name="layoutDirection">
+                   <enum>Qt::RightToLeft</enum>
+                  </property>
+                  <property name="text">
+                   <string>pitch Modulation</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="1">
+                 <widget class="QCheckBox" name="SampleEndcheckBox_5">
+                  <property name="text">
+                   <string>Sample End</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="Channel6">
+           <attribute name="title">
+            <string>6</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_11">
+            <item row="0" column="0">
+             <layout class="QFormLayout" name="formLayout_10">
+              <property name="fieldGrowthPolicy">
+               <enum>QFormLayout::ExpandingFieldsGrow</enum>
+              </property>
+              <property name="rowWrapPolicy">
+               <enum>QFormLayout::DontWrapRows</enum>
+              </property>
+              <property name="labelAlignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+              <property name="formAlignment">
+               <set>Qt::AlignHCenter|Qt::AlignTop</set>
+              </property>
+              <item row="0" column="0">
+               <widget class="QLabel" name="VolumeLlabel_6">
+                <property name="text">
+                 <string>Volume Left</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QProgressBar" name="VolumeLprogressBar_6">
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="VolumeRlabel_6">
+                <property name="text">
+                 <string>Volume Right</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QProgressBar" name="VolumeRprogressBar_6">
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="WaveHeightlabel_6">
+                <property name="text">
+                 <string>Wave height</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QProgressBar" name="WaveHeightprogressBar_6">
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="EchoFIRCoefflabel_6">
+                <property name="text">
+                 <string>Echo FIR coeff</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QProgressBar" name="EchoFIRCoeffprogressBar_6">
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="0">
+               <widget class="QLabel" name="Pitchlabel_6">
+                <property name="text">
+                 <string>Pitch</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="1">
+               <widget class="QLineEdit" name="PitchlineEdit_6"/>
+              </item>
+              <item row="5" column="0">
+               <widget class="QLabel" name="sourceNumberLabel_6">
+                <property name="text">
+                 <string>Source Number</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="1">
+               <widget class="QLineEdit" name="sourceNumberLineEdit_6"/>
+              </item>
+              <item row="6" column="0">
+               <widget class="QLabel" name="Gainlabel_6">
+                <property name="text">
+                 <string>Gain</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="1">
+               <widget class="QLineEdit" name="GainlineEdit_6"/>
+              </item>
+              <item row="7" column="0">
+               <widget class="QLabel" name="Envelopelabel_6">
+                <property name="text">
+                 <string>Envelope</string>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="1">
+               <widget class="QLineEdit" name="EnvelopelineEdit_6"/>
+              </item>
+              <item row="8" column="0">
+               <widget class="QLabel" name="EnvelopeValueLabel_6">
+                <property name="text">
+                 <string>Envelope value</string>
+                </property>
+               </widget>
+              </item>
+              <item row="8" column="1">
+               <widget class="QLineEdit" name="EnvelopeValueLineEdit_6"/>
+              </item>
+              <item row="9" column="0" colspan="2">
+               <layout class="QGridLayout" name="ChannelRegisters_6">
+                <item row="0" column="0">
+                 <widget class="QCheckBox" name="KeyOncheckBox_6">
+                  <property name="layoutDirection">
+                   <enum>Qt::RightToLeft</enum>
+                  </property>
+                  <property name="text">
+                   <string>Key On</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QCheckBox" name="KeyOffcheckBox_6">
+                  <property name="text">
+                   <string>Key Off</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QCheckBox" name="NoisecheckBox_6">
+                  <property name="layoutDirection">
+                   <enum>Qt::RightToLeft</enum>
+                  </property>
+                  <property name="text">
+                   <string>Noise</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="1">
+                 <widget class="QCheckBox" name="EchocheckBox_6">
+                  <property name="text">
+                   <string>Echo</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QCheckBox" name="PitchModulationcheckBox_6">
+                  <property name="layoutDirection">
+                   <enum>Qt::RightToLeft</enum>
+                  </property>
+                  <property name="text">
+                   <string>pitch Modulation</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="1">
+                 <widget class="QCheckBox" name="SampleEndcheckBox_6">
+                  <property name="text">
+                   <string>Sample End</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="Channel7">
+           <attribute name="title">
+            <string>7</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_12">
+            <item row="0" column="0">
+             <layout class="QFormLayout" name="formLayout_11">
+              <property name="fieldGrowthPolicy">
+               <enum>QFormLayout::ExpandingFieldsGrow</enum>
+              </property>
+              <property name="rowWrapPolicy">
+               <enum>QFormLayout::DontWrapRows</enum>
+              </property>
+              <property name="labelAlignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+              <property name="formAlignment">
+               <set>Qt::AlignHCenter|Qt::AlignTop</set>
+              </property>
+              <item row="0" column="0">
+               <widget class="QLabel" name="VolumeLlabel_7">
+                <property name="text">
+                 <string>Volume Left</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QProgressBar" name="VolumeLprogressBar_7">
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="VolumeRlabel_7">
+                <property name="text">
+                 <string>Volume Right</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QProgressBar" name="VolumeRprogressBar_7">
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="WaveHeightlabel_7">
+                <property name="text">
+                 <string>Wave height</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QProgressBar" name="WaveHeightprogressBar_7">
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="EchoFIRCoefflabel_7">
+                <property name="text">
+                 <string>Echo FIR coeff</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QProgressBar" name="EchoFIRCoeffprogressBar_7">
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="0">
+               <widget class="QLabel" name="Pitchlabel_7">
+                <property name="text">
+                 <string>Pitch</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="1">
+               <widget class="QLineEdit" name="PitchlineEdit_7"/>
+              </item>
+              <item row="5" column="0">
+               <widget class="QLabel" name="sourceNumberLabel_7">
+                <property name="text">
+                 <string>Source Number</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="1">
+               <widget class="QLineEdit" name="sourceNumberLineEdit_7"/>
+              </item>
+              <item row="6" column="0">
+               <widget class="QLabel" name="Gainlabel_7">
+                <property name="text">
+                 <string>Gain</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="1">
+               <widget class="QLineEdit" name="GainlineEdit_7"/>
+              </item>
+              <item row="7" column="0">
+               <widget class="QLabel" name="Envelopelabel_7">
+                <property name="text">
+                 <string>Envelope</string>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="1">
+               <widget class="QLineEdit" name="EnvelopelineEdit_7"/>
+              </item>
+              <item row="8" column="0">
+               <widget class="QLabel" name="EnvelopeValueLabel_7">
+                <property name="text">
+                 <string>Envelope value</string>
+                </property>
+               </widget>
+              </item>
+              <item row="8" column="1">
+               <widget class="QLineEdit" name="EnvelopeValueLineEdit_7"/>
+              </item>
+              <item row="9" column="0" colspan="2">
+               <layout class="QGridLayout" name="ChannelRegisters_7">
+                <item row="0" column="0">
+                 <widget class="QCheckBox" name="KeyOncheckBox_7">
+                  <property name="layoutDirection">
+                   <enum>Qt::RightToLeft</enum>
+                  </property>
+                  <property name="text">
+                   <string>Key On</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QCheckBox" name="KeyOffcheckBox_7">
+                  <property name="text">
+                   <string>Key Off</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QCheckBox" name="NoisecheckBox_7">
+                  <property name="layoutDirection">
+                   <enum>Qt::RightToLeft</enum>
+                  </property>
+                  <property name="text">
+                   <string>Noise</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="1">
+                 <widget class="QCheckBox" name="EchocheckBox_7">
+                  <property name="text">
+                   <string>Echo</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QCheckBox" name="PitchModulationcheckBox_7">
+                  <property name="layoutDirection">
+                   <enum>Qt::RightToLeft</enum>
+                  </property>
+                  <property name="text">
+                   <string>pitch Modulation</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="1">
+                 <widget class="QCheckBox" name="SampleEndcheckBox_7">
+                  <property name="text">
+                   <string>Sample End</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="Channel8">
+           <attribute name="title">
+            <string>8</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_13">
+            <item row="0" column="0">
+             <layout class="QFormLayout" name="formLayout_12">
+              <property name="fieldGrowthPolicy">
+               <enum>QFormLayout::ExpandingFieldsGrow</enum>
+              </property>
+              <property name="rowWrapPolicy">
+               <enum>QFormLayout::DontWrapRows</enum>
+              </property>
+              <property name="labelAlignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+              <property name="formAlignment">
+               <set>Qt::AlignHCenter|Qt::AlignTop</set>
+              </property>
+              <item row="0" column="0">
+               <widget class="QLabel" name="VolumeLlabel_8">
+                <property name="text">
+                 <string>Volume Left</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QProgressBar" name="VolumeLprogressBar_8">
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="VolumeRlabel_8">
+                <property name="text">
+                 <string>Volume Right</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QProgressBar" name="VolumeRprogressBar_8">
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="WaveHeightlabel_8">
+                <property name="text">
+                 <string>Wave height</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QProgressBar" name="WaveHeightprogressBar_8">
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="EchoFIRCoefflabel_8">
+                <property name="text">
+                 <string>Echo FIR coeff</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QProgressBar" name="EchoFIRCoeffprogressBar_8">
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="0">
+               <widget class="QLabel" name="Pitchlabel_8">
+                <property name="text">
+                 <string>Pitch</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="1">
+               <widget class="QLineEdit" name="PitchlineEdit_8"/>
+              </item>
+              <item row="5" column="0">
+               <widget class="QLabel" name="sourceNumberLabel_8">
+                <property name="text">
+                 <string>Source Number</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="1">
+               <widget class="QLineEdit" name="sourceNumberLineEdit_8"/>
+              </item>
+              <item row="6" column="0">
+               <widget class="QLabel" name="Gainlabel_8">
+                <property name="text">
+                 <string>Gain</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="1">
+               <widget class="QLineEdit" name="GainlineEdit_8"/>
+              </item>
+              <item row="7" column="0">
+               <widget class="QLabel" name="Envelopelabel_8">
+                <property name="text">
+                 <string>Envelope</string>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="1">
+               <widget class="QLineEdit" name="EnvelopelineEdit_8"/>
+              </item>
+              <item row="8" column="0">
+               <widget class="QLabel" name="EnvelopeValueLabel_8">
+                <property name="text">
+                 <string>Envelope value</string>
+                </property>
+               </widget>
+              </item>
+              <item row="8" column="1">
+               <widget class="QLineEdit" name="EnvelopeValueLineEdit_8"/>
+              </item>
+              <item row="9" column="0" colspan="2">
+               <layout class="QGridLayout" name="ChannelRegisters_8">
+                <item row="0" column="0">
+                 <widget class="QCheckBox" name="KeyOncheckBox_8">
+                  <property name="layoutDirection">
+                   <enum>Qt::RightToLeft</enum>
+                  </property>
+                  <property name="text">
+                   <string>Key On</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QCheckBox" name="KeyOffcheckBox_8">
+                  <property name="text">
+                   <string>Key Off</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QCheckBox" name="NoisecheckBox_8">
+                  <property name="layoutDirection">
+                   <enum>Qt::RightToLeft</enum>
+                  </property>
+                  <property name="text">
+                   <string>Noise</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="1">
+                 <widget class="QCheckBox" name="EchocheckBox_8">
+                  <property name="text">
+                   <string>Echo</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QCheckBox" name="PitchModulationcheckBox_8">
+                  <property name="layoutDirection">
+                   <enum>Qt::RightToLeft</enum>
+                  </property>
+                  <property name="text">
+                   <string>pitch Modulation</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="1">
+                 <widget class="QCheckBox" name="SampleEndcheckBox_8">
+                  <property name="text">
+                   <string>Sample End</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources>
+  <include location="../resources/appResources.qrc"/>
+ </resources>
+ <connections/>
+</ui>
