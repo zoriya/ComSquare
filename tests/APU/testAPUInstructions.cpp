@@ -465,3 +465,145 @@ Test(Subroutine, RETI)
 	cr_assert_eq(apu->_internalRegisters.pch, 0x34);
 	cr_assert_eq(apu->_internalRegisters.pcl, 0x56);
 }
+
+/////////////////////////////
+//						   //
+// Subroutine Program Flow //
+//						   //
+/////////////////////////////
+
+Test(ProgramFlow, BRA)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalWrite(apu->_internalRegisters.pc, 23);
+	apu->_internalWrite(apu->_internalRegisters.pc + 24, 101);
+	result = apu->BRA();
+	cr_assert_eq(result, 4);
+	cr_assert_eq(apu->_internalRead(apu->_internalRegisters.pc), 101);
+}
+
+Test(ProgramFlow, BEQ)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalWrite(apu->_internalRegisters.pc, 23);
+	apu->_internalWrite(apu->_internalRegisters.pc + 24, 101);
+	result = apu->BEQ();
+	cr_assert_eq(result, 2);
+	apu->_internalRegisters.z = true;
+	result = apu->BEQ();
+	cr_assert_eq(result, 4);
+	cr_assert_eq(apu->_internalRead(apu->_internalRegisters.pc), 101);
+}
+
+Test(ProgramFlow, BNE)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalWrite(apu->_internalRegisters.pc, 23);
+	apu->_internalWrite(apu->_internalRegisters.pc + 24, 101);
+	apu->_internalRegisters.z = true;
+	result = apu->BNE();
+	cr_assert_eq(result, 2);
+	apu->_internalRegisters.z = false;
+	result = apu->BNE();
+	cr_assert_eq(result, 4);
+	cr_assert_eq(apu->_internalRead(apu->_internalRegisters.pc), 101);
+}
+
+Test(ProgramFlow, BCS)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalWrite(apu->_internalRegisters.pc, 23);
+	apu->_internalWrite(apu->_internalRegisters.pc + 24, 101);
+	result = apu->BCS();
+	cr_assert_eq(result, 2);
+	apu->_internalRegisters.c = true;
+	result = apu->BCS();
+	cr_assert_eq(result, 4);
+	cr_assert_eq(apu->_internalRead(apu->_internalRegisters.pc), 101);
+}
+
+Test(ProgramFlow, BCC)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalWrite(apu->_internalRegisters.pc, 23);
+	apu->_internalWrite(apu->_internalRegisters.pc + 24, 101);
+	apu->_internalRegisters.c = true;
+	result = apu->BCC();
+	cr_assert_eq(result, 2);
+	apu->_internalRegisters.c = false;
+	result = apu->BCC();
+	cr_assert_eq(result, 4);
+	cr_assert_eq(apu->_internalRead(apu->_internalRegisters.pc), 101);
+}
+
+Test(ProgramFlow, BVS)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalWrite(apu->_internalRegisters.pc, 23);
+	apu->_internalWrite(apu->_internalRegisters.pc + 24, 101);
+	result = apu->BVS();
+	cr_assert_eq(result, 2);
+	apu->_internalRegisters.v = true;
+	result = apu->BVS();
+	cr_assert_eq(result, 4);
+	cr_assert_eq(apu->_internalRead(apu->_internalRegisters.pc), 101);
+}
+
+Test(ProgramFlow, BVC)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalWrite(apu->_internalRegisters.pc, 23);
+	apu->_internalWrite(apu->_internalRegisters.pc + 24, 101);
+	apu->_internalRegisters.v = true;
+	result = apu->BVC();
+	cr_assert_eq(result, 2);
+	apu->_internalRegisters.v = false;
+	result = apu->BVC();
+	cr_assert_eq(result, 4);
+	cr_assert_eq(apu->_internalRead(apu->_internalRegisters.pc), 101);
+}
+
+Test(ProgramFlow, BMI)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalWrite(apu->_internalRegisters.pc, 23);
+	apu->_internalWrite(apu->_internalRegisters.pc + 24, 101);
+	result = apu->BMI();
+	cr_assert_eq(result, 2);
+	apu->_internalRegisters.n = true;
+	result = apu->BMI();
+	cr_assert_eq(result, 4);
+	cr_assert_eq(apu->_internalRead(apu->_internalRegisters.pc), 101);
+}
+
+Test(ProgramFlow, BPL)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalWrite(apu->_internalRegisters.pc, 23);
+	apu->_internalWrite(apu->_internalRegisters.pc + 24, 101);
+	apu->_internalRegisters.n = true;
+	result = apu->BPL();
+	cr_assert_eq(result, 2);
+	apu->_internalRegisters.n = false;
+	result = apu->BPL();
+	cr_assert_eq(result, 4);
+	cr_assert_eq(apu->_internalRead(apu->_internalRegisters.pc), 101);
+}

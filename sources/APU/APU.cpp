@@ -174,6 +174,8 @@ namespace ComSquare::APU
 			return this->TSET1(this->_getAbsoluteAddr());
 		case 0x0F:
 			return this->BRK();
+		case 0x10:
+			return this->BPL();
 		case 0x11:
 			return this->TCALL(1);
 		case 0x12:
@@ -188,6 +190,10 @@ namespace ComSquare::APU
 			return this->OR1(this->_getAbsoluteBit(), true);
 		case 0x2D:
 			return this->PUSH(this->_internalRegisters.a);
+		case 0x2F:
+			return this->BRA();
+		case 0x30:
+			return this->BMI();
 		case 0x31:
 			return this->TCALL(3);
 		case 0x32:
@@ -208,6 +214,8 @@ namespace ComSquare::APU
 			return this->TCLR1(this->_getAbsoluteAddr());
 		case 0x4F:
 			return this->PCALL();
+		case 0x50:
+			return this->BVC();
 		case 0x51:
 			return this->TCALL(5);
 		case 0x52:
@@ -224,6 +232,8 @@ namespace ComSquare::APU
 			return this->PUSH(this->_internalRegisters.y);
 		case 0x6F:
 			return this->RET();
+		case 0x70:
+			return this->BVS();
 		case 0x71:
 			return this->TCALL(7);
 		case 0x72:
@@ -240,6 +250,8 @@ namespace ComSquare::APU
 			return this->EOR1(this->_getAbsoluteBit());
 		case 0x8E:
 			return this->POP(this->_internalRegisters.psw);
+		case 0x90:
+			return this->BCC();
 		case 0x91:
 			return this->TCALL(9);
 		case 0x92:
@@ -254,6 +266,8 @@ namespace ComSquare::APU
 			return this->MOV1(this->_getAbsoluteBit(), true);
 		case 0xAE:
 			return this->POP(this->_internalRegisters.a);
+		case 0xB0:
+			return this->BCS();
 		case 0xB1:
 			return this->TCALL(11);
 		case 0xB2:
@@ -268,6 +282,8 @@ namespace ComSquare::APU
 			return this->MOV1(this->_getAbsoluteBit());
 		case 0xCE:
 			return this->POP(this->_internalRegisters.x);
+		case 0xD0:
+			return this->BNE();
 		case 0xD1:
 			return this->TCALL(13);
 		case 0xD2:
@@ -278,6 +294,8 @@ namespace ComSquare::APU
 			return this->SET1(this->_getDirectAddr(), 7);
 		case 0xEE:
 			return this->POP(this->_internalRegisters.y);
+		case 0xF0:
+			return BEQ();
 		case 0xF1:
 			return this->TCALL(15);
 		case 0xF2:

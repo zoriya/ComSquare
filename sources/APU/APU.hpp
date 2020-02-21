@@ -232,6 +232,25 @@ namespace ComSquare::APU
 		int RET();
 		//! @brief Return from interrupt.
 		int RETI();
+
+		//! @brief Branch Always, go to the specified location from the next instruction.
+		int BRA();
+		//! @brief Branch if Zero Flag is set
+		int BEQ();
+		//! @brief Branch if Zero Flag is clear
+		int BNE();
+		//! @brief Branch if Carry Flag is set
+		int BCS();
+		//! @brief Branch if Carry Flag is clear
+		int BCC();
+		//! @brief Branch if Overflow Flag is set
+		int BVS();
+		//! @brief Branch if Overflow Flag is set
+		int BVC();
+		//! @brief Branch if Negative Flag is set
+		int BMI();
+		//! @brief Branch if Negative Flag is clear
+		int BPL();
 	public:
 		explicit APU(std::shared_ptr<MemoryMap> &map);
 		APU(const APU &) = default;
