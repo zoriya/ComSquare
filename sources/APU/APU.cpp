@@ -166,6 +166,8 @@ namespace ComSquare::APU
 			return this->SET1(this->_getDirectAddr(), 0);
 		case 0x0A:
 			return this->OR1(this->_getAbsoluteBit());
+		case 0x0D:
+			return this->PUSH(this->_internalRegisters.psw);
 		case 0x0E:
 			return this->TSET1(this->_getAbsoluteAddr());
 		case 0x12:
@@ -176,6 +178,8 @@ namespace ComSquare::APU
 			return this->SET1(this->_getDirectAddr(), 1);
 		case 0x2A:
 			return this->OR1(this->_getAbsoluteBit(), true);
+		case 0x2D:
+			return this->PUSH(this->_internalRegisters.a);
 		case 0x32:
 			return this->CLR1(this->_getDirectAddr(), 1);
 		case 0x40:
@@ -184,6 +188,8 @@ namespace ComSquare::APU
 			return this->SET1(this->_getDirectAddr(), 2);
 		case 0x4A:
 			return this->AND1(this->_getAbsoluteBit());
+		case 0x4D:
+			return this->PUSH(this->_internalRegisters.x);
 		case 0x4E:
 			return this->TCLR1(this->_getAbsoluteAddr());
 		case 0x52:
@@ -194,6 +200,8 @@ namespace ComSquare::APU
 			return this->SET1(this->_getDirectAddr(), 3);
 		case 0x6A:
 			return this->AND1(this->_getAbsoluteBit(), true);
+		case 0x6D:
+			return this->PUSH(this->_internalRegisters.y);
 		case 0x72:
 			return this->CLR1(this->_getDirectAddr(), 3);
 		case 0x80:
@@ -202,6 +210,8 @@ namespace ComSquare::APU
 			return this->SET1(this->_getDirectAddr(), 4);
 		case 0x8A:
 			return this->EOR1(this->_getAbsoluteBit());
+		case 0x8E:
+			return this->POP(this->_internalRegisters.psw);
 		case 0x92:
 			return this->CLR1(this->_getDirectAddr(), 4);
 		case 0xA0:
@@ -210,6 +220,8 @@ namespace ComSquare::APU
 			return this->SET1(this->_getDirectAddr(), 5);
 		case 0xAA:
 			return this->MOV1(this->_getAbsoluteBit(), true);
+		case 0xAE:
+			return this->POP(this->_internalRegisters.a);
 		case 0xB2:
 			return this->CLR1(this->_getDirectAddr(), 5);
 		case 0xC0:
@@ -218,10 +230,14 @@ namespace ComSquare::APU
 			return this->SET1(this->_getDirectAddr(), 6);
 		case 0xC1:
 			return this->MOV1(this->_getAbsoluteBit());
+		case 0xCE:
+			return this->POP(this->_internalRegisters.x);
 		case 0xD2:
 			return this->CLR1(this->_getDirectAddr(), 6);
 		case 0xE2:
 			return this->SET1(this->_getDirectAddr(), 7);
+		case 0xEE:
+			return this->POP(this->_internalRegisters.y);
 		case 0xF2:
 			return this->CLR1(this->_getDirectAddr(), 7);
 		case 0xEA:

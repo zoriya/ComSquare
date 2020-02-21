@@ -71,6 +71,7 @@ add_executable(unit_tests
         sources/Ram/ExtendedRam.hpp
         sources/Utility/Utility.hpp sources/Utility/Utility.cpp
         sources/APU/Instructions/Bit.cpp
+        sources/APU/Instructions/Stack.cpp
 )
 
 # include criterion & coverage
@@ -154,6 +155,7 @@ add_executable(ComSquare
         sources/Debugger/HeaderViewer.hpp
         sources/Debugger/APUDebug.hpp
         sources/Debugger/APUDebug.cpp
+        sources/APU/Instructions/Stack.cpp
 )
 
 target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)

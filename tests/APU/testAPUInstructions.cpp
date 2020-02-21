@@ -340,3 +340,33 @@ Test(Bit, MOV1_carry)
 	cr_assert_eq(apu->_internalRegisters.c, false);
 	cr_assert_eq(result, 4);
 }
+
+/////////////////
+//			   //
+// Stack tests //
+//			   //
+/////////////////
+
+Test(Stack, push)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.a = 56;
+	result = apu->PUSH(apu->_internalRegisters.a);
+	apu->_internalRegisters.sp++;
+	cr_assert_eq(result, 4);
+	cr_assert_eq(apu->_internalRead(apu->_internalRegisters.sp | 0x100u), 56);
+}
+
+Test(Stack, pop)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalWrite(++apu->_internalRegisters.sp | 0x100u, 82);
+	apu->_internalRegisters.sp--;
+	result = apu->POP(apu->_internalRegisters.y);
+	cr_assert_eq(result, 4);
+	cr_assert_eq(apu->_internalRegisters.y, 82);
+}

@@ -214,6 +214,11 @@ namespace ComSquare::APU
 		int NOT1(std::pair<uint24_t, uint24_t> operand);
 		//! @brief Either moves the specified bit into carry or moves carry into the specified bit.
 		int MOV1(std::pair<uint24_t, uint24_t> operand, bool to_carry = false);
+
+		//! @brief Push a value onto the stack and decrement SP Register.
+		int PUSH(uint8_t value);
+		//! @brief Increment SP Register and pop a single value from the stack.
+		int POP(uint8_t &destination);
 	public:
 		explicit APU(std::shared_ptr<MemoryMap> &map);
 		APU(const APU &) = default;
