@@ -421,13 +421,13 @@ namespace ComSquare::PPU
 			};
 			uint8_t raw;
 		} _wsel[3];
-		//! @brief WH0 Register (CWindow 1 Left Position)
+		//! @brief WH0 Register (Window 1 Left Position)
 		uint8_t _wh0;
-		//! @brief WH1 Register (CWindow 1 Right Position)
+		//! @brief WH1 Register (Window 1 Right Position)
 		uint8_t _wh1;
-		//! @brief WH2 Register (CWindow 2 Left Position)
+		//! @brief WH2 Register (Window 2 Left Position)
 		uint8_t _wh2;
-		//! @brief WH3 Register (CWindow 2 Right Position)
+		//! @brief WH3 Register (Window 2 Right Position)
 		uint8_t _wh3;
 		//! @brief WBGLOG Register (Window mask logic for BGs)
 		union {
