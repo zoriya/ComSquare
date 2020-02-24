@@ -161,10 +161,16 @@ namespace ComSquare::APU
 		//! @brief Keep the number of excess cycles executed to pad the next update
 		unsigned int _paddingCycles = 0;
 
+		//! @brief Get value of the Pointer Counter
+		uint8_t _getDirectValue();
 		//! @brief Get direct page offset
 		uint24_t _getDirectAddr();
+		//! @brief Get direct page offset and add to it the X Index Flag
+		uint24_t _getDirectAddrByX();
 		//! @brief Get absolute direct page offset
 		uint24_t _getAbsoluteAddr();
+		//! @brief Get absolute direct page offset nd add to it the X Index Flag
+		uint24_t _getAbsoluteAddrByX();
 		//! @brief Get absolute offset and separate its bits
 		std::pair<uint24_t, uint24_t> _getAbsoluteBit();
 
@@ -235,22 +241,32 @@ namespace ComSquare::APU
 
 		//! @brief Branch Always, go to the specified location from the next instruction.
 		int BRA();
-		//! @brief Branch if Zero Flag is set
+		//! @brief Branch if Zero Flag is set.
 		int BEQ();
-		//! @brief Branch if Zero Flag is clear
+		//! @brief Branch if Zero Flag is clear.
 		int BNE();
-		//! @brief Branch if Carry Flag is set
+		//! @brief Branch if Carry Flag is set.
 		int BCS();
-		//! @brief Branch if Carry Flag is clear
+		//! @brief Branch if Carry Flag is clear.
 		int BCC();
-		//! @brief Branch if Overflow Flag is set
+		//! @brief Branch if Overflow Flag is set.
 		int BVS();
-		//! @brief Branch if Overflow Flag is set
+		//! @brief Branch if Overflow Flag is set.
 		int BVC();
-		//! @brief Branch if Negative Flag is set
+		//! @brief Branch if Negative Flag is set.
 		int BMI();
-		//! @brief Branch if Negative Flag is clear
+		//! @brief Branch if Negative Flag is clear.
 		int BPL();
+		//! @brief Branch if the specified is set in the address, go to the specified location from the next instruction.
+		int BBS(uint24_t addr, uint8_t bit);
+		//! @brief Branch if the specified is clear in the address, go to the specified location from the next instruction.
+		int BBC(uint24_t addr, uint8_t bit);
+		//! @brief Branch if the value at the specified address is not equal to the Accumulator Flag.
+		int CBNE(uint24_t addr, bool by_x = false);
+		//! @brief Decrement a value then branch to the specified location if the value is not zero.
+		int DBNZ(bool direct_addr = false);
+		//! @brief Jump to the specified location.
+		int JMP(uint24_t addr, bool by_x = false);
 	public:
 		explicit APU(std::shared_ptr<MemoryMap> &map);
 		APU(const APU &) = default;

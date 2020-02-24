@@ -74,7 +74,7 @@ add_executable(unit_tests
         sources/APU/Instructions/Stack.cpp
         sources/APU/Instructions/Subroutine.cpp
         sources/APU/Instructions/ProgramFlow.cpp
-)
+        sources/APU/Operand.cpp)
 
 # include criterion & coverage
 target_link_libraries(unit_tests criterion -lgcov)
@@ -160,7 +160,7 @@ add_executable(ComSquare
         sources/APU/Instructions/Stack.cpp
         sources/APU/Instructions/Subroutine.cpp
         sources/APU/Instructions/ProgramFlow.cpp
-)
+        sources/APU/Operand.cpp)
 
 target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)
 

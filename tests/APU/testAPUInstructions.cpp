@@ -607,3 +607,93 @@ Test(ProgramFlow, BPL)
 	cr_assert_eq(result, 4);
 	cr_assert_eq(apu->_internalRead(apu->_internalRegisters.pc), 101);
 }
+
+Test(ProgramFlow, BBS)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.pc = 0;
+	apu->_internalWrite(apu->_internalRegisters.pc, 23);
+	apu->_internalWrite(23, 0);
+	result = apu->BBS(apu->_getDirectAddr(), 2);
+	cr_assert_eq(result, 5);
+	apu->_internalRegisters.pc = 0;
+	apu->_internalWrite(apu->_internalRegisters.pc + 1, 10);
+	apu->_internalWrite(23, 255);
+	result = apu->BBS(apu->_getDirectAddr(), 2);
+	cr_assert_eq(result, 7);
+	cr_assert_eq(apu->_internalRegisters.pc, 12);
+}
+
+Test(ProgramFlow, BBC)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.pc = 0;
+	apu->_internalWrite(apu->_internalRegisters.pc, 10);
+	apu->_internalWrite( 10, 255);
+	apu->_internalWrite(apu->_internalRegisters.pc + 1, 23);
+	result = apu->BBC(apu->_getDirectAddr(), 2);
+	cr_assert_eq(result, 5);
+	apu->_internalRegisters.pc = 0;
+	apu->_internalWrite( 10, 0);
+	result = apu->BBC(apu->_getDirectAddr(), 2);
+	cr_assert_eq(result, 7);
+	cr_assert_eq(apu->_internalRegisters.pc, 25);
+}
+
+Test(ProgramFlow, CBNE)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.pc = 0;
+	apu->_internalRegisters.a = 4;
+	apu->_internalWrite(apu->_internalRegisters.pc, 10);
+	apu->_internalWrite( 10, 4);
+	apu->_internalWrite(apu->_internalRegisters.pc + 1, 23);
+	result = apu->CBNE(apu->_getDirectAddr());
+	cr_assert_eq(result, 5);
+	apu->_internalRegisters.pc = 0;
+	apu->_internalWrite( 10, 0);
+	result = apu->CBNE(apu->_getDirectAddrByX(), true);
+	cr_assert_eq(result, 8);
+	cr_assert_eq(apu->_internalRegisters.pc, 25);
+}
+
+Test(ProgramFlow, DBNZ)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.pc = 0;
+	apu->_internalRegisters.y = 1;
+	result = apu->DBNZ();
+	cr_assert_eq(result, 4);
+	apu->_internalWrite(apu->_internalRegisters.pc, 10);
+	apu->_internalWrite(apu->_internalRegisters.pc + 1, 23);
+	apu->_internalWrite( 10, 0);
+	result = apu->DBNZ(true);
+	cr_assert_eq(result, 7);
+	cr_assert_eq(apu->_internalRegisters.pc, 25);
+}
+
+Test(ProgramFlow, JMP)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.pc = 0x32;
+	apu->_internalWrite(0x32, 0b00001111);
+	apu->_internalWrite(0x33, 0b11110000);
+	result = apu->JMP(apu->_getAbsoluteAddr());
+	cr_assert_eq(result, 3);
+	cr_assert_eq(apu->_internalRegisters.pc, 61455);
+	apu->_internalRegisters.pc = 0x32;
+	apu->_internalRegisters.x = 0b000000001;
+	result = apu->JMP(apu->_getAbsoluteAddrByX(), true);
+	cr_assert_eq(result, 6);
+	cr_assert_eq(apu->_internalRegisters.pc, 61712);
+}
