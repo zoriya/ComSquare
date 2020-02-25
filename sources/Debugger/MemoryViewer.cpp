@@ -9,6 +9,8 @@
 #include "MemoryViewer.hpp"
 #include "../SNES.hpp"
 #include "../Utility/Utility.hpp"
+#include "../Memory/MemoryShadow.hpp"
+#include "../Exceptions/InvalidAddress.hpp"
 
 MemoryViewerModel::MemoryViewerModel(std::shared_ptr<Ram> memory, QObject *parent) :
 	QAbstractTableModel(parent),
@@ -62,9 +64,10 @@ void MemoryViewerModel::setMemory(std::shared_ptr<Ram> memory)
 
 namespace ComSquare::Debugger
 {
-	MemoryViewer::MemoryViewer(ComSquare::SNES &snes) :
+	MemoryViewer::MemoryViewer(ComSquare::SNES &snes, Memory::MemoryBus &bus) :
 		QMainWindow(),
 		_snes(snes),
+		_bus(bus),
 		_ui(),
 		_model(snes.wram)
 	{
@@ -128,15 +131,35 @@ namespace ComSquare::Debugger
 		if (dialog.exec() != QDialog::Accepted)
 			return;
 		long value = std::strtol(dialogUI.spinBox->text().toStdString().c_str() + 1, nullptr, 16);
-		if (dialogUI.checkBox->isChecked())
-			this->switchToAddrTab(value);
+		if (dialogUI.checkBox->isChecked()) {
+			try {
+				value = this->switchToAddrTab(value);
+			} catch (InvalidAddress &) {}
+		}
 		QModelIndex index = this->_ui.tableView->model()->index(value >> 4, value & 0x0000000F);
 		this->_ui.tableView->scrollTo(index);
 		this->_ui.tableView->selectionModel()->select(index, QItemSelectionModel::ClearAndSelect);
 	}
 
-	void MemoryViewer::switchToAddrTab(uint24_t addr)
+	unsigned MemoryViewer::switchToAddrTab(uint24_t addr)
 	{
+		std::shared_ptr<Memory::IMemory> accessor = this->_bus.getAccessor(addr);
+		if (!accessor)
+			throw InvalidAddress("Memory viewer switch to address", addr);
+		Memory::IMemory *ptr;
+		if (accessor->isMirror())
+			ptr = accessor->getMirrored().get();
+		else
+			ptr = accessor.get();
 
+		if (ptr == this->_snes.wram.get())
+			this->_ui.tabs->setCurrentIndex(0);
+		else if (ptr == this->_snes.sram.get())
+			this->_ui.tabs->setCurrentIndex(1);
+		else if (ptr == this->_snes.cartridge.get())
+			this->_ui.tabs->setCurrentIndex(2);
+		else
+			throw InvalidAddress("Memory viewer switch to address", addr);
+		return addr - accessor->getStart();
 	}
 }

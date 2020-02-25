@@ -34,7 +34,12 @@ namespace ComSquare::Memory
 		//! @param data The new data to write.
 		//! @throw This function should thrown an InvalidAddress for address that are not mapped to the component.
 		void write_internal(uint24_t addr, uint8_t data) override;
-
+		//! @brief Check if this memory is a mirror or not.
+		//! @return True if this memory is a mirror. False otherwise.
+		bool isMirror() override;
+		//! @brief Return the memory accessor this accessor mirror if any
+		//! @return nullptr if isMirror is false, the source otherwise.
+		std::shared_ptr<IMemory> getMirrored() override;
 
 		RectangleShadow *setBankOffset(uint8_t bankOffset);
 	};
