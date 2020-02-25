@@ -43,8 +43,10 @@ namespace ComSquare::Debugger
 
 	unsigned CPUDebug::_executeInstruction(uint8_t opcode)
 	{
-		if (this->_isPaused)
+		if (this->_isPaused) {
+			this->_registers.pac--;
 			return 0;
+		}
 		if (this->_isStepping) {
 			this->_isStepping = false;
 			this->_isPaused = true;
