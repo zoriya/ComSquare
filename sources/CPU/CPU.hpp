@@ -308,7 +308,9 @@ namespace ComSquare::CPU
 		AND_DPYi = 0x31,
 		AND_DPYil = 0x37,
 		AND_SR = 0x23,
-		AND_SRYi = 0x33
+		AND_SRYi = 0x33,
+
+		XCE = 0xFB
 	};
 
 	//! @brief The main CPU
@@ -455,6 +457,8 @@ namespace ComSquare::CPU
 		void SED();
 		//! @brief Set the Interrupt Disable flag.
 		void SEI();
+		//! @brief Exchange Carry and Emulation Flags
+		void XCE();
 		//! @brief And accumulator with memory.
 		void AND(uint24_t valueAddr);
 	public:

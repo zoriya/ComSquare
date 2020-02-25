@@ -462,3 +462,36 @@ Test(SED, set)
 	pair.second.cpu->SED();
 	cr_assert_eq(pair.second.cpu->_registers.p.d, true, "The decimal flag should be set");
 }
+
+Test(XCE, enableEmulation)
+{
+	auto pair = Init();
+	pair.second.cpu->_isEmulationMode = false;
+	pair.second.cpu->_registers.p.flags = 0;
+	pair.second.cpu->_registers.p.c = true;
+	pair.second.cpu->_registers.xh = 0xFF;
+	pair.second.cpu->_registers.yh = 0xFF;
+	pair.second.cpu->XCE();
+	cr_assert_eq(pair.second.cpu->_isEmulationMode, true, "The e flag should be set");
+	cr_assert_eq(pair.second.cpu->_registers.p.c, false, "The carry flag should not be set");
+	cr_assert_eq(pair.second.cpu->_registers.p.m, false, "The memory width flag should be untouched (unset)");
+	cr_assert_eq(pair.second.cpu->_registers.p.x_b, false, "The index width flag should be untouched (unset)");
+	cr_assert_eq(pair.second.cpu->_registers.xh, 0xFF, "The high byte of the x index flag should be untouched (0xFF)");
+	cr_assert_eq(pair.second.cpu->_registers.yh, 0xFF, "The high byte of the y index flag should be untouched (0xFF)");
+}
+
+Test(XCE, enableNative)
+{
+	auto pair = Init();
+	pair.second.cpu->_isEmulationMode = true;
+	pair.second.cpu->_registers.p.flags = 0;
+	pair.second.cpu->_registers.xh = 0xFF;
+	pair.second.cpu->_registers.yh = 0xFF;
+	pair.second.cpu->XCE();
+	cr_assert_eq(pair.second.cpu->_isEmulationMode, false, "The e flag should be not set");
+	cr_assert_eq(pair.second.cpu->_registers.p.c, true, "The carry flag should be set");
+	cr_assert_eq(pair.second.cpu->_registers.p.m, true, "The memory width flag should be set");
+	cr_assert_eq(pair.second.cpu->_registers.p.x_b, true, "The index width flag should be set");
+	cr_assert_eq(pair.second.cpu->_registers.xh, 0, "The high byte of the x index flag should be set to 0");
+	cr_assert_eq(pair.second.cpu->_registers.yh, 0, "The high byte of the y index flag should be set to 0");
+}

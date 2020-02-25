@@ -326,6 +326,8 @@ namespace ComSquare::CPU
 		case Instructions::AND_SR:   this->AND(this->_getStackRelativeAddr()); 					return 4 + !this->_registers.p.m;
 		case Instructions::AND_SRYi: this->AND(this->_getStackRelativeIndirectIndexedYAddr()); 	return 7 + !this->_registers.p.m;
 
+		case Instructions::XCE: this->XCE(); return 2;
+
 		default:
 			throw InvalidOpcode("CPU", opcode);
 		}

@@ -240,6 +240,8 @@ namespace ComSquare::Debugger
 		case Instructions::AND_SR:   return "AND";
 		case Instructions::AND_SRYi: return "AND";
 
+		case Instructions::XCE: return "XCE";
+
 		default: return "Unknown";
 		}
 	}

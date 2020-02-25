@@ -150,4 +150,18 @@ namespace ComSquare::CPU
 		this->_registers.p.z = this->_registers.y == 0;
 		this->_registers.p.n = this->_registers.y & 0x8000u;
 	}
+
+	void CPU::XCE()
+	{
+		bool oldCarry = this->_registers.p.c;
+		this->_registers.p.c = this->_isEmulationMode;
+		this->_isEmulationMode = oldCarry;
+
+		if (!this->_isEmulationMode)  {
+			this->_registers.p.m = true;
+			this->_registers.p.x_b = true;
+			this->_registers.xh = 0;
+			this->_registers.yh = 0;
+		}
+	}
 }
