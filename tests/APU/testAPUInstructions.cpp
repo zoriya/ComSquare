@@ -733,3 +733,39 @@ Test(DecimalCompensation, DAS)
 	cr_assert_eq(apu->_internalRegisters.n, true);
 	cr_assert_eq(apu->_internalRegisters.z, false);
 }
+
+///////////////////////////////////
+//								 //
+// Multiplication Division tests //
+//								 //
+///////////////////////////////////
+
+Test(MultiplicationDivision, MUL)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.a = 10;
+	apu->_internalRegisters.y = 23;
+	result = apu->MUL();
+	cr_assert_eq(result, 9);
+	cr_assert_eq(apu->_internalRegisters.ya, 230);
+}
+
+Test(MultiplicationDivision, DIV)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.ya = 235;
+	apu->_internalRegisters.x = 10;
+	result = apu->DIV();
+	cr_assert_eq(result, 12);
+	cr_assert_eq(apu->_internalRegisters.y, 5);
+	cr_assert_eq(apu->_internalRegisters.a, 23);
+	apu->_internalRegisters.ya = 12345;
+	apu->_internalRegisters.x = 2;
+	result = apu->DIV();
+	cr_assert_eq(apu->_internalRegisters.y, 147);
+	cr_assert_eq(apu->_internalRegisters.a, 211);
+}

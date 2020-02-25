@@ -268,10 +268,15 @@ namespace ComSquare::APU
 		//! @brief Jump to the specified location.
 		int JMP(uint24_t addr, bool by_x = false);
 
-		//! @brief Decimal adjusts A for addition.
+		//! @brief Decimal adjust A for addition.
 		int DAA();
-		//! @brief Decimal adjusts A for subtraction.
+		//! @brief Decimal adjust A for subtraction.
 		int DAS();
+
+		//! @brief Store the 16-bit value of Y * A into YA
+		int MUL();
+		//! @brief Divide the 16-bit value YA by X, storing the quotient in A and the remainder in Y.
+		int DIV();
 	public:
 		explicit APU(std::shared_ptr<MemoryMap> &map);
 		APU(const APU &) = default;
