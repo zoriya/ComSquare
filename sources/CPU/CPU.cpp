@@ -306,6 +306,10 @@ namespace ComSquare::CPU
 		case Instructions::CLD: this->CLD(); return 2;
 		case Instructions::CLV: this->CLV(); return 2;
 
+		case Instructions::SEC: this->SEC(); return 2;
+		case Instructions::SED: this->SED(); return 2;
+		case Instructions::SEI: this->SEI(); return 2;
+
 		case Instructions::AND_IM:   this->AND(this->_getImmediateAddr()); 						return 2 + !this->_registers.p.m;
 		case Instructions::AND_ABS:  this->AND(this->_getAbsoluteAddr()); 						return 4 + !this->_registers.p.m;
 		case Instructions::AND_ABSl: this->AND(this->_getAbsoluteLongAddr()); 					return 5 + !this->_registers.p.m;

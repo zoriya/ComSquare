@@ -6,6 +6,41 @@
 
 namespace ComSquare::CPU
 {
+	void CPU::SEC()
+	{
+		this->_registers.p.c = true;
+	}
+
+	void CPU::SED()
+	{
+		this->_registers.p.d = true;
+	}
+
+	void CPU::SEI()
+	{
+		this->_registers.p.i = true;
+	}
+
+	void CPU::CLC()
+	{
+		this->_registers.p.c = false;
+	}
+
+	void CPU::CLI()
+	{
+		this->_registers.p.i = false;
+	}
+
+	void CPU::CLD()
+	{
+		this->_registers.p.d = false;
+	}
+
+	void CPU::CLV()
+	{
+		this->_registers.p.v = false;
+	}
+
 	void CPU::SEP(uint24_t valueAddr)
 	{
 		this->_registers.p.flags |= this->_bus->read(valueAddr);
@@ -114,25 +149,5 @@ namespace ComSquare::CPU
 		this->_registers.y = this->_pop16();
 		this->_registers.p.z = this->_registers.y == 0;
 		this->_registers.p.n = this->_registers.y & 0x8000u;
-	}
-
-	void CPU::CLC()
-	{
-		this->_registers.p.c = false;
-	}
-
-	void CPU::CLI()
-	{
-		this->_registers.p.i = false;
-	}
-
-	void CPU::CLD()
-	{
-		this->_registers.p.d = false;
-	}
-
-	void CPU::CLV()
-	{
-		this->_registers.p.v = false;
 	}
 }

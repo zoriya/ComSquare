@@ -218,6 +218,10 @@ namespace ComSquare::Debugger
 		case Instructions::CLD: return "CLD";
 		case Instructions::CLV: return "CLV";
 
+		case Instructions::SEC: return "SEC";
+		case Instructions::SED: return "SED";
+		case Instructions::SEI: return "SEI";
+
 		case Instructions::AND_IM:   return "AND";
 		case Instructions::AND_ABS:  return "AND";
 		case Instructions::AND_ABSl: return "AND";

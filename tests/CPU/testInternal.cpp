@@ -438,3 +438,27 @@ Test(CLV, clear)
 	pair.second.cpu->CLV();
 	cr_assert_eq(pair.second.cpu->_registers.p.v, false, "The overflow flag should not be set");
 }
+
+Test(SEC, set)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.p.flags = 0x00;
+	pair.second.cpu->SEC();
+	cr_assert_eq(pair.second.cpu->_registers.p.c, true, "The carry flag should be set");
+}
+
+Test(SEI, set)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.p.flags = 0x00;
+	pair.second.cpu->SEI();
+	cr_assert_eq(pair.second.cpu->_registers.p.i, true, "The interrupt disabled flag should be set");
+}
+
+Test(SED, set)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.p.flags = 0x00;
+	pair.second.cpu->SED();
+	cr_assert_eq(pair.second.cpu->_registers.p.d, true, "The decimal flag should be set");
+}

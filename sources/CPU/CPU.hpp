@@ -290,6 +290,10 @@ namespace ComSquare::CPU
 		CLD = 0xD8,
 		CLV = 0xB8,
 
+		SEC = 0x38,
+		SEI = 0x78,
+		SED = 0xF8,
+
 		AND_IM = 0x29,
 		AND_ABS = 0x2D,
 		AND_ABSl = 0x2F,
@@ -445,6 +449,12 @@ namespace ComSquare::CPU
 		void CLD();
 		//! @brief Clear the overflow flag.
 		void CLV();
+		//! @brief Set the carry Flag.
+		void SEC();
+		//! @brief Set the decimal flag.
+		void SED();
+		//! @brief Set the Interrupt Disable flag.
+		void SEI();
 		//! @brief And accumulator with memory.
 		void AND(uint24_t valueAddr);
 	public:
