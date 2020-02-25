@@ -316,6 +316,8 @@ namespace ComSquare::APU
 			return this->CLR1(this->_getDirectAddr(), 5);
 		case 0xB3:
 			return this->BBC(this->_getDirectAddr(), 5);
+		case 0xBA:
+			return this->MOVW(this->_getDirectAddr(), true);
 		case 0xBE:
 			return this->DAS();
 		case 0xC0:
@@ -340,6 +342,8 @@ namespace ComSquare::APU
 			return this->CLR1(this->_getDirectAddr(), 6);
 		case 0xD3:
 			return this->BBC(this->_getDirectAddr(), 6);
+		case 0xDA:
+			return this->MOVW(this->_getDirectAddr());
 		case 0xDE:
 			return this->CBNE(this->_getDirectAddrByX(), true);
 		case 0xDF:

@@ -857,3 +857,30 @@ Test(XVIbitArithmetic, CMPW)
 	cr_assert_eq(apu->_internalRegisters.c, true);
 	cr_assert_eq(apu->_internalRegisters.n, false);
 }
+
+/////////////////////////////////////////
+//									   //
+// (XVI)16-bit Data Transmission tests //
+//									   //
+/////////////////////////////////////////
+
+Test(XVIbitDataTransmission, MOVW)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.ya = 0x2211;
+	apu->_internalWrite(apu->_internalRegisters.pc, 0x55);
+	result = apu->MOVW(apu->_getDirectAddr());
+	cr_assert_eq(result, 5);
+	cr_assert_eq(apu->_internalRead(0x55), 0x11);
+	cr_assert_eq(apu->_internalRead(0x56), 0x22);
+	apu->_internalRegisters.ya = 0x0000;
+	apu->_internalRegisters.pc = 0;
+	apu->_internalWrite(0x55, 0x33);
+	apu->_internalWrite(0x55 + 1, 0x44);
+	apu->MOVW(apu->_getDirectAddr(), true);
+	cr_assert_eq(apu->_internalRegisters.ya, 0x4433);
+	cr_assert_eq(apu->_internalRegisters.n, false);
+	cr_assert_eq(apu->_internalRegisters.z, false);
+}

@@ -288,6 +288,9 @@ namespace ComSquare::APU
 		int SUBW(uint24_t addr);
 		//! @brief Compare YA with a word value.
 		int CMPW(uint24_t addr);
+
+		//! @brief Sets a word value equal to another
+		int MOVW(uint24_t addr, bool to_ya = false);
 	public:
 		explicit APU(std::shared_ptr<MemoryMap> &map);
 		APU(const APU &) = default;
