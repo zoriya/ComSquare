@@ -175,7 +175,7 @@ namespace ComSquare::Cartridge
 
 		this->header = this->_mapHeader(headerAddress);
 		this->header.gameName = std::string(reinterpret_cast<char *>(&this->_data[headerAddress]), 21);
-		if (headerAddress & 0x1C0u) {
+		if ((headerAddress + 0x40u) & 0x200u) {
 			this->_romStart = 0x200u;
 			this->_size -= 0x200u;
 			return true;
