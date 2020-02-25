@@ -267,6 +267,11 @@ namespace ComSquare::APU
 		int DBNZ(bool direct_addr = false);
 		//! @brief Jump to the specified location.
 		int JMP(uint24_t addr, bool by_x = false);
+
+		//! @brief Decimal adjusts A for addition.
+		int DAA();
+		//! @brief Decimal adjusts A for subtraction.
+		int DAS();
 	public:
 		explicit APU(std::shared_ptr<MemoryMap> &map);
 		APU(const APU &) = default;

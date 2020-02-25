@@ -466,11 +466,11 @@ Test(Subroutine, RETI)
 	cr_assert_eq(apu->_internalRegisters.pcl, 0x56);
 }
 
-/////////////////////////////
-//						   //
-// Subroutine Program Flow //
-//						   //
-/////////////////////////////
+////////////////////////
+//					  //
+// Program Flow tests //
+//					  //
+////////////////////////
 
 Test(ProgramFlow, BRA)
 {
@@ -696,4 +696,40 @@ Test(ProgramFlow, JMP)
 	result = apu->JMP(apu->_getAbsoluteAddrByX(), true);
 	cr_assert_eq(result, 6);
 	cr_assert_eq(apu->_internalRegisters.pc, 61712);
+}
+
+////////////////////////////////
+//							  //
+// Decimal Compensation tests //
+//							  //
+////////////////////////////////
+
+Test(DecimalCompensation, DAA)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.c = true;
+	apu->_internalRegisters.h = true;
+	apu->_internalRegisters.a = 0x1A;
+	result = apu->DAA();
+	cr_assert_eq(result, 3);
+	cr_assert_eq(apu->_internalRegisters.a, 0x80);
+	cr_assert_eq(apu->_internalRegisters.n, true);
+	cr_assert_eq(apu->_internalRegisters.z, false);
+}
+
+Test(DecimalCompensation, DAS)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.c = false;
+	apu->_internalRegisters.h = false;
+	apu->_internalRegisters.a = 0xFF;
+	result = apu->DAS();
+	cr_assert_eq(result, 3);
+	cr_assert_eq(apu->_internalRegisters.a, 0x99);
+	cr_assert_eq(apu->_internalRegisters.n, true);
+	cr_assert_eq(apu->_internalRegisters.z, false);
 }

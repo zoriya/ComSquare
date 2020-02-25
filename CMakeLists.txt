@@ -69,12 +69,15 @@ add_executable(unit_tests
         tests/CPU/testInternal.cpp
         sources/Ram/ExtendedRam.cpp
         sources/Ram/ExtendedRam.hpp
-        sources/Utility/Utility.hpp sources/Utility/Utility.cpp
+        sources/Utility/Utility.hpp
+        sources/Utility/Utility.cpp
         sources/APU/Instructions/Bit.cpp
         sources/APU/Instructions/Stack.cpp
         sources/APU/Instructions/Subroutine.cpp
         sources/APU/Instructions/ProgramFlow.cpp
-        sources/APU/Operand.cpp)
+        sources/APU/Operand.cpp
+        sources/APU/Instructions/DecimalCompensation.cpp;
+)
 
 # include criterion & coverage
 target_link_libraries(unit_tests criterion -lgcov)
@@ -160,7 +163,9 @@ add_executable(ComSquare
         sources/APU/Instructions/Stack.cpp
         sources/APU/Instructions/Subroutine.cpp
         sources/APU/Instructions/ProgramFlow.cpp
-        sources/APU/Operand.cpp)
+        sources/APU/Operand.cpp
+        sources/APU/Instructions/DecimalCompensation.cpp
+)
 
 target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)
 
