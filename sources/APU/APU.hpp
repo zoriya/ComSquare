@@ -277,6 +277,17 @@ namespace ComSquare::APU
 		int MUL();
 		//! @brief Divide the 16-bit value YA by X, storing the quotient in A and the remainder in Y.
 		int DIV();
+
+		//! @brief Increment a word value.
+		int INCW(uint24_t addr);
+		//! @brief Decrement a word value.
+		int DECW(uint24_t addr);
+		//! @brief Add YA with a word value.
+		int ADDW(uint24_t addr);
+		//! @brief Subtract YA with a word value.
+		int SUBW(uint24_t addr);
+		//! @brief Compare YA with a word value.
+		int CMPW(uint24_t addr);
 	public:
 		explicit APU(std::shared_ptr<MemoryMap> &map);
 		APU(const APU &) = default;

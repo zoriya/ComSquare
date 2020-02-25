@@ -184,6 +184,8 @@ namespace ComSquare::APU
 			return this->CLR1(this->_getDirectAddr(), 0);
 		case 0x13:
 			return this->BBC(this->_getDirectAddr(), 0);
+		case 0x1A:
+			return this->DECW(this->_getDirectAddr());
 		case 0x1F:
 			return this->JMP(this->_getAbsoluteAddrByX(), true);
 		case 0x20:
@@ -210,6 +212,8 @@ namespace ComSquare::APU
 			return this->CLR1(this->_getDirectAddr(), 1);
 		case 0x33:
 			return this->BBC(this->_getDirectAddr(), 1);
+		case 0x3A:
+			return this->INCW(this->_getDirectAddr());
 		case 0x3F:
 			return this->CALL(this->_getAbsoluteAddr());
 		case 0x40:
@@ -236,6 +240,8 @@ namespace ComSquare::APU
 			return this->CLR1(this->_getDirectAddr(), 2);
 		case 0x53:
 			return this->BBC(this->_getDirectAddr(), 2);
+		case 0x5A:
+			return this->CMPW(this->_getDirectAddr());
 		case 0x5F:
 			return this->JMP(this->_getAbsoluteAddr());
 		case 0x60:
@@ -262,6 +268,8 @@ namespace ComSquare::APU
 			return this->CLR1(this->_getDirectAddr(), 3);
 		case 0x73:
 			return this->BBC(this->_getDirectAddr(), 3);
+		case 0x7A:
+			return this->ADDW(this->_getDirectAddr());
 		case 0x7F:
 			return this->RETI();
 		case 0x80:
@@ -284,6 +292,8 @@ namespace ComSquare::APU
 			return this->CLR1(this->_getDirectAddr(), 4);
 		case 0x93:
 			return this->BBC(this->_getDirectAddr(), 4);
+		case 0x9A:
+			return this->SUBW(this->_getDirectAddr());
 		case 0x9E:
 			return this->DIV();
 		case 0xA0:

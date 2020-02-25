@@ -769,3 +769,91 @@ Test(MultiplicationDivision, DIV)
 	cr_assert_eq(apu->_internalRegisters.y, 147);
 	cr_assert_eq(apu->_internalRegisters.a, 211);
 }
+
+//////////////////////////////////
+//								//
+// (XVI)16-bit Arithmetic tests //
+//								//
+//////////////////////////////////
+
+Test(XVIbitArithmetic, INCW)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalWrite(apu->_internalRegisters.pc, 0x55);
+	apu->_internalWrite(0x55, 0xFF);
+	apu->_internalWrite(0x55 + 1, 0x22);
+	result = apu->INCW(apu->_getDirectAddr());
+	cr_assert_eq(result, 6);
+	cr_assert_eq(apu->_internalRead(0x55), 0x00);
+	cr_assert_eq(apu->_internalRead(0x55 + 1), 0x23);
+}
+
+Test(XVIbitArithmetic, DECW)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalWrite(apu->_internalRegisters.pc, 0x55);
+	apu->_internalWrite(0x55, 0x00);
+	apu->_internalWrite(0x55 + 1, 0x23);
+	result = apu->DECW(apu->_getDirectAddr());
+	cr_assert_eq(result, 6);
+	cr_assert_eq(apu->_internalRead(0x55), 0xFF);
+	cr_assert_eq(apu->_internalRead(0x55 + 1), 0x22);
+}
+
+Test(XVIbitArithmetic, ADDW)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.ya = 0x4321;
+	apu->_internalWrite(apu->_internalRegisters.pc, 0x55);
+	apu->_internalWrite(0x55, 0x11);
+	apu->_internalWrite(0x55 + 1, 0x22);
+	result = apu->ADDW(apu->_getDirectAddr());
+	cr_assert_eq(result, 5);
+	cr_assert_eq(apu->_internalRegisters.ya, 0x6532);
+	cr_assert_eq(apu->_internalRegisters.n, false);
+	cr_assert_eq(apu->_internalRegisters.v, false);
+	cr_assert_eq(apu->_internalRegisters.h, false);
+	cr_assert_eq(apu->_internalRegisters.z, false);
+	cr_assert_eq(apu->_internalRegisters.c, false);
+}
+
+Test(XVIbitArithmetic, SUBW)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.ya = 0x4321;
+	apu->_internalWrite(apu->_internalRegisters.pc, 0x55);
+	apu->_internalWrite(0x55, 0x11);
+	apu->_internalWrite(0x55 + 1, 0x22);
+	result = apu->SUBW(apu->_getDirectAddr());
+	cr_assert_eq(result, 5);
+	cr_assert_eq(apu->_internalRegisters.ya, 0x2110);
+	cr_assert_eq(apu->_internalRegisters.n, false);
+	cr_assert_eq(apu->_internalRegisters.v, false);
+	cr_assert_eq(apu->_internalRegisters.h, true);
+	cr_assert_eq(apu->_internalRegisters.z, false);
+	cr_assert_eq(apu->_internalRegisters.c, true);
+}
+
+Test(XVIbitArithmetic, CMPW)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.ya = 0x2211;
+	apu->_internalWrite(apu->_internalRegisters.pc, 0x55);
+	apu->_internalWrite(0x55, 0x11);
+	apu->_internalWrite(0x55 + 1, 0x22);
+	result = apu->CMPW(apu->_getDirectAddr());
+	cr_assert_eq(result, 4);
+	cr_assert_eq(apu->_internalRegisters.z, true);
+	cr_assert_eq(apu->_internalRegisters.c, true);
+	cr_assert_eq(apu->_internalRegisters.n, false);
+}
