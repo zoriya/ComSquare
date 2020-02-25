@@ -7,6 +7,7 @@
 
 #include <QtWidgets/QMainWindow>
 #include "../../ui/ui_ramView.h"
+#include "../../ui/ui_gotoDialog.h"
 #include "../Ram/Ram.hpp"
 #include <memory>
 
