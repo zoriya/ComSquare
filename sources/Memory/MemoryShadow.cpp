@@ -23,4 +23,14 @@ namespace ComSquare::Memory
 	{
 		return this->_initial->write(addr, data);
 	}
+
+	bool MemoryShadow::isMirror()
+	{
+		return true;
+	}
+
+	std::shared_ptr<IMemory> MemoryShadow::getMirrored()
+	{
+		return this->_initial;
+	}
 }

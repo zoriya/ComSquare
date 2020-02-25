@@ -581,4 +581,14 @@ namespace ComSquare::APU::DSP
 			throw InvalidAddress("DSP Registers write", addr);
 		}
 	}
+
+	Registers DSP::getRegisters()
+	{
+		return this->_registers;
+	}
+
+	std::array<Channel, 8> DSP::getChannels()
+	{
+		return this->_channels;
+	}
 }

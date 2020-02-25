@@ -19,6 +19,9 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
+    <item row="1" column="0">
+     <widget class="QTableView" name="tableView"/>
+    </item>
     <item row="0" column="0">
      <widget class="QTabBar" name="tabs" native="true">
       <property name="minimumSize">
@@ -29,12 +32,51 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="0">
-     <widget class="QTableView" name="tableView"/>
-    </item>
    </layout>
   </widget>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionGoto"/>
+   <addaction name="actionGoto_Absolute"/>
+  </widget>
+  <action name="actionGoto">
+   <property name="text">
+    <string>Goto</string>
+   </property>
+   <property name="toolTip">
+    <string>Go to an address</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+G</string>
+   </property>
+  </action>
+  <action name="actionGoto_Absolute">
+   <property name="text">
+    <string>Goto Absolute</string>
+   </property>
+   <property name="toolTip">
+    <string>Go to an absolute address</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+G</string>
+   </property>
+  </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QTabBar</class>
+   <extends>QWidget</extends>
+   <header>qtabbar.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../resources/appResources.qrc"/>
  </resources>

@@ -19,7 +19,6 @@ void usage(char *bin)
 void parseArguments(int argc, char **argv, SNES &snes)
 {
 	while (true) {
-		int this_option_optind = optind ? optind : 1;
 		int option_index = 0;
 		static struct option long_options[] = {
 			{"cpu",     no_argument, 0,  'c' },
@@ -57,6 +56,7 @@ int main(int argc, char **argv)
 		return 1;
 	}
 	QApplication app(argc, argv);
+	QApplication::setAttribute(Qt::AA_DisableWindowContextHelpButton);
 	Renderer::QtSFML renderer(600, 800);
 	SNES snes(std::make_shared<Memory::MemoryBus>(), argv[1], renderer);
 	renderer.createWindow(snes, 60);

@@ -29,6 +29,8 @@ namespace ComSquare::Renderer
 		void enableRamViewer();
 		//! @brief Action called when clicking on the enable Header viewer button.
 		void enableHeaderViewer();
+		//! @brief Action called when clicking on the enable APU debugger button.
+		void enableDebugAPU();
 		//! @brief Action called when clicking on the reset button.
 		void reset();
 		QtFullSFML(SNES &snes, QWidget* parent, const QPoint& position, const QSize& size, int frameRate = 0);

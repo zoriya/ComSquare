@@ -51,6 +51,12 @@ add_executable(unit_tests
         sources/Exceptions/InvalidOpcode.hpp
         sources/CPU/Instructions/Interrupts.cpp
         sources/CPU/Instructions/MathematicalOperations.cpp
+        sources/APU/Instructions/Standbys.cpp
+        tests/APU/testAPUInstructions.cpp
+        sources/APU/Instructions/ProgramStatusWord.cpp
+        sources/APU/Instructions/Bit.cpp
+        tests/APU/testAPU.cpp
+        sources/CPU/Instructions/MathematicalOperations.cpp
         tests/CPU/testAddressingMode.cpp
         tests/tests.cpp
         tests/PPU/testPpuWrite.cpp
@@ -63,7 +69,15 @@ add_executable(unit_tests
         tests/CPU/testInternal.cpp
         sources/Ram/ExtendedRam.cpp
         sources/Ram/ExtendedRam.hpp
-        sources/Utility/Utility.hpp sources/Utility/Utility.cpp sources/CPU/Instructions/BitsInstructions.cpp tests/CPU/testBits.cpp)
+        sources/Utility/Utility.hpp
+        sources/Utility/Utility.cpp
+        sources/CPU/Instructions/BitsInstructions.cpp
+        tests/CPU/testBits.cpp
+        sources/APU/Instructions/Bit.cpp
+        sources/APU/Instructions/Stack.cpp
+        sources/APU/Instructions/Subroutine.cpp
+        sources/APU/Instructions/ProgramFlow.cpp
+)
 
 # include criterion & coverage
 target_link_libraries(unit_tests criterion -lgcov)
@@ -119,6 +133,10 @@ add_executable(ComSquare
         sources/Exceptions/InvalidOpcode.hpp
         sources/CPU/Instructions/Interrupts.cpp
         sources/CPU/Instructions/MathematicalOperations.cpp
+        sources/APU/Instructions/Standbys.cpp
+        sources/APU/Instructions/ProgramStatusWord.cpp
+        sources/APU/Instructions/Bit.cpp
+        sources/CPU/Instructions/MathematicalOperations.cpp
         sources/CPU/Instructions/MemoryInstructions.cpp
         sources/CPU/Instructions/InternalInstruction.cpp
         sources/Ram/ExtendedRam.cpp
@@ -132,11 +150,23 @@ add_executable(ComSquare
         ui/cpu.ui
         ui/ramView.ui
         ui/cartridgeView.ui
+        ui/apuView.ui
         resources/appResources.qrc
         sources/Utility/Utility.hpp
         sources/Debugger/MemoryViewer.cpp
         sources/Debugger/MemoryViewer.hpp
-        sources/Utility/Utility.cpp sources/Debugger/HeaderViewer.cpp sources/Debugger/HeaderViewer.hpp sources/CPU/Instructions/BitsInstructions.cpp)
+        sources/Utility/Utility.cpp
+        sources/Debugger/HeaderViewer.cpp
+        sources/Debugger/HeaderViewer.hpp
+        sources/CPU/Instructions/BitsInstructions.cpp
+        sources/Debugger/HeaderViewer.cpp
+        sources/Debugger/HeaderViewer.hpp
+        sources/Debugger/APUDebug.hpp
+        sources/Debugger/APUDebug.cpp
+        sources/APU/Instructions/Stack.cpp
+        sources/APU/Instructions/Subroutine.cpp
+        sources/APU/Instructions/ProgramFlow.cpp
+)
 
 target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)
 
