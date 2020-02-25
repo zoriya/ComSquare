@@ -58,6 +58,8 @@ namespace ComSquare
 		public:
 			//! @brief Callback called when a memory tab is selected.
 			void changeRam(int id);
+			//! @brief Create a popup asking you where you want to jump to.
+			void gotoAddr();
 
 			explicit MemoryViewer(SNES &snes);
 			MemoryViewer(const MemoryViewer &) = delete;

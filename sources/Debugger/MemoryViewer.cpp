@@ -4,6 +4,8 @@
 
 #include <iostream>
 #include <cmath>
+#include <QtWidgets/QInputDialog>
+#include <QtWidgets/QSpinBox>
 #include "MemoryViewer.hpp"
 #include "../SNES.hpp"
 #include "../Utility/Utility.hpp"
@@ -58,7 +60,6 @@ void MemoryViewerModel::setMemory(std::shared_ptr<Ram> memory)
 	emit this->layoutChanged();
 }
 
-
 namespace ComSquare::Debugger
 {
 	MemoryViewer::MemoryViewer(ComSquare::SNES &snes) :
@@ -77,6 +78,7 @@ namespace ComSquare::Debugger
 		this->_ui.tabs->addTab("&SRam");
 		this->_ui.tabs->addTab("&Rom");
 //		this->_ui.tabs->addTab("&VRam");
+		QMainWindow::connect(this->_ui.actionGoto, &QAction::triggered, this, &MemoryViewer::gotoAddr);
 		QObject::connect(this->_ui.tabs, &QTabBar::currentChanged, this, &MemoryViewer::changeRam);
 		this->show();
 	}
@@ -98,5 +100,29 @@ namespace ComSquare::Debugger
 //			this->_model.setMemory(this->_snes.vram);
 //			break;
 		}
+	}
+
+
+	void MemoryViewer::gotoAddr()
+	{
+		QInputDialog dialog(this, Qt::WindowFlags());
+		dialog.setWindowTitle("Go to:");
+		dialog.setLabelText("Address");
+		dialog.setIntRange(0, 0xFFFFFF);
+		dialog.setIntValue(0);
+		dialog.setIntStep(1);
+		dialog.setWindowModality(Qt::WindowModal);
+		QSpinBox *spinbox = dialog.findChild<QSpinBox*>();
+		spinbox->setDisplayIntegerBase(16);
+		QFont font = spinbox->font();
+		font.setCapitalization(QFont::AllUppercase);
+		spinbox->setFont(font);
+
+		if (dialog.exec() != QDialog::Accepted)
+			return;
+		long value = std::strtol(spinbox->text().toStdString().c_str(), nullptr, 16);
+		QModelIndex index = this->_ui.tableView->model()->index(value >> 4, value & 0x0000000F);
+		this->_ui.tableView->scrollTo(index);
+		this->_ui.tableView->selectionModel()->select(index, QItemSelectionModel::ClearAndSelect);
 	}
 }
