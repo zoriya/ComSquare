@@ -79,6 +79,7 @@ namespace ComSquare::Debugger
 		this->_ui.tabs->addTab("&Rom");
 //		this->_ui.tabs->addTab("&VRam");
 		QMainWindow::connect(this->_ui.actionGoto, &QAction::triggered, this, &MemoryViewer::gotoAddr);
+		QMainWindow::connect(this->_ui.actionGoto_Absolute, &QAction::triggered, this, &MemoryViewer::gotoAbsoluteAddr);
 		QObject::connect(this->_ui.tabs, &QTabBar::currentChanged, this, &MemoryViewer::changeRam);
 		this->show();
 	}
@@ -102,22 +103,40 @@ namespace ComSquare::Debugger
 		}
 	}
 
-
 	void MemoryViewer::gotoAddr()
 	{
+		this->_internalGoto(false);
+	}
+
+	void MemoryViewer::gotoAbsoluteAddr()
+	{
+		this->_internalGoto(true);
+	}
+
+	void MemoryViewer::_internalGoto(bool isAbsolute)
+	{
 		QDialog dialog(this);
+		dialog.setWindowModality(Qt::WindowModal);
 		Ui::GotoDialog dialogUI;
 		dialogUI.setupUi(&dialog);
 		QFont font = dialogUI.spinBox->font();
 		font.setCapitalization(QFont::AllUppercase);
 		dialogUI.spinBox->setFont(font);
 		dialogUI.spinBox->selectAll();
+		dialogUI.checkBox->setChecked(isAbsolute);
 
 		if (dialog.exec() != QDialog::Accepted)
 			return;
 		long value = std::strtol(dialogUI.spinBox->text().toStdString().c_str() + 1, nullptr, 16);
+		if (dialogUI.checkBox->isChecked())
+			this->switchToAddrTab(value);
 		QModelIndex index = this->_ui.tableView->model()->index(value >> 4, value & 0x0000000F);
 		this->_ui.tableView->scrollTo(index);
 		this->_ui.tableView->selectionModel()->select(index, QItemSelectionModel::ClearAndSelect);
+	}
+
+	void MemoryViewer::switchToAddrTab(uint24_t addr)
+	{
+
 	}
 }

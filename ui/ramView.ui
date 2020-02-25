@@ -45,6 +45,7 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionGoto"/>
+   <addaction name="actionGoto_Absolute"/>
   </widget>
   <action name="actionGoto">
    <property name="text">
@@ -55,6 +56,17 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+G</string>
+   </property>
+  </action>
+  <action name="actionGoto_Absolute">
+   <property name="text">
+    <string>Goto Absolute</string>
+   </property>
+   <property name="toolTip">
+    <string>Go to an absolute address</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+G</string>
    </property>
   </action>
  </widget>

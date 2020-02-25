@@ -56,11 +56,18 @@ namespace ComSquare
 			Ui::RamView _ui;
 			//! @brief The Ram visualizer model for QT.
 			MemoryViewerModel _model;
+			//! @brief Helper function to create the goto dialog.
+			void _internalGoto(bool isAbsolute);
 		public:
+			//! @brief Select the memory tab corresponding to a 24 bit address (map the address via the bus).
+			void switchToAddrTab(uint24_t addr);
+
 			//! @brief Callback called when a memory tab is selected.
 			void changeRam(int id);
 			//! @brief Create a popup asking you where you want to jump to.
 			void gotoAddr();
+			//! @brief Create a popup asking you where you want to jump to with the absolute mode selected.
+			void gotoAbsoluteAddr();
 
 			explicit MemoryViewer(SNES &snes);
 			MemoryViewer(const MemoryViewer &) = delete;
