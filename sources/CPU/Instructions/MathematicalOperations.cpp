@@ -26,4 +26,9 @@ namespace ComSquare::CPU
 		this->_registers.p.z = this->_registers.a == 0;
 		this->_registers.p.n = this->_registers.a & negativeMask;
 	}
+
+	void CPU::SBC(uint24_t valueAddr)
+	{
+
+	}
 }

@@ -393,7 +393,6 @@ namespace ComSquare::CPU
 		//! @brief Return from Interrupt - Used to return from a interrupt handler.
 		void RTI();
 		//! @brief Add with carry - Adds operand to the Accumulator; adds an additional 1 if carry is set.
-		//! @return The number of extra cycles that this operation took.
 		void ADC(uint24_t valueAddr);
 		//! @brief Store the accumulator to memory.
 		void STA(uint24_t addr);
@@ -461,6 +460,8 @@ namespace ComSquare::CPU
 		void XCE();
 		//! @brief And accumulator with memory.
 		void AND(uint24_t valueAddr);
+		//! @brief Subtract with Borrow from Accumulator.
+		void SBC(uint24_t valueAddr);
 	public:
 		explicit CPU(std::shared_ptr<Memory::MemoryBus> bus, Cartridge::Header &cartridgeHeader);
 		CPU(const CPU &) = default;
