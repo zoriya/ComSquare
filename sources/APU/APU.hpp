@@ -289,8 +289,19 @@ namespace ComSquare::APU
 		//! @brief Compare YA with a word value.
 		int CMPW(uint24_t addr);
 
-		//! @brief Sets a word value equal to another
+		//! @brief Sets a word value equal to another.
 		int MOVW(uint24_t addr, bool to_ya = false);
+
+		//! @brief Arithmetic Shift Left.
+		int ASL(uint24_t operand, int cycles, bool accumulator = false);
+		//! @brief Logical Shift Right.
+		int LSR(uint24_t operand, int cycles, bool accumulator = false);
+		//! @brief Rotate Bits Left.
+		int ROL(uint24_t operand, int cycles, bool accumulator = false);
+		//! @brief Rotate Bits Right.
+		int ROR(uint24_t operand, int cycles, bool accumulator = false);
+		//! @brief Exchange Nibbles.
+		int XCN();
 	public:
 		explicit APU(std::shared_ptr<MemoryMap> &map);
 		APU(const APU &) = default;

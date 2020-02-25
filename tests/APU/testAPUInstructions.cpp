@@ -884,3 +884,110 @@ Test(XVIbitDataTransmission, MOVW)
 	cr_assert_eq(apu->_internalRegisters.n, false);
 	cr_assert_eq(apu->_internalRegisters.z, false);
 }
+
+//////////////////////////////////////
+//									//
+// (VIII)8-bit Shift Rotation tests //
+//									//
+//////////////////////////////////////
+
+Test(VIIIShiftRotation, ASL)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.a = 0x66;
+	result = apu->ASL(apu->_internalRegisters.a, 2, true);
+	cr_assert_eq(result, 2);
+	cr_assert_eq(apu->_internalRegisters.a, 0xCC);
+	cr_assert_eq(apu->_internalRegisters.c, false);
+	cr_assert_eq(apu->_internalRegisters.n, true);
+	cr_assert_eq(apu->_internalRegisters.z, false);
+	apu->_internalWrite(apu->_internalRegisters.pc, 0x55);
+	apu->_internalWrite(0x55, 0xDD);
+	result = apu->ASL(apu->_getDirectAddr(), 5);
+	cr_assert_eq(result, 5);
+	cr_assert_eq(apu->_internalRead(0x55), 0xBA);
+	cr_assert_eq(apu->_internalRegisters.c, true);
+	cr_assert_eq(apu->_internalRegisters.n, true);
+	cr_assert_eq(apu->_internalRegisters.z, false);
+}
+
+Test(VIIIShiftRotation, LSR)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.a = 0x66;
+	result = apu->LSR(apu->_internalRegisters.a, 2, true);
+	cr_assert_eq(result, 2);
+	cr_assert_eq(apu->_internalRegisters.a, 0x33);
+	cr_assert_eq(apu->_internalRegisters.c, false);
+	cr_assert_eq(apu->_internalRegisters.n, true);
+	cr_assert_eq(apu->_internalRegisters.z, false);
+	apu->_internalWrite(apu->_internalRegisters.pc, 0x55);
+	apu->_internalWrite(0x55, 0xDD);
+	result = apu->LSR(apu->_getDirectAddr(), 5);
+	cr_assert_eq(result , 5);
+	cr_assert_eq(apu->_internalRead(0x55), 0x6E);
+	cr_assert_eq(apu->_internalRegisters.c, true);
+	cr_assert_eq(apu->_internalRegisters.n, false);
+	cr_assert_eq(apu->_internalRegisters.z, false);
+}
+
+Test(VIIIShiftRotation, ROL)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.a = 0x66;
+	result = apu->ROL(apu->_internalRegisters.a, 2, true);
+	cr_assert_eq(result, 2);
+	cr_assert_eq(apu->_internalRegisters.a, 0xCC);
+	cr_assert_eq(apu->_internalRegisters.c, false);
+	cr_assert_eq(apu->_internalRegisters.n, true);
+	cr_assert_eq(apu->_internalRegisters.z, false);
+	apu->_internalWrite(apu->_internalRegisters.pc, 0x55);
+	apu->_internalWrite(0x55, 0xDD);
+	result = apu->ROL(apu->_getDirectAddr(), 5);
+	cr_assert_eq(result, 5);
+	cr_assert_eq(apu->_internalRead(0x55), 0xBA);
+	cr_assert_eq(apu->_internalRegisters.c, true);
+	cr_assert_eq(apu->_internalRegisters.n, true);
+	cr_assert_eq(apu->_internalRegisters.z, false);
+}
+
+Test(VIIIShiftRotation, ROR)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.a = 0x66;
+	result = apu->ROR(apu->_internalRegisters.a, 2, true);
+	cr_assert_eq(result, 2);
+	cr_assert_eq(apu->_internalRegisters.a, 0x33);
+	cr_assert_eq(apu->_internalRegisters.c, false);
+	cr_assert_eq(apu->_internalRegisters.n, true);
+	cr_assert_eq(apu->_internalRegisters.z, false);
+	apu->_internalWrite(apu->_internalRegisters.pc, 0x55);
+	apu->_internalWrite(0x55, 0xDD);
+	result = apu->ROR(apu->_getDirectAddr(), 5);
+	cr_assert_eq(result , 5);
+	cr_assert_eq(apu->_internalRead(0x55), 0x6E);
+	cr_assert_eq(apu->_internalRegisters.c, true);
+	cr_assert_eq(apu->_internalRegisters.n, false);
+	cr_assert_eq(apu->_internalRegisters.z, false);
+}
+
+Test(VIIIShiftRotation, XCN)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.a = 0b10101010;
+	result = apu->XCN();
+	cr_assert_eq(result, 5);
+	cr_assert_eq(apu->_internalRegisters.a, 0xAA);
+	cr_assert_eq(apu->_internalRegisters.n, true);
+	cr_assert_eq(apu->_internalRegisters.z, false);
+}
