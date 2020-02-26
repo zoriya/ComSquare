@@ -32,4 +32,14 @@ namespace ComSquare::Memory
 		this->_bankOffset = bankOffset;
 		return this;
 	}
+
+	bool RectangleShadow::isMirror()
+	{
+		return true;
+	}
+
+	std::shared_ptr<IMemory> RectangleShadow::getMirrored()
+	{
+		return this->_initial;
+	}
 }

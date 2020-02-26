@@ -31,6 +31,12 @@ namespace ComSquare::Memory
 		//! @param data The data to write.
 		//! @throw InvalidAddress will be thrown if the address is more than the size of the initial IMemory.
 		void write(uint24_t addr, uint8_t data) override;
+		//! @brief Check if this memory is a mirror or not.
+		//! @return True if this memory is a mirror. False otherwise.
+		bool isMirror() override;
+		//! @brief Return the memory accessor this accessor mirror if any
+		//! @return nullptr if isMirror is false, the source otherwise.
+		std::shared_ptr<IMemory> getMirrored() override;
 	};
 }
 

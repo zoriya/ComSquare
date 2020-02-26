@@ -22,11 +22,6 @@ namespace ComSquare
 			//! @brief The list of components registered inside the bus. Every components that can read/write to a public address should be in this vector.
 			std::vector<std::shared_ptr<IMemory>> _memoryAccessors;
 
-			//! @brief Helper function to get the components that is responsible of read/write at an address.
-			//! @param addr The address you want to look for.
-			//! @return The components responsible for the address param or nullptr if none was found.
-			std::shared_ptr<IMemory> getAccessor(uint24_t addr);
-
 			//! @brief The last value read via the memory bus.
 			uint8_t _openBus = 0;
 
@@ -54,6 +49,11 @@ namespace ComSquare
 			//! @brief Map components to the address space using the currently loaded cartridge to set the right mapping mode.
 			//! @param console All the components.
 			void mapComponents(SNES &console);
+
+			//! @brief Helper function to get the components that is responsible of read/write at an address.
+			//! @param addr The address you want to look for.
+			//! @return The components responsible for the address param or nullptr if none was found.
+			std::shared_ptr<IMemory> getAccessor(uint24_t addr);
 		};
 	}
 }

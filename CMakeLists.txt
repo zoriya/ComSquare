@@ -71,6 +71,8 @@ add_executable(unit_tests
         sources/Ram/ExtendedRam.hpp
         sources/Utility/Utility.hpp
         sources/Utility/Utility.cpp
+        sources/CPU/Instructions/BitsInstructions.cpp
+        tests/CPU/testBits.cpp
         sources/APU/Instructions/Bit.cpp
         sources/APU/Instructions/Stack.cpp
         sources/APU/Instructions/Subroutine.cpp
@@ -81,7 +83,10 @@ add_executable(unit_tests
         sources/APU/Instructions/16bitArithmetic.cpp
         sources/APU/Instructions/16bitDataTransmission.cpp
         sources/APU/Instructions/8bitShiftRotation.cpp
-        sources/APU/Instructions/8bitIncrementDecrement.cpp sources/APU/Instructions/8bitLogical.cpp tests/APU/testOperand.cpp)
+        sources/APU/Instructions/8bitIncrementDecrement.cpp
+        sources/APU/Instructions/8bitLogical.cpp
+        tests/APU/testOperand.cpp
+)
 
 # include criterion & coverage
 target_link_libraries(unit_tests criterion -lgcov)
@@ -162,6 +167,9 @@ add_executable(ComSquare
         sources/Utility/Utility.cpp
         sources/Debugger/HeaderViewer.cpp
         sources/Debugger/HeaderViewer.hpp
+        sources/CPU/Instructions/BitsInstructions.cpp
+        sources/Debugger/HeaderViewer.cpp
+        sources/Debugger/HeaderViewer.hpp
         sources/Debugger/APUDebug.hpp
         sources/Debugger/APUDebug.cpp
         sources/APU/Instructions/Stack.cpp
@@ -173,7 +181,9 @@ add_executable(ComSquare
         sources/APU/Instructions/16bitArithmetic.cpp
         sources/APU/Instructions/16bitDataTransmission.cpp
         sources/APU/Instructions/8bitShiftRotation.cpp
-        sources/APU/Instructions/8bitIncrementDecrement.cpp sources/APU/Instructions/8bitLogical.cpp)
+        sources/APU/Instructions/8bitIncrementDecrement.cpp
+        sources/APU/Instructions/8bitLogical.cpp
+)
 
 target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)
 

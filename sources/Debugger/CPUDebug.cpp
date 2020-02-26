@@ -4,6 +4,7 @@
 
 #include "CPUDebug.hpp"
 #include "../Utility/Utility.hpp"
+#include "../Exceptions/InvalidOpcode.hpp"
 
 using namespace ComSquare::CPU;
 
@@ -24,14 +25,20 @@ namespace ComSquare::Debugger
 
 	unsigned CPUDebug::update()
 	{
-		if (!this->isVisible()) {
-			this->_snes.disableCPUDebugging();
-			return 0;
-		}
+		try {
+			if (!this->isVisible()) {
+				this->_snes.disableCPUDebugging();
+				return 0;
+			}
 
-		if (this->_isPaused)
+			if (this->_isPaused)
+				return 0xFF;
+			return CPU::update();
+		} catch (InvalidOpcode &e) {
+			this->pause();
+			this->_ui.logger->append(e.what());
 			return 0xFF;
-		return CPU::update();
+		}
 	}
 
 	unsigned CPUDebug::_executeInstruction(uint8_t opcode)
@@ -105,6 +112,8 @@ namespace ComSquare::Debugger
 	{
 		switch (opcode) {
 		case Instructions::BRK:      return "BRK";
+
+		case Instructions::COP:      return "COP";
 
 		case Instructions::RTI:	     return "RTI";
 
@@ -208,6 +217,22 @@ namespace ComSquare::Debugger
 		case Instructions::CLI: return "CLI";
 		case Instructions::CLD: return "CLD";
 		case Instructions::CLV: return "CLV";
+
+		case Instructions::AND_IM:   return "AND";
+		case Instructions::AND_ABS:  return "AND";
+		case Instructions::AND_ABSl: return "AND";
+		case Instructions::AND_DP:   return "AND";
+		case Instructions::AND_DPi:  return "AND";
+		case Instructions::AND_DPil: return "AND";
+		case Instructions::AND_ABSX: return "AND";
+		case Instructions::AND_ABSXl:return "AND";
+		case Instructions::AND_ABSY: return "AND";
+		case Instructions::AND_DPX:  return "AND";
+		case Instructions::AND_DPXi: return "AND";
+		case Instructions::AND_DPYi: return "AND";
+		case Instructions::AND_DPYil:return "AND";
+		case Instructions::AND_SR:   return "AND";
+		case Instructions::AND_SRYi: return "AND";
 
 		default: return "Unknown";
 		}

@@ -22,13 +22,14 @@ namespace ComSquare
 {
 	//! @brief Container of all the components of the SNES.
 	class SNES {
-#ifdef DEBUGGER_ENABLED
 	private:
+#ifdef DEBUGGER_ENABLED
 		//! @brief The window that allow the user to view a memory.
 		std::shared_ptr<Debugger::MemoryViewer> _ramViewer;
 		//! @brief The window that allow the user to view the cartridge's header.
 		std::shared_ptr<Debugger::HeaderViewer> _headerViewer;
 #endif
+		std::shared_ptr<Memory::MemoryBus> _bus;
 	public:
 		//! @brief Cartridge containing instructions (ROM).
 		std::shared_ptr<Cartridge::Cartridge> cartridge;
