@@ -168,6 +168,18 @@ namespace ComSquare::APU
 			return this->SET1(this->_getDirectAddr(), 0);
 		case 0x03:
 			return this->BBS(this->_getDirectAddr(), 0);
+		case 0x04:
+			return this->ORacc(this->_getDirectAddr(), 3);
+		case 0x05:
+			return this->ORacc(this->_getAbsoluteAddr(), 4);
+		case 0x06:
+			return this->ORacc(this->_getIndexXAddr(), 3);
+		case 0x07:
+			return this->ORacc(this->_getAbsoluteDirectByXAddr(), 6);
+		case 0x08:
+			return this->ORacc(this->_getImmediateData(), 2);
+		case 0x09:
+			return this->OR(this->_getDirectAddr(), this->_getDirectAddr(), 6);
 		case 0x0A:
 			return this->OR1(this->_getAbsoluteBit());
 		case 0x0B:
@@ -188,6 +200,18 @@ namespace ComSquare::APU
 			return this->CLR1(this->_getDirectAddr(), 0);
 		case 0x13:
 			return this->BBC(this->_getDirectAddr(), 0);
+		case 0x14:
+			return this->ORacc(this->_getDirectAddrByX(), 4);
+		case 0x15:
+			return this->ORacc(this->_getAbsoluteAddrByX(), 5);
+		case 0x16:
+			return this->ORacc(this->_getAbsoluteAddrByY(), 5);
+		case 0x17:
+			return this->ORacc(this->_getAbsoluteDirectAddrByY(), 6);
+		case 0x18:
+			return this->OR(this->_getDirectAddr(), this->_getImmediateData(), 5);
+		case 0x19:
+			return this->OR(this->_getIndexXAddr(), this->_getIndexYAddr(), 5);
 		case 0x1A:
 			return this->DECW(this->_getDirectAddr());
 		case 0x1B:
@@ -197,7 +221,7 @@ namespace ComSquare::APU
 		case 0x1D:
 			return this->DECreg(this->_internalRegisters.x);
 		case 0x1F:
-			return this->JMP(this->_getAbsoluteAddrByX(), true);
+			return this->JMP(this->_getAbsoluteByXAddr(), true);
 		case 0x20:
 			return this->CLRP();
 		case 0x21:
@@ -206,6 +230,18 @@ namespace ComSquare::APU
 			return this->SET1(this->_getDirectAddr(), 1);
 		case 0x23:
 			return this->BBS(this->_getDirectAddr(), 1);
+		case 0x24:
+			return this->ANDacc(this->_getDirectAddr(), 3);
+		case 0x25:
+			return this->ANDacc(this->_getAbsoluteAddr(), 4);
+		case 0x26:
+			return this->ANDacc(this->_getIndexXAddr(), 3);
+		case 0x27:
+			return this->ANDacc(this->_getAbsoluteDirectByXAddr(), 6);
+		case 0x28:
+			return this->ANDacc(this->_getImmediateData(), 2);
+		case 0x29:
+			return this->AND(this->_getDirectAddr(), this->_getDirectAddr(), 6);
 		case 0x2A:
 			return this->OR1(this->_getAbsoluteBit(), true);
 		case 0x2B:
@@ -215,7 +251,7 @@ namespace ComSquare::APU
 		case 0x2D:
 			return this->PUSH(this->_internalRegisters.a);
 		case 0x2E:
-			return this->CBNE(this->_getDirectValue());
+			return this->CBNE(this->_getImmediateData());
 		case 0x2F:
 			return this->BRA();
 		case 0x30:
@@ -226,6 +262,18 @@ namespace ComSquare::APU
 			return this->CLR1(this->_getDirectAddr(), 1);
 		case 0x33:
 			return this->BBC(this->_getDirectAddr(), 1);
+		case 0x34:
+			return this->ANDacc(this->_getDirectAddrByX(), 4);
+		case 0x35:
+			return this->ANDacc(this->_getAbsoluteAddrByX(), 5);
+		case 0x36:
+			return this->ANDacc(this->_getAbsoluteAddrByY(), 5);
+		case 0x37:
+			return this->ANDacc(this->_getAbsoluteDirectAddrByY(), 6);
+		case 0x38:
+			return this->AND(this->_getDirectAddr(), this->_getImmediateData(), 5);
+		case 0x39:
+			return this->AND(this->_getIndexXAddr(), this->_getIndexYAddr(), 5);
 		case 0x3A:
 			return this->INCW(this->_getDirectAddr());
 		case 0x3B:
@@ -244,6 +292,18 @@ namespace ComSquare::APU
 			return this->SET1(this->_getDirectAddr(), 2);
 		case 0x43:
 			return this->BBS(this->_getDirectAddr(), 2);
+		case 0x44:
+			return this->EORacc(this->_getDirectAddr(), 3);
+		case 0x45:
+			return this->EORacc(this->_getAbsoluteAddr(), 4);
+		case 0x46:
+			return this->EORacc(this->_getIndexXAddr(), 3);
+		case 0x47:
+			return this->EORacc(this->_getAbsoluteDirectByXAddr(), 6);
+		case 0x48:
+			return this->EORacc(this->_getImmediateData(), 2);
+		case 0x49:
+			return this->EOR(this->_getDirectAddr(), this->_getDirectAddr(), 6);
 		case 0x4A:
 			return this->AND1(this->_getAbsoluteBit());
 		case 0x4B:
@@ -264,6 +324,18 @@ namespace ComSquare::APU
 			return this->CLR1(this->_getDirectAddr(), 2);
 		case 0x53:
 			return this->BBC(this->_getDirectAddr(), 2);
+		case 0x54:
+			return this->EORacc(this->_getDirectAddrByX(), 4);
+		case 0x55:
+			return this->EORacc(this->_getAbsoluteAddrByX(), 5);
+		case 0x56:
+			return this->EORacc(this->_getAbsoluteAddrByY(), 5);
+		case 0x57:
+			return this->EORacc(this->_getAbsoluteDirectAddrByY(), 6);
+		case 0x58:
+			return this->EOR(this->_getDirectAddr(), this->_getImmediateData(), 5);
+		case 0x59:
+			return this->EOR(this->_getIndexXAddr(), this->_getIndexYAddr(), 5);
 		case 0x5A:
 			return this->CMPW(this->_getDirectAddr());
 		case 0x5B:

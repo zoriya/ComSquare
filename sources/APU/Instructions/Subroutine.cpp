@@ -17,7 +17,7 @@ namespace ComSquare::APU
 
 	int APU::PCALL()
 	{
-		this->CALL(0xFF00u + this->_getDirectValue());
+		this->CALL(0xFF00u + this->_getImmediateData());
 		return 6;
 	}
 

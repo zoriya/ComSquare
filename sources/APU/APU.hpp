@@ -162,15 +162,27 @@ namespace ComSquare::APU
 		unsigned int _paddingCycles = 0;
 
 		//! @brief Get value of the Pointer Counter
-		uint8_t _getDirectValue();
+		uint8_t _getImmediateData();
 		//! @brief Get direct page offset
 		uint24_t _getDirectAddr();
+		//! @brief Get Index X offset
+		uint24_t _getIndexXAddr();
+		//! @brief Get Index Y offset
+		uint24_t _getIndexYAddr();
 		//! @brief Get direct page offset and add to it the X Index Flag
 		uint24_t _getDirectAddrByX();
 		//! @brief Get absolute direct page offset
 		uint24_t _getAbsoluteAddr();
-		//! @brief Get absolute direct page offset nd add to it the X Index Flag
+		//! @brief _get absolute direct page + X Index offset
+		uint24_t _getAbsoluteByXAddr();
+		//! @brief Get absolute direct page offset and add to it the X Index Flag
 		uint24_t _getAbsoluteAddrByX();
+		//! @brief Get absolute direct page offset and add to it the Y Index Flag
+		uint24_t _getAbsoluteAddrByY();
+		//! @brief Get absolute offset of the direct page added to the X Index Flag
+		uint24_t _getAbsoluteDirectByXAddr();
+		//! @brief Get absolute offset of the direct page and add the Y Index Flag to it
+		uint24_t _getAbsoluteDirectAddrByY();
 		//! @brief Get absolute offset and separate its bits
 		std::pair<uint24_t, uint24_t> _getAbsoluteBit();
 
@@ -314,6 +326,19 @@ namespace ComSquare::APU
 		int DEC(uint24_t addr, int cycles);
 		//! @brief Decrement a register.
 		int DECreg(uint8_t &value);
+
+		//! @brief Perform a bitwise AND.
+		int AND(uint24_t operand1, uint24_t operand2, int cycles);
+		//! @brief Perform a bitwise AND on the Accumulator flag.
+		int ANDacc(uint24_t addr, int cycles);
+		//! @brief Perform a bitwise OR.
+		int OR(uint24_t operand1, uint24_t operand2, int cycles);
+		//! @brief Perform a bitwise OR on the Accumulator flag.
+		int ORacc(uint24_t addr, int cycles);
+		//! @brief Perform an Exclusive OR.
+		int EOR(uint24_t operand1, uint24_t operand2, int cycles);
+		//! @brief Perform an Exclusive OR on the Accumulator flag.
+		int EORacc(uint24_t addr, int cycles);
 	public:
 		explicit APU(std::shared_ptr<MemoryMap> &map);
 		APU(const APU &) = default;

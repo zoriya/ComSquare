@@ -8,7 +8,7 @@ namespace ComSquare::APU
 {
 	int APU::BRA()
 	{
-		int8_t offset = this->_getDirectValue();
+		int8_t offset = this->_getImmediateData();
 
 		this->_internalRegisters.pc += offset;
 		return 4;
