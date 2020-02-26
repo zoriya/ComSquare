@@ -81,7 +81,7 @@ add_executable(unit_tests
         sources/APU/Instructions/16bitArithmetic.cpp
         sources/APU/Instructions/16bitDataTransmission.cpp
         sources/APU/Instructions/8bitShiftRotation.cpp
-)
+        sources/APU/Instructions/8bitIncrementDecrement.cpp)
 
 # include criterion & coverage
 target_link_libraries(unit_tests criterion -lgcov)
@@ -173,7 +173,7 @@ add_executable(ComSquare
         sources/APU/Instructions/16bitArithmetic.cpp
         sources/APU/Instructions/16bitDataTransmission.cpp
         sources/APU/Instructions/8bitShiftRotation.cpp
-)
+        sources/APU/Instructions/8bitIncrementDecrement.cpp)
 
 target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)
 

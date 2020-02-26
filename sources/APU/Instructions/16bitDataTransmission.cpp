@@ -14,8 +14,7 @@ namespace ComSquare::APU
 			uint16_t value = ((this->_internalRead(addr2) << 8u) | this->_internalRead(addr));
 
 			this->_internalRegisters.ya = value;
-			this->_internalRegisters.n = value & 0x8000u;
-			this->_internalRegisters.z = !value;
+			this->_setNZflags(value);
 		}
 		else {
 			this->_internalWrite(addr, this->_internalRegisters.a);

@@ -194,6 +194,8 @@ namespace ComSquare::APU
 			return this->ASL(this->_getDirectAddrByX(), 5);
 		case 0x1C:
 			return this->ASL(this->_internalRegisters.a, 2, true);
+		case 0x1D:
+			return this->DECreg(this->_internalRegisters.x);
 		case 0x1F:
 			return this->JMP(this->_getAbsoluteAddrByX(), true);
 		case 0x20:
@@ -230,6 +232,8 @@ namespace ComSquare::APU
 			return this->ROL(this->_getAbsoluteAddrByX(), 5);
 		case 0x3C:
 			return this->ROL(this->_internalRegisters.a, 2, true);
+		case 0x3D:
+			return this->INCreg(this->_internalRegisters.x);
 		case 0x3F:
 			return this->CALL(this->_getAbsoluteAddr());
 		case 0x40:
@@ -314,6 +318,10 @@ namespace ComSquare::APU
 			return this->BBS(this->_getDirectAddr(), 4);
 		case 0x8A:
 			return this->EOR1(this->_getAbsoluteBit());
+		case 0x8B:
+			return this->DEC(this->_getDirectAddr(), 4);
+		case 0x8C:
+			return this->DEC(this->_getAbsoluteAddr(), 5);
 		case 0x8E:
 			return this->POP(this->_internalRegisters.psw);
 		case 0x90:
@@ -326,6 +334,10 @@ namespace ComSquare::APU
 			return this->BBC(this->_getDirectAddr(), 4);
 		case 0x9A:
 			return this->SUBW(this->_getDirectAddr());
+		case 0x9B:
+			return this->DEC(this->_getDirectAddrByX(), 5);
+		case 0x9C:
+			return this->DECreg(this->_internalRegisters.a);
 		case 0x9E:
 			return this->DIV();
 		case 0x9F:
@@ -340,6 +352,10 @@ namespace ComSquare::APU
 			return this->BBS(this->_getDirectAddr(), 5);
 		case 0xAA:
 			return this->MOV1(this->_getAbsoluteBit(), true);
+		case 0xAB:
+			return this->INC(this->_getDirectAddr(), 4);
+		case 0xAC:
+			return this->INC(this->_getAbsoluteAddr(), 5);
 		case 0xAE:
 			return this->POP(this->_internalRegisters.a);
 		case 0xB0:
@@ -352,6 +368,10 @@ namespace ComSquare::APU
 			return this->BBC(this->_getDirectAddr(), 5);
 		case 0xBA:
 			return this->MOVW(this->_getDirectAddr(), true);
+		case 0xBB:
+			return this->INC(this->_getDirectAddrByX(), 5);
+		case 0xBC:
+			return this->INCreg(this->_internalRegisters.a);
 		case 0xBE:
 			return this->DAS();
 		case 0xC0:
@@ -378,6 +398,8 @@ namespace ComSquare::APU
 			return this->BBC(this->_getDirectAddr(), 6);
 		case 0xDA:
 			return this->MOVW(this->_getDirectAddr());
+		case 0xDC:
+			return this->DECreg(this->_internalRegisters.y);
 		case 0xDE:
 			return this->CBNE(this->_getDirectAddrByX(), true);
 		case 0xDF:
@@ -398,6 +420,8 @@ namespace ComSquare::APU
 			return this->CLR1(this->_getDirectAddr(), 7);
 		case 0xF3:
 			return this->BBC(this->_getDirectAddr(), 7);
+		case 0xFC:
+			return this->INCreg(this->_internalRegisters.y);
 		case 0xEA:
 			return this->NOT1(this->_getAbsoluteBit());
 		case 0xED:
@@ -422,6 +446,12 @@ namespace ComSquare::APU
 			total += this->_executeInstruction();
 		if (this->_state == Running)
 			this->_paddingCycles = total - cycles;
+	}
+
+	void APU::_setNZflags(uint8_t value)
+	{
+		this->_internalRegisters.n = value & 0x80u;
+		this->_internalRegisters.z = !value;
 	}
 
 	MemoryMap::MemoryMap() :

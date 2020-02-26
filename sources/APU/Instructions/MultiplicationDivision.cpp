@@ -28,8 +28,7 @@ namespace ComSquare::APU
 			this->_internalRegisters.a = 0xFF - (ya - (this->_internalRegisters.x << 9u)) / (0x100 - this->_internalRegisters.x);
 			this->_internalRegisters.y = this->_internalRegisters.x + (ya - (this->_internalRegisters.x << 9u)) % (0x100 - this->_internalRegisters.x);
 		}
-		this->_internalRegisters.z = !this->_internalRegisters.a;
-		this->_internalRegisters.n = this->_internalRegisters.a & 0x80u;
+		this->_setNZflags(this->_internalRegisters.a);
 		return 12;
 	}
 }

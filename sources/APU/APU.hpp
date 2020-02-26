@@ -174,6 +174,9 @@ namespace ComSquare::APU
 		//! @brief Get absolute offset and separate its bits
 		std::pair<uint24_t, uint24_t> _getAbsoluteBit();
 
+		//! @brief Set Negative and Zero flags with value after an instruction
+		void _setNZflags(uint8_t value);
+
 		//! @brief Execute a single instruction.
 		//! @return The number of cycles that the instruction took.
 		virtual int _executeInstruction();
@@ -302,6 +305,15 @@ namespace ComSquare::APU
 		int ROR(uint24_t operand, int cycles, bool accumulator = false);
 		//! @brief Exchange Nibbles.
 		int XCN();
+
+		//! @brief Increment a value at an address.
+		int INC(uint24_t addr, int cycles);
+		//! @brief Increment a register.
+		int INCreg(uint8_t &value);
+		//! @brief Decrement a value at an address.
+		int DEC(uint24_t addr, int cycles);
+		//! @brief Decrement a register.
+		int DECreg(uint8_t &value);
 	public:
 		explicit APU(std::shared_ptr<MemoryMap> &map);
 		APU(const APU &) = default;

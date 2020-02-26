@@ -16,8 +16,7 @@ namespace ComSquare::APU
 			this->_internalRegisters.a = value;
 		else
 			this->_internalWrite(operand, value);
-		this->_internalRegisters.n = value & 0x80u;
-		this->_internalRegisters.z = !value;
+		this->_setNZflags(value);
 		return cycles;
 	}
 
@@ -46,8 +45,7 @@ namespace ComSquare::APU
 			this->_internalRegisters.a = result;
 		else
 			this->_internalWrite(operand, result);
-		this->_internalRegisters.n = result & 0x80u;
-		this->_internalRegisters.z = !result;
+		this->_setNZflags(result);
 		return cycles;
 	}
 
@@ -69,8 +67,7 @@ namespace ComSquare::APU
 	int APU::XCN()
 	{
 		this->_internalRegisters.a = (this->_internalRegisters.a >> 4u) | (this->_internalRegisters.a << 4u);
-		this->_internalRegisters.n = this->_internalRegisters.a & 0x80u;
-		this->_internalRegisters.z =  !this->_internalRegisters.a;
+		this->_setNZflags(this->_internalRegisters.a);
 		return 5;
 	}
 }

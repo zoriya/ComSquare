@@ -891,7 +891,7 @@ Test(XVIbitDataTransmission, MOVW)
 //									//
 //////////////////////////////////////
 
-Test(VIIIShiftRotation, ASL)
+Test(VIIIbitShiftRotation, ASL)
 {
 	auto apu = Init().second.apu;
 	int result = 0;
@@ -913,7 +913,7 @@ Test(VIIIShiftRotation, ASL)
 	cr_assert_eq(apu->_internalRegisters.z, false);
 }
 
-Test(VIIIShiftRotation, LSR)
+Test(VIIIbitShiftRotation, LSR)
 {
 	auto apu = Init().second.apu;
 	int result = 0;
@@ -935,7 +935,7 @@ Test(VIIIShiftRotation, LSR)
 	cr_assert_eq(apu->_internalRegisters.z, false);
 }
 
-Test(VIIIShiftRotation, ROL)
+Test(VIIIbitShiftRotation, ROL)
 {
 	auto apu = Init().second.apu;
 	int result = 0;
@@ -957,7 +957,7 @@ Test(VIIIShiftRotation, ROL)
 	cr_assert_eq(apu->_internalRegisters.z, false);
 }
 
-Test(VIIIShiftRotation, ROR)
+Test(VIIIbitShiftRotation, ROR)
 {
 	auto apu = Init().second.apu;
 	int result = 0;
@@ -990,4 +990,64 @@ Test(VIIIShiftRotation, XCN)
 	cr_assert_eq(apu->_internalRegisters.a, 0xAA);
 	cr_assert_eq(apu->_internalRegisters.n, true);
 	cr_assert_eq(apu->_internalRegisters.z, false);
+}
+
+///////////////////////////////////////////
+//										 //
+// (VIII)8-bit Increment Decrement tests //
+//										 //
+///////////////////////////////////////////
+
+Test(VIIIbitIncrementDecrement, INC)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalWrite(apu->_internalRegisters.pc, 0x55);
+	apu->_internalWrite(0x55, 0xDD);
+	result = apu->INC(apu->_getDirectAddr(), 4);
+	cr_assert_eq(result, 4);
+	cr_assert_eq(apu->_internalRead(0x55), 0xDE);
+	cr_assert_eq(apu->_internalRegisters.z, false);
+	cr_assert_eq(apu->_internalRegisters.n, true);
+}
+
+Test(VIIIbitIncrementDecrement, INCreg)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.a = 0x76;
+	result = apu->INCreg(apu->_internalRegisters.a);
+	cr_assert_eq(result, 2);
+	cr_assert_eq(apu->_internalRegisters.a, 0x77);
+	cr_assert_eq(apu->_internalRegisters.z, false);
+	cr_assert_eq(apu->_internalRegisters.n, false);
+}
+
+Test(VIIIbitIncrementDecrement, DEC)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalWrite(apu->_internalRegisters.pc, 0x55);
+	apu->_internalWrite(0x55, 0xDD);
+	result = apu->DEC(apu->_getDirectAddr(), 4);
+	cr_assert_eq(result, 4);
+	cr_assert_eq(apu->_internalRead(0x55), 0xDC);
+	cr_assert_eq(apu->_internalRegisters.z, false);
+	cr_assert_eq(apu->_internalRegisters.n, true);
+}
+
+Test(VIIIbitIncrementDecrement, DECreg)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.a = 0x76;
+	result = apu->DECreg(apu->_internalRegisters.a);
+	cr_assert_eq(result, 2);
+	cr_assert_eq(apu->_internalRegisters.a, 0x75);
+	cr_assert_eq(apu->_internalRegisters.z, false);
+	cr_assert_eq(apu->_internalRegisters.n, false);
 }

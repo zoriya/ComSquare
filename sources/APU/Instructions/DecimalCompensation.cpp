@@ -15,8 +15,7 @@ namespace ComSquare::APU
 		if (this->_internalRegisters.h || (this->_internalRegisters.a & 0x0Fu) > 0x09) {
 			this->_internalRegisters.a += 0x06;
 		}
-		this->_internalRegisters.n = this->_internalRegisters.a & 0x80u;
-		this->_internalRegisters.z = !this->_internalRegisters.a;
+		this->_setNZflags(this->_internalRegisters.a);
 		return 3;
 	}
 
@@ -29,8 +28,7 @@ namespace ComSquare::APU
 		if (!this->_internalRegisters.h || (this->_internalRegisters.a & 0x0Fu) > 0x09) {
 			this->_internalRegisters.a -= 0x06;
 		}
-		this->_internalRegisters.n = this->_internalRegisters.a & 0x80u;
-		this->_internalRegisters.z = !this->_internalRegisters.a;
+		this->_setNZflags(this->_internalRegisters.a);
 		return 3;
 	}
 }
