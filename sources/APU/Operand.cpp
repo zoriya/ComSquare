@@ -111,7 +111,6 @@ namespace ComSquare::APU
 			DirectIndexX += 0x100;
 		uint24_t high = this->_internalRead(DirectIndexX);
 
-		printf("\n\nHey : %i\n\n", ((high << 8u) | low) + this->_internalRegisters.y);
 		return ((high << 8u) | low) + this->_internalRegisters.y;
 	}
 }
