@@ -86,6 +86,7 @@ add_executable(unit_tests
         sources/APU/Instructions/8bitIncrementDecrement.cpp
         sources/APU/Instructions/8bitLogical.cpp
         tests/APU/testOperand.cpp
+        sources/APU/Instructions/8bitArithmetic.cpp
 )
 
 # include criterion & coverage
@@ -183,6 +184,7 @@ add_executable(ComSquare
         sources/APU/Instructions/8bitShiftRotation.cpp
         sources/APU/Instructions/8bitIncrementDecrement.cpp
         sources/APU/Instructions/8bitLogical.cpp
+        sources/APU/Instructions/8bitArithmetic.cpp
 )
 
 target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)

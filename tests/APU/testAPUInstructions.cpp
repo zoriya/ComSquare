@@ -1096,3 +1096,106 @@ Test(VIIILogical, EOR)
 	cr_assert_eq(result, 5);
 	cr_assert_eq(apu->_internalRead(4), 32);
 }
+
+//////////////////////////////////
+//								//
+// (VIII)8-bit Arithmetic tests //
+//								//
+//////////////////////////////////
+
+Test(VIIIArithmetic, ADC)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.x = 4;
+	apu->_internalRegisters.y = 7;
+	apu->_internalRegisters.c = true;
+	apu->_internalWrite(4, 53);
+	apu->_internalWrite(7, 76);
+	result = apu->ADC(apu->_getIndexXAddr(), apu->_getIndexYAddr(), 5);
+	cr_assert_eq(result, 5);
+	cr_assert_eq(apu->_internalRead(4), 130);
+	cr_assert_eq(apu->_internalRegisters.c, false);
+	cr_assert_eq(apu->_internalRegisters.h, true);
+	cr_assert_eq(apu->_internalRegisters.v, true);
+}
+
+Test(VIIIArithmetic, ADCacc)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.x = 4;
+	apu->_internalRegisters.a = 53;
+	apu->_internalRegisters.c = true;
+	apu->_internalWrite(4, 76);
+	result = apu->ADCacc(apu->_getIndexXAddr(), 3);
+	cr_assert_eq(result, 3);
+	cr_assert_eq(apu->_internalRegisters.a, 130);
+	cr_assert_eq(apu->_internalRegisters.c, false);
+	cr_assert_eq(apu->_internalRegisters.h, true);
+	cr_assert_eq(apu->_internalRegisters.v, true);
+}
+
+Test(VIIIArithmetic, SBC)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.x = 4;
+	apu->_internalRegisters.y = 7;
+	apu->_internalRegisters.c = true;
+	apu->_internalWrite(4, 67);
+	apu->_internalWrite(7, 45);
+	result = apu->SBC(apu->_getIndexXAddr(), apu->_getIndexYAddr(), 5);
+	cr_assert_eq(result, 5);
+	cr_assert_eq(apu->_internalRead(4), 22);
+	cr_assert_eq(apu->_internalRegisters.c, true);
+	cr_assert_eq(apu->_internalRegisters.h, false);
+	cr_assert_eq(apu->_internalRegisters.v, false);
+}
+
+Test(VIIIArithmetic, SBCacc)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.x = 4;
+	apu->_internalRegisters.a = 67;
+	apu->_internalRegisters.c = true;
+	apu->_internalWrite(4, 45);
+	result = apu->SBCacc(apu->_getIndexXAddr(), 3);
+	cr_assert_eq(result, 3);
+	cr_assert_eq(apu->_internalRegisters.a, 22);
+	cr_assert_eq(apu->_internalRegisters.c, true);
+	cr_assert_eq(apu->_internalRegisters.h, false);
+	cr_assert_eq(apu->_internalRegisters.v, false);
+}
+
+Test(VIIIArithmetic, CMP)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.x = 4;
+	apu->_internalRegisters.y = 7;
+	apu->_internalWrite(4, 67);
+	apu->_internalWrite(7, 45);
+	result = apu->CMP(apu->_getIndexXAddr(), apu->_getIndexYAddr(), 5);
+	cr_assert_eq(result, 5);
+	cr_assert_eq(apu->_internalRegisters.c, true);
+}
+
+Test(VIIIArithmetic, CMPacc)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.x = 4;
+	apu->_internalRegisters.a = 67;
+	apu->_internalWrite(4, 45);
+	result = apu->CMPreg(apu->_internalRegisters.a, apu->_getIndexXAddr(), 3);
+	cr_assert_eq(result, 3);
+	cr_assert_eq(apu->_internalRegisters.c, true);
+}

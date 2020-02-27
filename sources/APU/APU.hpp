@@ -339,6 +339,19 @@ namespace ComSquare::APU
 		int EOR(uint24_t operand1, uint24_t operand2, int cycles);
 		//! @brief Perform an Exclusive OR on the Accumulator flag.
 		int EORacc(uint24_t addr, int cycles);
+
+		//! @brief Add operand1 with operand2 and carry.
+		int ADC(uint24_t operand1, uint24_t operand2, int cycles);
+		//! !@brief Add Accumulator Flag with value at address and carry.
+		int ADCacc(uint24_t addr, int cycles);
+		//! @brief Subtract operand1 with operand2 and carry.
+		int SBC(uint24_t operand1, uint24_t operand2, int cycles);
+		//! @brief Subtract Accumulator Flag with address and carry.
+		int SBCacc(uint24_t addr, int cycles);
+		//! @brief Compare the two values of the operands and set NZC flags.
+		int CMP(uint24_t operand1, uint24_t operand2, int cycles);
+		//! @brief Compare a Register Flag with the value of the operand and set NZC flags.
+		int CMPreg(uint8_t  &reg, uint24_t addr, int cycles);
 	public:
 		explicit APU(std::shared_ptr<MemoryMap> &map);
 		APU(const APU &) = default;
