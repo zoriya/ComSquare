@@ -84,7 +84,7 @@ namespace ComSquare::CPU
 				bool i : 1;
 				//!	@brief The Decimal mode flag
 				bool d : 1;
-				//!	@brief The indeX register width flag (in native mode only) OR the Break flag (in emulation mode only)
+				//!	@brief The indeX register width flag (in native mode only) - 0 = 16 bits mode, 1 = 8 bits mode OR the Break flag (in emulation mode only)
 				bool x_b : 1;
 				//! @brief The accumulator and Memory width flag (in native mode only) - 0 = 16 bits mode, 1 = 8 bits mode.
 				bool m : 1;
