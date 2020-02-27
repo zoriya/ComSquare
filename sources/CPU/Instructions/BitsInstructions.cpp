@@ -11,7 +11,7 @@ namespace ComSquare::CPU
 	{
 		unsigned negativeMask = this->_isEmulationMode ? 0x80u : 0x8000u;
 		unsigned value = this->_bus->read(valueAddr);
-		if (this->_registers.p.m)
+		if (!this->_registers.p.m)
 			value += this->_bus->read(valueAddr + 1) << 8u;
 
 		this->_registers.a &= value;

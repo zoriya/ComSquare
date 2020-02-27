@@ -377,7 +377,7 @@ namespace ComSquare::CPU
 	uint24_t CPU::_getImmediateAddr()
 	{
 		uint24_t effective = this->_registers.pac++;
-		if (this->_registers.p.m)
+		if (!this->_registers.p.m)
 			this->_registers.pac++;
 		return effective;
 	}

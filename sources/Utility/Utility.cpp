@@ -36,12 +36,10 @@ namespace ComSquare::Utility
 	std::string to_binary(uint16_t i)
 	{
 		return std::bitset<16>(i).to_string();
-
 	}
 
 	std::string to_binary(uint24_t i)
 	{
 		return std::bitset<24>(i).to_string();
-
 	}
 }

@@ -25,12 +25,20 @@ namespace ComSquare::Debugger
 		SNES &_snes;
 		//! @brief Reimplement the basic instruction execution method to log instructions inside the logger view.
 		unsigned _executeInstruction(uint8_t opcode) override;
-		//! @brief Get a printable string representing an instruction.
-		static std::string _getInstructionString(uint8_t opcode);
+		//! @brief Get a printable string representing an instruction at the program counter given as parameter.
+		std::string _getInstructionString(uint24_t pc);
 		//! @brief Get a printable string representing the flags.
 		std::string _getFlagsString();
 		//! @brief Update the register's panel (accumulator, stack pointer...)
 		void _updateRegistersPanel();
+
+		//! @brief Return a printable string corresponding to the value of an immediate addressing mode.
+		std::string _getImmediateValue(uint24_t pc);
+		//! @brief Return a printable string corresponding to the value of a direct addressing mode.
+		std::string _getDirectValue(uint24_t pc);
+		//! @brief Return a printable string corresponding to the value of an absolute addressing mode.
+		std::string _getAbsoluteValue(uint24_t pc);
+
 	public slots:
 		//! @brief Pause/Resume the CPU.
 		void pause();

@@ -10,7 +10,7 @@ namespace ComSquare::CPU
 	void CPU::ADC(uint24_t valueAddr)
 	{
 		unsigned value = this->_bus->read(valueAddr) + this->_registers.p.c;
-		if (this->_registers.p.m)
+		if (!this->_registers.p.m)
 			value += this->_bus->read(valueAddr + 1) << 8u;
 		unsigned negativeMask = this->_isEmulationMode ? 0x80u : 0x8000u;
 		unsigned maxValue = this->_isEmulationMode ? UINT8_MAX : UINT16_MAX;
@@ -31,7 +31,7 @@ namespace ComSquare::CPU
 	{
 		unsigned negativeMask = this->_isEmulationMode ? 0x80u : 0x8000u;
 		unsigned value = this->_bus->read(valueAddr);
-		if (this->_registers.p.m)
+		if (!this->_registers.p.m)
 			value += this->_bus->read(valueAddr + 1) << 8u;
 		bool oldCarry = this->_registers.p.c;
 

@@ -28,7 +28,7 @@ Test(SBC, legitOverflowWithCarry)
 	auto pair = Init();
 	pair.second.cpu->_isEmulationMode = false;
 	pair.second.cpu->_registers.a = 0x1;
-	pair.second.cpu->_registers.p.m = true;
+	pair.second.cpu->_registers.p.m = false;
 	pair.second.cpu->_registers.p.c = true;
 	pair.second.wram->_data[0] = 0x03;
 	pair.second.wram->_data[1] = 0x20;
@@ -45,7 +45,7 @@ Test(SBC, overflowWithCarry)
 	auto pair = Init();
 	pair.second.cpu->_isEmulationMode = false;
 	pair.second.cpu->_registers.a = 0x1;
-	pair.second.cpu->_registers.p.m = true;
+	pair.second.cpu->_registers.p.m = false;
 	pair.second.cpu->_registers.p.c = true;
 	pair.second.wram->_data[0] = 0x03;
 	pair.second.wram->_data[1] = 0x20;
@@ -80,7 +80,7 @@ Test(SBC, decimal)
 	pair.second.cpu->_isEmulationMode = true;
 	pair.second.cpu->_registers.a = 0x1;
 	pair.second.cpu->_registers.p.d = true;
-	pair.second.cpu->_registers.p.m = true;
+	pair.second.cpu->_registers.p.m = false;
 	pair.second.wram->_data[0] = 0x03;
 	pair.second.wram->_data[1] = 0x20;
 	pair.second.cpu->SBC(0x0);

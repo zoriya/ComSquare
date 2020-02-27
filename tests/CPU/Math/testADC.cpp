@@ -110,7 +110,7 @@ Test(ADC, memoryTwoBytes)
 {
 	auto pair = Init();
 	pair.second.cpu->_isEmulationMode = false;
-	pair.second.cpu->_registers.p.m = true;
+	pair.second.cpu->_registers.p.m = false;
 	pair.second.cpu->_registers.a = 0x000F;
 	pair.second.wram->_data[0] = 0x01;
 	pair.second.wram->_data[1] = 0x04;
