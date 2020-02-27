@@ -16,6 +16,11 @@ namespace ComSquare::Debugger
 		//! @brief A widget that contain the whole UI.
 		Ui::APUView _ui;
 
+		//! @brief If this is set to true, the execution of the APU will be paused.
+		bool _isPaused = true;
+		//! @brief If this is set to true, the APU will execute one instruction and pause itself.
+		bool _isStepping = false;
+
 		//! @brief A reference to the snes (to disable the debugger).
 		SNES &_snes;
 
@@ -30,6 +35,11 @@ namespace ComSquare::Debugger
 
 		//! @brief return the mnemonic of the current instruction done.
 		std::string _getInstructionString();
+	public slots:
+		//! @brief Pause/Resume the APU.
+		void pause();
+		//! @brief Step - Execute a single instruction.
+		void step();
 	public:
 		//! @brief Convert a basic APU to a debugging APU.
 		explicit APUDebug(ComSquare::APU::APU &apu, SNES &snes);

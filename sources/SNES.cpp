@@ -78,9 +78,9 @@ namespace ComSquare
 	void SNES::enableAPUDebugging()
 	{
 		#ifdef DEBUGGER_ENABLED
-				this->apu = std::make_shared<Debugger::APUDebug>(*this->apu, *this);
+			this->apu = std::make_shared<Debugger::APUDebug>(*this->apu, *this);
 		#else
-				std::cerr << "Debugging features are not enabled. You can't enable the debugger." << std::endl;
+			std::cerr << "Debugging features are not enabled. You can't enable the debugger." << std::endl;
 		#endif
 	}
 

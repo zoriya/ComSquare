@@ -9,6 +9,7 @@
 #include "DSP/DSP.hpp"
 #include "../Memory/IMemory.hpp"
 #include "../Ram/Ram.hpp"
+#include "IPL/IPL.hpp"
 
 namespace ComSquare::APU
 {
@@ -123,7 +124,7 @@ namespace ComSquare::APU
 		//! @brief Any-use memory
 		Ram::Ram Memory;
 		//! @brief IPL ROM
-		Ram::Ram IPL;
+		IPL::IPL IPL;
 
 		MemoryMap();
 		MemoryMap(const MemoryMap &) = delete;

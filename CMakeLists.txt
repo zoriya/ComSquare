@@ -88,6 +88,8 @@ add_executable(unit_tests
         tests/APU/testOperand.cpp
         sources/APU/Instructions/8bitArithmetic.cpp
         sources/APU/Instructions/8bitDataTransmission.cpp
+        sources/APU/IPL/IPL.hpp
+        sources/APU/IPL/IPL.cpp
 )
 
 # include criterion & coverage
@@ -187,6 +189,8 @@ add_executable(ComSquare
         sources/APU/Instructions/8bitLogical.cpp
         sources/APU/Instructions/8bitArithmetic.cpp
         sources/APU/Instructions/8bitDataTransmission.cpp
+        sources/APU/IPL/IPL.hpp
+        sources/APU/IPL/IPL.cpp
 )
 
 target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)

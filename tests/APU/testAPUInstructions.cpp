@@ -380,6 +380,7 @@ Test(Subroutine, CALL)
 	auto apu = Init().second.apu;
 	int result = 0;
 
+	apu->_internalRegisters.pc = 0;
 	apu->_internalWrite(apu->_getAbsoluteAddr(), 23);
 	apu->_internalRegisters.pc -= 2;
 	result = apu->CALL(apu->_getAbsoluteAddr());
@@ -855,6 +856,7 @@ Test(XVIbitDataTransmission, MOVW)
 	auto apu = Init().second.apu;
 	int result = 0;
 
+	apu->_internalRegisters.pc = 0;
 	apu->_internalRegisters.ya = 0x2211;
 	apu->_internalWrite(apu->_internalRegisters.pc, 0x55);
 	result = apu->MOVW(apu->_getDirectAddr());
