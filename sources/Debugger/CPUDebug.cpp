@@ -242,6 +242,22 @@ namespace ComSquare::Debugger
 
 		case Instructions::XCE: return "XCE";
 
+		case Instructions::SBC_IM:   return "SBC";
+		case Instructions::SBC_ABS:  return "SBC";
+		case Instructions::SBC_ABSl: return "SBC";
+		case Instructions::SBC_DP:   return "SBC";
+		case Instructions::SBC_DPi:  return "SBC";
+		case Instructions::SBC_DPil: return "SBC";
+		case Instructions::SBC_ABSX: return "SBC";
+		case Instructions::SBC_ABSXl:return "SBC";
+		case Instructions::SBC_ABSY: return "SBC";
+		case Instructions::SBC_DPX:  return "SBC";
+		case Instructions::SBC_DPXi: return "SBC";
+		case Instructions::SBC_DPYi: return "SBC";
+		case Instructions::SBC_DPYil:return "SBC";
+		case Instructions::SBC_SR:   return "SBC";
+		case Instructions::SBC_SRYi: return "SBC";
+
 		default: return "Unknown";
 		}
 	}

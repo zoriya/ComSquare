@@ -310,7 +310,23 @@ namespace ComSquare::CPU
 		AND_SR = 0x23,
 		AND_SRYi = 0x33,
 
-		XCE = 0xFB
+		XCE = 0xFB,
+
+		SBC_IM = 0xE9,
+		SBC_ABS = 0xED,
+		SBC_ABSl = 0xEF,
+		SBC_DP = 0xE5,
+		SBC_DPi = 0xF2,
+		SBC_DPil = 0xE7,
+		SBC_ABSX = 0xFD,
+		SBC_ABSXl = 0xFF,
+		SBC_ABSY = 0xF9,
+		SBC_DPX = 0xF5,
+		SBC_DPXi = 0xE1,
+		SBC_DPYi = 0xF1,
+		SBC_DPYil = 0xF7,
+		SBC_SR = 0xE3,
+		SBC_SRYi = 0xF3,
 	};
 
 	//! @brief The main CPU

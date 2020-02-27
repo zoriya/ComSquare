@@ -328,6 +328,22 @@ namespace ComSquare::CPU
 
 		case Instructions::XCE: this->XCE(); return 2;
 
+		case Instructions::SBC_IM:   this->SBC(this->_getImmediateAddr()); 						return 2 + !this->_registers.p.m;
+		case Instructions::SBC_ABS:  this->SBC(this->_getAbsoluteAddr()); 						return 4 + !this->_registers.p.m;
+		case Instructions::SBC_ABSl: this->SBC(this->_getAbsoluteLongAddr()); 					return 5 + !this->_registers.p.m;
+		case Instructions::SBC_DP:   this->SBC(this->_getDirectAddr()); 							return 3 + !this->_registers.p.m + this->_registers.dl != 0;
+		case Instructions::SBC_DPi:  this->SBC(this->_getDirectIndirectAddr()); 					return 5 + !this->_registers.p.m + this->_registers.dl != 0;
+		case Instructions::SBC_DPil: this->SBC(this->_getDirectIndirectLongAddr()); 				return 6 + !this->_registers.p.m + this->_registers.dl != 0;
+		case Instructions::SBC_ABSX: this->SBC(this->_getAbsoluteIndexedByXAddr()); 				return 4 + !this->_registers.p.m + this->_hasIndexCrossedPageBoundary;
+		case Instructions::SBC_ABSXl:this->SBC(this->_getAbsoluteIndexedByXLongAddr()); 			return 5 + !this->_registers.p.m;
+		case Instructions::SBC_ABSY: this->SBC(this->_getAbsoluteIndexedByYAddr()); 				return 4 + !this->_registers.p.m + this->_hasIndexCrossedPageBoundary;
+		case Instructions::SBC_DPX:  this->SBC(this->_getDirectIndexedByXAddr()); 				return 4 + !this->_registers.p.m + this->_registers.dl != 0;
+		case Instructions::SBC_DPXi: this->SBC(this->_getDirectIndirectIndexedXAddr());			return 6 + !this->_registers.p.m + this->_registers.dl != 0;
+		case Instructions::SBC_DPYi: this->SBC(this->_getDirectIndirectIndexedYAddr()); 			return 5 + !this->_registers.p.m + this->_registers.dl != 0 + this->_hasIndexCrossedPageBoundary;
+		case Instructions::SBC_DPYil:this->SBC(this->_getDirectIndirectIndexedYLongAddr()); 		return 6 + !this->_registers.p.m + this->_registers.dl != 0;
+		case Instructions::SBC_SR:   this->SBC(this->_getStackRelativeAddr()); 					return 4 + !this->_registers.p.m;
+		case Instructions::SBC_SRYi: this->SBC(this->_getStackRelativeIndirectIndexedYAddr()); 	return 7 + !this->_registers.p.m;
+
 		default:
 			throw InvalidOpcode("CPU", opcode);
 		}

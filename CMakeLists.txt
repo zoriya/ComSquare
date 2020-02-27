@@ -77,7 +77,7 @@ add_executable(unit_tests
         sources/APU/Instructions/Stack.cpp
         sources/APU/Instructions/Subroutine.cpp
         sources/APU/Instructions/ProgramFlow.cpp
-)
+        tests/CPU/Math/testSBC.cpp)
 
 # include criterion & coverage
 target_link_libraries(unit_tests criterion -lgcov)
