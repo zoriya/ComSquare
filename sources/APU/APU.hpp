@@ -171,6 +171,8 @@ namespace ComSquare::APU
 		uint24_t _getIndexYAddr();
 		//! @brief Get direct page offset and add to it the X Index Flag
 		uint24_t _getDirectAddrByX();
+		//! @brief Get direct page offset and add to it the Y Index Flag
+		uint24_t _getDirectAddrByY();
 		//! @brief Get absolute direct page offset
 		uint24_t _getAbsoluteAddr();
 		//! @brief _get absolute direct page + X Index offset
@@ -352,6 +354,11 @@ namespace ComSquare::APU
 		int CMP(uint24_t operand1, uint24_t operand2, int cycles);
 		//! @brief Compare a Register Flag with the value of the operand and set NZC flags.
 		int CMPreg(uint8_t  &reg, uint24_t addr, int cycles);
+
+		int MOV(uint8_t &regFrom, uint8_t &regTo, bool setFlags = true);
+		int MOV(uint24_t memFrom, uint24_t memTo);
+		int MOV(uint8_t &regFrom, uint24_t memTo, int cycles, bool incrementX = false);
+		int MOV(uint24_t memFrom, uint8_t &regTo, int cycles, bool incrementX = false);
 	public:
 		explicit APU(std::shared_ptr<MemoryMap> &map);
 		APU(const APU &) = default;

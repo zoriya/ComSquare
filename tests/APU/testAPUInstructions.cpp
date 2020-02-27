@@ -1199,3 +1199,64 @@ Test(VIIIArithmetic, CMPacc)
 	cr_assert_eq(result, 3);
 	cr_assert_eq(apu->_internalRegisters.c, true);
 }
+
+/////////////////////////////////////////
+//									   //
+// (VIII)8-bit Data Transmission tests //
+//									   //
+/////////////////////////////////////////
+
+Test(VIIIDataTransmission, MovRegToReg)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.a = 23;
+	apu->_internalRegisters.x = 45;
+	result = apu->MOV(apu->_internalRegisters.x, apu->_internalRegisters.a);
+	cr_assert_eq(result, 2);
+	cr_assert_eq(apu->_internalRegisters.a, 45);
+}
+
+Test(VIIIDataTransmission, MovMemToMem)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.pc = 0x23;
+	apu->_internalWrite(0x23, 0x56);
+	apu->_internalWrite(0x24, 0x33);
+	apu->_internalWrite(0x56, 99);
+	apu->_internalWrite(0x33, 66);
+	result = apu->MOV(apu->_getDirectAddr(), apu->_getDirectAddr());
+	cr_assert_eq(result, 5);
+	cr_assert_eq(apu->_internalRead(0x56), 66);
+}
+
+Test(VIIIDataTransmission, MovRegToMem)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.x = 0x23;
+	apu->_internalRegisters.a = 0x44;
+	apu->_internalWrite(0x23, 0x56);
+	result = apu->MOV(apu->_internalRegisters.a, apu->_getIndexXAddr(), 4, true);
+	cr_assert_eq(result, 4);
+	cr_assert_eq(apu->_internalRead(0x23), 0x44);
+	cr_assert_eq(apu->_internalRegisters.x, 0x24);
+}
+
+Test(VIIIDataTransmission, MovMemToReg)
+{
+	auto apu = Init().second.apu;
+	int result = 0;
+
+	apu->_internalRegisters.x = 0x23;
+	apu->_internalRegisters.a = 0x44;
+	apu->_internalWrite(0x23, 0x56);
+	result = apu->MOV(apu->_getIndexXAddr(), apu->_internalRegisters.a, 4, true);
+	cr_assert_eq(result, 4);
+	cr_assert_eq(apu->_internalRegisters.x, 0x24);
+	cr_assert_eq(apu->_internalRegisters.a, 0x56);
+}

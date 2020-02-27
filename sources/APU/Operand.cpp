@@ -47,6 +47,14 @@ namespace ComSquare::APU
 		return addr;
 	}
 
+	uint24_t APU::_getDirectAddrByY()
+	{
+		uint24_t addr = this->_getDirectAddr();
+
+		addr += this->_internalRegisters.y;
+		return addr;
+	}
+
 	uint24_t APU::_getAbsoluteAddr()
 	{
 		uint24_t addr1 = this->_getImmediateData();

@@ -58,6 +58,16 @@ Test(_get, directbyX)
 	cr_assert_eq(apu->_getDirectAddrByX(), 0x43);
 }
 
+Test(_get, directbyY)
+{
+	auto apu = Init().second.apu;
+
+	apu->_internalRegisters.pc = 0x32;
+	apu->_internalRegisters.y = 0x05;
+	apu->_internalWrite(0x32, 0x40);
+	cr_assert_eq(apu->_getDirectAddrByY(), 0x45);
+}
+
 Test(_get, absolute)
 {
 	auto apu = Init().second.apu;

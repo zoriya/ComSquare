@@ -345,6 +345,8 @@ namespace ComSquare::APU
 			return this->LSR(this->_getDirectAddrByX(), 5);
 		case 0x5C:
 			return this->LSR(this->_internalRegisters.a, 2, true);
+		case 0x5D:
+			return this->MOV(this->_internalRegisters.a, this->_internalRegisters.x);
 		case 0x5E:
 			return this->CMPreg(this->_internalRegisters.y, this->_getAbsoluteAddr(), 4);
 		case 0x5F:
@@ -407,6 +409,8 @@ namespace ComSquare::APU
 			return this->ROR(this->_getDirectAddrByX(), 5);
 		case 0x7C:
 			return this->ROR(this->_internalRegisters.a, 2, true);
+		case 0x7D:
+			return this->MOV(this->_internalRegisters.x, this->_internalRegisters.a);
 		case 0x7E:
 			return this->CMPreg(this->_internalRegisters.y, this->_getDirectAddr(), 3);
 		case 0x7F:
@@ -437,8 +441,12 @@ namespace ComSquare::APU
 			return this->DEC(this->_getDirectAddr(), 4);
 		case 0x8C:
 			return this->DEC(this->_getAbsoluteAddr(), 5);
+		case 0x8D:
+			return this->MOV(this->_getImmediateData(), this->_internalRegisters.y, 2);
 		case 0x8E:
 			return this->POP(this->_internalRegisters.psw);
+		case 0x8F:
+			return this->MOV(this->_getImmediateData(), this->_getDirectAddr());
 		case 0x90:
 			return this->BCC();
 		case 0x91:
@@ -465,6 +473,8 @@ namespace ComSquare::APU
 			return this->DEC(this->_getDirectAddrByX(), 5);
 		case 0x9C:
 			return this->DECreg(this->_internalRegisters.a);
+		case 0x9D:
+			return this->MOV(this->_internalRegisters.sp, this->_internalRegisters.x);
 		case 0x9E:
 			return this->DIV();
 		case 0x9F:
@@ -499,6 +509,8 @@ namespace ComSquare::APU
 			return this->CMPreg(this->_internalRegisters.y, this->_getImmediateData(), 2);
 		case 0xAE:
 			return this->POP(this->_internalRegisters.a);
+		case 0xAF:
+			return this->MOV(this->_internalRegisters.a, this->_getIndexXAddr(), 4, true);
 		case 0xB0:
 			return this->BCS();
 		case 0xB1:
@@ -525,8 +537,12 @@ namespace ComSquare::APU
 			return this->INC(this->_getDirectAddrByX(), 5);
 		case 0xBC:
 			return this->INCreg(this->_internalRegisters.a);
+		case 0xBD:
+			return this->MOV(this->_internalRegisters.x, this->_internalRegisters.sp, false);
 		case 0xBE:
 			return this->DAS();
+		case 0xBF:
+			return this->MOV(this->_getIndexXAddr(), this->_internalRegisters.a, 4, true);
 		case 0xC0:
 			return this->DI();
 		case 0xC1:
@@ -535,10 +551,26 @@ namespace ComSquare::APU
 			return this->SET1(this->_getDirectAddr(), 6);
 		case 0xC3:
 			return this->BBS(this->_getDirectAddr(), 6);
+		case 0xC4:
+			return this->MOV(this->_internalRegisters.a, this->_getDirectAddr(), 4);
+		case 0xC5:
+			return this->MOV(this->_internalRegisters.a, this->_getAbsoluteAddr());
+		case 0xC6:
+			return this->MOV(this->_internalRegisters.a, this->_getIndexXAddr(), 4);
+		case 0xC7:
+			return this->MOV(this->_internalRegisters.a, this->_getAbsoluteDirectByXAddr(), 7);
 		case 0xC8:
 			return this->CMPreg(this->_internalRegisters.x, this->_getImmediateData(), 2);
+		case 0xC9:
+			return this->MOV(this->_internalRegisters.x, this->_getAbsoluteAddr(), 5);
 		case 0xCA:
 			return this->MOV1(this->_getAbsoluteBit());
+		case 0xCB:
+			return this->MOV(this->_internalRegisters.y, this->_getDirectAddr(), 4);
+		case 0xCC:
+			return this->MOV(this->_internalRegisters.y, this->_getAbsoluteAddr(), 5);
+		case 0xCD:
+			return this->MOV(this->_getImmediateData(), this->_internalRegisters.x, 2);
 		case 0xCE:
 			return this->POP(this->_internalRegisters.x);
 		case 0xCF:
@@ -551,22 +583,62 @@ namespace ComSquare::APU
 			return this->CLR1(this->_getDirectAddr(), 6);
 		case 0xD3:
 			return this->BBC(this->_getDirectAddr(), 6);
+		case 0xD4:
+			return this->MOV(this->_internalRegisters.a, this->_getDirectAddrByX(), 5);
+		case 0xD5:
+			return this->MOV(this->_internalRegisters.a, this->_getAbsoluteAddrByX(), 6);
+		case 0xD6:
+			return this->MOV(this->_internalRegisters.a, this->_getAbsoluteAddrByY(), 6);
+		case 0xD7:
+			return this->MOV(this->_internalRegisters.a, this->_getAbsoluteDirectAddrByY(), 7);
+		case 0xD8:
+			return this->MOV(this->_internalRegisters.x, this->_getDirectAddr(), 4);
+		case 0xD9:
+			return this->MOV(this->_internalRegisters.x, this->_getDirectAddrByY(), 5);
 		case 0xDA:
 			return this->MOVW(this->_getDirectAddr());
+		case 0xDB:
+			return this->MOV(this->_internalRegisters.y, this->_getDirectAddrByX(), 5);
 		case 0xDC:
 			return this->DECreg(this->_internalRegisters.y);
+		case 0xDD:
+			return this->MOV(this->_internalRegisters.y, this->_internalRegisters.a);
 		case 0xDE:
 			return this->CBNE(this->_getDirectAddrByX(), true);
 		case 0xDF:
 			return this->DAA();
+		case 0xE0:
+			return this->CLRV();
 		case 0xE1:
 			return this->TCALL(14);
 		case 0xE2:
 			return this->SET1(this->_getDirectAddr(), 7);
 		case 0xE3:
 			return this->BBS(this->_getDirectAddr(), 7);
+		case 0xE4:
+			return this->MOV(this->_getDirectAddr(), this->_internalRegisters.a, 3);
+		case 0xE5:
+			return this->MOV(this->_getAbsoluteAddrByX(), this->_internalRegisters.a, 5);
+		case 0xE6:
+			return this->MOV(this->_getIndexXAddr(), this->_internalRegisters.a, 3);
+		case 0xE7:
+			return this->MOV(this->_getAbsoluteDirectByXAddr(), this->_internalRegisters.a, 6);
+		case 0xE8:
+			return this->MOV(this->_getImmediateData(), this->_internalRegisters.a, 2);
+		case 0xE9:
+			return this->MOV(this->_getAbsoluteAddr(), this->_internalRegisters.x, 4);
+		case 0xEA:
+			return this->NOT1(this->_getAbsoluteBit());
+		case 0xEB:
+			return this->MOV(this->_getDirectAddr(), this->_internalRegisters.y, 3);
+		case 0xEC:
+			return this->MOV(this->_getAbsoluteAddr(), this->_internalRegisters.y, 4);
+		case 0xED:
+			return this->NOTC();
 		case 0xEE:
 			return this->POP(this->_internalRegisters.y);
+		case 0xEF:
+			return this->SLEEP();
 		case 0xF0:
 			return BEQ();
 		case 0xF1:
@@ -575,14 +647,26 @@ namespace ComSquare::APU
 			return this->CLR1(this->_getDirectAddr(), 7);
 		case 0xF3:
 			return this->BBC(this->_getDirectAddr(), 7);
+		case 0xF4:
+			return this->MOV(this->_getDirectAddrByX(), this->_internalRegisters.a, 4);
+		case 0xF5:
+			return this->MOV(this->_getAbsoluteAddrByX(), this->_internalRegisters.a, 5);
+		case 0xF6:
+			return this->MOV(this->_getAbsoluteAddrByY(), this->_internalRegisters.a, 5);
+		case 0xF7:
+			return this->MOV(this->_getAbsoluteDirectAddrByY(), this->_internalRegisters.a, 6);
+		case 0xF8:
+			return this->MOV(this->_getDirectAddr(), this->_internalRegisters.x, 3);
+		case 0xF9:
+			return this->MOV(this->_getDirectAddrByY(), this->_internalRegisters.x, 4);
+		case 0xFA:
+			return this->MOV(this->_getDirectAddr(), this->_getDirectAddr());
+		case 0xFB:
+			return this->MOV(this->_getDirectAddrByX(), this->_internalRegisters.y, 4);
 		case 0xFC:
 			return this->INCreg(this->_internalRegisters.y);
-		case 0xEA:
-			return this->NOT1(this->_getAbsoluteBit());
-		case 0xED:
-			return this->NOTC();
-		case 0xEF:
-			return this->SLEEP();
+		case 0xFD:
+			return this->MOV(this->_internalRegisters.a, this->_internalRegisters.y);
 		case 0xFE:
 			return this->DBNZ();
 		case 0xFF:
