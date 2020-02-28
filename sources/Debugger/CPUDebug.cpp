@@ -366,6 +366,13 @@ namespace ComSquare::Debugger
 		case Instructions::BRA: 	 return "BRA " + this->_getImmediateValue8Bits(pc);
 		case Instructions::BRL: 	 return "BRL " + this->_getImmediateValue16Bits(pc);
 
+		case Instructions::JMP_ABS:  	return "JMP " + this->_getAbsoluteValue(pc);
+		case Instructions::JMP_ABSi: 	return "JMP "; //+ this->_getAbsoluteIndire(pc);
+		case Instructions::JMP_ABSXi:  	return "JMP "; //+ this->_getAbsoluteValue(pc);
+
+		case Instructions::JML_ABSl:	return "JML";
+		case Instructions::JML_ABSil:	return "JML";
+
 		default: return "Unknown";
 		}
 	}

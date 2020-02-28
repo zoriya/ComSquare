@@ -352,7 +352,14 @@ namespace ComSquare::CPU
 		BVC = 0x50,
 		BVS = 0x70,
 		BRA = 0x80,
-		BRL = 0x82
+		BRL = 0x82,
+
+		JMP_ABS = 0x4C,
+		JMP_ABSi = 0x6C,
+		JMP_ABSXi = 0x7C,
+
+		JML_ABSl = 0x5C,
+		JML_ABSil = 0xDC
 	};
 
 	//! @brief The main CPU
@@ -540,6 +547,10 @@ namespace ComSquare::CPU
 		bool BRA(uint24_t valueAddr);
 		//! @brief Branch always long
 		bool BRL(uint24_t valueAddr);
+		//! @brief Jump.
+		void JMP(uint24_t valueAddr);
+		//! @brief Long jump.
+		void JML(uint24_t valueAddr);
 	public:
 		explicit CPU(std::shared_ptr<Memory::MemoryBus> bus, Cartridge::Header &cartridgeHeader);
 		CPU(const CPU &) = default;

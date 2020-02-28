@@ -297,4 +297,21 @@ namespace ComSquare::CPU
 			this->_registers.pac += static_cast<int8_t>(this->_bus->read(valueAddr));
 		return this->_registers.p.v;
 	}
+
+	void CPU::JMP(uint24_t valueAddr)
+	{
+		unsigned value = this->_bus->read(valueAddr);
+		value += this->_bus->read(valueAddr + 1) << 8u;
+
+		this->_registers.pc = value;
+	}
+
+	void CPU::JML(uint24_t valueAddr)
+	{
+		unsigned value = this->_bus->read(valueAddr);
+		value += this->_bus->read(valueAddr + 1) << 8u;
+		value += this->_bus->read(valueAddr + 2) << 16u;
+
+		this->_registers.pac = value;
+	}
 }

@@ -370,6 +370,13 @@ namespace ComSquare::CPU
 		case Instructions::BRA: this->BRA(this->_registers.pc++);  return 3 + this->_isEmulationMode;
 		case Instructions::BRL: this->BRL(this->_registers.pc); this->_registers.pc += 2;  return 4;
 
+		case Instructions::JMP_ABS: 	this->JMP(this->_getAbsoluteAddr()); 				return 3;
+		case Instructions::JMP_ABSi: 	this->JMP(this->_getAbsoluteIndirectAddr()); 		return 3;
+		case Instructions::JMP_ABSXi: 	this->JMP(this->_getAbsoluteIndexedByXAddr()); 	return 3;
+
+		case Instructions::JML_ABSl: 	this->JML(this->_getAbsoluteLongAddr()); 		return 3;
+		//case Instructions::JML_ABSil: 	this->JML(this->_getAbsoluteLong()); 	return 3;
+
 		default:
 			throw InvalidOpcode("CPU", opcode);
 		}
