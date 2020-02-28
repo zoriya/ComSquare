@@ -29,7 +29,7 @@ namespace ComSquare::Renderer
 			#ifdef Q_WS_X11
 				XFlush(QX11Info::display());
 			#endif
-			this->_window.create(this->winId());
+			this->_window.create((sf::WindowHandle)this->winId());
 			this->_onInit();
 
 			connect(&_timer, SIGNAL(timeout()), this, SLOT(repaint()));
