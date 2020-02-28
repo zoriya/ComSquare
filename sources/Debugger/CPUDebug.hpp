@@ -44,6 +44,8 @@ namespace ComSquare::Debugger
 		void pause();
 		//! @brief Step - Execute a single instruction.
 		void step();
+		//! @brief Clear the history panel.
+		void clearHistory();
 	public:
 		//! @brief Update the UI when reseting the CPU.
 		void RESB() override;

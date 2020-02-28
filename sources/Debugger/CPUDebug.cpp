@@ -19,6 +19,7 @@ namespace ComSquare::Debugger
 		this->_ui.setupUi(this);
 		QMainWindow::connect(this->_ui.actionPause, &QAction::triggered, this, &CPUDebug::pause);
 		QMainWindow::connect(this->_ui.actionStep, &QAction::triggered, this, &CPUDebug::step);
+		QMainWindow::connect(this->_ui.clear, &QPushButton::released, this, &CPUDebug::clearHistory);
 		this->show();
 		this->_updateRegistersPanel();
 	}
@@ -35,8 +36,8 @@ namespace ComSquare::Debugger
 				return 0xFF;
 			return CPU::update();
 		} catch (InvalidOpcode &e) {
-			this->pause();
-			this->_ui.logger->append(e.what());
+			if (!this->_isPaused)
+				this->pause();
 			return 0xFF;
 		}
 	}
@@ -109,6 +110,11 @@ namespace ComSquare::Debugger
 		str += this->_registers.p.z ? "z" : "-";
 		str += this->_registers.p.c ? "c" : "-";
 		return str;
+	}
+
+	void CPUDebug::clearHistory()
+	{
+		this->_ui.logger->clear();
 	}
 
 	std::string CPUDebug::_getImmediateValue(uint24_t pc)
