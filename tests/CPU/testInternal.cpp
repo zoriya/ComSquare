@@ -8,6 +8,8 @@
 #include "../tests.hpp"
 #include "../../sources/SNES.hpp"
 #include "../../sources/Memory/MemoryBus.hpp"
+#include "../../sources/CPU/CPU.hpp"
+
 using namespace ComSquare;
 
 Test(SEP, setall)
@@ -484,4 +486,56 @@ Test(XCE, enableNative)
 	cr_assert_eq(pair.second.cpu->_registers.p.x_b, true, "The index width flag should be set");
 	cr_assert_eq(pair.second.cpu->_registers.xh, 0, "The high byte of the x index flag should be set to 0");
 	cr_assert_eq(pair.second.cpu->_registers.yh, 0, "The high byte of the y index flag should be set to 0");
+}
+
+Test(INX, basic)
+{
+	auto pair = Init();
+	pair.second.cpu->_isEmulationMode = true;
+	pair.second.cpu->_registers.p.flags = 0;
+	pair.second.cpu->_registers.p.x_b = false;
+	pair.second.cpu->_registers.x = 0xFF;
+	pair.second.cpu->INX();
+	cr_assert_eq(pair.second.cpu->_registers.x, 0x0100, "The x register should be equal to 0x0100 but it was 0x%x.", pair.second.cpu->_registers.x);
+	cr_assert_eq(pair.second.cpu->_registers.p.z, false, "The zero flag should not be set");
+	cr_assert_eq(pair.second.cpu->_registers.p.n, false, "The negative flag should not be set");
+}
+
+Test(INX, 8bits)
+{
+	auto pair = Init();
+	pair.second.cpu->_isEmulationMode = true;
+	pair.second.cpu->_registers.p.flags = 0;
+	pair.second.cpu->_registers.p.x_b = true;
+	pair.second.cpu->_registers.x = 0xFF;
+	pair.second.cpu->INX();
+	cr_assert_eq(pair.second.cpu->_registers.x, 0x00, "The x register should be equal to 0x00 but it was 0x%x.", pair.second.cpu->_registers.x);
+	cr_assert_eq(pair.second.cpu->_registers.p.z, true, "The zero flag should be set");
+	cr_assert_eq(pair.second.cpu->_registers.p.n, false, "The negative flag should not be set");
+}
+
+Test(INY, basic)
+{
+	auto pair = Init();
+	pair.second.cpu->_isEmulationMode = true;
+	pair.second.cpu->_registers.p.flags = 0;
+	pair.second.cpu->_registers.p.x_b = false;
+	pair.second.cpu->_registers.y = 0xFF;
+	pair.second.cpu->INY();
+	cr_assert_eq(pair.second.cpu->_registers.y, 0x0100, "The y register should be equal to 0x0100 but it was 0x%x.", pair.second.cpu->_registers.y);
+	cr_assert_eq(pair.second.cpu->_registers.p.z, false, "The zero flag should not be set");
+	cr_assert_eq(pair.second.cpu->_registers.p.n, false, "The negative flag should not be set");
+}
+
+Test(INY, 8bits)
+{
+	auto pair = Init();
+	pair.second.cpu->_isEmulationMode = true;
+	pair.second.cpu->_registers.p.flags = 0;
+	pair.second.cpu->_registers.p.x_b = true;
+	pair.second.cpu->_registers.y = 0xFF;
+	pair.second.cpu->INY();
+	cr_assert_eq(pair.second.cpu->_registers.y, 0x00, "The y register should be equal to 0x00 but it was 0x%x.", pair.second.cpu->_registers.y);
+	cr_assert_eq(pair.second.cpu->_registers.p.z, true, "The zero flag should be set");
+	cr_assert_eq(pair.second.cpu->_registers.p.n, false, "The negative flag should not be set");
 }

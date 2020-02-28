@@ -330,7 +330,10 @@ namespace ComSquare::CPU
 
 		TAX = 0xAA,
 		TAY = 0xA8,
-		TXS = 0x9A
+		TXS = 0x9A,
+
+		INX = 0xE8,
+		INY = 0xC8
 	};
 
 	//! @brief The main CPU
@@ -490,6 +493,10 @@ namespace ComSquare::CPU
 		void TAY();
 		//! @brief Transfer X to SP
 		void TXS();
+		//! @brief Increment the X register
+		void INX();
+		//! @brief Increment the Y register
+		void INY();
 	public:
 		explicit CPU(std::shared_ptr<Memory::MemoryBus> bus, Cartridge::Header &cartridgeHeader);
 		CPU(const CPU &) = default;

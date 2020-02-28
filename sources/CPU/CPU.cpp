@@ -348,6 +348,9 @@ namespace ComSquare::CPU
 		case Instructions::TAY: 	this->TAY();	return 2;
 		case Instructions::TXS: 	this->TXS();	return 2;
 
+		case Instructions::INX: 	this->INX();	return 2;
+		case Instructions::INY: 	this->INY();	return 2;
+
 		default:
 			throw InvalidOpcode("CPU", opcode);
 		}

@@ -171,6 +171,15 @@ namespace ComSquare::Debugger
 		return ss.str();
 	}
 
+	std::string CPUDebug::_getDirectIndexedByXValue(uint24_t pc)
+	{
+		unsigned value = this->_bus->read(pc);
+
+		std::stringstream ss;
+		ss << "$" << std::hex << value << ", x";
+		return ss.str();
+	}
+
 	std::string CPUDebug::_getInstructionString(uint24_t pc)
 	{
 		uint8_t opcode = this->_bus->read(pc++);
@@ -191,7 +200,7 @@ namespace ComSquare::Debugger
 		case Instructions::ADC_ABSX: return "ADC";
 		case Instructions::ADC_ABSXl:return "ADC";
 		case Instructions::ADC_ABSY: return "ADC";
-		case Instructions::ADC_DPX:  return "ADC";
+		case Instructions::ADC_DPX:  return "ADC " + this->_getDirectIndexedByXValue(pc);
 		case Instructions::ADC_DPXi: return "ADC";
 		case Instructions::ADC_DPYi: return "ADC";
 		case Instructions::ADC_DPYil:return "ADC";
@@ -206,7 +215,7 @@ namespace ComSquare::Debugger
 		case Instructions::STA_ABSX: return "STA";
 		case Instructions::STA_ABSXl:return "STA";
 		case Instructions::STA_ABSY: return "STA";
-		case Instructions::STA_DPX:  return "STA";
+		case Instructions::STA_DPX:  return "STA " + this->_getDirectIndexedByXValue(pc);
 		case Instructions::STA_DPXi: return "STA";
 		case Instructions::STA_DPYi: return "STA";
 		case Instructions::STA_DPYil:return "STA";
@@ -219,12 +228,12 @@ namespace ComSquare::Debugger
 
 		case Instructions::STY_ABS:  return "STY " + this->_getAbsoluteValue(pc);
 		case Instructions::STY_DP:   return "STY " + this->_getDirectValue(pc);
-		case Instructions::STY_DPX:  return "STY";
+		case Instructions::STY_DPX:  return "STY " + this->_getDirectIndexedByXValue(pc);
 
 		case Instructions::STZ_ABS:  return "STZ " + this->_getAbsoluteValue(pc);
 		case Instructions::STZ_DP:   return "STZ " + this->_getDirectValue(pc);
 		case Instructions::STZ_ABSX: return "STZ";
-		case Instructions::STZ_DPX:  return "STZ";
+		case Instructions::STZ_DPX:  return "STZ " + this->_getDirectIndexedByXValue(pc);
 
 		case Instructions::LDA_IM:   return "LDA " + this->_getImmediateValueForA(pc);
 		case Instructions::LDA_ABS:  return "LDA " + this->_getAbsoluteValue(pc);
@@ -235,7 +244,7 @@ namespace ComSquare::Debugger
 		case Instructions::LDA_ABSX: return "LDA";
 		case Instructions::LDA_ABSXl:return "LDA";
 		case Instructions::LDA_ABSY: return "LDA";
-		case Instructions::LDA_DPX:  return "LDA";
+		case Instructions::LDA_DPX:  return "LDA " + this->_getDirectIndexedByXValue(pc);
 		case Instructions::LDA_DPXi: return "LDA";
 		case Instructions::LDA_DPYi: return "LDA";
 		case Instructions::LDA_DPYil:return "LDA";
@@ -296,7 +305,7 @@ namespace ComSquare::Debugger
 		case Instructions::AND_ABSX: return "AND";
 		case Instructions::AND_ABSXl:return "AND";
 		case Instructions::AND_ABSY: return "AND";
-		case Instructions::AND_DPX:  return "AND";
+		case Instructions::AND_DPX:  return "AND " + this->_getDirectIndexedByXValue(pc);
 		case Instructions::AND_DPXi: return "AND";
 		case Instructions::AND_DPYi: return "AND";
 		case Instructions::AND_DPYil:return "AND";
@@ -314,7 +323,7 @@ namespace ComSquare::Debugger
 		case Instructions::SBC_ABSX: return "SBC";
 		case Instructions::SBC_ABSXl:return "SBC";
 		case Instructions::SBC_ABSY: return "SBC";
-		case Instructions::SBC_DPX:  return "SBC";
+		case Instructions::SBC_DPX:  return "SBC " + this->_getDirectIndexedByXValue(pc);
 		case Instructions::SBC_DPXi: return "SBC";
 		case Instructions::SBC_DPYi: return "SBC";
 		case Instructions::SBC_DPYil:return "SBC";
@@ -324,6 +333,9 @@ namespace ComSquare::Debugger
 		case Instructions::TAX: 	 return "TAX";
 		case Instructions::TAY: 	 return "TAY";
 		case Instructions::TXS: 	 return "TXS";
+
+		case Instructions::INX: 	 return "INX";
+		case Instructions::INY: 	 return "INY";
 
 		default: return "Unknown";
 		}

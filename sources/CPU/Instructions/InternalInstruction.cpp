@@ -164,4 +164,28 @@ namespace ComSquare::CPU
 			this->_registers.yh = 0;
 		}
 	}
+
+	void CPU::INX()
+	{
+		this->_registers.x++;
+
+		if (this->_registers.p.x_b)
+			this->_registers.x %= 0x100;
+
+		unsigned negativeFlag = this->_registers.p.x_b ? 0x80u : 0x8000u;
+		this->_registers.p.z = this->_registers.x == 0;
+		this->_registers.p.n = this->_registers.x & negativeFlag;
+	}
+
+	void CPU::INY()
+	{
+		this->_registers.y++;
+
+		if (this->_registers.p.x_b)
+			this->_registers.y %= 0x100;
+
+		unsigned negativeFlag = this->_registers.p.x_b ? 0x80u : 0x8000u;
+		this->_registers.p.z = this->_registers.y == 0;
+		this->_registers.p.n = this->_registers.y & negativeFlag;
+	}
 }

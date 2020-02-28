@@ -44,6 +44,8 @@ namespace ComSquare::Debugger
 		std::string _getAbsoluteValue(uint24_t pc);
 		//! @brief Return a printable string corresponding to the value of an absolute long addressing mode.
 		std::string _getAbsoluteLongValue(uint24_t pc);
+		//! @brief Return a printable string corresponding to the value of a direct index by x addressing mode.
+		std::string _getDirectIndexedByXValue(uint24_t pc);
 
 	public slots:
 		//! @brief Pause/Resume the CPU.
