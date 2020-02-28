@@ -351,6 +351,14 @@ namespace ComSquare::CPU
 		case Instructions::INX: 	this->INX();	return 2;
 		case Instructions::INY: 	this->INY();	return 2;
 
+		case Instructions::CPX_IM: 	this->CPX(this->_getImmediateAddrForX());	return 2 + !this->_registers.p.m;
+		case Instructions::CPX_ABS: this->CPX(this->_getAbsoluteAddr());		return 4 + !this->_registers.p.m;
+		case Instructions::CPX_DP: 	this->CPX(this->_getDirectAddr());		return 3 + !this->_registers.p.m + this->_registers.dl != 0;
+
+		case Instructions::CPY_IM: 	this->CPY(this->_getImmediateAddrForX());	return 2 + !this->_registers.p.m;
+		case Instructions::CPY_ABS: this->CPY(this->_getAbsoluteAddr());		return 4 + !this->_registers.p.m;
+		case Instructions::CPY_DP: 	this->CPY(this->_getDirectAddr());		return 3 + !this->_registers.p.m + this->_registers.dl != 0;
+
 		default:
 			throw InvalidOpcode("CPU", opcode);
 		}

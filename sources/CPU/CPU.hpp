@@ -333,7 +333,15 @@ namespace ComSquare::CPU
 		TXS = 0x9A,
 
 		INX = 0xE8,
-		INY = 0xC8
+		INY = 0xC8,
+
+		CPX_IM = 0xE0,
+		CPX_ABS = 0xEC,
+		CPX_DP = 0xE4,
+
+		CPY_IM = 0xC0,
+		CPY_ABS = 0xCC,
+		CPY_DP = 0xC4
 	};
 
 	//! @brief The main CPU
@@ -497,6 +505,10 @@ namespace ComSquare::CPU
 		void INX();
 		//! @brief Increment the Y register
 		void INY();
+		//! @brief Compare the X register with the memory
+		void CPX(uint24_t valueAddr);
+		//! @brief Compare the Y register with the memory
+		void CPY(uint24_t valueAddr);
 	public:
 		explicit CPU(std::shared_ptr<Memory::MemoryBus> bus, Cartridge::Header &cartridgeHeader);
 		CPU(const CPU &) = default;

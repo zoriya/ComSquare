@@ -188,4 +188,42 @@ namespace ComSquare::CPU
 		this->_registers.p.z = this->_registers.y == 0;
 		this->_registers.p.n = this->_registers.y & negativeFlag;
 	}
+
+	void CPU::CPX(uint24_t valueAddr)
+	{
+		unsigned value = this->_bus->read(valueAddr++);
+
+		if (this->_registers.p.x_b) {
+			uint8_t x = this->_registers.x;
+			x -= value;
+			this->_registers.p.z = x == 0;
+			this->_registers.p.n = x & 0x80u;
+		} else {
+			value += this->_bus->read(valueAddr) << 8u;
+			uint16_t x = this->_registers.x;
+			x -= value;
+			this->_registers.p.z = x == 0;
+			this->_registers.p.n = x & 0x8000u;
+		}
+		this->_registers.p.c = this->_registers.x >= value;
+	}
+
+	void CPU::CPY(uint24_t valueAddr)
+	{
+		unsigned value = this->_bus->read(valueAddr++);
+
+		this->_registers.p.c = this->_registers.y >= value;
+		if (this->_registers.p.x_b) {
+			uint8_t y = this->_registers.y;
+			y -= value;
+			this->_registers.p.z = y == 0;
+			this->_registers.p.n = y & 0x80u;
+		} else {
+			value += this->_bus->read(valueAddr) << 8u;
+			uint16_t y = this->_registers.y;
+			y -= value;
+			this->_registers.p.z = y == 0;
+			this->_registers.p.n = y & 0x8000u;
+		}
+	}
 }

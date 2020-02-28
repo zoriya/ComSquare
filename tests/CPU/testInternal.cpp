@@ -539,3 +539,69 @@ Test(INY, 8bits)
 	cr_assert_eq(pair.second.cpu->_registers.p.z, true, "The zero flag should be set");
 	cr_assert_eq(pair.second.cpu->_registers.p.n, false, "The negative flag should not be set");
 }
+
+Test(CPX, basic)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.p.x_b = true;
+	pair.second.cpu->_registers.p.flags = 0;
+	pair.second.cpu->_registers.x = 0xFF;
+	pair.second.wram->_data[0] = 0xFF;
+	pair.second.cpu->CPX(0x0);
+	cr_assert_eq(pair.second.cpu->_registers.p.z, true, "The zero flag should be set");
+	cr_assert_eq(pair.second.cpu->_registers.p.n, false, "The negative flag should not be set");
+	cr_assert_eq(pair.second.cpu->_registers.p.c, true, "The carry flag should be set");
+}
+
+Test(CPX, negative)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.p.x_b = true;
+	pair.second.cpu->_registers.p.flags = 0;
+	pair.second.cpu->_registers.x = 0x80;
+	pair.second.wram->_data[0] = 0xFF;
+	pair.second.cpu->CPX(0x0);
+	cr_assert_eq(pair.second.cpu->_registers.p.z, false, "The zero flag should not be set");
+	cr_assert_eq(pair.second.cpu->_registers.p.n, true, "The negative flag should be set");
+	cr_assert_eq(pair.second.cpu->_registers.p.c, false, "The carry flag should not be set");
+}
+
+Test(CPX, 16bits)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.p.flags = 0;
+	pair.second.cpu->_registers.p.x_b = false;
+	pair.second.cpu->_registers.x = 0x8888;
+	pair.second.wram->_data[0] = 0x88;
+	pair.second.wram->_data[1] = 0x98;
+	pair.second.cpu->CPX(0x0);
+	cr_assert_eq(pair.second.cpu->_registers.p.z, false, "The zero flag should not be set");
+	cr_assert_eq(pair.second.cpu->_registers.p.n, true, "The negative flag should be set");
+	cr_assert_eq(pair.second.cpu->_registers.p.c, false, "The carry flag should not be set");
+}
+
+Test(CPY, basic)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.p.x_b = true;
+	pair.second.cpu->_registers.p.flags = 0;
+	pair.second.cpu->_registers.y = 0xFF;
+	pair.second.wram->_data[0] = 0xFF;
+	pair.second.cpu->CPY(0x0);
+	cr_assert_eq(pair.second.cpu->_registers.p.z, true, "The zero flag should be set");
+	cr_assert_eq(pair.second.cpu->_registers.p.n, false, "The negative flag should not be set");
+	cr_assert_eq(pair.second.cpu->_registers.p.c, true, "The carry flag should be set");
+}
+
+Test(CPY, negative)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.p.x_b = true;
+	pair.second.cpu->_registers.p.flags = 0;
+	pair.second.cpu->_registers.y = 0x80;
+	pair.second.wram->_data[0] = 0xFF;
+	pair.second.cpu->CPY(0x0);
+	cr_assert_eq(pair.second.cpu->_registers.p.z, false, "The zero flag should not be set");
+	cr_assert_eq(pair.second.cpu->_registers.p.n, true, "The negative flag should be set");
+	cr_assert_eq(pair.second.cpu->_registers.p.c, false, "The carry flag should not be set");
+}

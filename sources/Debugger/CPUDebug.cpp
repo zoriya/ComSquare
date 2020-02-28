@@ -337,6 +337,14 @@ namespace ComSquare::Debugger
 		case Instructions::INX: 	 return "INX";
 		case Instructions::INY: 	 return "INY";
 
+		case Instructions::CPX_IM:	 return "CPX " + this->_getImmediateValueForX(pc);
+		case Instructions::CPX_ABS:	 return "CPX " + this->_getAbsoluteValue(pc);
+		case Instructions::CPX_DP:	 return "CPX";
+
+		case Instructions::CPY_IM:	 return "CPY " + this->_getImmediateValueForX(pc);
+		case Instructions::CPY_ABS:	 return "CPY " + this->_getAbsoluteValue(pc);
+		case Instructions::CPY_DP:	 return "CPY";
+
 		default: return "Unknown";
 		}
 	}
