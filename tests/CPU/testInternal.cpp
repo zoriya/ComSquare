@@ -13,8 +13,7 @@ using namespace ComSquare;
 Test(SEP, setall)
 {
 	auto pair = Init();
-	pair.second.wram->_data[0] = 0xFF;
-	pair.second.cpu->SEP(0x0);
+	pair.second.cpu->SEP(0xFF);
 	auto data = pair.second.cpu->_registers.p.flags;
 	cr_assert_eq(data, 0xFF, "The flag should be 0xFF but it was %x", data);
 }
@@ -22,9 +21,8 @@ Test(SEP, setall)
 Test(SEP, setsome)
 {
 	auto pair = Init();
-	pair.second.wram->_data[0] = 0b10110101;
 	pair.second.cpu->_registers.p.flags = 0b01000000;
-	pair.second.cpu->SEP(0x0);
+	pair.second.cpu->SEP(0b10110101);
 	auto data = pair.second.cpu->_registers.p.flags;
 	cr_assert_eq(data, 0b11110101, "The flag should be 245 but it was %i", data);
 }
@@ -33,8 +31,7 @@ Test(REP, resetall)
 {
 	auto pair = Init();
 	pair.second.cpu->_isEmulationMode = false;
-	pair.second.wram->_data[0] = 0xFF;
-	pair.second.cpu->REP(0x0);
+	pair.second.cpu->REP(0xFF);
 	auto data = pair.second.cpu->_registers.p.flags;
 	cr_assert_eq(data, 0x00, "The flag should be 0x00 but it was %x", data);
 }
@@ -43,9 +40,8 @@ Test(REP, resetsome)
 {
 	auto pair = Init();
 	pair.second.cpu->_isEmulationMode = false;
-	pair.second.wram->_data[0] = 0b01000000;
 	pair.second.cpu->_registers.p.flags = 0b01000000;
-	pair.second.cpu->REP(0x0);
+	pair.second.cpu->REP(0b01000000);
 	auto data = pair.second.cpu->_registers.p.flags;
 	cr_assert_eq(data, 0x0, "The flag should be 0 but it was %x", data);
 }
@@ -54,8 +50,7 @@ Test(REP, resetallEmulation)
 {
 	auto pair = Init();
 	pair.second.cpu->_isEmulationMode = true;
-	pair.second.wram->_data[0] = 0xFF;
-	pair.second.cpu->REP(0x0);
+	pair.second.cpu->REP(0xFF);
 	auto data = pair.second.cpu->_registers.p.flags;
 	cr_assert_eq(data, 0b00110000, "The flag should be 0b00110000 but it was %x", data);
 }
@@ -64,9 +59,8 @@ Test(REP, resetsomeEmulation)
 {
 	auto pair = Init();
 	pair.second.cpu->_isEmulationMode = true;
-	pair.second.wram->_data[0] = 0b01000001;
 	pair.second.cpu->_registers.p.flags = 0b01000101;
-	pair.second.cpu->REP(0x0);
+	pair.second.cpu->REP(0b01000001);
 	auto data = pair.second.cpu->_registers.p.flags;
 	cr_assert_eq(data, 0b00110100, "The flag should be 0b00110100 but it was %x", data);
 }
@@ -76,9 +70,7 @@ Test(JSR, jump)
 	auto pair = Init();
 	pair.second.cpu->_registers.pc = 0xABCD;
 	pair.second.cpu->_registers.s = 0x0123;
-	pair.second.wram->_data[0] = 0xFF;
-	pair.second.wram->_data[1] = 0xAB;
-	pair.second.cpu->JSR(0x0);
+	pair.second.cpu->JSR(0xABFF);
 	auto pc = pair.second.cpu->_registers.pc;
 	cr_assert_eq(pc, 0xABFF, "The PC should be 0xABFF but it was %x", pc);
 	cr_assert_eq(pair.second.cpu->_registers.s, 0x0121, "The stack pointer should be 0x0121 but it was %x", pair.second.cpu->_registers.s);
@@ -92,11 +84,9 @@ Test(JSL, jump)
 	pair.second.cpu->_registers.pbr = 0xFF;
 	pair.second.cpu->_registers.pc = 0xABCD;
 	pair.second.cpu->_registers.s = 0x0123;
-	pair.second.wram->_data[0] = 0xFF;
-	pair.second.wram->_data[1] = 0xAB;
-	pair.second.cpu->JSL(0x0);
-	auto pc = pair.second.cpu->_registers.pc;
-	cr_assert_eq(pc, 0xABFF, "The PC should be 0xABFF but it was %x", pc);
+	pair.second.cpu->JSL(0xCDABFF);
+	auto pac = pair.second.cpu->_registers.pac;
+	cr_assert_eq(pac, 0xCDABFF, "The PC should be 0xCDABFF but it was %x", pac);
 	cr_assert_eq(pair.second.cpu->_registers.s, 0x0120, "The stack pointer should be 0x0120 but it was %x", pair.second.cpu->_registers.s);
 	auto pushed = pair.second.cpu->_pop16() + (pair.second.cpu->_pop() << 16u);
 	cr_assert_eq(pushed, 0xFFABCC, "The value pushed to the stack should be 0xFFABCD but it was %x", pushed);

@@ -41,32 +41,32 @@ namespace ComSquare::CPU
 		this->_registers.p.v = false;
 	}
 
-	void CPU::SEP(uint24_t valueAddr)
+	void CPU::SEP(uint24_t value)
 	{
-		this->_registers.p.flags |= this->_bus->read(valueAddr);
+		this->_registers.p.flags |= value;
 	}
 
-	void CPU::REP(uint24_t valueAddr)
+	void CPU::REP(uint24_t value)
 	{
-		this->_registers.p.flags &= ~this->_bus->read(valueAddr);
+		this->_registers.p.flags &= ~value;
 		if (this->_isEmulationMode) {
 			this->_registers.p.x_b = true;
 			this->_registers.p.m = true;
 		}
 	}
 
-	void CPU::JSR(uint24_t valueAddr)
+	void CPU::JSR(uint24_t value)
 	{
 		this->_push(--this->_registers.pc);
-		this->_registers.pc = this->_bus->read(valueAddr) + (this->_bus->read(valueAddr + 1) << 8u);
+		this->_registers.pc = value;
 	}
 
-	void CPU::JSL(uint24_t valueAddr)
+	void CPU::JSL(uint24_t value)
 	{
 		this->_registers.pac--;
 		this->_push(this->_registers.pbr);
 		this->_push(this->_registers.pc);
-		this->_registers.pc = this->_bus->read(valueAddr) + (this->_bus->read(valueAddr + 1) << 8u);
+		this->_registers.pac = value;
 	}
 
 	void CPU::PHA()

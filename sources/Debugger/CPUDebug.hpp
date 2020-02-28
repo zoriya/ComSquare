@@ -32,12 +32,18 @@ namespace ComSquare::Debugger
 		//! @brief Update the register's panel (accumulator, stack pointer...)
 		void _updateRegistersPanel();
 
-		//! @brief Return a printable string corresponding to the value of an immediate addressing mode.
-		std::string _getImmediateValue(uint24_t pc);
+		//! @brief Return a printable string corresponding to the value of an immediate addressing mode for a.
+		std::string _getImmediateValueForA(uint24_t pc);
+		//! @brief Return a printable string corresponding to the value of an immediate addressing mode for x.
+		std::string _getImmediateValueForX(uint24_t pc);
+		//! @brief Return a printable string corresponding to the value of a 8bits immediate addressing mode (used only with SEP and REP).
+		std::string _getImmediateValue8Bits(uint24_t pc);
 		//! @brief Return a printable string corresponding to the value of a direct addressing mode.
 		std::string _getDirectValue(uint24_t pc);
 		//! @brief Return a printable string corresponding to the value of an absolute addressing mode.
 		std::string _getAbsoluteValue(uint24_t pc);
+		//! @brief Return a printable string corresponding to the value of an absolute long addressing mode.
+		std::string _getAbsoluteLongValue(uint24_t pc);
 
 	public slots:
 		//! @brief Pause/Resume the CPU.

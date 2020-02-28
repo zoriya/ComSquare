@@ -350,8 +350,10 @@ namespace ComSquare::CPU
 		//! @brief True if an addressing mode with an iterator (x, y) has crossed the page. (Used because crossing the page boundary take one more cycle to run certain instructions).
 		bool _hasIndexCrossedPageBoundary = false;
 
-		//! @brief Immediate address mode is specified with a value. (This functions returns the 24bit space address of the value).
-		uint24_t _getImmediateAddr();
+		//! @brief Immediate address mode is specified with a value in 8 or 16 bits. The value is 16 bits if the m flag is unset. (This functions returns the 24bit space address of the value).
+		uint24_t _getImmediateAddrForA();
+		//! @brief Immediate address mode is specified with a value in 8 or 16 bits. The value is 16 bits if the x flag is unset. (This functions returns the 24bit space address of the value).
+		uint24_t _getImmediateAddrForX();
 		//! @brief The destination is formed by adding the direct page register with the 8-bit address to form an effective address. (This functions returns the 24bit space address of the value).
 		uint24_t _getDirectAddr();
 		//! @brief The effective address is formed by DBR:<16-bit exp>. (This functions returns the 24bit space address of the value).

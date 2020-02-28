@@ -205,7 +205,7 @@ namespace ComSquare::CPU
 
  		case Instructions::RTI:	     this->RTI(); return 6 + !this->_isEmulationMode;
 
-		case Instructions::ADC_IM:   this->ADC(this->_getImmediateAddr()); 						return 2 + !this->_registers.p.m;
+		case Instructions::ADC_IM:   this->ADC(this->_getImmediateAddrForA()); 						return 2 + !this->_registers.p.m;
 		case Instructions::ADC_ABS:  this->ADC(this->_getAbsoluteAddr()); 						return 4 + !this->_registers.p.m;
 		case Instructions::ADC_ABSl: this->ADC(this->_getAbsoluteLongAddr()); 					return 5 + !this->_registers.p.m;
 		case Instructions::ADC_DP:   this->ADC(this->_getDirectAddr()); 							return 3 + !this->_registers.p.m + this->_registers.dl != 0;
@@ -249,7 +249,7 @@ namespace ComSquare::CPU
 		case Instructions::STZ_ABSX: this->STX(this->_getAbsoluteIndexedByXAddr()); 	return 3 + !this->_registers.p.m + this->_registers.dl != 0;
 		case Instructions::STZ_DPX:  this->STX(this->_getDirectIndexedByXAddr());		return 4 + !this->_registers.p.m + this->_registers.dl != 0;
 
-		case Instructions::LDA_IM:   this->LDA(this->_getImmediateAddr()); 						return 2 + !this->_registers.p.m;
+		case Instructions::LDA_IM:   this->LDA(this->_getImmediateAddrForA()); 						return 2 + !this->_registers.p.m;
 		case Instructions::LDA_ABS:  this->LDA(this->_getAbsoluteAddr()); 						return 4 + !this->_registers.p.m;
 		case Instructions::LDA_ABSl: this->LDA(this->_getAbsoluteLongAddr()); 					return 5 + !this->_registers.p.m;
 		case Instructions::LDA_DP:   this->LDA(this->_getDirectAddr()); 							return 3 + !this->_registers.p.m + this->_registers.dl != 0;
@@ -265,21 +265,21 @@ namespace ComSquare::CPU
 		case Instructions::LDA_SR:   this->LDA(this->_getStackRelativeAddr()); 					return 4 + !this->_registers.p.m;
 		case Instructions::LDA_SRYi: this->LDA(this->_getStackRelativeIndirectIndexedYAddr()); 	return 7 + !this->_registers.p.m;
 
-		case Instructions::LDX_IM:   this->LDX(this->_getImmediateAddr()); 			return 2 + !this->_registers.p.m;
+		case Instructions::LDX_IM:   this->LDX(this->_getImmediateAddrForX()); 			return 2 + !this->_registers.p.m;
 		case Instructions::LDX_ABS:  this->LDX(this->_getAbsoluteAddr()); 			return 4 + !this->_registers.p.m;
 		case Instructions::LDX_DP:   this->LDX(this->_getDirectAddr()); 				return 3 + !this->_registers.p.m + this->_registers.dl != 0;
 		case Instructions::LDX_ABSY: this->LDX(this->_getAbsoluteIndexedByYAddr()); 	return 4 + !this->_registers.p.m + this->_hasIndexCrossedPageBoundary;
 		case Instructions::LDX_DPY:  this->LDX(this->_getDirectIndexedByYAddr()); 	return 4 + !this->_registers.p.m + this->_registers.dl != 0;
 
-		case Instructions::LDY_IM:   this->LDY(this->_getImmediateAddr()); 			return 2 + !this->_registers.p.m;
+		case Instructions::LDY_IM:   this->LDY(this->_getImmediateAddrForX()); 			return 2 + !this->_registers.p.m;
 		case Instructions::LDY_ABS:  this->LDY(this->_getAbsoluteAddr()); 			return 4 + !this->_registers.p.m;
 		case Instructions::LDY_DP:   this->LDY(this->_getDirectAddr()); 				return 3 + !this->_registers.p.m + this->_registers.dl != 0;
 		case Instructions::LDY_ABSY: this->LDY(this->_getAbsoluteIndexedByYAddr()); 	return 4 + !this->_registers.p.m + this->_hasIndexCrossedPageBoundary;
 		case Instructions::LDY_DPY:  this->LDY(this->_getDirectIndexedByYAddr()); 	return 4 + !this->_registers.p.m + this->_registers.dl != 0;
 
-		case Instructions::SEP: this->SEP(this->_getImmediateAddr()); return 3;
+		case Instructions::SEP: this->SEP(this->_bus->read(this->_registers.pc++)); return 3;
 
-		case Instructions::REP: this->REP(this->_getImmediateAddr()); return 3;
+		case Instructions::REP: this->REP(this->_bus->read(this->_registers.pc++)); return 3;
 
 		case Instructions::PHA: this->PHA(); return 3 + !this->_registers.p.m;
 		case Instructions::PHB: this->PHB(); return 3;
@@ -299,7 +299,7 @@ namespace ComSquare::CPU
 		case Instructions::JSR_ABS:   this->JSR(this->_getAbsoluteAddr()); 				   return 6;
 		case Instructions::JSR_ABSXi: this->JSR(this->_getAbsoluteIndirectIndexedByXAddr()); return 8;
 
-		case Instructions::JSL: this->JSR(this->_getAbsoluteLongAddr()); return 8;
+		case Instructions::JSL: this->JSL(this->_getAbsoluteLongAddr()); return 8;
 
 		case Instructions::CLC: this->CLC(); return 2;
 		case Instructions::CLI: this->CLI(); return 2;
@@ -310,7 +310,7 @@ namespace ComSquare::CPU
 		case Instructions::SED: this->SED(); return 2;
 		case Instructions::SEI: this->SEI(); return 2;
 
-		case Instructions::AND_IM:   this->AND(this->_getImmediateAddr()); 						return 2 + !this->_registers.p.m;
+		case Instructions::AND_IM:   this->AND(this->_getImmediateAddrForA()); 						return 2 + !this->_registers.p.m;
 		case Instructions::AND_ABS:  this->AND(this->_getAbsoluteAddr()); 						return 4 + !this->_registers.p.m;
 		case Instructions::AND_ABSl: this->AND(this->_getAbsoluteLongAddr()); 					return 5 + !this->_registers.p.m;
 		case Instructions::AND_DP:   this->AND(this->_getDirectAddr()); 							return 3 + !this->_registers.p.m + this->_registers.dl != 0;
@@ -328,7 +328,7 @@ namespace ComSquare::CPU
 
 		case Instructions::XCE: this->XCE(); return 2;
 
-		case Instructions::SBC_IM:   this->SBC(this->_getImmediateAddr()); 						return 2 + !this->_registers.p.m;
+		case Instructions::SBC_IM:   this->SBC(this->_getImmediateAddrForA()); 						return 2 + !this->_registers.p.m;
 		case Instructions::SBC_ABS:  this->SBC(this->_getAbsoluteAddr()); 						return 4 + !this->_registers.p.m;
 		case Instructions::SBC_ABSl: this->SBC(this->_getAbsoluteLongAddr()); 					return 5 + !this->_registers.p.m;
 		case Instructions::SBC_DP:   this->SBC(this->_getDirectAddr()); 							return 3 + !this->_registers.p.m + this->_registers.dl != 0;
@@ -378,10 +378,18 @@ namespace ComSquare::CPU
 	/// Addressing modes
 	////////////////////////////////////////////////////////////////////
 
-	uint24_t CPU::_getImmediateAddr()
+	uint24_t CPU::_getImmediateAddrForA()
 	{
 		uint24_t effective = this->_registers.pac++;
 		if (!this->_registers.p.m)
+			this->_registers.pac++;
+		return effective;
+	}
+
+	uint24_t CPU::_getImmediateAddrForX()
+	{
+		uint24_t effective = this->_registers.pac++;
+		if (!this->_registers.p.x_b)
 			this->_registers.pac++;
 		return effective;
 	}

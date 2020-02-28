@@ -22,7 +22,7 @@ Test(AddrMode, Immediate)
 	pair.second.cpu->_registers.pac = 0x000015;
 	pair.second.cpu->_isEmulationMode = true;
 	pair.second.cpu->_registers.p.m = false;
-	cr_assert_eq(pair.second.cpu->_getImmediateAddr(), 0x000015, "Got %x, Expected 0x000015");
+	cr_assert_eq(pair.second.cpu->_getImmediateAddrForA(), 0x000015, "Got %x, Expected 0x000015");
 	cr_assert_eq(pair.second.cpu->_registers.pac, 0x000017);
 }
 
@@ -32,7 +32,7 @@ Test(AddrMode, ImmediateMemoryFlag)
 	pair.second.cpu->_isEmulationMode = true;
 	pair.second.cpu->_registers.pac = 0x000015;
 	pair.second.cpu->_registers.p.m = false;
-	cr_assert_eq(pair.second.cpu->_getImmediateAddr(), 0x000015, "Got %x, Expected 0x000015");
+	cr_assert_eq(pair.second.cpu->_getImmediateAddrForA(), 0x000015, "Got %x, Expected 0x000015");
 	cr_assert_eq(pair.second.cpu->_registers.pac, 0x000017);
 }
 
@@ -41,7 +41,7 @@ Test(AddrMode, ImmediateBankChange)
 	auto pair = Init();
 	pair.second.cpu->_registers.pac = 0x00FFFF;
 	pair.second.cpu->_registers.p.m = true;
-	cr_assert_eq(pair.second.cpu->_getImmediateAddr(), 0x00FFFF);
+	cr_assert_eq(pair.second.cpu->_getImmediateAddrForA(), 0x00FFFF);
 	cr_assert_eq(pair.second.cpu->_registers.pac, 0x010000);
 }
 
