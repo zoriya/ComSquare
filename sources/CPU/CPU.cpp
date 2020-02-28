@@ -344,6 +344,10 @@ namespace ComSquare::CPU
 		case Instructions::SBC_SR:   this->SBC(this->_getStackRelativeAddr()); 					return 4 + !this->_registers.p.m;
 		case Instructions::SBC_SRYi: this->SBC(this->_getStackRelativeIndirectIndexedYAddr()); 	return 7 + !this->_registers.p.m;
 
+		case Instructions::TAX: 	this->TAX();	return 2;
+		case Instructions::TAY: 	this->TAY();	return 2;
+		case Instructions::TXS: 	this->TXS();	return 2;
+
 		default:
 			throw InvalidOpcode("CPU", opcode);
 		}

@@ -292,6 +292,10 @@ namespace ComSquare::Debugger
 		case Instructions::SBC_SR:   return "SBC";
 		case Instructions::SBC_SRYi: return "SBC";
 
+		case Instructions::TAX: 	 return "TAX";
+		case Instructions::TAY: 	 return "TAY";
+		case Instructions::TXS: 	 return "TXS";
+
 		default: return "Unknown";
 		}
 	}

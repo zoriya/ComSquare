@@ -327,6 +327,10 @@ namespace ComSquare::CPU
 		SBC_DPYil = 0xF7,
 		SBC_SR = 0xE3,
 		SBC_SRYi = 0xF3,
+
+		TAX = 0xAA,
+		TAY = 0xA8,
+		TXS = 0x9A
 	};
 
 	//! @brief The main CPU
@@ -478,6 +482,12 @@ namespace ComSquare::CPU
 		void AND(uint24_t valueAddr);
 		//! @brief Subtract with Borrow from Accumulator.
 		void SBC(uint24_t valueAddr);
+		//! @brief Transfer A to X
+		void TAX();
+		//! @brief Transfer A to Y
+		void TAY();
+		//! @brief Transfer X to SP
+		void TXS();
 	public:
 		explicit CPU(std::shared_ptr<Memory::MemoryBus> bus, Cartridge::Header &cartridgeHeader);
 		CPU(const CPU &) = default;
