@@ -38,6 +38,8 @@ namespace ComSquare::Debugger
 		std::string _getImmediateValueForX(uint24_t pc);
 		//! @brief Return a printable string corresponding to the value of a 8bits immediate addressing mode (used only with SEP and REP).
 		std::string _getImmediateValue8Bits(uint24_t pc);
+		//! @brief Return a printable string corresponding to the value of a 16bits immediate addressing mode.
+		std::string _getImmediateValue16Bits(uint24_t pc);
 		//! @brief Return a printable string corresponding to the value of a direct addressing mode.
 		std::string _getDirectValue(uint24_t pc);
 		//! @brief Return a printable string corresponding to the value of an absolute addressing mode.

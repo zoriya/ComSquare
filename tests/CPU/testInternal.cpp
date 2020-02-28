@@ -605,3 +605,282 @@ Test(CPY, negative)
 	cr_assert_eq(pair.second.cpu->_registers.p.n, true, "The negative flag should be set");
 	cr_assert_eq(pair.second.cpu->_registers.p.c, false, "The carry flag should not be set");
 }
+
+Test(BCC, basic)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.p.c = false;
+	pair.second.cpu->_registers.pc = 0x80;
+	pair.second.wram->_data[0] = 0x50;
+	pair.second.cpu->BCC(0x0);
+	cr_assert_eq(pair.second.cpu->_registers.pc, 0xD0, "The program counter should be equal to 0xD0 but it was 0x%x.", pair.second.cpu->_registers.pc);
+}
+
+Test(BCC, negativeJump)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.p.c = false;
+	pair.second.cpu->_registers.pc = 0x80;
+	pair.second.wram->_data[0] = 0xF0;
+	pair.second.cpu->BCC(0x0);
+	cr_assert_eq(pair.second.cpu->_registers.pc, 0x70, "The program counter should be equal to 0x70 but it was 0x%x.", pair.second.cpu->_registers.pc);
+}
+
+Test(BCC, noJump)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.p.c = true;
+	pair.second.cpu->_registers.pc = 0x80;
+	pair.second.wram->_data[0] = 0x90;
+	pair.second.cpu->BCC(0x0);
+	cr_assert_eq(pair.second.cpu->_registers.pc, 0x80, "The program counter should be equal to 0x80 but it was 0x%x.", pair.second.cpu->_registers.pc);
+}
+
+Test(BCS, basic)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.p.c = true;
+	pair.second.cpu->_registers.pc = 0x80;
+	pair.second.wram->_data[0] = 0x50;
+	pair.second.cpu->BCS(0x0);
+	cr_assert_eq(pair.second.cpu->_registers.pc, 0xD0, "The program counter should be equal to 0xD0 but it was 0x%x.", pair.second.cpu->_registers.pc);
+}
+
+Test(BCS, negativeJump)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.p.c = true;
+	pair.second.cpu->_registers.pc = 0x80;
+	pair.second.wram->_data[0] = 0xF0;
+	pair.second.cpu->BCS(0x0);
+	cr_assert_eq(pair.second.cpu->_registers.pc, 0x70, "The program counter should be equal to 0x70 but it was 0x%x.", pair.second.cpu->_registers.pc);
+}
+
+Test(BCS, noJump)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.p.c = false;
+	pair.second.cpu->_registers.pc = 0x80;
+	pair.second.wram->_data[0] = 0x90;
+	pair.second.cpu->BCS(0x0);
+	cr_assert_eq(pair.second.cpu->_registers.pc, 0x80, "The program counter should be equal to 0x80 but it was 0x%x.", pair.second.cpu->_registers.pc);
+}
+
+Test(BEQ, basic)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.p.z = true;
+	pair.second.cpu->_registers.pc = 0x80;
+	pair.second.wram->_data[0] = 0x50;
+	pair.second.cpu->BEQ(0x0);
+	cr_assert_eq(pair.second.cpu->_registers.pc, 0xD0, "The program counter should be equal to 0xD0 but it was 0x%x.", pair.second.cpu->_registers.pc);
+}
+
+Test(BEQ, negativeJump)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.p.z = true;
+	pair.second.cpu->_registers.pc = 0x80;
+	pair.second.wram->_data[0] = 0xF0;
+	pair.second.cpu->BEQ(0x0);
+	cr_assert_eq(pair.second.cpu->_registers.pc, 0x70, "The program counter should be equal to 0x70 but it was 0x%x.", pair.second.cpu->_registers.pc);
+}
+
+Test(BEQ, noJump)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.p.z = false;
+	pair.second.cpu->_registers.pc = 0x80;
+	pair.second.wram->_data[0] = 0x90;
+	pair.second.cpu->BEQ(0x0);
+	cr_assert_eq(pair.second.cpu->_registers.pc, 0x80, "The program counter should be equal to 0x80 but it was 0x%x.", pair.second.cpu->_registers.pc);
+}
+
+Test(BNE, basic)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.p.z = false;
+	pair.second.cpu->_registers.pc = 0x80;
+	pair.second.wram->_data[0] = 0x50;
+	pair.second.cpu->BNE(0x0);
+	cr_assert_eq(pair.second.cpu->_registers.pc, 0xD0, "The program counter should be equal to 0xD0 but it was 0x%x.", pair.second.cpu->_registers.pc);
+}
+
+Test(BNE, negativeJump)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.p.z = false;
+	pair.second.cpu->_registers.pc = 0x80;
+	pair.second.wram->_data[0] = 0xF0;
+	pair.second.cpu->BNE(0x0);
+	cr_assert_eq(pair.second.cpu->_registers.pc, 0x70, "The program counter should be equal to 0x70 but it was 0x%x.", pair.second.cpu->_registers.pc);
+}
+
+Test(BNE, noJump)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.p.z = true;
+	pair.second.cpu->_registers.pc = 0x80;
+	pair.second.wram->_data[0] = 0x90;
+	pair.second.cpu->BNE(0x0);
+	cr_assert_eq(pair.second.cpu->_registers.pc, 0x80, "The program counter should be equal to 0x80 but it was 0x%x.", pair.second.cpu->_registers.pc);
+}
+
+Test(BMI, basic)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.p.n = true;
+	pair.second.cpu->_registers.pc = 0x80;
+	pair.second.wram->_data[0] = 0x50;
+	pair.second.cpu->BMI(0x0);
+	cr_assert_eq(pair.second.cpu->_registers.pc, 0xD0, "The program counter should be equal to 0xD0 but it was 0x%x.", pair.second.cpu->_registers.pc);
+}
+
+Test(BMI, negativeJump)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.p.n = true;
+	pair.second.cpu->_registers.pc = 0x80;
+	pair.second.wram->_data[0] = 0xF0;
+	pair.second.cpu->BMI(0x0);
+	cr_assert_eq(pair.second.cpu->_registers.pc, 0x70, "The program counter should be equal to 0x70 but it was 0x%x.", pair.second.cpu->_registers.pc);
+}
+
+Test(BMI, noJump)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.p.n = false;
+	pair.second.cpu->_registers.pc = 0x80;
+	pair.second.wram->_data[0] = 0x90;
+	pair.second.cpu->BMI(0x0);
+	cr_assert_eq(pair.second.cpu->_registers.pc, 0x80, "The program counter should be equal to 0x80 but it was 0x%x.", pair.second.cpu->_registers.pc);
+}
+
+Test(BPL, basic)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.p.n = false;
+	pair.second.cpu->_registers.pc = 0x80;
+	pair.second.wram->_data[0] = 0x50;
+	pair.second.cpu->BPL(0x0);
+	cr_assert_eq(pair.second.cpu->_registers.pc, 0xD0, "The program counter should be equal to 0xD0 but it was 0x%x.", pair.second.cpu->_registers.pc);
+}
+
+Test(BPL, negativeJump)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.p.n = false;
+	pair.second.cpu->_registers.pc = 0x80;
+	pair.second.wram->_data[0] = 0xF0;
+	pair.second.cpu->BPL(0x0);
+	cr_assert_eq(pair.second.cpu->_registers.pc, 0x70, "The program counter should be equal to 0x70 but it was 0x%x.", pair.second.cpu->_registers.pc);
+}
+
+Test(BPL, noJump)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.p.n = true;
+	pair.second.cpu->_registers.pc = 0x80;
+	pair.second.wram->_data[0] = 0x90;
+	pair.second.cpu->BPL(0x0);
+	cr_assert_eq(pair.second.cpu->_registers.pc, 0x80, "The program counter should be equal to 0x80 but it was 0x%x.", pair.second.cpu->_registers.pc);
+}
+
+Test(BRA, basic)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.pc = 0x80;
+	pair.second.wram->_data[0] = 0x50;
+	pair.second.cpu->BRA(0x0);
+	cr_assert_eq(pair.second.cpu->_registers.pc, 0xD0, "The program counter should be equal to 0xD0 but it was 0x%x.", pair.second.cpu->_registers.pc);
+}
+
+Test(BRA, negativeJump)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.pc = 0x80;
+	pair.second.wram->_data[0] = 0xF0;
+	pair.second.cpu->BRA(0x0);
+	cr_assert_eq(pair.second.cpu->_registers.pc, 0x70, "The program counter should be equal to 0x70 but it was 0x%x.", pair.second.cpu->_registers.pc);
+}
+
+Test(BRL, basic)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.pc = 0x8080;
+	pair.second.wram->_data[0] = 0x00;
+	pair.second.wram->_data[1] = 0x10;
+	pair.second.cpu->BRL(0x0);
+	cr_assert_eq(pair.second.cpu->_registers.pc, 0x9080, "The program counter should be equal to 0x9080 but it was 0x%x.", pair.second.cpu->_registers.pc);
+}
+
+Test(BRL, negativeJump)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.pc = 0x8080;
+	pair.second.wram->_data[0] = 0x00;
+	pair.second.wram->_data[1] = 0xF0;
+	pair.second.cpu->BRL(0x0);
+	cr_assert_eq(pair.second.cpu->_registers.pc, 0x7080, "The program counter should be equal to 0x7080 but it was 0x%x.", pair.second.cpu->_registers.pc);
+}
+
+Test(BVC, basic)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.p.v = false;
+	pair.second.cpu->_registers.pc = 0x80;
+	pair.second.wram->_data[0] = 0x50;
+	pair.second.cpu->BVC(0x0);
+	cr_assert_eq(pair.second.cpu->_registers.pc, 0xD0, "The program counter should be equal to 0xD0 but it was 0x%x.", pair.second.cpu->_registers.pc);
+}
+
+Test(BVC, negativeJump)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.p.v = false;
+	pair.second.cpu->_registers.pc = 0x80;
+	pair.second.wram->_data[0] = 0xF0;
+	pair.second.cpu->BVC(0x0);
+	cr_assert_eq(pair.second.cpu->_registers.pc, 0x70, "The program counter should be equal to 0x70 but it was 0x%x.", pair.second.cpu->_registers.pc);
+}
+
+Test(BVC, noJump)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.p.v = true;
+	pair.second.cpu->_registers.pc = 0x80;
+	pair.second.wram->_data[0] = 0x90;
+	pair.second.cpu->BVC(0x0);
+	cr_assert_eq(pair.second.cpu->_registers.pc, 0x80, "The program counter should be equal to 0x80 but it was 0x%x.", pair.second.cpu->_registers.pc);
+}
+
+
+Test(BVS, basic)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.p.v = true;
+	pair.second.cpu->_registers.pc = 0x80;
+	pair.second.wram->_data[0] = 0x50;
+	pair.second.cpu->BVS(0x0);
+	cr_assert_eq(pair.second.cpu->_registers.pc, 0xD0, "The program counter should be equal to 0xD0 but it was 0x%x.", pair.second.cpu->_registers.pc);
+}
+
+Test(BVS, negativeJump)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.p.v = true;
+	pair.second.cpu->_registers.pc = 0x80;
+	pair.second.wram->_data[0] = 0xF0;
+	pair.second.cpu->BVS(0x0);
+	cr_assert_eq(pair.second.cpu->_registers.pc, 0x70, "The program counter should be equal to 0x70 but it was 0x%x.", pair.second.cpu->_registers.pc);
+}
+
+Test(BVS, noJump)
+{
+	auto pair = Init();
+	pair.second.cpu->_registers.p.v = false;
+	pair.second.cpu->_registers.pc = 0x80;
+	pair.second.wram->_data[0] = 0x90;
+	pair.second.cpu->BVS(0x0);
+	cr_assert_eq(pair.second.cpu->_registers.pc, 0x80, "The program counter should be equal to 0x80 but it was 0x%x.", pair.second.cpu->_registers.pc);
+}

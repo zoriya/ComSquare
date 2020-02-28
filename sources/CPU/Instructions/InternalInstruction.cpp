@@ -226,4 +226,75 @@ namespace ComSquare::CPU
 			this->_registers.p.n = y & 0x8000u;
 		}
 	}
+
+	bool CPU::BCC(uint24_t valueAddr)
+	{
+		if (!this->_registers.p.c)
+			this->_registers.pac += static_cast<int8_t>(this->_bus->read(valueAddr));
+		return !this->_registers.p.c;
+	}
+
+	bool CPU::BCS(uint24_t valueAddr)
+	{
+		if (this->_registers.p.c)
+			this->_registers.pac += static_cast<int8_t>(this->_bus->read(valueAddr));
+		return this->_registers.p.c;
+	}
+
+	bool CPU::BEQ(uint24_t valueAddr)
+	{
+		if (this->_registers.p.z)
+			this->_registers.pac += static_cast<int8_t>(this->_bus->read(valueAddr));
+		return this->_registers.p.z;
+	}
+
+	bool CPU::BNE(uint24_t valueAddr)
+	{
+		if (!this->_registers.p.z)
+			this->_registers.pac += static_cast<int8_t>(this->_bus->read(valueAddr));
+		return !this->_registers.p.z;
+	}
+
+	bool CPU::BMI(uint24_t valueAddr)
+	{
+		if (this->_registers.p.n)
+			this->_registers.pac += static_cast<int8_t>(this->_bus->read(valueAddr));
+		return this->_registers.p.n;
+	}
+
+	bool CPU::BPL(uint24_t valueAddr)
+	{
+		if (!this->_registers.p.n)
+			this->_registers.pac += static_cast<int8_t>(this->_bus->read(valueAddr));
+		return !this->_registers.p.n;
+	}
+
+	bool CPU::BRA(uint24_t valueAddr)
+	{
+		this->_registers.pac += static_cast<int8_t>(this->_bus->read(valueAddr));
+		return true;
+	}
+
+	bool CPU::BRL(uint24_t valueAddr)
+	{
+		unsigned value = this->_bus->read(valueAddr);
+		value += this->_bus->read(valueAddr + 1) << 8u;
+
+		this->_registers.pac += static_cast<int16_t>(value);
+		return true;
+	}
+
+	bool CPU::BVC(uint24_t valueAddr)
+	{
+		if (!this->_registers.p.v)
+			this->_registers.pac += static_cast<int8_t>(this->_bus->read(valueAddr));
+		return !this->_registers.p.v;
+	}
+
+	bool CPU::BVS(uint24_t valueAddr)
+	{
+		if (this->_registers.p.v)
+			this->_registers.pac += static_cast<int8_t>(this->_bus->read(valueAddr));
+		return this->_registers.p.v;
+	}
 }

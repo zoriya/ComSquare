@@ -328,7 +328,7 @@ namespace ComSquare::CPU
 
 		case Instructions::XCE: this->XCE(); return 2;
 
-		case Instructions::SBC_IM:   this->SBC(this->_getImmediateAddrForA()); 						return 2 + !this->_registers.p.m;
+		case Instructions::SBC_IM:   this->SBC(this->_getImmediateAddrForA()); 					return 2 + !this->_registers.p.m;
 		case Instructions::SBC_ABS:  this->SBC(this->_getAbsoluteAddr()); 						return 4 + !this->_registers.p.m;
 		case Instructions::SBC_ABSl: this->SBC(this->_getAbsoluteLongAddr()); 					return 5 + !this->_registers.p.m;
 		case Instructions::SBC_DP:   this->SBC(this->_getDirectAddr()); 							return 3 + !this->_registers.p.m + this->_registers.dl != 0;
@@ -358,6 +358,17 @@ namespace ComSquare::CPU
 		case Instructions::CPY_IM: 	this->CPY(this->_getImmediateAddrForX());	return 2 + !this->_registers.p.m;
 		case Instructions::CPY_ABS: this->CPY(this->_getAbsoluteAddr());		return 4 + !this->_registers.p.m;
 		case Instructions::CPY_DP: 	this->CPY(this->_getDirectAddr());		return 3 + !this->_registers.p.m + this->_registers.dl != 0;
+
+		case Instructions::BCC: return this->BCC(this->_registers.pc++) + 2 + this->_isEmulationMode;
+		case Instructions::BCS: return this->BCS(this->_registers.pc++) + 2 + this->_isEmulationMode;
+		case Instructions::BEQ: return this->BEQ(this->_registers.pc++) + 2 + this->_isEmulationMode;
+		case Instructions::BNE: return this->BNE(this->_registers.pc++) + 2 + this->_isEmulationMode;
+		case Instructions::BMI: return this->BMI(this->_registers.pc++) + 2 + this->_isEmulationMode;
+		case Instructions::BPL: return this->BPL(this->_registers.pc++) + 2 + this->_isEmulationMode;
+		case Instructions::BVC: return this->BVC(this->_registers.pc++) + 2 + this->_isEmulationMode;
+		case Instructions::BVS: return this->BVS(this->_registers.pc++) + 2 + this->_isEmulationMode;
+		case Instructions::BRA: this->BRA(this->_registers.pc++);  return 3 + this->_isEmulationMode;
+		case Instructions::BRL: this->BRL(this->_registers.pc); this->_registers.pc += 2;  return 4;
 
 		default:
 			throw InvalidOpcode("CPU", opcode);

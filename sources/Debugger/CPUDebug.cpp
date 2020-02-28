@@ -146,6 +146,16 @@ namespace ComSquare::Debugger
 		return ss.str();
 	}
 
+	std::string CPUDebug::_getImmediateValue16Bits(uint24_t pc)
+	{
+		unsigned value = this->_bus->read(pc);
+		value += this->_bus->read(pc + 1) << 8u;
+
+		std::stringstream ss;
+		ss << "#$" << std::hex << value;
+		return ss.str();
+	}
+
 	std::string CPUDebug::_getDirectValue(uint24_t pc)
 	{
 		std::stringstream ss;
@@ -344,6 +354,17 @@ namespace ComSquare::Debugger
 		case Instructions::CPY_IM:	 return "CPY " + this->_getImmediateValueForX(pc);
 		case Instructions::CPY_ABS:	 return "CPY " + this->_getAbsoluteValue(pc);
 		case Instructions::CPY_DP:	 return "CPY";
+
+		case Instructions::BCC: 	 return "BCC " + this->_getImmediateValue8Bits(pc);
+		case Instructions::BCS:  	 return "BCS " + this->_getImmediateValue8Bits(pc);
+		case Instructions::BEQ: 	 return "BEQ " + this->_getImmediateValue8Bits(pc);
+		case Instructions::BNE: 	 return "BNE " + this->_getImmediateValue8Bits(pc);
+		case Instructions::BMI: 	 return "BMI " + this->_getImmediateValue8Bits(pc);
+		case Instructions::BPL: 	 return "BPL " + this->_getImmediateValue8Bits(pc);
+		case Instructions::BVC: 	 return "BVC " + this->_getImmediateValue8Bits(pc);
+		case Instructions::BVS: 	 return "BVS " + this->_getImmediateValue8Bits(pc);
+		case Instructions::BRA: 	 return "BRA " + this->_getImmediateValue8Bits(pc);
+		case Instructions::BRL: 	 return "BRL " + this->_getImmediateValue16Bits(pc);
 
 		default: return "Unknown";
 		}

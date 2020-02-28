@@ -341,7 +341,18 @@ namespace ComSquare::CPU
 
 		CPY_IM = 0xC0,
 		CPY_ABS = 0xCC,
-		CPY_DP = 0xC4
+		CPY_DP = 0xC4,
+
+		BCC = 0x90,
+		BCS = 0xB0,
+		BEQ = 0xF0,
+		BNE = 0xD0,
+		BMI = 0x30,
+		BPL = 0x10,
+		BVC = 0x50,
+		BVS = 0x70,
+		BRA = 0x80,
+		BRL = 0x82
 	};
 
 	//! @brief The main CPU
@@ -509,6 +520,26 @@ namespace ComSquare::CPU
 		void CPX(uint24_t valueAddr);
 		//! @brief Compare the Y register with the memory
 		void CPY(uint24_t valueAddr);
+		//! @brief Branch if carry clear
+		bool BCC(uint24_t valueAddr);
+		//! @brief Branch if carry set
+		bool BCS(uint24_t valueAddr);
+		//! @brief Branch if equal
+		bool BEQ(uint24_t valueAddr);
+		//! @brief Branch if not equal
+		bool BNE(uint24_t valueAddr);
+		//! @brief Branch if minus
+		bool BMI(uint24_t valueAddr);
+		//! @brief Branch if plus
+		bool BPL(uint24_t valueAddr);
+		//! @brief Branch if Overflow Clear
+		bool BVC(uint24_t valueAddr);
+		//! @brief Branch if Overflow Set
+		bool BVS(uint24_t valueAddr);
+		//! @brief Branch always
+		bool BRA(uint24_t valueAddr);
+		//! @brief Branch always long
+		bool BRL(uint24_t valueAddr);
 	public:
 		explicit CPU(std::shared_ptr<Memory::MemoryBus> bus, Cartridge::Header &cartridgeHeader);
 		CPU(const CPU &) = default;
