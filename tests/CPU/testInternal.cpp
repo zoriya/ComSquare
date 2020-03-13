@@ -889,9 +889,7 @@ Test(JMP, simpleJump)
 {
 	auto pair = Init();
 	pair.second.cpu->_registers.pc = 0x8000;
-	pair.second.wram->_data[0] = 0x00;
-	pair.second.wram->_data[1] = 0x10;
-	pair.second.cpu->JMP(0x0);
+	pair.second.cpu->JMP(0x1000);
 	cr_assert_eq(pair.second.cpu->_registers.pc, 0x1000, "The program counter should be equal to 0x9000 but it was 0x%x.", pair.second.cpu->_registers.pc);
 }
 
@@ -899,9 +897,6 @@ Test(JML, simpleJump)
 {
 	auto pair = Init();
 	pair.second.cpu->_registers.pc = 0x8000;
-	pair.second.wram->_data[0] = 0x00;
-	pair.second.wram->_data[1] = 0xAB;
-	pair.second.wram->_data[2] = 0x10;
-	pair.second.cpu->JML(0x0);
+	pair.second.cpu->JML(0x10AB00);
 	cr_assert_eq(pair.second.cpu->_registers.pac, 0x10AB00, "The program counter should be equal to 0x10AB00 but it was 0x%x.", pair.second.cpu->_registers.pac);
 }

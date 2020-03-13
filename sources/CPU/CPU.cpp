@@ -197,6 +197,7 @@ namespace ComSquare::CPU
 	unsigned CPU::_executeInstruction(uint8_t opcode)
 	{
 		this->_hasIndexCrossedPageBoundary = false;
+		uint24_t addr;
 
 		switch (opcode) {
 		case Instructions::BRK:      this->BRK(); return 7 + !this->_isEmulationMode;
@@ -370,11 +371,11 @@ namespace ComSquare::CPU
 		case Instructions::BRA: this->BRA(this->_registers.pc++);  return 3 + this->_isEmulationMode;
 		case Instructions::BRL: this->BRL(this->_registers.pc); this->_registers.pc += 2;  return 4;
 
-		case Instructions::JMP_ABS: 	this->JMP(this->_getAbsoluteAddr()); 				return 3;
-		case Instructions::JMP_ABSi: 	this->JMP(this->_getAbsoluteIndirectAddr()); 		return 3;
-		case Instructions::JMP_ABSXi: 	this->JMP(this->_getAbsoluteIndexedByXAddr()); 	return 3;
+		case Instructions::JMP_ABS: 	addr = this->_getAbsoluteAddr();           this->JMP(addr); 	   return 3;
+		case Instructions::JMP_ABSi: 	addr = this->_getAbsoluteIndirectAddr();   this->JMP(addr); 	   return 3;
+		case Instructions::JMP_ABSXi: 	addr = this->_getAbsoluteIndexedByXAddr(); this->JMP(addr); 	   return 3;
 
-		case Instructions::JML_ABSl: 	this->JML(this->_getAbsoluteLongAddr()); 		return 3;
+		case Instructions::JML_ABSl: 	addr = this->_getAbsoluteLongAddr();       this->JML(addr);        return 3;
 		//case Instructions::JML_ABSil: 	this->JML(this->_getAbsoluteLong()); 	return 3;
 
 		default:
