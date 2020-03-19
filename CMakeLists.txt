@@ -69,7 +69,10 @@ add_executable(unit_tests
         tests/CPU/testInternal.cpp
         sources/Ram/ExtendedRam.cpp
         sources/Ram/ExtendedRam.hpp
-        sources/Utility/Utility.hpp sources/Utility/Utility.cpp
+        sources/Utility/Utility.hpp
+        sources/Utility/Utility.cpp
+        sources/CPU/Instructions/BitsInstructions.cpp
+        tests/CPU/testBits.cpp
         sources/APU/Instructions/Bit.cpp
         sources/APU/Instructions/Stack.cpp
         sources/APU/Instructions/Subroutine.cpp
@@ -153,6 +156,9 @@ add_executable(ComSquare
         sources/Debugger/MemoryViewer.cpp
         sources/Debugger/MemoryViewer.hpp
         sources/Utility/Utility.cpp
+        sources/Debugger/HeaderViewer.cpp
+        sources/Debugger/HeaderViewer.hpp
+        sources/CPU/Instructions/BitsInstructions.cpp
         sources/Debugger/HeaderViewer.cpp
         sources/Debugger/HeaderViewer.hpp
         sources/Debugger/APUDebug.hpp

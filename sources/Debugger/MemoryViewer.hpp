@@ -7,7 +7,9 @@
 
 #include <QtWidgets/QMainWindow>
 #include "../../ui/ui_ramView.h"
+#include "../../ui/ui_gotoDialog.h"
 #include "../Ram/Ram.hpp"
+#include "../Memory/MemoryBus.hpp"
 #include <memory>
 
 using ComSquare::Ram::Ram;
@@ -51,15 +53,27 @@ namespace ComSquare
 		private:
 			//! @brief SNES containing all rams to view.
 			SNES &_snes;
+			//! @brief The memory bus used to get the view for a given address.
+			Memory::MemoryBus &_bus;
 			//! @brief The layout of the viewer.
 			Ui::RamView _ui;
 			//! @brief The Ram visualizer model for QT.
 			MemoryViewerModel _model;
+			//! @brief Helper function to create the goto dialog.
+			void _internalGoto(bool isAbsolute);
 		public:
+			//! @brief Select the memory tab corresponding to a 24 bit address (map the address via the bus).
+			//! @return The address converted to the new tab's locale space.
+			unsigned switchToAddrTab(uint24_t addr);
+
 			//! @brief Callback called when a memory tab is selected.
 			void changeRam(int id);
+			//! @brief Create a popup asking you where you want to jump to.
+			void gotoAddr();
+			//! @brief Create a popup asking you where you want to jump to with the absolute mode selected.
+			void gotoAbsoluteAddr();
 
-			explicit MemoryViewer(SNES &snes);
+			explicit MemoryViewer(SNES &snes, Memory::MemoryBus &bus);
 			MemoryViewer(const MemoryViewer &) = delete;
 			MemoryViewer &operator=(const MemoryViewer &) = delete;
 			~MemoryViewer() override = default;

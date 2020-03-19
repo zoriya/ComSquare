@@ -10,6 +10,7 @@ namespace ComSquare::Memory
 {
 	uint8_t IRectangleMemory::read(uint24_t addr)
 	{
+		addr += this->getStart();
 		uint8_t bank = addr >> 16u;
 		uint16_t page = addr;
 		unsigned bankCount = bank - this->_startBank;
@@ -26,6 +27,7 @@ namespace ComSquare::Memory
 
 	void IRectangleMemory::write(uint24_t addr, uint8_t data)
 	{
+		addr += this->getStart();
 		uint8_t bank = addr >> 16u;
 		uint16_t page = addr;
 		unsigned bankCount = bank - this->_startBank;
@@ -53,7 +55,7 @@ namespace ComSquare::Memory
 
 	uint24_t IRectangleMemory::getStart()
 	{
-		return 0;
+		return (this->_startBank << 16u) + this->_startPage;
 	}
 
 	void IRectangleMemory::setMemoryRegion(uint8_t startBank, uint8_t endBank, uint16_t startPage, uint16_t endPage)

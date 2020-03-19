@@ -8,6 +8,7 @@
 
 #include <cstdint>
 #include <vector>
+#include <memory>
 #include "../Models/Int24.hpp"
 
 namespace ComSquare::Memory
@@ -42,6 +43,12 @@ namespace ComSquare::Memory
 		//! @brief Get the first address mapped to this component.
 		//! @return the _start value.
 		virtual uint24_t getStart();
+		//! @brief Check if this memory is a mirror or not.
+		//! @return True if this memory is a mirror. False otherwise.
+		virtual bool isMirror();
+		//! @brief Return the memory accessor this accessor mirror if any
+		//! @return nullptr if isMirror is false, the source otherwise.
+		virtual std::shared_ptr<IMemory> getMirrored();
 	};
 };
 

@@ -22,4 +22,14 @@ namespace ComSquare::Memory
 	{
 		return this->_start;
 	}
+
+	bool IMemory::isMirror()
+	{
+		return false;
+	}
+
+	std::shared_ptr<IMemory> IMemory::getMirrored()
+	{
+		return nullptr;
+	}
 }

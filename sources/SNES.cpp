@@ -13,6 +13,7 @@
 namespace ComSquare
 {
 	SNES::SNES(const std::shared_ptr<Memory::MemoryBus> &bus, const std::string &romPath, Renderer::IRenderer &renderer) :
+		_bus(bus),
 		cartridge(new Cartridge::Cartridge(romPath)),
 		wram(new Ram::Ram(16384)),
 		sram(new Ram::Ram(this->cartridge->header.sramSize)),
@@ -42,7 +43,7 @@ namespace ComSquare
 	void SNES::enableRamViewer()
 	{
 		#ifdef DEBUGGER_ENABLED
-			this->_ramViewer = std::make_shared<Debugger::MemoryViewer>(*this);
+			this->_ramViewer = std::make_shared<Debugger::MemoryViewer>(*this, *this->_bus);
 		#endif
 	}
 
