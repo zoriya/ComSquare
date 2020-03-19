@@ -119,21 +119,23 @@ namespace ComSquare::PPU
 			this->_m7sel.raw = data;
 			break;
 		case ppuRegisters::cgadd:
+			std::cout << "cgadd addr : " <<  std::bitset<8>(data)  << std::endl;
 			this->_cgadd = data;
 			this->_isLowByte = true;
 			break;
 		case ppuRegisters::cgdata:
 			//throw InvalidAddress("cgdata", addr);
 			if (this->_isLowByte) {
-				//std::cout << "cgadatal" << std::endl;
+				std::cout << "cgadatal w data " <<  std::bitset<8>(data) << std::endl;
 				this->_cgdata.cgdatal = data;
 				//this->_cgram.write(this->_cgadd, this->_cgdata.raw);
 				//this->_cgadd++;
 			}
 			else {
-				//std::cout << "cgadatah" << std::endl;
+				std::cout << "data for h " <<  std::bitset<8>(data) << std::endl;
 				this->_cgdata.cgdatah = data;
 				this->_cgram.write(this->_cgadd, this->_cgdata.raw);
+				std::cout << "cgadatah at addr: " << this->_cgadd << " valeur : " <<  std::bitset<16>(this->_cgdata.raw)  << std::endl;
 				this->_cgadd++;
 			}
 			this->_isLowByte = !this->_isLowByte;
@@ -206,11 +208,6 @@ namespace ComSquare::PPU
 	void PPU::update(unsigned cycles)
 	{
 		(void)cycles;
-		this->_bus->write(0x2121, 0);
-		for (uint16_t value = 0; value <= 256; value++) {
-			this->_bus->write(0x2122, 0b11100000);
-			this->_bus->write(0x2122, 0b00000011);
-		}
 		uint16_t tmp;
 		uint8_t red;
 		uint8_t green;

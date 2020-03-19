@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>420</width>
-    <height>405</height>
+    <height>438</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,7 +22,27 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0" rowspan="2">
+    <item row="0" column="1">
+     <widget class="QLabel" name="loggerLabel">
+      <property name="text">
+       <string>Instructions History</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QTextBrowser" name="logger"/>
+    </item>
+    <item row="2" column="1">
+     <widget class="QPushButton" name="clear">
+      <property name="text">
+       <string>Clear History</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0" rowspan="3">
      <layout class="QFormLayout" name="formLayout">
       <item row="0" column="0">
        <widget class="QLabel" name="accumulatorLabel">
@@ -133,19 +153,6 @@
        </widget>
       </item>
      </layout>
-    </item>
-    <item row="0" column="1">
-     <widget class="QLabel" name="loggerLabel">
-      <property name="text">
-       <string>Instructions History</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="1">
-     <widget class="QTextBrowser" name="logger"/>
     </item>
    </layout>
   </widget>

@@ -84,9 +84,9 @@ namespace ComSquare::CPU
 				bool i : 1;
 				//!	@brief The Decimal mode flag
 				bool d : 1;
-				//!	@brief The indeX register _width flag (in native mode only) OR the Break flag (in emulation mode only)
+				//!	@brief The indeX register width flag (in native mode only) - 0 = 16 bits mode, 1 = 8 bits mode OR the Break flag (in emulation mode only)
 				bool x_b : 1;
-				//! @brief The accumulator and Memory _width flag (in native mode only)
+				//! @brief The accumulator and Memory width flag (in native mode only) - 0 = 16 bits mode, 1 = 8 bits mode.
 				bool m : 1;
 				//! @brief The oVerflow flag
 				bool v : 1;
@@ -290,6 +290,10 @@ namespace ComSquare::CPU
 		CLD = 0xD8,
 		CLV = 0xB8,
 
+		SEC = 0x38,
+		SEI = 0x78,
+		SED = 0xF8,
+
 		AND_IM = 0x29,
 		AND_ABS = 0x2D,
 		AND_ABSl = 0x2F,
@@ -304,7 +308,58 @@ namespace ComSquare::CPU
 		AND_DPYi = 0x31,
 		AND_DPYil = 0x37,
 		AND_SR = 0x23,
-		AND_SRYi = 0x33
+		AND_SRYi = 0x33,
+
+		XCE = 0xFB,
+
+		SBC_IM = 0xE9,
+		SBC_ABS = 0xED,
+		SBC_ABSl = 0xEF,
+		SBC_DP = 0xE5,
+		SBC_DPi = 0xF2,
+		SBC_DPil = 0xE7,
+		SBC_ABSX = 0xFD,
+		SBC_ABSXl = 0xFF,
+		SBC_ABSY = 0xF9,
+		SBC_DPX = 0xF5,
+		SBC_DPXi = 0xE1,
+		SBC_DPYi = 0xF1,
+		SBC_DPYil = 0xF7,
+		SBC_SR = 0xE3,
+		SBC_SRYi = 0xF3,
+
+		TAX = 0xAA,
+		TAY = 0xA8,
+		TXS = 0x9A,
+
+		INX = 0xE8,
+		INY = 0xC8,
+
+		CPX_IM = 0xE0,
+		CPX_ABS = 0xEC,
+		CPX_DP = 0xE4,
+
+		CPY_IM = 0xC0,
+		CPY_ABS = 0xCC,
+		CPY_DP = 0xC4,
+
+		BCC = 0x90,
+		BCS = 0xB0,
+		BEQ = 0xF0,
+		BNE = 0xD0,
+		BMI = 0x30,
+		BPL = 0x10,
+		BVC = 0x50,
+		BVS = 0x70,
+		BRA = 0x80,
+		BRL = 0x82,
+
+		JMP_ABS = 0x4C,
+		JMP_ABSi = 0x6C,
+		JMP_ABSXi = 0x7C,
+
+		JML_ABSl = 0x5C,
+		JML_ABSil = 0xDC
 	};
 
 	//! @brief The main CPU
@@ -324,8 +379,10 @@ namespace ComSquare::CPU
 		//! @brief True if an addressing mode with an iterator (x, y) has crossed the page. (Used because crossing the page boundary take one more cycle to run certain instructions).
 		bool _hasIndexCrossedPageBoundary = false;
 
-		//! @brief Immediate address mode is specified with a value. (This functions returns the 24bit space address of the value).
-		uint24_t _getImmediateAddr();
+		//! @brief Immediate address mode is specified with a value in 8 or 16 bits. The value is 16 bits if the m flag is unset. (This functions returns the 24bit space address of the value).
+		uint24_t _getImmediateAddrForA();
+		//! @brief Immediate address mode is specified with a value in 8 or 16 bits. The value is 16 bits if the x flag is unset. (This functions returns the 24bit space address of the value).
+		uint24_t _getImmediateAddrForX();
 		//! @brief The destination is formed by adding the direct page register with the 8-bit address to form an effective address. (This functions returns the 24bit space address of the value).
 		uint24_t _getDirectAddr();
 		//! @brief The effective address is formed by DBR:<16-bit exp>. (This functions returns the 24bit space address of the value).
@@ -387,7 +444,6 @@ namespace ComSquare::CPU
 		//! @brief Return from Interrupt - Used to return from a interrupt handler.
 		void RTI();
 		//! @brief Add with carry - Adds operand to the Accumulator; adds an additional 1 if carry is set.
-		//! @return The number of extra cycles that this operation took.
 		void ADC(uint24_t valueAddr);
 		//! @brief Store the accumulator to memory.
 		void STA(uint24_t addr);
@@ -445,8 +501,56 @@ namespace ComSquare::CPU
 		void CLD();
 		//! @brief Clear the overflow flag.
 		void CLV();
+		//! @brief Set the carry Flag.
+		void SEC();
+		//! @brief Set the decimal flag.
+		void SED();
+		//! @brief Set the Interrupt Disable flag.
+		void SEI();
+		//! @brief Exchange Carry and Emulation Flags
+		void XCE();
 		//! @brief And accumulator with memory.
 		void AND(uint24_t valueAddr);
+		//! @brief Subtract with Borrow from Accumulator.
+		void SBC(uint24_t valueAddr);
+		//! @brief Transfer A to X
+		void TAX();
+		//! @brief Transfer A to Y
+		void TAY();
+		//! @brief Transfer X to SP
+		void TXS();
+		//! @brief Increment the X register
+		void INX();
+		//! @brief Increment the Y register
+		void INY();
+		//! @brief Compare the X register with the memory
+		void CPX(uint24_t valueAddr);
+		//! @brief Compare the Y register with the memory
+		void CPY(uint24_t valueAddr);
+		//! @brief Branch if carry clear
+		bool BCC(uint24_t valueAddr);
+		//! @brief Branch if carry set
+		bool BCS(uint24_t valueAddr);
+		//! @brief Branch if equal
+		bool BEQ(uint24_t valueAddr);
+		//! @brief Branch if not equal
+		bool BNE(uint24_t valueAddr);
+		//! @brief Branch if minus
+		bool BMI(uint24_t valueAddr);
+		//! @brief Branch if plus
+		bool BPL(uint24_t valueAddr);
+		//! @brief Branch if Overflow Clear
+		bool BVC(uint24_t valueAddr);
+		//! @brief Branch if Overflow Set
+		bool BVS(uint24_t valueAddr);
+		//! @brief Branch always
+		bool BRA(uint24_t valueAddr);
+		//! @brief Branch always long
+		bool BRL(uint24_t valueAddr);
+		//! @brief Jump.
+		void JMP(uint24_t valueAddr);
+		//! @brief Long jump.
+		void JML(uint24_t valueAddr);
 	public:
 		explicit CPU(std::shared_ptr<Memory::MemoryBus> bus, Cartridge::Header &cartridgeHeader);
 		CPU(const CPU &) = default;

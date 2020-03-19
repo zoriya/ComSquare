@@ -28,7 +28,7 @@ namespace ComSquare
 			//! @brief WRam, CPU, PPU & APU registers are mirrored to all banks of Q1 & Q3. This function is used for the mirroring.
 			//! @param console All the components.
 			//! @param i Base address for the mirrors.
-			inline void _mirrorComponents(SNES &console, unsigned i);
+			void _mirrorComponents(SNES &console, unsigned i);
 
 		public:
 			MemoryBus() = default;
