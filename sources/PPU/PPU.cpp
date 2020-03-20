@@ -206,11 +206,6 @@ namespace ComSquare::PPU
 	void PPU::update(unsigned cycles)
 	{
 		(void)cycles;
-		this->_bus->write(0x2121, 0);
-		for (uint16_t value = 0; value <= 256; value++) {
-			this->_bus->write(0x2122, 0b11100000);
-			this->_bus->write(0x2122, 0b00000011);
-		}
 		uint16_t tmp;
 		uint8_t red;
 		uint8_t green;

@@ -19,6 +19,7 @@ namespace ComSquare::Debugger
 		this->_ui.setupUi(this);
 		QMainWindow::connect(this->_ui.actionPause, &QAction::triggered, this, &CPUDebug::pause);
 		QMainWindow::connect(this->_ui.actionStep, &QAction::triggered, this, &CPUDebug::step);
+		QMainWindow::connect(this->_ui.clear, &QPushButton::released, this, &CPUDebug::clearHistory);
 		this->show();
 		this->_updateRegistersPanel();
 	}
@@ -35,23 +36,26 @@ namespace ComSquare::Debugger
 				return 0xFF;
 			return CPU::update();
 		} catch (InvalidOpcode &e) {
-			this->pause();
-			this->_ui.logger->append(e.what());
+			if (!this->_isPaused)
+				this->pause();
 			return 0xFF;
 		}
 	}
 
 	unsigned CPUDebug::_executeInstruction(uint8_t opcode)
 	{
-		if (this->_isPaused)
+		if (this->_isPaused) {
+			this->_registers.pac--;
 			return 0;
+		}
 		if (this->_isStepping) {
 			this->_isStepping = false;
 			this->_isPaused = true;
 		}
-		this->_ui.logger->append(CPUDebug::_getInstructionString(opcode).c_str());
+		this->_ui.logger->append((CPUDebug::_getInstructionString(this->_registers.pac - 1) + " -  " + Utility::to_hex(opcode)).c_str());
+		unsigned ret = CPU::_executeInstruction(opcode);
 		this->_updateRegistersPanel();
-		return CPU::_executeInstruction(opcode);
+		return ret;
 	}
 
 	void CPUDebug::pause()
@@ -80,7 +84,7 @@ namespace ComSquare::Debugger
 		this->_ui.directBankLineEdit->setText(Utility::to_hex(this->_registers.dbr).c_str());
 		this->_ui.directPageLineEdit->setText(Utility::to_hex(this->_registers.d).c_str());
 		this->_ui.stackPointerLineEdit->setText(Utility::to_hex(this->_registers.s).c_str());
-		if (this->_registers.p.x_b) {
+		if (!this->_registers.p.x_b) {
 			this->_ui.xIndexLineEdit->setText(Utility::to_hex(this->_registers.x).c_str());
 			this->_ui.yIndexLineEdit->setText(Utility::to_hex(this->_registers.y).c_str());
 		} else {
@@ -108,8 +112,88 @@ namespace ComSquare::Debugger
 		return str;
 	}
 
-	std::string CPUDebug::_getInstructionString(uint8_t opcode)
+	void CPUDebug::clearHistory()
 	{
+		this->_ui.logger->clear();
+	}
+
+	std::string CPUDebug::_getImmediateValueForA(uint24_t pc)
+	{
+		unsigned value = this->_bus->read(pc);
+
+		if (!this->_registers.p.m)
+			value += this->_bus->read(pc + 1) << 8u;
+		std::stringstream ss;
+		ss << "#$" << std::hex << value;
+		return ss.str();
+	}
+
+	std::string CPUDebug::_getImmediateValueForX(uint24_t pc)
+	{
+		unsigned value = this->_bus->read(pc);
+
+		if (!this->_registers.p.x_b)
+			value += this->_bus->read(pc + 1) << 8u;
+		std::stringstream ss;
+		ss << "#$" << std::hex << value;
+		return ss.str();
+	}
+
+	std::string CPUDebug::_getImmediateValue8Bits(uint24_t pc)
+	{
+		std::stringstream ss;
+		ss << "#$" << std::hex << static_cast<int>(this->_bus->read(pc));
+		return ss.str();
+	}
+
+	std::string CPUDebug::_getImmediateValue16Bits(uint24_t pc)
+	{
+		unsigned value = this->_bus->read(pc);
+		value += this->_bus->read(pc + 1) << 8u;
+
+		std::stringstream ss;
+		ss << "#$" << std::hex << value;
+		return ss.str();
+	}
+
+	std::string CPUDebug::_getDirectValue(uint24_t pc)
+	{
+		std::stringstream ss;
+		ss << "$" << std::hex << static_cast<int>(this->_bus->read(pc));
+		return ss.str();
+	}
+
+	std::string CPUDebug::_getAbsoluteValue(uint24_t pc)
+	{
+		std::stringstream ss;
+		ss << "$" << std::hex << (this->_bus->read(pc) + (this->_bus->read(pc + 1) << 8u));
+		return ss.str();
+	}
+
+	std::string CPUDebug::_getAbsoluteLongValue(uint24_t pc)
+	{
+		unsigned value = this->_bus->read(pc++);
+		value += this->_bus->read(pc++) << 8u;
+		value += this->_bus->read(pc) << 16u;
+
+		std::stringstream ss;
+		ss << "$" << std::hex << value;
+		return ss.str();
+	}
+
+	std::string CPUDebug::_getDirectIndexedByXValue(uint24_t pc)
+	{
+		unsigned value = this->_bus->read(pc);
+
+		std::stringstream ss;
+		ss << "$" << std::hex << value << ", x";
+		return ss.str();
+	}
+
+	std::string CPUDebug::_getInstructionString(uint24_t pc)
+	{
+		uint8_t opcode = this->_bus->read(pc++);
+
 		switch (opcode) {
 		case Instructions::BRK:      return "BRK";
 
@@ -117,81 +201,81 @@ namespace ComSquare::Debugger
 
 		case Instructions::RTI:	     return "RTI";
 
-		case Instructions::ADC_IM:   return "ADC";
-		case Instructions::ADC_ABS:  return "ADC";
-		case Instructions::ADC_ABSl: return "ADC";
-		case Instructions::ADC_DP:   return "ADC";
+		case Instructions::ADC_IM:   return "ADC " + this->_getImmediateValueForA(pc);
+		case Instructions::ADC_ABS:  return "ADC " + this->_getAbsoluteValue(pc);
+		case Instructions::ADC_ABSl: return "ADC " + this->_getAbsoluteLongValue(pc);
+		case Instructions::ADC_DP:   return "ADC " + this->_getDirectValue(pc);
 		case Instructions::ADC_DPi:  return "ADC";
 		case Instructions::ADC_DPil: return "ADC";
 		case Instructions::ADC_ABSX: return "ADC";
 		case Instructions::ADC_ABSXl:return "ADC";
 		case Instructions::ADC_ABSY: return "ADC";
-		case Instructions::ADC_DPX:  return "ADC";
+		case Instructions::ADC_DPX:  return "ADC " + this->_getDirectIndexedByXValue(pc);
 		case Instructions::ADC_DPXi: return "ADC";
 		case Instructions::ADC_DPYi: return "ADC";
 		case Instructions::ADC_DPYil:return "ADC";
 		case Instructions::ADC_SR:   return "ADC";
 		case Instructions::ADC_SRYi: return "ADC";
 
-		case Instructions::STA_ABS:  return "STA";
-		case Instructions::STA_ABSl: return "STA";
-		case Instructions::STA_DP:   return "STA";
+		case Instructions::STA_ABS:  return "STA " + this->_getAbsoluteValue(pc);
+		case Instructions::STA_ABSl: return "STA " + this->_getAbsoluteLongValue(pc);
+		case Instructions::STA_DP:   return "STA " + this->_getDirectValue(pc);
 		case Instructions::STA_DPi:  return "STA";
 		case Instructions::STA_DPil: return "STA";
 		case Instructions::STA_ABSX: return "STA";
 		case Instructions::STA_ABSXl:return "STA";
 		case Instructions::STA_ABSY: return "STA";
-		case Instructions::STA_DPX:  return "STA";
+		case Instructions::STA_DPX:  return "STA " + this->_getDirectIndexedByXValue(pc);
 		case Instructions::STA_DPXi: return "STA";
 		case Instructions::STA_DPYi: return "STA";
 		case Instructions::STA_DPYil:return "STA";
 		case Instructions::STA_SR:   return "STA";
 		case Instructions::STA_SRYi: return "STA";
 
-		case Instructions::STX_ABS:  return "STX";
-		case Instructions::STX_DP:   return "STX";
+		case Instructions::STX_ABS:  return "STX " + this->_getAbsoluteValue(pc);
+		case Instructions::STX_DP:   return "STX " + this->_getDirectValue(pc);
 		case Instructions::STX_DPY:  return "STX";
 
-		case Instructions::STY_ABS:  return "STX";
-		case Instructions::STY_DP:   return "STX";
-		case Instructions::STY_DPX:  return "STX";
+		case Instructions::STY_ABS:  return "STY " + this->_getAbsoluteValue(pc);
+		case Instructions::STY_DP:   return "STY " + this->_getDirectValue(pc);
+		case Instructions::STY_DPX:  return "STY " + this->_getDirectIndexedByXValue(pc);
 
-		case Instructions::STZ_ABS:  return "STX";
-		case Instructions::STZ_DP:   return "STX";
-		case Instructions::STZ_ABSX: return "STX";
-		case Instructions::STZ_DPX:  return "STX";
+		case Instructions::STZ_ABS:  return "STZ " + this->_getAbsoluteValue(pc);
+		case Instructions::STZ_DP:   return "STZ " + this->_getDirectValue(pc);
+		case Instructions::STZ_ABSX: return "STZ";
+		case Instructions::STZ_DPX:  return "STZ " + this->_getDirectIndexedByXValue(pc);
 
-		case Instructions::LDA_IM:   return "LDA";
-		case Instructions::LDA_ABS:  return "LDA";
-		case Instructions::LDA_ABSl: return "LDA";
-		case Instructions::LDA_DP:   return "LDA";
+		case Instructions::LDA_IM:   return "LDA " + this->_getImmediateValueForA(pc);
+		case Instructions::LDA_ABS:  return "LDA " + this->_getAbsoluteValue(pc);
+		case Instructions::LDA_ABSl: return "LDA " + this->_getAbsoluteLongValue(pc);
+		case Instructions::LDA_DP:   return "LDA " + this->_getDirectValue(pc);
 		case Instructions::LDA_DPi:  return "LDA";
 		case Instructions::LDA_DPil: return "LDA";
 		case Instructions::LDA_ABSX: return "LDA";
 		case Instructions::LDA_ABSXl:return "LDA";
 		case Instructions::LDA_ABSY: return "LDA";
-		case Instructions::LDA_DPX:  return "LDA";
+		case Instructions::LDA_DPX:  return "LDA " + this->_getDirectIndexedByXValue(pc);
 		case Instructions::LDA_DPXi: return "LDA";
 		case Instructions::LDA_DPYi: return "LDA";
 		case Instructions::LDA_DPYil:return "LDA";
 		case Instructions::LDA_SR:   return "LDA";
 		case Instructions::LDA_SRYi: return "LDA";
 
-		case Instructions::LDX_IM:   return "LDX";
-		case Instructions::LDX_ABS:  return "LDX";
-		case Instructions::LDX_DP:   return "LDX";
+		case Instructions::LDX_IM:   return "LDX " + this->_getImmediateValueForX(pc);
+		case Instructions::LDX_ABS:  return "LDX " + this->_getAbsoluteValue(pc);
+		case Instructions::LDX_DP:   return "LDX " + this->_getDirectValue(pc);
 		case Instructions::LDX_ABSY: return "LDX";
 		case Instructions::LDX_DPY:  return "LDX";
 
-		case Instructions::LDY_IM:   return "LDY";
-		case Instructions::LDY_ABS:  return "LDY";
-		case Instructions::LDY_DP:   return "LDY";
+		case Instructions::LDY_IM:   return "LDY " + this->_getImmediateValueForX(pc);
+		case Instructions::LDY_ABS:  return "LDY " + this->_getAbsoluteValue(pc);
+		case Instructions::LDY_DP:   return "LDY " + this->_getDirectValue(pc);
 		case Instructions::LDY_ABSY: return "LDY";
 		case Instructions::LDY_DPY:  return "LDY";
 
-		case Instructions::SEP: return "SEP";
+		case Instructions::SEP: return "SEP " + this->_getImmediateValue8Bits(pc);
 
-		case Instructions::REP: return "REP";
+		case Instructions::REP: return "REP " + this->_getImmediateValue8Bits(pc);
 
 		case Instructions::PHA: return "PHA";
 		case Instructions::PHB: return "PHB";
@@ -208,31 +292,86 @@ namespace ComSquare::Debugger
 		case Instructions::PLX: return "PLX";
 		case Instructions::PLY: return "PLY";
 
-		case Instructions::JSR_ABS:   return "JSR";
+		case Instructions::JSR_ABS:   return "JSR " + this->_getAbsoluteValue(pc);
 		case Instructions::JSR_ABSXi: return "JSR";
 
-		case Instructions::JSL: return "JSR";
+		case Instructions::JSL: return "JSL " + this->_getAbsoluteLongValue(pc);
 
 		case Instructions::CLC: return "CLC";
 		case Instructions::CLI: return "CLI";
 		case Instructions::CLD: return "CLD";
 		case Instructions::CLV: return "CLV";
 
-		case Instructions::AND_IM:   return "AND";
-		case Instructions::AND_ABS:  return "AND";
-		case Instructions::AND_ABSl: return "AND";
-		case Instructions::AND_DP:   return "AND";
+		case Instructions::SEC: return "SEC";
+		case Instructions::SED: return "SED";
+		case Instructions::SEI: return "SEI";
+
+		case Instructions::AND_IM:   return "AND " + this->_getImmediateValueForA(pc);
+		case Instructions::AND_ABS:  return "AND " + this->_getAbsoluteValue(pc);
+		case Instructions::AND_ABSl: return "AND " + this->_getAbsoluteLongValue(pc);
+		case Instructions::AND_DP:   return "AND " + this->_getDirectValue(pc);
 		case Instructions::AND_DPi:  return "AND";
 		case Instructions::AND_DPil: return "AND";
 		case Instructions::AND_ABSX: return "AND";
 		case Instructions::AND_ABSXl:return "AND";
 		case Instructions::AND_ABSY: return "AND";
-		case Instructions::AND_DPX:  return "AND";
+		case Instructions::AND_DPX:  return "AND " + this->_getDirectIndexedByXValue(pc);
 		case Instructions::AND_DPXi: return "AND";
 		case Instructions::AND_DPYi: return "AND";
 		case Instructions::AND_DPYil:return "AND";
 		case Instructions::AND_SR:   return "AND";
 		case Instructions::AND_SRYi: return "AND";
+
+		case Instructions::XCE: return "XCE";
+
+		case Instructions::SBC_IM:   return "SBC " + this->_getImmediateValueForA(pc);
+		case Instructions::SBC_ABS:  return "SBC " + this->_getAbsoluteValue(pc);
+		case Instructions::SBC_ABSl: return "SBC " + this->_getAbsoluteLongValue(pc);
+		case Instructions::SBC_DP:   return "SBC " + this->_getDirectValue(pc);
+		case Instructions::SBC_DPi:  return "SBC";
+		case Instructions::SBC_DPil: return "SBC";
+		case Instructions::SBC_ABSX: return "SBC";
+		case Instructions::SBC_ABSXl:return "SBC";
+		case Instructions::SBC_ABSY: return "SBC";
+		case Instructions::SBC_DPX:  return "SBC " + this->_getDirectIndexedByXValue(pc);
+		case Instructions::SBC_DPXi: return "SBC";
+		case Instructions::SBC_DPYi: return "SBC";
+		case Instructions::SBC_DPYil:return "SBC";
+		case Instructions::SBC_SR:   return "SBC";
+		case Instructions::SBC_SRYi: return "SBC";
+
+		case Instructions::TAX: 	 return "TAX";
+		case Instructions::TAY: 	 return "TAY";
+		case Instructions::TXS: 	 return "TXS";
+
+		case Instructions::INX: 	 return "INX";
+		case Instructions::INY: 	 return "INY";
+
+		case Instructions::CPX_IM:	 return "CPX " + this->_getImmediateValueForX(pc);
+		case Instructions::CPX_ABS:	 return "CPX " + this->_getAbsoluteValue(pc);
+		case Instructions::CPX_DP:	 return "CPX";
+
+		case Instructions::CPY_IM:	 return "CPY " + this->_getImmediateValueForX(pc);
+		case Instructions::CPY_ABS:	 return "CPY " + this->_getAbsoluteValue(pc);
+		case Instructions::CPY_DP:	 return "CPY";
+
+		case Instructions::BCC: 	 return "BCC " + this->_getImmediateValue8Bits(pc);
+		case Instructions::BCS:  	 return "BCS " + this->_getImmediateValue8Bits(pc);
+		case Instructions::BEQ: 	 return "BEQ " + this->_getImmediateValue8Bits(pc);
+		case Instructions::BNE: 	 return "BNE " + this->_getImmediateValue8Bits(pc);
+		case Instructions::BMI: 	 return "BMI " + this->_getImmediateValue8Bits(pc);
+		case Instructions::BPL: 	 return "BPL " + this->_getImmediateValue8Bits(pc);
+		case Instructions::BVC: 	 return "BVC " + this->_getImmediateValue8Bits(pc);
+		case Instructions::BVS: 	 return "BVS " + this->_getImmediateValue8Bits(pc);
+		case Instructions::BRA: 	 return "BRA " + this->_getImmediateValue8Bits(pc);
+		case Instructions::BRL: 	 return "BRL " + this->_getImmediateValue16Bits(pc);
+
+		case Instructions::JMP_ABS:  	return "JMP " + this->_getAbsoluteValue(pc);
+		case Instructions::JMP_ABSi: 	return "JMP "; //+ this->_getAbsoluteIndire(pc);
+		case Instructions::JMP_ABSXi:  	return "JMP "; //+ this->_getAbsoluteValue(pc);
+
+		case Instructions::JML_ABSl:	return "JML";
+		case Instructions::JML_ABSil:	return "JML";
 
 		default: return "Unknown";
 		}
