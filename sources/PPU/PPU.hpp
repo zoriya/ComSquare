@@ -155,65 +155,7 @@ namespace ComSquare::PPU
 	stat78 = 0x3F
 	};
 
-	//! @brief The class containing all the registers the PPU
-	class PPU : public Memory::IMemory {
-	private:
-	/*	struct _layerInfo {
-			bool _characterSize;
-		};
-
-		struct {
-			unsigned int _height;
-			unsigned int _width;
-			bool verticalMirroring;
-			bool horizontalMirroring;
-			int verticalOffset;
-			int horizontalOffset;
-			//! @brief A Character is the base unit of the background it can be 16x16 or 8x8 (16x8 under certain circumstances)
-			unsigned char characterHeight;
-			unsigned char characterWidth;
-		} _BG[4];
-
-		struct object {
-			bool verticalMirroring;
-			bool horizontalMirroring;
-			bool priority;
-			unsigned short graphicAddress;
-		};
-
-		//! @brief INIDISP variables (F-blank and Brightness)
-		struct {
-			bool _fBlank;
-			//! @brief F=max, 0="off".
-			unsigned short _brightness;
-		} _inidisp;
-
-		//! @brief OBSEL variables (Object Size and Character Address)
-		struct {
-			//! @brief "OamMode" this contains the size of the Objects (ex: 8x8 and 16x16)
-			unsigned char _objectSize;
-			//! @brief "OamBaseAddress"
-			unsigned char _baseSelect;
-			//! @brief "OamAddressOffset"
-			unsigned char _nameSelect;
-		} _obsel;
-
-		//! @brief OAMADD variables (OAM Address and Obj Priority)
-		struct {
-			uint16_t _oamAddress;
-			bool _objPriority;
-		} _oamadd;
-
-		//! @brief BGMODE (BG Mode and Character Size)
-		struct {
-			unsigned char _bgMode;
-			bool _mode1Bg3Priority;
-			_layerInfo layers[4];
-		} _bgmode;*/
-
-
-
-
+	struct Registers {
 		//! @brief INIDISP Register (F-blank and Brightness)
 		union {
 			struct {
@@ -542,8 +484,15 @@ namespace ComSquare::PPU
 				uint8_t mpym;
 				uint8_t mpyh;
 			};
-			uint32_t  mpy;
+			uint32_t mpy;
 		} mpy;
+	};
+
+	//! @brief The class containing all the registers the PPU
+	class PPU : public Memory::IMemory {
+	private:
+		//! @brief Init ppuRegisters
+		Registers _registers{};
 		Renderer::IRenderer &_renderer;
 		std::shared_ptr<Memory::MemoryBus> _bus;
 		Ram::ExtendedRam _vram;

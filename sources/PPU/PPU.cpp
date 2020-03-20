@@ -14,11 +14,11 @@ namespace ComSquare::PPU
 	{
 		switch (addr) {
 		case 0x34:
-			return this->mpy.mpyl;
+			return  this->_registers.mpy.mpyl;
 		case 0x35:
-			return this->mpy.mpym;
+			return this->_registers.mpy.mpym;
 		case 0x36:
-			return this->mpy.mpyh;
+			return this->_registers.mpy.mpyh;
 		default:
 			throw InvalidAddress("PPU Internal Registers read", addr);
 		}
@@ -28,40 +28,40 @@ namespace ComSquare::PPU
 	{
 		switch (addr) {
 		case ppuRegisters::inidisp:
-			this->_inidisp.raw = data;
+			this->_registers._inidisp.raw = data;
 			break;
 		case ppuRegisters::obsel:
-			this->_obsel.raw = data;
+			this->_registers._obsel.raw = data;
 			break;
 		case ppuRegisters::oamaddl:
-			this->_oamadd.oamaddl = data;
+			this->_registers._oamadd.oamaddl = data;
 			break;
 		case ppuRegisters::oamaddh:
-			this->_oamadd.oamaddh = data;
+			this->_registers._oamadd.oamaddh = data;
 			break;
 		case ppuRegisters::oamdata:
-			this->_oamdata = data;
+			this->_registers._oamdata = data;
 			//throw InvalidAddress("oamdata", addr);
 			std::cout << "oamdata" << std::endl;
 			// the oamAddress have to be calculated if fblank or not (not implemented)
-			_oamram.write(this->_oamadd.oamAddress, this->_oamdata);
-			this->_oamadd.oamAddress++;
+			_oamram.write(this->_registers._oamadd.oamAddress, this->_registers._oamdata);
+			this->_registers._oamadd.oamAddress++;
 			break;
 		case ppuRegisters::bgmode:
-			this->_bgmode.raw = data;
+			this->_registers._bgmode.raw = data;
 			break;
 		case ppuRegisters::mosaic:
-			this->_mosaic.raw = data;
+			this->_registers._mosaic.raw = data;
 			break;
 		case ppuRegisters::bg1sc:
 		case ppuRegisters::bg2sc:
 		case ppuRegisters::bg3sc:
 		case ppuRegisters::bg4sc:
-			this->_bgsc[addr - 0x07].raw = data;
+			this->_registers._bgsc[addr - 0x07].raw = data;
 			break;
 		case ppuRegisters::bg12nba:
 		case ppuRegisters::bg34nba:
-			this->_bgnba[addr - 0x0B].raw = data;
+			this->_registers._bgnba[addr - 0x0B].raw = data;
 			break;
 		case ppuRegisters::bg1hofs:
 		case ppuRegisters::bg1vofs:
@@ -73,115 +73,115 @@ namespace ComSquare::PPU
 		case ppuRegisters::bg4vofs:
 			// Work in progress !
 			if (addr == ppuRegisters::bg1hofs || addr == ppuRegisters::bg1vofs)
-				this->_m7ofs[addr - ppuRegisters::bg1hofs].raw = data;
-			this->_bgofs[addr - ppuRegisters::bg1hofs].raw = data;
+				this->_registers._m7ofs[addr - ppuRegisters::bg1hofs].raw = data;
+			this->_registers._bgofs[addr - ppuRegisters::bg1hofs].raw = data;
 			break;
 		case ppuRegisters::vmain:
-			this->_vmain.raw = data;
-			switch (this->_vmain.incrementAmount) {
+			this->_registers._vmain.raw = data;
+			switch (this->_registers._vmain.incrementAmount) {
 			case 0b00:
-				this->_incrementAmount = 1;
+				this->_registers._incrementAmount = 1;
 				break;
 			case 0b01:
-				this->_incrementAmount = 32;
+				this->_registers._incrementAmount = 32;
 				break;
 			case 0b10:
 			case 0b11:
-				this->_incrementAmount = 128;
+				this->_registers._incrementAmount = 128;
 			}
 			break;
 		case ppuRegisters::vmaddl:
-			this->_vmadd.vmaddl = data;
+			this->_registers._vmadd.vmaddl = data;
 			break;
 		case ppuRegisters::vmaddh:
-			this->_vmadd.vmaddh = data;
+			this->_registers._vmadd.vmaddh = data;
 			break;
 		case ppuRegisters::vmdatal:
 			//throw InvalidAddress("vmdata", addr);
 			std::cout << "vmdatal" << std::endl;
-			if (!this->_inidisp.fblank) {
-				this->_vmdata.vmdatal = data;
-				this->_vram.write(getVramAddress(), this->_vmdata.vmdata);
+			if (!this->_registers._inidisp.fblank) {
+				this->_registers._vmdata.vmdatal = data;
+				this->_vram.write(getVramAddress(), this->_registers._vmdata.vmdata);
 			}
-			if (!this->_vmain.incrementMode)
-				this->_vmadd.vmadd += this->_incrementAmount;
+			if (!this->_registers._vmain.incrementMode)
+				this->_registers._vmadd.vmadd += this->_registers._incrementAmount;
 			break;
 		case ppuRegisters::vmdatah:
 			std::cout << "vmdatah" << std::endl;
-			if (!this->_inidisp.fblank) {
-				this->_vmdata.vmdatah = data;
-				this->_vram.write(getVramAddress(), this->_vmdata.vmdata);
+			if (!this->_registers._inidisp.fblank) {
+				this->_registers._vmdata.vmdatah = data;
+				this->_vram.write(getVramAddress(), this->_registers._vmdata.vmdata);
 			}
-			if (this->_vmain.incrementMode)
-				this->_vmadd.vmadd += this->_incrementAmount;
+			if (this->_registers._vmain.incrementMode)
+				this->_registers._vmadd.vmadd += this->_registers._incrementAmount;
 			break;
 		case ppuRegisters::m7sel:
-			this->_m7sel.raw = data;
+			this->_registers._m7sel.raw = data;
 			break;
 		case ppuRegisters::cgadd:
 			std::cout << "cgadd addr : " <<  std::bitset<8>(data)  << std::endl;
-			this->_cgadd = data;
-			this->_isLowByte = true;
+			this->_registers._cgadd = data;
+			this->_registers._isLowByte = true;
 			break;
 		case ppuRegisters::cgdata:
 			//throw InvalidAddress("cgdata", addr);
-			if (this->_isLowByte) {
+			if (this->_registers._isLowByte) {
 				std::cout << "cgadatal w data " <<  std::bitset<8>(data) << std::endl;
-				this->_cgdata.cgdatal = data;
-				//this->_cgram.write(this->_cgadd, this->_cgdata.raw);
-				//this->_cgadd++;
+				this->_registers._cgdata.cgdatal = data;
+				//this->_registers._cgram.write(this->_registers._cgadd, this->_registers._cgdata.raw);
+				//this->_registers._cgadd++;
 			}
 			else {
-				std::cout << "data for h " <<  std::bitset<8>(data) << std::endl;
-				this->_cgdata.cgdatah = data;
-				this->_cgram.write(this->_cgadd, this->_cgdata.raw);
-				std::cout << "cgadatah at addr: " << this->_cgadd << " valeur : " <<  std::bitset<16>(this->_cgdata.raw)  << std::endl;
-				this->_cgadd++;
+				std::cout << "cgdatah w data " <<  std::bitset<8>(data) << std::endl;
+				this->_registers._cgdata.cgdatah = data;
+				this->_cgram.write(this->_registers._cgadd, this->_registers._cgdata.raw);
+				std::cout << "cgadatah at addr: " << this->_registers._cgadd << " valeur : " <<  std::bitset<16>(this->_registers._cgdata.raw)  << std::endl;
+				this->_registers._cgadd++;
 			}
-			this->_isLowByte = !this->_isLowByte;
+			this->_registers._isLowByte = !this->_registers._isLowByte;
 			break;
 		case ppuRegisters::w12sel:
 		case ppuRegisters::w34sel:
 		case ppuRegisters::wobjsel:
-			this->_wsel[addr - ppuRegisters::w12sel].raw = data;
+			this->_registers._wsel[addr - ppuRegisters::w12sel].raw = data;
 			break;
 		case ppuRegisters::wh0:
-			this->_wh0 = data;
+			this->_registers._wh0 = data;
 			break;
 		case ppuRegisters::wh1:
-			this->_wh1 = data;
+			this->_registers._wh1 = data;
 			break;
 		case ppuRegisters::wh2:
-			this->_wh2 = data;
+			this->_registers._wh2 = data;
 			break;
 		case ppuRegisters::wh3:
-			this->_wh3 = data;
+			this->_registers._wh3 = data;
 			break;
 		case ppuRegisters::wbjlog:
-			this->_wbglog.raw = data;
+			this->_registers._wbglog.raw = data;
 			break;
 		case ppuRegisters::wobjlog:
-			this->_wobjlog.raw = data;
+			this->_registers._wobjlog.raw = data;
 			break;
 		case ppuRegisters::tm:
 		case ppuRegisters::ts:
-			this->_t[addr - ppuRegisters::tm].raw = data;
+			this->_registers._t[addr - ppuRegisters::tm].raw = data;
 			break;
 		case ppuRegisters::tmw:
 		case ppuRegisters::tsw:
-			this->_tw[addr - ppuRegisters::tmw].raw = data;
+			this->_registers._tw[addr - ppuRegisters::tmw].raw = data;
 			break;
 		case ppuRegisters::cgwsel:
-			this->_cgwsel.raw = data;
+			this->_registers._cgwsel.raw = data;
 			break;
 		case ppuRegisters::cgadsub:
-			this->_cgadsub.raw = data;
+			this->_registers._cgadsub.raw = data;
 			break;
 		case ppuRegisters::coldata:
-			this->_coldata.raw = data;
+			this->_registers._coldata.raw = data;
 			break;
 		case ppuRegisters::setini:
-			this->_setini.raw = data;
+			this->_registers._setini.raw = data;
 			break;
 		//TODO adding the rest of the registers. oaf !
 		default:
@@ -191,9 +191,9 @@ namespace ComSquare::PPU
 
 	uint8_t PPU::getVramAddress()
 	{
-		uint16_t vanillaAddress = this->_vmadd.vmadd;
+		uint16_t vanillaAddress = this->_registers._vmadd.vmadd;
 
-		switch (this->_vmain.addressRemapping) {
+		switch (this->_registers._vmain.addressRemapping) {
 		case 0b00:
 			return vanillaAddress;
 		case 0b01:
@@ -214,7 +214,7 @@ namespace ComSquare::PPU
 		uint8_t blue;
 		uint32_t pixelTmp = 0x000000FF;
 		//std::cout << "update" << std::endl;
-		if (!this->_inidisp.fblank) {
+		if (!this->_registers._inidisp.fblank) {
 				for (int y = 0; y <= 255; y++) {
 					tmp = this->_cgram.read(y);
 
@@ -245,6 +245,6 @@ namespace ComSquare::PPU
 		_oamram(544),
 		_cgram(512)
 	{
-		this->_isLowByte = true;
+		this->_registers._isLowByte = true;
 	}
 }
