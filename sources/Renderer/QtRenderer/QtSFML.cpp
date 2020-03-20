@@ -55,6 +55,10 @@ namespace ComSquare::Renderer
 		apuDebugger->setShortcut(Qt::Key_F4);
 		QMainWindow::connect(apuDebugger, &QAction::triggered, this->_sfWidget.get(), &QtFullSFML::enableDebugAPU);
 		debugger->addAction(apuDebugger);
+		QAction *busDebugger = new QAction("Memory bus Viewer", &this->_window);
+		busDebugger->setShortcut(Qt::Key_F5);
+		QMainWindow::connect(busDebugger, &QAction::triggered, this->_sfWidget.get(), &QtFullSFML::enableDebugBus);
+		debugger->addAction(busDebugger);
 
 		this->_window.show();
 	}
@@ -109,5 +113,10 @@ namespace ComSquare::Renderer
 	void QtFullSFML::enableDebugAPU()
 	{
 		this->_snes.enableAPUDebugging();
+	}
+
+	void QtFullSFML::enableDebugBus()
+	{
+		this->_snes.enableMemoryBusDebugging();
 	}
 }

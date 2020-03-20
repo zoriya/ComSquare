@@ -10,6 +10,15 @@
 
 namespace ComSquare::PPU
 {
+	PPU::PPU(Renderer::IRenderer &renderer):
+		_renderer(renderer),
+		_vram(65536),
+		_oamram(544),
+		_cgram(512)
+	{
+		this->_isLowByte = true;
+	}
+
 	uint8_t PPU::read(uint24_t addr)
 	{
 		switch (addr) {
@@ -234,15 +243,5 @@ namespace ComSquare::PPU
 				}
 		}
 		this->_renderer.drawScreen();
-	}
-
-	PPU::PPU(const std::shared_ptr<Memory::MemoryBus> &bus, Renderer::IRenderer &renderer):
-		_renderer(renderer),
-		_bus(std::move(bus)),
-		_vram(65536),
-		_oamram(544),
-		_cgram(512)
-	{
-		this->_isLowByte = true;
 	}
 }

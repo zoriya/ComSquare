@@ -545,12 +545,11 @@ namespace ComSquare::PPU
 			uint32_t  mpy;
 		} mpy;
 		Renderer::IRenderer &_renderer;
-		std::shared_ptr<Memory::MemoryBus> _bus;
 		Ram::ExtendedRam _vram;
 		Ram::ExtendedRam _oamram;
 		Ram::ExtendedRam _cgram;
 	public:
-		PPU(const std::shared_ptr<Memory::MemoryBus> &bus, Renderer::IRenderer &renderer);
+		PPU(Renderer::IRenderer &renderer);
 		PPU(const PPU &) = default;
 		PPU &operator=(const PPU &) = delete;
 		~PPU() = default;

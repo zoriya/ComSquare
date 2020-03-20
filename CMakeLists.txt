@@ -77,7 +77,11 @@ add_executable(unit_tests
         sources/APU/Instructions/Stack.cpp
         sources/APU/Instructions/Subroutine.cpp
         sources/APU/Instructions/ProgramFlow.cpp
-        tests/CPU/Math/testSBC.cpp sources/CPU/Instructions/TransferRegisters.cpp tests/CPU/TransferRegisters.cpp)
+        tests/CPU/Math/testSBC.cpp
+        sources/CPU/Instructions/TransferRegisters.cpp
+        tests/CPU/TransferRegisters.cpp
+        sources/CPU/AddressingModes.cpp
+)
 
 # include criterion & coverage
 target_link_libraries(unit_tests criterion -lgcov)
@@ -95,7 +99,7 @@ set(CMAKE_AUTOUIC ON)
 
 # make app
 add_executable(ComSquare
-        main.cpp
+        sources/main.cpp
         sources/SNES.cpp
         sources/SNES.hpp
         sources/Memory/MemoryBus.cpp
@@ -166,7 +170,12 @@ add_executable(ComSquare
         sources/APU/Instructions/Stack.cpp
         sources/APU/Instructions/Subroutine.cpp
         sources/APU/Instructions/ProgramFlow.cpp
-        sources/CPU/Instructions/TransferRegisters.cpp)
+        sources/CPU/Instructions/TransferRegisters.cpp
+        sources/CPU/AddressingModes.cpp
+        sources/Debugger/MemoryBusDebug.cpp
+        sources/Debugger/MemoryBusDebug.hpp
+        sources/Debugger/ClosableWindow.hpp
+)
 
 target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)
 

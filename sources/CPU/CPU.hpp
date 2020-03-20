@@ -555,7 +555,7 @@ namespace ComSquare::CPU
 		explicit CPU(std::shared_ptr<Memory::MemoryBus> bus, Cartridge::Header &cartridgeHeader);
 		CPU(const CPU &) = default;
 		CPU &operator=(const CPU &) = delete;
-		~CPU() = default;
+		~CPU() override = default;
 		//! @brief This function continue to execute the Cartridge code.
 		//! @return The number of CPU cycles that elapsed
 		virtual unsigned update();
@@ -572,6 +572,9 @@ namespace ComSquare::CPU
 
 		//! @brief Reset interrupt - Called on boot and when the reset button is pressed.
 		virtual void RESB();
+
+		//! @brief Change the memory bus used by the CPU.
+		void setMemoryBus(std::shared_ptr<Memory::MemoryBus> bus);
 	};
 }
 

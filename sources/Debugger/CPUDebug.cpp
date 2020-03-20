@@ -5,33 +5,41 @@
 #include "CPUDebug.hpp"
 #include "../Utility/Utility.hpp"
 #include "../Exceptions/InvalidOpcode.hpp"
+#include <QtEvents>
+#include <iostream>
 
 using namespace ComSquare::CPU;
 
 namespace ComSquare::Debugger
 {
 	CPUDebug::CPUDebug(CPU &basicCPU, SNES &snes)
-		: CPU(basicCPU), QMainWindow(), _ui(), _snes(snes)
+		: CPU(basicCPU), _window(new ClosableWindow(this, &CPUDebug::disableDebugger)), _ui(), _snes(snes)
 	{
-		this->setContextMenuPolicy(Qt::NoContextMenu);
-		this->setAttribute(Qt::WA_QuitOnClose, false);
+		this->_window->setContextMenuPolicy(Qt::NoContextMenu);
+		this->_window->setAttribute(Qt::WA_QuitOnClose, false);
+		this->_window->setAttribute(Qt::WA_DeleteOnClose);
 
-		this->_ui.setupUi(this);
+		this->_ui.setupUi(this->_window);
 		QMainWindow::connect(this->_ui.actionPause, &QAction::triggered, this, &CPUDebug::pause);
 		QMainWindow::connect(this->_ui.actionStep, &QAction::triggered, this, &CPUDebug::step);
 		QMainWindow::connect(this->_ui.clear, &QPushButton::released, this, &CPUDebug::clearHistory);
-		this->show();
+		this->_window->show();
 		this->_updateRegistersPanel();
+	}
+
+	void CPUDebug::disableDebugger()
+	{
+		this->_snes.disableCPUDebugging();
+	}
+
+	CPUDebug::~CPUDebug()
+	{
+		std::cout << "Destructor" << std::endl;
 	}
 
 	unsigned CPUDebug::update()
 	{
 		try {
-			if (!this->isVisible()) {
-				this->_snes.disableCPUDebugging();
-				return 0;
-			}
-
 			if (this->_isPaused)
 				return 0xFF;
 			return CPU::update();

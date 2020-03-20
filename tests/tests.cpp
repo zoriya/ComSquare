@@ -13,14 +13,12 @@ using namespace ComSquare;
 
 std::pair<std::shared_ptr<Memory::MemoryBus>, SNES> Init()
 {
-	std::shared_ptr<Memory::MemoryBus> bus = std::make_shared<Memory::MemoryBus>();
 	Renderer::NoRenderer norenderer(0, 0, 0);
-	SNES snes(bus, "../tests/my_cartridge", norenderer);
+	SNES snes("../tests/my_cartridge", norenderer);
 	snes.cartridge->_size = 100;
 	snes.cartridge->_data = new uint8_t[snes.cartridge->_size];
 	snes.cartridge->header.mappingMode = Cartridge::LoRom;
 	snes.sram->_size = 100;
 	snes.sram->_data = new uint8_t[snes.cartridge->_size];
-//	bus->mapComponents(snes);
-	return std::make_pair(bus, snes);
+	return std::make_pair(snes._bus, snes);
 }
