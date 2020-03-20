@@ -49,6 +49,9 @@ namespace ComSquare::Memory
 		//! @brief Return the memory accessor this accessor mirror if any
 		//! @return nullptr if isMirror is false, the source otherwise.
 		virtual std::shared_ptr<IMemory> getMirrored();
+		// TODO add destructors everywhere
+		// TODO rename this as an abstract.
+		virtual ~IMemory() = default;
 	};
 };
 

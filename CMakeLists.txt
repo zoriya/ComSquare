@@ -90,6 +90,9 @@ add_executable(unit_tests
         sources/APU/Instructions/8bitDataTransmission.cpp
         sources/APU/IPL/IPL.hpp
         sources/APU/IPL/IPL.cpp
+        tests/CPU/Math/testSBC.cpp
+        sources/CPU/Instructions/TransferRegisters.cpp
+        tests/CPU/TransferRegisters.cpp
 )
 
 # include criterion & coverage
@@ -191,6 +194,7 @@ add_executable(ComSquare
         sources/APU/Instructions/8bitDataTransmission.cpp
         sources/APU/IPL/IPL.hpp
         sources/APU/IPL/IPL.cpp
+        sources/CPU/Instructions/TransferRegisters.cpp
 )
 
 target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)
