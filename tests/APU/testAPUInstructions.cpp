@@ -1256,9 +1256,8 @@ Test(VIIIDataTransmission, MovMemToReg)
 
 	apu->_internalRegisters.x = 0x23;
 	apu->_internalRegisters.a = 0x44;
-	apu->_internalWrite(0x23, 0x56);
 	result = apu->MOV(apu->_getIndexXAddr(), apu->_internalRegisters.a, 4, true);
 	cr_assert_eq(result, 4);
 	cr_assert_eq(apu->_internalRegisters.x, 0x24);
-	cr_assert_eq(apu->_internalRegisters.a, 0x56);
+	cr_assert_eq(apu->_internalRegisters.a, 0x23);
 }

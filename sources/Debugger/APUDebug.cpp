@@ -20,8 +20,8 @@ namespace ComSquare::Debugger
 		this->setAttribute(Qt::WA_QuitOnClose, false);
 
 		this->_ui.setupUi(this);
-		//QMainWindow::connect(this->_ui.resumeButton, SIGNAL(clicked()), this, SLOT(APUDebug::pause()));
-		//QMainWindow::connect(this->_ui.stepButton, SIGNAL(clicked()), this, SLOT(APUDebug::step()));
+		QMainWindow::connect(this->_ui.resumeButton, &QPushButton::clicked, this, &APUDebug::pause);
+		QMainWindow::connect(this->_ui.stepButton, &QPushButton::clicked, this, &APUDebug::step);
 		this->show();
 		this->_updatePanel();
 	}
@@ -475,7 +475,7 @@ namespace ComSquare::Debugger
 	int APUDebug::_executeInstruction()
 	{
 		if (this->_isPaused)
-			return 0;
+			return 0xFF;
 		if (this->_isStepping) {
 			this->_isStepping = false;
 			this->_isPaused = true;
@@ -494,7 +494,7 @@ namespace ComSquare::Debugger
 			}
 			if (this->_isPaused)
 				return;
-			return APU::update(cycles);
+			APU::update(cycles);
 		} catch (InvalidOpcode &e) {
 			this->pause();
 			this->_ui.logger->append(e.what());

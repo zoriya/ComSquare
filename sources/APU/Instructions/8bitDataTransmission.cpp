@@ -9,12 +9,10 @@ namespace ComSquare::APU
 {
 	int APU::MOV(uint24_t memFrom, uint8_t &regTo, int cycles, bool incrementX)
 	{
-		uint8_t data = this->_internalRead(memFrom);
-
-		regTo = data;
+		regTo = memFrom;
 		if (incrementX)
 			this->_internalRegisters.x++;
-		this->_setNZflags(data);
+		this->_setNZflags(regTo);
 		return cycles;
 	}
 
