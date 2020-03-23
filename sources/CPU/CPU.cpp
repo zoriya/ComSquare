@@ -18,6 +18,11 @@ namespace ComSquare::CPU
 		this->RESB();
 	}
 
+	bool CPU::isDebugger()
+	{
+		return false;
+	}
+
 	void CPU::setMemoryBus(std::shared_ptr<Memory::MemoryBus> bus)
 	{
 		this->_bus = std::move(bus);

@@ -14,15 +14,15 @@ namespace ComSquare::Debugger
 	protected:
 		void closeEvent(QCloseEvent *) override
 		{
-			(this->_obj->*this->_onClose)();
+			(this->_obj.*this->_onClose)();
 		}
 
 	private:
-		T *_obj;
+		T &_obj;
 		void (T::*_onClose)();
 
 	public:
-		explicit ClosableWindow(T *obj, void (T::*onClose)())
+		explicit ClosableWindow(T &obj, void (T::*onClose)())
 			: _obj(obj), _onClose(onClose)
 		{ }
 		ClosableWindow(const ClosableWindow &) = delete;

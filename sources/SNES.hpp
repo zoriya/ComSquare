@@ -28,7 +28,6 @@ namespace ComSquare
 		std::unique_ptr<Debugger::MemoryViewer> _ramViewer;
 		//! @brief The window that allow the user to view the cartridge's header.
 		std::unique_ptr<Debugger::HeaderViewer> _headerViewer;
-//		std::unique_ptr<Debugger:Window
 #endif
 		//! @brief The memory bus that map addresses to components.
 		std::shared_ptr<Memory::MemoryBus> _bus;
@@ -74,7 +73,7 @@ namespace ComSquare
 
 		//! @brief Create all the components using a common memory bus for all of them.
 		SNES(const std::string &ramPath, Renderer::IRenderer &renderer);
-		SNES(const SNES &) = default;
+		SNES(const SNES &) = delete;
 		SNES &operator=(const SNES &) = delete;
 		~SNES() = default;
 	};

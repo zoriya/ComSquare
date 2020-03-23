@@ -573,6 +573,9 @@ namespace ComSquare::CPU
 		//! @brief Reset interrupt - Called on boot and when the reset button is pressed.
 		virtual void RESB();
 
+		//! @brief Return true if the CPU is overloaded with debugging features.
+		virtual bool isDebugger();
+
 		//! @brief Change the memory bus used by the CPU.
 		void setMemoryBus(std::shared_ptr<Memory::MemoryBus> bus);
 	};

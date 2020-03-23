@@ -16,6 +16,7 @@ namespace ComSquare::Debugger
 	//! @brief A custom CPU with a window that show it's registers and the disassembly.
 	class CPUDebug : public CPU::CPU, public QObject {
 	private:
+		//! @brief The QT window for this debugger.
 		ClosableWindow<CPUDebug> *_window;
 		//! @brief A widget that contain the whole UI.
 		Ui::CPUView _ui;
@@ -67,7 +68,13 @@ namespace ComSquare::Debugger
 		explicit CPUDebug(ComSquare::CPU::CPU &cpu, SNES &snes);
 		CPUDebug(const CPUDebug &) = delete;
 		CPUDebug &operator=(const CPUDebug &) = delete;
-		~CPUDebug() override;
+		~CPUDebug() override = default;
+
+		//! @brief Return true if the CPU is overloaded with debugging features.
+		bool isDebugger() override;
+
+		//! @brief Focus the debugger's window.
+		void focus();
 
 		//! @brief Override the basic cpu's update to allow pausing of the CPU only.
 		unsigned update() override;

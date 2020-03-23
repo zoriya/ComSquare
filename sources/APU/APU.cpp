@@ -18,6 +18,11 @@ namespace ComSquare::APU
 		this->reset();
 	}
 
+	bool APU::isDebugger()
+	{
+		return false;
+	}
+
 	uint8_t APU::_internalRead(uint24_t addr) {
 		switch (addr) {
 		case 0x0000 ... 0x00EF:

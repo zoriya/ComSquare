@@ -13,7 +13,10 @@ using namespace ComSquare::CPU;
 namespace ComSquare::Debugger
 {
 	CPUDebug::CPUDebug(CPU &basicCPU, SNES &snes)
-		: CPU(basicCPU), _window(new ClosableWindow(this, &CPUDebug::disableDebugger)), _ui(), _snes(snes)
+		: CPU(basicCPU),
+		_window(new ClosableWindow(*this, &CPUDebug::disableDebugger)),
+		_ui(),
+		_snes(snes)
 	{
 		this->_window->setContextMenuPolicy(Qt::NoContextMenu);
 		this->_window->setAttribute(Qt::WA_QuitOnClose, false);
@@ -27,14 +30,14 @@ namespace ComSquare::Debugger
 		this->_updateRegistersPanel();
 	}
 
+	bool CPUDebug::isDebugger()
+	{
+		return true;
+	}
+
 	void CPUDebug::disableDebugger()
 	{
 		this->_snes.disableCPUDebugging();
-	}
-
-	CPUDebug::~CPUDebug()
-	{
-		std::cout << "Destructor" << std::endl;
 	}
 
 	unsigned CPUDebug::update()
@@ -389,5 +392,10 @@ namespace ComSquare::Debugger
 	{
 		CPU::RESB();
 		this->_updateRegistersPanel();
+	}
+
+	void CPUDebug::focus()
+	{
+		this->_window->activateWindow();
 	}
 }

@@ -54,6 +54,9 @@ namespace ComSquare
 			//! @param addr The address you want to look for.
 			//! @return The components responsible for the address param or nullptr if none was found.
 			std::shared_ptr<IMemory> getAccessor(uint24_t addr);
+
+			//! @brief Return true if the Bus is overloaded with debugging features.
+			virtual bool isDebugger();
 		};
 	}
 }

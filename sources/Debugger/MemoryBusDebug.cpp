@@ -3,17 +3,35 @@
 //
 
 #include "MemoryBusDebug.hpp"
+#include "../SNES.hpp"
 
 namespace ComSquare::Debugger
 {
-	MemoryBusDebug::MemoryBusDebug(const ComSquare::Memory::MemoryBus &bus)
-		: MemoryBus(bus), QMainWindow(), _ui()
+	MemoryBusDebug::MemoryBusDebug(SNES &snes, const Memory::MemoryBus &bus)
+		: MemoryBus(bus),
+		_window(new ClosableWindow(*this, &MemoryBusDebug::disableViewer)),
+		_snes(snes),
+		_ui()
 	{
-		this->setContextMenuPolicy(Qt::NoContextMenu);
-		this->setAttribute(Qt::WA_QuitOnClose, false);
+		this->_window->setContextMenuPolicy(Qt::NoContextMenu);
+		this->_window->setAttribute(Qt::WA_QuitOnClose, false);
 
-		this->_ui.setupUi(this);
-//		QMainWindow::connect(this->_ui.actionPause, &QAction::triggered, this, &CPUDebug::pause);
-		this->show();
+		this->_ui.setupUi(this->_window);
+		this->_window->show();
+	}
+
+	void MemoryBusDebug::disableViewer()
+	{
+		this->_snes.disableMemoryBusDebugging();
+	}
+
+	void MemoryBusDebug::focus()
+	{
+		this->_window->activateWindow();
+	}
+
+	bool MemoryBusDebug::isDebugger()
+	{
+		return true;
 	}
 }

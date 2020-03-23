@@ -273,6 +273,9 @@ namespace ComSquare::APU
 
 		//! @brief This function is executed when the SNES is powered on or the reset button is pushed.
 		void reset();
+
+		//! @brief Return true if the CPU is overloaded with debugging features.
+		virtual bool isDebugger();
 	};
 }
 

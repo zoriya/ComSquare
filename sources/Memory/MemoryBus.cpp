@@ -97,4 +97,9 @@ namespace ComSquare::Memory
 		}
 		// TODO should implement HiRom.
 	}
+
+	bool MemoryBus::isDebugger()
+	{
+		return false;
+	}
 }
