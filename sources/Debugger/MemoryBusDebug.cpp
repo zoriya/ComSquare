@@ -101,6 +101,11 @@ namespace ComSquare::Debugger
 			this->_proxy.refresh();
 		});
 
+		QMainWindow::connect(this->_ui.clearBtn, &QPushButton::pressed, [this]() {
+			this->_model.clearLogs();
+			this->_proxy.refresh();
+		});
+
 		this->_window->show();
 	}
 
@@ -204,7 +209,7 @@ QVariant BusLogModel::headerData(int section, Qt::Orientation orientation, int r
 	}
 }
 
-void BusLogModel::log(ComSquare::Debugger::BusLog log)
+void BusLogModel::log(const ComSquare::Debugger::BusLog& log)
 {
 	int row = this->_logs.size();
 	this->beginInsertRows(QModelIndex(), row, row);
@@ -218,9 +223,16 @@ ComSquare::Debugger::BusLog BusLogModel::getLogAt(int index)
 	return this->_logs[index];
 }
 
+void BusLogModel::clearLogs()
+{
+	this->beginResetModel();
+	this->_logs.clear();
+	this->endResetModel();
+}
+
 BusLoggerProxy::BusLoggerProxy(BusLogModel &parent) : QSortFilterProxyModel(), _parent(parent) {}
 
-bool BusLoggerProxy::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
+bool BusLoggerProxy::filterAcceptsRow(int sourceRow, const QModelIndex &) const
 {
 	ComSquare::Debugger::BusLog log = this->_parent.getLogAt(sourceRow);
 

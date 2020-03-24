@@ -56,10 +56,12 @@ public:
 	const int column = 6;
 
 	//! @brief Add a log to the model
-	void log(ComSquare::Debugger::BusLog log);
+	void log(const ComSquare::Debugger::BusLog& log);
 
 	//! @brief Get a log at an index.
 	ComSquare::Debugger::BusLog getLogAt(int index);
+	//! @brief Clear all the logs
+	void clearLogs();
 
 	//! @brief The number of row the table has.
 	int rowCount(const QModelIndex &parent) const override;
