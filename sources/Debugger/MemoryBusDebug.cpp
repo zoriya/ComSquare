@@ -5,6 +5,8 @@
 #include "MemoryBusDebug.hpp"
 #include "../SNES.hpp"
 #include "../Utility/Utility.hpp"
+#include "../Exceptions/InvalidAction.hpp"
+#include "../Exceptions/InvalidAddress.hpp"
 
 namespace ComSquare::Debugger
 {
@@ -46,13 +48,29 @@ namespace ComSquare::Debugger
 
 	uint8_t MemoryBusDebug::read(uint24_t addr)
 	{
+		auto accessor = this->getAccessor(addr);
+		uint8_t value = accessor->read(addr - accessor->getStart());
+		this->_model.log(BusLog(false, addr, accessor, value, value));
+
 		return MemoryBus::read(addr);
 	}
 
 	void MemoryBusDebug::write(uint24_t addr, uint8_t data)
 	{
+		auto accessor = this->getAccessor(addr);
+		uint8_t value;
+		try {
+			value = accessor->read(addr - accessor->getStart());
+		} catch (InvalidAddress &) {
+			value = 0;
+		}
+		this->_model.log(BusLog(true, addr, accessor, value, data));
 		MemoryBus::write(addr, data);
 	}
+
+	BusLog::BusLog(bool write, uint24_t addr, std::shared_ptr<Memory::AMemory> &accessor, uint8_t oldData, uint8_t newData) :
+		write(write), addr(addr), accessor(accessor), oldData(oldData), newData(newData)
+	{}
 }
 
 int BusLogModel::rowCount(const QModelIndex &) const
@@ -78,9 +96,9 @@ QVariant BusLogModel::data(const QModelIndex &index, int role) const
 	case 1:
 		return QString(ComSquare::Utility::to_hex(log.addr).c_str());
 	case 2:
-		return QString(log.accessor.getName().c_str());
+		return QString(log.accessor->getName().c_str());
 	case 3:
-		return QString(log.accessor.getValueName(log.addr - log.accessor.getStart()).c_str());
+		return QString(log.accessor->getValueName(log.addr - log.accessor->getStart()).c_str());
 	case 4:
 		return QString(ComSquare::Utility::to_hex(log.oldData).c_str());
 	case 5:
@@ -110,4 +128,11 @@ QVariant BusLogModel::headerData(int section, Qt::Orientation orientation, int r
 	default:
 		return QString("");
 	}
+}
+
+void BusLogModel::log(ComSquare::Debugger::BusLog log)
+{
+	this->_logs.push_back(log);
+	this->insertRow(this->_logs.size());
+	// The row may be inserted but items are not displayed.
 }

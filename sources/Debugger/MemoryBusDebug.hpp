@@ -14,9 +14,11 @@ namespace ComSquare::Debugger
 {
 	//! @brief The struct used to represent memory bus logs.
 	struct BusLog {
+		BusLog(bool write, uint24_t addr, std::shared_ptr<Memory::AMemory> &accessor, uint8_t oldData, uint8_t newData);
+
 		bool write;
 		uint24_t addr;
-		Memory::AMemory &accessor;
+		std::shared_ptr<Memory::AMemory> &accessor;
 		uint8_t oldData;
 		uint8_t newData;
 	};
@@ -35,6 +37,9 @@ public:
 	BusLogModel(const BusLogModel &) = delete;
 	const BusLogModel &operator=(const BusLogModel &) = delete;
 	~BusLogModel() override = default;
+
+	//! @brief Add a log to the model
+	void log(ComSquare::Debugger::BusLog log);
 
 	//! @brief The number of row the table has.
 	int rowCount(const QModelIndex &parent) const override;
@@ -60,9 +65,6 @@ namespace ComSquare::Debugger
 		Ui::BusView _ui;
 		//! @brief The Log visualizer model for QT.
 		BusLogModel _model;
-
-		//! @brief Log a read/write to the debugger.
-//		void log()
 	public:
 		//! @brief Called when the window is closed. Turn off the debugger and revert to a basic CPU.
 		void disableViewer();
