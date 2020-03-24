@@ -13,7 +13,7 @@ namespace ComSquare::APU
 {
 	APU::APU(std::shared_ptr<MemoryMap> &map) :
 		_map(map),
-		_dsp(new DSP::DSP)
+		_dsp(new DSP::DSP())
 	{
 		this->reset();
 	}
@@ -359,10 +359,10 @@ namespace ComSquare::APU
 	}
 
 	MemoryMap::MemoryMap() :
-		Page0(0x00F0),
-		Page1(0x0100),
-		Memory(0xFDC0),
-	    IPL(0x0040)
+		Page0(0x00F0, "APU's Page 0"),
+		Page1(0x0100, "APU's Page 1"),
+		Memory(0xFDC0, "APU's Ram"),
+	    IPL(0x0040, "IPL Rom")
 	{
 
 	}

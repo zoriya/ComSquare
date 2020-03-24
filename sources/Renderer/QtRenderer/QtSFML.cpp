@@ -33,12 +33,12 @@ namespace ComSquare::Renderer
 		//TODO implement rom openning from this menu.
 		(void)file;
 
-		QMenu *game = this->_window.menuBar()->addMenu("Game");
+		QMenu *game = this->_window.menuBar()->addMenu("&Game");
 		QAction *reset = new QAction("Reset", &this->_window);
 		QMainWindow::connect(reset, &QAction::triggered, this->_sfWidget.get(), &QtFullSFML::reset);
 		game->addAction(reset);
 
-		QMenu *debugger = this->_window.menuBar()->addMenu("Debugger");
+		QMenu *debugger = this->_window.menuBar()->addMenu("&Debugger");
 		QAction *cpuDebugger = new QAction("CPU's Debugger", &this->_window);
 		cpuDebugger->setShortcut(Qt::Key_F1);
 		QMainWindow::connect(cpuDebugger, &QAction::triggered, this->_sfWidget.get(), &QtFullSFML::enableDebugCPU);

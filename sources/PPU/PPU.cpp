@@ -244,4 +244,9 @@ namespace ComSquare::PPU
 		}
 		this->_renderer.drawScreen();
 	}
+
+	std::string PPU::getName()
+	{
+		return "PPU";
+	}
 }

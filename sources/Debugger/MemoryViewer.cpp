@@ -149,10 +149,10 @@ namespace ComSquare::Debugger
 
 	unsigned MemoryViewer::switchToAddrTab(uint24_t addr)
 	{
-		std::shared_ptr<Memory::IMemory> accessor = this->_bus.getAccessor(addr);
+		std::shared_ptr<Memory::AMemory> accessor = this->_bus.getAccessor(addr);
 		if (!accessor)
 			throw InvalidAddress("Memory viewer switch to address", addr);
-		Memory::IMemory *ptr;
+		Memory::AMemory *ptr;
 		if (accessor->isMirror())
 			ptr = accessor->getMirrored().get();
 		else

@@ -10,6 +10,20 @@
 #define class struct
 
 #include "../sources/Memory/MemoryBus.hpp"
-std::pair<std::shared_ptr<ComSquare::Memory::MemoryBus>, ComSquare::SNES> Init();
+#include <criterion/criterion.h>
+#include <iostream>
+#include <zconf.h>
+#include "tests.hpp"
+#include "../sources/Renderer/NoRenderer.hpp"
+#include "../sources/SNES.hpp"
+
+#define Init() \
+	Renderer::NoRenderer norenderer(0, 0, 0); \
+	SNES snes("../tests/my_cartridge", norenderer); \
+	snes.cartridge->_size = 100; \
+	snes.cartridge->_data = new uint8_t[snes.cartridge->_size]; \
+	snes.cartridge->header.mappingMode = Cartridge::LoRom; \
+	snes.sram->_size = 100; \
+	snes.sram->_data = new uint8_t[snes.cartridge->_size];
 
 #endif //COMSQUARE_TESTS_HPP

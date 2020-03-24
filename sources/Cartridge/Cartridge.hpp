@@ -6,9 +6,9 @@
 #define COMSQUARE_CARTRIDGE_HPP
 
 #include <string>
-#include "../Memory/IMemory.hpp"
+#include "../Memory/AMemory.hpp"
 #include "../Models/Int24.hpp"
-#include "../Memory/IRectangleMemory.hpp"
+#include "../Memory/ARectangleMemory.hpp"
 #include "InterruptVectors.hpp"
 #include "../Ram/Ram.hpp"
 

@@ -5,7 +5,7 @@
 #ifndef COMSQUARE_CPU_HPP
 #define COMSQUARE_CPU_HPP
 
-#include "../Memory/IMemory.hpp"
+#include "../Memory/AMemory.hpp"
 #include "../Memory/MemoryBus.hpp"
 #include "../Models/Int24.hpp"
 #include "../Cartridge/Cartridge.hpp"
@@ -363,7 +363,7 @@ namespace ComSquare::CPU
 	};
 
 	//! @brief The main CPU
-	class CPU : public Memory::IMemory {
+	class CPU : public Memory::AMemory {
 	protected:
 		//! @brief All the registers of the CPU
 		Registers _registers{};
@@ -569,6 +569,9 @@ namespace ComSquare::CPU
 		//! @param data The new value of the register.
 		//! @throw InvalidAddress will be thrown if the address is more than $1F (the number of register).
 		void write(uint24_t addr, uint8_t data) override;
+
+		//! @brief Get the name of this accessor (used for debug purpose)
+		std::string getName() override;
 
 		//! @brief Reset interrupt - Called on boot and when the reset button is pressed.
 		virtual void RESB();

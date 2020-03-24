@@ -3,13 +3,15 @@
 //
 
 #include <cstring>
+#include <utility>
 #include "Ram.hpp"
 #include "../Exceptions/InvalidAddress.hpp"
 
 namespace ComSquare::Ram
 {
-	Ram::Ram(size_t size)
-		: _size(size)
+	Ram::Ram(size_t size, std::string ramName)
+		: _size(size),
+		_ramName(std::move(ramName))
 	{
 		if (size == 0)
 			this->_data = nullptr;
@@ -50,5 +52,10 @@ namespace ComSquare::Ram
 	size_t Ram::getSize()
 	{
 		return this->_size;
+	}
+
+	std::string Ram::getName()
+	{
+		return this->_ramName;
 	}
 }

@@ -7,7 +7,7 @@
 
 #include <memory>
 #include "DSP/DSP.hpp"
-#include "../Memory/IMemory.hpp"
+#include "../Memory/AMemory.hpp"
 #include "../Ram/Ram.hpp"
 
 namespace ComSquare::APU
@@ -131,7 +131,7 @@ namespace ComSquare::APU
 		~MemoryMap() = default;
 	};
 
-	class APU : public Memory::IMemory {
+	class APU : public Memory::AMemory {
 	protected:
 		//! @brief All the registers of the APU CPU
 		Registers _registers{};
@@ -154,6 +154,9 @@ namespace ComSquare::APU
 		//! @param data The new value of the register.
 		//! @throw InvalidAddress will be thrown if the address is more than $FFFF (the number of register).
 		void _internalWrite(uint24_t addr, uint8_t data);
+
+		//! @brief Get the name of this accessor (used for debug purpose)
+		std::string getName() override;
 
 		//! @brief Current state of APU CPU
 		StateMode _state = Running;

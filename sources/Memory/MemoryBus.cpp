@@ -11,9 +11,9 @@
 
 namespace ComSquare::Memory
 {
-	std::shared_ptr<IMemory> MemoryBus::getAccessor(uint24_t addr)
+	std::shared_ptr<AMemory> MemoryBus::getAccessor(uint24_t addr)
 	{
-		auto it = std::find_if(this->_memoryAccessors.begin(), this->_memoryAccessors.end(), [addr](std::shared_ptr<IMemory> &accessor)
+		auto it = std::find_if(this->_memoryAccessors.begin(), this->_memoryAccessors.end(), [addr](std::shared_ptr<AMemory> &accessor)
 		{
 			return accessor->hasMemoryAt(addr);
 		});
@@ -24,7 +24,7 @@ namespace ComSquare::Memory
 
 	uint8_t MemoryBus::read(uint24_t addr)
 	{
-		std::shared_ptr<IMemory> handler = this->getAccessor(addr);
+		std::shared_ptr<AMemory> handler = this->getAccessor(addr);
 
 		if (!handler) {
 			std::cout << "Unknown memory accessor for address " << std::hex << addr << ". Using open bus." << std::endl;
@@ -37,7 +37,7 @@ namespace ComSquare::Memory
 
 	void MemoryBus::write(uint24_t addr, uint8_t data)
 	{
-		std::shared_ptr<IMemory> handler = this->getAccessor(addr);
+		std::shared_ptr<AMemory> handler = this->getAccessor(addr);
 
 		if (!handler) {
 			std::cout << "Unknown memory accessor for address " << std::hex << addr << ". Warning, it was a write." << std::endl;
