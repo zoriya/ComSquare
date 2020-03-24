@@ -22,7 +22,7 @@ namespace ComSquare::Memory
 		return *it;
 	}
 
-	uint8_t MemoryBus::read(uint24_t addr)
+	uint8_t MemoryBus::read(uint24_t addr, bool)
 	{
 		std::shared_ptr<AMemory> handler = this->getAccessor(addr);
 

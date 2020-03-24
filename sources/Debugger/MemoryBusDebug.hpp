@@ -120,7 +120,7 @@ namespace ComSquare::Debugger
 		//! @brief Read data at a global address and log it to the debugger.
 		//! @param addr The address to read from.
 		//! @return The value that the component returned for this address. If the address was mapped to ram, it simply returned the value. If the address was mapped to a register the component returned the register.
-		uint8_t read(uint24_t addr) override;
+		uint8_t read(uint24_t addr, bool silence = false) override;
 
 		//! @brief Write a data to a global address and log it to the debugger.
 		//! @param addr The address to write to.

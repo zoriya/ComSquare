@@ -48,12 +48,13 @@ namespace ComSquare::Debugger
 		return true;
 	}
 
-	uint8_t MemoryBusDebug::read(uint24_t addr)
+	uint8_t MemoryBusDebug::read(uint24_t addr, bool silence)
 	{
-		auto accessor = this->getAccessor(addr);
-		uint8_t value = accessor->read(addr - accessor->getStart());
-		this->_model.log(BusLog(false, addr, accessor, value, value));
-
+		if (!silence) {
+			auto accessor = this->getAccessor(addr);
+			uint8_t value = accessor->read(addr - accessor->getStart());
+			this->_model.log(BusLog(false, addr, accessor, value, value));
+		}
 		return MemoryBus::read(addr);
 	}
 
@@ -134,10 +135,11 @@ QVariant BusLogModel::headerData(int section, Qt::Orientation orientation, int r
 
 void BusLogModel::log(ComSquare::Debugger::BusLog log)
 {
-	this->_logs.push_back(log);
 	int row = this->_logs.size();
+	this->beginInsertRows(QModelIndex(), row, row);
+	this->_logs.push_back(log);
 	this->insertRow(row);
-	emit this->layoutChanged();
+	this->endInsertRows();
 }
 
 ComSquare::Debugger::BusLog BusLogModel::getLogAt(int index)
@@ -151,7 +153,7 @@ bool BusLoggerProxy::filterAcceptsRow(int sourceRow, const QModelIndex &sourcePa
 {
 	ComSquare::Debugger::BusLog log = this->_parent.getLogAt(sourceRow);
 
-	if (log.accessor && log.accessor->getName() == "Cartridge")
-		return false;
+//	if (log.accessor && log.accessor->getName() == "Cartridge")
+//		return false;
 	return QSortFilterProxyModel::filterAcceptsRow(sourceRow, sourceParent);
 }
