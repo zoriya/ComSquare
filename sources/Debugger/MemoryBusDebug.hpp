@@ -84,7 +84,10 @@ public:
 	//! @brief Currently enabled filters, index 0 is for reads, index 1 for writes.
 	ComSquare::Debugger::BusLoggerFilters filters[2] = {ComSquare::Debugger::BusLoggerFilters(), ComSquare::Debugger::BusLoggerFilters()};
 
-	BusLoggerProxy(BusLogModel &parent);
+	//! @brief Refresh the view after a change of filters.
+	void refresh();
+
+	explicit BusLoggerProxy(BusLogModel &parent);
 	BusLoggerProxy(const BusLoggerProxy &) = delete;
 	const BusLoggerProxy &operator=(const BusLoggerProxy &) = delete;
 	~BusLoggerProxy() override = default;

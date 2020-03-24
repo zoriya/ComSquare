@@ -33,55 +33,72 @@ namespace ComSquare::Debugger
 
 		QMainWindow::connect(this->_ui.fromAPU, &QCheckBox::toggled, [this](bool checked) {
 			this->_proxy.filters[0].apu = checked;
+			this->_proxy.refresh();
 		});
 		QMainWindow::connect(this->_ui.fromCPU, &QCheckBox::toggled, [this](bool checked) {
 			this->_proxy.filters[0].cpu = checked;
+			this->_proxy.refresh();
 		});
 		QMainWindow::connect(this->_ui.fromOAM, &QCheckBox::toggled, [this](bool checked) {
 			this->_proxy.filters[0].oamram = checked;
+			this->_proxy.refresh();
 		});
 		QMainWindow::connect(this->_ui.fromPPU, &QCheckBox::toggled, [this](bool checked) {
 			this->_proxy.filters[0].ppu = checked;
+			this->_proxy.refresh();
 		});
 		QMainWindow::connect(this->_ui.fromROM, &QCheckBox::toggled, [this](bool checked) {
 			this->_proxy.filters[0].rom = checked;
+			this->_proxy.refresh();
 		});
 		QMainWindow::connect(this->_ui.fromSRAM, &QCheckBox::toggled, [this](bool checked) {
 			this->_proxy.filters[0].sram = checked;
+			this->_proxy.refresh();
 		});
 		QMainWindow::connect(this->_ui.fromVRAM, &QCheckBox::toggled, [this](bool checked) {
 			this->_proxy.filters[0].vram = checked;
+			this->_proxy.refresh();
 		});
 		QMainWindow::connect(this->_ui.fromWRAM, &QCheckBox::toggled, [this](bool checked) {
 			this->_proxy.filters[0].wram = checked;
+			this->_proxy.refresh();
 		});
 		QMainWindow::connect(this->_ui.fromCG, &QCheckBox::toggled, [this](bool checked) {
 			this->_proxy.filters[0].cgram = checked;
+			this->_proxy.refresh();
 		});
 
 		QMainWindow::connect(this->_ui.toAPU, &QCheckBox::toggled, [this](bool checked) {
 			this->_proxy.filters[1].apu = checked;
+			this->_proxy.refresh();
 		});
 		QMainWindow::connect(this->_ui.toCPU, &QCheckBox::toggled, [this](bool checked) {
 			this->_proxy.filters[1].cpu = checked;
+			this->_proxy.refresh();
 		});
 		QMainWindow::connect(this->_ui.toOAM, &QCheckBox::toggled, [this](bool checked) {
 			this->_proxy.filters[1].oamram = checked;
+			this->_proxy.refresh();
 		});
 		QMainWindow::connect(this->_ui.toPPU, &QCheckBox::toggled, [this](bool checked) {
 			this->_proxy.filters[1].ppu = checked;
+			this->_proxy.refresh();
 		});
 		QMainWindow::connect(this->_ui.toSRAM, &QCheckBox::toggled, [this](bool checked) {
 			this->_proxy.filters[1].sram = checked;
+			this->_proxy.refresh();
 		});
 		QMainWindow::connect(this->_ui.toVRAM, &QCheckBox::toggled, [this](bool checked) {
 			this->_proxy.filters[1].vram = checked;
+			this->_proxy.refresh();
 		});
 		QMainWindow::connect(this->_ui.toWRAM, &QCheckBox::toggled, [this](bool checked) {
 			this->_proxy.filters[1].wram = checked;
+			this->_proxy.refresh();
 		});
 		QMainWindow::connect(this->_ui.toCG, &QCheckBox::toggled, [this](bool checked) {
 			this->_proxy.filters[1].cgram = checked;
+			this->_proxy.refresh();
 		});
 
 		this->_window->show();
@@ -230,4 +247,9 @@ bool BusLoggerProxy::filterAcceptsRow(int sourceRow, const QModelIndex &sourcePa
 	case ComSquare::Component::SRam:
 		return this->filters[log.write].sram;
 	}
+}
+
+void BusLoggerProxy::refresh()
+{
+	this->invalidateFilter();
 }
