@@ -15,11 +15,13 @@ namespace ComSquare::Ram
 		uint8_t *_data;
 		//! @brief The size of the ram (iny bytes).
 		size_t _size;
+		//! @brief An id identifying the type of memory this is (for the debugger)
+		Component _ramType;
 		//! @brief The name of this ram.
 		std::string _ramName;
 	public:
 		//! @brief Create a ram of a given size in bytes.
-		explicit Ram(size_t size, std::string ramName);
+		explicit Ram(size_t size, Component, std::string ramName);
 		//! @brief The ram can't be copied.
 		Ram(const Ram &) = delete;
 		//! @brief The ram can't be assigned.
@@ -45,6 +47,9 @@ namespace ComSquare::Ram
 
 		//! @brief Get the name of this accessor (used for debug purpose)
 		std::string getName() override;
+
+		//! @brief Get the component of this accessor (used for debug purpose)
+		Component getComponent() override;
 
 		//! @brief Get the size of the ram in bytes.
 		size_t getSize();

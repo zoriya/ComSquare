@@ -47,4 +47,9 @@ namespace ComSquare::Memory
 	{
 		return this->_initial->getName();
 	}
+
+	Component RectangleShadow::getComponent()
+	{
+		return this->_initial->getComponent();
+	}
 }

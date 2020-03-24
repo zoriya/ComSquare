@@ -81,10 +81,8 @@ protected:
 	//! @brief Function that filter logs.
 	bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
 public:
-	//! @brief Currently enabled read filters
-	ComSquare::Debugger::BusLoggerFilters readFilters = ComSquare::Debugger::BusLoggerFilters();
-	//! @brief Currently enabled write filters
-	ComSquare::Debugger::BusLoggerFilters writeFilters = ComSquare::Debugger::BusLoggerFilters();
+	//! @brief Currently enabled filters, index 0 is for reads, index 1 for writes.
+	ComSquare::Debugger::BusLoggerFilters filters[2] = {ComSquare::Debugger::BusLoggerFilters(), ComSquare::Debugger::BusLoggerFilters()};
 
 	BusLoggerProxy(BusLogModel &parent);
 	BusLoggerProxy(const BusLoggerProxy &) = delete;

@@ -17,8 +17,8 @@ namespace ComSquare
 	SNES::SNES(const std::string &romPath, Renderer::IRenderer &renderer) :
 		_bus(std::make_shared<Memory::MemoryBus>()),
 		cartridge(new Cartridge::Cartridge(romPath)),
-		wram(new Ram::Ram(16384, "WRam")),
-		sram(new Ram::Ram(this->cartridge->header.sramSize, "SRam")),
+		wram(new Ram::Ram(16384, WRam, "WRam")),
+		sram(new Ram::Ram(this->cartridge->header.sramSize, SRam, "SRam")),
 		apuRam(new APU::MemoryMap()),
 		cpu(new CPU::CPU(this->_bus, cartridge->header)),
 		ppu(new PPU::PPU(renderer)),

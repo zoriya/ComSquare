@@ -143,6 +143,9 @@ namespace ComSquare::APU::DSP
 
 		//! @brief Get the name of this accessor (used for debug purpose)
 		std::string getName() override;
+
+		//! @brief Get the component of this accessor (used for debug purpose)
+		Component getComponent() override;
 	};
 }
 

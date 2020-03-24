@@ -158,6 +158,9 @@ namespace ComSquare::APU
 		//! @brief Get the name of this accessor (used for debug purpose)
 		std::string getName() override;
 
+		//! @brief Get the component of this accessor (used for debug purpose)
+		Component getComponent() override;
+
 		//! @brief Current state of APU CPU
 		StateMode _state = Running;
 

@@ -593,4 +593,9 @@ namespace ComSquare::APU::DSP
 	{
 		return "DSP";
 	}
+
+	Component DSP::getComponent()
+	{
+		return Apu;
+	}
 }

@@ -23,6 +23,16 @@ namespace ComSquare::APU
 		return false;
 	}
 
+	std::string APU::getName()
+	{
+		return "APU";
+	}
+
+	Component APU::getComponent()
+	{
+		return Apu;
+	}
+
 	uint8_t APU::_internalRead(uint24_t addr) {
 		switch (addr) {
 		case 0x0000 ... 0x00EF:
@@ -359,10 +369,10 @@ namespace ComSquare::APU
 	}
 
 	MemoryMap::MemoryMap() :
-		Page0(0x00F0, "APU's Page 0"),
-		Page1(0x0100, "APU's Page 1"),
-		Memory(0xFDC0, "APU's Ram"),
-	    IPL(0x0040, "IPL Rom")
+		Page0(0x00F0, Apu, "APU's Page 0"),
+		Page1(0x0100, Apu, "APU's Page 1"),
+		Memory(0xFDC0, Apu, "APU's Ram"),
+	    IPL(0x0040, Apu, "IPL Rom")
 	{
 
 	}

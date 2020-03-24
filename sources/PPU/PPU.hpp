@@ -566,6 +566,8 @@ namespace ComSquare::PPU
 		void write(uint24_t addr, uint8_t data) override;
 		//! @brief Get the name of this accessor (used for debug purpose)
 		std::string getName() override;
+		//! @brief Get the component of this accessor (used for debug purpose)
+		Component getComponent() override;
 
 		//! @brief Update the PPU of n cycles.
 		//! @param The number of cycles to update.

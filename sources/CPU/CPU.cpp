@@ -413,4 +413,14 @@ namespace ComSquare::CPU
 	{
 		return this->_bus->read(++this->_registers.s) + (this->_bus->read(++this->_registers.s) << 8u);
 	}
+
+	std::string CPU::getName()
+	{
+		return "CPU";
+	}
+
+	Component CPU::getComponent()
+	{
+		return Cpu;
+	}
 }

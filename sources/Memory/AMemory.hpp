@@ -10,6 +10,7 @@
 #include <vector>
 #include <memory>
 #include "../Models/Int24.hpp"
+#include "../Models/Components.hpp"
 
 namespace ComSquare::Memory
 {
@@ -48,6 +49,8 @@ namespace ComSquare::Memory
 		virtual bool isMirror();
 		//! @brief Get the name of this accessor (used for debug purpose)
 		virtual std::string getName() = 0;
+		//! @brief Get the component of this accessor (used for debug purpose)
+		virtual Component getComponent() = 0;
 		//! @brief Get the name of the data at the address
 		//! @param addr The address (in local space)
 		virtual std::string getValueName(uint24_t addr);

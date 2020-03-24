@@ -52,9 +52,4 @@ namespace ComSquare::APU
 		this->RET();
 		return 6;
 	}
-
-	std::string APU::getName()
-	{
-		return "APU";
-	}
 }

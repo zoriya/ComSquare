@@ -307,9 +307,4 @@ namespace ComSquare::CPU
 	{
 		this->_registers.pac = value;
 	}
-
-	std::string CPU::getName()
-	{
-		return "CPU";
-	}
 }

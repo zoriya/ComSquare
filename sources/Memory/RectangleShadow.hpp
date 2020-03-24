@@ -39,6 +39,8 @@ namespace ComSquare::Memory
 		bool isMirror() override;
 		//! @brief Get the name of this accessor (used for debug purpose)
 		std::string getName() override;
+		//! @brief Get the component of this accessor (used for debug purpose)
+		Component getComponent() override;
 		//! @brief Return the memory accessor this accessor mirror if any
 		//! @return nullptr if isMirror is false, the source otherwise.
 		std::shared_ptr<AMemory> getMirrored() override;

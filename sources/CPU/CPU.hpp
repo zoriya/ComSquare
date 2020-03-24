@@ -9,6 +9,7 @@
 #include "../Memory/MemoryBus.hpp"
 #include "../Models/Int24.hpp"
 #include "../Cartridge/Cartridge.hpp"
+#include "../Memory/AMemory.hpp"
 
 namespace ComSquare::CPU
 {
@@ -572,6 +573,9 @@ namespace ComSquare::CPU
 
 		//! @brief Get the name of this accessor (used for debug purpose)
 		std::string getName() override;
+
+		//! @brief Get the component of this accessor (used for debug purpose)
+		Component getComponent() override;
 
 		//! @brief Reset interrupt - Called on boot and when the reset button is pressed.
 		virtual void RESB();

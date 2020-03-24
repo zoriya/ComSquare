@@ -249,4 +249,9 @@ namespace ComSquare::PPU
 	{
 		return "PPU";
 	}
+
+	Component PPU::getComponent()
+	{
+		return Ppu;
+	}
 }
