@@ -18,7 +18,7 @@ namespace ComSquare::Debugger
 
 		bool write;
 		uint24_t addr;
-		std::shared_ptr<Memory::AMemory> &accessor;
+		std::shared_ptr<Memory::AMemory> accessor;
 		uint8_t oldData;
 		uint8_t newData;
 	};
@@ -32,6 +32,8 @@ Q_OBJECT
 private:
 	//! @brief The logs to display.
 	std::vector<ComSquare::Debugger::BusLog> _logs;
+	//! @brief The number of column;
+	const int _columnCount = 6;
 public:
 	BusLogModel() = default;
 	BusLogModel(const BusLogModel &) = delete;

@@ -68,8 +68,8 @@ namespace ComSquare::Debugger
 		MemoryBus::write(addr, data);
 	}
 
-	BusLog::BusLog(bool write, uint24_t addr, std::shared_ptr<Memory::AMemory> &accessor, uint8_t oldData, uint8_t newData) :
-		write(write), addr(addr), accessor(accessor), oldData(oldData), newData(newData)
+	BusLog::BusLog(bool _write, uint24_t _addr, std::shared_ptr<Memory::AMemory> &_accessor, uint8_t _oldData, uint8_t _newData) :
+		write(_write), addr(_addr), accessor(std::move(_accessor)), oldData(_oldData), newData(_newData)
 	{}
 }
 
@@ -80,7 +80,7 @@ int BusLogModel::rowCount(const QModelIndex &) const
 
 int BusLogModel::columnCount(const QModelIndex &) const
 {
-	return 5;
+	return this->_columnCount;
 }
 
 QVariant BusLogModel::data(const QModelIndex &index, int role) const
@@ -96,9 +96,9 @@ QVariant BusLogModel::data(const QModelIndex &index, int role) const
 	case 1:
 		return QString(ComSquare::Utility::to_hex(log.addr).c_str());
 	case 2:
-		return QString(log.accessor->getName().c_str());
+		return QString(log.accessor ? log.accessor->getName().c_str() : "Bus");
 	case 3:
-		return QString(log.accessor->getValueName(log.addr - log.accessor->getStart()).c_str());
+		return QString(log.accessor ? log.accessor->getValueName(log.addr - log.accessor->getStart()).c_str() : "Open bus");
 	case 4:
 		return QString(ComSquare::Utility::to_hex(log.oldData).c_str());
 	case 5:
@@ -133,6 +133,8 @@ QVariant BusLogModel::headerData(int section, Qt::Orientation orientation, int r
 void BusLogModel::log(ComSquare::Debugger::BusLog log)
 {
 	this->_logs.push_back(log);
-	this->insertRow(this->_logs.size());
+	int row = this->_logs.size();
+	this->insertRow(row);
+	emit this->layoutChanged();
 	// The row may be inserted but items are not displayed.
 }
