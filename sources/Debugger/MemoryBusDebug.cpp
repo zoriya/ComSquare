@@ -15,18 +15,20 @@ namespace ComSquare::Debugger
 		_window(new ClosableWindow(*this, &MemoryBusDebug::disableViewer)),
 		_snes(snes),
 		_ui(),
-		_model()
+		_model(),
+		_proxy(this->_model)
 	{
 		this->_window->setContextMenuPolicy(Qt::NoContextMenu);
 		this->_window->setAttribute(Qt::WA_QuitOnClose, false);
 		this->_window->setAttribute(Qt::WA_DeleteOnClose);
 
 		this->_ui.setupUi(this->_window);
-		this->_ui.log->setModel(&this->_model);
+		this->_proxy.setSourceModel(&this->_model);
+		this->_ui.log->setModel(&this->_proxy);
 		this->_ui.log->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
 		this->_ui.log->horizontalHeader()->setStretchLastSection(true);
 		this->_ui.log->horizontalHeader()->setSectionsMovable(true);
-		for (int i = 0; i < 5; i++)
+		for (int i = 0; i < this->_model.column; i++)
 			this->_ui.log->setColumnWidth(i, this->_ui.log->width());
 		this->_window->show();
 	}
@@ -80,7 +82,7 @@ int BusLogModel::rowCount(const QModelIndex &) const
 
 int BusLogModel::columnCount(const QModelIndex &) const
 {
-	return this->_columnCount;
+	return this->column;
 }
 
 QVariant BusLogModel::data(const QModelIndex &index, int role) const
@@ -136,5 +138,20 @@ void BusLogModel::log(ComSquare::Debugger::BusLog log)
 	int row = this->_logs.size();
 	this->insertRow(row);
 	emit this->layoutChanged();
-	// The row may be inserted but items are not displayed.
+}
+
+ComSquare::Debugger::BusLog BusLogModel::getLogAt(int index)
+{
+	return this->_logs[index];
+}
+
+BusLoggerProxy::BusLoggerProxy(BusLogModel &parent) : QSortFilterProxyModel(), _parent(parent) {}
+
+bool BusLoggerProxy::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
+{
+	ComSquare::Debugger::BusLog log = this->_parent.getLogAt(sourceRow);
+
+	if (log.accessor && log.accessor->getName() == "Cartridge")
+		return false;
+	return QSortFilterProxyModel::filterAcceptsRow(sourceRow, sourceParent);
 }

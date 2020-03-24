@@ -6,6 +6,7 @@
 #define COMSQUARE_MEMORYBUSDEBUG_HPP
 
 #include <QtWidgets/QMainWindow>
+#include <QtCore/QSortFilterProxyModel>
 #include "../Memory/MemoryBus.hpp"
 #include "../../ui/ui_busView.h"
 #include "ClosableWindow.hpp"
@@ -22,26 +23,43 @@ namespace ComSquare::Debugger
 		uint8_t oldData;
 		uint8_t newData;
 	};
+
+	//! @brief The struct representing filters of the memory bus's logger.
+	struct BusLoggerFilters {
+		bool cpu = true;
+		bool apu = true;
+		bool ppu = true;
+		bool rom = true;
+		bool wram = true;
+		bool sram = true;
+		bool vram = true;
+		bool oamram = true;
+		bool cgram = true;
+	};
 }
 
 
 //! @brief The qt model that bind the logs to the view.
 class BusLogModel : public QAbstractTableModel
 {
-Q_OBJECT
+	Q_OBJECT
 private:
 	//! @brief The logs to display.
 	std::vector<ComSquare::Debugger::BusLog> _logs;
-	//! @brief The number of column;
-	const int _columnCount = 6;
 public:
 	BusLogModel() = default;
 	BusLogModel(const BusLogModel &) = delete;
 	const BusLogModel &operator=(const BusLogModel &) = delete;
 	~BusLogModel() override = default;
 
+	//! @brief The number of column;
+	const int column = 6;
+
 	//! @brief Add a log to the model
 	void log(ComSquare::Debugger::BusLog log);
+
+	//! @brief Get a log at an index.
+	ComSquare::Debugger::BusLog getLogAt(int index);
 
 	//! @brief The number of row the table has.
 	int rowCount(const QModelIndex &parent) const override;
@@ -51,6 +69,27 @@ public:
 	QVariant data(const QModelIndex &index, int role) const override;
 	//! @brief Override the headers to use hex values.
 	QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
+};
+
+//! @brief A class to filter logs from the memory bus's debugger.
+class BusLoggerProxy : public QSortFilterProxyModel {
+	Q_OBJECT
+private:
+	//! @brief The parent to get the original data for filters
+	BusLogModel &_parent;
+protected:
+	//! @brief Function that filter logs.
+	bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
+public:
+	//! @brief Currently enabled read filters
+	ComSquare::Debugger::BusLoggerFilters readFilters = ComSquare::Debugger::BusLoggerFilters();
+	//! @brief Currently enabled write filters
+	ComSquare::Debugger::BusLoggerFilters writeFilters = ComSquare::Debugger::BusLoggerFilters();
+
+	BusLoggerProxy(BusLogModel &parent);
+	BusLoggerProxy(const BusLoggerProxy &) = delete;
+	const BusLoggerProxy &operator=(const BusLoggerProxy &) = delete;
+	~BusLoggerProxy() override = default;
 };
 
 
@@ -67,6 +106,8 @@ namespace ComSquare::Debugger
 		Ui::BusView _ui;
 		//! @brief The Log visualizer model for QT.
 		BusLogModel _model;
+		//! @brief A QT proxy to filter the logs.
+		BusLoggerProxy _proxy;
 	public:
 		//! @brief Called when the window is closed. Turn off the debugger and revert to a basic CPU.
 		void disableViewer();
