@@ -67,6 +67,17 @@ namespace ComSquare::Debugger
 			this->_proxy.filters[0].cgram = checked;
 			this->_proxy.refresh();
 		});
+		QMainWindow::connect(this->_ui.fromToggle, &QPushButton::pressed, [this]() {
+			this->_ui.fromWRAM->setChecked(!this->_proxy.filters[0].wram);
+			this->_ui.fromCPU->setChecked(!this->_proxy.filters[0].cpu);
+			this->_ui.fromAPU->setChecked(!this->_proxy.filters[0].apu);
+			this->_ui.fromPPU->setChecked(!this->_proxy.filters[0].ppu);
+			this->_ui.fromVRAM->setChecked(!this->_proxy.filters[0].vram);
+			this->_ui.fromOAM->setChecked(!this->_proxy.filters[0].oamram);
+			this->_ui.fromCG->setChecked(!this->_proxy.filters[0].cgram);
+			this->_ui.fromROM->setChecked(!this->_proxy.filters[0].rom);
+			this->_ui.fromSRAM->setChecked(!this->_proxy.filters[0].sram);
+		});
 
 		QMainWindow::connect(this->_ui.toAPU, &QCheckBox::toggled, [this](bool checked) {
 			this->_proxy.filters[1].apu = checked;
@@ -104,6 +115,17 @@ namespace ComSquare::Debugger
 		QMainWindow::connect(this->_ui.clearBtn, &QPushButton::pressed, [this]() {
 			this->_model.clearLogs();
 			this->_proxy.refresh();
+		});
+		QMainWindow::connect(this->_ui.toToggle, &QPushButton::pressed, [this]() {
+			this->_ui.toWRAM->setChecked(!this->_proxy.filters[1].wram);
+			this->_ui.toCPU->setChecked(!this->_proxy.filters[1].cpu);
+			this->_ui.toAPU->setChecked(!this->_proxy.filters[1].apu);
+			this->_ui.toPPU->setChecked(!this->_proxy.filters[1].ppu);
+			this->_ui.toVRAM->setChecked(!this->_proxy.filters[1].vram);
+			this->_ui.toOAM->setChecked(!this->_proxy.filters[1].oamram);
+			this->_ui.toCG->setChecked(!this->_proxy.filters[1].cgram);
+			this->_ui.toROM->setChecked(!this->_proxy.filters[1].rom);
+			this->_ui.toSRAM->setChecked(!this->_proxy.filters[1].sram);
 		});
 
 		this->_window->show();
@@ -258,6 +280,8 @@ bool BusLoggerProxy::filterAcceptsRow(int sourceRow, const QModelIndex &) const
 		return this->filters[log.write].oamram;
 	case ComSquare::Component::SRam:
 		return this->filters[log.write].sram;
+	default:
+		return true;
 	}
 }
 
