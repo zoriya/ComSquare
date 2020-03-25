@@ -16,10 +16,10 @@ void usage(char *bin)
 	std::cout << "ComSquare:" << std::endl
 		<< "\tUsage: " << bin << " rom_path [options]" << std::endl
 		<< "Options:" << std::endl
-		<< "\t-c, --cpu: \tEnable the debugger of the CPU." << std::endl
+		<< "\t-c, --cpu:    \tEnable the debugger of the CPU." << std::endl
 		<< "\t-m, --memory: \tEnable the memory viewer panel." << std::endl
 		<< "\t-h, --header: \tShow the header of the cartridge." << std::endl
-		<< "\t-b, --bus: \tShow the memory bus's log." << std::endl;
+		<< "\t-b, --bus:    \tShow the memory bus's log." << std::endl;
 }
 
 void parseArguments(int argc, char **argv, SNES &snes)
@@ -28,7 +28,7 @@ void parseArguments(int argc, char **argv, SNES &snes)
 		int option_index = 0;
 		static struct option long_options[] = {
 			{"cpu",    no_argument, 0, 'c'},
-			{"apu",     no_argument, 0,  'a' },
+			{"apu",    no_argument, 0, 'a'},
 			{"memory", no_argument, 0, 'm'},
 			{"header", no_argument, 0, 'h'},
 			{"bus",    no_argument, 0, 'b'},
