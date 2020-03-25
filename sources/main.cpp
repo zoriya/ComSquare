@@ -35,7 +35,7 @@ void parseArguments(int argc, char **argv, SNES &snes)
 			{0, 0,                  0, 0}
 		};
 
-		int c = getopt_long(argc, argv, "camh", long_options, &option_index);
+		int c = getopt_long(argc, argv, "camhb", long_options, &option_index);
 		if (c == -1)
 			break;
 		switch (c) {
