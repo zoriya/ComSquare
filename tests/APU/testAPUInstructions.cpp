@@ -12,7 +12,7 @@
 
 using namespace ComSquare;
 
-////////////////////
+////////////////////Init()\n\tauto apu = snes.apu
 //				  //
 // Standbys tests //
 //				  //
@@ -20,7 +20,8 @@ using namespace ComSquare;
 
 Test(Standbys, NOP)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	result = apu->NOP();
@@ -29,7 +30,8 @@ Test(Standbys, NOP)
 
 Test(Standbys, SLEEP)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	result = apu->SLEEP();
@@ -39,7 +41,8 @@ Test(Standbys, SLEEP)
 
 Test(Standbys, STOP)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	result = apu->STOP();
@@ -55,7 +58,8 @@ Test(Standbys, STOP)
 
 Test(PSW, CLRC)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	result = apu->CLRC();
@@ -65,7 +69,8 @@ Test(PSW, CLRC)
 
 Test(PSW, SETC)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	result = apu->SETC();
@@ -75,7 +80,8 @@ Test(PSW, SETC)
 
 Test(PSW, NOTC)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.c = false;
@@ -86,7 +92,8 @@ Test(PSW, NOTC)
 
 Test(PSW, CLRV)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	result = apu->CLRV();
@@ -97,7 +104,8 @@ Test(PSW, CLRV)
 
 Test(PSW, CLRP)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	result = apu->CLRP();
@@ -107,7 +115,8 @@ Test(PSW, CLRP)
 
 Test(PSW, SETP)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	result = apu->SETP();
@@ -117,7 +126,8 @@ Test(PSW, SETP)
 
 Test(PSW, EI)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	result = apu->EI();
@@ -127,7 +137,8 @@ Test(PSW, EI)
 
 Test(PSW, DI)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	result = apu->DI();
@@ -143,7 +154,8 @@ Test(PSW, DI)
 
 Test(Bit, SET1)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.pc = 0x32;
@@ -157,7 +169,8 @@ Test(Bit, SET1)
 
 Test(Bit, CLR1)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.pc = 0x32;
@@ -171,7 +184,8 @@ Test(Bit, CLR1)
 
 Test(Bit, TSET1)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.a = 42;
@@ -190,7 +204,8 @@ Test(Bit, TSET1)
 
 Test(Bit, TCLR1)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.a = 0x80;
@@ -209,7 +224,8 @@ Test(Bit, TCLR1)
 
 Test(Bit, AND1)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.a = 42;
@@ -226,7 +242,8 @@ Test(Bit, AND1)
 
 Test(Bit, AND1_invert)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.a = 42;
@@ -243,7 +260,8 @@ Test(Bit, AND1_invert)
 
 Test(Bit, OR1)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.a = 42;
@@ -260,7 +278,8 @@ Test(Bit, OR1)
 
 Test(Bit, OR1_invert)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.a = 42;
@@ -277,7 +296,8 @@ Test(Bit, OR1_invert)
 
 Test(Bit, EOR1)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.a = 42;
@@ -294,7 +314,8 @@ Test(Bit, EOR1)
 
 Test(Bit, NOT1)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.a = 42;
@@ -311,7 +332,8 @@ Test(Bit, NOT1)
 
 Test(Bit, MOV1)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.a = 42;
@@ -328,7 +350,8 @@ Test(Bit, MOV1)
 
 Test(Bit, MOV1_carry)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.a = 42;
@@ -351,7 +374,8 @@ Test(Bit, MOV1_carry)
 
 Test(Stack, PUSH)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.a = 56;
@@ -363,7 +387,8 @@ Test(Stack, PUSH)
 
 Test(Stack, POP)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalWrite(++apu->_internalRegisters.sp | 0x100u, 82);
@@ -381,7 +406,8 @@ Test(Stack, POP)
 
 Test(Subroutine, CALL)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalWrite(apu->_getAbsoluteAddr(), 23);
@@ -395,7 +421,8 @@ Test(Subroutine, CALL)
 
 Test(Subroutine, PCALL)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalWrite(apu->_internalRegisters.pc, 123);
@@ -406,7 +433,8 @@ Test(Subroutine, PCALL)
 
 Test(Subroutine, TCALL)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalWrite(0xFFD0, 45);
@@ -417,7 +445,8 @@ Test(Subroutine, TCALL)
 
 Test(Subroutine, BRK)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.pch = 0xFF;
@@ -438,7 +467,8 @@ Test(Subroutine, BRK)
 
 Test(Subroutine, RET)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalWrite(++apu->_internalRegisters.sp | 0x100u, 0x12);
@@ -452,7 +482,8 @@ Test(Subroutine, RET)
 
 Test(Subroutine, RETI)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalWrite(++apu->_internalRegisters.sp | 0x100u, 0x12);
@@ -474,7 +505,8 @@ Test(Subroutine, RETI)
 
 Test(ProgramFlow, BRA)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalWrite(apu->_internalRegisters.pc, 23);
@@ -486,7 +518,8 @@ Test(ProgramFlow, BRA)
 
 Test(ProgramFlow, BEQ)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalWrite(apu->_internalRegisters.pc, 23);
@@ -501,7 +534,8 @@ Test(ProgramFlow, BEQ)
 
 Test(ProgramFlow, BNE)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalWrite(apu->_internalRegisters.pc, 23);
@@ -517,7 +551,8 @@ Test(ProgramFlow, BNE)
 
 Test(ProgramFlow, BCS)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalWrite(apu->_internalRegisters.pc, 23);
@@ -532,7 +567,8 @@ Test(ProgramFlow, BCS)
 
 Test(ProgramFlow, BCC)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalWrite(apu->_internalRegisters.pc, 23);
@@ -548,7 +584,8 @@ Test(ProgramFlow, BCC)
 
 Test(ProgramFlow, BVS)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalWrite(apu->_internalRegisters.pc, 23);
@@ -563,7 +600,8 @@ Test(ProgramFlow, BVS)
 
 Test(ProgramFlow, BVC)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalWrite(apu->_internalRegisters.pc, 23);
@@ -579,7 +617,8 @@ Test(ProgramFlow, BVC)
 
 Test(ProgramFlow, BMI)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalWrite(apu->_internalRegisters.pc, 23);
@@ -594,7 +633,8 @@ Test(ProgramFlow, BMI)
 
 Test(ProgramFlow, BPL)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalWrite(apu->_internalRegisters.pc, 23);

@@ -9,7 +9,7 @@
 
 namespace ComSquare::Memory
 {
-	RectangleShadow::RectangleShadow(std::shared_ptr<IRectangleMemory> initial, uint8_t startBank, uint8_t endBank, uint16_t startPage, uint16_t endPage)
+	RectangleShadow::RectangleShadow(std::shared_ptr<ARectangleMemory> initial, uint8_t startBank, uint8_t endBank, uint16_t startPage, uint16_t endPage)
 		: _initial(std::move(initial))
 	{
 		this->setMemoryRegion(startBank, endBank, startPage, endPage);
@@ -38,8 +38,18 @@ namespace ComSquare::Memory
 		return true;
 	}
 
-	std::shared_ptr<IMemory> RectangleShadow::getMirrored()
+	std::shared_ptr<AMemory> RectangleShadow::getMirrored()
 	{
 		return this->_initial;
+	}
+
+	std::string RectangleShadow::getName()
+	{
+		return this->_initial->getName();
+	}
+
+	Component RectangleShadow::getComponent()
+	{
+		return this->_initial->getComponent();
 	}
 }

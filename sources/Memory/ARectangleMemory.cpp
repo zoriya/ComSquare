@@ -3,12 +3,12 @@
 //
 
 #include <iostream>
-#include "IRectangleMemory.hpp"
+#include "ARectangleMemory.hpp"
 #include "../Exceptions/InvalidAddress.hpp"
 
 namespace ComSquare::Memory
 {
-	uint8_t IRectangleMemory::read(uint24_t addr)
+	uint8_t ARectangleMemory::read(uint24_t addr)
 	{
 		addr += this->getStart();
 		uint8_t bank = addr >> 16u;
@@ -25,7 +25,7 @@ namespace ComSquare::Memory
 		return this->read_internal(page);
 	}
 
-	void IRectangleMemory::write(uint24_t addr, uint8_t data)
+	void ARectangleMemory::write(uint24_t addr, uint8_t data)
 	{
 		addr += this->getStart();
 		uint8_t bank = addr >> 16u;
@@ -42,7 +42,7 @@ namespace ComSquare::Memory
 		this->write_internal(page, data);
 	}
 
-	bool IRectangleMemory::hasMemoryAt(uint24_t addr)
+	bool ARectangleMemory::hasMemoryAt(uint24_t addr)
 	{
 		uint8_t bank = addr >> 16u;
 		uint16_t page = addr;
@@ -53,12 +53,12 @@ namespace ComSquare::Memory
 		return false;
 	}
 
-	uint24_t IRectangleMemory::getStart()
+	uint24_t ARectangleMemory::getStart()
 	{
 		return (this->_startBank << 16u) + this->_startPage;
 	}
 
-	void IRectangleMemory::setMemoryRegion(uint8_t startBank, uint8_t endBank, uint16_t startPage, uint16_t endPage)
+	void ARectangleMemory::setMemoryRegion(uint8_t startBank, uint8_t endBank, uint16_t startPage, uint16_t endPage)
 	{
 		this->_startBank = startBank;
 		this->_endBank = endBank;

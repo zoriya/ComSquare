@@ -2,19 +2,20 @@
 // Created by anonymus-raccoon on 1/23/20.
 //
 
-#ifndef COMSQUARE_IMEMORY_HPP
-#define COMSQUARE_IMEMORY_HPP
+#ifndef COMSQUARE_AMEMORY_HPP
+#define COMSQUARE_AMEMORY_HPP
 
 
 #include <cstdint>
 #include <vector>
 #include <memory>
 #include "../Models/Int24.hpp"
+#include "../Models/Components.hpp"
 
 namespace ComSquare::Memory
 {
 	//! @brief Common interface implemented by all components mapping memory.
-	class IMemory {
+	class AMemory {
 	private:
 		//! @brief The starting address mapped to this component.
 		uint24_t _start = 0;
@@ -34,7 +35,7 @@ namespace ComSquare::Memory
 		//! @brief Change starting and ending points of this mapped memory.
 		//! @param start The first address mapped to this component.
 		//! @param end The last address mapped to this component.
-		//! @warning The start/end address should be a continuous range. You can't map address 0x0 and 0x2 but not 0x1. To do that, use two IMemory.
+		//! @warning The start/end address should be a continuous range. You can't map address 0x0 and 0x2 but not 0x1. To do that, use two AMemory.
 		void setMemoryRegion(uint24_t start, uint24_t end);
 		//! @brief Return true if this component has mapped the address.
 		//! @param addr The address to check.
@@ -46,14 +47,19 @@ namespace ComSquare::Memory
 		//! @brief Check if this memory is a mirror or not.
 		//! @return True if this memory is a mirror. False otherwise.
 		virtual bool isMirror();
+		//! @brief Get the name of this accessor (used for debug purpose)
+		virtual std::string getName() = 0;
+		//! @brief Get the component of this accessor (used for debug purpose)
+		virtual Component getComponent() = 0;
+		//! @brief Get the name of the data at the address
+		//! @param addr The address (in local space)
+		virtual std::string getValueName(uint24_t addr);
 		//! @brief Return the memory accessor this accessor mirror if any
 		//! @return nullptr if isMirror is false, the source otherwise.
-		virtual std::shared_ptr<IMemory> getMirrored();
-		// TODO add destructors everywhere
-		// TODO rename this as an abstract.
-		virtual ~IMemory() = default;
+		virtual std::shared_ptr<AMemory> getMirrored();
+		virtual ~AMemory() = default;
 	};
 };
 
 
-#endif //COMSQUARE_IMEMORY_HPP
+#endif //COMSQUARE_AMEMORY_HPP

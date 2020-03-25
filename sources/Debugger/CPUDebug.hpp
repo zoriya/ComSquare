@@ -9,12 +9,15 @@
 #include "../Renderer/SFRenderer.hpp"
 #include "../SNES.hpp"
 #include "../../ui/ui_cpu.h"
+#include "ClosableWindow.hpp"
 
 namespace ComSquare::Debugger
 {
 	//! @brief A custom CPU with a window that show it's registers and the disassembly.
-	class CPUDebug : public CPU::CPU, public QMainWindow {
+	class CPUDebug : public CPU::CPU, public QObject {
 	private:
+		//! @brief The QT window for this debugger.
+		ClosableWindow<CPUDebug> *_window;
 		//! @brief A widget that contain the whole UI.
 		Ui::CPUView _ui;
 		//! @brief If this is set to true, the execution of the CPU will be paused.
@@ -56,6 +59,8 @@ namespace ComSquare::Debugger
 		void step();
 		//! @brief Clear the history panel.
 		void clearHistory();
+		//! @brief Called when the window is closed. Turn off the debugger and revert to a basic CPU.
+		void disableDebugger();
 	public:
 		//! @brief Update the UI when reseting the CPU.
 		void RESB() override;
@@ -64,6 +69,12 @@ namespace ComSquare::Debugger
 		CPUDebug(const CPUDebug &) = delete;
 		CPUDebug &operator=(const CPUDebug &) = delete;
 		~CPUDebug() override = default;
+
+		//! @brief Return true if the CPU is overloaded with debugging features.
+		bool isDebugger() override;
+
+		//! @brief Focus the debugger's window.
+		void focus();
 
 		//! @brief Override the basic cpu's update to allow pausing of the CPU only.
 		unsigned update() override;

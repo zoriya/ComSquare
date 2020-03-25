@@ -10,114 +10,114 @@ using namespace ComSquare;
 
 Test(ADC, addingOne)
 {
-	auto pair = Init();
-	pair.second.cpu->_isEmulationMode = false;
-	pair.second.cpu->_registers.a = 0;
-	pair.second.wram->_data[0] = 0x1;
-	pair.second.cpu->ADC(0x0);
-	cr_assert_eq(pair.second.cpu->_registers.a, 1, "The accumulator's value should be 0x1 but it was 0x%x.", pair.second.cpu->_registers.a);
-	cr_assert_eq(pair.second.cpu->_registers.p.c, false, "The carry flags should not be set.");
-	cr_assert_eq(pair.second.cpu->_registers.p.v, false, "The overflow flags should not be set.");
-	cr_assert_eq(pair.second.cpu->_registers.p.n, false, "The negative flags should not be set.");
-	cr_assert_eq(pair.second.cpu->_registers.p.z, false, "The zero flags should not be set.");
+	Init()
+	snes.cpu->_isEmulationMode = false;
+	snes.cpu->_registers.a = 0;
+	snes.wram->_data[0] = 0x1;
+	snes.cpu->ADC(0x0);
+	cr_assert_eq(snes.cpu->_registers.a, 1, "The accumulator's value should be 0x1 but it was 0x%x.", snes.cpu->_registers.a);
+	cr_assert_eq(snes.cpu->_registers.p.c, false, "The carry flags should not be set.");
+	cr_assert_eq(snes.cpu->_registers.p.v, false, "The overflow flags should not be set.");
+	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flags should not be set.");
+	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flags should not be set.");
 }
 
 Test(ADC, addingOneEmulation)
 {
-	auto pair = Init();
-	pair.second.cpu->_isEmulationMode = true;
-	pair.second.cpu->_registers.a = 0;
-	pair.second.wram->_data[0] = 0x1;
-	pair.second.cpu->ADC(0x0);
-	cr_assert_eq(pair.second.cpu->_registers.a, 1, "The accumulator's value should be 0x1 but it was 0x%x.", pair.second.cpu->_registers.a);
-	cr_assert_eq(pair.second.cpu->_registers.p.c, false, "The carry flags should not be set.");
-	cr_assert_eq(pair.second.cpu->_registers.p.v, false, "The overflow flags should not be set.");
-	cr_assert_eq(pair.second.cpu->_registers.p.n, false, "The negative flags should not be set.");
-	cr_assert_eq(pair.second.cpu->_registers.p.z, false, "The zero flags should not be set.");
+	Init()
+	snes.cpu->_isEmulationMode = true;
+	snes.cpu->_registers.a = 0;
+	snes.wram->_data[0] = 0x1;
+	snes.cpu->ADC(0x0);
+	cr_assert_eq(snes.cpu->_registers.a, 1, "The accumulator's value should be 0x1 but it was 0x%x.", snes.cpu->_registers.a);
+	cr_assert_eq(snes.cpu->_registers.p.c, false, "The carry flags should not be set.");
+	cr_assert_eq(snes.cpu->_registers.p.v, false, "The overflow flags should not be set.");
+	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flags should not be set.");
+	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flags should not be set.");
 }
 
 Test(ADC, overflow)
 {
-	auto pair = Init();
-	pair.second.cpu->_isEmulationMode = false;
-	pair.second.cpu->_registers.a = 0xFFFF;
-	pair.second.wram->_data[0] = 0x1;
-	pair.second.cpu->ADC(0x0);
-	cr_assert_eq(pair.second.cpu->_registers.a, 0, "The accumulator's value should be 0x0 but it was 0x%x.", pair.second.cpu->_registers.a);
-	cr_assert_eq(pair.second.cpu->_registers.p.c, true, "The carry flags should be set.");
-	cr_assert_eq(pair.second.cpu->_registers.p.v, false, "The overflow flags should not be set.");
-	cr_assert_eq(pair.second.cpu->_registers.p.n, false, "The negative flags should not be set.");
-	cr_assert_eq(pair.second.cpu->_registers.p.z, true, "The zero flags should be set.");
+	Init()
+	snes.cpu->_isEmulationMode = false;
+	snes.cpu->_registers.a = 0xFFFF;
+	snes.wram->_data[0] = 0x1;
+	snes.cpu->ADC(0x0);
+	cr_assert_eq(snes.cpu->_registers.a, 0, "The accumulator's value should be 0x0 but it was 0x%x.", snes.cpu->_registers.a);
+	cr_assert_eq(snes.cpu->_registers.p.c, true, "The carry flags should be set.");
+	cr_assert_eq(snes.cpu->_registers.p.v, false, "The overflow flags should not be set.");
+	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flags should not be set.");
+	cr_assert_eq(snes.cpu->_registers.p.z, true, "The zero flags should be set.");
 }
 
 Test(ADC, overflowEmulation)
 {
-	auto pair = Init();
-	pair.second.cpu->_isEmulationMode = true;
-	pair.second.cpu->_registers.a = 0xFF;
-	pair.second.wram->_data[0] = 0x1;
-	pair.second.cpu->ADC(0x0);
-	cr_assert_eq(pair.second.cpu->_registers.a, 0, "The accumulator's value should be 0x0 but it was 0x%x.", pair.second.cpu->_registers.a);
-	cr_assert_eq(pair.second.cpu->_registers.p.c, true, "The carry flags should be set.");
-	cr_assert_eq(pair.second.cpu->_registers.p.v, false, "The overflow flags should not be set.");
-	cr_assert_eq(pair.second.cpu->_registers.p.n, false, "The negative flags should not be set.");
-	cr_assert_eq(pair.second.cpu->_registers.p.z, true, "The zero flags should be set.");
+	Init()
+	snes.cpu->_isEmulationMode = true;
+	snes.cpu->_registers.a = 0xFF;
+	snes.wram->_data[0] = 0x1;
+	snes.cpu->ADC(0x0);
+	cr_assert_eq(snes.cpu->_registers.a, 0, "The accumulator's value should be 0x0 but it was 0x%x.", snes.cpu->_registers.a);
+	cr_assert_eq(snes.cpu->_registers.p.c, true, "The carry flags should be set.");
+	cr_assert_eq(snes.cpu->_registers.p.v, false, "The overflow flags should not be set.");
+	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flags should not be set.");
+	cr_assert_eq(snes.cpu->_registers.p.z, true, "The zero flags should be set.");
 }
 
 Test(ADC, signedOverflow)
 {
-	auto pair = Init();
-	pair.second.cpu->_isEmulationMode = false;
-	pair.second.cpu->_registers.a = 0x7FFF;
-	pair.second.wram->_data[0] = 0x1;
-	pair.second.cpu->ADC(0x0);
-	cr_assert_eq(pair.second.cpu->_registers.a, 0x8000, "The accumulator's value should be 0x8000 but it was 0x%x.", pair.second.cpu->_registers.a);
-	cr_assert_eq(pair.second.cpu->_registers.p.c, false, "The carry flags should not be set.");
-	cr_assert_eq(pair.second.cpu->_registers.p.v, true, "The overflow flags should be set.");
-	cr_assert_eq(pair.second.cpu->_registers.p.n, true, "The negative flags should be set.");
-	cr_assert_eq(pair.second.cpu->_registers.p.z, false, "The zero flags should not be set.");
+	Init()
+	snes.cpu->_isEmulationMode = false;
+	snes.cpu->_registers.a = 0x7FFF;
+	snes.wram->_data[0] = 0x1;
+	snes.cpu->ADC(0x0);
+	cr_assert_eq(snes.cpu->_registers.a, 0x8000, "The accumulator's value should be 0x8000 but it was 0x%x.", snes.cpu->_registers.a);
+	cr_assert_eq(snes.cpu->_registers.p.c, false, "The carry flags should not be set.");
+	cr_assert_eq(snes.cpu->_registers.p.v, true, "The overflow flags should be set.");
+	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flags should be set.");
+	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flags should not be set.");
 }
 
 Test(ADC, signedOverflowEmulated)
 {
-	auto pair = Init();
-	pair.second.cpu->_isEmulationMode = true;
-	pair.second.cpu->_registers.a = 0x007F;
-	pair.second.wram->_data[0] = 0x1;
-	pair.second.cpu->ADC(0x0);
-	cr_assert_eq(pair.second.cpu->_registers.a, 0x0080, "The accumulator's value should be 0x0080 but it was 0x%x.", pair.second.cpu->_registers.a);
-	cr_assert_eq(pair.second.cpu->_registers.p.c, false, "The carry flags should not be set.");
-	cr_assert_eq(pair.second.cpu->_registers.p.v, true, "The overflow flags should be set.");
-	cr_assert_eq(pair.second.cpu->_registers.p.n, true, "The negative flags should be set.");
-	cr_assert_eq(pair.second.cpu->_registers.p.z, false, "The zero flags should not be set.");
+	Init()
+	snes.cpu->_isEmulationMode = true;
+	snes.cpu->_registers.a = 0x007F;
+	snes.wram->_data[0] = 0x1;
+	snes.cpu->ADC(0x0);
+	cr_assert_eq(snes.cpu->_registers.a, 0x0080, "The accumulator's value should be 0x0080 but it was 0x%x.", snes.cpu->_registers.a);
+	cr_assert_eq(snes.cpu->_registers.p.c, false, "The carry flags should not be set.");
+	cr_assert_eq(snes.cpu->_registers.p.v, true, "The overflow flags should be set.");
+	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flags should be set.");
+	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flags should not be set.");
 }
 
 Test(ADC, negative)
 {
-	auto pair = Init();
-	pair.second.cpu->_isEmulationMode = false;
-	pair.second.cpu->_registers.a = 0x8FFF;
-	pair.second.wram->_data[0] = 0x1;
-	pair.second.cpu->ADC(0x0);
-	cr_assert_eq(pair.second.cpu->_registers.a, 0x9000, "The accumulator's value should be 0x9000 but it was 0x%x.", pair.second.cpu->_registers.a);
-	cr_assert_eq(pair.second.cpu->_registers.p.c, false, "The carry flags should not be set.");
-	cr_assert_eq(pair.second.cpu->_registers.p.v, false, "The overflow flags should be set.");
-	cr_assert_eq(pair.second.cpu->_registers.p.n, true, "The negative flags should be set.");
-	cr_assert_eq(pair.second.cpu->_registers.p.z, false, "The zero flags should not be set.");
+	Init()
+	snes.cpu->_isEmulationMode = false;
+	snes.cpu->_registers.a = 0x8FFF;
+	snes.wram->_data[0] = 0x1;
+	snes.cpu->ADC(0x0);
+	cr_assert_eq(snes.cpu->_registers.a, 0x9000, "The accumulator's value should be 0x9000 but it was 0x%x.", snes.cpu->_registers.a);
+	cr_assert_eq(snes.cpu->_registers.p.c, false, "The carry flags should not be set.");
+	cr_assert_eq(snes.cpu->_registers.p.v, false, "The overflow flags should be set.");
+	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flags should be set.");
+	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flags should not be set.");
 }
 
 Test(ADC, memoryTwoBytes)
 {
-	auto pair = Init();
-	pair.second.cpu->_isEmulationMode = false;
-	pair.second.cpu->_registers.p.m = false;
-	pair.second.cpu->_registers.a = 0x000F;
-	pair.second.wram->_data[0] = 0x01;
-	pair.second.wram->_data[1] = 0x04;
-	pair.second.cpu->ADC(0x0);
-	cr_assert_eq(pair.second.cpu->_registers.a, 0x0410, "The accumulator's value should be 0x0410 but it was 0x%x.", pair.second.cpu->_registers.a);
-	cr_assert_eq(pair.second.cpu->_registers.p.c, false, "The carry flags should not be set.");
-	cr_assert_eq(pair.second.cpu->_registers.p.v, false, "The overflow flags should not be set.");
-	cr_assert_eq(pair.second.cpu->_registers.p.n, false, "The negative flags should not be set.");
-	cr_assert_eq(pair.second.cpu->_registers.p.z, false, "The zero flags should not be set.");
+	Init()
+	snes.cpu->_isEmulationMode = false;
+	snes.cpu->_registers.p.m = false;
+	snes.cpu->_registers.a = 0x000F;
+	snes.wram->_data[0] = 0x01;
+	snes.wram->_data[1] = 0x04;
+	snes.cpu->ADC(0x0);
+	cr_assert_eq(snes.cpu->_registers.a, 0x0410, "The accumulator's value should be 0x0410 but it was 0x%x.", snes.cpu->_registers.a);
+	cr_assert_eq(snes.cpu->_registers.p.c, false, "The carry flags should not be set.");
+	cr_assert_eq(snes.cpu->_registers.p.v, false, "The overflow flags should not be set.");
+	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flags should not be set.");
+	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flags should not be set.");
 }

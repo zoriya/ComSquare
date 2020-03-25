@@ -65,16 +65,17 @@ void MemoryViewerModel::setMemory(std::shared_ptr<Ram> memory)
 namespace ComSquare::Debugger
 {
 	MemoryViewer::MemoryViewer(ComSquare::SNES &snes, Memory::MemoryBus &bus) :
-		QMainWindow(),
+		_window(new ClosableWindow(*this, &MemoryViewer::disableViewer)),
 		_snes(snes),
 		_bus(bus),
 		_ui(),
 		_model(snes.wram)
 	{
-		this->setContextMenuPolicy(Qt::NoContextMenu);
-		this->setAttribute(Qt::WA_QuitOnClose, false);
+		this->_window->setContextMenuPolicy(Qt::NoContextMenu);
+		this->_window->setAttribute(Qt::WA_QuitOnClose, false);
+		this->_window->setAttribute(Qt::WA_DeleteOnClose);
 
-		this->_ui.setupUi(this);
+		this->_ui.setupUi(this->_window);
 		this->_ui.tableView->setModel(&this->_model);
 		this->_ui.tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 		this->_ui.tabs->addTab("&WRam");
@@ -84,7 +85,12 @@ namespace ComSquare::Debugger
 		QMainWindow::connect(this->_ui.actionGoto, &QAction::triggered, this, &MemoryViewer::gotoAddr);
 		QMainWindow::connect(this->_ui.actionGoto_Absolute, &QAction::triggered, this, &MemoryViewer::gotoAbsoluteAddr);
 		QObject::connect(this->_ui.tabs, &QTabBar::currentChanged, this, &MemoryViewer::changeRam);
-		this->show();
+		this->_window->show();
+	}
+
+	void MemoryViewer::disableViewer()
+	{
+		this->_snes.disableRamViewer();
 	}
 
 	void MemoryViewer::changeRam(int id)
@@ -118,7 +124,7 @@ namespace ComSquare::Debugger
 
 	void MemoryViewer::_internalGoto(bool isAbsolute)
 	{
-		QDialog dialog(this);
+		QDialog dialog(this->_window);
 		dialog.setWindowModality(Qt::WindowModal);
 		Ui::GotoDialog dialogUI;
 		dialogUI.setupUi(&dialog);
@@ -143,10 +149,10 @@ namespace ComSquare::Debugger
 
 	unsigned MemoryViewer::switchToAddrTab(uint24_t addr)
 	{
-		std::shared_ptr<Memory::IMemory> accessor = this->_bus.getAccessor(addr);
+		std::shared_ptr<Memory::AMemory> accessor = this->_bus.getAccessor(addr);
 		if (!accessor)
 			throw InvalidAddress("Memory viewer switch to address", addr);
-		Memory::IMemory *ptr;
+		Memory::AMemory *ptr;
 		if (accessor->isMirror())
 			ptr = accessor->getMirrored().get();
 		else
@@ -161,5 +167,10 @@ namespace ComSquare::Debugger
 		else
 			throw InvalidAddress("Memory viewer switch to address", addr);
 		return addr - accessor->getStart();
+	}
+
+	void MemoryViewer::focus()
+	{
+		this->_window->activateWindow();
 	}
 }

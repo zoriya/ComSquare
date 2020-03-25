@@ -6,9 +6,9 @@
 #define COMSQUARE_CARTRIDGE_HPP
 
 #include <string>
-#include "../Memory/IMemory.hpp"
+#include "../Memory/AMemory.hpp"
 #include "../Models/Int24.hpp"
-#include "../Memory/IRectangleMemory.hpp"
+#include "../Memory/ARectangleMemory.hpp"
 #include "InterruptVectors.hpp"
 #include "../Ram/Ram.hpp"
 
@@ -91,7 +91,7 @@ namespace ComSquare::Cartridge
 		//! @brief The cartridge can't be assigned.
 		Cartridge &operator=(const Cartridge &) = delete;
 		//! @brief Destructor that free the cartridge data.
-		~Cartridge() = default;
+		~Cartridge() override = default;
 
 		//! @brief The header of the cartridge.
 		Header header;

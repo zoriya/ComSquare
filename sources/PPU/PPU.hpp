@@ -6,7 +6,7 @@
 #define COMSQUARE_PPU_HPP
 
 #include <stdint-gcc.h>
-#include "../Memory/IMemory.hpp"
+#include "../Memory/AMemory.hpp"
 #include "../Memory/MemoryBus.hpp"
 #include "../Renderer/IRenderer.hpp"
 #include "../Ram/ExtendedRam.hpp"
@@ -156,7 +156,7 @@ namespace ComSquare::PPU
 	};
 
 	//! @brief The class containing all the registers the PPU
-	class PPU : public Memory::IMemory {
+	class PPU : public Memory::AMemory {
 	private:
 	/*	struct _layerInfo {
 			bool _characterSize;
@@ -545,15 +545,14 @@ namespace ComSquare::PPU
 			uint32_t  mpy;
 		} mpy;
 		Renderer::IRenderer &_renderer;
-		std::shared_ptr<Memory::MemoryBus> _bus;
 		Ram::ExtendedRam _vram;
 		Ram::ExtendedRam _oamram;
 		Ram::ExtendedRam _cgram;
 	public:
-		PPU(const std::shared_ptr<Memory::MemoryBus> &bus, Renderer::IRenderer &renderer);
-		PPU(const PPU &) = default;
+		explicit PPU(Renderer::IRenderer &renderer);
+		PPU(const PPU &) = delete;
 		PPU &operator=(const PPU &) = delete;
-		~PPU() = default;
+		~PPU() override = default;
 
 		//! @brief Read data from the component.
 		//! @param addr The local address to read from (0x0 should refer to the first byte of this component).
@@ -565,6 +564,11 @@ namespace ComSquare::PPU
 		//! @param data The new data to write.
 		//! @throw This function should thrown an InvalidAddress for address that are not mapped to the component.
 		void write(uint24_t addr, uint8_t data) override;
+		//! @brief Get the name of this accessor (used for debug purpose)
+		std::string getName() override;
+		//! @brief Get the component of this accessor (used for debug purpose)
+		Component getComponent() override;
+
 		//! @brief Update the PPU of n cycles.
 		//! @param The number of cycles to update.
 		void update(unsigned cycles);

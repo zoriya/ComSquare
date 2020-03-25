@@ -19,8 +19,8 @@ using namespace ComSquare;
 
 Test(_internalRead, register)
 {
-	auto apu = Init().second.apu;
-	uint8_t result = 0;
+	Init()
+	auto apu = snes.apu;int8_t result = 0;
 
 	apu->_registers.counter0 = 123;
 	result = apu->_internalRead(0x00FD);
@@ -29,7 +29,8 @@ Test(_internalRead, register)
 
 Test(_internalRead, Page0)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	uint8_t result = 0;
 
 	apu->_map->Page0._data[0x0010] = 123;
@@ -39,7 +40,8 @@ Test(_internalRead, Page0)
 
 Test(_internalRead, Page1)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	uint8_t result = 0;
 
 	apu->_map->Page1._data[0x0042] = 123;
@@ -49,7 +51,8 @@ Test(_internalRead, Page1)
 
 Test(_internalRead, Memory)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	uint8_t result = 0;
 
 	apu->_map->Memory._data[0xFCDC] = 123;
@@ -59,7 +62,8 @@ Test(_internalRead, Memory)
 
 Test(_internalRead, IPL)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	uint8_t result = 0;
 
 	apu->_map->IPL._data[0x001F] = 123;
@@ -69,7 +73,8 @@ Test(_internalRead, IPL)
 
 Test(_internalRead, Invalid)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 
 	cr_assert_throw(apu->_internalRead(0x10000), InvalidAddress);
 }
@@ -82,7 +87,8 @@ Test(_internalRead, Invalid)
 
 Test(_internalWrite, Page0)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 
 	apu->_internalWrite(0x0001, 123);
 	cr_assert_eq(apu->_map->Page0._data[0x0001], 123);
@@ -90,7 +96,8 @@ Test(_internalWrite, Page0)
 
 Test(_internalWrite, register)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 
 	apu->_internalWrite(0x00F4, 123);
 	cr_assert_eq(apu->_registers.port0, 123);
@@ -98,7 +105,8 @@ Test(_internalWrite, register)
 
 Test(_internalWrite, Page1)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 
 	apu->_internalWrite(0x01FF, 123);
 	cr_assert_eq(apu->_map->Page1._data[0x00FF], 123);
@@ -106,7 +114,8 @@ Test(_internalWrite, Page1)
 
 Test(_internalWrite, Memory)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 
 	apu->_internalWrite(0x0789, 123);
 	cr_assert_eq(apu->_map->Memory._data[0x0589], 123);
@@ -114,7 +123,8 @@ Test(_internalWrite, Memory)
 
 Test(_internalWrite, IPL)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 
 	apu->_internalWrite(0xFFF0, 123);
 	cr_assert_eq(apu->_map->IPL._data[0x0030], 123);
@@ -122,7 +132,8 @@ Test(_internalWrite, IPL)
 
 Test(_internalWrite, Invalid)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 
 	cr_assert_throw(apu->_internalWrite(0x10000, 123), InvalidAddress);
 }
@@ -135,7 +146,8 @@ Test(_internalWrite, Invalid)
 
 Test(read, Valid)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	uint8_t result = 0;
 
 	apu->_registers.port2 = 123;
@@ -145,7 +157,8 @@ Test(read, Valid)
 
 Test(read, Invalid)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 
 	cr_assert_throw(apu->read(0x10000), InvalidAddress);
 }
@@ -158,7 +171,8 @@ Test(read, Invalid)
 
 Test(write, Valid)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 
 	apu->write(0x03, 123);
 	cr_assert_eq(apu->_registers.port3, 123);
@@ -166,7 +180,8 @@ Test(write, Valid)
 
 Test(write, Invalid)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 
 	cr_assert_throw(apu->write(0x04, 123), InvalidAddress);
 }
@@ -179,7 +194,8 @@ Test(write, Invalid)
 
 Test(executeInstruction, Valid)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	uint8_t result = 0;
 
 	apu->_internalRegisters.pc = 0x00;
@@ -189,7 +205,8 @@ Test(executeInstruction, Valid)
 
 Test(executeInstruction, Invalid)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 
 	apu->_internalRegisters.pc = 0xFFFF;
 	cr_assert_throw(apu->_executeInstruction(), InvalidOpcode);
@@ -203,7 +220,8 @@ Test(executeInstruction, Invalid)
 
 Test(update, running)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 
 	apu->_internalRegisters.pc = 0x00;
 	apu->update(1);
@@ -212,7 +230,8 @@ Test(update, running)
 
 Test(update, stopped)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 
 	apu->_state = APU::Stopped;
 	apu->update(1);
@@ -227,7 +246,8 @@ Test(update, stopped)
 
 Test(_get, direct)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 
 	apu->_internalRegisters.pc = 0x32;
 	apu->_internalWrite(0x32, 123);
@@ -236,7 +256,8 @@ Test(_get, direct)
 
 Test(_get, absolute)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 
 	apu->_internalRegisters.pc = 0x32;
 	apu->_internalWrite(0x32, 0b00001111);

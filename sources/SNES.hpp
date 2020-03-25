@@ -25,10 +25,11 @@ namespace ComSquare
 	private:
 #ifdef DEBUGGER_ENABLED
 		//! @brief The window that allow the user to view a memory.
-		std::shared_ptr<Debugger::MemoryViewer> _ramViewer;
+		std::unique_ptr<Debugger::MemoryViewer> _ramViewer;
 		//! @brief The window that allow the user to view the cartridge's header.
-		std::shared_ptr<Debugger::HeaderViewer> _headerViewer;
+		std::unique_ptr<Debugger::HeaderViewer> _headerViewer;
 #endif
+		//! @brief The memory bus that map addresses to components.
 		std::shared_ptr<Memory::MemoryBus> _bus;
 	public:
 		//! @brief Cartridge containing instructions (ROM).
@@ -65,11 +66,15 @@ namespace ComSquare
 		void disableAPUDebugging();
 		//! @brief Enable the APU's debugging window.
 		void enableAPUDebugging();
+		//! @brief Disable the Memory Bus's debugging window.
+		void disableMemoryBusDebugging();
+		//! @brief Enable the Memory Bus's debugging window.
+		void enableMemoryBusDebugging();
 
 		//! @brief Create all the components using a common memory bus for all of them.
-		SNES(const std::shared_ptr<Memory::MemoryBus> &bus, const std::string &ramPath, Renderer::IRenderer &renderer);
-		SNES(const SNES &) = default;
-		SNES &operator=(const SNES &) = default;
+		SNES(const std::string &ramPath, Renderer::IRenderer &renderer);
+		SNES(const SNES &) = delete;
+		SNES &operator=(const SNES &) = delete;
 		~SNES() = default;
 	};
 }
