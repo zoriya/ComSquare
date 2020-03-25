@@ -14,7 +14,7 @@ namespace ComSquare::Debugger
 {
 	CPUDebug::CPUDebug(CPU &basicCPU, SNES &snes)
 		: CPU(basicCPU),
-		_window(new ClosableWindow(*this, &CPUDebug::disableDebugger)),
+		_window(new ClosableWindow<CPUDebug>(*this, &CPUDebug::disableDebugger)),
 		_ui(),
 		_snes(snes)
 	{
@@ -175,7 +175,7 @@ namespace ComSquare::Debugger
 	std::string CPUDebug::_getAbsoluteValue(uint24_t pc)
 	{
 		std::stringstream ss;
-		ss << "$" << std::hex << (this->_bus->read(pc) + (this->_bus->read(pc + 1) << 8u), true);
+		ss << "$" << std::hex << (this->_bus->read(pc) + (this->_bus->read(pc + 1, true) << 8u));
 		return ss.str();
 	}
 

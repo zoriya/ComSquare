@@ -8,7 +8,6 @@
 #include <QtWidgets/QSpinBox>
 #include "MemoryViewer.hpp"
 #include "../SNES.hpp"
-#include "../Utility/Utility.hpp"
 #include "../Memory/MemoryShadow.hpp"
 #include "../Exceptions/InvalidAddress.hpp"
 
@@ -65,7 +64,7 @@ void MemoryViewerModel::setMemory(std::shared_ptr<Ram> memory)
 namespace ComSquare::Debugger
 {
 	MemoryViewer::MemoryViewer(ComSquare::SNES &snes, Memory::MemoryBus &bus) :
-		_window(new ClosableWindow(*this, &MemoryViewer::disableViewer)),
+		_window(new ClosableWindow<MemoryViewer>(*this, &MemoryViewer::disableViewer)),
 		_snes(snes),
 		_bus(bus),
 		_ui(),

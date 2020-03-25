@@ -1,26 +1,28 @@
-//		//! @brief Convert a basic CPU to a debugging CPU.
-
+//
 // Created by Melefo on 19/02/2020.
 //
 
 #include "APUDebug.hpp"
 #include "../Utility/Utility.hpp"
+#include "../Exceptions/InvalidOpcode.hpp"
 
 using namespace ComSquare::APU;
 
 namespace ComSquare::Debugger
 {
 	APUDebug::APUDebug(APU &apu, SNES &snes) :
-		APU(apu),
-		_window(new ClosableWindow(*this, &APUDebug::disableDebugger)),
-		_ui(),
-		_snes(snes)
+			APU(apu),
+			_window(new ClosableWindow<APUDebug>(*this, &APUDebug::disableDebugger)),
+			_ui(),
+			_snes(snes)
 	{
 		this->_window->setContextMenuPolicy(Qt::NoContextMenu);
 		this->_window->setAttribute(Qt::WA_QuitOnClose, false);
 		this->_window->setAttribute(Qt::WA_DeleteOnClose);
 
 		this->_ui.setupUi(this->_window);
+		QMainWindow::connect(this->_ui.resumeButton, &QPushButton::clicked, this, &APUDebug::pause);
+		QMainWindow::connect(this->_ui.stepButton, &QPushButton::clicked, this, &APUDebug::step);
 		this->_window->show();
 		this->_updatePanel();
 	}
@@ -473,6 +475,12 @@ namespace ComSquare::Debugger
 
 	int APUDebug::_executeInstruction()
 	{
+		if (this->_isPaused)
+			return 0xFF;
+		if (this->_isStepping) {
+			this->_isStepping = false;
+			this->_isPaused = true;
+		}
 		this->_ui.logger->append(APUDebug::_getInstructionString().c_str());
 		this->_updatePanel();
 		return APU::_executeInstruction();
@@ -480,8 +488,31 @@ namespace ComSquare::Debugger
 
 	void APUDebug::update(unsigned cycles)
 	{
-		return APU::update(cycles);
+		try {
+			if (this->_isPaused)
+				return;
+			APU::update(cycles);
+		} catch (InvalidOpcode &e) {
+			this->pause();
+			this->_ui.logger->append(e.what());
+		}
 	}
+
+	void APUDebug::step()
+	{
+		this->_isStepping = true;
+		this->_isPaused = false;
+	}
+
+	void APUDebug::pause()
+	{
+		this->_isPaused = !this->_isPaused;
+		if (this->_isPaused)
+			this->_ui.resumeButton->setText("Resume");
+		else
+			this->_ui.resumeButton->setText("Pause");
+	}
+
 
 	void APUDebug::disableDebugger()
 	{

@@ -9,7 +9,7 @@
 namespace ComSquare::Debugger
 {
 	HeaderViewer::HeaderViewer(ComSquare::SNES &snes)
-		: _window(new ClosableWindow(*this, &HeaderViewer::disableDebugger)),
+		: _window(new ClosableWindow<HeaderViewer>(*this, &HeaderViewer::disableDebugger)),
 		_snes(snes),
 		_cartridge(*snes.cartridge),
 		_ui()
