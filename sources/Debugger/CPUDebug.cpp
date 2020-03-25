@@ -14,7 +14,7 @@ namespace ComSquare::Debugger
 {
 	CPUDebug::CPUDebug(CPU &basicCPU, SNES &snes)
 		: CPU(basicCPU),
-		_window(new ClosableWindow(*this, &CPUDebug::disableDebugger)),
+		_window(new ClosableWindow<CPUDebug>(*this, &CPUDebug::disableDebugger)),
 		_ui(),
 		_snes(snes)
 	{
