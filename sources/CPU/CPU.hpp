@@ -5,10 +5,11 @@
 #ifndef COMSQUARE_CPU_HPP
 #define COMSQUARE_CPU_HPP
 
-#include "../Memory/IMemory.hpp"
+#include "../Memory/AMemory.hpp"
 #include "../Memory/MemoryBus.hpp"
 #include "../Models/Int24.hpp"
 #include "../Cartridge/Cartridge.hpp"
+#include "../Memory/AMemory.hpp"
 
 namespace ComSquare::CPU
 {
@@ -363,7 +364,7 @@ namespace ComSquare::CPU
 	};
 
 	//! @brief The main CPU
-	class CPU : public Memory::IMemory {
+	class CPU : public Memory::AMemory {
 	protected:
 		//! @brief All the registers of the CPU
 		Registers _registers{};
@@ -555,7 +556,7 @@ namespace ComSquare::CPU
 		explicit CPU(std::shared_ptr<Memory::MemoryBus> bus, Cartridge::Header &cartridgeHeader);
 		CPU(const CPU &) = default;
 		CPU &operator=(const CPU &) = delete;
-		~CPU() = default;
+		~CPU() override = default;
 		//! @brief This function continue to execute the Cartridge code.
 		//! @return The number of CPU cycles that elapsed
 		virtual unsigned update();
@@ -570,8 +571,20 @@ namespace ComSquare::CPU
 		//! @throw InvalidAddress will be thrown if the address is more than $1F (the number of register).
 		void write(uint24_t addr, uint8_t data) override;
 
+		//! @brief Get the name of this accessor (used for debug purpose)
+		std::string getName() override;
+
+		//! @brief Get the component of this accessor (used for debug purpose)
+		Component getComponent() override;
+
 		//! @brief Reset interrupt - Called on boot and when the reset button is pressed.
 		virtual void RESB();
+
+		//! @brief Return true if the CPU is overloaded with debugging features.
+		virtual bool isDebugger();
+
+		//! @brief Change the memory bus used by the CPU.
+		void setMemoryBus(std::shared_ptr<Memory::MemoryBus> bus);
 	};
 }
 

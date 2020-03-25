@@ -13,7 +13,7 @@
 namespace ComSquare::Cartridge
 {
 	Cartridge::Cartridge(const std::string &romPath)
-		: Ram::Ram(0)
+		: Ram::Ram(0, Rom, "Cartridge")
 	{
 		try {
 			if (romPath.empty())

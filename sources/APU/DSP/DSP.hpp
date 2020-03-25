@@ -7,7 +7,7 @@
 
 #include <cstdint>
 #include <array>
-#include "../../Memory/IMemory.hpp"
+#include "../../Memory/AMemory.hpp"
 
 namespace ComSquare::APU::DSP
 {
@@ -113,7 +113,7 @@ namespace ComSquare::APU::DSP
 		uint8_t coeff;
 	};
 
-	class DSP : public Memory::IMemory {
+	class DSP : public Memory::AMemory {
 	private:
 		//! @brief All registers of the DSP
 		Registers _registers{};
@@ -121,10 +121,10 @@ namespace ComSquare::APU::DSP
 		//! @brief 8x channels of sample used to make sound
 		std::array<Channel, 8> _channels{};
 	public:
-		explicit DSP();
+		DSP() = default;
 		DSP(const DSP &) = default;
 		DSP &operator=(const DSP &) = default;
-		~DSP() = default;
+		~DSP() override = default;
 
 		Registers getRegisters();
 
@@ -140,6 +140,12 @@ namespace ComSquare::APU::DSP
 		//! @param data The new value of the register.
 		//! @throw InvalidAddress will be thrown if the address is more than $7F (the number of register).
 		void write(uint24_t addr, uint8_t data) override;
+
+		//! @brief Get the name of this accessor (used for debug purpose)
+		std::string getName() override;
+
+		//! @brief Get the component of this accessor (used for debug purpose)
+		Component getComponent() override;
 	};
 }
 

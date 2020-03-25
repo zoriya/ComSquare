@@ -10,7 +10,6 @@ add_compile_options(-W -Wall -Wextra -Wshadow)
 # make unit tests
 add_executable(unit_tests
         tests/CPU/testAddressingMode.cpp
-        tests/tests.cpp
         tests/CPU/testInterupts.cpp
         tests/testMemoryBus.cpp
         tests/tests.hpp
@@ -18,8 +17,8 @@ add_executable(unit_tests
         sources/SNES.hpp
         sources/Memory/MemoryBus.cpp
         sources/Memory/MemoryBus.hpp
-        sources/Memory/IMemory.hpp
-        sources/Memory/IMemory.cpp
+        sources/Memory/AMemory.hpp
+        sources/Memory/AMemory.cpp
         sources/PPU/PPU.cpp
         sources/PPU/PPU.hpp
         sources/CPU/CPU.cpp
@@ -37,8 +36,8 @@ add_executable(unit_tests
         sources/Ram/Ram.hpp
         sources/Memory/MemoryShadow.cpp
         sources/Memory/MemoryShadow.hpp
-        sources/Memory/IRectangleMemory.cpp
-        sources/Memory/IRectangleMemory.hpp
+        sources/Memory/ARectangleMemory.cpp
+        sources/Memory/ARectangleMemory.hpp
         sources/APU/DSP/DSP.cpp
         sources/APU/DSP/DSP.hpp
         sources/Renderer/IRenderer.hpp
@@ -58,7 +57,6 @@ add_executable(unit_tests
         tests/APU/testAPU.cpp
         sources/CPU/Instructions/MathematicalOperations.cpp
         tests/CPU/testAddressingMode.cpp
-        tests/tests.cpp
         tests/PPU/testPpuWrite.cpp
         tests/PPU/testPpuWriteFromVmain.cpp
         sources/CPU/Instructions/MathematicalOperations.cpp
@@ -93,6 +91,8 @@ add_executable(unit_tests
         tests/CPU/Math/testSBC.cpp
         sources/CPU/Instructions/TransferRegisters.cpp
         tests/CPU/TransferRegisters.cpp
+        sources/CPU/AddressingModes.cpp
+        sources/Models/Components.hpp
 )
 
 # include criterion & coverage
@@ -111,13 +111,13 @@ set(CMAKE_AUTOUIC ON)
 
 # make app
 add_executable(ComSquare
-        main.cpp
+        sources/main.cpp
         sources/SNES.cpp
         sources/SNES.hpp
         sources/Memory/MemoryBus.cpp
         sources/Memory/MemoryBus.hpp
-        sources/Memory/IMemory.hpp
-        sources/Memory/IMemory.cpp
+        sources/Memory/AMemory.hpp
+        sources/Memory/AMemory.cpp
         sources/PPU/PPU.cpp
         sources/PPU/PPU.hpp
         sources/CPU/CPU.cpp
@@ -135,8 +135,8 @@ add_executable(ComSquare
         sources/Ram/Ram.hpp
         sources/Memory/MemoryShadow.cpp
         sources/Memory/MemoryShadow.hpp
-        sources/Memory/IRectangleMemory.cpp
-        sources/Memory/IRectangleMemory.hpp
+        sources/Memory/ARectangleMemory.cpp
+        sources/Memory/ARectangleMemory.hpp
         sources/APU/DSP/DSP.cpp
         sources/APU/DSP/DSP.hpp
         sources/Renderer/IRenderer.hpp
@@ -167,6 +167,7 @@ add_executable(ComSquare
         ui/ramView.ui
         ui/cartridgeView.ui
         ui/apuView.ui
+        ui/busView.ui
         resources/appResources.qrc
         sources/Utility/Utility.hpp
         sources/Debugger/MemoryViewer.cpp
@@ -195,7 +196,11 @@ add_executable(ComSquare
         sources/APU/IPL/IPL.hpp
         sources/APU/IPL/IPL.cpp
         sources/CPU/Instructions/TransferRegisters.cpp
-)
+        sources/CPU/AddressingModes.cpp
+        sources/Debugger/MemoryBusDebug.cpp
+        sources/Debugger/MemoryBusDebug.hpp
+        sources/Debugger/ClosableWindow.hpp
+        sources/Models/Components.hpp)
 
 target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)
 

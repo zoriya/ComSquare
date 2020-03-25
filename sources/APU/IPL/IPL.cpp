@@ -3,11 +3,15 @@
 //
 
 #include "IPL.hpp"
+
+#include <utility>
 #include "../../Exceptions/InvalidAddress.hpp"
 
 namespace ComSquare::APU::IPL
 {
-	IPL::IPL()
+	IPL::IPL(Component type, std::string iplName)
+		: _iplType(type),
+		_iplName(std::move(iplName))
 	{ }
 
 	IPL::~IPL()
@@ -25,5 +29,15 @@ namespace ComSquare::APU::IPL
 		if (addr >= this->_size)
 			throw InvalidAddress("IPL write", addr);
 		this->_data[addr] = data;
+	}
+
+	std::string IPL::getName()
+	{
+		return this->_iplName;
+	}
+
+	Component IPL::getComponent()
+	{
+		return this->_iplType;
 	}
 }

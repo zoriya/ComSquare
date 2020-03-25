@@ -10,6 +10,7 @@
 #include "../../ui/ui_gotoDialog.h"
 #include "../Ram/Ram.hpp"
 #include "../Memory/MemoryBus.hpp"
+#include "ClosableWindow.hpp"
 #include <memory>
 
 using ComSquare::Ram::Ram;
@@ -49,8 +50,11 @@ namespace ComSquare
 	namespace Debugger
 	{
 		//! @brief Class responsible of the Memory Viewer.
-		class MemoryViewer : public QMainWindow {
+		class MemoryViewer : public QObject {
+		Q_OBJECT
 		private:
+			//! @brief The QT window for this debugger.
+			ClosableWindow<MemoryViewer> *_window;
 			//! @brief SNES containing all rams to view.
 			SNES &_snes;
 			//! @brief The memory bus used to get the view for a given address.
@@ -61,6 +65,9 @@ namespace ComSquare
 			MemoryViewerModel _model;
 			//! @brief Helper function to create the goto dialog.
 			void _internalGoto(bool isAbsolute);
+		public slots:
+			//! @brief Called when the window is closed. Turn off the debugger.
+			void disableViewer();
 		public:
 			//! @brief Select the memory tab corresponding to a 24 bit address (map the address via the bus).
 			//! @return The address converted to the new tab's locale space.
@@ -72,6 +79,9 @@ namespace ComSquare
 			void gotoAddr();
 			//! @brief Create a popup asking you where you want to jump to with the absolute mode selected.
 			void gotoAbsoluteAddr();
+
+			//! @brief Focus the memory viewer's window.
+			void focus();
 
 			explicit MemoryViewer(SNES &snes, Memory::MemoryBus &bus);
 			MemoryViewer(const MemoryViewer &) = delete;

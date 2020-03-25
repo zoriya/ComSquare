@@ -11,8 +11,11 @@
 
 namespace ComSquare::Debugger
 {
-	class APUDebug : public APU::APU, public QMainWindow {
+	class APUDebug : public APU::APU, public QObject {
 	private:
+		//! @brief The QT window for this debugger.
+		ClosableWindow<APUDebug> *_window;
+
 		//! @brief A widget that contain the whole UI.
 		Ui::APUView _ui;
 
@@ -40,6 +43,8 @@ namespace ComSquare::Debugger
 		void pause();
 		//! @brief Step - Execute a single instruction.
 		void step();
+		//! @brief Called when the window is closed. Turn off the debugger and revert to a basic APU.
+		void disableDebugger();
 	public:
 		//! @brief Convert a basic APU to a debugging APU.
 		explicit APUDebug(ComSquare::APU::APU &apu, SNES &snes);
@@ -49,6 +54,13 @@ namespace ComSquare::Debugger
 
 		//! @brief Override the apu's update to disable debugging.
 		void update(unsigned cycles) override;
+
+
+		//! @brief Return true if the CPU is overloaded with debugging features.
+		bool isDebugger() override;
+
+		//! @brief Focus the debugger's window.
+		void focus();
 	};
 }
 

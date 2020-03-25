@@ -5,11 +5,11 @@
 #ifndef COMSQUARE_IPL_HPP
 #define COMSQUARE_IPL_HPP
 
-#include "../../Memory/IRectangleMemory.hpp"
+#include "../../Memory/ARectangleMemory.hpp"
 
 namespace ComSquare::APU::IPL
 {
-	class IPL : public Memory::IMemory {
+	class IPL : public Memory::AMemory {
 	protected:
 		//! @brief The Rom.
 		std::array<uint8_t, 64> _data = {
@@ -22,10 +22,15 @@ namespace ComSquare::APU::IPL
 			0xF6, 0xDA, 0x00, 0xBA, 0xF4, 0xC4, 0xF4, 0xDD,
 			0x5D, 0xD0, 0xDB, 0x1F, 0x00, 0x00, 0xC0, 0xFF
 		};
+		//! @brief The size of the IPL rom (in bytes).
 		size_t _size = 64;
+		//! @brief An id identifying the type of memory this is (for the debugger)
+		Component _iplType;
+		//! @brief The name of this ram.
+		std::string _iplName;
 	public:
 		//! @brief Create the rom with its value.
-		explicit IPL();
+		explicit IPL(Component, std::string iplName);
 
 		//! @brief The rom can't be copied.
 		IPL(const IPL &) = delete;
@@ -47,6 +52,12 @@ namespace ComSquare::APU::IPL
 		//! @param data The new data to write.
 		//! @throw InvalidAddress if the address is not mapped to the component.
 		void write(uint24_t addr, uint8_t data) override;
+
+		//! @brief Get the name of this accessor (used for debug purpose)
+		std::string getName() override;
+
+		//! @brief Get the component of this accessor (used for debug purpose)
+		Component getComponent() override;
 	};
 }
 

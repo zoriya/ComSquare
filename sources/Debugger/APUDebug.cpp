@@ -11,18 +11,19 @@ using namespace ComSquare::APU;
 namespace ComSquare::Debugger
 {
 	APUDebug::APUDebug(APU &apu, SNES &snes) :
-		APU(apu),
-		QMainWindow(),
-		_ui(),
-		_snes(snes)
+			APU(apu),
+			_window(new ClosableWindow(*this, &APUDebug::disableDebugger)),
+			_ui(),
+			_snes(snes)
 	{
-		this->setContextMenuPolicy(Qt::NoContextMenu);
-		this->setAttribute(Qt::WA_QuitOnClose, false);
+		this->_window->setContextMenuPolicy(Qt::NoContextMenu);
+		this->_window->setAttribute(Qt::WA_QuitOnClose, false);
+		this->_window->setAttribute(Qt::WA_DeleteOnClose);
 
-		this->_ui.setupUi(this);
+		this->_ui.setupUi(this->_window);
 		QMainWindow::connect(this->_ui.resumeButton, &QPushButton::clicked, this, &APUDebug::pause);
 		QMainWindow::connect(this->_ui.stepButton, &QPushButton::clicked, this, &APUDebug::step);
-		this->show();
+		this->_window->show();
 		this->_updatePanel();
 	}
 
@@ -488,10 +489,6 @@ namespace ComSquare::Debugger
 	void APUDebug::update(unsigned cycles)
 	{
 		try {
-			if (!this->isVisible()) {
-				this->_snes.disableAPUDebugging();
-				return;
-			}
 			if (this->_isPaused)
 				return;
 			APU::update(cycles);
@@ -514,5 +511,21 @@ namespace ComSquare::Debugger
 			this->_ui.resumeButton->setText("Resume");
 		else
 			this->_ui.resumeButton->setText("Pause");
+	}
+
+
+	void APUDebug::disableDebugger()
+	{
+		this->_snes.disableAPUDebugging();
+	}
+
+	bool APUDebug::isDebugger()
+	{
+		return true;
+	}
+
+	void APUDebug::focus()
+	{
+		this->_window->activateWindow();
 	}
 }

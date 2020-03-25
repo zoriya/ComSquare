@@ -13,9 +13,24 @@ namespace ComSquare::APU
 {
 	APU::APU(std::shared_ptr<MemoryMap> &map) :
 		_map(map),
-		_dsp(new DSP::DSP)
+		_dsp(new DSP::DSP())
 	{
 		this->reset();
+	}
+
+	bool APU::isDebugger()
+	{
+		return false;
+	}
+
+	std::string APU::getName()
+	{
+		return "APU";
+	}
+
+	Component APU::getComponent()
+	{
+		return Apu;
 	}
 
 	uint8_t APU::_internalRead(uint24_t addr) {
@@ -705,9 +720,9 @@ namespace ComSquare::APU
 	}
 
 	MemoryMap::MemoryMap() :
-		Page0(0x00F0),
-		Page1(0x0100),
-		Memory(0xFDC0),
-	    IPL()
+		Page0(0x00F0, Apu, "APU's Page 0"),
+		Page1(0x0100, Apu, "APU's Page 1"),
+		Memory(0xFDC0, Apu, "APU's Ram"),
+	    IPL(Apu, "IPL Rom")
 	{ }
 }
