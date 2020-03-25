@@ -11,18 +11,20 @@
 
 using namespace ComSquare;
 
-Test(_get, immediate)
+Test(apu_get, immediate)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 
 	apu->_internalRegisters.pc = 0x32;
 	apu->_internalWrite(0x32, 0x40);
 	cr_assert_eq(apu->_getImmediateData(), 0x40);
 }
 
-Test(_get, direct)
+Test(apu_get, direct)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 
 	apu->_internalRegisters.pc = 0x32;
 	apu->_internalRegisters.p = true;
@@ -30,27 +32,30 @@ Test(_get, direct)
 	cr_assert_eq(apu->_getDirectAddr(), 0x140);
 }
 
-Test(_get, X)
+Test(apu_get, X)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 
 	apu->_internalRegisters.x = 0x32;
 	apu->_internalRegisters.p = true;
 	cr_assert_eq(apu->_getIndexXAddr(), 0x132);
 }
 
-Test(_get, Y)
+Test(apu_get, Y)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 
 	apu->_internalRegisters.y = 0x32;
 	apu->_internalRegisters.p = true;
 	cr_assert_eq(apu->_getIndexYAddr(), 0x132);
 }
 
-Test(_get, directbyX)
+Test(apu_get, directbyX)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 
 	apu->_internalRegisters.pc = 0x32;
 	apu->_internalRegisters.x = 0x03;
@@ -58,9 +63,10 @@ Test(_get, directbyX)
 	cr_assert_eq(apu->_getDirectAddrByX(), 0x43);
 }
 
-Test(_get, directbyY)
+Test(apu_get, directbyY)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 
 	apu->_internalRegisters.pc = 0x32;
 	apu->_internalRegisters.y = 0x05;
@@ -68,9 +74,10 @@ Test(_get, directbyY)
 	cr_assert_eq(apu->_getDirectAddrByY(), 0x45);
 }
 
-Test(_get, absolute)
+Test(apu_get, absolute)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 
 	apu->_internalRegisters.pc = 0x32;
 	apu->_internalWrite(0x32, 0b00001111);
@@ -78,9 +85,10 @@ Test(_get, absolute)
 	cr_assert_eq(apu->_getAbsoluteAddr(), 61455);
 }
 
-Test(_get, absolutebyx)
+Test(apu_get, absolutebyx)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 
 	apu->_internalRegisters.pc = 0x32;
 	apu->_internalRegisters.x = 10;
@@ -89,9 +97,10 @@ Test(_get, absolutebyx)
 	cr_assert_eq(apu->_getAbsoluteByXAddr(), 64025);
 }
 
-Test(_get, absoluteaddrbyx)
+Test(apu_get, absoluteaddrbyx)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 
 	apu->_internalRegisters.pc = 0x32;
 	apu->_internalRegisters.x = 10;
@@ -100,9 +109,10 @@ Test(_get, absoluteaddrbyx)
 	cr_assert_eq(apu->_getAbsoluteAddrByX(), 61465);
 }
 
-Test(_get, absoluteaddrbyy)
+Test(apu_get, absoluteaddrbyy)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 
 	apu->_internalRegisters.pc = 0x32;
 	apu->_internalRegisters.y = 10;
@@ -111,9 +121,10 @@ Test(_get, absoluteaddrbyy)
 	cr_assert_eq(apu->_getAbsoluteAddrByY(), 61465);
 }
 
-Test(_get, absolutebit)
+Test(apu_get, absolutebit)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	std::pair<uint24_t, uint24_t> result;
 
 	apu->_internalRegisters.pc = 0x32;
@@ -124,9 +135,10 @@ Test(_get, absolutebit)
 	cr_assert_eq(result.second, 7);
 }
 
-Test(_get, absolutebyxdirect)
+Test(apu_get, absolutebyxdirect)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 
 	apu->_internalRegisters.pc = 0x32;
 	apu->_internalRegisters.p = true;
@@ -137,9 +149,10 @@ Test(_get, absolutebyxdirect)
 	cr_assert_eq(apu->_getAbsoluteDirectByXAddr(), 0b0110101100001101);
 }
 
-Test(_get, absolutedirectbyy)
+Test(apu_get, absolutedirectbyy)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 
 	apu->_internalRegisters.pc = 0x32;
 	apu->_internalRegisters.p = true;

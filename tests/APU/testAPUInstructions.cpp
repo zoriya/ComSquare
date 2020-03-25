@@ -647,7 +647,8 @@ Test(ProgramFlow, BPL)
 
 Test(ProgramFlow, BBS)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.pc = 0;
@@ -665,7 +666,8 @@ Test(ProgramFlow, BBS)
 
 Test(ProgramFlow, BBC)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.pc = 0;
@@ -683,7 +685,8 @@ Test(ProgramFlow, BBC)
 
 Test(ProgramFlow, CBNE)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.pc = 0;
@@ -702,7 +705,8 @@ Test(ProgramFlow, CBNE)
 
 Test(ProgramFlow, DBNZ)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.pc = 0;
@@ -719,7 +723,8 @@ Test(ProgramFlow, DBNZ)
 
 Test(ProgramFlow, JMP)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.pc = 0x32;
@@ -743,7 +748,8 @@ Test(ProgramFlow, JMP)
 
 Test(DecimalCompensation, DAA)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.c = true;
@@ -756,7 +762,8 @@ Test(DecimalCompensation, DAA)
 
 Test(DecimalCompensation, DAS)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.c = false;
@@ -775,7 +782,8 @@ Test(DecimalCompensation, DAS)
 
 Test(MultiplicationDivision, MUL)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.a = 10;
@@ -787,7 +795,8 @@ Test(MultiplicationDivision, MUL)
 
 Test(MultiplicationDivision, DIV)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.ya = 235;
@@ -811,7 +820,8 @@ Test(MultiplicationDivision, DIV)
 
 Test(XVIbitArithmetic, INCW)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalWrite(apu->_internalRegisters.pc, 0x55);
@@ -825,7 +835,8 @@ Test(XVIbitArithmetic, INCW)
 
 Test(XVIbitArithmetic, DECW)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalWrite(apu->_internalRegisters.pc, 0x55);
@@ -839,7 +850,8 @@ Test(XVIbitArithmetic, DECW)
 
 Test(XVIbitArithmetic, ADDW)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.ya = 0x4321;
@@ -856,7 +868,8 @@ Test(XVIbitArithmetic, ADDW)
 
 Test(XVIbitArithmetic, SUBW)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.ya = 0x4321;
@@ -873,7 +886,8 @@ Test(XVIbitArithmetic, SUBW)
 
 Test(XVIbitArithmetic, CMPW)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.ya = 0x2211;
@@ -893,7 +907,8 @@ Test(XVIbitArithmetic, CMPW)
 
 Test(XVIbitDataTransmission, MOVW)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.pc = 0;
@@ -919,7 +934,8 @@ Test(XVIbitDataTransmission, MOVW)
 
 Test(VIIIbitShiftRotation, ASL)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.a = 0x66;
@@ -937,7 +953,8 @@ Test(VIIIbitShiftRotation, ASL)
 
 Test(VIIIbitShiftRotation, LSR)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.a = 0x66;
@@ -955,7 +972,8 @@ Test(VIIIbitShiftRotation, LSR)
 
 Test(VIIIbitShiftRotation, ROL)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.a = 0x66;
@@ -973,7 +991,8 @@ Test(VIIIbitShiftRotation, ROL)
 
 Test(VIIIbitShiftRotation, ROR)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.a = 0x66;
@@ -991,7 +1010,8 @@ Test(VIIIbitShiftRotation, ROR)
 
 Test(VIIIShiftRotation, XCN)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.a = 0b10101010;
@@ -1008,7 +1028,8 @@ Test(VIIIShiftRotation, XCN)
 
 Test(VIIIbitIncrementDecrement, INC)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalWrite(apu->_internalRegisters.pc, 0x55);
@@ -1020,7 +1041,8 @@ Test(VIIIbitIncrementDecrement, INC)
 
 Test(VIIIbitIncrementDecrement, INCreg)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.a = 0x76;
@@ -1031,7 +1053,8 @@ Test(VIIIbitIncrementDecrement, INCreg)
 
 Test(VIIIbitIncrementDecrement, DEC)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalWrite(apu->_internalRegisters.pc, 0x55);
@@ -1043,7 +1066,8 @@ Test(VIIIbitIncrementDecrement, DEC)
 
 Test(VIIIbitIncrementDecrement, DECreg)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.a = 0x76;
@@ -1060,7 +1084,8 @@ Test(VIIIbitIncrementDecrement, DECreg)
 
 Test(VIIILogical, ANDacc)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.x = 4;
@@ -1073,7 +1098,8 @@ Test(VIIILogical, ANDacc)
 
 Test(VIIILogical, AND)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.x = 4;
@@ -1087,7 +1113,8 @@ Test(VIIILogical, AND)
 
 Test(VIIILogical, ORacc)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.x = 4;
@@ -1100,7 +1127,8 @@ Test(VIIILogical, ORacc)
 
 Test(VIIILogical, OR)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.x = 4;
@@ -1114,7 +1142,8 @@ Test(VIIILogical, OR)
 
 Test(VIIILogical, EORacc)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.x = 4;
@@ -1127,7 +1156,8 @@ Test(VIIILogical, EORacc)
 
 Test(VIIILogical, EOR)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.x = 4;
@@ -1147,7 +1177,8 @@ Test(VIIILogical, EOR)
 
 Test(VIIIArithmetic, ADC)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.x = 4;
@@ -1165,7 +1196,8 @@ Test(VIIIArithmetic, ADC)
 
 Test(VIIIArithmetic, ADCacc)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.x = 4;
@@ -1182,7 +1214,8 @@ Test(VIIIArithmetic, ADCacc)
 
 Test(VIIIArithmetic, SBC)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.x = 4;
@@ -1200,7 +1233,8 @@ Test(VIIIArithmetic, SBC)
 
 Test(VIIIArithmetic, SBCacc)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.x = 4;
@@ -1217,7 +1251,8 @@ Test(VIIIArithmetic, SBCacc)
 
 Test(VIIIArithmetic, CMP)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.x = 4;
@@ -1231,7 +1266,8 @@ Test(VIIIArithmetic, CMP)
 
 Test(VIIIArithmetic, CMPacc)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.x = 4;
@@ -1250,7 +1286,8 @@ Test(VIIIArithmetic, CMPacc)
 
 Test(VIIIDataTransmission, MovRegToReg)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.a = 23;
@@ -1262,7 +1299,8 @@ Test(VIIIDataTransmission, MovRegToReg)
 
 Test(VIIIDataTransmission, MovMemToMem)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.pc = 0x23;
@@ -1277,7 +1315,8 @@ Test(VIIIDataTransmission, MovMemToMem)
 
 Test(VIIIDataTransmission, MovRegToMem)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.x = 0x23;
@@ -1291,7 +1330,8 @@ Test(VIIIDataTransmission, MovRegToMem)
 
 Test(VIIIDataTransmission, MovMemToReg)
 {
-	auto apu = Init().second.apu;
+	Init()
+	auto apu = snes.apu;
 	int result = 0;
 
 	apu->_internalRegisters.x = 0x23;

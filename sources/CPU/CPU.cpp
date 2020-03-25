@@ -411,7 +411,9 @@ namespace ComSquare::CPU
 
 	uint16_t CPU::_pop16()
 	{
-		return this->_bus->read(++this->_registers.s) + (this->_bus->read(++this->_registers.s) << 8u);
+		uint16_t value = this->_bus->read(++this->_registers.s);
+		value +=this->_bus->read(++this->_registers.s) << 8u;
+		return value;
 	}
 
 	std::string CPU::getName()
