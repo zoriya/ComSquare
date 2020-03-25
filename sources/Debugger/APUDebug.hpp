@@ -11,13 +11,18 @@
 
 namespace ComSquare::Debugger
 {
-	class APUDebug : public APU::APU {
+	class APUDebug : public APU::APU, public QObject {
 	private:
 		//! @brief The QT window for this debugger.
 		ClosableWindow<APUDebug> *_window;
 
 		//! @brief A widget that contain the whole UI.
 		Ui::APUView _ui;
+
+		//! @brief If this is set to true, the execution of the APU will be paused.
+		bool _isPaused = true;
+		//! @brief If this is set to true, the APU will execute one instruction and pause itself.
+		bool _isStepping = false;
 
 		//! @brief A reference to the snes (to disable the debugger).
 		SNES &_snes;
@@ -33,8 +38,11 @@ namespace ComSquare::Debugger
 
 		//! @brief return the mnemonic of the current instruction done.
 		std::string _getInstructionString();
-
 	public slots:
+		//! @brief Pause/Resume the APU.
+		void pause();
+		//! @brief Step - Execute a single instruction.
+		void step();
 		//! @brief Called when the window is closed. Turn off the debugger and revert to a basic APU.
 		void disableDebugger();
 	public:
@@ -46,6 +54,7 @@ namespace ComSquare::Debugger
 
 		//! @brief Override the apu's update to disable debugging.
 		void update(unsigned cycles) override;
+
 
 		//! @brief Return true if the CPU is overloaded with debugging features.
 		bool isDebugger() override;

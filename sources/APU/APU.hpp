@@ -9,6 +9,7 @@
 #include "DSP/DSP.hpp"
 #include "../Memory/AMemory.hpp"
 #include "../Ram/Ram.hpp"
+#include "IPL/IPL.hpp"
 
 namespace ComSquare::APU
 {
@@ -123,7 +124,7 @@ namespace ComSquare::APU
 		//! @brief Any-use memory
 		Ram::Ram Memory;
 		//! @brief IPL ROM
-		Ram::Ram IPL;
+		IPL::IPL IPL;
 
 		MemoryMap();
 		MemoryMap(const MemoryMap &) = delete;
@@ -167,12 +168,35 @@ namespace ComSquare::APU
 		//! @brief Keep the number of excess cycles executed to pad the next update
 		unsigned int _paddingCycles = 0;
 
+		//! @brief Get value of the Pointer Counter
+		uint8_t _getImmediateData();
 		//! @brief Get direct page offset
 		uint24_t _getDirectAddr();
+		//! @brief Get Index X offset
+		uint24_t _getIndexXAddr();
+		//! @brief Get Index Y offset
+		uint24_t _getIndexYAddr();
+		//! @brief Get direct page offset and add to it the X Index Flag
+		uint24_t _getDirectAddrByX();
+		//! @brief Get direct page offset and add to it the Y Index Flag
+		uint24_t _getDirectAddrByY();
 		//! @brief Get absolute direct page offset
 		uint24_t _getAbsoluteAddr();
+		//! @brief _get absolute direct page + X Index offset
+		uint24_t _getAbsoluteByXAddr();
+		//! @brief Get absolute direct page offset and add to it the X Index Flag
+		uint24_t _getAbsoluteAddrByX();
+		//! @brief Get absolute direct page offset and add to it the Y Index Flag
+		uint24_t _getAbsoluteAddrByY();
+		//! @brief Get absolute offset of the direct page added to the X Index Flag
+		uint24_t _getAbsoluteDirectByXAddr();
+		//! @brief Get absolute offset of the direct page and add the Y Index Flag to it
+		uint24_t _getAbsoluteDirectAddrByY();
 		//! @brief Get absolute offset and separate its bits
 		std::pair<uint24_t, uint24_t> _getAbsoluteBit();
+
+		//! @brief Set Negative and Zero flags with value after an instruction
+		void _setNZflags(uint8_t value);
 
 		//! @brief Execute a single instruction.
 		//! @return The number of cycles that the instruction took.
@@ -241,22 +265,107 @@ namespace ComSquare::APU
 
 		//! @brief Branch Always, go to the specified location from the next instruction.
 		int BRA();
-		//! @brief Branch if Zero Flag is set
+		//! @brief Branch if Zero Flag is set.
 		int BEQ();
-		//! @brief Branch if Zero Flag is clear
+		//! @brief Branch if Zero Flag is clear.
 		int BNE();
-		//! @brief Branch if Carry Flag is set
+		//! @brief Branch if Carry Flag is set.
 		int BCS();
-		//! @brief Branch if Carry Flag is clear
+		//! @brief Branch if Carry Flag is clear.
 		int BCC();
-		//! @brief Branch if Overflow Flag is set
+		//! @brief Branch if Overflow Flag is set.
 		int BVS();
-		//! @brief Branch if Overflow Flag is set
+		//! @brief Branch if Overflow Flag is set.
 		int BVC();
-		//! @brief Branch if Negative Flag is set
+		//! @brief Branch if Negative Flag is set.
 		int BMI();
-		//! @brief Branch if Negative Flag is clear
+		//! @brief Branch if Negative Flag is clear.
 		int BPL();
+		//! @brief Branch if the specified is set in the address, go to the specified location from the next instruction.
+		int BBS(uint24_t addr, uint8_t bit);
+		//! @brief Branch if the specified is clear in the address, go to the specified location from the next instruction.
+		int BBC(uint24_t addr, uint8_t bit);
+		//! @brief Branch if the value at the specified address is not equal to the Accumulator Flag.
+		int CBNE(uint24_t addr, bool by_x = false);
+		//! @brief Decrement a value then branch to the specified location if the value is not zero.
+		int DBNZ(bool direct_addr = false);
+		//! @brief Jump to the specified location.
+		int JMP(uint24_t addr, bool by_x = false);
+
+		//! @brief Decimal adjust A for addition.
+		int DAA();
+		//! @brief Decimal adjust A for subtraction.
+		int DAS();
+
+		//! @brief Store the 16-bit value of Y * A into YA
+		int MUL();
+		//! @brief Divide the 16-bit value YA by X, storing the quotient in A and the remainder in Y.
+		int DIV();
+
+		//! @brief Increment a word value.
+		int INCW(uint24_t addr);
+		//! @brief Decrement a word value.
+		int DECW(uint24_t addr);
+		//! @brief Add YA with a word value.
+		int ADDW(uint24_t addr);
+		//! @brief Subtract YA with a word value.
+		int SUBW(uint24_t addr);
+		//! @brief Compare YA with a word value.
+		int CMPW(uint24_t addr);
+
+		//! @brief Sets a word value equal to another.
+		int MOVW(uint24_t addr, bool to_ya = false);
+
+		//! @brief Arithmetic Shift Left.
+		int ASL(uint24_t operand, int cycles, bool accumulator = false);
+		//! @brief Logical Shift Right.
+		int LSR(uint24_t operand, int cycles, bool accumulator = false);
+		//! @brief Rotate Bits Left.
+		int ROL(uint24_t operand, int cycles, bool accumulator = false);
+		//! @brief Rotate Bits Right.
+		int ROR(uint24_t operand, int cycles, bool accumulator = false);
+		//! @brief Exchange Nibbles.
+		int XCN();
+
+		//! @brief Increment a value at an address.
+		int INC(uint24_t addr, int cycles);
+		//! @brief Increment a register.
+		int INCreg(uint8_t &value);
+		//! @brief Decrement a value at an address.
+		int DEC(uint24_t addr, int cycles);
+		//! @brief Decrement a register.
+		int DECreg(uint8_t &value);
+
+		//! @brief Perform a bitwise AND.
+		int AND(uint24_t operand1, uint24_t operand2, int cycles);
+		//! @brief Perform a bitwise AND on the Accumulator flag.
+		int ANDacc(uint24_t addr, int cycles);
+		//! @brief Perform a bitwise OR.
+		int OR(uint24_t operand1, uint24_t operand2, int cycles);
+		//! @brief Perform a bitwise OR on the Accumulator flag.
+		int ORacc(uint24_t addr, int cycles);
+		//! @brief Perform an Exclusive OR.
+		int EOR(uint24_t operand1, uint24_t operand2, int cycles);
+		//! @brief Perform an Exclusive OR on the Accumulator flag.
+		int EORacc(uint24_t addr, int cycles);
+
+		//! @brief Add operand1 with operand2 and carry.
+		int ADC(uint24_t operand1, uint24_t operand2, int cycles);
+		//! !@brief Add Accumulator Flag with value at address and carry.
+		int ADCacc(uint24_t addr, int cycles);
+		//! @brief Subtract operand1 with operand2 and carry.
+		int SBC(uint24_t operand1, uint24_t operand2, int cycles);
+		//! @brief Subtract Accumulator Flag with address and carry.
+		int SBCacc(uint24_t addr, int cycles);
+		//! @brief Compare the two values of the operands and set NZC flags.
+		int CMP(uint24_t operand1, uint24_t operand2, int cycles);
+		//! @brief Compare a Register Flag with the value of the operand and set NZC flags.
+		int CMPreg(uint8_t  &reg, uint24_t addr, int cycles);
+
+		int MOV(uint8_t &regFrom, uint8_t &regTo, bool setFlags = true);
+		int MOV(uint24_t memFrom, uint24_t memTo);
+		int MOV(uint8_t &regFrom, uint24_t memTo, int cycles, bool incrementX = false);
+		int MOV(uint24_t memFrom, uint8_t &regTo, int cycles, bool incrementX = false);
 	public:
 		explicit APU(std::shared_ptr<MemoryMap> &map);
 		APU(const APU &) = default;

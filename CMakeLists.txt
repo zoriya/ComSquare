@@ -75,11 +75,25 @@ add_executable(unit_tests
         sources/APU/Instructions/Stack.cpp
         sources/APU/Instructions/Subroutine.cpp
         sources/APU/Instructions/ProgramFlow.cpp
+        sources/APU/Operand.cpp
+        sources/APU/Instructions/DecimalCompensation.cpp
+        sources/APU/Instructions/MultiplicationDivision.cpp
+        sources/APU/Instructions/16bitArithmetic.cpp
+        sources/APU/Instructions/16bitDataTransmission.cpp
+        sources/APU/Instructions/8bitShiftRotation.cpp
+        sources/APU/Instructions/8bitIncrementDecrement.cpp
+        sources/APU/Instructions/8bitLogical.cpp
+        tests/APU/testOperand.cpp
+        sources/APU/Instructions/8bitArithmetic.cpp
+        sources/APU/Instructions/8bitDataTransmission.cpp
+        sources/APU/IPL/IPL.hpp
+        sources/APU/IPL/IPL.cpp
         tests/CPU/Math/testSBC.cpp
         sources/CPU/Instructions/TransferRegisters.cpp
         tests/CPU/TransferRegisters.cpp
         sources/CPU/AddressingModes.cpp
-        sources/Models/Components.hpp)
+        sources/Models/Components.hpp
+)
 
 # include criterion & coverage
 target_link_libraries(unit_tests criterion -lgcov)
@@ -169,6 +183,18 @@ add_executable(ComSquare
         sources/APU/Instructions/Stack.cpp
         sources/APU/Instructions/Subroutine.cpp
         sources/APU/Instructions/ProgramFlow.cpp
+        sources/APU/Operand.cpp
+        sources/APU/Instructions/DecimalCompensation.cpp
+        sources/APU/Instructions/MultiplicationDivision.cpp
+        sources/APU/Instructions/16bitArithmetic.cpp
+        sources/APU/Instructions/16bitDataTransmission.cpp
+        sources/APU/Instructions/8bitShiftRotation.cpp
+        sources/APU/Instructions/8bitIncrementDecrement.cpp
+        sources/APU/Instructions/8bitLogical.cpp
+        sources/APU/Instructions/8bitArithmetic.cpp
+        sources/APU/Instructions/8bitDataTransmission.cpp
+        sources/APU/IPL/IPL.hpp
+        sources/APU/IPL/IPL.cpp
         sources/CPU/Instructions/TransferRegisters.cpp
         sources/CPU/AddressingModes.cpp
         sources/Debugger/MemoryBusDebug.cpp

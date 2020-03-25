@@ -28,13 +28,14 @@ void parseArguments(int argc, char **argv, SNES &snes)
 		int option_index = 0;
 		static struct option long_options[] = {
 			{"cpu",    no_argument, 0, 'c'},
+			{"apu",     no_argument, 0,  'a' },
 			{"memory", no_argument, 0, 'm'},
 			{"header", no_argument, 0, 'h'},
 			{"bus",    no_argument, 0, 'b'},
 			{0, 0,                  0, 0}
 		};
 
-		int c = getopt_long(argc, argv, "cmh", long_options, &option_index);
+		int c = getopt_long(argc, argv, "camh", long_options, &option_index);
 		if (c == -1)
 			break;
 		switch (c) {
@@ -43,6 +44,9 @@ void parseArguments(int argc, char **argv, SNES &snes)
 			break;
 		case 'c':
 			snes.enableCPUDebugging();
+			break;
+		case 'a':
+			snes.enableAPUDebugging();
 			break;
 		case 'm':
 			snes.enableRamViewer();
