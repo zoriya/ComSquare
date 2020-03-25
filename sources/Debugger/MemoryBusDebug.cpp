@@ -12,7 +12,7 @@ namespace ComSquare::Debugger
 {
 	MemoryBusDebug::MemoryBusDebug(SNES &snes, const Memory::MemoryBus &bus)
 		: MemoryBus(bus),
-		_window(new ClosableWindow(*this, &MemoryBusDebug::disableViewer)),
+		_window(new ClosableWindow<MemoryBusDebug>(*this, &MemoryBusDebug::disableViewer)),
 		_snes(snes),
 		_ui(),
 		_model(),
