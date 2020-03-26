@@ -227,27 +227,22 @@ namespace ComSquare::PPU
 		uint8_t red;
 		uint8_t green;
 		uint8_t blue;
-		uint32_t pixelTmp = 0x000000FF;
-		//std::cout << "update" << std::endl;
+		uint32_t pixelTmp = 0x0;
 		if (!this->_registers._inidisp.fblank) {
 				for (int y = 0; y <= 255; y++) {
 					tmp = this->_cgram.read(y);
 
-					//std::cout << "tmp " << std::bitset<16>(tmp) << std::endl;
 					blue = (tmp & 0x7D00U) >> 10U;
 					green = (tmp & 0x03E0U) >> 5U;
 					red = (tmp & 0x001FU);
 
-					//std::cout << "red " << std::bitset<8>(red) << std::endl;
-					//std::cout << "green " << std::bitset<8>(green) << std::endl;
-					//std::cout << "blue " << std::bitset<8>(blue) << std::endl;
-					pixelTmp += (red * 256U / 32U) << 24U;
-					pixelTmp += (green * 256U / 32U) << 16U;
-					pixelTmp += (blue * 256U / 32U) << 8U;
-					//std::cout << "value of pixel " << std::hex << pixelTmp << " pour inc " << std::dec << y << std::endl;
+					pixelTmp = this->_registers._inidisp.brightness * 255U / 15U;
+					pixelTmp += (red * 255U / 31U) << 24U;
+					pixelTmp += (green * 255U / 31U) << 16U;
+					pixelTmp += (blue * 255U / 31U) << 8U;
+
 					for (int x = 0; x < 100; x++)
 						this->_renderer.putPixel(x, y, pixelTmp);
-					pixelTmp = 0xFF;
 				}
 		}
 		this->_renderer.drawScreen();
@@ -390,7 +385,7 @@ namespace ComSquare::PPU
 		case ppuRegisters::stat78:
 			return "STAT78";
 		default:
-			return "PPU : Unknown register";
+			return "PPU : ???";
 		}
 	}
 
