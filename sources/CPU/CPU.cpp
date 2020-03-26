@@ -255,10 +255,10 @@ namespace ComSquare::CPU
 		case Instructions::STY_DP:   this->STX(this->_getDirectAddr()); 			return 3 + !this->_registers.p.m + this->_registers.dl != 0;
 		case Instructions::STY_DPX:  this->STX(this->_getDirectIndexedByXAddr());	return 4 + !this->_registers.p.m + this->_registers.dl != 0;
 
-		case Instructions::STZ_ABS:  this->STX(this->_getAbsoluteAddr()); 			return 4 + !this->_registers.p.m;
-		case Instructions::STZ_DP:   this->STX(this->_getDirectAddr()); 				return 3 + !this->_registers.p.m + this->_registers.dl != 0;
-		case Instructions::STZ_ABSX: this->STX(this->_getAbsoluteIndexedByXAddr()); 	return 3 + !this->_registers.p.m + this->_registers.dl != 0;
-		case Instructions::STZ_DPX:  this->STX(this->_getDirectIndexedByXAddr());		return 4 + !this->_registers.p.m + this->_registers.dl != 0;
+		case Instructions::STZ_ABS:  this->STZ(this->_getAbsoluteAddr()); 			return 4 + !this->_registers.p.m;
+		case Instructions::STZ_DP:   this->STZ(this->_getDirectAddr()); 				return 3 + !this->_registers.p.m + this->_registers.dl != 0;
+		case Instructions::STZ_ABSX: this->STZ(this->_getAbsoluteIndexedByXAddr()); 	return 3 + !this->_registers.p.m + this->_registers.dl != 0;
+		case Instructions::STZ_DPX:  this->STZ(this->_getDirectIndexedByXAddr());		return 4 + !this->_registers.p.m + this->_registers.dl != 0;
 
 		case Instructions::LDA_IM:   this->LDA(this->_getImmediateAddrForA()); 					return 2 + !this->_registers.p.m;
 		case Instructions::LDA_ABS:  this->LDA(this->_getAbsoluteAddr()); 						return 4 + !this->_registers.p.m;
