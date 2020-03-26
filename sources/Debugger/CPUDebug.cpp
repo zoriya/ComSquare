@@ -24,12 +24,12 @@ namespace ComSquare::Debugger
 		this->_window->setAttribute(Qt::WA_DeleteOnClose);
 
 		this->_ui.setupUi(this->_window);
-
-		this->_ui.disasembly->setModel(&this->_model);
-		this->_ui.disasembly->setShowGrid(false);
-		this->_ui.disasembly->verticalHeader()->hide();
-		this->_ui.disasembly->horizontalHeader()->hide();
-		this->_ui.disasembly->horizontalHeader()->setStretchLastSection(true);
+//
+//		this->_ui.disasembly->setModel(&this->_model);
+//		this->_ui.disasembly->setShowGrid(false);
+//		this->_ui.disasembly->verticalHeader()->hide();
+//		this->_ui.disasembly->horizontalHeader()->hide();
+//		this->_ui.disasembly->horizontalHeader()->setStretchLastSection(true);
 
 		QMainWindow::connect(this->_ui.actionPause, &QAction::triggered, this, &CPUDebug::pause);
 		QMainWindow::connect(this->_ui.actionStep, &QAction::triggered, this, &CPUDebug::step);
@@ -213,7 +213,18 @@ namespace ComSquare::Debugger
 	std::string CPUDebug::_getInstructionString(uint24_t pc)
 	{
 		uint8_t opcode = this->_bus->read(pc++, true);
-		return this->_instructions[opcode].name;
+
+		return this->_instructions[opcode].name + this->_getInstructionParameter(pc);
+	}
+
+	std::string CPUDebug::_getInstructionParameter(uint24_t pc)
+	{
+		Instruction instruction = this->_instructions[opcode];
+
+		switch (instruction.addressingMode) {
+		case ImmediateForA:
+			return this->_getImmediateAddrForA(pc);
+		}
 	}
 
 	int CPUDebug::RESB(uint24_t)

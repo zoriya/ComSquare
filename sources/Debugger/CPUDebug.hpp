@@ -57,6 +57,8 @@ namespace ComSquare::Debugger
 		unsigned _executeInstruction(uint8_t opcode) override;
 		//! @brief Get a printable string representing an instruction at the program counter given as parameter.
 		std::string _getInstructionString(uint24_t pc);
+		//! @brief Get the parameter of the instruction as an hexadecimal string.
+		std::string _getInstructionParameter(uint24_t pc);
 		//! @brief Get a printable string representing the flags.
 		std::string _getFlagsString();
 		//! @brief Update the register's panel (accumulator, stack pointer...)
