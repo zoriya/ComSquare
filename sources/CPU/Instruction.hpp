@@ -57,6 +57,11 @@ namespace ComSquare::CPU
 		std::string name;
 		AddressingMode addressingMode;
 		int size;
+
+		Instruction() = default;
+		Instruction(const Instruction &) = default;
+		Instruction &operator=(const Instruction &) = default;
+		~Instruction() = default;
 	};
 }
 #endif //COMSQUARE_INSTRUCTION_HPP

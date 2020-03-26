@@ -303,6 +303,8 @@ namespace ComSquare::CPU
 		case AbsoluteIndirectIndexedByX:
 			valueAddr = this->_getAbsoluteIndirectIndexedByXAddr();
 			break;
+		default:
+			break;
 		}
 
 		return cycles + (this->*instruction.call)(valueAddr);

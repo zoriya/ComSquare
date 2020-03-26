@@ -48,15 +48,15 @@ namespace ComSquare::CPU
 		return 0;
 	}
 
-	int CPU::SEP(uint24_t value)
+	int CPU::SEP(uint24_t valueAddr)
 	{
-		this->_registers.p.flags |= value;
+		this->_registers.p.flags |= this->_bus->read(valueAddr);
 		return 0;
 	}
 
-	int CPU::REP(uint24_t value)
+	int CPU::REP(uint24_t valueAddr)
 	{
-		this->_registers.p.flags &= ~value;
+		this->_registers.p.flags &= ~this->_bus->read(valueAddr);
 		if (this->_isEmulationMode) {
 			this->_registers.p.x_b = true;
 			this->_registers.p.m = true;
@@ -64,19 +64,19 @@ namespace ComSquare::CPU
 		return 0;
 	}
 
-	int CPU::JSR(uint24_t value)
+	int CPU::JSR(uint24_t valueAddr)
 	{
 		this->_push(--this->_registers.pc);
-		this->_registers.pc = value;
+		this->_registers.pc = valueAddr;
 		return 0;
 	}
 
-	int CPU::JSL(uint24_t value)
+	int CPU::JSL(uint24_t valueAddr)
 	{
 		this->_registers.pac--;
 		this->_push(this->_registers.pbr);
 		this->_push(this->_registers.pc);
-		this->_registers.pac = value;
+		this->_registers.pac = valueAddr;
 		return 0;
 	}
 

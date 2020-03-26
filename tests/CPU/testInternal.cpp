@@ -15,7 +15,8 @@ using namespace ComSquare;
 Test(SEP, setall)
 {
 	Init()
-	snes.cpu->SEP(0xFF);
+	snes.wram->_data[0] = 0xFF;
+	snes.cpu->SEP(0x00);
 	auto data = snes.cpu->_registers.p.flags;
 	cr_assert_eq(data, 0xFF, "The flag should be 0xFF but it was %x", data);
 }
@@ -24,7 +25,8 @@ Test(SEP, setsome)
 {
 	Init()
 	snes.cpu->_registers.p.flags = 0b01000000;
-	snes.cpu->SEP(0b10110101);
+	snes.wram->_data[0] = 0b10110101;
+	snes.cpu->SEP(0x0);
 	auto data = snes.cpu->_registers.p.flags;
 	cr_assert_eq(data, 0b11110101, "The flag should be 245 but it was %i", data);
 }
@@ -33,7 +35,8 @@ Test(REP, resetall)
 {
 	Init()
 	snes.cpu->_isEmulationMode = false;
-	snes.cpu->REP(0xFF);
+	snes.wram->_data[0] = 0xFF;
+	snes.cpu->REP(0x00);
 	auto data = snes.cpu->_registers.p.flags;
 	cr_assert_eq(data, 0x00, "The flag should be 0x00 but it was %x", data);
 }
@@ -43,7 +46,8 @@ Test(REP, resetsome)
 	Init()
 	snes.cpu->_isEmulationMode = false;
 	snes.cpu->_registers.p.flags = 0b01000000;
-	snes.cpu->REP(0b01000000);
+	snes.wram->_data[0] = 0b01000000;
+	snes.cpu->REP(0x0);
 	auto data = snes.cpu->_registers.p.flags;
 	cr_assert_eq(data, 0x0, "The flag should be 0 but it was %x", data);
 }
@@ -52,7 +56,8 @@ Test(REP, resetallEmulation)
 {
 	Init()
 	snes.cpu->_isEmulationMode = true;
-	snes.cpu->REP(0xFF);
+	snes.wram->_data[0] = 0xFF;
+	snes.cpu->REP(0x00);
 	auto data = snes.cpu->_registers.p.flags;
 	cr_assert_eq(data, 0b00110000, "The flag should be 0b00110000 but it was %x", data);
 }
@@ -62,7 +67,8 @@ Test(REP, resetsomeEmulation)
 	Init()
 	snes.cpu->_isEmulationMode = true;
 	snes.cpu->_registers.p.flags = 0b01000101;
-	snes.cpu->REP(0b01000001);
+	snes.wram->_data[0] = 0b01000001;
+	snes.cpu->REP(0x0);
 	auto data = snes.cpu->_registers.p.flags;
 	cr_assert_eq(data, 0b00110100, "The flag should be 0b00110100 but it was %x", data);
 }

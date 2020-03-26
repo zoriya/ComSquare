@@ -532,7 +532,7 @@ namespace ComSquare::CPU
 			{&CPU::STA, 6, "sta", AddressingMode::DirectPageIndirectIndexedByYLong, 2}, // 97
 			{&CPU::BRK, 7, "tya #-#", AddressingMode::Implied, 2}, // 98
 			{&CPU::STA, 5, "sta", AddressingMode::AbsoluteIndexedByY, 3}, // 99
-			{&CPU::BRK, 7, "txs #-#", AddressingMode::Implied, 2}, // 9A
+			{&CPU::TXS, 2, "txs", AddressingMode::Implied, 1}, // 9A
 			{&CPU::BRK, 7, "txy #-#", AddressingMode::Implied, 2}, // 9B
 			{&CPU::STZ, 4, "stz", AddressingMode::Absolute, 3}, // 9C
 			{&CPU::STA, 5, "sta", AddressingMode::AbsoluteIndexedByX, 3}, // 9D
@@ -546,9 +546,9 @@ namespace ComSquare::CPU
 			{&CPU::LDA, 3, "lda", AddressingMode::DirectPage, 2}, // A5
 			{&CPU::LDX, 3, "ldx", AddressingMode::DirectPage, 2}, // A6
 			{&CPU::LDA, 6, "lda", AddressingMode::DirectPageIndirectLong, 2}, // A7
-			{&CPU::BRK, 7, "tay #-#", AddressingMode::Implied, 2}, // A8
+			{&CPU::TAY, 2, "tay", AddressingMode::Implied, 1}, // A8
 			{&CPU::LDA, 2, "lda", AddressingMode::ImmediateForA, 2}, // A9
-			{&CPU::BRK, 7, "tax #-#", AddressingMode::Implied, 2}, // AA
+			{&CPU::TAX, 2, "tax", AddressingMode::Implied, 1}, // AA
 			{&CPU::BRK, 7, "trb #-#", AddressingMode::Implied, 2}, // AB
 			{&CPU::LDY, 4, "ldy", AddressingMode::Absolute, 4}, // AC
 			{&CPU::LDA, 4, "lda", AddressingMode::Absolute, 3}, // AD

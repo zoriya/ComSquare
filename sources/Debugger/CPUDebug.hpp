@@ -38,6 +38,18 @@ public:
 
 namespace ComSquare::Debugger
 {
+	struct DisassembledInstruction : public CPU::Instruction {
+		std::string argument;
+		uint8_t opcode;
+
+		DisassembledInstruction(const CPU::Instruction &instruction, std::string argument, uint8_t opcode);
+		DisassembledInstruction(const DisassembledInstruction &) = default;
+		DisassembledInstruction &operator=(const DisassembledInstruction &) = default;
+		~DisassembledInstruction() = default;
+
+		std::string toString();
+	};
+
 	//! @brief A custom CPU with a window that show it's registers and the disassembly.
 	class CPUDebug : public CPU::CPU, public QObject {
 	private:
@@ -47,6 +59,8 @@ namespace ComSquare::Debugger
 		Ui::CPUView _ui;
 		//! @brief The disassembly viewer's model.
 		DisassemblyModel _model;
+		//! @brief The list of disassembled instructions to show on the debugger.
+		std::map<uint24_t, DisassembledInstruction> _disassembledInstructions;
 		//! @brief If this is set to true, the execution of the CPU will be paused.
 		bool _isPaused = true;
 		//! @brief If this is set to true, the CPU will execute one instruction and pause itself.
@@ -55,10 +69,10 @@ namespace ComSquare::Debugger
 		SNES &_snes;
 		//! @brief Reimplement the basic instruction execution method to log instructions inside the logger view.
 		unsigned _executeInstruction(uint8_t opcode) override;
-		//! @brief Get a printable string representing an instruction at the program counter given as parameter.
-		std::string _getInstructionString(uint24_t pc);
+		//! @brief Parse the instruction at the program counter given to have human readable information.
+		DisassembledInstruction _parseInstruction(uint24_t pc);
 		//! @brief Get the parameter of the instruction as an hexadecimal string.
-		std::string _getInstructionParameter(uint24_t pc);
+		std::string _getInstructionParameter(ComSquare::CPU::Instruction &instruction, uint24_t pc);
 		//! @brief Get a printable string representing the flags.
 		std::string _getFlagsString();
 		//! @brief Update the register's panel (accumulator, stack pointer...)

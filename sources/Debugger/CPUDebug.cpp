@@ -7,6 +7,7 @@
 #include "../Exceptions/InvalidOpcode.hpp"
 #include <QtEvents>
 #include <iostream>
+#include <utility>
 
 using namespace ComSquare::CPU;
 
@@ -24,12 +25,16 @@ namespace ComSquare::Debugger
 		this->_window->setAttribute(Qt::WA_DeleteOnClose);
 
 		this->_ui.setupUi(this->_window);
-//
-//		this->_ui.disasembly->setModel(&this->_model);
-//		this->_ui.disasembly->setShowGrid(false);
-//		this->_ui.disasembly->verticalHeader()->hide();
-//		this->_ui.disasembly->horizontalHeader()->hide();
-//		this->_ui.disasembly->horizontalHeader()->setStretchLastSection(true);
+
+		this->_ui.disasembly->setModel(&this->_model);
+		this->_ui.disasembly->setShowGrid(false);
+		this->_ui.disasembly->verticalHeader()->hide();
+		this->_ui.disasembly->horizontalHeader()->hide();
+		this->_ui.disasembly->horizontalHeader()->setStretchLastSection(true);
+
+//		uint24_t pc = 0x80800; // The first byte of the ROM //TODO make this work for other rom mapping.
+//		while (pc < 0x80800 + this->_cartridgeHeader.romSize)
+//			this->_disassembledInstructions.insert(pc, this->_parseInstruction(pc));
 
 		QMainWindow::connect(this->_ui.actionPause, &QAction::triggered, this, &CPUDebug::pause);
 		QMainWindow::connect(this->_ui.actionStep, &QAction::triggered, this, &CPUDebug::step);
@@ -72,7 +77,7 @@ namespace ComSquare::Debugger
 			this->_isStepping = false;
 			this->_isPaused = true;
 		}
-		this->_ui.logger->append((CPUDebug::_getInstructionString(this->_registers.pac - 1) + " -  " + Utility::to_hex(opcode)).c_str());
+		this->_ui.logger->append((this->_parseInstruction(this->_registers.pac - 1).toString() + " -  " + Utility::to_hex(opcode)).c_str());
 		unsigned ret = CPU::_executeInstruction(opcode);
 		this->_updateRegistersPanel();
 		return ret;
@@ -162,7 +167,7 @@ namespace ComSquare::Debugger
 	std::string CPUDebug::_getImmediateValue8Bits(uint24_t pc)
 	{
 		std::stringstream ss;
-		ss << "#$" << std::hex << static_cast<int>(this->_bus->read(pc), true);
+		ss << "#$" << std::hex << static_cast<unsigned>(this->_bus->read(pc, true));
 		return ss.str();
 	}
 
@@ -179,7 +184,7 @@ namespace ComSquare::Debugger
 	std::string CPUDebug::_getDirectValue(uint24_t pc)
 	{
 		std::stringstream ss;
-		ss << "$" << std::hex << static_cast<int>(this->_bus->read(pc), true);
+		ss << "$" << std::hex << static_cast<int>(this->_bus->read(pc, true));
 		return ss.str();
 	}
 
@@ -210,20 +215,36 @@ namespace ComSquare::Debugger
 		return ss.str();
 	}
 
-	std::string CPUDebug::_getInstructionString(uint24_t pc)
+	DisassembledInstruction CPUDebug::_parseInstruction(uint24_t pc)
 	{
-		uint8_t opcode = this->_bus->read(pc++, true);
-
-		return this->_instructions[opcode].name + this->_getInstructionParameter(pc);
+		uint24_t opcode = this->_bus->read(pc++, true);
+		Instruction instruction = this->_instructions[opcode];
+		std::string argument = this->_getInstructionParameter(instruction, pc);
+		return DisassembledInstruction(instruction, argument, opcode);
 	}
 
-	std::string CPUDebug::_getInstructionParameter(uint24_t pc)
+	std::string CPUDebug::_getInstructionParameter(Instruction &instruction, uint24_t pc)
 	{
-		Instruction instruction = this->_instructions[opcode];
-
 		switch (instruction.addressingMode) {
+		case Implied:
+			return "";
 		case ImmediateForA:
-			return this->_getImmediateAddrForA(pc);
+			return this->_getImmediateValueForA(pc);
+		case ImmediateForX:
+			return this->_getImmediateValueForX(pc);
+		case Immediate8bits:
+			return this->_getImmediateValue8Bits(pc);
+		case Absolute:
+			return this->_getAbsoluteValue(pc);
+		case AbsoluteLong:
+			return this->_getAbsoluteLongValue(pc);
+		case DirectPage:
+			return this->_getDirectValue(pc);
+		case DirectPageIndexedByX:
+			return this->_getDirectIndexedByXValue(pc);
+
+		default:
+			return "???";
 		}
 	}
 
@@ -238,6 +259,14 @@ namespace ComSquare::Debugger
 	{
 		this->_window->activateWindow();
 	}
+
+	DisassembledInstruction::DisassembledInstruction(const CPU::Instruction &instruction, std::string arg, uint8_t op)
+		: CPU::Instruction(instruction), argument(std::move(arg)), opcode(op) {}
+
+	std::string DisassembledInstruction::toString()
+	{
+		return this->name + " " + this->argument;
+	}
 }
 
 DisassemblyModel::DisassemblyModel(ComSquare::Debugger::CPUDebug &cpu) : QAbstractTableModel(), _cpu(cpu){ }
@@ -249,10 +278,10 @@ int DisassemblyModel::columnCount(const QModelIndex &) const
 
 int DisassemblyModel::rowCount(const QModelIndex &) const
 {
-	return 0xFFFFFF;
+	return 5;
 }
 
-QVariant DisassemblyModel::data(const QModelIndex &index, int role) const
+QVariant DisassemblyModel::data(const QModelIndex &, int role) const
 {
 	if (role != Qt::DisplayRole)
 		return QVariant();
