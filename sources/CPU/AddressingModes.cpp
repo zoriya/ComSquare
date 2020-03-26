@@ -7,6 +7,11 @@
 
 namespace ComSquare::CPU
 {
+	uint24_t CPU::_getImmediateAddr8Bits()
+	{
+		return this->_registers.pac++;
+	}
+
 	uint24_t CPU::_getImmediateAddrForA()
 	{
 		uint24_t effective = this->_registers.pac++;

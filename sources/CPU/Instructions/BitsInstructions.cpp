@@ -7,7 +7,7 @@
 
 namespace ComSquare::CPU
 {
-	void CPU::AND(uint24_t valueAddr)
+	int CPU::AND(uint24_t valueAddr)
 	{
 		unsigned negativeMask = this->_isEmulationMode ? 0x80u : 0x8000u;
 		unsigned value = this->_bus->read(valueAddr);
@@ -17,5 +17,6 @@ namespace ComSquare::CPU
 		this->_registers.a &= value;
 		this->_registers.p.n = this->_registers.a & negativeMask;
 		this->_registers.p.z = this->_registers.a == 0;
+		return 0;
 	}
 }

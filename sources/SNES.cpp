@@ -34,12 +34,14 @@ namespace ComSquare
 		this->apu->update(cycleCount);
 	}
 
-	void SNES::enableCPUDebugging()
+	void SNES::enableCPUDebugging(bool pause)
 	{
 		#ifdef DEBUGGER_ENABLED
-			if (this->cpu->isDebugger())
-				std::static_pointer_cast<Debugger::CPUDebug>(this->cpu)->focus();
-			else
+			if (this->cpu->isDebugger()) {
+				auto cpuDebug = std::static_pointer_cast<Debugger::CPUDebug>(this->cpu);
+				cpuDebug->focus();
+				cpuDebug->pause();
+			} else
 				this->cpu = std::make_shared<Debugger::CPUDebug>(*this->cpu, *this);
 		#else
 			std::cerr << "Debugging features are not enabled. You can't enable the debugger." << std::endl;

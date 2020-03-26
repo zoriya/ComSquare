@@ -13,6 +13,31 @@
 
 namespace ComSquare::Debugger
 {
+	class CPUDebug;
+}
+
+//! @brief The qt model that show the disassembly.
+class DisassemblyModel : public QAbstractTableModel
+{
+Q_OBJECT
+private:
+	ComSquare::Debugger::CPUDebug &_cpu;
+public:
+	explicit DisassemblyModel(ComSquare::Debugger::CPUDebug &cpu);
+	DisassemblyModel(const DisassemblyModel &) = delete;
+	const DisassemblyModel &operator=(const DisassemblyModel &) = delete;
+	~DisassemblyModel() override = default;
+
+	//! @brief The number of row the table has.
+	int rowCount(const QModelIndex &parent) const override;
+	//! @brief The number of column the table has.
+	int columnCount(const QModelIndex &parent) const override;
+	//! @brief Return a data representing the table cell.
+	QVariant data(const QModelIndex &index, int role) const override;
+};
+
+namespace ComSquare::Debugger
+{
 	//! @brief A custom CPU with a window that show it's registers and the disassembly.
 	class CPUDebug : public CPU::CPU, public QObject {
 	private:
@@ -20,6 +45,8 @@ namespace ComSquare::Debugger
 		ClosableWindow<CPUDebug> *_window;
 		//! @brief A widget that contain the whole UI.
 		Ui::CPUView _ui;
+		//! @brief The disassembly viewer's model.
+		DisassemblyModel _model;
 		//! @brief If this is set to true, the execution of the CPU will be paused.
 		bool _isPaused = true;
 		//! @brief If this is set to true, the CPU will execute one instruction and pause itself.
@@ -52,7 +79,7 @@ namespace ComSquare::Debugger
 		//! @brief Return a printable string corresponding to the value of a direct index by x addressing mode.
 		std::string _getDirectIndexedByXValue(uint24_t pc);
 
-	public slots:
+	public:
 		//! @brief Pause/Resume the CPU.
 		void pause();
 		//! @brief Step - Execute a single instruction.
@@ -63,7 +90,7 @@ namespace ComSquare::Debugger
 		void disableDebugger();
 	public:
 		//! @brief Update the UI when reseting the CPU.
-		void RESB() override;
+		int RESB(uint24_t) override;
 		//! @brief Convert a basic CPU to a debugging CPU.
 		explicit CPUDebug(ComSquare::CPU::CPU &cpu, SNES &snes);
 		CPUDebug(const CPUDebug &) = delete;

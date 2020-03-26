@@ -6,152 +6,176 @@
 
 namespace ComSquare::CPU
 {
-	void CPU::SEC()
+	int CPU::SEC(uint24_t)
 	{
 		this->_registers.p.c = true;
+		return 0;
 	}
 
-	void CPU::SED()
+	int CPU::SED(uint24_t)
 	{
 		this->_registers.p.d = true;
+		return 0;
 	}
 
-	void CPU::SEI()
+	int CPU::SEI(uint24_t)
 	{
 		this->_registers.p.i = true;
+		return 0;
 	}
 
-	void CPU::CLC()
+	int CPU::CLC(uint24_t)
 	{
 		this->_registers.p.c = false;
+		return 0;
 	}
 
-	void CPU::CLI()
+	int CPU::CLI(uint24_t)
 	{
 		this->_registers.p.i = false;
+		return 0;
 	}
 
-	void CPU::CLD()
+	int CPU::CLD(uint24_t)
 	{
 		this->_registers.p.d = false;
+		return 0;
 	}
 
-	void CPU::CLV()
+	int CPU::CLV(uint24_t)
 	{
 		this->_registers.p.v = false;
+		return 0;
 	}
 
-	void CPU::SEP(uint24_t value)
+	int CPU::SEP(uint24_t value)
 	{
 		this->_registers.p.flags |= value;
+		return 0;
 	}
 
-	void CPU::REP(uint24_t value)
+	int CPU::REP(uint24_t value)
 	{
 		this->_registers.p.flags &= ~value;
 		if (this->_isEmulationMode) {
 			this->_registers.p.x_b = true;
 			this->_registers.p.m = true;
 		}
+		return 0;
 	}
 
-	void CPU::JSR(uint24_t value)
+	int CPU::JSR(uint24_t value)
 	{
 		this->_push(--this->_registers.pc);
 		this->_registers.pc = value;
+		return 0;
 	}
 
-	void CPU::JSL(uint24_t value)
+	int CPU::JSL(uint24_t value)
 	{
 		this->_registers.pac--;
 		this->_push(this->_registers.pbr);
 		this->_push(this->_registers.pc);
 		this->_registers.pac = value;
+		return 0;
 	}
 
-	void CPU::PHA()
+	int CPU::PHA(uint24_t)
 	{
 		this->_push(this->_registers.a);
+		return 0;
 	}
 
-	void CPU::PHB()
+	int CPU::PHB(uint24_t)
 	{
 		this->_push(this->_registers.dbr);
+		return 0;
 	}
 
-	void CPU::PHD()
+	int CPU::PHD(uint24_t)
 	{
 		this->_push(this->_registers.d);
+		return 0;
 	}
 
-	void CPU::PHK()
+	int CPU::PHK(uint24_t)
 	{
 		this->_push(this->_registers.pbr);
+		return 0;
 	}
 
-	void CPU::PHP()
+	int CPU::PHP(uint24_t)
 	{
 		this->_push(this->_registers.p.flags);
+		return 0;
 	}
 
-	void CPU::PHX()
+	int CPU::PHX(uint24_t)
 	{
 		this->_push(this->_registers.x);
+		return 0;
 	}
 
-	void CPU::PHY()
+	int CPU::PHY(uint24_t)
 	{
 		this->_push(this->_registers.y);
+		return 0;
 	}
 
-	void CPU::PLA()
+	int CPU::PLA(uint24_t)
 	{
 		// TODO this register should be poped by 8 if the m flag is 1
 		this->_registers.a = this->_pop16();
 		this->_registers.p.z = this->_registers.a == 0;
 		this->_registers.p.n = this->_registers.a & 0x8000u;
+		return 0;
 	}
 
-	void CPU::PLB()
+	int CPU::PLB(uint24_t)
 	{
 		this->_registers.dbr = this->_pop();
 		this->_registers.p.z = this->_registers.dbr == 0;
 		this->_registers.p.n = this->_registers.dbr & 0x80u;
+		return 0;
 	}
 
-	void CPU::PLD()
+	int CPU::PLD(uint24_t)
 	{
 		this->_registers.d = this->_pop16();
 		this->_registers.p.z = this->_registers.d == 0;
 		this->_registers.p.n = this->_registers.d & 0x8000u;
+		return 0;
 	}
 
-	void CPU::PLP()
+	int CPU::PLP(uint24_t)
 	{
 		this->_registers.p.flags = this->_pop();
 		if (this->_isEmulationMode) {
 			this->_registers.p.m = true;
 			this->_registers.p.x_b = true;
 		}
+		return 0;
 	}
 
-	void CPU::PLX()
+	int CPU::PLX(uint24_t)
 	{
 		// TODO this register should be poped by 8 if the x_b is 1
 		this->_registers.x = this->_pop16();
 		this->_registers.p.z = this->_registers.x == 0;
 		this->_registers.p.n = this->_registers.x & 0x8000u;
+		return 0;
 	}
 
-	void CPU::PLY()
+	int CPU::PLY(uint24_t)
 	{
 		// TODO this register should be poped by 8 if the x_b is 1
 		this->_registers.y = this->_pop16();
 		this->_registers.p.z = this->_registers.y == 0;
 		this->_registers.p.n = this->_registers.y & 0x8000u;
+		return 0;
 	}
 
-	void CPU::XCE()
+	int CPU::XCE(uint24_t)
 	{
 		bool oldCarry = this->_registers.p.c;
 		this->_registers.p.c = this->_isEmulationMode;
@@ -163,9 +187,10 @@ namespace ComSquare::CPU
 			this->_registers.xh = 0;
 			this->_registers.yh = 0;
 		}
+		return 0;
 	}
 
-	void CPU::INX()
+	int CPU::INX(uint24_t)
 	{
 		this->_registers.x++;
 
@@ -175,9 +200,10 @@ namespace ComSquare::CPU
 		unsigned negativeFlag = this->_registers.p.x_b ? 0x80u : 0x8000u;
 		this->_registers.p.z = this->_registers.x == 0;
 		this->_registers.p.n = this->_registers.x & negativeFlag;
+		return 0;
 	}
 
-	void CPU::INY()
+	int CPU::INY(uint24_t)
 	{
 		this->_registers.y++;
 
@@ -187,9 +213,10 @@ namespace ComSquare::CPU
 		unsigned negativeFlag = this->_registers.p.x_b ? 0x80u : 0x8000u;
 		this->_registers.p.z = this->_registers.y == 0;
 		this->_registers.p.n = this->_registers.y & negativeFlag;
+		return 0;
 	}
 
-	void CPU::CPX(uint24_t valueAddr)
+	int CPU::CPX(uint24_t valueAddr)
 	{
 		unsigned value = this->_bus->read(valueAddr++);
 
@@ -206,9 +233,10 @@ namespace ComSquare::CPU
 			this->_registers.p.n = x & 0x8000u;
 		}
 		this->_registers.p.c = this->_registers.x >= value;
+		return 0;
 	}
 
-	void CPU::CPY(uint24_t valueAddr)
+	int CPU::CPY(uint24_t valueAddr)
 	{
 		unsigned value = this->_bus->read(valueAddr++);
 
@@ -225,57 +253,58 @@ namespace ComSquare::CPU
 			this->_registers.p.z = y == 0;
 			this->_registers.p.n = y & 0x8000u;
 		}
+		return 0;
 	}
 
-	bool CPU::BCC(uint24_t valueAddr)
+	int CPU::BCC(uint24_t valueAddr)
 	{
 		if (!this->_registers.p.c)
 			this->_registers.pac += static_cast<int8_t>(this->_bus->read(valueAddr));
 		return !this->_registers.p.c;
 	}
 
-	bool CPU::BCS(uint24_t valueAddr)
+	int CPU::BCS(uint24_t valueAddr)
 	{
 		if (this->_registers.p.c)
 			this->_registers.pac += static_cast<int8_t>(this->_bus->read(valueAddr));
 		return this->_registers.p.c;
 	}
 
-	bool CPU::BEQ(uint24_t valueAddr)
+	int CPU::BEQ(uint24_t valueAddr)
 	{
 		if (this->_registers.p.z)
 			this->_registers.pac += static_cast<int8_t>(this->_bus->read(valueAddr));
 		return this->_registers.p.z;
 	}
 
-	bool CPU::BNE(uint24_t valueAddr)
+	int CPU::BNE(uint24_t valueAddr)
 	{
 		if (!this->_registers.p.z)
 			this->_registers.pac += static_cast<int8_t>(this->_bus->read(valueAddr));
 		return !this->_registers.p.z;
 	}
 
-	bool CPU::BMI(uint24_t valueAddr)
+	int CPU::BMI(uint24_t valueAddr)
 	{
 		if (this->_registers.p.n)
 			this->_registers.pac += static_cast<int8_t>(this->_bus->read(valueAddr));
 		return this->_registers.p.n;
 	}
 
-	bool CPU::BPL(uint24_t valueAddr)
+	int CPU::BPL(uint24_t valueAddr)
 	{
 		if (!this->_registers.p.n)
 			this->_registers.pac += static_cast<int8_t>(this->_bus->read(valueAddr));
 		return !this->_registers.p.n;
 	}
 
-	bool CPU::BRA(uint24_t valueAddr)
+	int CPU::BRA(uint24_t valueAddr)
 	{
 		this->_registers.pac += static_cast<int8_t>(this->_bus->read(valueAddr));
 		return true;
 	}
 
-	bool CPU::BRL(uint24_t valueAddr)
+	int CPU::BRL(uint24_t valueAddr)
 	{
 		unsigned value = this->_bus->read(valueAddr);
 		value += this->_bus->read(valueAddr + 1) << 8u;
@@ -284,27 +313,34 @@ namespace ComSquare::CPU
 		return true;
 	}
 
-	bool CPU::BVC(uint24_t valueAddr)
+	int CPU::BVC(uint24_t valueAddr)
 	{
 		if (!this->_registers.p.v)
 			this->_registers.pac += static_cast<int8_t>(this->_bus->read(valueAddr));
 		return !this->_registers.p.v;
 	}
 
-	bool CPU::BVS(uint24_t valueAddr)
+	int CPU::BVS(uint24_t valueAddr)
 	{
 		if (this->_registers.p.v)
 			this->_registers.pac += static_cast<int8_t>(this->_bus->read(valueAddr));
 		return this->_registers.p.v;
 	}
 
-	void CPU::JMP(uint24_t value)
+	int CPU::JMP(uint24_t value)
 	{
 		this->_registers.pc = value;
+		return 0;
 	}
 
-	void CPU::JML(uint24_t value)
+	int CPU::JML(uint24_t value)
 	{
 		this->_registers.pac = value;
+		return 0;
+	}
+
+	int CPU::NOP(uint24_t)
+	{
+		return 0;
 	}
 }

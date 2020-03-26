@@ -93,7 +93,7 @@ add_executable(unit_tests
         tests/CPU/TransferRegisters.cpp
         sources/CPU/AddressingModes.cpp
         sources/Models/Components.hpp
-)
+        sources/CPU/Instruction.hpp sources/Exceptions/DebuggableError.hpp)
 
 # include criterion & coverage
 target_link_libraries(unit_tests criterion -lgcov)
@@ -200,7 +200,7 @@ add_executable(ComSquare
         sources/Debugger/MemoryBusDebug.cpp
         sources/Debugger/MemoryBusDebug.hpp
         sources/Debugger/ClosableWindow.hpp
-        sources/Models/Components.hpp)
+        sources/Models/Components.hpp sources/CPU/Instruction.hpp sources/Exceptions/DebuggableError.hpp)
 
 target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)
 

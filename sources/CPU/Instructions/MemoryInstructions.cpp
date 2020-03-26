@@ -6,7 +6,7 @@
 
 namespace ComSquare::CPU
 {
-	void CPU::STA(uint24_t addr)
+	int CPU::STA(uint24_t addr)
 	{
 		if (this->_registers.p.m)
 			this->_bus->write(addr, this->_registers.al);
@@ -14,9 +14,10 @@ namespace ComSquare::CPU
 			this->_bus->write(addr, this->_registers.al);
 			this->_bus->write(addr + 1, this->_registers.ah);
 		}
+		return 0;
 	}
 
-	void CPU::STX(uint24_t addr)
+	int CPU::STX(uint24_t addr)
 	{
 		if (this->_registers.p.x_b)
 			this->_bus->write(addr, this->_registers.xl);
@@ -24,9 +25,10 @@ namespace ComSquare::CPU
 			this->_bus->write(addr, this->_registers.xl);
 			this->_bus->write(addr + 1, this->_registers.xh);
 		}
+		return 0;
 	}
 
-	void CPU::STY(uint24_t addr)
+	int CPU::STY(uint24_t addr)
 	{
 		if (this->_registers.p.x_b)
 			this->_bus->write(addr, this->_registers.yl);
@@ -34,16 +36,18 @@ namespace ComSquare::CPU
 			this->_bus->write(addr, this->_registers.yl);
 			this->_bus->write(addr + 1, this->_registers.yh);
 		}
+		return 0;
 	}
 
-	void CPU::STZ(uint24_t addr)
+	int CPU::STZ(uint24_t addr)
 	{
 		this->_bus->write(addr, 0x00);
 		if (!this->_registers.p.m)
 			this->_bus->write(addr + 1, 0x00);
+		return 0;
 	}
 
-	void CPU::LDA(uint24_t addr)
+	int CPU::LDA(uint24_t addr)
 	{
 		if (this->_registers.p.m) {
 			this->_registers.a = this->_bus->read(addr);
@@ -54,9 +58,10 @@ namespace ComSquare::CPU
 			this->_registers.p.n = this->_registers.a & 0xF000u;
 		}
 		this->_registers.p.z = this->_registers.a == 0x0;
+		return 0;
 	}
 
-	void CPU::LDX(uint24_t addr)
+	int CPU::LDX(uint24_t addr)
 	{
 		if (this->_registers.p.x_b) {
 			this->_registers.x = this->_bus->read(addr);
@@ -67,9 +72,10 @@ namespace ComSquare::CPU
 			this->_registers.p.n = this->_registers.x & 0xF000u;
 		}
 		this->_registers.p.z = this->_registers.x == 0x0;
+		return 0;
 	}
 
-	void CPU::LDY(uint24_t addr)
+	int CPU::LDY(uint24_t addr)
 	{
 		if (this->_registers.p.x_b) {
 			this->_registers.y = this->_bus->read(addr);
@@ -80,5 +86,6 @@ namespace ComSquare::CPU
 			this->_registers.p.n = this->_registers.y & 0xF000u;
 		}
 		this->_registers.p.z = this->_registers.y == 0x0;
+		return 0;
 	}
 }

@@ -9,11 +9,12 @@
 #include <string>
 #include <ios>
 #include <sstream>
+#include "DebuggableError.hpp"
 
 namespace ComSquare
 {
 	//! @brief Exception thrown when trying to read/write to an invalid address.
-	class InvalidAddress : public std::exception {
+	class InvalidAddress : public DebuggableError {
 	private:
 		std::string _msg;
 	public:
