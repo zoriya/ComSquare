@@ -253,6 +253,8 @@ namespace ComSquare::CPU
 		//! @brief Pop 16 bits of data from the stack.
 		uint16_t _pop16();
 
+		//! @brief Return the data at the program bank concatenated with the program counter. It also increment the program counter (the program bank is not incremented on overflows).
+		uint8_t readPC();
 
 		//! @brief Execute a single instruction.
 		//! @return The number of CPU cycles that the instruction took.

@@ -259,48 +259,48 @@ namespace ComSquare::CPU
 	int CPU::BCC(uint24_t valueAddr)
 	{
 		if (!this->_registers.p.c)
-			this->_registers.pac += static_cast<int8_t>(this->_bus->read(valueAddr));
+			this->_registers.pc += static_cast<int8_t>(this->_bus->read(valueAddr));
 		return !this->_registers.p.c;
 	}
 
 	int CPU::BCS(uint24_t valueAddr)
 	{
 		if (this->_registers.p.c)
-			this->_registers.pac += static_cast<int8_t>(this->_bus->read(valueAddr));
+			this->_registers.pc += static_cast<int8_t>(this->_bus->read(valueAddr));
 		return this->_registers.p.c;
 	}
 
 	int CPU::BEQ(uint24_t valueAddr)
 	{
 		if (this->_registers.p.z)
-			this->_registers.pac += static_cast<int8_t>(this->_bus->read(valueAddr));
+			this->_registers.pc += static_cast<int8_t>(this->_bus->read(valueAddr));
 		return this->_registers.p.z;
 	}
 
 	int CPU::BNE(uint24_t valueAddr)
 	{
 		if (!this->_registers.p.z)
-			this->_registers.pac += static_cast<int8_t>(this->_bus->read(valueAddr));
+			this->_registers.pc += static_cast<int8_t>(this->_bus->read(valueAddr));
 		return !this->_registers.p.z;
 	}
 
 	int CPU::BMI(uint24_t valueAddr)
 	{
 		if (this->_registers.p.n)
-			this->_registers.pac += static_cast<int8_t>(this->_bus->read(valueAddr));
+			this->_registers.pc += static_cast<int8_t>(this->_bus->read(valueAddr));
 		return this->_registers.p.n;
 	}
 
 	int CPU::BPL(uint24_t valueAddr)
 	{
 		if (!this->_registers.p.n)
-			this->_registers.pac += static_cast<int8_t>(this->_bus->read(valueAddr));
+			this->_registers.pc += static_cast<int8_t>(this->_bus->read(valueAddr));
 		return !this->_registers.p.n;
 	}
 
 	int CPU::BRA(uint24_t valueAddr)
 	{
-		this->_registers.pac += static_cast<int8_t>(this->_bus->read(valueAddr));
+		this->_registers.pc += static_cast<int8_t>(this->_bus->read(valueAddr));
 		return true;
 	}
 
@@ -309,21 +309,21 @@ namespace ComSquare::CPU
 		unsigned value = this->_bus->read(valueAddr);
 		value += this->_bus->read(valueAddr + 1) << 8u;
 
-		this->_registers.pac += static_cast<int16_t>(value);
+		this->_registers.pc += static_cast<int16_t>(value);
 		return true;
 	}
 
 	int CPU::BVC(uint24_t valueAddr)
 	{
 		if (!this->_registers.p.v)
-			this->_registers.pac += static_cast<int8_t>(this->_bus->read(valueAddr));
+			this->_registers.pc += static_cast<int8_t>(this->_bus->read(valueAddr));
 		return !this->_registers.p.v;
 	}
 
 	int CPU::BVS(uint24_t valueAddr)
 	{
 		if (this->_registers.p.v)
-			this->_registers.pac += static_cast<int8_t>(this->_bus->read(valueAddr));
+			this->_registers.pc += static_cast<int8_t>(this->_bus->read(valueAddr));
 		return this->_registers.p.v;
 	}
 

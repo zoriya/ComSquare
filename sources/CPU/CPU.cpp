@@ -195,12 +195,21 @@ namespace ComSquare::CPU
 		}
 	}
 
+	uint8_t CPU::readPC()
+	{
+		uint8_t ret = this->_bus->read(this->_registers.pac);
+		this->_registers.pc++;
+		return ret;
+	}
+
 	unsigned CPU::update()
 	{
 		unsigned cycles = 0;
 
-		for (int i = 0; i < 0xFF; i++)
-			cycles += this->_executeInstruction(this->_bus->read(this->_registers.pac++));
+		for (int i = 0; i < 0xFF; i++) {
+			cycles += this->_executeInstruction(this->readPC());
+			this->_registers.pc++;
+		}
 		return cycles;
 	}
 

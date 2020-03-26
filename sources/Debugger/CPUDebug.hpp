@@ -39,10 +39,11 @@ public:
 namespace ComSquare::Debugger
 {
 	struct DisassembledInstruction : public CPU::Instruction {
+		uint24_t address;
 		std::string argument;
 		uint8_t opcode;
 
-		DisassembledInstruction(const CPU::Instruction &instruction, std::string argument, uint8_t opcode);
+		DisassembledInstruction(const CPU::Instruction &instruction, uint24_t address, std::string argument, uint8_t opcode);
 		DisassembledInstruction(const DisassembledInstruction &) = default;
 		DisassembledInstruction &operator=(const DisassembledInstruction &) = default;
 		~DisassembledInstruction() = default;
@@ -59,8 +60,6 @@ namespace ComSquare::Debugger
 		Ui::CPUView _ui;
 		//! @brief The disassembly viewer's model.
 		DisassemblyModel _model;
-		//! @brief The list of disassembled instructions to show on the debugger.
-		std::map<uint24_t, DisassembledInstruction> _disassembledInstructions;
 		//! @brief If this is set to true, the execution of the CPU will be paused.
 		bool _isPaused = true;
 		//! @brief If this is set to true, the CPU will execute one instruction and pause itself.
@@ -75,6 +74,8 @@ namespace ComSquare::Debugger
 		std::string _getInstructionParameter(ComSquare::CPU::Instruction &instruction, uint24_t pc);
 		//! @brief Get a printable string representing the flags.
 		std::string _getFlagsString();
+		//! @brief Disassemble part of the memory (using the bus) and parse it to a map of address and disassembled instruction.
+		std::vector<DisassembledInstruction> _disassemble(uint24_t startAddr, uint24_t size);
 		//! @brief Update the register's panel (accumulator, stack pointer...)
 		void _updateRegistersPanel();
 
@@ -104,7 +105,8 @@ namespace ComSquare::Debugger
 		void clearHistory();
 		//! @brief Called when the window is closed. Turn off the debugger and revert to a basic CPU.
 		void disableDebugger();
-	public:
+		//! @brief The list of disassembled instructions to show on the debugger.
+		std::vector<DisassembledInstruction> disassembledInstructions;
 		//! @brief Update the UI when reseting the CPU.
 		int RESB(uint24_t) override;
 		//! @brief Convert a basic CPU to a debugging CPU.
