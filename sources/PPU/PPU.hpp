@@ -310,8 +310,7 @@ namespace ComSquare::PPU
 			};
 			uint8_t raw;
 		} _m7sel;
-		//! M7A M7B M7C M7D i didn't understand how they works so they will be added later.
-
+		//! @brief M7A M7B M7C M7C registers, M7A and M7B are also used with ($2134/6) (multiplactions registers)
 		union {
 			struct {
 				uint8_t m7l;
