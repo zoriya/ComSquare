@@ -31,7 +31,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="APU">
        <attribute name="title">
@@ -329,6 +329,45 @@
         <string>CPU</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_3">
+        <item row="3" column="0">
+         <widget class="QTextBrowser" name="logger"/>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="loggerLabel">
+          <property name="text">
+           <string>Instructions History</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="0" column="0">
+           <widget class="QPushButton" name="resumeButton">
+            <property name="text">
+             <string>Resume</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../resources/appResources.qrc">
+              <normaloff>:/resources/icons/play.svg</normaloff>:/resources/icons/play.svg</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QPushButton" name="stepButton">
+            <property name="text">
+             <string>Step</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../resources/appResources.qrc">
+              <normaloff>:/resources/icons/step.svg</normaloff>:/resources/icons/step.svg</iconset>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
         <item row="0" column="0">
          <layout class="QGridLayout" name="gridLayout_15">
           <item row="0" column="0">
@@ -392,19 +431,6 @@
            </widget>
           </item>
          </layout>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="loggerLabel">
-          <property name="text">
-           <string>Instructions History</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="QTextBrowser" name="logger"/>
         </item>
        </layout>
       </widget>
@@ -543,7 +569,7 @@
         <item row="3" column="0" colspan="2">
          <widget class="QTabWidget" name="ChannelsTabs">
           <property name="currentIndex">
-           <number>7</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="Channel1">
            <attribute name="title">

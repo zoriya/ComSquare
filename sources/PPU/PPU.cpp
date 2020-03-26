@@ -10,15 +10,24 @@
 
 namespace ComSquare::PPU
 {
+	PPU::PPU(Renderer::IRenderer &renderer):
+		_renderer(renderer),
+		_vram(65536),
+		_oamram(544),
+		_cgram(512)
+	{
+		this->_registers._isLowByte = true;
+	}
+
 	uint8_t PPU::read(uint24_t addr)
 	{
 		switch (addr) {
 		case 0x34:
-			return  this->_registers.mpy.mpyl;
+			return  this->_registers._mpy.mpyl;
 		case 0x35:
-			return this->_registers.mpy.mpym;
+			return this->_registers._mpy.mpym;
 		case 0x36:
-			return this->_registers.mpy.mpyh;
+			return this->_registers._mpy.mpyh;
 		default:
 			throw InvalidAddress("PPU Internal Registers read", addr);
 		}
@@ -117,6 +126,12 @@ namespace ComSquare::PPU
 			break;
 		case ppuRegisters::m7sel:
 			this->_registers._m7sel.raw = data;
+			break;
+		case ppuRegisters::m7a:
+		case ppuRegisters::m7b:
+		case ppuRegisters::m7c:
+		case ppuRegisters::m7d:
+			this->_registers._m7[addr - ppuRegisters::m7a].m7 = (this->_registers._m7[addr - ppuRegisters::m7a].m7 << 8) | data;
 			break;
 		case ppuRegisters::cgadd:
 			std::cout << "cgadd addr : " <<  std::bitset<8>(data)  << std::endl;
@@ -238,13 +253,149 @@ namespace ComSquare::PPU
 		this->_renderer.drawScreen();
 	}
 
-	PPU::PPU(const std::shared_ptr<Memory::MemoryBus> &bus, Renderer::IRenderer &renderer):
-		_renderer(renderer),
-		_bus(std::move(bus)),
-		_vram(65536),
-		_oamram(544),
-		_cgram(512)
+	std::string PPU::getName()
 	{
-		this->_registers._isLowByte = true;
+		return "PPU";
+	}
+
+	std::string PPU::getValueName(uint24_t addr)
+	{
+		switch (addr) {
+		case ppuRegisters::inidisp:
+			return "INIDISP";
+		case ppuRegisters::obsel:
+			return "OBSEL";
+		case ppuRegisters::oamaddl:
+			return "OAMADDL";
+		case ppuRegisters::oamaddh:
+			return "OAMDDH";
+		case ppuRegisters::oamdata:
+			return "OAMDATA";
+		case ppuRegisters::bgmode:
+			return "BGMODE";
+		case ppuRegisters::mosaic:
+			return "MOSAIC";
+		case ppuRegisters::bg1sc:
+			return "BG1SC";
+		case ppuRegisters::bg2sc:
+			return "BG2SC";
+		case ppuRegisters::bg3sc:
+			return "BG3SC";
+		case ppuRegisters::bg4sc:
+			return "BG4SC";
+		case ppuRegisters::bg12nba:
+			return "BG12NBA";
+		case ppuRegisters::bg34nba:
+			return "BG34NBA";
+		case ppuRegisters::bg1hofs:
+			return "BG1HOFS";
+		case ppuRegisters::bg1vofs:
+			return "BG1VOFS";
+		case ppuRegisters::bg2hofs:
+			return "BG2HOFS";
+		case ppuRegisters::bg2vofs:
+			return "BG2VOFS";
+		case ppuRegisters::bg3hofs:
+			return "BG3HOFS";
+		case ppuRegisters::bg3vofs:
+			return "BG3VOFS";
+		case ppuRegisters::bg4hofs:
+			return "BG4HOFS";
+		case ppuRegisters::bg4vofs:
+			return "BG4VOFS";
+		case ppuRegisters::vmain:
+			return "VMAIN";
+		case ppuRegisters::vmaddl:
+			return "VMADDL";
+		case ppuRegisters::vmaddh:
+			return "VMADDH";
+		case ppuRegisters::vmdatal:
+			return "VMDATAL";
+		case ppuRegisters::vmdatah:
+			return "VMDATAH";
+		case ppuRegisters::m7sel:
+			return "M7SEL";
+		case ppuRegisters ::m7a:
+			return "M7A";
+		case ppuRegisters ::m7b:
+			return "M7B";
+		case ppuRegisters ::m7c:
+			return "M7C";
+		case ppuRegisters ::m7d:
+			return "M7D";
+		case ppuRegisters ::m7x:
+			return "M7X";
+		case ppuRegisters ::m7y:
+			return "M7Y";
+		case ppuRegisters::cgadd:
+			return "CGADD";
+		case ppuRegisters::cgdata:
+			return "CGDATA";
+		case ppuRegisters::w12sel:
+			return "W12SEL";
+		case ppuRegisters::w34sel:
+			return "W34SEL";
+		case ppuRegisters::wobjsel:
+			return "WOBJSEL";
+		case ppuRegisters::wh0:
+			return "WH0";
+		case ppuRegisters::wh1:
+			return "WH1";
+		case ppuRegisters::wh2:
+			return "WH2";
+		case ppuRegisters::wh3:
+			return "WH3";
+		case ppuRegisters::wbjlog:
+			return "WBJLOG";
+		case ppuRegisters::wobjlog:
+			return "WOBJLOG";
+		case ppuRegisters::tm:
+			return "TM";
+		case ppuRegisters::ts:
+			return "TS";
+		case ppuRegisters::tmw:
+			return "TMW";
+		case ppuRegisters::tsw:
+			return "TSW";
+		case ppuRegisters::cgwsel:
+			return "CGWSEL";
+		case ppuRegisters::cgadsub:
+			return "CGADDSUB";
+		case ppuRegisters::coldata:
+			return "COLDATA";
+		case ppuRegisters::setini:
+			return "SETINI";
+		case ppuRegisters::mpyl:
+			return "MPYL";
+		case ppuRegisters::mpym:
+			return "MPYM";
+		case ppuRegisters::mpyh:
+			return "MPYH";
+		case ppuRegisters::slhv:
+			return "SLHV";
+		case ppuRegisters::oamdataread:
+			return "OAMDATAREAD";
+		case ppuRegisters::vmdatalread:
+			return "VMDATALREAD";
+		case ppuRegisters::vmdatahread:
+			return "VMDATAHREAD";
+		case ppuRegisters::cgdataread:
+			return "CGDATAREAD";
+		case ppuRegisters::ophct:
+			return "OPHCT";
+		case ppuRegisters::opvct:
+			return "OPVCT";
+		case ppuRegisters::stat77:
+			return "STAT77";
+		case ppuRegisters::stat78:
+			return "STAT78";
+		default:
+			return "PPU : Unknown register";
+		}
+	}
+
+	Component PPU::getComponent()
+	{
+		return Ppu;
 	}
 }

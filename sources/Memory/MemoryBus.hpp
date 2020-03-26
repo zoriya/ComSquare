@@ -8,7 +8,7 @@
 #include <cstdint>
 #include <vector>
 #include <memory>
-#include "IMemory.hpp"
+#include "AMemory.hpp"
 
 namespace ComSquare
 {
@@ -20,7 +20,7 @@ namespace ComSquare
 		class MemoryBus {
 		private:
 			//! @brief The list of components registered inside the bus. Every components that can read/write to a public address should be in this vector.
-			std::vector<std::shared_ptr<IMemory>> _memoryAccessors;
+			std::vector<std::shared_ptr<AMemory>> _memoryAccessors;
 
 			//! @brief The last value read via the memory bus.
 			uint8_t _openBus = 0;
@@ -38,13 +38,14 @@ namespace ComSquare
 
 			//! @brief Read data at a global address.
 			//! @param addr The address to read from.
+			//! @param silence Disable login to the memory bus's debugger (if enabled). Should only be used by other debuggers.
 			//! @return The value that the component returned for this address. If the address was mapped to ram, it simply returned the value. If the address was mapped to a register the component returned the register.
-			uint8_t read(uint24_t addr);
+			virtual uint8_t read(uint24_t addr, bool silence = false);
 
 			//! @brief Write a data to a global address.
 			//! @param addr The address to write to.
 			//! @param data The data to write.
-			void write(uint24_t addr, uint8_t data);
+			virtual void write(uint24_t addr, uint8_t data);
 
 			//! @brief Map components to the address space using the currently loaded cartridge to set the right mapping mode.
 			//! @param console All the components.
@@ -53,7 +54,10 @@ namespace ComSquare
 			//! @brief Helper function to get the components that is responsible of read/write at an address.
 			//! @param addr The address you want to look for.
 			//! @return The components responsible for the address param or nullptr if none was found.
-			std::shared_ptr<IMemory> getAccessor(uint24_t addr);
+			std::shared_ptr<AMemory> getAccessor(uint24_t addr);
+
+			//! @brief Return true if the Bus is overloaded with debugging features.
+			virtual bool isDebugger();
 		};
 	}
 }

@@ -6,7 +6,7 @@
 #define COMSQUARE_PPU_HPP
 
 #include <stdint-gcc.h>
-#include "../Memory/IMemory.hpp"
+#include "../Memory/AMemory.hpp"
 #include "../Memory/MemoryBus.hpp"
 #include "../Renderer/IRenderer.hpp"
 #include "../Ram/ExtendedRam.hpp"
@@ -132,7 +132,7 @@ namespace ComSquare::PPU
 	//! @brief MPYL (Multiplication Result low byte)
 	mpyl = 0x34,
 	//! @brief MPYM (Multiplication Result middle byte)
-	mpum = 0x35,
+	mpym = 0x35,
 	//! @brief MPYH (Multiplication Result high byte)
 	mpyh = 0x36,
 	//! @brief SLHV (Software Latch for H/V Counter)
@@ -148,7 +148,7 @@ namespace ComSquare::PPU
 	//! @brief OPHCT (Horizontal Scanline Location)
 	ophct = 0x3C,
 	//! @brief OPVCT (Vertical Scanline Location)
-	opcvt = 0x3D,
+	opvct = 0x3D,
 	//! @brief STAT77 (PPU Status Flag and Version)
 	stat77 = 0x3E,
 	//! @brief STAT78 (PPU Status Flag and Version)
@@ -312,6 +312,13 @@ namespace ComSquare::PPU
 		} _m7sel;
 		//! M7A M7B M7C M7D i didn't understand how they works so they will be added later.
 
+		union {
+			struct {
+				uint8_t m7l;
+				uint8_t m7h;
+			};
+			uint16_t m7;
+		} _m7[4];
 		// <to work>
 
 		//! @brief M7X Register (Mode 7 Center X)
@@ -485,24 +492,23 @@ namespace ComSquare::PPU
 				uint8_t mpyh;
 			};
 			uint32_t mpy;
-		} mpy;
+		} _mpy;
 	};
 
 	//! @brief The class containing all the registers the PPU
-	class PPU : public Memory::IMemory {
+	class PPU : public Memory::AMemory {
 	private:
 		//! @brief Init ppuRegisters
 		Registers _registers{};
 		Renderer::IRenderer &_renderer;
-		std::shared_ptr<Memory::MemoryBus> _bus;
 		Ram::ExtendedRam _vram;
 		Ram::ExtendedRam _oamram;
 		Ram::ExtendedRam _cgram;
 	public:
-		PPU(const std::shared_ptr<Memory::MemoryBus> &bus, Renderer::IRenderer &renderer);
-		PPU(const PPU &) = default;
+		explicit PPU(Renderer::IRenderer &renderer);
+		PPU(const PPU &) = delete;
 		PPU &operator=(const PPU &) = delete;
-		~PPU() = default;
+		~PPU() override = default;
 
 		//! @brief Read data from the component.
 		//! @param addr The local address to read from (0x0 should refer to the first byte of this component).
@@ -514,11 +520,18 @@ namespace ComSquare::PPU
 		//! @param data The new data to write.
 		//! @throw This function should thrown an InvalidAddress for address that are not mapped to the component.
 		void write(uint24_t addr, uint8_t data) override;
+		//! @brief Get the name of this accessor (used for debug purpose)
+		std::string getName() override;
+		//! @brief Get the component of this accessor (used for debug purpose)
+		Component getComponent() override;
+
 		//! @brief Update the PPU of n cycles.
 		//! @param The number of cycles to update.
 		void update(unsigned cycles);
 		//! @brief Give the Vram Address with the right Address remapping
 		uint8_t getVramAddress();
+		//! @brief Give the name of the Address register
+		std::string getValueName(uint24_t addr);
 	};
 }
 #endif //COMSQUARE_PPU_HPP

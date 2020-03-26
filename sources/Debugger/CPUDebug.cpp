@@ -5,35 +5,48 @@
 #include "CPUDebug.hpp"
 #include "../Utility/Utility.hpp"
 #include "../Exceptions/InvalidOpcode.hpp"
+#include <QtEvents>
+#include <iostream>
 
 using namespace ComSquare::CPU;
 
 namespace ComSquare::Debugger
 {
 	CPUDebug::CPUDebug(CPU &basicCPU, SNES &snes)
-		: CPU(basicCPU), QMainWindow(), _ui(), _snes(snes)
+		: CPU(basicCPU),
+		_window(new ClosableWindow<CPUDebug>(*this, &CPUDebug::disableDebugger)),
+		_ui(),
+		_snes(snes)
 	{
-		this->setContextMenuPolicy(Qt::NoContextMenu);
-		this->setAttribute(Qt::WA_QuitOnClose, false);
+		this->_window->setContextMenuPolicy(Qt::NoContextMenu);
+		this->_window->setAttribute(Qt::WA_QuitOnClose, false);
+		this->_window->setAttribute(Qt::WA_DeleteOnClose);
 
-		this->_ui.setupUi(this);
+		this->_ui.setupUi(this->_window);
 		QMainWindow::connect(this->_ui.actionPause, &QAction::triggered, this, &CPUDebug::pause);
 		QMainWindow::connect(this->_ui.actionStep, &QAction::triggered, this, &CPUDebug::step);
 		QMainWindow::connect(this->_ui.clear, &QPushButton::released, this, &CPUDebug::clearHistory);
-		this->show();
+		this->_window->show();
 		this->_updateRegistersPanel();
+	}
+
+	bool CPUDebug::isDebugger()
+	{
+		return true;
+	}
+
+	void CPUDebug::disableDebugger()
+	{
+		this->_snes.disableCPUDebugging();
 	}
 
 	unsigned CPUDebug::update()
 	{
 		try {
-			if (!this->isVisible()) {
-				this->_snes.disableCPUDebugging();
-				return 0;
-			}
-
 			if (this->_isPaused)
 				return 0xFF;
+			if (this->_isStepping)
+				return this->_executeInstruction(this->_bus->read(this->_registers.pac++));
 			return CPU::update();
 		} catch (InvalidOpcode &e) {
 			if (!this->_isPaused)
@@ -44,10 +57,6 @@ namespace ComSquare::Debugger
 
 	unsigned CPUDebug::_executeInstruction(uint8_t opcode)
 	{
-		if (this->_isPaused) {
-			this->_registers.pac--;
-			return 0;
-		}
 		if (this->_isStepping) {
 			this->_isStepping = false;
 			this->_isPaused = true;
@@ -119,10 +128,10 @@ namespace ComSquare::Debugger
 
 	std::string CPUDebug::_getImmediateValueForA(uint24_t pc)
 	{
-		unsigned value = this->_bus->read(pc);
+		unsigned value = this->_bus->read(pc, true);
 
 		if (!this->_registers.p.m)
-			value += this->_bus->read(pc + 1) << 8u;
+			value += this->_bus->read(pc + 1, true) << 8u;
 		std::stringstream ss;
 		ss << "#$" << std::hex << value;
 		return ss.str();
@@ -130,10 +139,10 @@ namespace ComSquare::Debugger
 
 	std::string CPUDebug::_getImmediateValueForX(uint24_t pc)
 	{
-		unsigned value = this->_bus->read(pc);
+		unsigned value = this->_bus->read(pc, true);
 
 		if (!this->_registers.p.x_b)
-			value += this->_bus->read(pc + 1) << 8u;
+			value += this->_bus->read(pc + 1, true) << 8u;
 		std::stringstream ss;
 		ss << "#$" << std::hex << value;
 		return ss.str();
@@ -142,14 +151,14 @@ namespace ComSquare::Debugger
 	std::string CPUDebug::_getImmediateValue8Bits(uint24_t pc)
 	{
 		std::stringstream ss;
-		ss << "#$" << std::hex << static_cast<int>(this->_bus->read(pc));
+		ss << "#$" << std::hex << static_cast<int>(this->_bus->read(pc), true);
 		return ss.str();
 	}
 
 	std::string CPUDebug::_getImmediateValue16Bits(uint24_t pc)
 	{
-		unsigned value = this->_bus->read(pc);
-		value += this->_bus->read(pc + 1) << 8u;
+		unsigned value = this->_bus->read(pc, true);
+		value += this->_bus->read(pc + 1, true) << 8u;
 
 		std::stringstream ss;
 		ss << "#$" << std::hex << value;
@@ -159,22 +168,22 @@ namespace ComSquare::Debugger
 	std::string CPUDebug::_getDirectValue(uint24_t pc)
 	{
 		std::stringstream ss;
-		ss << "$" << std::hex << static_cast<int>(this->_bus->read(pc));
+		ss << "$" << std::hex << static_cast<int>(this->_bus->read(pc), true);
 		return ss.str();
 	}
 
 	std::string CPUDebug::_getAbsoluteValue(uint24_t pc)
 	{
 		std::stringstream ss;
-		ss << "$" << std::hex << (this->_bus->read(pc) + (this->_bus->read(pc + 1) << 8u));
+		ss << "$" << std::hex << (this->_bus->read(pc) + (this->_bus->read(pc + 1, true) << 8u));
 		return ss.str();
 	}
 
 	std::string CPUDebug::_getAbsoluteLongValue(uint24_t pc)
 	{
-		unsigned value = this->_bus->read(pc++);
-		value += this->_bus->read(pc++) << 8u;
-		value += this->_bus->read(pc) << 16u;
+		unsigned value = this->_bus->read(pc++, true);
+		value += this->_bus->read(pc++, true) << 8u;
+		value += this->_bus->read(pc, true) << 16u;
 
 		std::stringstream ss;
 		ss << "$" << std::hex << value;
@@ -183,7 +192,7 @@ namespace ComSquare::Debugger
 
 	std::string CPUDebug::_getDirectIndexedByXValue(uint24_t pc)
 	{
-		unsigned value = this->_bus->read(pc);
+		unsigned value = this->_bus->read(pc, true);
 
 		std::stringstream ss;
 		ss << "$" << std::hex << value << ", x";
@@ -192,7 +201,7 @@ namespace ComSquare::Debugger
 
 	std::string CPUDebug::_getInstructionString(uint24_t pc)
 	{
-		uint8_t opcode = this->_bus->read(pc++);
+		uint8_t opcode = this->_bus->read(pc++, true);
 
 		switch (opcode) {
 		case Instructions::BRK:      return "BRK";
@@ -381,5 +390,10 @@ namespace ComSquare::Debugger
 	{
 		CPU::RESB();
 		this->_updateRegistersPanel();
+	}
+
+	void CPUDebug::focus()
+	{
+		this->_window->activateWindow();
 	}
 }

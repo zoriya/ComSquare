@@ -28,8 +28,7 @@ namespace ComSquare::APU
 		uint8_t data = this->_internalRead(abs);
 
 		this->_internalWrite(abs, data | this->_internalRegisters.a);
-		this->_internalRegisters.n = data & 0x80u;
-		this->_internalRegisters.z = !data;
+		this->_setNZflags(data);
 		return 6;
 	}
 
@@ -38,8 +37,7 @@ namespace ComSquare::APU
 		uint8_t data = this->_internalRead(abs);
 
 		this->_internalWrite(abs, data & ~this->_internalRegisters.a);
-		this->_internalRegisters.n = data & 0x80u;
-		this->_internalRegisters.z = !data;
+		this->_setNZflags(data);
 		return 6;
 	}
 

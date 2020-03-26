@@ -7,9 +7,6 @@
 
 namespace ComSquare::APU::DSP
 {
-	DSP::DSP()
-	{ }
-
 	uint8_t DSP::read(uint24_t addr)
 	{
 		switch (addr) {
@@ -590,5 +587,15 @@ namespace ComSquare::APU::DSP
 	std::array<Channel, 8> DSP::getChannels()
 	{
 		return this->_channels;
+	}
+
+	std::string DSP::getName()
+	{
+		return "DSP";
+	}
+
+	Component DSP::getComponent()
+	{
+		return Apu;
 	}
 }

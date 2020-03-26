@@ -7,7 +7,7 @@
 #include <iostream>
 #include "tests.hpp"
 #include "../sources/Memory/MemoryBus.hpp"
-#include "../sources/Memory/IMemory.hpp"
+#include "../sources/Memory/AMemory.hpp"
 #include "../sources/SNES.hpp"
 #include "../sources/Renderer/NoRenderer.hpp"
 #include "../sources/Memory/MemoryShadow.hpp"
@@ -26,248 +26,237 @@ using namespace ComSquare;
 
 Test(BusAccessor, GetWramStart)
 {
-	auto pair = Init();
-	std::shared_ptr<Memory::IMemory> accessor = nullptr;
+	Init()
+	std::shared_ptr<Memory::AMemory> accessor = nullptr;
 
-	accessor = pair.first->getAccessor(0x7E0000);
-	cr_assert_eq(accessor.get(), pair.second.wram.get());
+	accessor = snes._bus->getAccessor(0x7E0000);
+	cr_assert_eq(accessor.get(), snes.wram.get());
 }
 
 Test(BusAccessor, GetWramEnd)
 {
-	auto pair = Init();
-	std::shared_ptr<Memory::IMemory> accessor = nullptr;
+	Init()
+	std::shared_ptr<Memory::AMemory> accessor = nullptr;
 
-	accessor = pair.first->getAccessor(0x7FFFFF);
-	cr_assert_eq(accessor.get(), pair.second.wram.get());
+	accessor = snes._bus->getAccessor(0x7FFFFF);
+	cr_assert_eq(accessor.get(), snes.wram.get());
 }
 
 Test(BusAccessor, GetWramMirror)
 {
-	auto pair = Init();
+	Init()
 	std::shared_ptr<Memory::RectangleShadow> accessor = nullptr;
 
-	accessor = std::static_pointer_cast<Memory::RectangleShadow>(pair.first->getAccessor(0x2F11FF));
+	accessor = std::static_pointer_cast<Memory::RectangleShadow>(snes._bus->getAccessor(0x2F11FF));
 	cr_assert_neq(accessor, nullptr);
-	cr_assert_eq(accessor->_initial.get(), pair.second.wram.get());
+	cr_assert_eq(accessor->_initial.get(), snes.wram.get());
 }
 
 Test(BusAccessor, GetWramMirror2)
 {
-	auto pair = Init();
+	Init()
 	std::shared_ptr<Memory::RectangleShadow> accessor = nullptr;
 
-	accessor = std::static_pointer_cast<Memory::RectangleShadow>(pair.first->getAccessor(0x100000));
+	accessor = std::static_pointer_cast<Memory::RectangleShadow>(snes._bus->getAccessor(0x100000));
 	cr_assert_neq(accessor, nullptr);
-	cr_assert_eq(accessor->_initial.get(), pair.second.wram.get());
+	cr_assert_eq(accessor->_initial.get(), snes.wram.get());
 }
 
 Test(BusAccessor, GetWramMirror3)
 {
-	auto pair = Init();
+	Init()
 	std::shared_ptr<Memory::RectangleShadow> accessor = nullptr;
 
-	accessor = std::static_pointer_cast<Memory::RectangleShadow>(pair.first->getAccessor(0x1010));
+	accessor = std::static_pointer_cast<Memory::RectangleShadow>(snes._bus->getAccessor(0x1010));
 	cr_assert_neq(accessor, nullptr);
-	cr_assert_eq(accessor->_initial.get(), pair.second.wram.get());
+	cr_assert_eq(accessor->_initial.get(), snes.wram.get());
 }
 
 Test(BusAccessor, GetOpenBus)
 {
-	auto pair = Init();
-	std::shared_ptr<Memory::IMemory> accessor = pair.first->getAccessor(0x897654);
+	Init()
+	std::shared_ptr<Memory::AMemory> accessor = snes._bus->getAccessor(0x897654);
 	cr_assert_eq(accessor.get(), nullptr);
 }
 
 Test(BusAccessor, GetSramStart)
 {
-	auto pair = Init();
+	Init()
 	std::shared_ptr<Memory::RectangleShadow> accessor = nullptr;
 
-	accessor = std::static_pointer_cast<Memory::RectangleShadow>(pair.first->getAccessor(0x700000));
-	cr_assert_eq(accessor->_initial.get(), pair.second.sram.get());
+	accessor = std::static_pointer_cast<Memory::RectangleShadow>(snes._bus->getAccessor(0x700000));
+	cr_assert_eq(accessor->_initial.get(), snes.sram.get());
 }
 
 Test(BusAccessor, GetSramEnd)
 {
-	auto pair = Init();
+	Init()
 	std::shared_ptr<Memory::RectangleShadow> accessor = nullptr;
 
-	accessor = std::static_pointer_cast<Memory::RectangleShadow>(pair.first->getAccessor(0x7D7FFF));
-	cr_assert_eq(accessor->_initial.get(), pair.second.sram.get());
+	accessor = std::static_pointer_cast<Memory::RectangleShadow>(snes._bus->getAccessor(0x7D7FFF));
+	cr_assert_eq(accessor->_initial.get(), snes.sram.get());
 }
 
 Test(BusAccessor, GetSramMirror)
 {
-	auto pair = Init();
-	std::shared_ptr<Memory::IRectangleMemory> accessor = nullptr;
+	Init()
+	std::shared_ptr<Memory::ARectangleMemory> accessor = nullptr;
 
-	accessor = std::static_pointer_cast<Memory::IRectangleMemory>(pair.first->getAccessor(0xF00123));
-	cr_assert_eq(accessor.get(), pair.second.sram.get());
+	accessor = std::static_pointer_cast<Memory::ARectangleMemory>(snes._bus->getAccessor(0xF00123));
+	cr_assert_eq(accessor.get(), snes.sram.get());
 }
-
-//Test(BusAccessor, GetSramMirror2)
-//{
-//	auto pair = Init();
-//	std::shared_ptr<Memory::RectangleShadow> accessor = nullptr;
-//
-//	// TODO implement the SRam accessor for the FE/FF.
-//	//std::cout << pair.first->getAccessor(0xFE0123) << std::endl;
-//	accessor = std::static_pointer_cast<Memory::RectangleShadow>(pair.first->getAccessor(0xFE0123));
-//	cr_assert_eq(accessor->_initial.get(), pair.second.sram.get());
-//}
 
 Test(BusAccessor, GetAPUStart)
 {
-	auto pair = Init();
-	std::shared_ptr<Memory::IMemory> accessor = nullptr;
+	Init()
+	std::shared_ptr<Memory::AMemory> accessor = nullptr;
 
-	accessor = pair.first->getAccessor(0x002140);
-	cr_assert_eq(accessor.get(), pair.second.apu.get());
+	accessor = snes._bus->getAccessor(0x002140);
+	cr_assert_eq(accessor.get(), snes.apu.get());
 }
 
 Test(BusAccessor, GetAPUEnd)
 {
-	auto pair = Init();
-	std::shared_ptr<Memory::IMemory> accessor = nullptr;
+	Init()
+	std::shared_ptr<Memory::AMemory> accessor = nullptr;
 
-	accessor = pair.first->getAccessor(0x002143);
-	cr_assert_eq(accessor.get(), pair.second.apu.get());
+	accessor = snes._bus->getAccessor(0x002143);
+	cr_assert_eq(accessor.get(), snes.apu.get());
 }
 
 Test(BusAccessor, GetAPUMirror)
 {
-	auto pair = Init();
+	Init()
 	std::shared_ptr<Memory::MemoryShadow> accessor = nullptr;
 
-	accessor = std::static_pointer_cast<Memory::MemoryShadow>(pair.first->getAccessor(0xAB2143));
-	cr_assert_eq(accessor->_initial.get(), pair.second.apu.get());
+	accessor = std::static_pointer_cast<Memory::MemoryShadow>(snes._bus->getAccessor(0xAB2143));
+	cr_assert_eq(accessor->_initial.get(), snes.apu.get());
 }
 
 Test(BusAccessor, GetAPUMirrorFirstHalf)
 {
-	auto pair = Init();
+	Init()
 	std::shared_ptr<Memory::MemoryShadow> accessor = nullptr;
 
-	accessor = std::static_pointer_cast<Memory::MemoryShadow>(pair.first->getAccessor(0x052143));
-	cr_assert_eq(accessor->_initial.get(), pair.second.apu.get());
+	accessor = std::static_pointer_cast<Memory::MemoryShadow>(snes._bus->getAccessor(0x052143));
+	cr_assert_eq(accessor->_initial.get(), snes.apu.get());
 }
 
 Test(BusAccessor, GetCPUStart)
 {
-	auto pair = Init();
-	std::shared_ptr<Memory::IMemory> accessor = nullptr;
+	Init()
+	std::shared_ptr<Memory::AMemory> accessor = nullptr;
 
-	accessor = pair.first->getAccessor(0x004200);
-	cr_assert_eq(accessor.get(), pair.second.cpu.get());
+	accessor = snes._bus->getAccessor(0x004200);
+	cr_assert_eq(accessor.get(), snes.cpu.get());
 }
 
 Test(BusAccessor, GetCPUEnd)
 {
-	auto pair = Init();
-	std::shared_ptr<Memory::IMemory> accessor = nullptr;
+	Init()
+	std::shared_ptr<Memory::AMemory> accessor = nullptr;
 
-	accessor = pair.first->getAccessor(0x00421F);
-	cr_assert_eq(accessor.get(), pair.second.cpu.get());
+	accessor = snes._bus->getAccessor(0x00421F);
+	cr_assert_eq(accessor.get(), snes.cpu.get());
 }
 
 Test(BusAccessor, GetPPU1Start)
 {
-	auto pair = Init();
-	std::shared_ptr<Memory::IMemory> accessor = nullptr;
+	Init()
+	std::shared_ptr<Memory::AMemory> accessor = nullptr;
 
-	accessor = pair.first->getAccessor(0x00213E);
-	cr_assert_eq(accessor.get(), pair.second.ppu.get());
+	accessor = snes._bus->getAccessor(0x00213E);
+	cr_assert_eq(accessor.get(), snes.ppu.get());
 }
 
 Test(BusAccessor, GetPPU1End)
 {
-	auto pair = Init();
-	std::shared_ptr<Memory::IMemory> accessor = nullptr;
+	Init()
+	std::shared_ptr<Memory::AMemory> accessor = nullptr;
 
-	accessor = pair.first->getAccessor(0x00213F);
-	cr_assert_eq(accessor.get(), pair.second.ppu.get());
+	accessor = snes._bus->getAccessor(0x00213F);
+	cr_assert_eq(accessor.get(), snes.ppu.get());
 }
 
 Test(BusAccessor, GetCPU)
 {
-	auto pair = Init();
-	std::shared_ptr<Memory::IMemory> accessor = nullptr;
+	Init()
+	std::shared_ptr<Memory::AMemory> accessor = nullptr;
 
-	accessor = pair.first->getAccessor(0x004212);
-	cr_assert_eq(accessor.get(), pair.second.cpu.get());
+	accessor = snes._bus->getAccessor(0x004212);
+	cr_assert_eq(accessor.get(), snes.cpu.get());
 }
 
 Test(BusAccessor, GetPPU1Mirror)
 {
-	auto pair = Init();
+	Init()
 	std::shared_ptr<Memory::MemoryShadow> accessor = nullptr;
 
-	accessor = std::static_pointer_cast<Memory::MemoryShadow>(pair.first->getAccessor(0x80213F));
-	cr_assert_eq(accessor->_initial.get(), pair.second.ppu.get());
+	accessor = std::static_pointer_cast<Memory::MemoryShadow>(snes._bus->getAccessor(0x80213F));
+	cr_assert_eq(accessor->_initial.get(), snes.ppu.get());
 }
 
 Test(BusAccessor, GetCPU2Mirror)
 {
-	auto pair = Init();
+	Init()
 	std::shared_ptr<Memory::MemoryShadow> accessor = nullptr;
 
-	accessor = std::static_pointer_cast<Memory::MemoryShadow>(pair.first->getAccessor(0x804212));
-	cr_assert_eq(accessor->_initial.get(), pair.second.cpu.get());
+	accessor = std::static_pointer_cast<Memory::MemoryShadow>(snes._bus->getAccessor(0x804212));
+	cr_assert_eq(accessor->_initial.get(), snes.cpu.get());
 }
 
 Test(BusAccessor, GetRomStart)
 {
-	auto pair = Init();
-	std::shared_ptr<Memory::IMemory> accessor = nullptr;
+	Init()
+	std::shared_ptr<Memory::AMemory> accessor = nullptr;
 
-	accessor = pair.first->getAccessor(0x808000);
-	cr_assert_eq(accessor.get(), pair.second.cartridge.get());
+	accessor = snes._bus->getAccessor(0x808000);
+	cr_assert_eq(accessor.get(), snes.cartridge.get());
 }
 
 Test(BusAccessor, GetRomEnd)
 {
-	auto pair = Init();
-	std::shared_ptr<Memory::IMemory> accessor = nullptr;
+	Init()
+	std::shared_ptr<Memory::AMemory> accessor = nullptr;
 
-	accessor = pair.first->getAccessor(0xFFFFFF);
-	cr_assert_eq(accessor.get(), pair.second.cartridge.get());
+	accessor = snes._bus->getAccessor(0xFFFFFF);
+	cr_assert_eq(accessor.get(), snes.cartridge.get());
 }
 
 Test(BusAccessor, GetRomMirror)
 {
-	auto pair = Init();
+	Init()
 	std::shared_ptr<Memory::RectangleShadow> accessor = nullptr;
 
-	accessor = std::static_pointer_cast<Memory::RectangleShadow>(pair.first->getAccessor(0x694200));
-	cr_assert_eq(accessor->_initial.get(), pair.second.cartridge.get());
+	accessor = std::static_pointer_cast<Memory::RectangleShadow>(snes._bus->getAccessor(0x694200));
+	cr_assert_eq(accessor->_initial.get(), snes.cartridge.get());
 }
 
 Test(BusAccessor, GetRomMirror2)
 {
-	auto pair = Init();
+	Init()
 	std::shared_ptr<Memory::RectangleShadow> accessor = nullptr;
 
-	accessor = std::static_pointer_cast<Memory::RectangleShadow>(pair.first->getAccessor(0x01FEDC));
-	cr_assert_eq(accessor->_initial.get(), pair.second.cartridge.get());
+	accessor = std::static_pointer_cast<Memory::RectangleShadow>(snes._bus->getAccessor(0x01FEDC));
+	cr_assert_eq(accessor->_initial.get(), snes.cartridge.get());
 }
 
 Test(BusAccessor, GetRomMirror3)
 {
-	auto pair = Init();
+	Init()
 	std::shared_ptr<Memory::RectangleShadow> accessor = nullptr;
 
-	accessor = std::static_pointer_cast<Memory::RectangleShadow>(pair.first->getAccessor(0xDE1248));
-	cr_assert_eq(accessor->_initial.get(), pair.second.cartridge.get());
+	accessor = std::static_pointer_cast<Memory::RectangleShadow>(snes._bus->getAccessor(0xDE1248));
+	cr_assert_eq(accessor->_initial.get(), snes.cartridge.get());
 }
 
 Test(BusAccessor, Get0x0)
 {
-	auto pair = Init();
+	Init()
 	std::shared_ptr<Memory::RectangleShadow> accessor = nullptr;
 
-	accessor = std::static_pointer_cast<Memory::RectangleShadow>(pair.first->getAccessor(0x0));
-	cr_assert_eq(accessor->_initial.get(), pair.second.wram.get());
+	accessor = std::static_pointer_cast<Memory::RectangleShadow>(snes._bus->getAccessor(0x0));
+	cr_assert_eq(accessor->_initial.get(), snes.wram.get());
 }
 
 ///////////////////////////
@@ -278,132 +267,132 @@ Test(BusAccessor, Get0x0)
 
 Test(BusRead, Read0x0)
 {
-	auto pair = Init();
+	Init()
 	uint8_t data;
 
-	pair.second.wram->_data[0] = 123;
-	data = pair.first->read(0x0);
+	snes.wram->_data[0] = 123;
+	data = snes._bus->read(0x0);
 	cr_assert_eq(data, 123);
 }
 
 Test(BusRead, ReadOutside, .init = cr_redirect_stdout)
 {
-	auto pair = Init();
+	Init()
 	uint8_t data;
 
-	pair.first->_openBus = 123;
-	data = pair.first->read(0x002000);
+	snes._bus->_openBus = 123;
+	data = snes._bus->read(0x002000);
 	cr_assert_eq(data, 123);
 }
 
 Test(BusRead, ReadOutside2, .init = cr_redirect_stdout)
 {
-	auto pair = Init();
+	Init()
 	uint8_t data;
 
-	pair.first->_openBus = 123;
-	data = pair.first->read(0xBF2FFF);
+	snes._bus->_openBus = 123;
+	data = snes._bus->read(0xBF2FFF);
 	cr_assert_eq(data, 123);
 }
 
 Test(BusRead, ReadOutside3, .init = cr_redirect_stdout)
 {
-	auto pair = Init();
+	Init()
 	uint8_t data;
 
-	pair.first->_openBus = 123;
-	data = pair.first->read(0x127654);
+	snes._bus->_openBus = 123;
+	data = snes._bus->read(0x127654);
 	cr_assert_eq(data, 123);
 }
 
 Test(BusRead, ReadAPU)
 {
-	auto pair = Init();
+	Init()
 	uint8_t data;
 
-	pair.second.apu->_registers.port0 = 123;
-	data = pair.first->read(0x002140);
+	snes.apu->_registers.port0 = 123;
+	data = snes._bus->read(0x002140);
 	cr_assert_eq(data, 123);
 }
 
 Test(BusRead, ReadROM)
 {
-	auto pair = Init();
+	Init()
 	uint8_t data;
 
-	pair.second.cartridge->_data[5] = 123;
-	data = pair.first->read(0x808005);
+	snes.cartridge->_data[5] = 123;
+	data = snes._bus->read(0x808005);
 	cr_assert_eq(data, 123);
 }
 
 Test(BusRead, ReadROMStart)
 {
-	auto pair = Init();
+	Init()
 	uint8_t data;
 
-	pair.second.cartridge->_data[0] = 123;
-	data = pair.first->read(0x808000);
+	snes.cartridge->_data[0] = 123;
+	data = snes._bus->read(0x808000);
 	cr_assert_eq(data, 123);
 }
 
 Test(BusRead, ReadCPU)
 {
-	auto pair = Init();
+	Init()
 	uint8_t data;
 
-	pair.second.cpu->_internalRegisters.wrio = 123;
-	data = pair.first->read(0x004201);
+	snes.cpu->_internalRegisters.wrio = 123;
+	data = snes._bus->read(0x004201);
 	cr_assert_eq(data, 123);
 }
 
 Test(BusRead, ReadPPU)
 {
-	auto pair = Init();
+	Init()
 	uint8_t data;
 
-	pair.second.ppu->mpy.mpyl = 123;
-	data = pair.first->read(0x002134);
+	snes.ppu->mpy.mpyl = 123;
+	data = snes._bus->read(0x002134);
 	cr_assert_eq(data, 123);
 }
 
 Test(BusRead, ReadSRAM)
 {
-	auto pair = Init();
+	Init()
 	uint8_t data;
 
-	pair.second.sram->_data[7] = 123;
-	data = pair.first->read(0x700007);
+	snes.sram->_data[7] = 123;
+	data = snes._bus->read(0x700007);
 	cr_assert_eq(data, 123);
 }
 
 Test(BusRead, ReadWRAM)
 {
-	auto pair = Init();
+	Init()
 	uint8_t data;
 
-	pair.second.wram->_data[3] = 123;
-	data = pair.first->read(0x7E0003);
+	snes.wram->_data[3] = 123;
+	data = snes._bus->read(0x7E0003);
 	cr_assert_eq(data, 123);
 }
 
 Test(BusRead, ReadWRAM2)
 {
-	auto pair = Init();
+	Init()
 	uint8_t data;
 
-	pair.second.wram->_data[0x1010] = 123;
-	data = pair.first->read(0x7E1010);
+	snes.wram->_data[0x1010] = 123;
+	data = snes._bus->read(0x7E1010);
 	cr_assert_eq(data, 123);
 }
 
 
 Test(BusRead, ReadWRAMMirror)
 {
-	auto pair = Init();
+	Init()
 	uint8_t data;
 
-	pair.second.wram->_data[0x1010] = 123;
-	data = pair.first->read(0x1010);
+	snes.wram->_data[0x1010] = 123;
+	data = snes._bus->read(0x1010);
 	cr_assert_eq(data, 123);
 }
 
@@ -415,60 +404,60 @@ Test(BusRead, ReadWRAMMirror)
 
 Test(BusWrite, Write0x0)
 {
-	auto pair = Init();
+	Init()
 
 	try {
-		pair.first->write(0x0, 123);
+		snes._bus->write(0x0, 123);
 	} catch (std::exception &ex) {
 		std::cout << ex.what() << std::endl;
 	}
-	cr_assert_eq(pair.second.wram->_data[0], 123);
+	cr_assert_eq(snes.wram->_data[0], 123);
 }
 
 
 Test(BusWrite, WriteAPU)
 {
-	auto pair = Init();
+	Init()
 
-	pair.first->write(0x002143, 123);
-	cr_assert_eq(pair.second.apu->_registers.port3, 123);
+	snes._bus->write(0x002143, 123);
+	cr_assert_eq(snes.apu->_registers.port3, 123);
 }
 
 Test(BusWrite, WritePPU)
 {
-	auto pair = Init();
+	Init()
 
-	pair.first->write(0x002106, 123);
-	cr_assert_eq(pair.second.ppu->_mosaic.raw, 123);
+	snes._bus->write(0x002106, 123);
+	cr_assert_eq(snes.ppu->_mosaic.raw, 123);
 }
 
 Test(BusWrite, WriteCPU)
 {
-	auto pair = Init();
+	Init()
 
-	pair.first->write(0x00420D, 123);
-	cr_assert_eq(pair.second.cpu->_internalRegisters.memsel, 123);
+	snes._bus->write(0x00420D, 123);
+	cr_assert_eq(snes.cpu->_internalRegisters.memsel, 123);
 }
 
 Test(BusWrite, WriteROM)
 {
-	auto pair = Init();
+	Init()
 
-	cr_assert_throw(pair.first->write(0x808005, 123), InvalidAction);
+	cr_assert_throw(snes._bus->write(0x808005, 123), InvalidAction);
 }
 
 Test(BusWrite, WriteWRAM)
 {
-	auto pair = Init();
+	Init()
 
-	pair.first->write(0x7E0002, 123);
-	cr_assert_eq(pair.second.wram->_data[2], 123);
+	snes._bus->write(0x7E0002, 123);
+	cr_assert_eq(snes.wram->_data[2], 123);
 }
 
 Test(BusWrite, WriteSRAM)
 {
-	auto pair = Init();
+	Init()
 
-	pair.first->write(0x700009, 123);
-	cr_assert_eq(pair.second.sram->_data[9], 123);
+	snes._bus->write(0x700009, 123);
+	cr_assert_eq(snes.sram->_data[9], 123);
 }

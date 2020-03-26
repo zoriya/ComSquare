@@ -33,12 +33,12 @@ namespace ComSquare::Renderer
 		//TODO implement rom openning from this menu.
 		(void)file;
 
-		QMenu *game = this->_window.menuBar()->addMenu("Game");
+		QMenu *game = this->_window.menuBar()->addMenu("&Game");
 		QAction *reset = new QAction("Reset", &this->_window);
 		QMainWindow::connect(reset, &QAction::triggered, this->_sfWidget.get(), &QtFullSFML::reset);
 		game->addAction(reset);
 
-		QMenu *debugger = this->_window.menuBar()->addMenu("Debugger");
+		QMenu *debugger = this->_window.menuBar()->addMenu("&Debugger");
 		QAction *cpuDebugger = new QAction("CPU's Debugger", &this->_window);
 		cpuDebugger->setShortcut(Qt::Key_F1);
 		QMainWindow::connect(cpuDebugger, &QAction::triggered, this->_sfWidget.get(), &QtFullSFML::enableDebugCPU);
@@ -55,6 +55,10 @@ namespace ComSquare::Renderer
 		apuDebugger->setShortcut(Qt::Key_F4);
 		QMainWindow::connect(apuDebugger, &QAction::triggered, this->_sfWidget.get(), &QtFullSFML::enableDebugAPU);
 		debugger->addAction(apuDebugger);
+		QAction *busDebugger = new QAction("Memory bus Viewer", &this->_window);
+		busDebugger->setShortcut(Qt::Key_F5);
+		QMainWindow::connect(busDebugger, &QAction::triggered, this->_sfWidget.get(), &QtFullSFML::enableDebugBus);
+		debugger->addAction(busDebugger);
 
 		this->_window.show();
 	}
@@ -109,5 +113,10 @@ namespace ComSquare::Renderer
 	void QtFullSFML::enableDebugAPU()
 	{
 		this->_snes.enableAPUDebugging();
+	}
+
+	void QtFullSFML::enableDebugBus()
+	{
+		this->_snes.enableMemoryBusDebugging();
 	}
 }
