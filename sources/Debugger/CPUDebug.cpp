@@ -26,12 +26,12 @@ namespace ComSquare::Debugger
 
 		this->_ui.setupUi(this->_window);
 
+		this->disassembledInstructions = this->_disassemble(0x808000, 0x7FFF);
 		this->_ui.disasembly->setModel(&this->_model);
 		this->_ui.disasembly->setShowGrid(false);
 		this->_ui.disasembly->verticalHeader()->hide();
 		this->_ui.disasembly->horizontalHeader()->hide();
 		this->_ui.disasembly->horizontalHeader()->setStretchLastSection(true);
-		this->disassembledInstructions = this->_disassemble(0x808000, this->_cartridgeHeader.romSize);
 
 		QMainWindow::connect(this->_ui.actionPause, &QAction::triggered, this, &CPUDebug::pause);
 		QMainWindow::connect(this->_ui.actionStep, &QAction::triggered, this, &CPUDebug::step);
@@ -228,9 +228,9 @@ namespace ComSquare::Debugger
 
 	DisassembledInstruction CPUDebug::_parseInstruction(uint24_t pc)
 	{
-		uint24_t opcode = this->_bus->read(pc++, true);
+		uint24_t opcode = this->_bus->read(pc, true);
 		Instruction instruction = this->_instructions[opcode];
-		std::string argument = this->_getInstructionParameter(instruction, pc);
+		std::string argument = this->_getInstructionParameter(instruction, pc + 1);
 		return DisassembledInstruction(instruction, pc, argument, opcode);
 	}
 
@@ -300,6 +300,11 @@ QVariant DisassemblyModel::data(const QModelIndex &index, int role) const
 	switch (index.column()) {
 	case 0:
 		return QString(ComSquare::Utility::to_hex(instruction.address).c_str());
+	case 1:
+		return QString(instruction.name.c_str());
+	case 2:
+		return QString(instruction.argument.c_str());
+	default:
+		return QVariant();
 	}
-	return QString();
 }

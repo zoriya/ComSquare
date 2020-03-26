@@ -574,7 +574,7 @@ namespace ComSquare::CPU
 			{&CPU::LDA, 5, "lda", AddressingMode::AbsoluteIndexedByXLong, 4}, // BF
 			{&CPU::BRK, 7, "cpy #-#", AddressingMode::Implied, 2}, // C0
 			{&CPU::BRK, 7, "cmp #-#", AddressingMode::Implied, 2}, // C1
-			{&CPU::REP, 3, "rep", AddressingMode::Immediate8bits, 3}, // C2
+			{&CPU::REP, 3, "rep", AddressingMode::Immediate8bits, 2}, // C2
 			{&CPU::BRK, 7, "cmp #-#", AddressingMode::Implied, 2}, // C3
 			{&CPU::BRK, 7, "cpy #-#", AddressingMode::Implied, 2}, // C4
 			{&CPU::BRK, 7, "cmp #-#", AddressingMode::Implied, 2}, // C5
