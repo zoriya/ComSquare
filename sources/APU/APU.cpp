@@ -706,6 +706,10 @@ namespace ComSquare::APU
 	{
 		unsigned total = 0;
 
+		if (this->_paddingCycles > cycles) {
+			this->_paddingCycles -= cycles;
+			return;
+		}
 		cycles -= this->_paddingCycles;
 		while (total < cycles && this->_state == Running)
 			total += this->_executeInstruction();
