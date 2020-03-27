@@ -5,6 +5,7 @@
 #include "CPUDebug.hpp"
 #include "../Utility/Utility.hpp"
 #include "../Exceptions/InvalidOpcode.hpp"
+#include "../CPU/CPU.hpp"
 #include <QtEvents>
 #include <iostream>
 #include <utility>
@@ -75,7 +76,9 @@ namespace ComSquare::Debugger
 			this->_isPaused = true;
 		}
 		uint24_t pc = (this->_registers.pbr << 16u) | (this->_registers.pc - 1u);
-		this->_ui.logger->append((this->_parseInstruction(pc).toString() + " -  " + Utility::to_hex(opcode)).c_str());
+		DisassemblyContext ctx =  {this->_registers.p.m, this->_registers.p.x_b};
+		DisassembledInstruction instruction = this->_parseInstruction(pc, ctx);
+		this->_ui.logger->append((instruction.toString() + " -  " + Utility::to_hex(opcode)).c_str());
 		unsigned ret = CPU::_executeInstruction(opcode);
 		this->_updateRegistersPanel();
 		return ret;
@@ -135,50 +138,101 @@ namespace ComSquare::Debugger
 		return str;
 	}
 
-	std::vector<DisassembledInstruction> CPUDebug::_disassemble(uint24_t pc, uint24_t length)
-	{
-		std::vector<DisassembledInstruction> map;
-		uint24_t endAddr = pc + length;
-
-		while (pc < endAddr) {
-			DisassembledInstruction instruction = this->_parseInstruction(pc);
-			map.push_back(instruction);
-			pc += instruction.size;
-		}
-		return map;
-	}
-
 	void CPUDebug::clearHistory()
 	{
 		this->_ui.logger->clear();
 	}
 
-	std::string CPUDebug::_getImmediateValueForA(uint24_t pc)
+	std::vector<DisassembledInstruction> CPUDebug::_disassemble(uint24_t pc, uint24_t length)
+	{
+		std::vector<DisassembledInstruction> map;
+		uint24_t endAddr = pc + length;
+		DisassemblyContext ctx;
+
+		while (pc < endAddr) {
+			DisassembledInstruction instruction = this->_parseInstruction(pc, ctx);
+			map.push_back(instruction);
+			pc += instruction.size;
+			if (instruction.addressingMode == ImmediateForA && !ctx.mFlag)
+				pc++;
+			if (instruction.addressingMode == ImmediateForX && !ctx.xFlag)
+				pc++;
+
+			if (instruction.opcode == 0x40 && ctx.isEmulationMode) { // RTI
+				ctx.mFlag = true;
+				ctx.xFlag = true;
+			}
+			if (instruction.opcode == 0xC2) { // REP
+				if (ctx.isEmulationMode) {
+					ctx.mFlag = true;
+					ctx.xFlag = true;
+				} else {
+					uint8_t m = this->_bus->read(pc - 1);
+					ctx.mFlag &= ~m & 0b00100000u;
+					ctx.xFlag &= ~m & 0b00010000u;
+				}
+			}
+			if (instruction.opcode == 0xE2) { // SEP
+				uint8_t m = this->_bus->read(pc - 1);
+				ctx.mFlag |= m & 0b00100000u;
+				ctx.xFlag |= m & 0b00010000u;
+			}
+			if (instruction.opcode == 0x28) { // PLP
+				if (ctx.isEmulationMode) {
+					ctx.mFlag = true;
+					ctx.xFlag = true;
+				} else
+					ctx.compromised = true;
+			}
+			if (instruction.opcode == 0xFB) {// XCE
+				ctx.compromised = true;
+				ctx.isEmulationMode = false; // The most common use of the XCE is to enable native mode at the start of the ROM so we guess that it has done that.
+			}
+		}
+		return map;
+	}
+
+	DisassembledInstruction CPUDebug::_parseInstruction(uint24_t pc, DisassemblyContext &ctx)
+	{
+		uint24_t opcode = this->_bus->read(pc, true);
+		Instruction instruction = this->_instructions[opcode];
+		std::string argument = this->_getInstructionParameter(instruction, pc + 1, ctx);
+		return DisassembledInstruction(instruction, pc, argument, opcode);
+	}
+
+	std::string CPUDebug::_getInstructionParameter(Instruction &instruction, uint24_t pc, DisassemblyContext &ctx)
+	{
+		switch (instruction.addressingMode) {
+		case Implied:
+			return "";
+		case ImmediateForA:
+			return this->_getImmediateValue(pc, !ctx.mFlag);
+		case ImmediateForX:
+			return this->_getImmediateValue(pc, !ctx.xFlag);
+		case Immediate8bits:
+			return this->_getImmediateValue(pc, false);
+		case Absolute:
+			return this->_getAbsoluteValue(pc);
+		case AbsoluteLong:
+			return this->_getAbsoluteLongValue(pc);
+		case DirectPage:
+			return this->_getDirectValue(pc);
+		case DirectPageIndexedByX:
+			return this->_getDirectIndexedByXValue(pc);
+
+		default:
+			return "???";
+		}
+	}
+
+	std::string CPUDebug::_getImmediateValue(uint24_t pc, bool dual)
 	{
 		unsigned value = this->_bus->read(pc, true);
 
-		if (!this->_registers.p.m)
+		if (dual)
 			value += this->_bus->read(pc + 1, true) << 8u;
 		std::stringstream ss;
 		ss << "#$" << std::hex << value;
-		return ss.str();
-	}
-
-	std::string CPUDebug::_getImmediateValueForX(uint24_t pc)
-	{
-		unsigned value = this->_bus->read(pc, true);
-
-		if (!this->_registers.p.x_b)
-			value += this->_bus->read(pc + 1, true) << 8u;
-		std::stringstream ss;
-		ss << "#$" << std::hex << value;
-		return ss.str();
-	}
-
-	std::string CPUDebug::_getImmediateValue8Bits(uint24_t pc)
-	{
-		std::stringstream ss;
-		ss << "#$" << std::hex << static_cast<unsigned>(this->_bus->read(pc, true));
 		return ss.str();
 	}
 
@@ -224,39 +278,6 @@ namespace ComSquare::Debugger
 		std::stringstream ss;
 		ss << "$" << std::hex << value << ", x";
 		return ss.str();
-	}
-
-	DisassembledInstruction CPUDebug::_parseInstruction(uint24_t pc)
-	{
-		uint24_t opcode = this->_bus->read(pc, true);
-		Instruction instruction = this->_instructions[opcode];
-		std::string argument = this->_getInstructionParameter(instruction, pc + 1);
-		return DisassembledInstruction(instruction, pc, argument, opcode);
-	}
-
-	std::string CPUDebug::_getInstructionParameter(Instruction &instruction, uint24_t pc)
-	{
-		switch (instruction.addressingMode) {
-		case Implied:
-			return "";
-		case ImmediateForA:
-			return this->_getImmediateValueForA(pc);
-		case ImmediateForX:
-			return this->_getImmediateValueForX(pc);
-		case Immediate8bits:
-			return this->_getImmediateValue8Bits(pc);
-		case Absolute:
-			return this->_getAbsoluteValue(pc);
-		case AbsoluteLong:
-			return this->_getAbsoluteLongValue(pc);
-		case DirectPage:
-			return this->_getDirectValue(pc);
-		case DirectPageIndexedByX:
-			return this->_getDirectIndexedByXValue(pc);
-
-		default:
-			return "???";
-		}
 	}
 
 	int CPUDebug::RESB(uint24_t)

@@ -38,6 +38,21 @@ public:
 
 namespace ComSquare::Debugger
 {
+	//! @brief Struct used to emulate the state of the processor during the disassembly since instructions take a different amount of space depending on some flags.
+	struct DisassemblyContext {
+		//! @brief The accumulator and Memory width flag (in native mode only) - 0 = 16 bits mode, 1 = 8 bits mode.
+		//! @info If this flag is set to false, instructions that have the ImmediateByA addressing mode take 1 more bit of space.
+		bool mFlag = true;
+		//!	@brief The indeX register width flag (in native mode only) - 0 = 16 bits mode, 1 = 8 bits mode OR the Break flag (in emulation mode only)
+		//! @info If this flag is set to false, instructions that have the ImmediateByX addressing mode take 1 more bit of space.
+		bool xFlag = true;
+		//! @brief Is the CPU emulating a 6502? If yes, some instructions don't change flags the same way.
+		bool isEmulationMode = true;
+		//! @brief Sometimes, the flags can't be tracked correctly after an instruction so the next instructions may not be correctly disassembled.
+		bool compromised = false;
+	};
+
+	//! @brief Struct representing an instruction in an human readable way (created by disassembling the rom).
 	struct DisassembledInstruction : public CPU::Instruction {
 		uint24_t address;
 		std::string argument;
@@ -68,23 +83,20 @@ namespace ComSquare::Debugger
 		SNES &_snes;
 		//! @brief Reimplement the basic instruction execution method to log instructions inside the logger view.
 		unsigned _executeInstruction(uint8_t opcode) override;
-		//! @brief Parse the instruction at the program counter given to have human readable information.
-		DisassembledInstruction _parseInstruction(uint24_t pc);
-		//! @brief Get the parameter of the instruction as an hexadecimal string.
-		std::string _getInstructionParameter(ComSquare::CPU::Instruction &instruction, uint24_t pc);
-		//! @brief Get a printable string representing the flags.
-		std::string _getFlagsString();
 		//! @brief Disassemble part of the memory (using the bus) and parse it to a map of address and disassembled instruction.
 		std::vector<DisassembledInstruction> _disassemble(uint24_t startAddr, uint24_t size);
+		//! @brief Parse the instruction at the program counter given to have human readable information.
+		DisassembledInstruction _parseInstruction(uint24_t pc, DisassemblyContext &ctx);
+		//! @brief Get the parameter of the instruction as an hexadecimal string.
+		std::string _getInstructionParameter(ComSquare::CPU::Instruction &instruction, uint24_t pc, DisassemblyContext &ctx);
+		//! @brief Get a printable string representing the flags.
+		std::string _getFlagsString();
 		//! @brief Update the register's panel (accumulator, stack pointer...)
 		void _updateRegistersPanel();
 
-		//! @brief Return a printable string corresponding to the value of an immediate addressing mode for a.
-		std::string _getImmediateValueForA(uint24_t pc);
-		//! @brief Return a printable string corresponding to the value of an immediate addressing mode for x.
-		std::string _getImmediateValueForX(uint24_t pc);
-		//! @brief Return a printable string corresponding to the value of a 8bits immediate addressing mode (used only with SEP and REP).
-		std::string _getImmediateValue8Bits(uint24_t pc);
+		//! @brief Return a printable string corresponding to the value of a 8 or 16 bits immediate addressing mode.
+		//! @param dual Set this to true if the instruction take 16bits and not 8. (used for the immediate by a when the flag m is not set or the immediate by x if the flag x is not set).
+		std::string _getImmediateValue(uint24_t pc, bool dual);
 		//! @brief Return a printable string corresponding to the value of a 16bits immediate addressing mode.
 		std::string _getImmediateValue16Bits(uint24_t pc);
 		//! @brief Return a printable string corresponding to the value of a direct addressing mode.
