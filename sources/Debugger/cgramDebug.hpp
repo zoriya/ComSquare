@@ -49,7 +49,7 @@ public:
 };
 
 
-namespace ComSquare::cgramDebugger
+namespace ComSquare::Debugger
 {
 	//! @brief window that allow the user to view all data going through the memory bus.
 	class cgramDebug {
@@ -59,7 +59,7 @@ namespace ComSquare::cgramDebugger
 		//! @brief A reference to the snes (to disable the debugger).
 		SNES &_snes;
 		//! @brief A widget that contain the whole UI.
-		Ui::cgramView _ui;
+		Ui::CgramView _ui;
 		//! @brief The Log visualizer model for QT.
 		cgramModel _model;
 		//! @brief A reference to the ppu
@@ -76,13 +76,13 @@ namespace ComSquare::cgramDebugger
 		//! @brief Read data at the CGRAM address send it to the debugger.
 		//! @param addr The address to read from.
 		//! @return The color value in BGR, looks like this xbbbbbgggggrrrrr.
-		uint16_t read(uint8_t addr) override;
+		uint16_t read(uint8_t addr);
 
 		//! @brief Focus the debugger's window.
 		void focus();
 
 		//! @brief Return true if the Bus is overloaded with debugging features.
-		bool isDebugger() override;
+		bool isDebugger();
 	};
 }
 

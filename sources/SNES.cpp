@@ -9,6 +9,7 @@
 #include "Debugger/CPUDebug.hpp"
 #include "Debugger/APUDebug.hpp"
 #include "Debugger/MemoryBusDebug.hpp"
+#include "Debugger/cgramDebug.hpp"
 
 #endif
 
