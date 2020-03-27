@@ -7,6 +7,7 @@
 #include "../Exceptions/InvalidOpcode.hpp"
 #include "../CPU/CPU.hpp"
 #include <QtEvents>
+#include <QPainter>
 #include <iostream>
 #include <utility>
 
@@ -19,6 +20,7 @@ namespace ComSquare::Debugger
 		_window(new ClosableWindow<CPUDebug>(*this, &CPUDebug::disableDebugger)),
 		_ui(),
 		_model(*this),
+		_painter(*this),
 		_snes(snes)
 	{
 		this->_window->setContextMenuPolicy(Qt::NoContextMenu);
@@ -27,12 +29,12 @@ namespace ComSquare::Debugger
 
 		this->_ui.setupUi(this->_window);
 
-		this->disassembledInstructions = this->_disassemble(0x808000, 0x7FFF);
-		this->_ui.disasembly->setModel(&this->_model);
-		this->_ui.disasembly->setShowGrid(false);
-		this->_ui.disasembly->verticalHeader()->hide();
-		this->_ui.disasembly->horizontalHeader()->hide();
-		this->_ui.disasembly->horizontalHeader()->setStretchLastSection(true);
+		this->disassembledInstructions = this->_disassemble(this->_registers.pac, 0x7FFF);
+		this->_ui.disassembly->setModel(&this->_model);
+		this->_ui.disassembly->horizontalHeader()->setStretchLastSection(true);
+		this->_ui.disassembly->resizeColumnsToContents();
+		this->_ui.disassembly->verticalHeader()->setSectionResizeMode (QHeaderView::Fixed);
+		this->_ui.disassembly->setItemDelegate(&this->_painter);
 
 		QMainWindow::connect(this->_ui.actionPause, &QAction::triggered, this, &CPUDebug::pause);
 		QMainWindow::connect(this->_ui.actionStep, &QAction::triggered, this, &CPUDebug::step);
@@ -56,8 +58,11 @@ namespace ComSquare::Debugger
 		try {
 			if (this->_isPaused)
 				return 0xFF;
-			if (this->_isStepping)
-				return this->_executeInstruction(this->readPC());
+			if (this->_isStepping) {
+				unsigned ret = this->_executeInstruction(this->readPC());
+				this->_ui.disassembly->viewport()->repaint();
+				return ret;
+			}
 			return CPU::update();
 		} catch (InvalidOpcode &e) {
 			if (!this->_isPaused)
@@ -91,6 +96,10 @@ namespace ComSquare::Debugger
 			this->_ui.actionPause->setText("Resume");
 		else
 			this->_ui.actionPause->setText("Pause");
+		// TODO reload the disassembly from this point to update items that may be false up to this point
+		// TODO highlight the current line.
+		//this->disassembledInstructions. //= this->_disassemble(0x808000, 0x7FFF);
+		this->_ui.disassembly->viewport()->repaint();
 	}
 
 	void CPUDebug::step()
@@ -236,16 +245,6 @@ namespace ComSquare::Debugger
 		return ss.str();
 	}
 
-	std::string CPUDebug::_getImmediateValue16Bits(uint24_t pc)
-	{
-		unsigned value = this->_bus->read(pc, true);
-		value += this->_bus->read(pc + 1, true) << 8u;
-
-		std::stringstream ss;
-		ss << "#$" << std::hex << value;
-		return ss.str();
-	}
-
 	std::string CPUDebug::_getDirectValue(uint24_t pc)
 	{
 		std::stringstream ss;
@@ -292,6 +291,11 @@ namespace ComSquare::Debugger
 		this->_window->activateWindow();
 	}
 
+	uint24_t CPUDebug::getPC()
+	{
+		return this->_registers.pac;
+	}
+
 	DisassembledInstruction::DisassembledInstruction(const CPU::Instruction &instruction, uint24_t addr, std::string arg, uint8_t op)
 		: CPU::Instruction(instruction), address(addr), argument(std::move(arg)), opcode(op) {}
 
@@ -305,7 +309,7 @@ DisassemblyModel::DisassemblyModel(ComSquare::Debugger::CPUDebug &cpu) : QAbstra
 
 int DisassemblyModel::columnCount(const QModelIndex &) const
 {
-	return 4;
+	return 3;
 }
 
 int DisassemblyModel::rowCount(const QModelIndex &) const
@@ -320,12 +324,37 @@ QVariant DisassemblyModel::data(const QModelIndex &index, int role) const
 	ComSquare::Debugger::DisassembledInstruction instruction = this->_cpu.disassembledInstructions[index.row()];
 	switch (index.column()) {
 	case 0:
-		return QString(ComSquare::Utility::to_hex(instruction.address).c_str());
-	case 1:
 		return QString(instruction.name.c_str());
-	case 2:
+	case 1:
 		return QString(instruction.argument.c_str());
 	default:
 		return QVariant();
 	}
+}
+
+QVariant DisassemblyModel::headerData(int section, Qt::Orientation orientation, int role) const
+{
+	if (orientation == Qt::Horizontal)
+		return QVariant();
+	if (role != Qt::DisplayRole)
+		return QVariant();
+	ComSquare::Debugger::DisassembledInstruction instruction = this->_cpu.disassembledInstructions[section];
+	return QString(ComSquare::Utility::to_hex(instruction.address, ComSquare::Utility::HexString::NoPrefix).c_str());
+}
+
+RowPainter::RowPainter(ComSquare::Debugger::CPUDebug &cpu, QObject *parent) : QStyledItemDelegate(parent), _cpu(cpu) { }
+
+void RowPainter::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+	ComSquare::Debugger::DisassembledInstruction instruction = this->_cpu.disassembledInstructions[index.row()];
+
+	if (instruction.address == this->_cpu.getPC())
+		painter->fillRect(option.rect,QColor(Qt::darkGreen));
+	// TODO display breakpoints with the Qt::darkRed color.
+	QStyledItemDelegate::paint(painter, option, index);
+}
+
+QSize RowPainter::sizeHint(const QStyleOptionViewItem &, const QModelIndex &) const
+{
+	return QSize();
 }

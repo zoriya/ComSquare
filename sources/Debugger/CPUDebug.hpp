@@ -5,6 +5,7 @@
 #ifndef COMSQUARE_CPUDEBUG_HPP
 #define COMSQUARE_CPUDEBUG_HPP
 
+#include <QtWidgets/QStyledItemDelegate>
 #include "../CPU/CPU.hpp"
 #include "../Renderer/SFRenderer.hpp"
 #include "../SNES.hpp"
@@ -34,6 +35,22 @@ public:
 	int columnCount(const QModelIndex &parent) const override;
 	//! @brief Return a data representing the table cell.
 	QVariant data(const QModelIndex &index, int role) const override;
+	//! @brief Override the headers to use hex values.
+	QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
+};
+
+//! @brief The qt class that highlight breakpoints and the PC's position
+class RowPainter : public QStyledItemDelegate {
+	Q_OBJECT
+private:
+	ComSquare::Debugger::CPUDebug &_cpu;
+public:
+	explicit RowPainter(ComSquare::Debugger::CPUDebug &cpu, QObject *parent = nullptr);
+	RowPainter &operator=(const RowPainter &) = delete;
+	~RowPainter() override = default;
+protected:
+	QSize sizeHint(const QStyleOptionViewItem &options, const QModelIndex &index) const override;
+	void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 };
 
 namespace ComSquare::Debugger
@@ -75,6 +92,8 @@ namespace ComSquare::Debugger
 		Ui::CPUView _ui;
 		//! @brief The disassembly viewer's model.
 		DisassemblyModel _model;
+		//! @brief A custom painter that highlight breakpoints and the PC's position.
+		RowPainter _painter;
 		//! @brief If this is set to true, the execution of the CPU will be paused.
 		bool _isPaused = true;
 		//! @brief If this is set to true, the CPU will execute one instruction and pause itself.
@@ -119,7 +138,9 @@ namespace ComSquare::Debugger
 		void disableDebugger();
 		//! @brief The list of disassembled instructions to show on the debugger.
 		std::vector<DisassembledInstruction> disassembledInstructions;
-		//! @brief Update the UI when reseting the CPU.
+		//! @brief Return the current program counter of this CPU.
+		uint24_t getPC();
+		//! @brief Update the UI when resetting the CPU.
 		int RESB(uint24_t) override;
 		//! @brief Convert a basic CPU to a debugging CPU.
 		explicit CPUDebug(ComSquare::CPU::CPU &cpu, SNES &snes);

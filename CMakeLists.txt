@@ -93,7 +93,9 @@ add_executable(unit_tests
         tests/CPU/TransferRegisters.cpp
         sources/CPU/AddressingModes.cpp
         sources/Models/Components.hpp
-        sources/CPU/Instruction.hpp sources/Exceptions/DebuggableError.hpp)
+        sources/CPU/Instruction.hpp
+        sources/Exceptions/DebuggableError.hpp
+)
 
 # include criterion & coverage
 target_link_libraries(unit_tests criterion -lgcov)
