@@ -206,10 +206,8 @@ namespace ComSquare::CPU
 	{
 		unsigned cycles = 0;
 
-		for (int i = 0; i < 0xFF; i++) {
+		for (int i = 0; i < 0xFF; i++)
 			cycles += this->_executeInstruction(this->readPC());
-			this->_registers.pc++;
-		}
 		return cycles;
 	}
 
