@@ -200,7 +200,7 @@ add_executable(ComSquare
         sources/Debugger/MemoryBusDebug.cpp
         sources/Debugger/MemoryBusDebug.hpp
         sources/Debugger/ClosableWindow.hpp
-        sources/Models/Components.hpp)
+        sources/Models/Components.hpp sources/Debugger/cgramDebug.cpp sources/Debugger/cgramDebug.hpp)
 
 target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)
 

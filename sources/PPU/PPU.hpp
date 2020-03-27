@@ -494,7 +494,7 @@ namespace ComSquare::PPU
 		} _mpy;
 	};
 
-	//! @brief The class containing all the registers the PPU
+	//! @brief The class containing all the registers of the PPU
 	class PPU : public Memory::AMemory {
 	private:
 		//! @brief Init ppuRegisters
@@ -526,11 +526,15 @@ namespace ComSquare::PPU
 
 		//! @brief Update the PPU of n cycles.
 		//! @param The number of cycles to update.
-		void update(unsigned cycles);
+		virtual void update(unsigned cycles);
 		//! @brief Give the Vram Address with the right Address remapping
 		uint8_t getVramAddress();
-		//! @brief Give the name of the Address register
+		//! @brief Give the name of the Address register (used for debug)
 		std::string getValueName(uint24_t addr);
+		//! @brief Return true if the CPU is overloaded with debugging features.
+		virtual bool isDebugger();
+		//! @brief Allow others components to read the CGRAM (Debuggers)
+		uint16_t cgramRead(uint8_t addr);
 	};
 }
 #endif //COMSQUARE_PPU_HPP

@@ -126,4 +126,29 @@ namespace ComSquare
 			std::cerr << "Debugging features are not enabled. You can't enable the debugger." << std::endl;
 		#endif
 	}
+
+	void SNES::enableCgramDebugging()
+	{
+	#ifdef DEBUGGER_ENABLED
+			if (this->_bus->isDebugger())
+				std::static_pointer_cast<Debugger::MemoryBusDebug>(this->_bus)->focus();
+			else
+			{
+				this->_bus = std::make_shared<Debugger::MemoryBusDebug>(*this, *this->_bus);
+				this->cpu->setMemoryBus(this->_bus);
+			}
+	#else
+			std::cerr << "Debugging features are not enabled. You can't enable the debugger." << std::endl;
+	#endif
+		}
+
+		void SNES::disableCgramDebugging()
+		{
+	#ifdef DEBUGGER_ENABLED
+			this->_bus = std::make_shared<Memory::MemoryBus>(*this->_bus);
+			this->cpu->setMemoryBus(this->_bus);
+	#else
+			std::cerr << "Debugging features are not enabled. You can't enable the debugger." << std::endl;
+	#endif
+	}
 }

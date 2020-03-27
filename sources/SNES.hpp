@@ -70,6 +70,10 @@ namespace ComSquare
 		void disableMemoryBusDebugging();
 		//! @brief Enable the Memory Bus's debugging window.
 		void enableMemoryBusDebugging();
+		//! @brief Disable the Cgram's debugging window.
+		void disableCgramDebugging();
+		//! @brief Enable the Cgram's debugging window.
+		void enableCgramDebugging();
 
 		//! @brief Create all the components using a common memory bus for all of them.
 		SNES(const std::string &ramPath, Renderer::IRenderer &renderer);

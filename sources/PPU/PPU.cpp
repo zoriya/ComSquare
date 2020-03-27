@@ -134,23 +134,16 @@ namespace ComSquare::PPU
 			this->_registers._m7[addr - ppuRegisters::m7a].m7 = (this->_registers._m7[addr - ppuRegisters::m7a].m7 << 8) | data;
 			break;
 		case ppuRegisters::cgadd:
-			std::cout << "cgadd addr : " <<  std::bitset<8>(data)  << std::endl;
 			this->_registers._cgadd = data;
 			this->_registers._isLowByte = true;
 			break;
 		case ppuRegisters::cgdata:
-			//throw InvalidAddress("cgdata", addr);
 			if (this->_registers._isLowByte) {
-				std::cout << "cgadatal w data " <<  std::bitset<8>(data) << std::endl;
 				this->_registers._cgdata.cgdatal = data;
-				//this->_registers._cgram.write(this->_registers._cgadd, this->_registers._cgdata.raw);
-				//this->_registers._cgadd++;
 			}
 			else {
-				std::cout << "cgdatah w data " <<  std::bitset<8>(data) << std::endl;
 				this->_registers._cgdata.cgdatah = data;
 				this->_cgram.write(this->_registers._cgadd, this->_registers._cgdata.raw);
-				std::cout << "cgadatah at addr: " << this->_registers._cgadd << " valeur : " <<  std::bitset<16>(this->_registers._cgdata.raw)  << std::endl;
 				this->_registers._cgadd++;
 			}
 			this->_registers._isLowByte = !this->_registers._isLowByte;
@@ -385,12 +378,22 @@ namespace ComSquare::PPU
 		case ppuRegisters::stat78:
 			return "STAT78";
 		default:
-			return "PPU : ???";
+			return "???";
 		}
 	}
 
 	Component PPU::getComponent()
 	{
 		return Ppu;
+	}
+
+	bool PPU::isDebugger()
+	{
+		return false;
+	}
+
+	uint16_t PPU::cgramRead(uint8_t addr)
+	{
+		return this->_cgram.read(addr);
 	}
 }
