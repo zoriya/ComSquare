@@ -69,16 +69,18 @@ QVariant CGramModel::data(const QModelIndex &index, int role) const
 	uint8_t green;
 	uint8_t blue;
 	//std::cout << "test1" << std::endl;
-	//if (role == Qt::TextAlignmentRole)
-	//	return Qt::AlignCenter;
+	if (role == Qt::TextAlignmentRole)
+		return Qt::AlignCenter;
 	//std::cout << "test2" << std::endl;
-	//if (role == Qt::BackgroundRole) {
-	//	std::cout << "test" << std::endl;
-	//	return 1;
-	//}
+
 	//std::cout << "test3" << std::endl;
 	if (role != Qt::DisplayRole)
 		return QVariant();
+	if (role == Qt::BackgroundRole) {
+		//	std::cout << "test" << std::endl;
+		//unreachable
+		return 1;
+	}
 	addressValue = this->_ppu.cgramRead(index.column() * 16 + index.row());
 
 	blue = (addressValue & 0x7D00U) >> 10U;
@@ -88,5 +90,5 @@ QVariant CGramModel::data(const QModelIndex &index, int role) const
 	red = (red * 255U / 31U) << 24U;
 	green = (green * 255U / 31U) << 16U;
 	blue = (blue * 255U / 31U) << 8U;
-	return QColor(red, green,blue,255);
+	return QColor(red, green, blue);
 }
