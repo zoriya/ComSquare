@@ -713,7 +713,6 @@ namespace ComSquare::APU
 		cycles -= this->_paddingCycles;
 		while (total < cycles && this->_state == Running)
 			total += this->_executeInstruction();
-		std::cout << "Done." << std::endl;
 		if (this->_state == Running)
 			this->_paddingCycles = total - cycles;
 	}
