@@ -83,7 +83,6 @@ public:
 	QVariant data(const QModelIndex &index, int role) const override;
 };
 
-
 namespace ComSquare::Debugger
 {
 	//! @brief window that allow the user to view all data going through the memory bus.

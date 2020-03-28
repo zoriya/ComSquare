@@ -5,6 +5,7 @@
 #include "CGramDebug.hpp"
 #include "../SNES.hpp"
 #include <QColor>
+#include <iostream>
 #include "../Utility/Utility.hpp"
 #include "../Exceptions/InvalidAction.hpp"
 #include "../Exceptions/InvalidAddress.hpp"
@@ -23,6 +24,7 @@ namespace ComSquare::Debugger
 		this->_window->setAttribute(Qt::WA_DeleteOnClose);
 
 		this->_ui.setupUi(this->_window);
+		this->_ui.cgram_view->setModel(&this->_model);
 
 		this->_window->show();
 	}
@@ -62,11 +64,29 @@ int CGramModel::columnCount(const QModelIndex &) const
 
 QVariant CGramModel::data(const QModelIndex &index, int role) const
 {
-	if (role == Qt::TextAlignmentRole)
-		return Qt::AlignCenter;
-	if (role == Qt::BackgroundRole)
-		return 1;
-	this->_ppu.cgramRead(0);
+	u_int16_t addressValue;
+	uint8_t red;
+	uint8_t green;
+	uint8_t blue;
+	//std::cout << "test1" << std::endl;
+	//if (role == Qt::TextAlignmentRole)
+	//	return Qt::AlignCenter;
+	//std::cout << "test2" << std::endl;
+	//if (role == Qt::BackgroundRole) {
+	//	std::cout << "test" << std::endl;
+	//	return 1;
+	//}
+	//std::cout << "test3" << std::endl;
 	if (role != Qt::DisplayRole)
 		return QVariant();
+	addressValue = this->_ppu.cgramRead(index.column() * 16 + index.row());
+
+	blue = (addressValue & 0x7D00U) >> 10U;
+	green = (addressValue & 0x03E0U) >> 5U;
+	red = (addressValue & 0x001FU);
+
+	red = (red * 255U / 31U) << 24U;
+	green = (green * 255U / 31U) << 16U;
+	blue = (blue * 255U / 31U) << 8U;
+	return QColor(red, green,blue,255);
 }
