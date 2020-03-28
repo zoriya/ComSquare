@@ -31,7 +31,7 @@ namespace ComSquare
 	{
 		unsigned cycleCount = this->cpu->update();
 		this->ppu->update(cycleCount);
-//		this->apu->update(cycleCount);
+		this->apu->update(cycleCount);
 	}
 
 	void SNES::enableCPUDebugging(bool pause)
