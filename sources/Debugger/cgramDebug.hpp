@@ -11,6 +11,38 @@
 #include <QtCore/QSortFilterProxyModel>
 #include "ClosableWindow.hpp"
 
+
+/*namespace ComSquare
+{
+	class SNES;
+	namespace Debugger
+	{
+		//! @brief Window that show the header of the currently running game.
+		class cgramViewer {
+		private:
+			//! @brief The QT window for this debugger.
+			ClosableWindow<cgramViewer> *_window{};
+			//! @brief A reference to the snes (to disable the debugger).
+			SNES &_snes;
+			//! @brief The layout of the viewer.
+			Ui::CgramView _ui;
+			//! @brief The ppu containing the cgram.
+			ComSquare::PPU::PPU &_ppu;
+		public slots:
+			//! @brief Called when the window is closed. Turn off the debugger and revert to a basic CPU.
+			void disableDebugger();
+		public:
+			//! @brief Focus the debugger's window.
+			void focus();
+
+			explicit cgramViewer(SNES &snes, ComSquare::PPU::PPU &ppu);
+			cgramViewer(const cgramViewer &) = delete;
+			cgramViewer &operator=(const cgramViewer &) = delete;
+			~cgramViewer() = default;
+		};
+	}
+}*/
+
 /*namespace ComSquare::cgramDebugger
 {
 	//! @brief The struct used to represent memory bus logs.
@@ -30,6 +62,9 @@
 class cgramModel : public QAbstractTableModel
 {
 Q_OBJECT
+private:
+	//! @brief The ppu to log the cgram.
+	ComSquare::PPU::PPU &_ppu;
 public:
 	//! @brief The number of columns
 	const int column = 16;
@@ -40,6 +75,8 @@ public:
 	const cgramModel &operator=(const cgramModel &) = delete;
 	~cgramModel() override = default;
 
+	//! @brief set the reference to the ppu
+	void ppu(const ComSquare::PPU::PPU &ppu);
 	//! @brief The number of row the table has.
 	int rowCount(const QModelIndex &parent) const override;
 	//! @brief The number of column the table has.

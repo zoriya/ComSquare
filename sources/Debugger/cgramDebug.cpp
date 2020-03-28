@@ -22,13 +22,7 @@ namespace ComSquare::Debugger
 		this->_window->setAttribute(Qt::WA_QuitOnClose, false);
 		this->_window->setAttribute(Qt::WA_DeleteOnClose);
 
-		/*this->_ui.setupUi(this->_window);
-		this->_ui.log->setModel(&this->_model);
-		this->_ui.log->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
-		//this->_ui.log->horizontalHeader()->setStretchLastSection(true);
-		this->_ui.log->horizontalHeader()->setSectionsMovable(false);
-		for (int i = 0; i < this->_model.column; i++)
-			this->_ui.log->setColumnWidth(i, this->_ui.log->width());*/
+		this->_ui.setupUi(this->_window);
 
 		this->_window->show();
 	}
@@ -68,8 +62,14 @@ QVariant cgramModel::data(const QModelIndex &index, int role) const
 {
 	if (role == Qt::TextAlignmentRole)
 		return Qt::AlignCenter;
-	if (role != Qt::DisplayRole)
-		return QVariant();
 	if (role == Qt::BackgroundRole)
 		return 1;
+	this->_ppu.cgramRead(0);
+	if (role != Qt::DisplayRole)
+		return QVariant();
+}
+
+void cgramModel::ppu(const ComSquare::PPU::PPU &ppu)
+{
+	this->_ppu = ppu;
 }

@@ -130,26 +130,18 @@ namespace ComSquare
 
 	void SNES::enableCgramDebugging()
 	{
-	#ifdef DEBUGGER_ENABLED
-			if (this->_bus->isDebugger())
-				std::static_pointer_cast<Debugger::MemoryBusDebug>(this->_bus)->focus();
+		#ifdef DEBUGGER_ENABLED
+			if (this->_cgramViewer)
+				this->_cgramViewer->focus();
 			else
-			{
-				this->_bus = std::make_shared<Debugger::MemoryBusDebug>(*this, *this->_bus);
-				this->cpu->setMemoryBus(this->_bus);
-			}
-	#else
-			std::cerr << "Debugging features are not enabled. You can't enable the debugger." << std::endl;
-	#endif
-		}
+				this->_cgramViewer = std::make_unique<Debugger::cgramDebug>(*this, *this->ppu);
+		#endif
+	}
 
-		void SNES::disableCgramDebugging()
-		{
-	#ifdef DEBUGGER_ENABLED
-			this->_bus = std::make_shared<Memory::MemoryBus>(*this->_bus);
-			this->cpu->setMemoryBus(this->_bus);
-	#else
-			std::cerr << "Debugging features are not enabled. You can't enable the debugger." << std::endl;
-	#endif
+	void SNES::disableCgramDebugging()
+	{
+		#ifdef DEBUGGER_ENABLED
+				this->_cgramViewer = nullptr;
+		#endif
 	}
 }
