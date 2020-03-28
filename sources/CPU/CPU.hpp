@@ -261,121 +261,121 @@ namespace ComSquare::CPU
 		virtual unsigned _executeInstruction(uint8_t opcode);
 
 		//! @brief Break instruction - Causes a software break. The PC is loaded from a vector table.
-		int BRK(uint24_t);
+		int BRK(uint24_t, AddressingMode);
 		//! @brief Co-Processor Enable instruction - Causes a software break. The PC is loaded from a vector table.
-		int COP(uint24_t);
+		int COP(uint24_t, AddressingMode);
 		//! @brief Return from Interrupt - Used to return from a interrupt handler.
-		int RTI(uint24_t);
+		int RTI(uint24_t, AddressingMode);
 		//! @brief Add with carry - Adds operand to the Accumulator; adds an additional 1 if carry is set.
-		int ADC(uint24_t valueAddr);
+		int ADC(uint24_t valueAddr, AddressingMode);
 		//! @brief Store the accumulator to memory.
-		int STA(uint24_t addr);
+		int STA(uint24_t addr, AddressingMode);
 		//! @brief Store the index register X to memory.
-		int STX(uint24_t addr);
+		int STX(uint24_t addr, AddressingMode);
 		//! @brief Store the index register Y to memory.
-		int STY(uint24_t addr);
+		int STY(uint24_t addr, AddressingMode);
 		//! @brief Store zero to the memory.
-		int STZ(uint24_t addr);
+		int STZ(uint24_t addr, AddressingMode);
 		//! @brief Load the accumulator from memory.
-		int LDA(uint24_t addr);
+		int LDA(uint24_t addr, AddressingMode);
 		//! @brief Load the X index register from memory.
-		int LDX(uint24_t addr);
+		int LDX(uint24_t addr, AddressingMode);
 		//! @brief Load the Y index register from memory.
-		int LDY(uint24_t addr);
+		int LDY(uint24_t addr, AddressingMode);
 		//! @brief Set status bits.
-		int SEP(uint24_t valueAddr);
+		int SEP(uint24_t valueAddr, AddressingMode);
 		//! @brief Reset status bits.
-		int REP(uint24_t valueAddr);
+		int REP(uint24_t valueAddr, AddressingMode);
 		//! @brief Jump to subroutine
-		int JSR(uint24_t addr);
+		int JSR(uint24_t addr, AddressingMode);
 		//! @brief Jump to subroutine (long)
-		int JSL(uint24_t addr);
+		int JSL(uint24_t addr, AddressingMode);
 		//! @brief Push the accumulator to the stack.
-		int PHA(uint24_t);
+		int PHA(uint24_t, AddressingMode);
 		//! @brief Push the data bank register to the stack.
-		int PHB(uint24_t);
+		int PHB(uint24_t, AddressingMode);
 		//! @brief Push the direct page register to the stack.
-		int PHD(uint24_t);
+		int PHD(uint24_t, AddressingMode);
 		//! @brief Push the program bank register to the stack.
-		int PHK(uint24_t);
+		int PHK(uint24_t, AddressingMode);
 		//! @brief Push the processor status register to the stack.
-		int PHP(uint24_t);
+		int PHP(uint24_t, AddressingMode);
 		//! @brief Push the x index register to the stack.
-		int PHX(uint24_t);
+		int PHX(uint24_t, AddressingMode);
 		//! @brief Push the y index register to the stack.
-		int PHY(uint24_t);
+		int PHY(uint24_t, AddressingMode);
 		//! @brief Pull the accumulator to the stack.
-		int PLA(uint24_t);
+		int PLA(uint24_t, AddressingMode);
 		//! @brief Pull the data bank register to the stack.
-		int PLB(uint24_t);
+		int PLB(uint24_t, AddressingMode);
 		//! @brief Pull the direct page register to the stack.
-		int PLD(uint24_t);
+		int PLD(uint24_t, AddressingMode);
 		//! @brief Pull the processor status register to the stack.
-		int PLP(uint24_t);
+		int PLP(uint24_t, AddressingMode);
 		//! @brief Pull the x index register to the stack.
-		int PLX(uint24_t);
+		int PLX(uint24_t, AddressingMode);
 		//! @brief Pull the y index register to the stack.
-		int PLY(uint24_t);
+		int PLY(uint24_t, AddressingMode);
 		//! @brief Clear the carry flag.
-		int CLC(uint24_t);
+		int CLC(uint24_t, AddressingMode);
 		//! @brief Clear the Interrupt Disable flag.
-		int CLI(uint24_t);
+		int CLI(uint24_t, AddressingMode);
 		//! @brief Clear the decimal flag.
-		int CLD(uint24_t);
+		int CLD(uint24_t, AddressingMode);
 		//! @brief Clear the overflow flag.
-		int CLV(uint24_t);
+		int CLV(uint24_t, AddressingMode);
 		//! @brief Set the carry Flag.
-		int SEC(uint24_t);
+		int SEC(uint24_t, AddressingMode);
 		//! @brief Set the decimal flag.
-		int SED(uint24_t);
+		int SED(uint24_t, AddressingMode);
 		//! @brief Set the Interrupt Disable flag.
-		int SEI(uint24_t);
+		int SEI(uint24_t, AddressingMode);
 		//! @brief Exchange Carry and Emulation Flags
-		int XCE(uint24_t);
+		int XCE(uint24_t, AddressingMode);
 		//! @brief And accumulator with memory.
-		int AND(uint24_t valueAddr);
+		int AND(uint24_t valueAddr, AddressingMode);
 		//! @brief Subtract with Borrow from Accumulator.
-		int SBC(uint24_t valueAddr);
+		int SBC(uint24_t valueAddr, AddressingMode);
 		//! @brief Transfer A to X
-		int TAX(uint24_t);
+		int TAX(uint24_t, AddressingMode);
 		//! @brief Transfer A to Y
-		int TAY(uint24_t);
+		int TAY(uint24_t, AddressingMode);
 		//! @brief Transfer X to SP
-		int TXS(uint24_t);
+		int TXS(uint24_t, AddressingMode);
 		//! @brief Increment the X register
-		int INX(uint24_t);
+		int INX(uint24_t, AddressingMode);
 		//! @brief Increment the Y register
-		int INY(uint24_t);
+		int INY(uint24_t, AddressingMode);
 		//! @brief Compare the X register with the memory
-		int CPX(uint24_t valueAddr);
+		int CPX(uint24_t valueAddr, AddressingMode);
 		//! @brief Compare the Y register with the memory
-		int CPY(uint24_t valueAddr);
+		int CPY(uint24_t valueAddr, AddressingMode);
 		//! @brief Branch if carry clear
-		int BCC(uint24_t valueAddr);
+		int BCC(uint24_t valueAddr, AddressingMode);
 		//! @brief Branch if carry set
-		int BCS(uint24_t valueAddr);
+		int BCS(uint24_t valueAddr, AddressingMode);
 		//! @brief Branch if equal
-		int BEQ(uint24_t valueAddr);
+		int BEQ(uint24_t valueAddr, AddressingMode);
 		//! @brief Branch if not equal
-		int BNE(uint24_t valueAddr);
+		int BNE(uint24_t valueAddr, AddressingMode);
 		//! @brief Branch if minus
-		int BMI(uint24_t valueAddr);
+		int BMI(uint24_t valueAddr, AddressingMode);
 		//! @brief Branch if plus
-		int BPL(uint24_t valueAddr);
+		int BPL(uint24_t valueAddr, AddressingMode);
 		//! @brief Branch if Overflow Clear
-		int BVC(uint24_t valueAddr);
+		int BVC(uint24_t valueAddr, AddressingMode);
 		//! @brief Branch if Overflow Set
-		int BVS(uint24_t valueAddr);
+		int BVS(uint24_t valueAddr, AddressingMode);
 		//! @brief Branch always
-		int BRA(uint24_t valueAddr);
+		int BRA(uint24_t valueAddr, AddressingMode);
 		//! @brief Branch always long
-		int BRL(uint24_t valueAddr);
+		int BRL(uint24_t valueAddr, AddressingMode);
 		//! @brief Jump.
-		int JMP(uint24_t valueAddr);
+		int JMP(uint24_t valueAddr, AddressingMode);
 		//! @brief Long jump.
-		int JML(uint24_t valueAddr);
+		int JML(uint24_t valueAddr, AddressingMode);
 		//! @brief No OP.
-		int NOP(uint24_t);
+		int NOP(uint24_t, AddressingMode);
 
 		//! @brief All the instructions of the CPU.
 		//! @info Instructions are indexed by their opcode
@@ -580,7 +580,7 @@ namespace ComSquare::CPU
 			{&CPU::BRK, 7, "cmp #-#", AddressingMode::Implied, 2}, // C5
 			{&CPU::BRK, 7, "dec #-#", AddressingMode::Implied, 2}, // C6
 			{&CPU::BRK, 7, "cmp #-#", AddressingMode::Implied, 2}, // C7
-			{&CPU::BRK, 7, "iny #-#", AddressingMode::Implied, 2}, // C8
+			{&CPU::INY, 2, "iny", AddressingMode::Implied, 1}, // C8
 			{&CPU::BRK, 7, "cmp #-#", AddressingMode::Implied, 2}, // C9
 			{&CPU::BRK, 7, "dex #-#", AddressingMode::Implied, 2}, // CA
 			{&CPU::BRK, 7, "wai #-#", AddressingMode::Implied, 2}, // CB
@@ -612,7 +612,7 @@ namespace ComSquare::CPU
 			{&CPU::SBC, 3, "sbc", AddressingMode::DirectPage, 2}, // E5
 			{&CPU::BRK, 7, "inc #-#", AddressingMode::Implied, 2}, // E6
 			{&CPU::SBC, 6, "sbc", AddressingMode::DirectPageIndirectLong, 2}, // E7
-			{&CPU::BRK, 7, "inx #-#", AddressingMode::Implied, 2}, // E8
+			{&CPU::INX, 2, "inx", AddressingMode::Implied, 1}, // E8
 			{&CPU::SBC, 2, "sbc", AddressingMode::ImmediateForA, 2}, // E9
 			{&CPU::NOP, 2, "nop", AddressingMode::Implied, 1}, // EA
 			{&CPU::BRK, 7, "xba #-#", AddressingMode::Implied, 2}, // EB
@@ -663,7 +663,7 @@ namespace ComSquare::CPU
 		Component getComponent() override;
 
 		//! @brief Reset interrupt - Called on boot and when the reset button is pressed.
-		virtual int RESB(uint24_t = 0);
+		virtual int RESB();
 
 		//! @brief Return true if the CPU is overloaded with debugging features.
 		virtual bool isDebugger();

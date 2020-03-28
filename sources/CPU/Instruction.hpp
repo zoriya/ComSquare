@@ -52,11 +52,11 @@ namespace ComSquare::CPU
 
 	//! @brief Struct containing basic information about instructions.
 	struct Instruction {
-		int (CPU::*call)(uint24_t valueAddr);
-		int cycleCount;
-		std::string name;
-		AddressingMode addressingMode;
-		int size;
+		int (CPU::*call)(uint24_t valueAddr, AddressingMode mode) = nullptr;
+		int cycleCount = 0;
+		std::string name = "";
+		AddressingMode addressingMode = Implied;
+		int size = 0;
 
 		Instruction() = default;
 		Instruction(const Instruction &) = default;

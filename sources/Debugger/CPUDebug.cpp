@@ -344,7 +344,7 @@ namespace ComSquare::Debugger
 		return ss.str();
 	}
 
-	int CPUDebug::RESB(uint24_t)
+	int CPUDebug::RESB()
 	{
 		CPU::RESB();
 		this->_updateRegistersPanel();

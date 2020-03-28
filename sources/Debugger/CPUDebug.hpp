@@ -170,7 +170,7 @@ namespace ComSquare::Debugger
 		//! @brief Return the current program counter of this CPU.
 		uint24_t getPC();
 		//! @brief Update the UI when resetting the CPU.
-		int RESB(uint24_t) override;
+		int RESB() override;
 		//! @brief Convert a basic CPU to a debugging CPU.
 		explicit CPUDebug(ComSquare::CPU::CPU &cpu, SNES &snes);
 		CPUDebug(const CPUDebug &) = delete;

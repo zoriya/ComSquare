@@ -6,7 +6,7 @@
 
 namespace ComSquare::CPU
 {
-	int CPU::RESB(uint24_t)
+	int CPU::RESB()
 	{
 		this->_registers.p.i = true;
 		this->_registers.p.d = false;
@@ -21,7 +21,7 @@ namespace ComSquare::CPU
 		return 0;
 	}
 
-	int CPU::BRK(uint24_t)
+	int CPU::BRK(uint24_t, AddressingMode)
 	{
 		if (this->_isEmulationMode) {
 			this->_registers.pc += 2;
@@ -31,7 +31,6 @@ namespace ComSquare::CPU
 			this->_registers.p.i = true;
 			this->_registers.p.d = false;
 			this->_registers.pc = this->_cartridgeHeader.emulationInterrupts.brk;
-
 		} else {
 			this->_push(this->_registers.pbr);
 			this->_registers.pc += 2;
@@ -45,7 +44,7 @@ namespace ComSquare::CPU
 		return !this->_isEmulationMode;
 	}
 
-	int CPU::COP(uint24_t)
+	int CPU::COP(uint24_t, AddressingMode)
 	{
 		if (this->_isEmulationMode) {
 			this->_registers.pc += 2;
@@ -68,13 +67,13 @@ namespace ComSquare::CPU
 		return !this->_isEmulationMode;
 	}
 
-	int CPU::RTI(uint24_t)
+	int CPU::RTI(uint24_t, AddressingMode)
 	{
 		this->_registers.p.flags = this->_pop();
 		this->_registers.pc = this->_pop16();
 
 		if (!this->_isEmulationMode)
 			this->_registers.pbr = this->_pop16();
-		return 0;
+		return !this->_isEmulationMode;
 	}
 }
