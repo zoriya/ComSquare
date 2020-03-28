@@ -53,7 +53,7 @@ namespace ComSquare
 		//! @brief Disable the CPU's debugging window.
 		void disableCPUDebugging();
 		//! @brief Enable the CPU's debugging window.
-		void enableCPUDebugging();
+		void enableCPUDebugging(bool pause = false);
 		//! @brief Disable the Ram's debugging window.
 		void disableRamViewer();
 		//! @brief Enable the Ram's debugging window.

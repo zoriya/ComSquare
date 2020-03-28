@@ -25,6 +25,8 @@ namespace ComSquare::Debugger
 		this->_ui.setupUi(this->_window);
 		this->_proxy.setSourceModel(&this->_model);
 		this->_ui.log->setModel(&this->_proxy);
+		this->_ui.log->setAlternatingRowColors(true);
+		this->_ui.log->verticalHeader()->hide();
 		this->_ui.log->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
 		this->_ui.log->horizontalHeader()->setStretchLastSection(true);
 		this->_ui.log->horizontalHeader()->setSectionsMovable(true);

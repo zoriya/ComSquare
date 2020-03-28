@@ -3,29 +3,42 @@
 //
 
 #include <bitset>
+#include <iomanip>
 #include "Utility.hpp"
 
 namespace ComSquare::Utility
 {
-	std::string to_hex(uint8_t i)
+	std::string to_hex(uint8_t i, HexString prefix)
 	{
-		char buf[5];
-		sprintf(buf, "0x%02X", i);
-		return buf;
+		std::stringstream ss;
+		if (prefix == AsmPrefix)
+			ss << "$";
+		else if (prefix == StandardPrefix)
+			ss << "0x";
+		ss << std::hex << std::setfill('0') << std::setw(2) << static_cast<unsigned>(i);
+		return ss.str();
 	}
 
-	std::string to_hex(uint16_t i)
+	std::string to_hex(uint16_t i, HexString prefix)
 	{
-		char buf[7];
-		sprintf(buf, "0x%04X", i);
-		return buf;
+		std::stringstream ss;
+		if (prefix == AsmPrefix)
+			ss << "$";
+		else if (prefix == StandardPrefix)
+			ss << "0x";
+		ss << std::hex << std::setfill('0') << std::setw(4) << i;
+		return ss.str();
 	}
 
-	std::string to_hex(uint24_t i)
+	std::string to_hex(uint24_t i, HexString prefix)
 	{
-		char buf[9];
-		sprintf(buf, "0x%06X", i);
-		return buf;
+		std::stringstream ss;
+		if (prefix == AsmPrefix)
+			ss << "$";
+		else if (prefix == StandardPrefix)
+			ss << "0x";
+		ss << std::hex << std::setfill('0') << std::setw(6) << i;
+		return ss.str();
 	}
 
 	std::string to_binary(uint8_t i)

@@ -5,8 +5,11 @@
 #include "CPUDebug.hpp"
 #include "../Utility/Utility.hpp"
 #include "../Exceptions/InvalidOpcode.hpp"
+#include "../CPU/CPU.hpp"
 #include <QtEvents>
+#include <QPainter>
 #include <iostream>
+#include <utility>
 
 using namespace ComSquare::CPU;
 
@@ -16,6 +19,8 @@ namespace ComSquare::Debugger
 		: CPU(basicCPU),
 		_window(new ClosableWindow<CPUDebug>(*this, &CPUDebug::disableDebugger)),
 		_ui(),
+		_model(*this),
+		_painter(*this),
 		_snes(snes)
 	{
 		this->_window->setContextMenuPolicy(Qt::NoContextMenu);
@@ -23,9 +28,20 @@ namespace ComSquare::Debugger
 		this->_window->setAttribute(Qt::WA_DeleteOnClose);
 
 		this->_ui.setupUi(this->_window);
+
+		this->_updateDisassembly(0xFFFF - this->_registers.pc); //Parse the first page of the ROM (the code can't reach the second page without a jump).
+		this->_ui.disassembly->setModel(&this->_model);
+		this->_ui.disassembly->horizontalHeader()->setStretchLastSection(true);
+		this->_ui.disassembly->resizeColumnsToContents();
+		this->_ui.disassembly->verticalHeader()->setSectionResizeMode (QHeaderView::Fixed);
+		this->_ui.disassembly->verticalHeader()->setHighlightSections(false);
+		this->_ui.disassembly->setItemDelegate(&this->_painter);
+
 		QMainWindow::connect(this->_ui.actionPause, &QAction::triggered, this, &CPUDebug::pause);
 		QMainWindow::connect(this->_ui.actionStep, &QAction::triggered, this, &CPUDebug::step);
+		QMainWindow::connect(this->_ui.actionNext, &QAction::triggered, this, &CPUDebug::next);
 		QMainWindow::connect(this->_ui.clear, &QPushButton::released, this, &CPUDebug::clearHistory);
+		QMainWindow::connect(this->_ui.disassembly->verticalHeader(), &QHeaderView::sectionClicked, this, &CPUDebug::toggleBreakpoint);
 		this->_window->show();
 		this->_updateRegistersPanel();
 	}
@@ -43,25 +59,50 @@ namespace ComSquare::Debugger
 	unsigned CPUDebug::update()
 	{
 		try {
+			unsigned cycles = 0;
+
 			if (this->_isPaused)
 				return 0xFF;
-			if (this->_isStepping)
-				return this->_executeInstruction(this->_bus->read(this->_registers.pac++));
-			return CPU::update();
+			if (this->_isStepping) {
+				cycles = this->_executeInstruction(this->readPC());
+				this->_updateDisassembly();
+				return cycles;
+			}
+
+			for (int i = 0; i < 0xFF; i++) {
+				auto breakpoint = std::find_if(this->breakpoints.begin(), this->breakpoints.end(), [this](Breakpoint &brk) {
+					return brk.address == this->_registers.pac;
+				});
+				if (i != 0 && breakpoint != this->breakpoints.end()) {
+					if (breakpoint->oneTime)
+						this->breakpoints.erase(breakpoint);
+					this->_isPaused = false;
+					this->pause();
+					return cycles;
+				}
+				cycles += this->_executeInstruction(this->readPC());
+			}
+			return cycles;
 		} catch (InvalidOpcode &e) {
 			if (!this->_isPaused)
 				this->pause();
+			std::cout << "Invalid Opcode: " << e.what() << std::endl;
 			return 0xFF;
 		}
 	}
 
 	unsigned CPUDebug::_executeInstruction(uint8_t opcode)
 	{
+		if (this->_isPaused)
+			return 0;
 		if (this->_isStepping) {
 			this->_isStepping = false;
 			this->_isPaused = true;
 		}
-		this->_ui.logger->append((CPUDebug::_getInstructionString(this->_registers.pac - 1) + " -  " + Utility::to_hex(opcode)).c_str());
+		uint24_t pc = (this->_registers.pbr << 16u) | (this->_registers.pc - 1u);
+		DisassemblyContext ctx = this->_getDisassemblyContext();
+		DisassembledInstruction instruction = this->_parseInstruction(pc, ctx);
+		this->_ui.logger->append((instruction.toString() + " -  " + Utility::to_hex(opcode)).c_str());
 		unsigned ret = CPU::_executeInstruction(opcode);
 		this->_updateRegistersPanel();
 		return ret;
@@ -74,12 +115,35 @@ namespace ComSquare::Debugger
 			this->_ui.actionPause->setText("Resume");
 		else
 			this->_ui.actionPause->setText("Pause");
+		this->_updateDisassembly();
 	}
 
 	void CPUDebug::step()
 	{
 		this->_isStepping = true;
 		this->_isPaused = false;
+	}
+
+	void CPUDebug::next()
+	{
+		auto next = std::find_if(this->disassembledInstructions.begin(), this->disassembledInstructions.end(), [this](DisassembledInstruction &i) {
+			return i.address > this->_registers.pac;
+		});
+		this->breakpoints.push_back({next->address, true});
+		this->_isPaused = false;
+	}
+
+	void CPUDebug::toggleBreakpoint(int logicalIndex)
+	{
+		DisassembledInstruction instruction = this->disassembledInstructions[logicalIndex];
+		auto existing = std::find_if(this->breakpoints.begin(), this->breakpoints.end(), [instruction](Breakpoint &i) {
+			return i.address == instruction.address;
+		});
+		if (existing == this->breakpoints.end())
+			this->breakpoints.push_back({instruction.address, false});
+		else
+			this->breakpoints.erase(existing);
+		this->_ui.disassembly->viewport()->repaint();
 	}
 
 	void CPUDebug::_updateRegistersPanel()
@@ -126,40 +190,121 @@ namespace ComSquare::Debugger
 		this->_ui.logger->clear();
 	}
 
-	std::string CPUDebug::_getImmediateValueForA(uint24_t pc)
+	void CPUDebug::_updateDisassembly(uint24_t refreshSize)
+	{
+		auto first = std::find_if(this->disassembledInstructions.begin(), this->disassembledInstructions.end(), [this](DisassembledInstruction &i) {
+			return i.address >= this->_registers.pac;
+		});
+		auto end = std::find_if(this->disassembledInstructions.begin(), this->disassembledInstructions.end(),[this, refreshSize](DisassembledInstruction &i) {
+            return i.address >= this->_registers.pac + refreshSize;
+        });
+		this->disassembledInstructions.erase(first, end);
+
+		auto next = std::find_if(this->disassembledInstructions.begin(), this->disassembledInstructions.end(), [this](DisassembledInstruction &i) {
+			return i.address >= this->_registers.pac;
+		});
+		int row = next - this->disassembledInstructions.begin();
+		DisassemblyContext ctx = this->_getDisassemblyContext();
+		std::vector<DisassembledInstruction> nextInstructions = this->_disassemble(this->_registers.pac, refreshSize, ctx);
+		this->disassembledInstructions.insert(next, nextInstructions.begin(), nextInstructions.end());
+		if (this->_ui.disassembly->rowAt(0) > row || this->_ui.disassembly->rowAt(this->_ui.disassembly->height()) < row)
+			this->_ui.disassembly->scrollTo(this->_model.index(row, 0), QAbstractItemView::PositionAtCenter);
+		this->_ui.disassembly->viewport()->repaint();
+	}
+
+	DisassemblyContext CPUDebug::_getDisassemblyContext()
+	{
+		return {this->_registers.p.m, this->_registers.p.x_b, false};
+	}
+
+	std::vector<DisassembledInstruction> CPUDebug::_disassemble(uint24_t pc, uint24_t length, DisassemblyContext &ctx)
+	{
+		std::vector<DisassembledInstruction> map;
+		uint24_t endAddr = pc + length;
+
+		while (pc < endAddr) {
+			DisassembledInstruction instruction = this->_parseInstruction(pc, ctx);
+			instruction.level = ctx.level;
+			map.push_back(instruction);
+			pc += instruction.size;
+			if (instruction.addressingMode == ImmediateForA && !ctx.mFlag)
+				pc++;
+			if (instruction.addressingMode == ImmediateForX && !ctx.xFlag)
+				pc++;
+
+			if (instruction.opcode == 0x40 && ctx.isEmulationMode) { // RTI
+				ctx.mFlag = true;
+				ctx.xFlag = true;
+			}
+			if (instruction.opcode == 0xC2) { // REP
+				if (ctx.isEmulationMode) {
+					ctx.mFlag = true;
+					ctx.xFlag = true;
+				} else {
+					uint8_t m = this->_bus->read(pc - 1);
+					ctx.mFlag &= ~m & 0b00100000u;
+					ctx.xFlag &= ~m & 0b00010000u;
+				}
+			}
+			if (instruction.opcode == 0xE2) { // SEP
+				uint8_t m = this->_bus->read(pc - 1);
+				ctx.mFlag |= m & 0b00100000u;
+				ctx.xFlag |= m & 0b00010000u;
+			}
+			if (instruction.opcode == 0x28) { // PLP
+				if (ctx.isEmulationMode) {
+					ctx.mFlag = true;
+					ctx.xFlag = true;
+				} else
+					ctx.level = Compromised;
+			}
+			if (instruction.opcode == 0xFB) {// XCE
+				ctx.level = Unsafe;
+				ctx.isEmulationMode = false; // The most common use of the XCE is to enable native mode at the start of the ROM so we guess that it has done that.
+			}
+		}
+		return map;
+	}
+
+	DisassembledInstruction CPUDebug::_parseInstruction(uint24_t pc, DisassemblyContext &ctx)
+	{
+		uint24_t opcode = this->_bus->read(pc, true);
+		Instruction instruction = this->_instructions[opcode];
+		std::string argument = this->_getInstructionParameter(instruction, pc + 1, ctx);
+		return DisassembledInstruction(instruction, pc, argument, opcode);
+	}
+
+	std::string CPUDebug::_getInstructionParameter(Instruction &instruction, uint24_t pc, DisassemblyContext &ctx)
+	{
+		switch (instruction.addressingMode) {
+		case Implied:
+			return "";
+		case ImmediateForA:
+			return this->_getImmediateValue(pc, !ctx.mFlag);
+		case ImmediateForX:
+			return this->_getImmediateValue(pc, !ctx.xFlag);
+		case Immediate8bits:
+			return this->_getImmediateValue(pc, false);
+		case Absolute:
+			return this->_getAbsoluteValue(pc);
+		case AbsoluteLong:
+			return this->_getAbsoluteLongValue(pc);
+		case DirectPage:
+			return this->_getDirectValue(pc);
+		case DirectPageIndexedByX:
+			return this->_getDirectIndexedByXValue(pc);
+
+		default:
+			return "???";
+		}
+	}
+
+	std::string CPUDebug::_getImmediateValue(uint24_t pc, bool dual)
 	{
 		unsigned value = this->_bus->read(pc, true);
 
-		if (!this->_registers.p.m)
+		if (dual)
 			value += this->_bus->read(pc + 1, true) << 8u;
-		std::stringstream ss;
-		ss << "#$" << std::hex << value;
-		return ss.str();
-	}
-
-	std::string CPUDebug::_getImmediateValueForX(uint24_t pc)
-	{
-		unsigned value = this->_bus->read(pc, true);
-
-		if (!this->_registers.p.x_b)
-			value += this->_bus->read(pc + 1, true) << 8u;
-		std::stringstream ss;
-		ss << "#$" << std::hex << value;
-		return ss.str();
-	}
-
-	std::string CPUDebug::_getImmediateValue8Bits(uint24_t pc)
-	{
-		std::stringstream ss;
-		ss << "#$" << std::hex << static_cast<int>(this->_bus->read(pc), true);
-		return ss.str();
-	}
-
-	std::string CPUDebug::_getImmediateValue16Bits(uint24_t pc)
-	{
-		unsigned value = this->_bus->read(pc, true);
-		value += this->_bus->read(pc + 1, true) << 8u;
-
 		std::stringstream ss;
 		ss << "#$" << std::hex << value;
 		return ss.str();
@@ -168,7 +313,7 @@ namespace ComSquare::Debugger
 	std::string CPUDebug::_getDirectValue(uint24_t pc)
 	{
 		std::stringstream ss;
-		ss << "$" << std::hex << static_cast<int>(this->_bus->read(pc), true);
+		ss << "$" << std::hex << static_cast<int>(this->_bus->read(pc, true));
 		return ss.str();
 	}
 
@@ -199,201 +344,101 @@ namespace ComSquare::Debugger
 		return ss.str();
 	}
 
-	std::string CPUDebug::_getInstructionString(uint24_t pc)
-	{
-		uint8_t opcode = this->_bus->read(pc++, true);
-
-		switch (opcode) {
-		case Instructions::BRK:      return "BRK";
-
-		case Instructions::COP:      return "COP";
-
-		case Instructions::RTI:	     return "RTI";
-
-		case Instructions::ADC_IM:   return "ADC " + this->_getImmediateValueForA(pc);
-		case Instructions::ADC_ABS:  return "ADC " + this->_getAbsoluteValue(pc);
-		case Instructions::ADC_ABSl: return "ADC " + this->_getAbsoluteLongValue(pc);
-		case Instructions::ADC_DP:   return "ADC " + this->_getDirectValue(pc);
-		case Instructions::ADC_DPi:  return "ADC";
-		case Instructions::ADC_DPil: return "ADC";
-		case Instructions::ADC_ABSX: return "ADC";
-		case Instructions::ADC_ABSXl:return "ADC";
-		case Instructions::ADC_ABSY: return "ADC";
-		case Instructions::ADC_DPX:  return "ADC " + this->_getDirectIndexedByXValue(pc);
-		case Instructions::ADC_DPXi: return "ADC";
-		case Instructions::ADC_DPYi: return "ADC";
-		case Instructions::ADC_DPYil:return "ADC";
-		case Instructions::ADC_SR:   return "ADC";
-		case Instructions::ADC_SRYi: return "ADC";
-
-		case Instructions::STA_ABS:  return "STA " + this->_getAbsoluteValue(pc);
-		case Instructions::STA_ABSl: return "STA " + this->_getAbsoluteLongValue(pc);
-		case Instructions::STA_DP:   return "STA " + this->_getDirectValue(pc);
-		case Instructions::STA_DPi:  return "STA";
-		case Instructions::STA_DPil: return "STA";
-		case Instructions::STA_ABSX: return "STA";
-		case Instructions::STA_ABSXl:return "STA";
-		case Instructions::STA_ABSY: return "STA";
-		case Instructions::STA_DPX:  return "STA " + this->_getDirectIndexedByXValue(pc);
-		case Instructions::STA_DPXi: return "STA";
-		case Instructions::STA_DPYi: return "STA";
-		case Instructions::STA_DPYil:return "STA";
-		case Instructions::STA_SR:   return "STA";
-		case Instructions::STA_SRYi: return "STA";
-
-		case Instructions::STX_ABS:  return "STX " + this->_getAbsoluteValue(pc);
-		case Instructions::STX_DP:   return "STX " + this->_getDirectValue(pc);
-		case Instructions::STX_DPY:  return "STX";
-
-		case Instructions::STY_ABS:  return "STY " + this->_getAbsoluteValue(pc);
-		case Instructions::STY_DP:   return "STY " + this->_getDirectValue(pc);
-		case Instructions::STY_DPX:  return "STY " + this->_getDirectIndexedByXValue(pc);
-
-		case Instructions::STZ_ABS:  return "STZ " + this->_getAbsoluteValue(pc);
-		case Instructions::STZ_DP:   return "STZ " + this->_getDirectValue(pc);
-		case Instructions::STZ_ABSX: return "STZ";
-		case Instructions::STZ_DPX:  return "STZ " + this->_getDirectIndexedByXValue(pc);
-
-		case Instructions::LDA_IM:   return "LDA " + this->_getImmediateValueForA(pc);
-		case Instructions::LDA_ABS:  return "LDA " + this->_getAbsoluteValue(pc);
-		case Instructions::LDA_ABSl: return "LDA " + this->_getAbsoluteLongValue(pc);
-		case Instructions::LDA_DP:   return "LDA " + this->_getDirectValue(pc);
-		case Instructions::LDA_DPi:  return "LDA";
-		case Instructions::LDA_DPil: return "LDA";
-		case Instructions::LDA_ABSX: return "LDA";
-		case Instructions::LDA_ABSXl:return "LDA";
-		case Instructions::LDA_ABSY: return "LDA";
-		case Instructions::LDA_DPX:  return "LDA " + this->_getDirectIndexedByXValue(pc);
-		case Instructions::LDA_DPXi: return "LDA";
-		case Instructions::LDA_DPYi: return "LDA";
-		case Instructions::LDA_DPYil:return "LDA";
-		case Instructions::LDA_SR:   return "LDA";
-		case Instructions::LDA_SRYi: return "LDA";
-
-		case Instructions::LDX_IM:   return "LDX " + this->_getImmediateValueForX(pc);
-		case Instructions::LDX_ABS:  return "LDX " + this->_getAbsoluteValue(pc);
-		case Instructions::LDX_DP:   return "LDX " + this->_getDirectValue(pc);
-		case Instructions::LDX_ABSY: return "LDX";
-		case Instructions::LDX_DPY:  return "LDX";
-
-		case Instructions::LDY_IM:   return "LDY " + this->_getImmediateValueForX(pc);
-		case Instructions::LDY_ABS:  return "LDY " + this->_getAbsoluteValue(pc);
-		case Instructions::LDY_DP:   return "LDY " + this->_getDirectValue(pc);
-		case Instructions::LDY_ABSY: return "LDY";
-		case Instructions::LDY_DPY:  return "LDY";
-
-		case Instructions::SEP: return "SEP " + this->_getImmediateValue8Bits(pc);
-
-		case Instructions::REP: return "REP " + this->_getImmediateValue8Bits(pc);
-
-		case Instructions::PHA: return "PHA";
-		case Instructions::PHB: return "PHB";
-		case Instructions::PHD: return "PHD";
-		case Instructions::PHK: return "PHK";
-		case Instructions::PHP: return "PHP";
-		case Instructions::PHX: return "PHX";
-		case Instructions::PHY: return "PHY";
-
-		case Instructions::PLA: return "PLA";
-		case Instructions::PLB: return "PLB";
-		case Instructions::PLD: return "PLD";
-		case Instructions::PLP: return "PLP";
-		case Instructions::PLX: return "PLX";
-		case Instructions::PLY: return "PLY";
-
-		case Instructions::JSR_ABS:   return "JSR " + this->_getAbsoluteValue(pc);
-		case Instructions::JSR_ABSXi: return "JSR";
-
-		case Instructions::JSL: return "JSL " + this->_getAbsoluteLongValue(pc);
-
-		case Instructions::CLC: return "CLC";
-		case Instructions::CLI: return "CLI";
-		case Instructions::CLD: return "CLD";
-		case Instructions::CLV: return "CLV";
-
-		case Instructions::SEC: return "SEC";
-		case Instructions::SED: return "SED";
-		case Instructions::SEI: return "SEI";
-
-		case Instructions::AND_IM:   return "AND " + this->_getImmediateValueForA(pc);
-		case Instructions::AND_ABS:  return "AND " + this->_getAbsoluteValue(pc);
-		case Instructions::AND_ABSl: return "AND " + this->_getAbsoluteLongValue(pc);
-		case Instructions::AND_DP:   return "AND " + this->_getDirectValue(pc);
-		case Instructions::AND_DPi:  return "AND";
-		case Instructions::AND_DPil: return "AND";
-		case Instructions::AND_ABSX: return "AND";
-		case Instructions::AND_ABSXl:return "AND";
-		case Instructions::AND_ABSY: return "AND";
-		case Instructions::AND_DPX:  return "AND " + this->_getDirectIndexedByXValue(pc);
-		case Instructions::AND_DPXi: return "AND";
-		case Instructions::AND_DPYi: return "AND";
-		case Instructions::AND_DPYil:return "AND";
-		case Instructions::AND_SR:   return "AND";
-		case Instructions::AND_SRYi: return "AND";
-
-		case Instructions::XCE: return "XCE";
-
-		case Instructions::SBC_IM:   return "SBC " + this->_getImmediateValueForA(pc);
-		case Instructions::SBC_ABS:  return "SBC " + this->_getAbsoluteValue(pc);
-		case Instructions::SBC_ABSl: return "SBC " + this->_getAbsoluteLongValue(pc);
-		case Instructions::SBC_DP:   return "SBC " + this->_getDirectValue(pc);
-		case Instructions::SBC_DPi:  return "SBC";
-		case Instructions::SBC_DPil: return "SBC";
-		case Instructions::SBC_ABSX: return "SBC";
-		case Instructions::SBC_ABSXl:return "SBC";
-		case Instructions::SBC_ABSY: return "SBC";
-		case Instructions::SBC_DPX:  return "SBC " + this->_getDirectIndexedByXValue(pc);
-		case Instructions::SBC_DPXi: return "SBC";
-		case Instructions::SBC_DPYi: return "SBC";
-		case Instructions::SBC_DPYil:return "SBC";
-		case Instructions::SBC_SR:   return "SBC";
-		case Instructions::SBC_SRYi: return "SBC";
-
-		case Instructions::TAX: 	 return "TAX";
-		case Instructions::TAY: 	 return "TAY";
-		case Instructions::TXS: 	 return "TXS";
-
-		case Instructions::INX: 	 return "INX";
-		case Instructions::INY: 	 return "INY";
-
-		case Instructions::CPX_IM:	 return "CPX " + this->_getImmediateValueForX(pc);
-		case Instructions::CPX_ABS:	 return "CPX " + this->_getAbsoluteValue(pc);
-		case Instructions::CPX_DP:	 return "CPX";
-
-		case Instructions::CPY_IM:	 return "CPY " + this->_getImmediateValueForX(pc);
-		case Instructions::CPY_ABS:	 return "CPY " + this->_getAbsoluteValue(pc);
-		case Instructions::CPY_DP:	 return "CPY";
-
-		case Instructions::BCC: 	 return "BCC " + this->_getImmediateValue8Bits(pc);
-		case Instructions::BCS:  	 return "BCS " + this->_getImmediateValue8Bits(pc);
-		case Instructions::BEQ: 	 return "BEQ " + this->_getImmediateValue8Bits(pc);
-		case Instructions::BNE: 	 return "BNE " + this->_getImmediateValue8Bits(pc);
-		case Instructions::BMI: 	 return "BMI " + this->_getImmediateValue8Bits(pc);
-		case Instructions::BPL: 	 return "BPL " + this->_getImmediateValue8Bits(pc);
-		case Instructions::BVC: 	 return "BVC " + this->_getImmediateValue8Bits(pc);
-		case Instructions::BVS: 	 return "BVS " + this->_getImmediateValue8Bits(pc);
-		case Instructions::BRA: 	 return "BRA " + this->_getImmediateValue8Bits(pc);
-		case Instructions::BRL: 	 return "BRL " + this->_getImmediateValue16Bits(pc);
-
-		case Instructions::JMP_ABS:  	return "JMP " + this->_getAbsoluteValue(pc);
-		case Instructions::JMP_ABSi: 	return "JMP "; //+ this->_getAbsoluteIndire(pc);
-		case Instructions::JMP_ABSXi:  	return "JMP "; //+ this->_getAbsoluteValue(pc);
-
-		case Instructions::JML_ABSl:	return "JML";
-		case Instructions::JML_ABSil:	return "JML";
-
-		default: return "Unknown";
-		}
-	}
-
-	void CPUDebug::RESB()
+	int CPUDebug::RESB()
 	{
 		CPU::RESB();
 		this->_updateRegistersPanel();
+		return (0);
 	}
 
 	void CPUDebug::focus()
 	{
 		this->_window->activateWindow();
 	}
+
+	uint24_t CPUDebug::getPC()
+	{
+		return this->_registers.pac;
+	}
+
+	DisassembledInstruction::DisassembledInstruction(const CPU::Instruction &instruction, uint24_t addr, std::string arg, uint8_t op)
+		: CPU::Instruction(instruction), address(addr), argument(std::move(arg)), opcode(op) {}
+
+	std::string DisassembledInstruction::toString()
+	{
+		return this->name + " " + this->argument;
+	}
+}
+
+DisassemblyModel::DisassemblyModel(ComSquare::Debugger::CPUDebug &cpu) : QAbstractTableModel(), _cpu(cpu){ }
+
+int DisassemblyModel::columnCount(const QModelIndex &) const
+{
+	return 4;
+}
+
+int DisassemblyModel::rowCount(const QModelIndex &) const
+{
+	return this->_cpu.disassembledInstructions.size();
+}
+
+QVariant DisassemblyModel::data(const QModelIndex &index, int role) const
+{
+	if (role != Qt::DisplayRole && role != Qt::DecorationRole)
+		return QVariant();
+	ComSquare::Debugger::DisassembledInstruction instruction = this->_cpu.disassembledInstructions[index.row()];
+	if (role == Qt::DecorationRole) {
+		if (index.column() == 3 && instruction.level == ComSquare::Debugger::TrustLevel::Unsafe)
+			return QColor(Qt::yellow);
+		if (index.column() == 3 && instruction.level == ComSquare::Debugger::TrustLevel::Compromised)
+			return QColor(Qt::red);
+		return QVariant();
+	}
+	switch (index.column()) {
+	case 0:
+		return QString(instruction.name.c_str());
+	case 1:
+		return QString(instruction.argument.c_str());
+	default:
+		return QVariant();
+	}
+}
+
+QVariant DisassemblyModel::headerData(int section, Qt::Orientation orientation, int role) const
+{
+	if (orientation == Qt::Horizontal)
+		return QVariant();
+	if (role != Qt::DisplayRole)
+		return QVariant();
+	ComSquare::Debugger::DisassembledInstruction instruction = this->_cpu.disassembledInstructions[section];
+	return QString(ComSquare::Utility::to_hex(instruction.address, ComSquare::Utility::HexString::NoPrefix).c_str());
+}
+
+RowPainter::RowPainter(ComSquare::Debugger::CPUDebug &cpu, QObject *parent) : QStyledItemDelegate(parent), _cpu(cpu) { }
+
+void RowPainter::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+	ComSquare::Debugger::DisassembledInstruction instruction = this->_cpu.disassembledInstructions[index.row()];
+	bool isBreakpoint = false;
+
+	auto breakpoint = std::find_if(this->_cpu.breakpoints.begin(), this->_cpu.breakpoints.end(), [instruction](ComSquare::Debugger::Breakpoint brk) {
+		return brk.address == instruction.address;
+	});
+	if (breakpoint != this->_cpu.breakpoints.end())
+		isBreakpoint = true;
+
+	QStyleOptionViewItem style = option;
+	if (instruction.address == this->_cpu.getPC()) {
+		painter->fillRect(option.rect, QColor(Qt::darkGreen));
+		style.state &= ~QStyle::State_Selected;
+	} else if (isBreakpoint && !breakpoint->oneTime) {
+		painter->fillRect(option.rect,QColor(Qt::darkRed));
+		style.state &= ~QStyle::State_Selected;
+	}
+	QStyledItemDelegate::paint(painter, style, index);
+}
+
+QSize RowPainter::sizeHint(const QStyleOptionViewItem &, const QModelIndex &) const
+{
+	return QSize();
 }

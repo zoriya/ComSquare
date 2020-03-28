@@ -72,8 +72,14 @@ int main(int argc, char **argv)
 	QApplication app(argc, argv);
 	QApplication::setAttribute(Qt::AA_DisableWindowContextHelpButton);
 	Renderer::QtSFML renderer(600, 800);
-	SNES snes(argv[1], renderer);
-	renderer.createWindow(snes, 60);
-	parseArguments(argc, argv, snes);
-	return QApplication::exec();
+	try {
+		SNES snes(argv[1], renderer);
+		renderer.createWindow(snes, 60);
+		parseArguments(argc, argv, snes);
+		return QApplication::exec();
+	}
+	catch(std::exception &ex) {
+		std::cerr << ex.what() << std::endl;
+		return 1;
+	}
 }
