@@ -183,6 +183,7 @@ namespace ComSquare::Debugger
 
 		while (pc < endAddr) {
 			DisassembledInstruction instruction = this->_parseInstruction(pc, ctx);
+			instruction.level = ctx.level;
 			map.push_back(instruction);
 			pc += instruction.size;
 			if (instruction.addressingMode == ImmediateForA && !ctx.mFlag)
@@ -214,10 +215,10 @@ namespace ComSquare::Debugger
 					ctx.mFlag = true;
 					ctx.xFlag = true;
 				} else
-					ctx.compromised = true;
+					ctx.level = Compromised;
 			}
 			if (instruction.opcode == 0xFB) {// XCE
-				ctx.compromised = true;
+				ctx.level = Unsafe;
 				ctx.isEmulationMode = false; // The most common use of the XCE is to enable native mode at the start of the ROM so we guess that it has done that.
 			}
 		}
@@ -332,7 +333,7 @@ DisassemblyModel::DisassemblyModel(ComSquare::Debugger::CPUDebug &cpu) : QAbstra
 
 int DisassemblyModel::columnCount(const QModelIndex &) const
 {
-	return 3;
+	return 4;
 }
 
 int DisassemblyModel::rowCount(const QModelIndex &) const
@@ -342,9 +343,16 @@ int DisassemblyModel::rowCount(const QModelIndex &) const
 
 QVariant DisassemblyModel::data(const QModelIndex &index, int role) const
 {
-	if (role != Qt::DisplayRole)
+	if (role != Qt::DisplayRole && role != Qt::DecorationRole)
 		return QVariant();
 	ComSquare::Debugger::DisassembledInstruction instruction = this->_cpu.disassembledInstructions[index.row()];
+	if (role == Qt::DecorationRole) {
+		if (index.column() == 3 && instruction.level == ComSquare::Debugger::TrustLevel::Unsafe)
+			return QColor(Qt::yellow);
+		if (index.column() == 3 && instruction.level == ComSquare::Debugger::TrustLevel::Compromised)
+			return QColor(Qt::red);
+		return QVariant();
+	}
 	switch (index.column()) {
 	case 0:
 		return QString(instruction.name.c_str());

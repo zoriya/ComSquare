@@ -56,6 +56,12 @@ protected:
 
 namespace ComSquare::Debugger
 {
+	enum TrustLevel {
+		Safe,
+		Unsafe,
+		Compromised
+	};
+
 	//! @brief Struct used to emulate the state of the processor during the disassembly since instructions take a different amount of space depending on some flags.
 	struct DisassemblyContext {
 		//! @brief The accumulator and Memory width flag (in native mode only) - 0 = 16 bits mode, 1 = 8 bits mode.
@@ -67,14 +73,19 @@ namespace ComSquare::Debugger
 		//! @brief Is the CPU emulating a 6502? If yes, some instructions don't change flags the same way.
 		bool isEmulationMode = true;
 		//! @brief Sometimes, the flags can't be tracked correctly after an instruction so the next instructions may not be correctly disassembled.
-		bool compromised = false;
+		TrustLevel level = Safe;
 	};
 
 	//! @brief Struct representing an instruction in an human readable way (created by disassembling the rom).
 	struct DisassembledInstruction : public CPU::Instruction {
+		//! @brief The address of the instruction
 		uint24_t address;
+		//! @brief A string representing the argument with the right addressing mode.
 		std::string argument;
+		//! @brief The opcode of the instruction
 		uint8_t opcode;
+		//! @brief Are we sure that this instruction has been correctly disassembled?
+		TrustLevel level;
 
 		DisassembledInstruction(const CPU::Instruction &instruction, uint24_t address, std::string argument, uint8_t opcode);
 		DisassembledInstruction(const DisassembledInstruction &) = default;

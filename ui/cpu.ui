@@ -220,6 +220,7 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionPause"/>
+   <addaction name="actionNext"/>
    <addaction name="actionStep"/>
   </widget>
   <action name="actionPause">
@@ -228,13 +229,13 @@
      <normaloff>:/resources/icons/play.svg</normaloff>:/resources/icons/play.svg</iconset>
    </property>
    <property name="text">
-    <string>Resume</string>
+    <string>Continue</string>
    </property>
    <property name="toolTip">
     <string>Pause or Resume instruction execution.</string>
    </property>
    <property name="shortcut">
-    <string>P</string>
+    <string>C</string>
    </property>
   </action>
   <action name="actionStep">
@@ -250,6 +251,21 @@
    </property>
    <property name="shortcut">
     <string>S</string>
+   </property>
+  </action>
+  <action name="actionNext">
+   <property name="icon">
+    <iconset resource="../resources/appResources.qrc">
+     <normaloff>:/resources/icons/continue.svg</normaloff>:/resources/icons/continue.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Next</string>
+   </property>
+   <property name="toolTip">
+    <string>Continue execution to the next line.</string>
+   </property>
+   <property name="shortcut">
+    <string>N</string>
    </property>
   </action>
  </widget>
