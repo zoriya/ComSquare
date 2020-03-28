@@ -43,6 +43,7 @@ public:
 class RowPainter : public QStyledItemDelegate {
 	Q_OBJECT
 private:
+	//! @brief The CPU to get PC and breakpoints from.
 	ComSquare::Debugger::CPUDebug &_cpu;
 public:
 	explicit RowPainter(ComSquare::Debugger::CPUDebug &cpu, QObject *parent = nullptr);
@@ -102,8 +103,13 @@ namespace ComSquare::Debugger
 		SNES &_snes;
 		//! @brief Reimplement the basic instruction execution method to log instructions inside the logger view.
 		unsigned _executeInstruction(uint8_t opcode) override;
+		//! @brief Return a disassembly context representing the current state of the processor.
+		DisassemblyContext _getDisassemblyContext();
 		//! @brief Disassemble part of the memory (using the bus) and parse it to a map of address and disassembled instruction.
-		std::vector<DisassembledInstruction> _disassemble(uint24_t startAddr, uint24_t size);
+		//! @param ctx The initial context of the processor before the disassembly begin.
+		std::vector<DisassembledInstruction> _disassemble(uint24_t startAddr, uint24_t size, DisassemblyContext &ctx);
+		//! @brief Update disassembly with the new state of the processor.
+		void _updateDisassembly(uint24_t refreshSize = 0xFF);
 		//! @brief Parse the instruction at the program counter given to have human readable information.
 		DisassembledInstruction _parseInstruction(uint24_t pc, DisassemblyContext &ctx);
 		//! @brief Get the parameter of the instruction as an hexadecimal string.
@@ -116,8 +122,6 @@ namespace ComSquare::Debugger
 		//! @brief Return a printable string corresponding to the value of a 8 or 16 bits immediate addressing mode.
 		//! @param dual Set this to true if the instruction take 16bits and not 8. (used for the immediate by a when the flag m is not set or the immediate by x if the flag x is not set).
 		std::string _getImmediateValue(uint24_t pc, bool dual);
-		//! @brief Return a printable string corresponding to the value of a 16bits immediate addressing mode.
-		std::string _getImmediateValue16Bits(uint24_t pc);
 		//! @brief Return a printable string corresponding to the value of a direct addressing mode.
 		std::string _getDirectValue(uint24_t pc);
 		//! @brief Return a printable string corresponding to the value of an absolute addressing mode.

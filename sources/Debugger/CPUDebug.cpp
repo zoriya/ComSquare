@@ -29,7 +29,7 @@ namespace ComSquare::Debugger
 
 		this->_ui.setupUi(this->_window);
 
-		this->disassembledInstructions = this->_disassemble(this->_registers.pac, 0x7FFF);
+		this->_updateDisassembly(0xFFFF - this->_registers.pc); //Parse the first page of the ROM (the code can't reach the second page without a jump).
 		this->_ui.disassembly->setModel(&this->_model);
 		this->_ui.disassembly->horizontalHeader()->setStretchLastSection(true);
 		this->_ui.disassembly->resizeColumnsToContents();
@@ -60,7 +60,7 @@ namespace ComSquare::Debugger
 				return 0xFF;
 			if (this->_isStepping) {
 				unsigned ret = this->_executeInstruction(this->readPC());
-				this->_ui.disassembly->viewport()->repaint();
+				this->_updateDisassembly();
 				return ret;
 			}
 			return CPU::update();
@@ -81,7 +81,7 @@ namespace ComSquare::Debugger
 			this->_isPaused = true;
 		}
 		uint24_t pc = (this->_registers.pbr << 16u) | (this->_registers.pc - 1u);
-		DisassemblyContext ctx =  {this->_registers.p.m, this->_registers.p.x_b};
+		DisassemblyContext ctx = this->_getDisassemblyContext();
 		DisassembledInstruction instruction = this->_parseInstruction(pc, ctx);
 		this->_ui.logger->append((instruction.toString() + " -  " + Utility::to_hex(opcode)).c_str());
 		unsigned ret = CPU::_executeInstruction(opcode);
@@ -96,10 +96,7 @@ namespace ComSquare::Debugger
 			this->_ui.actionPause->setText("Resume");
 		else
 			this->_ui.actionPause->setText("Pause");
-		// TODO reload the disassembly from this point to update items that may be false up to this point
-		// TODO highlight the current line.
-		//this->disassembledInstructions. //= this->_disassemble(0x808000, 0x7FFF);
-		this->_ui.disassembly->viewport()->repaint();
+		this->_updateDisassembly();
 	}
 
 	void CPUDebug::step()
@@ -152,11 +149,37 @@ namespace ComSquare::Debugger
 		this->_ui.logger->clear();
 	}
 
-	std::vector<DisassembledInstruction> CPUDebug::_disassemble(uint24_t pc, uint24_t length)
+	void CPUDebug::_updateDisassembly(uint24_t refreshSize)
+	{
+		auto first = std::find_if(this->disassembledInstructions.begin(), this->disassembledInstructions.end(), [this](DisassembledInstruction &i) {
+			return i.address >= this->_registers.pac;
+		});
+		auto end = std::find_if(this->disassembledInstructions.begin(), this->disassembledInstructions.end(),[this, refreshSize](DisassembledInstruction &i) {
+            return i.address >= this->_registers.pac + refreshSize;
+        });
+		this->disassembledInstructions.erase(first, end);
+
+		auto next = std::find_if(this->disassembledInstructions.begin(), this->disassembledInstructions.end(), [this](DisassembledInstruction &i) {
+			return i.address >= this->_registers.pac;
+		});
+		int row = next - this->disassembledInstructions.begin();
+		DisassemblyContext ctx = this->_getDisassemblyContext();
+		std::vector<DisassembledInstruction> nextInstructions = this->_disassemble(this->_registers.pac, refreshSize, ctx);
+		this->disassembledInstructions.insert(next, nextInstructions.begin(), nextInstructions.end());
+		if (this->_ui.disassembly->rowAt(0) > row || this->_ui.disassembly->rowAt(this->_ui.disassembly->height()) < row)
+			this->_ui.disassembly->scrollTo(this->_model.index(row, 0), QAbstractItemView::PositionAtCenter);
+		this->_ui.disassembly->viewport()->repaint();
+	}
+
+	DisassemblyContext CPUDebug::_getDisassemblyContext()
+	{
+		return {this->_registers.p.m, this->_registers.p.x_b, false};
+	}
+
+	std::vector<DisassembledInstruction> CPUDebug::_disassemble(uint24_t pc, uint24_t length, DisassemblyContext &ctx)
 	{
 		std::vector<DisassembledInstruction> map;
 		uint24_t endAddr = pc + length;
-		DisassemblyContext ctx;
 
 		while (pc < endAddr) {
 			DisassembledInstruction instruction = this->_parseInstruction(pc, ctx);
