@@ -34,12 +34,14 @@ namespace ComSquare::Debugger
 		this->_ui.disassembly->horizontalHeader()->setStretchLastSection(true);
 		this->_ui.disassembly->resizeColumnsToContents();
 		this->_ui.disassembly->verticalHeader()->setSectionResizeMode (QHeaderView::Fixed);
+		this->_ui.disassembly->verticalHeader()->setHighlightSections(false);
 		this->_ui.disassembly->setItemDelegate(&this->_painter);
 
 		QMainWindow::connect(this->_ui.actionPause, &QAction::triggered, this, &CPUDebug::pause);
 		QMainWindow::connect(this->_ui.actionStep, &QAction::triggered, this, &CPUDebug::step);
 		QMainWindow::connect(this->_ui.actionNext, &QAction::triggered, this, &CPUDebug::next);
 		QMainWindow::connect(this->_ui.clear, &QPushButton::released, this, &CPUDebug::clearHistory);
+		QMainWindow::connect(this->_ui.disassembly->verticalHeader(), &QHeaderView::sectionClicked, this, &CPUDebug::toggleBreakpoint);
 		this->_window->show();
 		this->_updateRegistersPanel();
 	}
@@ -129,6 +131,19 @@ namespace ComSquare::Debugger
 		});
 		this->breakpoints.push_back({next->address, true});
 		this->_isPaused = false;
+	}
+
+	void CPUDebug::toggleBreakpoint(int logicalIndex)
+	{
+		DisassembledInstruction instruction = this->disassembledInstructions[logicalIndex];
+		auto existing = std::find_if(this->breakpoints.begin(), this->breakpoints.end(), [instruction](Breakpoint &i) {
+			return i.address == instruction.address;
+		});
+		if (existing == this->breakpoints.end())
+			this->breakpoints.push_back({instruction.address, false});
+		else
+			this->breakpoints.erase(existing);
+		this->_ui.disassembly->viewport()->repaint();
 	}
 
 	void CPUDebug::_updateRegistersPanel()
@@ -412,11 +427,15 @@ void RowPainter::paint(QPainter *painter, const QStyleOptionViewItem &option, co
 	if (breakpoint != this->_cpu.breakpoints.end())
 		isBreakpoint = true;
 
-	if (instruction.address == this->_cpu.getPC())
-		painter->fillRect(option.rect,QColor(Qt::darkGreen));
-	if (isBreakpoint && !breakpoint->oneTime)
+	QStyleOptionViewItem style = option;
+	if (instruction.address == this->_cpu.getPC()) {
+		painter->fillRect(option.rect, QColor(Qt::darkGreen));
+		style.state &= ~QStyle::State_Selected;
+	} else if (isBreakpoint && !breakpoint->oneTime) {
 		painter->fillRect(option.rect,QColor(Qt::darkRed));
-	QStyledItemDelegate::paint(painter, option, index);
+		style.state &= ~QStyle::State_Selected;
+	}
+	QStyledItemDelegate::paint(painter, style, index);
 }
 
 QSize RowPainter::sizeHint(const QStyleOptionViewItem &, const QModelIndex &) const

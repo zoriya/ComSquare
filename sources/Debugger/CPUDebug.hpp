@@ -159,6 +159,8 @@ namespace ComSquare::Debugger
 		void next();
 		//! @brief Clear the history panel.
 		void clearHistory();
+		//! @brief Called when the user clicks on a section header. It enable/disable a breakpoint for this address.
+		void toggleBreakpoint(int logicalIndex);
 		//! @brief Called when the window is closed. Turn off the debugger and revert to a basic CPU.
 		void disableDebugger();
 		//! @brief The list of disassembled instructions to show on the debugger.
