@@ -111,12 +111,12 @@ namespace ComSquare::Debugger
 		//! @param addr The address to read from.
 		//! @return The color value in BGR, looks like this xbbbbbgggggrrrrr.
 		uint16_t read(uint8_t addr);
-
 		//! @brief Focus the debugger's window.
 		void focus();
-
 		//! @brief Return true if the Bus is overloaded with debugging features.
 		bool isDebugger();
+		//! @brief Update the text fields with corresponding tile info
+		void updateInfoTile(uint8_t addr);
 	};
 }
 

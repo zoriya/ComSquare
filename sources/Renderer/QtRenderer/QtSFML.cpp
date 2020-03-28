@@ -59,6 +59,10 @@ namespace ComSquare::Renderer
 		busDebugger->setShortcut(Qt::Key_F5);
 		QMainWindow::connect(busDebugger, &QAction::triggered, this->_sfWidget.get(), &QtFullSFML::enableDebugBus);
 		debugger->addAction(busDebugger);
+		QAction *cgramDebugger = new QAction("Palette Viewer", &this->_window);
+		cgramDebugger->setShortcut(Qt::Key_F6);
+		QMainWindow::connect(cgramDebugger, &QAction::triggered, this->_sfWidget.get(), &QtFullSFML::enableCgramViewer);
+		debugger->addAction(cgramDebugger);
 
 		this->_window.show();
 	}
@@ -118,5 +122,10 @@ namespace ComSquare::Renderer
 	void QtFullSFML::enableDebugBus()
 	{
 		this->_snes.enableMemoryBusDebugging();
+	}
+
+	void QtFullSFML::enableCgramViewer()
+	{
+		this->_snes.enableCgramDebugging();
 	}
 }

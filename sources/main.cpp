@@ -19,7 +19,8 @@ void usage(char *bin)
 		<< "\t-c, --cpu:    \tEnable the debugger of the CPU." << std::endl
 		<< "\t-m, --memory: \tEnable the memory viewer panel." << std::endl
 		<< "\t-h, --header: \tShow the header of the cartridge." << std::endl
-		<< "\t-b, --bus:    \tShow the memory bus's log." << std::endl;
+		<< "\t-b, --bus:    \tShow the memory bus's log." << std::endl
+		<< "\t-g, --cgram:    \tShow the palette viewer." << std::endl;
 }
 
 void parseArguments(int argc, char **argv, SNES &snes)

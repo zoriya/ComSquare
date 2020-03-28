@@ -33,6 +33,8 @@ namespace ComSquare::Renderer
 		void enableDebugAPU();
 		//! @brief Action called when clicking on the enable Memory Bus debugger button.
 		void enableDebugBus();
+		//! @brief Action called when clicking on the enable Palette viewer button.
+		void enableCgramViewer();
 		//! @brief Action called when clicking on the reset button.
 		void reset();
 		QtFullSFML(SNES &snes, QWidget* parent, const QPoint& position, const QSize& size, int frameRate = 0);

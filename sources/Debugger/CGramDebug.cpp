@@ -7,9 +7,8 @@
 #include <QColor>
 #include <iostream>
 #include <bitset>
+#include <string>
 #include "../Utility/Utility.hpp"
-#include "../Exceptions/InvalidAction.hpp"
-#include "../Exceptions/InvalidAddress.hpp"
 
 namespace ComSquare::Debugger
 {
@@ -26,7 +25,7 @@ namespace ComSquare::Debugger
 
 		this->_ui.setupUi(this->_window);
 		this->_ui.cgram_view->setModel(&this->_model);
-
+		updateInfoTile(0);
 		this->_window->show();
 	}
 
@@ -48,6 +47,22 @@ namespace ComSquare::Debugger
 	uint16_t CGramDebug::read(uint8_t addr)
 	{
 		return this->_ppu.cgramRead(addr);
+	}
+
+	void CGramDebug::updateInfoTile(uint8_t addr)
+	{
+		uint16_t cgramValue = this->_ppu.cgramRead(addr);
+		std::cout << "val " << cgramValue << std::endl;
+		uint8_t blue = (cgramValue & 0x7D00U) >> 10U;
+		uint8_t green = (cgramValue & 0x03E0U) >> 5U;
+		uint8_t red = (cgramValue & 0x001FU);
+
+		this->_ui.indexLineEdit->setText(std::to_string(addr).c_str());
+		this->_ui.valueLineEdit->setText(std::to_string(cgramValue).c_str());
+		this->_ui.rLineEdit->setText(std::to_string(red).c_str());
+		this->_ui.gLineEdit->setText(std::to_string(green).c_str());
+		this->_ui.bLineEdit->setText(std::to_string(blue).c_str());
+		this->_ui.hexLineEdit->setText(Utility::to_hex(cgramValue).c_str());
 	}
 }
 
