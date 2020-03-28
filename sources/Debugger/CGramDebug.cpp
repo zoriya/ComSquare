@@ -6,6 +6,7 @@
 #include "../SNES.hpp"
 #include <QColor>
 #include <iostream>
+#include <bitset>
 #include "../Utility/Utility.hpp"
 #include "../Exceptions/InvalidAction.hpp"
 #include "../Exceptions/InvalidAddress.hpp"
@@ -68,27 +69,19 @@ QVariant CGramModel::data(const QModelIndex &index, int role) const
 	uint8_t red;
 	uint8_t green;
 	uint8_t blue;
-	//std::cout << "test1" << std::endl;
+
 	if (role == Qt::TextAlignmentRole)
 		return Qt::AlignCenter;
-	//std::cout << "test2" << std::endl;
-
-	//std::cout << "test3" << std::endl;
-	if (role != Qt::DisplayRole)
+	if (role != Qt::BackgroundRole)
 		return QVariant();
-	if (role == Qt::BackgroundRole) {
-		//	std::cout << "test" << std::endl;
-		//unreachable
-		return 1;
-	}
 	addressValue = this->_ppu.cgramRead(index.column() * 16 + index.row());
 
 	blue = (addressValue & 0x7D00U) >> 10U;
 	green = (addressValue & 0x03E0U) >> 5U;
 	red = (addressValue & 0x001FU);
 
-	red = (red * 255U / 31U) << 24U;
-	green = (green * 255U / 31U) << 16U;
-	blue = (blue * 255U / 31U) << 8U;
+	red = red * 255U / 31U;
+	green = green * 255U / 31U;
+	blue = blue * 255U / 31U;
 	return QColor(red, green, blue);
 }
