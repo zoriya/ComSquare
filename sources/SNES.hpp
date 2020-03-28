@@ -15,7 +15,7 @@
 #ifdef DEBUGGER_ENABLED
 #include "Debugger/MemoryViewer.hpp"
 #include "Debugger/HeaderViewer.hpp"
-#include "Debugger/cgramDebug.hpp"
+#include "Debugger/CGramDebug.hpp"
 
 #endif
 
@@ -30,7 +30,7 @@ namespace ComSquare
 		//! @brief The window that allow the user to view the cartridge's header.
 		std::unique_ptr<Debugger::HeaderViewer> _headerViewer;
 		//! @brief The window that allow the user to view the CGRAM.
-		std::unique_ptr<Debugger::cgramDebug> _cgramViewer;
+		std::unique_ptr<Debugger::CGramDebug> _cgramViewer;
 #endif
 		//! @brief The memory bus that map addresses to components.
 		std::shared_ptr<Memory::MemoryBus> _bus;

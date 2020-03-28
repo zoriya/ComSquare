@@ -59,7 +59,7 @@
 
 
 //! @brief The qt model that bind the logs to the view.
-class cgramModel : public QAbstractTableModel
+class CGramModel : public QAbstractTableModel
 {
 Q_OBJECT
 private:
@@ -70,13 +70,11 @@ public:
 	const int column = 16;
 	//! @brief The number of rows
 	const int rows = 16;
-	cgramModel() = default;
-	cgramModel(const cgramModel &) = delete;
-	const cgramModel &operator=(const cgramModel &) = delete;
-	~cgramModel() override = default;
+	explicit CGramModel(ComSquare::PPU::PPU &ppu);
+	CGramModel(const CGramModel &) = delete;
+	const CGramModel &operator=(const CGramModel &) = delete;
+	~CGramModel() override = default;
 
-	//! @brief set the reference to the ppu
-	void ppu(const ComSquare::PPU::PPU &ppu);
 	//! @brief The number of row the table has.
 	int rowCount(const QModelIndex &parent) const override;
 	//! @brief The number of column the table has.
@@ -89,26 +87,26 @@ public:
 namespace ComSquare::Debugger
 {
 	//! @brief window that allow the user to view all data going through the memory bus.
-	class cgramDebug {
+	class CGramDebug {
 	private:
 		//! @brief The QT window for this debugger.
-		ClosableWindow<cgramDebug> *_window;
+		ClosableWindow<CGramDebug> *_window;
 		//! @brief A reference to the snes (to disable the debugger).
 		SNES &_snes;
 		//! @brief A widget that contain the whole UI.
 		Ui::CgramView _ui;
 		//! @brief The Log visualizer model for QT.
-		cgramModel _model;
+		CGramModel _model;
 		//! @brief A reference to the ppu
 		ComSquare::PPU::PPU &_ppu;
 	public:
 		//! @brief Called when the window is closed. Turn off the debugger.
 		void disableViewer();
 	public:
-		explicit cgramDebug(SNES &snes, ComSquare::PPU::PPU &ppu);
-		cgramDebug(const cgramDebug &) = delete;
-		cgramDebug &operator=(const cgramDebug &) = delete;
-		~cgramDebug() = default;
+		explicit CGramDebug(SNES &snes, ComSquare::PPU::PPU &ppu);
+		CGramDebug(const CGramDebug &) = delete;
+		CGramDebug &operator=(const CGramDebug &) = delete;
+		~CGramDebug() = default;
 
 		//! @brief Read data at the CGRAM address send it to the debugger.
 		//! @param addr The address to read from.

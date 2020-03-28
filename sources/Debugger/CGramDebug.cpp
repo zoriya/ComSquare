@@ -2,7 +2,7 @@
 // Created by cbihan on 3/27/20.
 //
 
-#include "cgramDebug.hpp"
+#include "CGramDebug.hpp"
 #include "../SNES.hpp"
 #include <QColor>
 #include "../Utility/Utility.hpp"
@@ -11,11 +11,11 @@
 
 namespace ComSquare::Debugger
 {
-	cgramDebug::cgramDebug(SNES &snes, ComSquare::PPU::PPU &ppu)
-		: _window(new ClosableWindow<cgramDebug>(*this, &cgramDebug::disableViewer)),
+	CGramDebug::CGramDebug(SNES &snes, ComSquare::PPU::PPU &ppu)
+		: _window(new ClosableWindow<CGramDebug>(*this, &CGramDebug::disableViewer)),
 		  _snes(snes),
 		  _ui(),
-		  _model(),
+		  _model(ppu),
 		  _ppu(ppu)
 	{
 		this->_window->setContextMenuPolicy(Qt::NoContextMenu);
@@ -27,38 +27,40 @@ namespace ComSquare::Debugger
 		this->_window->show();
 	}
 
-	void cgramDebug::disableViewer()
+	void CGramDebug::disableViewer()
 	{
 		this->_snes.disableCgramDebugging();
 	}
 
-	void cgramDebug::focus()
+	void CGramDebug::focus()
 	{
 		this->_window->activateWindow();
 	}
 
-	bool cgramDebug::isDebugger()
+	bool CGramDebug::isDebugger()
 	{
 		return true;
 	}
 
-	uint16_t cgramDebug::read(uint8_t addr)
+	uint16_t CGramDebug::read(uint8_t addr)
 	{
 		return this->_ppu.cgramRead(addr);
 	}
 }
 
-int cgramModel::rowCount(const QModelIndex &) const
+CGramModel::CGramModel(ComSquare::PPU::PPU &ppu) : _ppu(ppu) {}
+
+int CGramModel::rowCount(const QModelIndex &) const
 {
 	return this->rows;
 }
 
-int cgramModel::columnCount(const QModelIndex &) const
+int CGramModel::columnCount(const QModelIndex &) const
 {
 	return this->column;
 }
 
-QVariant cgramModel::data(const QModelIndex &index, int role) const
+QVariant CGramModel::data(const QModelIndex &index, int role) const
 {
 	if (role == Qt::TextAlignmentRole)
 		return Qt::AlignCenter;
@@ -67,9 +69,4 @@ QVariant cgramModel::data(const QModelIndex &index, int role) const
 	this->_ppu.cgramRead(0);
 	if (role != Qt::DisplayRole)
 		return QVariant();
-}
-
-void cgramModel::ppu(const ComSquare::PPU::PPU &ppu)
-{
-	this->_ppu = ppu;
 }

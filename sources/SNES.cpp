@@ -9,7 +9,7 @@
 #include "Debugger/CPUDebug.hpp"
 #include "Debugger/APUDebug.hpp"
 #include "Debugger/MemoryBusDebug.hpp"
-#include "Debugger/cgramDebug.hpp"
+#include "Debugger/CGramDebug.hpp"
 
 #endif
 
@@ -134,7 +134,7 @@ namespace ComSquare
 			if (this->_cgramViewer)
 				this->_cgramViewer->focus();
 			else
-				this->_cgramViewer = std::make_unique<Debugger::cgramDebug>(*this, *this->ppu);
+				this->_cgramViewer = std::make_unique<Debugger::CGramDebug>(*this, *this->ppu);
 		#endif
 	}
 
