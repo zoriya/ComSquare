@@ -8,11 +8,12 @@
 #include <exception>
 #include <string>
 #include <sstream>
+#include "DebuggableError.hpp"
 
 namespace ComSquare
 {
 	//! @brief Exception thrown when someone tries to load an invalid rom.
-	class InvalidOpcode : public std::exception {
+	class InvalidOpcode : public DebuggableError {
 	private:
 		std::string _msg;
 	public:

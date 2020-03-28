@@ -42,7 +42,7 @@ Test(AddrMode, ImmediateBankChange)
 	snes.cpu->_registers.pac = 0x00FFFF;
 	snes.cpu->_registers.p.m = true;
 	cr_assert_eq(snes.cpu->_getImmediateAddrForA(), 0x00FFFF);
-	cr_assert_eq(snes.cpu->_registers.pac, 0x010000);
+	cr_assert_eq(snes.cpu->_registers.pac, 0x000000);
 }
 
 Test(AddrMode, Direct)

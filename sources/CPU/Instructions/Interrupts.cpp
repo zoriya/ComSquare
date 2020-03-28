@@ -6,7 +6,7 @@
 
 namespace ComSquare::CPU
 {
-	void CPU::RESB()
+	int CPU::RESB()
 	{
 		this->_registers.p.i = true;
 		this->_registers.p.d = false;
@@ -18,9 +18,10 @@ namespace ComSquare::CPU
 		this->_registers.d = 0x0000;
 		this->_registers.sh = 0x01; // the low bit of the stack pointer is undefined on reset.
 		this->_registers.pc = this->_cartridgeHeader.emulationInterrupts.reset;
+		return 0;
 	}
 
-	void CPU::BRK()
+	int CPU::BRK(uint24_t, AddressingMode)
 	{
 		if (this->_isEmulationMode) {
 			this->_registers.pc += 2;
@@ -30,7 +31,6 @@ namespace ComSquare::CPU
 			this->_registers.p.i = true;
 			this->_registers.p.d = false;
 			this->_registers.pc = this->_cartridgeHeader.emulationInterrupts.brk;
-
 		} else {
 			this->_push(this->_registers.pbr);
 			this->_registers.pc += 2;
@@ -41,9 +41,10 @@ namespace ComSquare::CPU
 			this->_registers.pbr = 0x0;
 			this->_registers.pc = this->_cartridgeHeader.nativeInterrupts.brk;
 		}
+		return !this->_isEmulationMode;
 	}
 
-	void CPU::COP()
+	int CPU::COP(uint24_t, AddressingMode)
 	{
 		if (this->_isEmulationMode) {
 			this->_registers.pc += 2;
@@ -63,14 +64,16 @@ namespace ComSquare::CPU
 			this->_registers.pbr = 0x0;
 			this->_registers.pc = this->_cartridgeHeader.nativeInterrupts.cop;
 		}
+		return !this->_isEmulationMode;
 	}
 
-	void CPU::RTI()
+	int CPU::RTI(uint24_t, AddressingMode)
 	{
 		this->_registers.p.flags = this->_pop();
 		this->_registers.pc = this->_pop16();
 
 		if (!this->_isEmulationMode)
 			this->_registers.pbr = this->_pop16();
+		return !this->_isEmulationMode;
 	}
 }

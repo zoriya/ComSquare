@@ -5,8 +5,6 @@
 #include "CGramDebug.hpp"
 #include "../SNES.hpp"
 #include <QColor>
-#include <iostream>
-#include <bitset>
 #include <string>
 #include "../Utility/Utility.hpp"
 

@@ -18,7 +18,7 @@ Test(CPU_emulated, BRK)
 	snes.cpu->_registers.p.flags = 0xF1;
 	snes.cpu->_registers.pc = 0x156u;
 	snes.cpu->_registers.pbr = 0x15;
-	snes.cpu->BRK();
+	snes.cpu->BRK(0x0, ComSquare::CPU::AddressingMode::Implied);
 	cr_assert_eq(snes.cpu->_registers.pc, 0x123u, "The program counter should be 0x123u but it was 0x%X", snes.cpu->_registers.pc);
 	cr_assert_eq(snes.cpu->_registers.pbr, 0x15, "The PBR should be 0x15 but it was 0x%X", snes.cpu->_registers.pbr);
 	cr_assert_eq(snes.cpu->_registers.p.d, false, "The decimal flag should not be set.");
@@ -38,7 +38,7 @@ Test(CPU_native, BRK)
 	snes.cpu->_registers.p.flags = 0xF1;
 	snes.cpu->_registers.pc = 0x156u;
 	snes.cpu->_registers.pbr = 0x15;
-	snes.cpu->BRK();
+	snes.cpu->BRK(0x0, ComSquare::CPU::AddressingMode::Implied);
 	cr_assert_eq(snes.cpu->_registers.pc, 0x123u, "The program counter should be 0x123u but it was 0x%X", snes.cpu->_registers.pc);
 	cr_assert_eq(snes.cpu->_registers.pbr, 0x0, "The PBR should be 0x0 but it was 0x%X", snes.cpu->_registers.pbr);
 	cr_assert_eq(snes.cpu->_registers.p.d, false, "The decimal flag should not be set.");
@@ -59,7 +59,7 @@ Test(CPU_emulated, COP)
 	snes.cpu->_registers.p.flags = 0x0F;
 	snes.cpu->_registers.pc = 0x156u;
 	snes.cpu->_registers.pbr = 0x15;
-	snes.cpu->COP();
+	snes.cpu->COP(0x0, ComSquare::CPU::AddressingMode::Implied);
 	cr_assert_eq(snes.cpu->_registers.pc, 0x123u, "The program counter should be 0x123u but it was 0x%X", snes.cpu->_registers.pc);
 	cr_assert_eq(snes.cpu->_registers.pbr, 0x15, "The PBR should be 0x15 but it was 0x%X", snes.cpu->_registers.pbr);
 	cr_assert_eq(snes.cpu->_registers.p.d, false, "The decimal flag should not be set.");
@@ -79,7 +79,7 @@ Test(CPU_native, COP)
 	snes.cpu->_registers.p.flags = 0xF1;
 	snes.cpu->_registers.pc = 0x156u;
 	snes.cpu->_registers.pbr = 0x15;
-	snes.cpu->COP();
+	snes.cpu->COP(0x0, ComSquare::CPU::AddressingMode::Implied);
 	cr_assert_eq(snes.cpu->_registers.pc, 0x123u, "The program counter should be 0x123u but it was 0x%X", snes.cpu->_registers.pc);
 	cr_assert_eq(snes.cpu->_registers.pbr, 0x0, "The PBR should be 0x0 but it was 0x%X", snes.cpu->_registers.pbr);
 	cr_assert_eq(snes.cpu->_registers.p.d, false, "The decimal flag should not be set.");

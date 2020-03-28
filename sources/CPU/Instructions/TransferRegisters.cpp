@@ -6,7 +6,7 @@
 
 namespace ComSquare::CPU
 {
-	void CPU::TAX()
+	int CPU::TAX(uint24_t, AddressingMode)
 	{
 		if (this->_registers.p.x_b) {
 			this->_registers.xl = this->_registers.al;
@@ -17,9 +17,10 @@ namespace ComSquare::CPU
 			this->_registers.p.z = this->_registers.x == 0;
 			this->_registers.p.n = this->_registers.x & 0x8000u;
 		}
+		return 0;
 	}
 
-	void CPU::TAY()
+	int CPU::TAY(uint24_t, AddressingMode)
 	{
 		if (this->_registers.p.x_b) {
 			this->_registers.yl = this->_registers.al;
@@ -30,9 +31,10 @@ namespace ComSquare::CPU
 			this->_registers.p.z = this->_registers.y == 0;
 			this->_registers.p.n = this->_registers.y & 0x8000u;
 		}
+		return 0;
 	}
 
-	void CPU::TXS()
+	int CPU::TXS(uint24_t, AddressingMode)
 	{
 		if (this->_registers.p.x_b) {
 			this->_registers.sh = 0;
@@ -44,5 +46,6 @@ namespace ComSquare::CPU
 			this->_registers.p.z = this->_registers.s == 0;
 			this->_registers.p.n = this->_registers.s & 0x8000u;
 		}
+		return 0;
 	}
 }
