@@ -52,17 +52,20 @@ namespace ComSquare::Debugger
 	void CGramDebug::updateInfoTile(uint8_t addr)
 	{
 		uint16_t cgramValue = this->_ppu.cgramRead(addr);
-		std::cout << "val " << cgramValue << std::endl;
 		uint8_t blue = (cgramValue & 0x7D00U) >> 10U;
 		uint8_t green = (cgramValue & 0x03E0U) >> 5U;
 		uint8_t red = (cgramValue & 0x001FU);
+		uint24_t hexColorValue = 0;
 
 		this->_ui.indexLineEdit->setText(std::to_string(addr).c_str());
 		this->_ui.valueLineEdit->setText(std::to_string(cgramValue).c_str());
 		this->_ui.rLineEdit->setText(std::to_string(red).c_str());
 		this->_ui.gLineEdit->setText(std::to_string(green).c_str());
 		this->_ui.bLineEdit->setText(std::to_string(blue).c_str());
-		this->_ui.hexLineEdit->setText(Utility::to_hex(cgramValue).c_str());
+		hexColorValue += (red * 255U / 31U) << 16U;
+		hexColorValue += (green * 255U / 31U) << 8U;
+		hexColorValue += (blue * 255U / 31U);
+		this->_ui.hexLineEdit->setText(Utility::to_hex(hexColorValue).c_str());
 	}
 }
 

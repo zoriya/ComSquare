@@ -103,7 +103,7 @@
        <widget class="QLineEdit" name="indexLineEdit">
         <property name="maximumSize">
          <size>
-          <width>70</width>
+          <width>75</width>
           <height>16777215</height>
          </size>
         </property>
@@ -129,7 +129,7 @@
        <widget class="QLineEdit" name="valueLineEdit">
         <property name="maximumSize">
          <size>
-          <width>70</width>
+          <width>75</width>
           <height>16777215</height>
          </size>
         </property>
@@ -155,7 +155,7 @@
        <widget class="QLineEdit" name="rLineEdit">
         <property name="maximumSize">
          <size>
-          <width>70</width>
+          <width>75</width>
           <height>16777215</height>
          </size>
         </property>
@@ -181,7 +181,7 @@
        <widget class="QLineEdit" name="gLineEdit">
         <property name="maximumSize">
          <size>
-          <width>70</width>
+          <width>75</width>
           <height>16777215</height>
          </size>
         </property>
@@ -207,7 +207,7 @@
        <widget class="QLineEdit" name="bLineEdit">
         <property name="maximumSize">
          <size>
-          <width>70</width>
+          <width>75</width>
           <height>16777215</height>
          </size>
         </property>
@@ -233,7 +233,7 @@
        <widget class="QLineEdit" name="hexLineEdit">
         <property name="maximumSize">
          <size>
-          <width>70</width>
+          <width>75</width>
           <height>16777215</height>
          </size>
         </property>
