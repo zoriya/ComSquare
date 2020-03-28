@@ -476,7 +476,7 @@ namespace ComSquare::CPU
 			{&CPU::BRK, 7, "eor #-#", AddressingMode::Implied, 2}, // 5D
 			{&CPU::BRK, 7, "lsr #-#", AddressingMode::Implied, 2}, // 5E
 			{&CPU::BRK, 7, "eor #-#", AddressingMode::Implied, 2}, // 5F
-			{&CPU::BRK, 7, "rtl #-#", AddressingMode::Implied, 2}, // 60
+			{&CPU::BRK, 7, "rtl #-#", AddressingMode::Implied, 1}, // 60
 			{&CPU::ADC, 6, "adc", AddressingMode::DirectPageIndirectIndexedByX, 2}, // 61
 			{&CPU::BRK, 7, "per #-#", AddressingMode::Implied, 2}, // 62
 			{&CPU::ADC, 4, "adc", AddressingMode::StackRelative, 2}, // 63
@@ -487,7 +487,7 @@ namespace ComSquare::CPU
 			{&CPU::PLA, 4, "pla", AddressingMode::Implied, 1}, // 68
 			{&CPU::ADC, 2, "adc", AddressingMode::ImmediateForA, 2}, // 69
 			{&CPU::BRK, 7, "ror #-#", AddressingMode::Implied, 2}, // 6A
-			{&CPU::BRK, 7, "rts #-#", AddressingMode::Implied, 2}, // 6B
+			{&CPU::BRK, 7, "rts #-#", AddressingMode::Implied, 1}, // 6B
 			{&CPU::JMP, 5, "jmp", AddressingMode::AbsoluteIndirect, 3}, // 6C
 			{&CPU::ADC, 4, "adc", AddressingMode::Absolute, 3}, // 6D
 			{&CPU::BRK, 7, "ror #-#", AddressingMode::Implied, 2}, // 6E

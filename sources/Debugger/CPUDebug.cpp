@@ -29,7 +29,7 @@ namespace ComSquare::Debugger
 
 		this->_ui.setupUi(this->_window);
 
-		this->_updateDisassembly(0xFFFF - this->_registers.pc); //Parse the first page of the ROM (the code can't reach the second page without a jump).
+		this->_updateDisassembly(this->_cartridgeHeader.emulationInterrupts.reset, 0xFFFF - this->_cartridgeHeader.emulationInterrupts.reset); //Parse the first page of the ROM (the code can't reach the second page without a jump).
 		this->_ui.disassembly->setModel(&this->_model);
 		this->_ui.disassembly->horizontalHeader()->setStretchLastSection(true);
 		this->_ui.disassembly->resizeColumnsToContents();
@@ -44,6 +44,7 @@ namespace ComSquare::Debugger
 		QMainWindow::connect(this->_ui.disassembly->verticalHeader(), &QHeaderView::sectionClicked, this, &CPUDebug::toggleBreakpoint);
 		this->_window->show();
 		this->_updateRegistersPanel();
+		this->_updateDisassembly(this->_registers.pac, 0);
 	}
 
 	bool CPUDebug::isDebugger()
@@ -65,7 +66,7 @@ namespace ComSquare::Debugger
 				return 0xFF;
 			if (this->_isStepping) {
 				cycles = this->_executeInstruction(this->readPC());
-				this->_updateDisassembly();
+				this->_updateDisassembly(this->_registers.pac);
 				return cycles;
 			}
 
@@ -115,7 +116,7 @@ namespace ComSquare::Debugger
 			this->_ui.actionPause->setText("Resume");
 		else
 			this->_ui.actionPause->setText("Pause");
-		this->_updateDisassembly();
+		this->_updateDisassembly(this->_registers.pac);
 	}
 
 	void CPUDebug::step()
@@ -190,25 +191,28 @@ namespace ComSquare::Debugger
 		this->_ui.logger->clear();
 	}
 
-	void CPUDebug::_updateDisassembly(uint24_t refreshSize)
+	void CPUDebug::_updateDisassembly(uint24_t start, uint24_t refreshSize)
 	{
-		auto first = std::find_if(this->disassembledInstructions.begin(), this->disassembledInstructions.end(), [this](DisassembledInstruction &i) {
-			return i.address >= this->_registers.pac;
+		auto first = std::find_if(this->disassembledInstructions.begin(), this->disassembledInstructions.end(), [start](DisassembledInstruction &i) {
+			return i.address >= start;
 		});
-		auto end = std::find_if(this->disassembledInstructions.begin(), this->disassembledInstructions.end(),[this, refreshSize](DisassembledInstruction &i) {
-            return i.address >= this->_registers.pac + refreshSize;
+		auto end = std::find_if(this->disassembledInstructions.begin(), this->disassembledInstructions.end(),[start, refreshSize](DisassembledInstruction &i) {
+            return i.address >= start + refreshSize;
         });
 		this->disassembledInstructions.erase(first, end);
 
-		auto next = std::find_if(this->disassembledInstructions.begin(), this->disassembledInstructions.end(), [this](DisassembledInstruction &i) {
-			return i.address >= this->_registers.pac;
+		auto next = std::find_if(this->disassembledInstructions.begin(), this->disassembledInstructions.end(), [start](DisassembledInstruction &i) {
+			return i.address >= start;
 		});
-		int row = next - this->disassembledInstructions.begin();
 		DisassemblyContext ctx = this->_getDisassemblyContext();
-		std::vector<DisassembledInstruction> nextInstructions = this->_disassemble(this->_registers.pac, refreshSize, ctx);
+		std::vector<DisassembledInstruction> nextInstructions = this->_disassemble(start, refreshSize, ctx);
 		this->disassembledInstructions.insert(next, nextInstructions.begin(), nextInstructions.end());
-		if (this->_ui.disassembly->rowAt(0) > row || this->_ui.disassembly->rowAt(this->_ui.disassembly->height()) < row)
-			this->_ui.disassembly->scrollTo(this->_model.index(row, 0), QAbstractItemView::PositionAtCenter);
+
+		int row = next - this->disassembledInstructions.begin();
+		if (this->_ui.disassembly->rowAt(0) > row || this->_ui.disassembly->rowAt(this->_ui.disassembly->height()) < row) {
+			auto index = this->_model.index(row, 0);
+			this->_ui.disassembly->scrollTo(index, QAbstractItemView::PositionAtCenter);
+		}
 		this->_ui.disassembly->viewport()->repaint();
 	}
 
@@ -347,6 +351,8 @@ namespace ComSquare::Debugger
 	int CPUDebug::RESB()
 	{
 		CPU::RESB();
+		this->disassembledInstructions.clear();
+		this->_updateDisassembly(0xFFFF - this->_cartridgeHeader.emulationInterrupts.reset);
 		this->_updateRegistersPanel();
 		return (0);
 	}
@@ -362,7 +368,7 @@ namespace ComSquare::Debugger
 	}
 
 	DisassembledInstruction::DisassembledInstruction(const CPU::Instruction &instruction, uint24_t addr, std::string arg, uint8_t op)
-		: CPU::Instruction(instruction), address(addr), argument(std::move(arg)), opcode(op) {}
+		: CPU::Instruction(instruction), address(addr), argument(std::move(arg)), opcode(op), level(Safe) {}
 
 	std::string DisassembledInstruction::toString()
 	{
@@ -412,6 +418,17 @@ QVariant DisassemblyModel::headerData(int section, Qt::Orientation orientation, 
 		return QVariant();
 	ComSquare::Debugger::DisassembledInstruction instruction = this->_cpu.disassembledInstructions[section];
 	return QString(ComSquare::Utility::to_hex(instruction.address, ComSquare::Utility::HexString::NoPrefix).c_str());
+}
+
+void DisassemblyModel::beginReset()
+{
+	this->beginResetModel();
+}
+
+void DisassemblyModel::endReset()
+{
+	this->endResetModel();
+	emit this->dataChanged(this->index(0, 0), this->index(this->_cpu.disassembledInstructions.size(), this->columnCount(QModelIndex())));
 }
 
 RowPainter::RowPainter(ComSquare::Debugger::CPUDebug &cpu, QObject *parent) : QStyledItemDelegate(parent), _cpu(cpu) { }

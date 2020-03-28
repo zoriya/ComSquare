@@ -37,6 +37,9 @@ public:
 	QVariant data(const QModelIndex &index, int role) const override;
 	//! @brief Override the headers to use hex values.
 	QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
+
+	void beginReset();
+	void endReset();
 };
 
 //! @brief The qt class that highlight breakpoints and the PC's position
@@ -128,7 +131,7 @@ namespace ComSquare::Debugger
 		//! @param ctx The initial context of the processor before the disassembly begin.
 		std::vector<DisassembledInstruction> _disassemble(uint24_t startAddr, uint24_t size, DisassemblyContext &ctx);
 		//! @brief Update disassembly with the new state of the processor.
-		void _updateDisassembly(uint24_t refreshSize = 0xFF);
+		void _updateDisassembly(uint24_t start, uint24_t refreshSize = 0xFF);
 		//! @brief Parse the instruction at the program counter given to have human readable information.
 		DisassembledInstruction _parseInstruction(uint24_t pc, DisassemblyContext &ctx);
 		//! @brief Get the parameter of the instruction as an hexadecimal string.
