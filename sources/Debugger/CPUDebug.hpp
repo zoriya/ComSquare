@@ -95,6 +95,14 @@ namespace ComSquare::Debugger
 		std::string toString();
 	};
 
+	//! @brief Struct representing a breakpoint set by the user or by the app
+	struct Breakpoint {
+		//! @brief The address of the breakpoint
+		uint24_t address;
+		//! @brief If this is true, the breakpoint will be deleted on first hit and won't be shown on the disassembly view.
+		bool oneTime;
+	};
+
 	//! @brief A custom CPU with a window that show it's registers and the disassembly.
 	class CPUDebug : public CPU::CPU, public QObject {
 	private:
@@ -147,12 +155,16 @@ namespace ComSquare::Debugger
 		void pause();
 		//! @brief Step - Execute a single instruction.
 		void step();
+		//! @brief Next - Continue running instructions until the next line is reached.
+		void next();
 		//! @brief Clear the history panel.
 		void clearHistory();
 		//! @brief Called when the window is closed. Turn off the debugger and revert to a basic CPU.
 		void disableDebugger();
 		//! @brief The list of disassembled instructions to show on the debugger.
 		std::vector<DisassembledInstruction> disassembledInstructions;
+		//! @brief The list of breakpoints the user has set.
+		std::vector<Breakpoint> breakpoints;
 		//! @brief Return the current program counter of this CPU.
 		uint24_t getPC();
 		//! @brief Update the UI when resetting the CPU.

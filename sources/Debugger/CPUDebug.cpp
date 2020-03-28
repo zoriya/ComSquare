@@ -38,6 +38,7 @@ namespace ComSquare::Debugger
 
 		QMainWindow::connect(this->_ui.actionPause, &QAction::triggered, this, &CPUDebug::pause);
 		QMainWindow::connect(this->_ui.actionStep, &QAction::triggered, this, &CPUDebug::step);
+		QMainWindow::connect(this->_ui.actionNext, &QAction::triggered, this, &CPUDebug::next);
 		QMainWindow::connect(this->_ui.clear, &QPushButton::released, this, &CPUDebug::clearHistory);
 		this->_window->show();
 		this->_updateRegistersPanel();
@@ -56,14 +57,30 @@ namespace ComSquare::Debugger
 	unsigned CPUDebug::update()
 	{
 		try {
+			unsigned cycles = 0;
+
 			if (this->_isPaused)
 				return 0xFF;
 			if (this->_isStepping) {
-				unsigned ret = this->_executeInstruction(this->readPC());
+				cycles = this->_executeInstruction(this->readPC());
 				this->_updateDisassembly();
-				return ret;
+				return cycles;
 			}
-			return CPU::update();
+
+			for (int i = 0; i < 0xFF; i++) {
+				auto breakpoint = std::find_if(this->breakpoints.begin(), this->breakpoints.end(), [this](Breakpoint &brk) {
+					return brk.address == this->_registers.pac;
+				});
+				if (i != 0 && breakpoint != this->breakpoints.end()) {
+					if (breakpoint->oneTime)
+						this->breakpoints.erase(breakpoint);
+					this->_isPaused = false;
+					this->pause();
+					return cycles;
+				}
+				cycles += this->_executeInstruction(this->readPC());
+			}
+			return cycles;
 		} catch (InvalidOpcode &e) {
 			if (!this->_isPaused)
 				this->pause();
@@ -102,6 +119,15 @@ namespace ComSquare::Debugger
 	void CPUDebug::step()
 	{
 		this->_isStepping = true;
+		this->_isPaused = false;
+	}
+
+	void CPUDebug::next()
+	{
+		auto next = std::find_if(this->disassembledInstructions.begin(), this->disassembledInstructions.end(), [this](DisassembledInstruction &i) {
+			return i.address > this->_registers.pac;
+		});
+		this->breakpoints.push_back({next->address, true});
 		this->_isPaused = false;
 	}
 
@@ -378,10 +404,18 @@ RowPainter::RowPainter(ComSquare::Debugger::CPUDebug &cpu, QObject *parent) : QS
 void RowPainter::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
 	ComSquare::Debugger::DisassembledInstruction instruction = this->_cpu.disassembledInstructions[index.row()];
+	bool isBreakpoint = false;
+
+	auto breakpoint = std::find_if(this->_cpu.breakpoints.begin(), this->_cpu.breakpoints.end(), [instruction](ComSquare::Debugger::Breakpoint brk) {
+		return brk.address == instruction.address;
+	});
+	if (breakpoint != this->_cpu.breakpoints.end())
+		isBreakpoint = true;
 
 	if (instruction.address == this->_cpu.getPC())
 		painter->fillRect(option.rect,QColor(Qt::darkGreen));
-	// TODO display breakpoints with the Qt::darkRed color.
+	if (isBreakpoint && !breakpoint->oneTime)
+		painter->fillRect(option.rect,QColor(Qt::darkRed));
 	QStyledItemDelegate::paint(painter, option, index);
 }
 
