@@ -378,42 +378,44 @@ namespace ComSquare::CPU
 		int DEX(uint24_t, AddressingMode);
 		//! @brief Decrement the Y register.
 		int DEY(uint24_t, AddressingMode);
+		//! @brief Or accumulator with memory.
+		int ORA(uint24_t valueAddr, AddressingMode mode);
 
 		//! @brief All the instructions of the CPU.
 		//! @info Instructions are indexed by their opcode
 		Instruction _instructions[0x100] = {
 			{&CPU::BRK, 7, "brk", AddressingMode::Implied, 2}, // 00
-			{&CPU::BRK, 7, "ora #-#", AddressingMode::Implied, 2}, // 01
+			{&CPU::ORA, 6, "ora", AddressingMode::DirectPageIndirectIndexedByX, 2}, // 01
 			{&CPU::COP, 7, "cop", AddressingMode::Implied, 2}, // 02
-			{&CPU::BRK, 7, "ora #-#", AddressingMode::Implied, 2}, // 03
+			{&CPU::ORA, 4, "ora", AddressingMode::StackRelative, 2}, // 03
 			{&CPU::BRK, 7, "tsb #-#", AddressingMode::Implied, 2}, // 04
-			{&CPU::BRK, 7, "ora #-#", AddressingMode::Implied, 2}, // 05
+			{&CPU::ORA, 3, "ora", AddressingMode::DirectPage, 2}, // 05
 			{&CPU::BRK, 7, "asl #-#", AddressingMode::Implied, 2}, // 06
-			{&CPU::BRK, 7, "ora #-#", AddressingMode::Implied, 2}, // 07
+			{&CPU::ORA, 6, "ora", AddressingMode::DirectPageIndirectLong, 2}, // 07
 			{&CPU::PHP, 3, "php", AddressingMode::Implied, 3}, // 08
-			{&CPU::BRK, 7, "ora #-#", AddressingMode::Implied, 2}, // 09
+			{&CPU::ORA, 2, "ora", AddressingMode::ImmediateForA, 2}, // 09
 			{&CPU::BRK, 7, "asl #-#", AddressingMode::Implied, 2}, // 0A
 			{&CPU::PHD, 4, "phd", AddressingMode::Implied, 1}, // 0B
 			{&CPU::BRK, 7, "tsb #-#", AddressingMode::Implied, 2}, // 0C
-			{&CPU::BRK, 7, "ora #-#", AddressingMode::Implied, 2}, // 0D
+			{&CPU::ORA, 3, "ora", AddressingMode::Absolute, 4}, // 0D
 			{&CPU::BRK, 7, "asl #-#", AddressingMode::Implied, 2}, // 0E
-			{&CPU::BRK, 7, "ora #-#", AddressingMode::Implied, 2}, // 0F
+			{&CPU::ORA, 5, "ora", AddressingMode::AbsoluteLong, 5}, // 0F
 			{&CPU::BPL, 7, "bpl", AddressingMode::Implied, 2}, // 10
-			{&CPU::BRK, 7, "ora #-#", AddressingMode::Implied, 2}, // 11
-			{&CPU::BRK, 7, "ora #-#", AddressingMode::Implied, 2}, // 12
-			{&CPU::BRK, 7, "ora #-#", AddressingMode::Implied, 2}, // 13
+			{&CPU::ORA, 5, "ora", AddressingMode::DirectPageIndirectIndexedByY, 2}, // 11
+			{&CPU::ORA, 5, "ora", AddressingMode::DirectPageIndirect, 2}, // 12
+			{&CPU::ORA, 7, "ora", AddressingMode::StackRelativeIndirectIndexedByY, 2}, // 13
 			{&CPU::BRK, 7, "trb #-#", AddressingMode::Implied, 2}, // 14
-			{&CPU::BRK, 7, "ora #-#", AddressingMode::Implied, 2}, // 15
+			{&CPU::ORA, 4, "ora", AddressingMode::DirectPageIndexedByX, 2}, // 15
 			{&CPU::BRK, 7, "asl #-#", AddressingMode::Implied, 2}, // 16
-			{&CPU::BRK, 7, "ora #-#", AddressingMode::Implied, 2}, // 17
+			{&CPU::ORA, 6, "ora", AddressingMode::DirectPageIndirectIndexedByYLong, 2}, // 17
 			{&CPU::CLC, 2, "clc", AddressingMode::Implied, 1}, // 18
-			{&CPU::BRK, 7, "ora #-#", AddressingMode::Implied, 2}, // 19
+			{&CPU::ORA, 4, "ora", AddressingMode::AbsoluteIndexedByY, 3}, // 19
 			{&CPU::BRK, 7, "inc #-#", AddressingMode::Implied, 2}, // 1A
 			{&CPU::BRK, 7, "tcs #-#", AddressingMode::Implied, 2}, // 1B
 			{&CPU::BRK, 7, "trb #-#", AddressingMode::Implied, 2}, // 1C
-			{&CPU::BRK, 7, "ora #-#", AddressingMode::Implied, 2}, // 1D
+			{&CPU::ORA, 4, "ora", AddressingMode::AbsoluteIndexedByX, 3}, // 1D
 			{&CPU::BRK, 7, "asl #-#", AddressingMode::Implied, 2}, // 1E
-			{&CPU::BRK, 7, "ora #-#", AddressingMode::Implied, 2}, // 1F
+			{&CPU::ORA, 5, "ora", AddressingMode::AbsoluteIndexedByXLong, 4}, // 1F
 			{&CPU::JSR, 6, "jsr", AddressingMode::Absolute, 3}, // 20
 			{&CPU::BRK, 7, "and #-#", AddressingMode::Implied, 2}, // 21
 			{&CPU::JSL, 8, "jsl", AddressingMode::AbsoluteLong, 4}, // 22
