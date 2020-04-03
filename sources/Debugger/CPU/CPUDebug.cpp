@@ -234,7 +234,7 @@ namespace ComSquare::Debugger
 
 	DisassemblyContext CPUDebug::_getDisassemblyContext()
 	{
-		return {this->_registers.p.m, this->_registers.p.x_b, false};
+		return {this->_registers.p.m, this->_registers.p.x_b, this->_isEmulationMode};
 	}
 
 	int CPUDebug::RESB()

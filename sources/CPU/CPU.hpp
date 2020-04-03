@@ -384,9 +384,9 @@ namespace ComSquare::CPU
 		//! @brief All the instructions of the CPU.
 		//! @info Instructions are indexed by their opcode
 		Instruction _instructions[0x100] = {
-			{&CPU::BRK, 7, "brk", AddressingMode::Implied, 2}, // 00
+			{&CPU::BRK, 7, "brk", AddressingMode::Immediate8bits, 2}, // 00
 			{&CPU::ORA, 6, "ora", AddressingMode::DirectPageIndirectIndexedByX, 2}, // 01
-			{&CPU::COP, 7, "cop", AddressingMode::Implied, 2}, // 02
+			{&CPU::COP, 7, "cop", AddressingMode::Immediate8bits, 2}, // 02
 			{&CPU::ORA, 4, "ora", AddressingMode::StackRelative, 2}, // 03
 			{&CPU::BRK, 7, "tsb #-#", AddressingMode::Implied, 2}, // 04
 			{&CPU::ORA, 3, "ora", AddressingMode::DirectPage, 2}, // 05
