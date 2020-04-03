@@ -93,7 +93,7 @@ namespace ComSquare::CPU
 
 	int CPU::DEX(uint24_t, AddressingMode)
 	{
-		unsigned negativeMask = this->_registers.p.x_b ? UINT8_MAX : UINT16_MAX;
+		unsigned negativeMask = this->_registers.p.x_b ? 0x80 : 0x8000;
 
 		this->_registers.x--;
 		if (this->_registers.p.x_b)
@@ -105,7 +105,7 @@ namespace ComSquare::CPU
 
 	int CPU::DEY(uint24_t, AddressingMode)
 	{
-		unsigned negativeMask = this->_registers.p.x_b ? UINT8_MAX : UINT16_MAX;
+		unsigned negativeMask = this->_registers.p.x_b ? 0x80 : 0x8000;
 
 		this->_registers.y--;
 		if (this->_registers.p.x_b)
