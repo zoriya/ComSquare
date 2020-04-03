@@ -165,8 +165,16 @@ namespace ComSquare::Debugger
 			this->_ui.xIndexLineEdit->setText(Utility::to_hex(this->_registers.xl).c_str());
 			this->_ui.yIndexLineEdit->setText(Utility::to_hex(this->_registers.yl).c_str());
 		}
-		this->_ui.flagsLineEdit->setText(this->_getFlagsString().c_str());
 		this->_ui.emulationModeCheckBox->setCheckState(this->_isEmulationMode ? Qt::CheckState::Checked : Qt::CheckState::Unchecked);
+
+		this->_ui.mCheckbox->setCheckState(this->_registers.p.m ? Qt::CheckState::Checked : Qt::CheckState::Unchecked);
+		this->_ui.xCheckbox->setCheckState(this->_registers.p.x_b ? Qt::CheckState::Checked : Qt::CheckState::Unchecked);
+		this->_ui.iCheckbox->setCheckState(this->_registers.p.i ? Qt::CheckState::Checked : Qt::CheckState::Unchecked);
+		this->_ui.vCheckbox->setCheckState(this->_registers.p.v ? Qt::CheckState::Checked : Qt::CheckState::Unchecked);
+		this->_ui.dCheckbox->setCheckState(this->_registers.p.d ? Qt::CheckState::Checked : Qt::CheckState::Unchecked);
+		this->_ui.cCheckbox->setCheckState(this->_registers.p.c ? Qt::CheckState::Checked : Qt::CheckState::Unchecked);
+		this->_ui.zCheckbox->setCheckState(this->_registers.p.z ? Qt::CheckState::Checked : Qt::CheckState::Unchecked);
+		this->_ui.nCheckbox->setCheckState(this->_registers.p.n ? Qt::CheckState::Checked : Qt::CheckState::Unchecked);
 	}
 
 	std::string CPUDebug::_getFlagsString()
