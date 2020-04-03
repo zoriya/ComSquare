@@ -133,6 +133,7 @@ public:
         gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
         stackView = new QTableView(centralwidget);
         stackView->setObjectName(QString::fromUtf8("stackView"));
+        stackView->horizontalHeader()->setVisible(false);
 
         gridLayout_2->addWidget(stackView, 1, 0, 1, 1);
 

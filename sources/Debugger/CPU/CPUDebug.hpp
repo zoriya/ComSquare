@@ -17,6 +17,29 @@ namespace ComSquare::Debugger
 	class CPUDebug;
 }
 
+//! @brief The qt model that show the stack.
+class StackModel : public QAbstractTableModel
+{
+Q_OBJECT
+private:
+	ComSquare::Memory::MemoryBus &_bus;
+	ComSquare::Debugger::CPUDebug &_cpu;
+public:
+	explicit StackModel(ComSquare::Memory::MemoryBus &bus, ComSquare::Debugger::CPUDebug &cpu);
+	StackModel(const StackModel &) = delete;
+	const StackModel &operator=(const StackModel &) = delete;
+	~StackModel() override = default;
+
+	//! @brief The number of row the table has.
+	int rowCount(const QModelIndex &parent) const override;
+	//! @brief The number of column the table has.
+	int columnCount(const QModelIndex &parent) const override;
+	//! @brief Return a data representing the table cell.
+	QVariant data(const QModelIndex &index, int role) const override;
+	//! @brief Override the headers to use hex values.
+	QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
+};
+
 //! @brief The qt model that show the disassembly.
 class DisassemblyModel : public QAbstractTableModel
 {
@@ -114,6 +137,8 @@ namespace ComSquare::Debugger
 		DisassemblyModel _model;
 		//! @brief A custom painter that highlight breakpoints and the PC's position.
 		RowPainter _painter;
+		//! @brief The stack viewer's model.
+		StackModel _stackModel;
 		//! @brief If this is set to true, the execution of the CPU will be paused.
 		bool _isPaused = true;
 		//! @brief If this is set to true, the CPU will execute one instruction and pause itself.
@@ -197,6 +222,10 @@ namespace ComSquare::Debugger
 		std::vector<Breakpoint> breakpoints;
 		//! @brief Return the current program counter of this CPU.
 		uint24_t getPC();
+		//! @brief Return the current stack pointer.
+		uint16_t getStackPointer();
+		//! @brief The stack pointer before the execution of any instructions.
+		uint16_t initialStackPointer = this->_registers.s;
 		//! @brief Update the UI when resetting the CPU.
 		int RESB() override;
 		//! @brief Convert a basic CPU to a debugging CPU.

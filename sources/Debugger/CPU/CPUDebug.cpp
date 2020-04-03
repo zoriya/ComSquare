@@ -21,6 +21,7 @@ namespace ComSquare::Debugger
 		_ui(),
 		_model(*this),
 		_painter(*this),
+		_stackModel(*this->_bus, *this),
 		_snes(snes)
 	{
 		this->_window->setContextMenuPolicy(Qt::NoContextMenu);
@@ -31,11 +32,15 @@ namespace ComSquare::Debugger
 
 		this->_updateDisassembly(this->_cartridgeHeader.emulationInterrupts.reset, 0xFFFF - this->_cartridgeHeader.emulationInterrupts.reset); //Parse the first page of the ROM (the code can't reach the second page without a jump).
 		this->_ui.disassembly->setModel(&this->_model);
-		this->_ui.disassembly->horizontalHeader()->setStretchLastSection(true);
-		this->_ui.disassembly->resizeColumnsToContents();
-		this->_ui.disassembly->verticalHeader()->setSectionResizeMode (QHeaderView::Fixed);
+		this->_ui.disassembly->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+		this->_ui.disassembly->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
 		this->_ui.disassembly->verticalHeader()->setHighlightSections(false);
 		this->_ui.disassembly->setItemDelegate(&this->_painter);
+
+		this->_ui.stackView->setModel(&this->_stackModel);
+		this->_ui.stackView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+		this->_ui.stackView->verticalHeader()->setSectionResizeMode (QHeaderView::Fixed);
+		this->_ui.stackView->verticalHeader()->setHighlightSections(false);
 
 		QMainWindow::connect(this->_ui.actionPause, &QAction::triggered, this, &CPUDebug::pause);
 		QMainWindow::connect(this->_ui.actionStep, &QAction::triggered, this, &CPUDebug::step);
@@ -175,6 +180,9 @@ namespace ComSquare::Debugger
 		this->_ui.cCheckbox->setCheckState(this->_registers.p.c ? Qt::CheckState::Checked : Qt::CheckState::Unchecked);
 		this->_ui.zCheckbox->setCheckState(this->_registers.p.z ? Qt::CheckState::Checked : Qt::CheckState::Unchecked);
 		this->_ui.nCheckbox->setCheckState(this->_registers.p.n ? Qt::CheckState::Checked : Qt::CheckState::Unchecked);
+
+		auto index = this->_stackModel.index(this->_registers.s / 2, 0);
+		this->_ui.stackView->scrollTo(index, QAbstractItemView::PositionAtCenter);
 	}
 
 	std::string CPUDebug::_getFlagsString()
@@ -246,6 +254,11 @@ namespace ComSquare::Debugger
 	uint24_t CPUDebug::getPC()
 	{
 		return this->_registers.pac;
+	}
+
+	uint16_t CPUDebug::getStackPointer()
+	{
+		return this->_registers.s;
 	}
 }
 
@@ -320,4 +333,47 @@ void RowPainter::paint(QPainter *painter, const QStyleOptionViewItem &option, co
 QSize RowPainter::sizeHint(const QStyleOptionViewItem &, const QModelIndex &) const
 {
 	return QSize();
+}
+
+StackModel::StackModel(ComSquare::Memory::MemoryBus &bus, ComSquare::Debugger::CPUDebug &cpu) : _bus(bus), _cpu(cpu) { }
+
+int StackModel::rowCount(const QModelIndex &) const
+{
+	return 0x10000 / 2;
+}
+
+int StackModel::columnCount(const QModelIndex &) const
+{
+	return 2;
+}
+
+QVariant StackModel::data(const QModelIndex &index, int role) const
+{
+	if (role == Qt::BackgroundRole) {
+		if (index.row() * 2 + index.column() == this->_cpu.getStackPointer())
+			return QColor(Qt::darkBlue);
+		if (index.row() * 2 + index.column() == this->_cpu.initialStackPointer)
+			return QColor(Qt::darkCyan);
+	}
+	if (role == Qt::TextAlignmentRole)
+		return Qt::AlignCenter;
+	if (role != Qt::DisplayRole)
+		return QVariant();
+	uint16_t addr = index.row() * 2 + index.column();
+	try {
+		uint8_t value = this->_bus.read(addr);
+		return (ComSquare::Utility::to_hex(value, ComSquare::Utility::NoPrefix).c_str());
+	} catch (std::exception &) {
+		return "??";
+	}
+}
+
+QVariant StackModel::headerData(int section, Qt::Orientation orientation, int role) const
+{
+	if (orientation == Qt::Horizontal)
+		return QVariant();
+	if (role != Qt::DisplayRole)
+		return QVariant();
+	uint16_t addr = section * 2;
+	return QString(ComSquare::Utility::to_hex(addr, ComSquare::Utility::HexString::NoPrefix).c_str());
 }
