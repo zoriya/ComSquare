@@ -6,11 +6,11 @@
 #define COMSQUARE_CPUDEBUG_HPP
 
 #include <QtWidgets/QStyledItemDelegate>
-#include "../CPU/CPU.hpp"
-#include "../Renderer/SFRenderer.hpp"
-#include "../SNES.hpp"
-#include "../../ui/ui_cpu.h"
-#include "ClosableWindow.hpp"
+#include "../../CPU/CPU.hpp"
+#include "../../Renderer/SFRenderer.hpp"
+#include "../../SNES.hpp"
+#include "../../../ui/ui_cpu.h"
+#include "../ClosableWindow.hpp"
 
 namespace ComSquare::Debugger
 {
@@ -37,9 +37,6 @@ public:
 	QVariant data(const QModelIndex &index, int role) const override;
 	//! @brief Override the headers to use hex values.
 	QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
-
-	void beginReset();
-	void endReset();
 };
 
 //! @brief The qt class that highlight breakpoints and the PC's position
@@ -144,14 +141,42 @@ namespace ComSquare::Debugger
 		//! @brief Return a printable string corresponding to the value of a 8 or 16 bits immediate addressing mode.
 		//! @param dual Set this to true if the instruction take 16bits and not 8. (used for the immediate by a when the flag m is not set or the immediate by x if the flag x is not set).
 		std::string _getImmediateValue(uint24_t pc, bool dual);
-		//! @brief Return a printable string corresponding to the value of a direct addressing mode.
-		std::string _getDirectValue(uint24_t pc);
 		//! @brief Return a printable string corresponding to the value of an absolute addressing mode.
 		std::string _getAbsoluteValue(uint24_t pc);
 		//! @brief Return a printable string corresponding to the value of an absolute long addressing mode.
 		std::string _getAbsoluteLongValue(uint24_t pc);
+		//! @brief Return a printable string corresponding to the value of a direct addressing mode.
+		std::string _getDirectValue(uint24_t pc);
+		//! @brief  Return a printable string corresponding to the value of a direct indirect addressing mode.
+		std::string _getDirectIndirectValue(uint24_t pc);
+		//! @brief  Return a printable string corresponding to the value of a direct indirect long addressing mode.
+		std::string _getDirectIndirectLongValue(uint24_t pc);
+		//! @brief  Return a printable string corresponding to the value of a absolute indexed by x addressing mode.
+		std::string _getAbsoluteIndexByXValue(uint24_t pc);
+		//! @brief  Return a printable string corresponding to the value of a absolute indexed by x long addressing mode.
+		std::string _getAbsoluteIndexByXLongValue(uint24_t pc);
+		//! @brief  Return a printable string corresponding to the value of a absolute indexed by y addressing mode.
+		std::string _getAbsoluteIndexByYValue(uint24_t pc);
 		//! @brief Return a printable string corresponding to the value of a direct index by x addressing mode.
 		std::string _getDirectIndexedByXValue(uint24_t pc);
+		//! @brief Return a printable string corresponding to the value of a direct index by y addressing mode.
+		std::string _getDirectIndexedByYValue(uint24_t pc);
+		//! @brief Return a printable string corresponding to the value of a direct indirect index by x addressing mode.
+		std::string _getDirectIndexedByXIndirectValue(uint24_t pc);
+		//! @brief Return a printable string corresponding to the value of a direct indirect index by y addressing mode.
+		std::string _getDirectIndirectIndexedByYValue(uint24_t pc);
+		//! @brief Return a printable string corresponding to the value of a direct indirect index by y long addressing mode.
+		std::string _getDirectIndirectIndexedByYLongValue(uint24_t pc);
+		//! @brief Return a printable string corresponding to the value of a stack relative addressing mode.
+		std::string _getStackRelativeValue(uint24_t pc);
+		//! @brief Return a printable string corresponding to the value of a stack relative indirect indexed by y addressing mode.
+		std::string _getStackRelativeIndiretIndexdeByYValue(uint24_t pc);
+		//! @brief Return a printable string corresponding to the value of a absolute indirect addressing mode.
+		std::string _getAbsoluteIndirectValue(uint24_t pc);
+		//! @brief Return a printable string corresponding to the value of a absolute indirect indexed by x addressing mode.
+		std::string _getAbsoluteIndirectIndexedByXValue(uint24_t pc);
+		//! @brief Return a printable string corresponding to the value of a absolute indirect long addressing mode.
+		std::string _getAbsoluteIndirectLongValue(uint24_t pc);
 
 	public:
 		//! @brief Pause/Resume the CPU.

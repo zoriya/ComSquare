@@ -287,12 +287,6 @@ namespace ComSquare::CPU
 			valueAddr = this->_getStackRelativeIndirectIndexedYAddr();
 			break;
 
-		case ProgramCounterRelative:
-			valueAddr = this->_getProgramCounterRelativeAddr();
-			break;
-		case ProgramCounterRelativeLong:
-			valueAddr = this->_getProgramCounterRelativeLongAddr();
-			break;
 		case AbsoluteIndirectIndexedByX:
 			valueAddr = this->_getAbsoluteIndirectIndexedByXAddr();
 			break;
