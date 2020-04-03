@@ -151,6 +151,16 @@ namespace ComSquare::CPU
 		return effective;
 	}
 
+	uint24_t CPU::_getAbsoluteIndirectLongAddr()
+	{
+		uint16_t abs = this->readPC();
+		abs += this->readPC() << 8u;
+		uint24_t effective = this->_bus->read(abs);
+		effective += this->_bus->read(abs + 1) << 8u;
+		effective += this->_bus->read(abs + 2) << 16u;
+		return effective;
+	}
+
 	uint24_t CPU::_getAbsoluteIndirectIndexedByXAddr()
 	{
 		uint24_t abs = this->readPC();

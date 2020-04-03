@@ -231,9 +231,6 @@ namespace ComSquare::CPU
 			valueAddr = this->_getImmediateAddrForX();
 			break;
 
-			// TODO implement the relative addressing mode
-			// TODO implement the relative long addressing mode
-
 		case Absolute:
 			valueAddr = this->_getAbsoluteAddr();
 			break;
@@ -243,8 +240,9 @@ namespace ComSquare::CPU
 		case AbsoluteIndirect:
 			valueAddr = this->_getAbsoluteIndirectAddr();
 			break;
-
-			//TODO implement absolute indirect long addressing mode
+		case AbsoluteIndirectLong:
+			valueAddr = this->_getAbsoluteIndirectLongAddr();
+			break;
 
 		case DirectPage:
 			valueAddr = this->_getDirectAddr();
@@ -297,8 +295,6 @@ namespace ComSquare::CPU
 			break;
 		case AbsoluteIndirectIndexedByX:
 			valueAddr = this->_getAbsoluteIndirectIndexedByXAddr();
-			break;
-		default:
 			break;
 		}
 
