@@ -27,6 +27,7 @@ jobs:
         run: |
           Set-Location build
           cmake .. -G "MinGW Makefiles" -DCMAKE_SH="CMAKE_SH-NOTFOUND" -DGITBUILD=true
+          tree /F
       - name: Build with Makefile
         run: |
           mingw32-make -C build ComSquare
