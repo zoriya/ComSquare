@@ -380,6 +380,10 @@ namespace ComSquare::CPU
 		int DEY(uint24_t, AddressingMode);
 		//! @brief Or accumulator with memory.
 		int ORA(uint24_t valueAddr, AddressingMode mode);
+		//! @brief Return from subroutine.
+		int RTS(uint24_t, AddressingMode);
+		//! @brief Return from subroutine long.
+		int RTL(uint24_t, AddressingMode);
 
 		//! @brief All the instructions of the CPU.
 		//! @info Instructions are indexed by their opcode
@@ -480,7 +484,7 @@ namespace ComSquare::CPU
 			{&CPU::BRK, 7, "eor #-#", AddressingMode::Implied, 2}, // 5D
 			{&CPU::BRK, 7, "lsr #-#", AddressingMode::Implied, 2}, // 5E
 			{&CPU::BRK, 7, "eor #-#", AddressingMode::Implied, 2}, // 5F
-			{&CPU::BRK, 7, "rtl #-#", AddressingMode::Implied, 1}, // 60
+			{&CPU::RTL, 6, "rtl", AddressingMode::Implied, 1}, // 60
 			{&CPU::ADC, 6, "adc", AddressingMode::DirectPageIndirectIndexedByX, 2}, // 61
 			{&CPU::BRK, 7, "per #-#", AddressingMode::Implied, 2}, // 62
 			{&CPU::ADC, 4, "adc", AddressingMode::StackRelative, 2}, // 63
@@ -491,7 +495,7 @@ namespace ComSquare::CPU
 			{&CPU::PLA, 4, "pla", AddressingMode::Implied, 1}, // 68
 			{&CPU::ADC, 2, "adc", AddressingMode::ImmediateForA, 2}, // 69
 			{&CPU::BRK, 7, "ror #-#", AddressingMode::Implied, 2}, // 6A
-			{&CPU::BRK, 7, "rts #-#", AddressingMode::Implied, 1}, // 6B
+			{&CPU::RTS, 6, "rts", AddressingMode::Implied, 1}, // 6B
 			{&CPU::JMP, 5, "jmp", AddressingMode::AbsoluteIndirect, 3}, // 6C
 			{&CPU::ADC, 4, "adc", AddressingMode::Absolute, 3}, // 6D
 			{&CPU::BRK, 7, "ror #-#", AddressingMode::Implied, 2}, // 6E

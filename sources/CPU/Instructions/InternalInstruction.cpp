@@ -352,4 +352,17 @@ namespace ComSquare::CPU
 	{
 		return 0;
 	}
+
+	int CPU::RTS(uint24_t, AddressingMode)
+	{
+		this->_registers.pc = this->_pop16() + 1;
+		return 0;
+	}
+
+	int CPU::RTL(uint24_t, AddressingMode)
+	{
+		this->_registers.pc = this->_pop16() + 1;
+		this->_registers.dbr = this->_pop();
+		return 0;
+	}
 }
