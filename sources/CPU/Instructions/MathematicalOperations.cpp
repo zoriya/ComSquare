@@ -12,8 +12,8 @@ namespace ComSquare::CPU
 		unsigned value = this->_bus->read(valueAddr) + this->_registers.p.c;
 		if (!this->_registers.p.m)
 			value += this->_bus->read(valueAddr + 1) << 8u;
-		unsigned negativeMask = this->_isEmulationMode ? 0x80u : 0x8000u;
-		unsigned maxValue = this->_isEmulationMode ? UINT8_MAX : UINT16_MAX;
+		unsigned negativeMask = this->_registers.p.m ? 0x80u : 0x8000u;
+		unsigned maxValue = this->_registers.p.m ? UINT8_MAX : UINT16_MAX;
 
 		this->_registers.p.c = static_cast<unsigned>(this->_registers.a) + value > maxValue;
 		if ((this->_registers.a & negativeMask) == (value & negativeMask))
@@ -21,7 +21,7 @@ namespace ComSquare::CPU
 		else
 			this->_registers.p.v = false;
 		this->_registers.a += value;
-		if (this->_isEmulationMode)
+		if (this->_registers.p.m)
 			this->_registers.a %= 0x100;
 		this->_registers.p.z = this->_registers.a == 0;
 		this->_registers.p.n = this->_registers.a & negativeMask;
@@ -51,7 +51,7 @@ namespace ComSquare::CPU
 
 	int CPU::SBC(uint24_t valueAddr, AddressingMode mode)
 	{
-		unsigned negativeMask = this->_isEmulationMode ? 0x80u : 0x8000u;
+		unsigned negativeMask = this->_registers.p.m ? 0x80u : 0x8000u;
 		unsigned value = this->_bus->read(valueAddr);
 		if (!this->_registers.p.m)
 			value += this->_bus->read(valueAddr + 1) << 8u;
@@ -63,7 +63,7 @@ namespace ComSquare::CPU
 		else
 			this->_registers.p.v = false;
 		this->_registers.a += ~value + oldCarry;
-		if (this->_isEmulationMode)
+		if (this->_registers.p.m)
 			this->_registers.a %= 0x100;
 		this->_registers.p.z = this->_registers.a == 0;
 		this->_registers.p.n = this->_registers.a & negativeMask;
@@ -89,5 +89,29 @@ namespace ComSquare::CPU
 			break;
 		}
 		return cycles;
+	}
+
+	int CPU::DEX(uint24_t, AddressingMode)
+	{
+		unsigned negativeMask = this->_registers.p.x_b ? UINT8_MAX : UINT16_MAX;
+
+		this->_registers.x--;
+		if (this->_registers.p.x_b)
+			this->_registers.xh = 0;
+		this->_registers.p.z = this->_registers.x == 0;
+		this->_registers.p.n = this->_registers.x & negativeMask;
+		return 0;
+	}
+
+	int CPU::DEY(uint24_t, AddressingMode)
+	{
+		unsigned negativeMask = this->_registers.p.x_b ? UINT8_MAX : UINT16_MAX;
+
+		this->_registers.y--;
+		if (this->_registers.p.x_b)
+			this->_registers.yh = 0;
+		this->_registers.p.z = this->_registers.y == 0;
+		this->_registers.p.n = this->_registers.y & negativeMask;
+		return 0;
 	}
 }

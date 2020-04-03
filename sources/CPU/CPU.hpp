@@ -374,6 +374,10 @@ namespace ComSquare::CPU
 		int JML(uint24_t valueAddr, AddressingMode);
 		//! @brief No OP.
 		int NOP(uint24_t, AddressingMode);
+		//! @brief Decrement the X register.
+		int DEX(uint24_t, AddressingMode);
+		//! @brief Decrement the Y register.
+		int DEY(uint24_t, AddressingMode);
 
 		//! @brief All the instructions of the CPU.
 		//! @info Instructions are indexed by their opcode
@@ -514,7 +518,7 @@ namespace ComSquare::CPU
 			{&CPU::STA, 3, "sta", AddressingMode::DirectPage, 2}, // 85
 			{&CPU::STX, 3, "stx", AddressingMode::DirectPage, 2}, // 86
 			{&CPU::STA, 6, "sta", AddressingMode::DirectPageIndirectLong, 2}, // 87
-			{&CPU::BRK, 7, "dey #-#", AddressingMode::Implied, 2}, // 88
+			{&CPU::DEY, 2, "dey", AddressingMode::Implied, 1}, // 88
 			{&CPU::BRK, 7, "bit #-#", AddressingMode::Implied, 2}, // 89
 			{&CPU::BRK, 7, "txa #-#", AddressingMode::Implied, 2}, // 8A
 			{&CPU::PHB, 3, "phb", AddressingMode::Implied, 1}, // 8B
@@ -580,7 +584,7 @@ namespace ComSquare::CPU
 			{&CPU::BRK, 7, "cmp #-#", AddressingMode::Implied, 2}, // C7
 			{&CPU::INY, 2, "iny", AddressingMode::Implied, 1}, // C8
 			{&CPU::BRK, 7, "cmp #-#", AddressingMode::Implied, 2}, // C9
-			{&CPU::BRK, 7, "dex #-#", AddressingMode::Implied, 2}, // CA
+			{&CPU::DEX, 2, "dex", AddressingMode::Implied, 1}, // CA
 			{&CPU::BRK, 7, "wai #-#", AddressingMode::Implied, 2}, // CB
 			{&CPU::BRK, 7, "cpy #-#", AddressingMode::Implied, 2}, // CC
 			{&CPU::BRK, 7, "cmp #-#", AddressingMode::Implied, 2}, // CD
