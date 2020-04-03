@@ -117,3 +117,39 @@ Test(DEY, zero)
 	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flags should not be set.");
 	cr_assert_eq(snes.cpu->_registers.p.z, true, "The zero flags should be set.");
 }
+
+Test(ORA, simple)
+{
+	Init()
+	snes.cpu->_registers.p.m = true;
+	snes.cpu->_registers.a = 0x80;
+	snes.wram->_data[0] = 0x0F;
+	snes.cpu->ORA(0x0, ComSquare::CPU::AddressingMode::Implied);
+	cr_assert_eq(snes.cpu->_registers.a, 0x8F, "The accumulator's value should be 0x8F but it was 0x%x.", snes.cpu->_registers.a);
+	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flags should be set.");
+	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flags should not be set.");
+}
+
+Test(ORA, simple2)
+{
+	Init()
+	snes.cpu->_registers.p.m = true;
+	snes.cpu->_registers.a = 0x80;
+	snes.wram->_data[0] = 0xF0;
+	snes.cpu->ORA(0x00, ComSquare::CPU::AddressingMode::Implied);
+	cr_assert_eq(snes.cpu->_registers.a, 0xF0, "The accumulator's value should be 0xF0 but it was 0x%x.", snes.cpu->_registers.a);
+	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flags should be set.");
+	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flags should not be set.");
+}
+
+Test(ORA, zero)
+{
+	Init()
+	snes.cpu->_registers.p.m = true;
+	snes.cpu->_registers.a = 0x00;
+	snes.wram->_data[0] = 0x00;
+	snes.cpu->ORA(0x0, ComSquare::CPU::AddressingMode::Implied);
+	cr_assert_eq(snes.cpu->_registers.a, 0x00, "The accumulator's value should be 0x00 but it was 0x%x.", snes.cpu->_registers.a);
+	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flags should not be set.");
+	cr_assert_eq(snes.cpu->_registers.p.z, true, "The zero flags should be set.");
+}
