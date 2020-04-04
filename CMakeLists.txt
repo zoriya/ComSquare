@@ -103,7 +103,8 @@ target_compile_options(unit_tests PUBLIC -fprofile-arcs -ftest-coverage)
 
 if ("${GITBUILD}" STREQUAL true)
     include_directories(ComSquare build/include)
-    link_directories(ComSquare build/lib)
+    link_directories(ComSquare build/qt/lib)
+    link_directories(ComSquare build/sfml/lib)
     message("Git build is true")
 endif ()
 
