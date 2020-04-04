@@ -18,6 +18,7 @@ jobs:
         uses: ouuan/install-qt-action@v2.3.1
         with:
           arch: win64_mingw73
+          dir: build
       - name: Install the SFML.
         run: |
            Invoke-WebRequest -Uri https://www.sfml-dev.org/files/SFML-2.5.1-windows-gcc-7.3.0-mingw-64-bit.zip -OutFile sfml.zip
