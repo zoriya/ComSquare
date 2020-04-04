@@ -208,7 +208,7 @@ add_executable(ComSquare
         sources/Models/Components.hpp
         sources/Debugger/CGramDebug.cpp
         sources/Debugger/CGramDebug.hpp
-)
+        )
 
 target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)
 

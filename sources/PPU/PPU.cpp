@@ -7,14 +7,15 @@
 #include "PPU.hpp"
 #include "../Exceptions/NotImplementedException.hpp"
 #include "../Exceptions/InvalidAddress.hpp"
+#include "../Ram/Ram.hpp"
 
 namespace ComSquare::PPU
 {
 	PPU::PPU(Renderer::IRenderer &renderer):
 		_renderer(renderer),
-		_vram(65536),
-		_oamram(544),
-		_cgram(512)
+		_vram(65536, ComSquare::VRam, "VRAM"),
+		_oamram(544, ComSquare::OAMRam, "OAMRAM"),
+		_cgram(512, ComSquare::CGRam, "CGRAM")
 	{
 		this->_registers._isLowByte = true;
 	}
@@ -29,8 +30,9 @@ namespace ComSquare::PPU
 		case 0x36:
 			return this->_registers._mpy.mpyh;
 		default:
-			throw InvalidAddress("PPU Internal Registers read", addr);
-		}
+			//throw InvalidAddress("PPU Internal Registers read", addr);
+			std::cout << "PPU Internal Registers read" << addr << std::endl;
+ 		}
 	}
 
 	void PPU::write(uint24_t addr, uint8_t data)
@@ -143,7 +145,9 @@ namespace ComSquare::PPU
 			}
 			else {
 				this->_registers._cgdata.cgdatah = data;
-				this->_cgram.write(this->_registers._cgadd, this->_registers._cgdata.raw);
+				this->_cgram.write(this->_registers._cgadd, this->_registers._cgdata.cgdatah);
+				this->_registers._cgadd++;
+				this->_cgram.write(this->_registers._cgadd, this->_registers._cgdata.cgdatal);
 				this->_registers._cgadd++;
 			}
 			this->_registers._isLowByte = !this->_registers._isLowByte;
@@ -222,9 +226,9 @@ namespace ComSquare::PPU
 		uint8_t blue;
 		uint32_t pixelTmp = 0x0;
 		if (!this->_registers._inidisp.fblank) {
-				for (int y = 0; y <= 255; y++) {
+				for (int y = 0; y <= 255; y += 2) {
 					tmp = this->_cgram.read(y);
-
+					tmp += this->_cgram.read( y + 1) << 8;
 					blue = (tmp & 0x7D00U) >> 10U;
 					green = (tmp & 0x03E0U) >> 5U;
 					red = (tmp & 0x001FU);
@@ -395,5 +399,21 @@ namespace ComSquare::PPU
 	uint16_t PPU::cgramRead(uint8_t addr)
 	{
 		return this->_cgram.read(addr);
+	}
+
+	void PPU::renderBackground(int bgNumber, std::vector<int> characterSize, int bpp, bool priority)
+	{
+		int nbCharactersHeight = (this->_registers._bgsc[bgNumber].tilemapVerticalMirroring) ? 64 : 32;
+		int nbCharactersWidth = (this->_registers._bgsc[bgNumber].tilemapHorizontalMirroring) ? 64 : 32;
+		uint16_t vramAddress = this->_registers._bgsc[bgNumber].tilemapAddress >> 8U;
+		uint16_t tilemapValue;
+
+		for (int i = 0; i < nbCharactersHeight * nbCharactersWidth; i++) {
+			for (int j = 0; j < 0x800; j++) {
+				tilemapValue = this->_vram.read(vramAddress);
+				vramAddress++;
+
+			}
+		}
 	}
 }
