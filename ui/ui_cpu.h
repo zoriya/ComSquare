@@ -23,7 +23,6 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QTableView>
-#include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
 
@@ -61,9 +60,9 @@ public:
     QLabel *emulationModeLabel;
     QCheckBox *emulationModeCheckBox;
     QGridLayout *gridLayout;
-    QTextBrowser *logger;
-    QPushButton *clear;
     QLabel *loggerLabel;
+    QPushButton *clear;
+    QTableView *history;
     QGroupBox *formGroupBox;
     QFormLayout *formLayout_2;
     QLabel *negativeLabel;
@@ -245,21 +244,21 @@ public:
 
         gridLayout = new QGridLayout();
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
-        logger = new QTextBrowser(centralwidget);
-        logger->setObjectName(QString::fromUtf8("logger"));
+        loggerLabel = new QLabel(centralwidget);
+        loggerLabel->setObjectName(QString::fromUtf8("loggerLabel"));
+        loggerLabel->setAlignment(Qt::AlignCenter);
 
-        gridLayout->addWidget(logger, 1, 0, 1, 1);
+        gridLayout->addWidget(loggerLabel, 0, 0, 1, 1);
 
         clear = new QPushButton(centralwidget);
         clear->setObjectName(QString::fromUtf8("clear"));
 
         gridLayout->addWidget(clear, 2, 0, 1, 1);
 
-        loggerLabel = new QLabel(centralwidget);
-        loggerLabel->setObjectName(QString::fromUtf8("loggerLabel"));
-        loggerLabel->setAlignment(Qt::AlignCenter);
+        history = new QTableView(centralwidget);
+        history->setObjectName(QString::fromUtf8("history"));
 
-        gridLayout->addWidget(loggerLabel, 0, 0, 1, 1);
+        gridLayout->addWidget(history, 1, 0, 1, 1);
 
 
         gridLayout_3->addLayout(gridLayout, 1, 1, 1, 1);
@@ -419,8 +418,8 @@ public:
         xIndexLabel->setText(QCoreApplication::translate("CPUView", "X Index", nullptr));
         yIndexLabel->setText(QCoreApplication::translate("CPUView", "Y Index", nullptr));
         emulationModeLabel->setText(QCoreApplication::translate("CPUView", "Emulation mode", nullptr));
-        clear->setText(QCoreApplication::translate("CPUView", "Clear History", nullptr));
         loggerLabel->setText(QCoreApplication::translate("CPUView", "Instructions History", nullptr));
+        clear->setText(QCoreApplication::translate("CPUView", "Clear History", nullptr));
         formGroupBox->setTitle(QCoreApplication::translate("CPUView", "Flags", nullptr));
         negativeLabel->setText(QCoreApplication::translate("CPUView", "Memory/Accumulator Select (M)", nullptr));
         zeroLabel->setText(QCoreApplication::translate("CPUView", "Index Select (X) / Break (B)", nullptr));

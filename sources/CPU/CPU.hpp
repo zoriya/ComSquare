@@ -258,6 +258,11 @@ namespace ComSquare::CPU
 		//! @return The number of CPU cycles that the instruction took.
 		virtual unsigned _executeInstruction(uint8_t opcode);
 
+		//! @brief Get the parameter address of an instruction from it's addressing mode.
+		//! @info The current program counter should point to the instruction's opcode + 1.
+		//! @return The address of the data to read on the instruction.
+		uint24_t _getValueAddr(Instruction &instruction);
+
 		//! @brief Break instruction - Causes a software break. The PC is loaded from a vector table.
 		int BRK(uint24_t, AddressingMode);
 		//! @brief Co-Processor Enable instruction - Causes a software break. The PC is loaded from a vector table.

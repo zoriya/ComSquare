@@ -15,6 +15,18 @@
 namespace ComSquare::Debugger
 {
 	class CPUDebug;
+
+	//! @brief An instruction that has already been executed. Used for the history viewer
+	struct ExecutedInstruction {
+		//! @brief Opcode of the instruction
+		uint8_t opcode;
+		//! @brief The name of the instruction
+		std::string name;
+		//! @brief Readable parameters (disassembly style)
+		std::string params;
+		//! @brief The address to read from after processing the parameter.
+		std::string proceededParams;
+	};
 }
 
 //! @brief The qt model that show the stack.
@@ -29,6 +41,33 @@ public:
 	StackModel(const StackModel &) = delete;
 	const StackModel &operator=(const StackModel &) = delete;
 	~StackModel() override = default;
+
+	//! @brief The number of row the table has.
+	int rowCount(const QModelIndex &parent) const override;
+	//! @brief The number of column the table has.
+	int columnCount(const QModelIndex &parent) const override;
+	//! @brief Return a data representing the table cell.
+	QVariant data(const QModelIndex &index, int role) const override;
+	//! @brief Override the headers to use hex values.
+	QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
+};
+
+//! @brief The qt model that show the history.
+class HistoryModel : public QAbstractTableModel
+{
+Q_OBJECT
+private:
+	std::vector<ComSquare::Debugger::ExecutedInstruction> _instructions = {};
+public:
+	HistoryModel();
+	HistoryModel(const HistoryModel &) = delete;
+	const HistoryModel &operator=(const HistoryModel &) = delete;
+	~HistoryModel() override = default;
+
+	//! @brief Log a new instruction
+	void log(const ComSquare::Debugger::ExecutedInstruction &);
+	//! @brief Remove every instructions of the history.
+	void clear();
 
 	//! @brief The number of row the table has.
 	int rowCount(const QModelIndex &parent) const override;
@@ -139,6 +178,8 @@ namespace ComSquare::Debugger
 		RowPainter _painter;
 		//! @brief The stack viewer's model.
 		StackModel _stackModel;
+		//! @brief The history model.
+		HistoryModel _historyModel;
 		//! @brief If this is set to true, the execution of the CPU will be paused.
 		bool _isPaused = true;
 		//! @brief If this is set to true, the CPU will execute one instruction and pause itself.
@@ -220,6 +261,8 @@ namespace ComSquare::Debugger
 		std::vector<DisassembledInstruction> disassembledInstructions;
 		//! @brief The list of breakpoints the user has set.
 		std::vector<Breakpoint> breakpoints;
+		//! @brief Get a string representing the actual value of the arguments of the next instruction to execute.
+		std::string getProceededParameters();
 		//! @brief Return the current program counter of this CPU.
 		uint24_t getPC();
 		//! @brief Return the current stack pointer.

@@ -42,6 +42,12 @@ namespace ComSquare::Debugger
 		this->_ui.stackView->verticalHeader()->setSectionResizeMode (QHeaderView::Fixed);
 		this->_ui.stackView->verticalHeader()->setHighlightSections(false);
 
+
+		this->_ui.history->setModel(&this->_historyModel);
+		this->_ui.history->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+		this->_ui.history->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
+		this->_ui.history->verticalHeader()->hide();
+
 		QMainWindow::connect(this->_ui.actionPause, &QAction::triggered, this, &CPUDebug::pause);
 		QMainWindow::connect(this->_ui.actionStep, &QAction::triggered, this, &CPUDebug::step);
 		QMainWindow::connect(this->_ui.actionNext, &QAction::triggered, this, &CPUDebug::next);
@@ -108,7 +114,10 @@ namespace ComSquare::Debugger
 		uint24_t pc = (this->_registers.pbr << 16u) | (this->_registers.pc - 1u);
 		DisassemblyContext ctx = this->_getDisassemblyContext();
 		DisassembledInstruction instruction = this->_parseInstruction(pc, ctx);
-		this->_ui.logger->append((instruction.toString() + " -  " + Utility::to_hex(opcode)).c_str());
+		this->_registers.pc--;
+		this->_historyModel.log({opcode, instruction.name, instruction.argument, this->getProceededParameters()});
+		this->_ui.history->scrollToBottom();
+		this->_registers.pc++;
 		unsigned ret = CPU::_executeInstruction(opcode);
 		this->_updateRegistersPanel();
 		return ret;
@@ -204,7 +213,7 @@ namespace ComSquare::Debugger
 
 	void CPUDebug::clearHistory()
 	{
-		this->_ui.logger->clear();
+		this->_historyModel.clear();
 	}
 
 	void CPUDebug::_updateDisassembly(uint24_t start, uint24_t refreshSize)
@@ -260,6 +269,19 @@ namespace ComSquare::Debugger
 	{
 		return this->_registers.s;
 	}
+
+	std::string CPUDebug::getProceededParameters()
+	{
+		uint24_t pac = this->_registers.pac;
+		this->_bus->forceSilence = true;
+		Instruction instruction = this->_instructions[this->readPC()];
+		uint24_t valueAddr = this->_getValueAddr(instruction);
+		this->_registers.pac = pac;
+		this->_bus->forceSilence = false;
+		if (instruction.size == 1)
+			return "";
+		return "[" + Utility::to_hex(valueAddr, Utility::AsmPrefix) + "]";
+	}
 }
 
 DisassemblyModel::DisassemblyModel(ComSquare::Debugger::CPUDebug &cpu) : QAbstractTableModel(), _cpu(cpu){ }
@@ -276,21 +298,28 @@ int DisassemblyModel::rowCount(const QModelIndex &) const
 
 QVariant DisassemblyModel::data(const QModelIndex &index, int role) const
 {
-	if (role != Qt::DisplayRole && role != Qt::DecorationRole)
-		return QVariant();
 	ComSquare::Debugger::DisassembledInstruction instruction = this->_cpu.disassembledInstructions[index.row()];
-	if (role == Qt::DecorationRole) {
-		if (index.column() == 3 && instruction.level == ComSquare::Debugger::TrustLevel::Unsafe)
+
+	switch (role) {
+	case Qt::DecorationRole:
+		if (index.column() == 2 && instruction.level == ComSquare::Debugger::TrustLevel::Unsafe)
 			return QColor(Qt::yellow);
-		if (index.column() == 3 && instruction.level == ComSquare::Debugger::TrustLevel::Compromised)
+		if (index.column() == 2 && instruction.level == ComSquare::Debugger::TrustLevel::Compromised)
 			return QColor(Qt::red);
 		return QVariant();
-	}
-	switch (index.column()) {
-	case 0:
-		return QString(instruction.name.c_str());
-	case 1:
-		return QString(instruction.argument.c_str());
+	case Qt::DisplayRole:
+		switch (index.column()) {
+		case 0:
+			return QString(instruction.name.c_str());
+		case 1:
+			return QString(instruction.argument.c_str());
+		case 3:
+			if (instruction.address != this->_cpu.getPC())
+				return QVariant();
+			return QString(this->_cpu.getProceededParameters().c_str());
+		default:
+			return QVariant();
+		}
 	default:
 		return QVariant();
 	}
@@ -376,4 +405,72 @@ QVariant StackModel::headerData(int section, Qt::Orientation orientation, int ro
 		return QVariant();
 	uint16_t addr = section * 2;
 	return QString(ComSquare::Utility::to_hex(addr, ComSquare::Utility::HexString::NoPrefix).c_str());
+}
+
+HistoryModel::HistoryModel() = default;
+
+int HistoryModel::rowCount(const QModelIndex &) const
+{
+	return this->_instructions.size();
+}
+
+int HistoryModel::columnCount(const QModelIndex &) const
+{
+	return 4;
+}
+
+QVariant HistoryModel::data(const QModelIndex &index, int role) const
+{
+	if (role == Qt::TextAlignmentRole)
+		return Qt::AlignCenter;
+	if (role != Qt::DisplayRole)
+		return QVariant();
+
+	ComSquare::Debugger::ExecutedInstruction instruction = this->_instructions[index.row()];
+	switch (index.column()) {
+	case 0:
+		return QString(ComSquare::Utility::to_hex(instruction.opcode, ComSquare::Utility::NoPrefix).c_str());
+	case 1:
+		return QString(instruction.name.c_str());
+	case 2:
+		return QString(instruction.params.c_str());
+	case 3:
+		return QString(instruction.proceededParams.c_str());
+	default:
+		return QVariant();
+	}
+}
+
+QVariant HistoryModel::headerData(int section, Qt::Orientation orientation, int role) const
+{
+	if (orientation == Qt::Vertical || role != Qt::DisplayRole)
+		return QVariant();
+	switch (section) {
+	case 0:
+		return QString("OP");
+	case 1:
+		return QString("INST");
+	case 2:
+		return QString("Parameter");
+	case 3:
+		return QString("Data Addr");
+	default:
+		return QVariant();
+	}
+}
+
+void HistoryModel::log(const ComSquare::Debugger::ExecutedInstruction& instruction)
+{
+	int row = this->_instructions.size();
+	this->beginInsertRows(QModelIndex(), row, row);
+	this->_instructions.push_back(instruction);
+	this->insertRow(row);
+	this->endInsertRows();
+}
+
+void HistoryModel::clear()
+{
+	this->beginResetModel();
+	this->_instructions.clear();
+	this->endResetModel();
 }

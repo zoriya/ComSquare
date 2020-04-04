@@ -181,16 +181,6 @@
     </item>
     <item row="1" column="1">
      <layout class="QGridLayout" name="gridLayout">
-      <item row="1" column="0">
-       <widget class="QTextBrowser" name="logger"/>
-      </item>
-      <item row="2" column="0">
-       <widget class="QPushButton" name="clear">
-        <property name="text">
-         <string>Clear History</string>
-        </property>
-       </widget>
-      </item>
       <item row="0" column="0">
        <widget class="QLabel" name="loggerLabel">
         <property name="text">
@@ -200,6 +190,16 @@
          <set>Qt::AlignCenter</set>
         </property>
        </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QPushButton" name="clear">
+        <property name="text">
+         <string>Clear History</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QTableView" name="history"/>
       </item>
      </layout>
     </item>
