@@ -18,12 +18,12 @@ jobs:
         uses: ouuan/install-qt-action@v2.3.1
         with:
           arch: win64_mingw73
-          dir: build
+          dir: build/qt
       - name: Install the SFML.
         run: |
            Invoke-WebRequest -Uri https://www.sfml-dev.org/files/SFML-2.5.1-windows-gcc-7.3.0-mingw-64-bit.zip -OutFile sfml.zip
            Expand-Archive sfml.zip -DestinationPath . -Force
-           Move-Item -Path SFML-2.5.1 -Destination build
+           Move-Item -Path SFML-2.5.1 -Destination build/sfml
       - name: Build Makefile with CMake
         run: |
           Set-Location build
@@ -35,12 +35,12 @@ jobs:
       - name: Clean up
         run: |
           Set-Location build
-          Remove-Item -Recurse -Path * -Exclude ComSquare.exe,bin,bin\*
           tree /F
       - name: Copy shared libs
         run: |
-          Copy-Item -Path build\bin\*.dll -Destination build
-          tree /F
+          Copy-Item -Path build\smfl\bin\*.dll -Destination build
+          Copy-Item -Path build\qt\bin\*.dll -Destination build
+          tree /F build
           Copy-Item -Path 'C:\Program Files\Git\mingw64\bin\*.dll' -Destination build
       - name: Archive production artifact
         uses: actions/upload-artifact@v1
