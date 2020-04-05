@@ -536,7 +536,7 @@ namespace ComSquare::PPU
 		//! @brief Return true if the CPU is overloaded with debugging features.
 		virtual bool isDebugger();
 		//! @brief Allow others components to read the CGRAM (Debuggers)
-		uint16_t cgramRead(uint8_t addr);
+		uint16_t cgramRead(uint16_t addr);
 		//! @brief Render a background on the screen
 		void renderBackground(int bgNumber, std::vector<int> characterSize, int bpp, bool priority);
 	};

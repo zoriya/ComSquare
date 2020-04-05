@@ -396,7 +396,7 @@ namespace ComSquare::PPU
 		return false;
 	}
 
-	uint16_t PPU::cgramRead(uint8_t addr)
+	uint16_t PPU::cgramRead(uint16_t addr)
 	{
 		return this->cgram->read_internal(addr);
 	}

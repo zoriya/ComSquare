@@ -5,7 +5,9 @@
 #include "CGramDebug.hpp"
 #include "../SNES.hpp"
 #include <QColor>
+#include <bitset>
 #include <string>
+#include <iostream>
 #include "../Utility/Utility.hpp"
 
 namespace ComSquare::Debugger
@@ -50,6 +52,7 @@ namespace ComSquare::Debugger
 	void CGramDebug::updateInfoTile(uint8_t addr)
 	{
 		uint16_t cgramValue = this->_ppu.cgramRead(addr);
+		cgramValue += this->_ppu.cgramRead(addr + 1) << 8;
 		uint8_t blue = (cgramValue & 0x7D00U) >> 10U;
 		uint8_t green = (cgramValue & 0x03E0U) >> 5U;
 		uint8_t red = (cgramValue & 0x001FU);
@@ -90,7 +93,10 @@ QVariant CGramModel::data(const QModelIndex &index, int role) const
 		return Qt::AlignCenter;
 	if (role != Qt::BackgroundRole)
 		return QVariant();
-	addressValue = this->_ppu.cgramRead(index.column() * 16 + index.row());
+	int idDisplayTile = index.row() * 16 + index.column();
+	uint16_t cgramAddress = idDisplayTile / 8 * 16 + (idDisplayTile % 8 * 2);
+	addressValue = this->_ppu.cgramRead(cgramAddress);
+	addressValue += this->_ppu.cgramRead(cgramAddress + 1) << 8U;
 
 	blue = (addressValue & 0x7D00U) >> 10U;
 	green = (addressValue & 0x03E0U) >> 5U;
