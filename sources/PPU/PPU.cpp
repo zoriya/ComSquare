@@ -30,8 +30,7 @@ namespace ComSquare::PPU
 		case 0x36:
 			return this->_registers._mpy.mpyh;
 		default:
-			//throw InvalidAddress("PPU Internal Registers read", addr);
-			std::cout << "PPU Internal Registers read" << addr << std::endl;
+			throw InvalidAddress("PPU Internal Registers read", addr);
  		}
 	}
 
