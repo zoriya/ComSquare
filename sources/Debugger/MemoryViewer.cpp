@@ -80,7 +80,7 @@ namespace ComSquare::Debugger
 		this->_ui.tabs->addTab("&WRam");
 		this->_ui.tabs->addTab("&SRam");
 		this->_ui.tabs->addTab("&Rom");
-//		this->_ui.tabs->addTab("&VRam");
+		//this->_ui.tabs->addTab("&CGRam");
 		QMainWindow::connect(this->_ui.actionGoto, &QAction::triggered, this, &MemoryViewer::gotoAddr);
 		QMainWindow::connect(this->_ui.actionGoto_Absolute, &QAction::triggered, this, &MemoryViewer::gotoAbsoluteAddr);
 		QObject::connect(this->_ui.tabs, &QTabBar::currentChanged, this, &MemoryViewer::changeRam);
@@ -105,9 +105,9 @@ namespace ComSquare::Debugger
 		case 2:
 			this->_model.setMemory(this->_snes.cartridge);
 			break;
-//		case 3:
-//			this->_model.setMemory(this->_snes.vram);
-//			break;
+	//	case 3:
+	//		this->_model.setMemory(std::make_shared(this->_snes.ppu->getPpuCgRam()));
+	//		break;
 		}
 	}
 

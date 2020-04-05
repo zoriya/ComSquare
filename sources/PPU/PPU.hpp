@@ -536,6 +536,12 @@ namespace ComSquare::PPU
 		virtual bool isDebugger();
 		//! @brief Allow others components to read the CGRAM (Debuggers)
 		uint16_t cgramRead(uint8_t addr);
+		//! @brief Allow Memory Viewer debugger to access the CGRAM
+		Ram::Ram &getPpuCgRam();
+		//! @brief Allow Memory Viewer debugger to access the VRAM
+		Ram::Ram &getPpuVRam();
+		//! @brief Allow Memory Viewer debugger to access the OAMRAM
+		Ram::Ram &getPpuOAMRam();
 		//! @brief Render a background on the screen
 		void renderBackground(int bgNumber, std::vector<int> characterSize, int bpp, bool priority);
 	};
