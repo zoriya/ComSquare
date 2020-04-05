@@ -98,7 +98,7 @@ Test(PPU_write_2, cgdata_data_full)
 	snes._bus->write(0x2122, 0b11111000);
 	cr_assert_eq(snes.ppu->_registers._cgdata.cgdatah, 0b11111000);
 	cr_assert_eq(snes.ppu->_registers._isLowByte, true);
-	cr_assert_eq(snes.ppu->_registers._cgadd, address + 1);
+	cr_assert_eq(snes.ppu->_registers._cgadd, address + 2);
 }
 
 Test(PPU_write_2, m7sel_data_full)
