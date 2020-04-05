@@ -30,8 +30,8 @@ namespace ComSquare::PPU
 		case 0x36:
 			return this->_registers._mpy.mpyh;
 		default:
-			//throw InvalidAddress("PPU Internal Registers read", addr);
-			std::cout << "PPU Internal Registers read" << addr << std::endl;
+			throw InvalidAddress("PPU Internal Registers read", addr);
+			//std::cout << "PPU Internal Registers read" << addr << std::endl;
  		}
 	}
 
@@ -112,7 +112,7 @@ namespace ComSquare::PPU
 			//std::cout << "vmdatal" << std::endl;
 			if (!this->_registers._inidisp.fblank) {
 				this->_registers._vmdata.vmdatal = data;
-				this->vram->write_internal(getVramAddress(), this->_registers._vmdata.vmdata);
+				this->vram->write_internal(getVramAddress(), this->_registers._vmdata.vmdatal);
 			}
 			if (!this->_registers._vmain.incrementMode)
 				this->_registers._vmadd.vmadd += this->_registers._incrementAmount;
@@ -121,7 +121,6 @@ namespace ComSquare::PPU
 			//std::cout << "vmdatah" << std::endl;
 			if (!this->_registers._inidisp.fblank) {
 				this->_registers._vmdata.vmdatah = data;
-				this->vram->write_internal(getVramAddress(), this->_registers._vmdata.vmdatal);
 				this->vram->write_internal(getVramAddress(), this->_registers._vmdata.vmdatah);
 			}
 			if (this->_registers._vmain.incrementMode)
@@ -202,7 +201,7 @@ namespace ComSquare::PPU
 		}
 	}
 
-	uint8_t PPU::getVramAddress()
+	uint16_t PPU::getVramAddress()
 	{
 		uint16_t vanillaAddress = this->_registers._vmadd.vmadd;
 

@@ -530,7 +530,7 @@ namespace ComSquare::PPU
 		//! @param The number of cycles to update.
 		virtual void update(unsigned cycles);
 		//! @brief Give the Vram Address with the right Address remapping
-		uint8_t getVramAddress();
+		uint16_t getVramAddress();
 		//! @brief Give the name of the Address register (used for debug)
 		std::string getValueName(uint24_t addr);
 		//! @brief Return true if the CPU is overloaded with debugging features.
