@@ -13,9 +13,9 @@ namespace ComSquare::PPU
 {
 	PPU::PPU(Renderer::IRenderer &renderer):
 		_renderer(renderer),
-		_vram(65536, ComSquare::VRam, "VRAM"),
-		_oamram(544, ComSquare::OAMRam, "OAMRAM"),
-		_cgram(512, ComSquare::CGRam, "CGRAM")
+		vram(new Ram::Ram(65536, ComSquare::VRam, "VRAM")),
+		oamram(new Ram::Ram(544, ComSquare::OAMRam, "OAMRAM")),
+		cgram(new Ram::Ram(512, ComSquare::CGRam, "CGRAM"))
 	{
 		this->_registers._isLowByte = true;
 	}
@@ -55,7 +55,7 @@ namespace ComSquare::PPU
 			//throw InvalidAddress("oamdata", addr);
 			std::cout << "oamdata" << std::endl;
 			// the oamAddress have to be calculated if fblank or not (not implemented)
-			_oamram.write_internal(this->_registers._oamadd.oamAddress, this->_registers._oamdata);
+			oamram->write_internal(this->_registers._oamadd.oamAddress, this->_registers._oamdata);
 			this->_registers._oamadd.oamAddress++;
 			break;
 		case ppuRegisters::bgmode:
@@ -112,7 +112,7 @@ namespace ComSquare::PPU
 			//std::cout << "vmdatal" << std::endl;
 			if (!this->_registers._inidisp.fblank) {
 				this->_registers._vmdata.vmdatal = data;
-				this->_vram.write_internal(getVramAddress(), this->_registers._vmdata.vmdata);
+				this->vram->write_internal(getVramAddress(), this->_registers._vmdata.vmdata);
 			}
 			if (!this->_registers._vmain.incrementMode)
 				this->_registers._vmadd.vmadd += this->_registers._incrementAmount;
@@ -121,8 +121,8 @@ namespace ComSquare::PPU
 			//std::cout << "vmdatah" << std::endl;
 			if (!this->_registers._inidisp.fblank) {
 				this->_registers._vmdata.vmdatah = data;
-				this->_vram.write_internal(getVramAddress(), this->_registers._vmdata.vmdatal);
-				this->_vram.write_internal(getVramAddress(), this->_registers._vmdata.vmdatah);
+				this->vram->write_internal(getVramAddress(), this->_registers._vmdata.vmdatal);
+				this->vram->write_internal(getVramAddress(), this->_registers._vmdata.vmdatah);
 			}
 			if (this->_registers._vmain.incrementMode)
 				this->_registers._vmadd.vmadd += this->_registers._incrementAmount;
@@ -146,9 +146,9 @@ namespace ComSquare::PPU
 			}
 			else {
 				this->_registers._cgdata.cgdatah = data;
-				this->_cgram.write_internal(this->_registers._cgadd, this->_registers._cgdata.cgdatal);
+				this->cgram->write_internal(this->_registers._cgadd, this->_registers._cgdata.cgdatal);
 				this->_registers._cgadd++;
-				this->_cgram.write_internal(this->_registers._cgadd, this->_registers._cgdata.cgdatah);
+				this->cgram->write_internal(this->_registers._cgadd, this->_registers._cgdata.cgdatah);
 				this->_registers._cgadd++;
 			}
 			this->_registers._isLowByte = !this->_registers._isLowByte;
@@ -228,8 +228,8 @@ namespace ComSquare::PPU
 		uint32_t pixelTmp = 0x0;
 		if (!this->_registers._inidisp.fblank) {
 				for (int y = 0; y <= 255; y += 2) {
-					tmp = this->_cgram.read_internal(y);
-					tmp += this->_cgram.read_internal( y + 1) << 8;
+					tmp = this->cgram->read_internal(y);
+					tmp += this->cgram->read_internal(y + 1) << 8;
 					blue = (tmp & 0x7D00U) >> 10U;
 					green = (tmp & 0x03E0U) >> 5U;
 					red = (tmp & 0x001FU);
@@ -399,7 +399,7 @@ namespace ComSquare::PPU
 
 	uint16_t PPU::cgramRead(uint8_t addr)
 	{
-		return this->_cgram.read_internal(addr);
+		return this->cgram->read_internal(addr);
 	}
 
 	void PPU::renderBackground(int bgNumber, std::vector<int> characterSize, int bpp, bool priority)
@@ -411,25 +411,10 @@ namespace ComSquare::PPU
 
 		for (int i = 0; i < nbCharactersHeight * nbCharactersWidth; i++) {
 			for (int j = 0; j < 0x800; j++) {
-				tilemapValue = this->_vram.read(vramAddress);
+				tilemapValue = this->vram->read(vramAddress);
 				vramAddress++;
 
 			}
 		}
-	}
-
-	Ram::Ram &PPU::getPpuCgRam()
-	{
-		return this->_cgram;
-	}
-
-	Ram::Ram &PPU::getPpuVRam()
-	{
-		return this->_vram;
-	}
-
-	Ram::Ram &PPU::getPpuOAMRam()
-	{
-		return this->_oamram;
 	}
 }

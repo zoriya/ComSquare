@@ -501,10 +501,11 @@ namespace ComSquare::PPU
 		//! @brief Init ppuRegisters
 		Registers _registers{};
 		Renderer::IRenderer &_renderer;
-		Ram::Ram _vram;
-		Ram::Ram _oamram;
-		Ram::Ram _cgram;
 	public:
+		std::shared_ptr<Ram::Ram> vram;
+		std::shared_ptr<Ram::Ram> oamram;
+		std::shared_ptr<Ram::Ram> cgram;
+
 		explicit PPU(Renderer::IRenderer &renderer);
 		PPU(const PPU &) = delete;
 		PPU &operator=(const PPU &) = delete;
@@ -536,12 +537,6 @@ namespace ComSquare::PPU
 		virtual bool isDebugger();
 		//! @brief Allow others components to read the CGRAM (Debuggers)
 		uint16_t cgramRead(uint8_t addr);
-		//! @brief Allow Memory Viewer debugger to access the CGRAM
-		Ram::Ram &getPpuCgRam();
-		//! @brief Allow Memory Viewer debugger to access the VRAM
-		Ram::Ram &getPpuVRam();
-		//! @brief Allow Memory Viewer debugger to access the OAMRAM
-		Ram::Ram &getPpuOAMRam();
 		//! @brief Render a background on the screen
 		void renderBackground(int bgNumber, std::vector<int> characterSize, int bpp, bool priority);
 	};
