@@ -23,14 +23,14 @@ namespace ComSquare::PPU
 	uint8_t PPU::read(uint24_t addr)
 	{
 		switch (addr) {
-		case 0x34:
+		case ppuRegisters::mpyl:
 			return  this->_registers._mpy.mpyl;
-		case 0x35:
+		case ppuRegisters::mpym:
 			return this->_registers._mpy.mpym;
-		case 0x36:
+		case ppuRegisters::mpyh:
 			return this->_registers._mpy.mpyh;
 		default:
-			throw InvalidAddress("PPU Internal Registers read", addr);
+			throw InvalidAddress("PPU Internal Registers read ", addr);
 			//std::cout << "PPU Internal Registers read" << addr << std::endl;
  		}
 	}
