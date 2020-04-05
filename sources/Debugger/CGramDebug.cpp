@@ -5,9 +5,7 @@
 #include "CGramDebug.hpp"
 #include "../SNES.hpp"
 #include <QColor>
-#include <bitset>
 #include <string>
-#include <iostream>
 #include "../Utility/Utility.hpp"
 
 namespace ComSquare::Debugger
