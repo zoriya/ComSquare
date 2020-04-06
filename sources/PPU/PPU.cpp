@@ -17,7 +17,11 @@ namespace ComSquare::PPU
 		oamram(new Ram::Ram(544, ComSquare::OAMRam, "OAMRAM")),
 		cgram(new Ram::Ram(512, ComSquare::CGRam, "CGRAM"))
 	{
+		uint8_t data = 1;
 		this->_registers._isLowByte = true;
+		for (int i = 0; i < 512; i++, data += 11) {
+			this->cgram->write_internal(i, data);
+		}
 	}
 
 	uint8_t PPU::read(uint24_t addr)
@@ -31,7 +35,6 @@ namespace ComSquare::PPU
 			return this->_registers._mpy.mpyh;
 		default:
 			throw InvalidAddress("PPU Internal Registers read ", addr);
-			//std::cout << "PPU Internal Registers read" << addr << std::endl;
  		}
 	}
 

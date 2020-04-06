@@ -36,6 +36,9 @@
         <height>324</height>
        </size>
       </property>
+      <property name="mouseTracking">
+       <bool>true</bool>
+      </property>
       <property name="autoFillBackground">
        <bool>false</bool>
       </property>
@@ -45,11 +48,17 @@
       <property name="frameShadow">
        <enum>QFrame::Sunken</enum>
       </property>
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+      <property name="horizontalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
       <property name="autoScrollMargin">
        <number>0</number>
       </property>
       <property name="editTriggers">
-       <set>QAbstractItemView::CurrentChanged|QAbstractItemView::SelectedClicked</set>
+       <set>QAbstractItemView::AnyKeyPressed|QAbstractItemView::CurrentChanged|QAbstractItemView::SelectedClicked</set>
       </property>
       <property name="dragDropMode">
        <enum>QAbstractItemView::NoDragDrop</enum>

@@ -6,6 +6,8 @@
 #include "../SNES.hpp"
 #include <QColor>
 #include <string>
+#include <iostream>
+#include <QtWidgets/QTableWidget>
 #include "../Utility/Utility.hpp"
 
 namespace ComSquare::Debugger
@@ -22,9 +24,11 @@ namespace ComSquare::Debugger
 		this->_window->setAttribute(Qt::WA_DeleteOnClose);
 
 		this->_ui.setupUi(this->_window);
+		QMainWindow::connect(this->_ui.cgram_view, &QTableView::pressed, this, &CGramDebug::tileClicked);
 		this->_ui.cgram_view->setModel(&this->_model);
-		updateInfoTile(0);
+		updateInfoTile(0, 0);
 		this->_window->show();
+		QEvent::registerEventType();
 	}
 
 	void CGramDebug::disableViewer()
@@ -47,8 +51,10 @@ namespace ComSquare::Debugger
 		return this->_ppu.cgramRead(addr);
 	}
 
-	void CGramDebug::updateInfoTile(uint8_t addr)
+	void CGramDebug::updateInfoTile(int row, int column)
 	{
+		int idTile = row * 16 + column;
+		uint16_t addr = idTile / 8 * 16 + (idTile % 8 * 2);
 		uint16_t cgramValue = this->_ppu.cgramRead(addr);
 		cgramValue += this->_ppu.cgramRead(addr + 1) << 8;
 		uint8_t blue = (cgramValue & 0x7D00U) >> 10U;
@@ -56,8 +62,8 @@ namespace ComSquare::Debugger
 		uint8_t red = (cgramValue & 0x001FU);
 		uint24_t hexColorValue = 0;
 
-		this->_ui.indexLineEdit->setText(std::to_string(addr).c_str());
-		this->_ui.valueLineEdit->setText(std::to_string(cgramValue).c_str());
+		this->_ui.indexLineEdit->setText(std::to_string(addr / 2).c_str());
+		this->_ui.valueLineEdit->setText(Utility::to_hex(cgramValue).c_str());
 		this->_ui.rLineEdit->setText(std::to_string(red).c_str());
 		this->_ui.gLineEdit->setText(std::to_string(green).c_str());
 		this->_ui.bLineEdit->setText(std::to_string(blue).c_str());
@@ -65,6 +71,13 @@ namespace ComSquare::Debugger
 		hexColorValue += (green * 255U / 31U) << 8U;
 		hexColorValue += (blue * 255U / 31U);
 		this->_ui.hexLineEdit->setText(Utility::to_hex(hexColorValue).c_str());
+	}
+
+	void CGramDebug::tileClicked(const QModelIndex &index)
+	{
+		if (!index.isValid())
+			return;
+		this->updateInfoTile(index.row(), index.column());
 	}
 }
 
@@ -104,4 +117,11 @@ QVariant CGramModel::data(const QModelIndex &index, int role) const
 	green = green * 255U / 31U;
 	blue = blue * 255U / 31U;
 	return QColor(red, green, blue);
+}
+
+void CGramModel::enterEvent(QMouseEvent *event)
+{
+	this->x = event->x();
+	this->y = event->y();
+	emit mouseEnter();
 }

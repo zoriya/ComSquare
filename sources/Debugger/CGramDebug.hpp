@@ -9,6 +9,9 @@
 #include "../PPU/PPU.hpp"
 #include "../../ui/ui_cgramView.h"
 #include <QtCore/QSortFilterProxyModel>
+#include <QEvent>
+#include <QMouseEvent>
+#include <QTableView>
 #include "ClosableWindow.hpp"
 
 
@@ -70,6 +73,8 @@ public:
 	const int column = 16;
 	//! @brief The number of rows
 	const int rows = 16;
+	int x;
+	int y;
 	explicit CGramModel(ComSquare::PPU::PPU &ppu);
 	CGramModel(const CGramModel &) = delete;
 	const CGramModel &operator=(const CGramModel &) = delete;
@@ -81,12 +86,16 @@ public:
 	int columnCount(const QModelIndex &parent) const override;
 	//! @brief Return a data representing the table cell.
 	QVariant data(const QModelIndex &index, int role) const override;
+	//! @brief Qt Mouse hover enter event
+	void enterEvent(QMouseEvent *event);
+signals:
+	void mouseEnter();
 };
 
 namespace ComSquare::Debugger
 {
 	//! @brief window that allow the user to view all data going through the memory bus.
-	class CGramDebug {
+	class CGramDebug : public QObject {
 	private:
 		//! @brief The QT window for this debugger.
 		ClosableWindow<CGramDebug> *_window;
@@ -116,7 +125,9 @@ namespace ComSquare::Debugger
 		//! @brief Return true if the Bus is overloaded with debugging features.
 		bool isDebugger();
 		//! @brief Update the text fields with corresponding tile info
-		void updateInfoTile(uint8_t addr);
+		void updateInfoTile(int row, int column);
+		//! @brief Update call updateInfoTile with the correct address
+		void tileClicked(const QModelIndex &index);
 	};
 }
 
