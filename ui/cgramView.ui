@@ -64,7 +64,7 @@
        <enum>QAbstractItemView::NoDragDrop</enum>
       </property>
       <property name="selectionMode">
-       <enum>QAbstractItemView::SingleSelection</enum>
+       <enum>QAbstractItemView::NoSelection</enum>
       </property>
       <property name="showGrid">
        <bool>true</bool>
