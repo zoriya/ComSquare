@@ -81,13 +81,15 @@ public:
     QLabel *irqDisableLabel;
     QCheckBox *nCheckbox;
     QCheckBox *zCheckbox;
+    QLabel *breakBLabel;
+    QCheckBox *bCheckbox;
     QToolBar *toolBar;
 
     void setupUi(QMainWindow *CPUView)
     {
         if (CPUView->objectName().isEmpty())
             CPUView->setObjectName(QString::fromUtf8("CPUView"));
-        CPUView->resize(971, 673);
+        CPUView->resize(1058, 673);
         QIcon icon;
         icon.addFile(QString::fromUtf8(":/resources/Logo.png"), QSize(), QIcon::Normal, QIcon::Off);
         CPUView->setWindowIcon(icon);
@@ -126,7 +128,7 @@ public:
         disassembly->horizontalHeader()->setVisible(false);
         disassembly->horizontalHeader()->setHighlightSections(false);
 
-        gridLayout_3->addWidget(disassembly, 0, 0, 2, 1);
+        gridLayout_3->addWidget(disassembly, 0, 0, 3, 1);
 
         gridLayout_2 = new QGridLayout();
         gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
@@ -240,7 +242,7 @@ public:
         formLayout->setWidget(8, QFormLayout::FieldRole, emulationModeCheckBox);
 
 
-        gridLayout_3->addLayout(formLayout, 0, 2, 1, 1);
+        gridLayout_3->addLayout(formLayout, 0, 2, 2, 1);
 
         gridLayout = new QGridLayout();
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
@@ -261,7 +263,7 @@ public:
         gridLayout->addWidget(history, 1, 0, 1, 1);
 
 
-        gridLayout_3->addLayout(gridLayout, 1, 1, 1, 1);
+        gridLayout_3->addLayout(gridLayout, 1, 1, 2, 1);
 
         formGroupBox = new QGroupBox(centralwidget);
         formGroupBox->setObjectName(QString::fromUtf8("formGroupBox"));
@@ -273,7 +275,7 @@ public:
         formLayout_2->setSizeConstraint(QLayout::SetDefaultConstraint);
         formLayout_2->setLabelAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
         formLayout_2->setFormAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
-        formLayout_2->setContentsMargins(26, 7, -1, -1);
+        formLayout_2->setContentsMargins(26, 7, 0, -1);
         negativeLabel = new QLabel(formGroupBox);
         negativeLabel->setObjectName(QString::fromUtf8("negativeLabel"));
 
@@ -299,71 +301,82 @@ public:
         carryLabel = new QLabel(formGroupBox);
         carryLabel->setObjectName(QString::fromUtf8("carryLabel"));
 
-        formLayout_2->setWidget(2, QFormLayout::LabelRole, carryLabel);
+        formLayout_2->setWidget(3, QFormLayout::LabelRole, carryLabel);
 
         iCheckbox = new QCheckBox(formGroupBox);
         iCheckbox->setObjectName(QString::fromUtf8("iCheckbox"));
         iCheckbox->setLayoutDirection(Qt::RightToLeft);
 
-        formLayout_2->setWidget(2, QFormLayout::FieldRole, iCheckbox);
+        formLayout_2->setWidget(3, QFormLayout::FieldRole, iCheckbox);
 
         Overflow = new QLabel(formGroupBox);
         Overflow->setObjectName(QString::fromUtf8("Overflow"));
 
-        formLayout_2->setWidget(3, QFormLayout::LabelRole, Overflow);
+        formLayout_2->setWidget(4, QFormLayout::LabelRole, Overflow);
 
         vCheckbox = new QCheckBox(formGroupBox);
         vCheckbox->setObjectName(QString::fromUtf8("vCheckbox"));
         vCheckbox->setLayoutDirection(Qt::RightToLeft);
 
-        formLayout_2->setWidget(3, QFormLayout::FieldRole, vCheckbox);
+        formLayout_2->setWidget(4, QFormLayout::FieldRole, vCheckbox);
 
         decimalLabel = new QLabel(formGroupBox);
         decimalLabel->setObjectName(QString::fromUtf8("decimalLabel"));
 
-        formLayout_2->setWidget(4, QFormLayout::LabelRole, decimalLabel);
+        formLayout_2->setWidget(5, QFormLayout::LabelRole, decimalLabel);
 
         dCheckbox = new QCheckBox(formGroupBox);
         dCheckbox->setObjectName(QString::fromUtf8("dCheckbox"));
         dCheckbox->setLayoutDirection(Qt::RightToLeft);
 
-        formLayout_2->setWidget(4, QFormLayout::FieldRole, dCheckbox);
+        formLayout_2->setWidget(5, QFormLayout::FieldRole, dCheckbox);
 
         memoryAccumulatorSelectLabel = new QLabel(formGroupBox);
         memoryAccumulatorSelectLabel->setObjectName(QString::fromUtf8("memoryAccumulatorSelectLabel"));
 
-        formLayout_2->setWidget(5, QFormLayout::LabelRole, memoryAccumulatorSelectLabel);
+        formLayout_2->setWidget(6, QFormLayout::LabelRole, memoryAccumulatorSelectLabel);
 
         cCheckbox = new QCheckBox(formGroupBox);
         cCheckbox->setObjectName(QString::fromUtf8("cCheckbox"));
         cCheckbox->setLayoutDirection(Qt::RightToLeft);
 
-        formLayout_2->setWidget(5, QFormLayout::FieldRole, cCheckbox);
+        formLayout_2->setWidget(6, QFormLayout::FieldRole, cCheckbox);
 
         indeXSelectLabel = new QLabel(formGroupBox);
         indeXSelectLabel->setObjectName(QString::fromUtf8("indeXSelectLabel"));
 
-        formLayout_2->setWidget(6, QFormLayout::LabelRole, indeXSelectLabel);
+        formLayout_2->setWidget(7, QFormLayout::LabelRole, indeXSelectLabel);
 
         irqDisableLabel = new QLabel(formGroupBox);
         irqDisableLabel->setObjectName(QString::fromUtf8("irqDisableLabel"));
 
-        formLayout_2->setWidget(7, QFormLayout::LabelRole, irqDisableLabel);
+        formLayout_2->setWidget(8, QFormLayout::LabelRole, irqDisableLabel);
 
         nCheckbox = new QCheckBox(formGroupBox);
         nCheckbox->setObjectName(QString::fromUtf8("nCheckbox"));
         nCheckbox->setLayoutDirection(Qt::RightToLeft);
 
-        formLayout_2->setWidget(7, QFormLayout::FieldRole, nCheckbox);
+        formLayout_2->setWidget(8, QFormLayout::FieldRole, nCheckbox);
 
         zCheckbox = new QCheckBox(formGroupBox);
         zCheckbox->setObjectName(QString::fromUtf8("zCheckbox"));
         zCheckbox->setLayoutDirection(Qt::RightToLeft);
 
-        formLayout_2->setWidget(6, QFormLayout::FieldRole, zCheckbox);
+        formLayout_2->setWidget(7, QFormLayout::FieldRole, zCheckbox);
+
+        breakBLabel = new QLabel(formGroupBox);
+        breakBLabel->setObjectName(QString::fromUtf8("breakBLabel"));
+
+        formLayout_2->setWidget(2, QFormLayout::LabelRole, breakBLabel);
+
+        bCheckbox = new QCheckBox(formGroupBox);
+        bCheckbox->setObjectName(QString::fromUtf8("bCheckbox"));
+        bCheckbox->setLayoutDirection(Qt::RightToLeft);
+
+        formLayout_2->setWidget(2, QFormLayout::FieldRole, bCheckbox);
 
 
-        gridLayout_3->addWidget(formGroupBox, 1, 2, 1, 1);
+        gridLayout_3->addWidget(formGroupBox, 2, 2, 1, 1);
 
         CPUView->setCentralWidget(centralwidget);
         toolBar = new QToolBar(CPUView);
@@ -421,14 +434,15 @@ public:
         loggerLabel->setText(QCoreApplication::translate("CPUView", "Instructions History", nullptr));
         clear->setText(QCoreApplication::translate("CPUView", "Clear History", nullptr));
         formGroupBox->setTitle(QCoreApplication::translate("CPUView", "Flags", nullptr));
-        negativeLabel->setText(QCoreApplication::translate("CPUView", "Memory/Accumulator Select (M)", nullptr));
-        zeroLabel->setText(QCoreApplication::translate("CPUView", "Index Select (X) / Break (B)", nullptr));
+        negativeLabel->setText(QCoreApplication::translate("CPUView", "Memory Select (M)", nullptr));
+        zeroLabel->setText(QCoreApplication::translate("CPUView", "Index Select (X)", nullptr));
         carryLabel->setText(QCoreApplication::translate("CPUView", "Interupt Request Disable (I)", nullptr));
         Overflow->setText(QCoreApplication::translate("CPUView", "Overflow (V)", nullptr));
         decimalLabel->setText(QCoreApplication::translate("CPUView", "Decimal (D)", nullptr));
         memoryAccumulatorSelectLabel->setText(QCoreApplication::translate("CPUView", "Carry (C)", nullptr));
         indeXSelectLabel->setText(QCoreApplication::translate("CPUView", "Zero (Z)", nullptr));
         irqDisableLabel->setText(QCoreApplication::translate("CPUView", "Negative (N)", nullptr));
+        breakBLabel->setText(QCoreApplication::translate("CPUView", "Break (B)", nullptr));
         toolBar->setWindowTitle(QCoreApplication::translate("CPUView", "toolBar", nullptr));
     } // retranslateUi
 

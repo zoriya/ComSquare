@@ -33,6 +33,7 @@ namespace ComSquare::Debugger
 		this->_updateDisassembly(this->_cartridgeHeader.emulationInterrupts.reset, 0xFFFF - this->_cartridgeHeader.emulationInterrupts.reset); //Parse the first page of the ROM (the code can't reach the second page without a jump).
 		this->_ui.disassembly->setModel(&this->_model);
 		this->_ui.disassembly->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+		this->_ui.disassembly->horizontalHeader()->setStretchLastSection(true);
 		this->_ui.disassembly->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
 		this->_ui.disassembly->verticalHeader()->setHighlightSections(false);
 		this->_ui.disassembly->setItemDelegate(&this->_painter);
@@ -45,6 +46,7 @@ namespace ComSquare::Debugger
 
 		this->_ui.history->setModel(&this->_historyModel);
 		this->_ui.history->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+		this->_ui.history->horizontalHeader()->setStretchLastSection(true);
 		this->_ui.history->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
 		this->_ui.history->verticalHeader()->hide();
 
@@ -183,6 +185,7 @@ namespace ComSquare::Debugger
 
 		this->_ui.mCheckbox->setCheckState(this->_registers.p.m ? Qt::CheckState::Checked : Qt::CheckState::Unchecked);
 		this->_ui.xCheckbox->setCheckState(this->_registers.p.x_b ? Qt::CheckState::Checked : Qt::CheckState::Unchecked);
+		this->_ui.bCheckbox->setCheckState(this->_registers.p.x_b ? Qt::CheckState::Checked : Qt::CheckState::Unchecked);
 		this->_ui.iCheckbox->setCheckState(this->_registers.p.i ? Qt::CheckState::Checked : Qt::CheckState::Unchecked);
 		this->_ui.vCheckbox->setCheckState(this->_registers.p.v ? Qt::CheckState::Checked : Qt::CheckState::Unchecked);
 		this->_ui.dCheckbox->setCheckState(this->_registers.p.d ? Qt::CheckState::Checked : Qt::CheckState::Unchecked);
@@ -327,8 +330,20 @@ QVariant DisassemblyModel::data(const QModelIndex &index, int role) const
 
 QVariant DisassemblyModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-	if (orientation == Qt::Horizontal)
-		return QVariant();
+	if (orientation == Qt::Horizontal) {
+		switch (section) {
+		case 0:
+			return QString("INST");
+		case 1:
+			return QString("Parameter");
+		case 2:
+			return QString("Thrust");
+		case 3:
+			return QString("Data Address");
+		default:
+			return QVariant();
+		}
+	}
 	if (role != Qt::DisplayRole)
 		return QVariant();
 	ComSquare::Debugger::DisassembledInstruction instruction = this->_cpu.disassembledInstructions[section];
@@ -447,13 +462,13 @@ QVariant HistoryModel::headerData(int section, Qt::Orientation orientation, int 
 		return QVariant();
 	switch (section) {
 	case 0:
-		return QString("OP");
+		return QString("op");
 	case 1:
-		return QString("INST");
+		return QString("ins");
 	case 2:
 		return QString("Parameter");
 	case 3:
-		return QString("Data Addr");
+		return QString("Pointer");
 	default:
 		return QVariant();
 	}
