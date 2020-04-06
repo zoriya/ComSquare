@@ -428,37 +428,37 @@ namespace ComSquare::CPU
 			{&CPU::BRK, 7, "asl #-#", AddressingMode::Implied, 2}, // 1E
 			{&CPU::ORA, 5, "ora", AddressingMode::AbsoluteIndexedByXLong, 4}, // 1F
 			{&CPU::JSR, 6, "jsr", AddressingMode::Absolute, 3}, // 20
-			{&CPU::BRK, 7, "and #-#", AddressingMode::Implied, 2}, // 21
+			{&CPU::AND, 6, "and", AddressingMode::DirectPageIndirectIndexedByX, 2}, // 21
 			{&CPU::JSL, 8, "jsl", AddressingMode::AbsoluteLong, 4}, // 22
-			{&CPU::BRK, 7, "and #-#", AddressingMode::Implied, 2}, // 23
+			{&CPU::AND, 4, "and", AddressingMode::StackRelative, 2}, // 23
 			{&CPU::BRK, 7, "bit #-#", AddressingMode::Implied, 2}, // 24
-			{&CPU::BRK, 7, "and #-#", AddressingMode::Implied, 2}, // 25
+			{&CPU::AND, 3, "and", AddressingMode::DirectPage, 2}, // 25
 			{&CPU::BRK, 7, "rol #-#", AddressingMode::Implied, 2}, // 26
-			{&CPU::BRK, 7, "and #-#", AddressingMode::Implied, 2}, // 27
+			{&CPU::AND, 6, "and", AddressingMode::DirectPageIndirectLong, 2}, // 27
 			{&CPU::PLP, 4, "plp", AddressingMode::Implied, 1}, // 28
-			{&CPU::BRK, 7, "and #-#", AddressingMode::Implied, 2}, // 29
+			{&CPU::AND, 2, "and", AddressingMode::ImmediateForA, 2}, // 29
 			{&CPU::BRK, 7, "rol #-#", AddressingMode::Implied, 2}, // 2A
 			{&CPU::PLD, 5, "pld", AddressingMode::Implied, 1}, // 2B
 			{&CPU::BRK, 7, "bit #-#", AddressingMode::Implied, 2}, // 2C
-			{&CPU::BRK, 7, "and #-#", AddressingMode::Implied, 2}, // 2D
+			{&CPU::AND, 4, "and", AddressingMode::Absolute, 3}, // 2D
 			{&CPU::BRK, 7, "rol #-#", AddressingMode::Implied, 2}, // 2E
-			{&CPU::BRK, 7, "and #-#", AddressingMode::Implied, 2}, // 2F
+			{&CPU::AND, 5, "and", AddressingMode::AbsoluteLong, 4}, // 2F
 			{&CPU::BMI, 2, "bmi", AddressingMode::Implied, 2}, // 30
-			{&CPU::BRK, 7, "and #-#", AddressingMode::Implied, 2}, // 31
-			{&CPU::BRK, 7, "and #-#", AddressingMode::Implied, 2}, // 32
-			{&CPU::BRK, 7, "and #-#", AddressingMode::Implied, 2}, // 33
+			{&CPU::AND, 5, "and", AddressingMode::DirectPageIndirectIndexedByY, 2}, // 31
+			{&CPU::AND, 5, "and", AddressingMode::DirectPageIndirect, 2}, // 32
+			{&CPU::AND, 7, "and", AddressingMode::StackRelativeIndirectIndexedByY, 2}, // 33
 			{&CPU::BRK, 7, "bit #-#", AddressingMode::Implied, 2}, // 34
-			{&CPU::BRK, 7, "and #-#", AddressingMode::Implied, 2}, // 35
+			{&CPU::AND, 4, "and", AddressingMode::DirectPageIndexedByX, 2}, // 35
 			{&CPU::BRK, 7, "rol #-#", AddressingMode::Implied, 2}, // 36
-			{&CPU::BRK, 7, "and #-#", AddressingMode::Implied, 2}, // 37
+			{&CPU::AND, 6, "and", AddressingMode::DirectPageIndirectIndexedByYLong, 2}, // 37
 			{&CPU::SEC, 2, "sec", AddressingMode::Implied, 1}, // 38
-			{&CPU::BRK, 7, "and #-#", AddressingMode::Implied, 2}, // 39
+			{&CPU::AND, 4, "and", AddressingMode::AbsoluteIndexedByY, 3}, // 39
 			{&CPU::BRK, 7, "dec #-#", AddressingMode::Implied, 2}, // 3A
 			{&CPU::BRK, 7, "tsc #-#", AddressingMode::Implied, 2}, // 3B
 			{&CPU::BRK, 7, "bit #-#", AddressingMode::Implied, 2}, // 3C
-			{&CPU::BRK, 7, "and #-#", AddressingMode::Implied, 2}, // 3D
+			{&CPU::AND, 4, "and", AddressingMode::AbsoluteIndexedByX, 3}, // 3D
 			{&CPU::BRK, 7, "rol #-#", AddressingMode::Implied, 2}, // 3E
-			{&CPU::BRK, 7, "and #-#", AddressingMode::Implied, 2}, // 3F
+			{&CPU::AND, 5, "and", AddressingMode::AbsoluteIndexedByXLong, 4}, // 3F
 			{&CPU::RTI, 6, "rti", AddressingMode::Implied, 1}, // 40
 			{&CPU::BRK, 7, "eor #-#", AddressingMode::Implied, 2}, // 41
 			{&CPU::BRK, 7, "wdm #-#", AddressingMode::Implied, 2}, // 42
