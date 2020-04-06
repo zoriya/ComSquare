@@ -97,7 +97,7 @@ add_executable(unit_tests
         sources/Exceptions/DebuggableError.hpp
         tests/CPU/Math/testOthersMath.cpp
         tests/testRectangleMemory.cpp
-)
+        tests/CPU/Math/testCMP.cpp)
 
 # include criterion & coverage
 target_link_libraries(unit_tests criterion -lgcov)
