@@ -391,6 +391,8 @@ namespace ComSquare::CPU
 		int RTL(uint24_t, AddressingMode);
 		//! @brief Compare Accumulator with Memory.
 		int CMP(uint24_t, AddressingMode);
+		//! @brief Increment
+		int INC(uint24_t, AddressingMode);
 
 		//! @brief All the instructions of the CPU.
 		//! @info Instructions are indexed by their opcode
@@ -421,7 +423,7 @@ namespace ComSquare::CPU
 			{&CPU::ORA, 6, "ora", AddressingMode::DirectPageIndirectIndexedByYLong, 2}, // 17
 			{&CPU::CLC, 2, "clc", AddressingMode::Implied, 1}, // 18
 			{&CPU::ORA, 4, "ora", AddressingMode::AbsoluteIndexedByY, 3}, // 19
-			{&CPU::BRK, 7, "inc #-#", AddressingMode::Implied, 2}, // 1A
+			{&CPU::INC, 2, "inc", AddressingMode::Implied, 1}, // 1A
 			{&CPU::BRK, 7, "tcs #-#", AddressingMode::Implied, 2}, // 1B
 			{&CPU::BRK, 7, "trb #-#", AddressingMode::Implied, 2}, // 1C
 			{&CPU::ORA, 4, "ora", AddressingMode::AbsoluteIndexedByX, 3}, // 1D
@@ -625,7 +627,7 @@ namespace ComSquare::CPU
 			{&CPU::SBC, 4, "sbc", AddressingMode::StackRelative, 2}, // E3
 			{&CPU::CPX, 3, "cpx", AddressingMode::DirectPage, 2}, // E4
 			{&CPU::SBC, 3, "sbc", AddressingMode::DirectPage, 2}, // E5
-			{&CPU::BRK, 7, "inc #-#", AddressingMode::Implied, 2}, // E6
+			{&CPU::INC, 5, "inc", AddressingMode::DirectPage, 2}, // E6
 			{&CPU::SBC, 6, "sbc", AddressingMode::DirectPageIndirectLong, 2}, // E7
 			{&CPU::INX, 2, "inx", AddressingMode::Implied, 1}, // E8
 			{&CPU::SBC, 2, "sbc", AddressingMode::ImmediateForA, 2}, // E9
@@ -633,7 +635,7 @@ namespace ComSquare::CPU
 			{&CPU::BRK, 7, "xba #-#", AddressingMode::Implied, 2}, // EB
 			{&CPU::CPX, 4, "cpx", AddressingMode::Absolute, 3}, // EC
 			{&CPU::SBC, 4, "sbc", AddressingMode::Absolute, 3}, // ED
-			{&CPU::BRK, 7, "inc #-#", AddressingMode::Implied, 2}, // EE
+			{&CPU::INC, 6, "inc", AddressingMode::Absolute, 3}, // EE
 			{&CPU::SBC, 5, "sbc", AddressingMode::AbsoluteLong, 4}, // EF
 			{&CPU::BEQ, 2, "beq", AddressingMode::Implied, 2}, // F0
 			{&CPU::SBC, 5, "sbc", AddressingMode::DirectPageIndirectIndexedByY, 2}, // F1
@@ -641,7 +643,7 @@ namespace ComSquare::CPU
 			{&CPU::SBC, 7, "sbc", AddressingMode::StackRelativeIndirectIndexedByY, 2}, // F3
 			{&CPU::BRK, 7, "pea #-#", AddressingMode::Implied, 2}, // F4
 			{&CPU::SBC, 4, "sbc", AddressingMode::DirectPageIndexedByX, 2}, // F5
-			{&CPU::BRK, 7, "inc #-#", AddressingMode::Implied, 2}, // F6
+			{&CPU::INC, 6, "inc", AddressingMode::DirectPageIndexedByX, 2}, // F6
 			{&CPU::SBC, 6, "sbc", AddressingMode::DirectPageIndirectIndexedByYLong, 2}, // F7
 			{&CPU::SED, 2, "sed", AddressingMode::Implied, 1}, // F8
 			{&CPU::SBC, 4, "sbc", AddressingMode::AbsoluteIndexedByY, 3}, // F9
@@ -649,7 +651,7 @@ namespace ComSquare::CPU
 			{&CPU::XCE, 2, "xce", AddressingMode::Implied, 1}, // FB
 			{&CPU::JSR, 8, "jsr", AddressingMode::AbsoluteIndirectIndexedByX, 3}, // FC
 			{&CPU::SBC, 4, "sbc", AddressingMode::AbsoluteIndexedByX, 3}, // FD
-			{&CPU::BRK, 7, "inc #-#", AddressingMode::Implied, 2}, // FE
+			{&CPU::INC, 7, "inc", AddressingMode::AbsoluteIndexedByX, 3}, // FE
 			{&CPU::SBC, 5, "sbc", AddressingMode::AbsoluteIndexedByXLong, 4}, // FF
 		};
 	public:
