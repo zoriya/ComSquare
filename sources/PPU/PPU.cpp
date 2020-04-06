@@ -17,10 +17,9 @@ namespace ComSquare::PPU
 		oamram(new Ram::Ram(544, ComSquare::OAMRam, "OAMRAM")),
 		cgram(new Ram::Ram(512, ComSquare::CGRam, "CGRAM"))
 	{
-		uint8_t data = 1;
 		this->_registers._isLowByte = true;
-		for (int i = 0; i < 512; i++, data += 11) {
-			this->cgram->write_internal(i, data);
+		for (int i = 0; i < 512; i++) {
+			this->cgram->write_internal(i, random() % 255);
 		}
 	}
 
