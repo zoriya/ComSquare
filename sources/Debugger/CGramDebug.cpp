@@ -118,10 +118,3 @@ QVariant CGramModel::data(const QModelIndex &index, int role) const
 	blue = blue * 255U / 31U;
 	return QColor(red, green, blue);
 }
-
-void CGramModel::enterEvent(QMouseEvent *event)
-{
-	this->x = event->x();
-	this->y = event->y();
-	emit mouseEnter();
-}

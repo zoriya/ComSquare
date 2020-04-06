@@ -86,10 +86,6 @@ public:
 	int columnCount(const QModelIndex &parent) const override;
 	//! @brief Return a data representing the table cell.
 	QVariant data(const QModelIndex &index, int role) const override;
-	//! @brief Qt Mouse hover enter event
-	void enterEvent(QMouseEvent *event);
-signals:
-	void mouseEnter();
 };
 
 namespace ComSquare::Debugger
