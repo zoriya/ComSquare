@@ -325,4 +325,44 @@ namespace ComSquare::CPU
 			return 0;
 		}
 	}
+
+	int CPU::DEC(uint24_t valueAddr, AddressingMode mode)
+	{
+		unsigned negativeMask = this->_registers.p.m ? 0x80u : 0x8000u;
+
+		unsigned result;
+		if (mode == Implied) {
+			this->_registers.a--;
+			if (this->_registers.p.m)
+				this->_registers.ah = 0;
+			result = this->_registers.a;
+		} else if (!this->_registers.p.m) {
+			result = this->_bus->read(valueAddr);
+			result += this->_bus->read(valueAddr + 1) << 8u;
+			result = (uint16_t)(result - 1);
+			this->_bus->write(valueAddr, result);
+			this->_bus->write(valueAddr + 1, result << 8u);
+		} else {
+			result = this->_bus->read(valueAddr);
+			result = (uint8_t)(result - 1);
+			this->_bus->write(valueAddr, result);
+		}
+
+		this->_registers.p.z = result == 0;
+		this->_registers.p.n = result & negativeMask;
+
+		switch (mode) {
+		case Implied:
+			return 0;
+		case Absolute:
+			return this->_registers.p.m == 0 ? 2 : 0;
+		case DirectPage:
+		case DirectPageIndexedByX:
+			return (this->_registers.p.m == 0 ? 2 : 0) + this->_registers.dl != 0 ;
+		case AbsoluteIndexedByX:
+			return (this->_registers.p.m == 0 ? 2 : 0) + this->_hasIndexCrossedPageBoundary;
+		default:
+			return 0;
+		}
+	}
 }

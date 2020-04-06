@@ -393,6 +393,8 @@ namespace ComSquare::CPU
 		int CMP(uint24_t, AddressingMode);
 		//! @brief Increment
 		int INC(uint24_t, AddressingMode);
+		//! @brief Decrement
+		int DEC(uint24_t, AddressingMode);
 
 		//! @brief All the instructions of the CPU.
 		//! @info Instructions are indexed by their opcode
@@ -455,7 +457,7 @@ namespace ComSquare::CPU
 			{&CPU::AND, 6, "and", AddressingMode::DirectPageIndirectIndexedByYLong, 2}, // 37
 			{&CPU::SEC, 2, "sec", AddressingMode::Implied, 1}, // 38
 			{&CPU::AND, 4, "and", AddressingMode::AbsoluteIndexedByY, 3}, // 39
-			{&CPU::BRK, 7, "dec #-#", AddressingMode::Implied, 2}, // 3A
+			{&CPU::DEC, 2, "dec", AddressingMode::Implied, 1}, // 3A
 			{&CPU::BRK, 7, "tsc #-#", AddressingMode::Implied, 2}, // 3B
 			{&CPU::BRK, 7, "bit #-#", AddressingMode::Implied, 2}, // 3C
 			{&CPU::AND, 4, "and", AddressingMode::AbsoluteIndexedByX, 3}, // 3D
@@ -595,7 +597,7 @@ namespace ComSquare::CPU
 			{&CPU::CMP, 4, "cmp", AddressingMode::StackRelative, 2}, // C3
 			{&CPU::CPY, 3, "cpy", AddressingMode::DirectPage, 2}, // C4
 			{&CPU::CMP, 3, "cmp", AddressingMode::DirectPage, 2}, // C5
-			{&CPU::BRK, 7, "dec #-#", AddressingMode::Implied, 2}, // C6
+			{&CPU::DEC, 5, "dec", AddressingMode::DirectPage, 2}, // C6
 			{&CPU::CMP, 6, "cmp", AddressingMode::DirectPageIndirectLong, 2}, // C7
 			{&CPU::INY, 2, "iny", AddressingMode::Implied, 1}, // C8
 			{&CPU::CMP, 2, "cmp", AddressingMode::ImmediateForA, 2}, // C9
@@ -603,7 +605,7 @@ namespace ComSquare::CPU
 			{&CPU::BRK, 7, "wai #-#", AddressingMode::Implied, 2}, // CB
 			{&CPU::CPY, 4, "cpy", AddressingMode::Absolute, 3}, // CC
 			{&CPU::CMP, 4, "cmp", AddressingMode::Absolute, 3}, // CD
-			{&CPU::BRK, 7, "dec #-#", AddressingMode::Implied, 2}, // CE
+			{&CPU::DEC, 6, "dec", AddressingMode::Absolute, 3}, // CE
 			{&CPU::CMP, 6, "cmp", AddressingMode::AbsoluteLong, 4}, // CF
 			{&CPU::BNE, 2, "bne", AddressingMode::Implied, 2}, // D0
 			{&CPU::CMP, 5, "cmp", AddressingMode::DirectPageIndirectIndexedByY, 2}, // D1
@@ -611,7 +613,7 @@ namespace ComSquare::CPU
 			{&CPU::CMP, 7, "cmp", AddressingMode::StackRelativeIndirectIndexedByY, 2}, // D3
 			{&CPU::BRK, 7, "pei #-#", AddressingMode::Implied, 2}, // D4
 			{&CPU::CMP, 4, "cmp", AddressingMode::DirectPageIndexedByX, 2}, // D5
-			{&CPU::BRK, 7, "dec #-#", AddressingMode::Implied, 2}, // D6
+			{&CPU::DEC, 6, "dec", AddressingMode::DirectPageIndexedByX, 2}, // D6
 			{&CPU::CMP, 6, "cmp", AddressingMode::DirectPageIndirectIndexedByYLong, 2}, // D7
 			{&CPU::CLD, 2, "cld", AddressingMode::Implied, 2}, // D8
 			{&CPU::CMP, 4, "cmp", AddressingMode::AbsoluteIndexedByY, 3}, // D9
@@ -619,7 +621,7 @@ namespace ComSquare::CPU
 			{&CPU::BRK, 7, "stp #-#", AddressingMode::Implied, 2}, // DB
 			{&CPU::JML, 7, "jml", AddressingMode::AbsoluteIndirectLong, 2}, // DC
 			{&CPU::CMP, 4, "cmp", AddressingMode::AbsoluteIndexedByX, 3}, // DD
-			{&CPU::BRK, 7, "dec #-#", AddressingMode::Implied, 2}, // DE
+			{&CPU::DEC, 7, "dec", AddressingMode::AbsoluteIndexedByX, 3}, // DE
 			{&CPU::CMP, 5, "cmp", AddressingMode::AbsoluteIndexedByXLong, 4}, // DF
 			{&CPU::CPX, 2, "cpx", AddressingMode::ImmediateForX, 2}, // E0
 			{&CPU::SBC, 6, "sbc", AddressingMode::DirectPageIndirectIndexedByX, 2}, // E1

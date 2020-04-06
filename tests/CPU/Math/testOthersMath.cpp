@@ -219,3 +219,69 @@ Test(INC, negativeNativeAccumulator)
 	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flags should be set.");
 	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flags should not be set.");
 }
+
+Test(DEC, simple)
+{
+	Init()
+	snes.cpu->_registers.p.m = true;
+	snes.wram->_data[0] = 0x58;
+	snes.cpu->DEC(0x0, ComSquare::CPU::AddressingMode::Absolute);
+	cr_assert_eq(snes.wram->_data[0], 0x57, "The incremented value should be 0x57 but it was 0x%x.", snes.wram->_data[0]);
+	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flags should not be set.");
+	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flags should not be set.");
+}
+
+Test(DEC, negative)
+{
+	Init()
+	snes.cpu->_registers.p.m = true;
+	snes.wram->_data[0] = 0x81;
+	snes.cpu->DEC(0x0, ComSquare::CPU::AddressingMode::Absolute);
+	cr_assert_eq(snes.wram->_data[0], 0x80, "The incremented value should be 0x80 but it was 0x%x.", snes.wram->_data[0]);
+	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flags should be set.");
+	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flags should not be set.");
+}
+
+Test(DEC, accumulator)
+{
+	Init()
+	snes.cpu->_registers.p.m = true;
+	snes.cpu->_registers.a = 0x58;
+	snes.cpu->DEC(0x0, ComSquare::CPU::AddressingMode::Implied);
+	cr_assert_eq(snes.cpu->_registers.a, 0x57, "The incremented value should be 0x57 but it was 0x%x.", snes.cpu->_registers.a);
+	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flags should not be set.");
+	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flags should not be set.");
+}
+
+Test(DEC, negativeAccumulator)
+{
+	Init()
+	snes.cpu->_registers.p.m = true;
+	snes.cpu->_registers.a = 0x81;
+	snes.cpu->DEC(0x0, ComSquare::CPU::AddressingMode::Implied);
+	cr_assert_eq(snes.cpu->_registers.a, 0x80, "The incremented value should be 0x80 but it was 0x%x.", snes.cpu->_registers.a);
+	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flags should be set.");
+	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flags should not be set.");
+}
+
+Test(DEC, nativeAccumulator)
+{
+	Init()
+	snes.cpu->_registers.p.m = false;
+	snes.cpu->_registers.a = 0x5602;
+	snes.cpu->DEC(0x0, ComSquare::CPU::AddressingMode::Implied);
+	cr_assert_eq(snes.cpu->_registers.a, 0x5601, "The incremented value should be 0x5601 but it was 0x%x.", snes.cpu->_registers.a);
+	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flags should not be set.");
+	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flags should not be set.");
+}
+
+Test(DEC, negativeNativeAccumulator)
+{
+	Init()
+	snes.cpu->_registers.p.m = false;
+	snes.cpu->_registers.a = 0x9001;
+	snes.cpu->DEC(0x0, ComSquare::CPU::AddressingMode::Implied);
+	cr_assert_eq(snes.cpu->_registers.a, 0x9000, "The incremented value should be 0x9000 but it was 0x%x.", snes.cpu->_registers.a);
+	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flags should be set.");
+	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flags should not be set.");
+}
