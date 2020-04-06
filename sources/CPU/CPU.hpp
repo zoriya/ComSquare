@@ -587,19 +587,19 @@ namespace ComSquare::CPU
 			{&CPU::LDA, 4, "lda", AddressingMode::AbsoluteIndexedByX, 3}, // BD
 			{&CPU::LDX, 4, "ldx", AddressingMode::AbsoluteIndexedByY, 3}, // BE
 			{&CPU::LDA, 5, "lda", AddressingMode::AbsoluteIndexedByXLong, 4}, // BF
-			{&CPU::BRK, 7, "cpy #-#", AddressingMode::Implied, 2}, // C0
+			{&CPU::CPY, 2, "cpy", AddressingMode::ImmediateForX, 2}, // C0
 			{&CPU::CMP, 6, "cmp", AddressingMode::DirectPageIndirectIndexedByX, 2}, // C1
 			{&CPU::REP, 3, "rep", AddressingMode::Immediate8bits, 2}, // C2
 			{&CPU::CMP, 4, "cmp", AddressingMode::StackRelative, 2}, // C3
-			{&CPU::BRK, 7, "cpy #-#", AddressingMode::Implied, 2}, // C4
+			{&CPU::CPY, 3, "cpy", AddressingMode::DirectPage, 2}, // C4
 			{&CPU::CMP, 3, "cmp", AddressingMode::DirectPage, 2}, // C5
 			{&CPU::BRK, 7, "dec #-#", AddressingMode::Implied, 2}, // C6
 			{&CPU::CMP, 6, "cmp", AddressingMode::DirectPageIndirectLong, 2}, // C7
 			{&CPU::INY, 2, "iny", AddressingMode::Implied, 1}, // C8
-			{&CPU::CMP, 2, "cmp", AddressingMode::Implied, 2}, // C9
+			{&CPU::CMP, 2, "cmp", AddressingMode::ImmediateForA, 2}, // C9
 			{&CPU::DEX, 2, "dex", AddressingMode::Implied, 1}, // CA
 			{&CPU::BRK, 7, "wai #-#", AddressingMode::Implied, 2}, // CB
-			{&CPU::BRK, 7, "cpy #-#", AddressingMode::Implied, 2}, // CC
+			{&CPU::CPY, 4, "cpy", AddressingMode::Absolute, 3}, // CC
 			{&CPU::CMP, 4, "cmp", AddressingMode::Absolute, 3}, // CD
 			{&CPU::BRK, 7, "dec #-#", AddressingMode::Implied, 2}, // CE
 			{&CPU::CMP, 6, "cmp", AddressingMode::AbsoluteLong, 4}, // CF
@@ -619,11 +619,11 @@ namespace ComSquare::CPU
 			{&CPU::CMP, 4, "cmp", AddressingMode::AbsoluteIndexedByX, 3}, // DD
 			{&CPU::BRK, 7, "dec #-#", AddressingMode::Implied, 2}, // DE
 			{&CPU::CMP, 5, "cmp", AddressingMode::AbsoluteIndexedByXLong, 4}, // DF
-			{&CPU::BRK, 7, "cpx #-#", AddressingMode::Implied, 2}, // E0
+			{&CPU::CPX, 2, "cpx", AddressingMode::ImmediateForX, 2}, // E0
 			{&CPU::SBC, 6, "sbc", AddressingMode::DirectPageIndirectIndexedByX, 2}, // E1
 			{&CPU::SEP, 3, "sep", AddressingMode::Immediate8bits, 2}, // E2
 			{&CPU::SBC, 4, "sbc", AddressingMode::StackRelative, 2}, // E3
-			{&CPU::BRK, 7, "cpx #-#", AddressingMode::Implied, 2}, // E4
+			{&CPU::CPX, 3, "cpx", AddressingMode::DirectPage, 2}, // E4
 			{&CPU::SBC, 3, "sbc", AddressingMode::DirectPage, 2}, // E5
 			{&CPU::BRK, 7, "inc #-#", AddressingMode::Implied, 2}, // E6
 			{&CPU::SBC, 6, "sbc", AddressingMode::DirectPageIndirectLong, 2}, // E7
@@ -631,7 +631,7 @@ namespace ComSquare::CPU
 			{&CPU::SBC, 2, "sbc", AddressingMode::ImmediateForA, 2}, // E9
 			{&CPU::NOP, 2, "nop", AddressingMode::Implied, 1}, // EA
 			{&CPU::BRK, 7, "xba #-#", AddressingMode::Implied, 2}, // EB
-			{&CPU::BRK, 7, "cpx #-#", AddressingMode::Implied, 2}, // EC
+			{&CPU::CPX, 4, "cpx", AddressingMode::Absolute, 3}, // EC
 			{&CPU::SBC, 4, "sbc", AddressingMode::Absolute, 3}, // ED
 			{&CPU::BRK, 7, "inc #-#", AddressingMode::Implied, 2}, // EE
 			{&CPU::SBC, 5, "sbc", AddressingMode::AbsoluteLong, 4}, // EF
