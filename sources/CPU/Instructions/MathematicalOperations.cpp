@@ -398,4 +398,14 @@ namespace ComSquare::CPU
 		}
 		return cycles;
 	}
+
+	int CPU::XBA(uint24_t, AddressingMode)
+	{
+		int tmp = this->_registers.ah;
+		this->_registers.ah = this->_registers.al;
+		this->_registers.al = tmp;
+		this->_registers.p.n = this->_registers.al & 0x80u;
+		this->_registers.p.z = this->_registers.al == 0;
+		return 0;
+	}
 }

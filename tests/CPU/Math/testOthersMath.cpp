@@ -321,3 +321,23 @@ Test(EOR, zero)
 	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flags should not be set.");
 	cr_assert_eq(snes.cpu->_registers.p.z, true, "The zero flags should be set.");
 }
+
+Test(XBA, zero)
+{
+	Init()
+	snes.cpu->_registers.a = 0x0001;
+	snes.cpu->XBA(0x0, ComSquare::CPU::AddressingMode::Implied);
+	cr_assert_eq(snes.cpu->_registers.a, 0x0100, "The accumulator's value should be 0x0100 but it was 0x%x.", snes.cpu->_registers.a);
+	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flags should not be set.");
+	cr_assert_eq(snes.cpu->_registers.p.z, true, "The zero flags should be set.");
+}
+
+Test(XBA, negative)
+{
+	Init()
+	snes.cpu->_registers.a = 0x8001;
+	snes.cpu->XBA(0x0, ComSquare::CPU::AddressingMode::Implied);
+	cr_assert_eq(snes.cpu->_registers.a, 0x0180, "The accumulator's value should be 0x0180 but it was 0x%x.", snes.cpu->_registers.a);
+	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flags should be set.");
+	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flags should be not set.");
+}

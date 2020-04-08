@@ -417,6 +417,8 @@ namespace ComSquare::CPU
 		int TYX(uint24_t, AddressingMode);
 		//! @brief Test and Set Memory Bits Against Accumulator
 		int TSB(uint24_t, AddressingMode);
+		//! @brief Exchange the B and A Accumulators
+		int XBA(uint24_t, AddressingMode);
 
 		//! @brief All the instructions of the CPU.
 		//! @info Instructions are indexed by their opcode
@@ -656,7 +658,7 @@ namespace ComSquare::CPU
 			{&CPU::INX, 2, "inx", AddressingMode::Implied, 1}, // E8
 			{&CPU::SBC, 2, "sbc", AddressingMode::ImmediateForA, 2}, // E9
 			{&CPU::NOP, 2, "nop", AddressingMode::Implied, 1}, // EA
-			{&CPU::BRK, 7, "xba #-#", AddressingMode::Implied, 2}, // EB
+			{&CPU::XBA, 3, "xba", AddressingMode::Implied, 1}, // EB
 			{&CPU::CPX, 4, "cpx", AddressingMode::Absolute, 3}, // EC
 			{&CPU::SBC, 4, "sbc", AddressingMode::Absolute, 3}, // ED
 			{&CPU::INC, 6, "inc", AddressingMode::Absolute, 3}, // EE
