@@ -95,6 +95,9 @@ add_executable(unit_tests
         sources/Models/Components.hpp
         sources/CPU/Instruction.hpp
         sources/Exceptions/DebuggableError.hpp
+        tests/CPU/Math/testOthersMath.cpp
+        tests/testRectangleMemory.cpp
+        tests/CPU/Math/testCMP.cpp
 )
 
 # include criterion & coverage
@@ -159,8 +162,8 @@ add_executable(ComSquare
         sources/CPU/Instructions/InternalInstruction.cpp
         sources/Ram/ExtendedRam.cpp
         sources/Ram/ExtendedRam.hpp
-        sources/Debugger/CPUDebug.cpp
-        sources/Debugger/CPUDebug.hpp
+        sources/Debugger/CPU/CPUDebug.cpp
+        sources/Debugger/CPU/CPUDebug.hpp
         sources/Renderer/QtRenderer/QtSFML.cpp
         sources/Renderer/QtRenderer/QtSFML.hpp
         sources/Renderer/QtRenderer/QtWidgetSFML.cpp
@@ -205,10 +208,11 @@ add_executable(ComSquare
         sources/Models/Components.hpp
         sources/CPU/Instruction.hpp
         sources/Exceptions/DebuggableError.hpp
+        sources/Debugger/CPU/Disassembly.cpp
         sources/Models/Components.hpp
         sources/Debugger/CGramDebug.cpp
         sources/Debugger/CGramDebug.hpp
-        )
+)
 
 target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)
 

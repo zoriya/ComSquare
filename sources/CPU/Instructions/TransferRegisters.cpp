@@ -48,4 +48,106 @@ namespace ComSquare::CPU
 		}
 		return 0;
 	}
+
+	int CPU::TCD(uint24_t, AddressingMode)
+	{
+		this->_registers.d = this->_registers.a;
+		this->_registers.p.n = this->_registers.d & 0x8000u;
+		this->_registers.p.z = this->_registers.d == 0;
+		return 0;
+	}
+
+	int CPU::TCS(uint24_t, AddressingMode)
+	{
+		this->_registers.s = this->_registers.a;
+		if (this->_isEmulationMode)
+			this->_registers.sh = 1;
+		return 0;
+	}
+
+	int CPU::TDC(uint24_t, AddressingMode)
+	{
+		this->_registers.a = this->_registers.d;
+		this->_registers.p.n = this->_registers.a & 0x8000u;
+		this->_registers.p.z = this->_registers.a == 0;
+		return 0;
+	}
+
+	int CPU::TSC(uint24_t, AddressingMode)
+	{
+		this->_registers.a = this->_registers.s;
+		this->_registers.p.n = this->_registers.a & 0x8000u;
+		this->_registers.p.z = this->_registers.a == 0;
+		return 0;
+	}
+
+	int CPU::TSX(uint24_t, AddressingMode)
+	{
+		unsigned negativeFlag = this->_registers.p.x_b ? 0x80u : 0x8000u;
+
+		this->_registers.x = this->_registers.s;
+		if (this->_registers.p.x_b)
+			this->_registers.xh = 0;
+		this->_registers.p.n = this->_registers.x & negativeFlag;
+		this->_registers.p.z = this->_registers.x == 0;
+		return 0;
+	}
+
+	int CPU::TXA(uint24_t, AddressingMode)
+	{
+		unsigned negativeFlag = this->_registers.p.m ? 0x80u : 0x8000u;
+
+		if (this->_registers.p.m)
+			this->_registers.al = this->_registers.xl;
+		else {
+			this->_registers.a = this->_registers.x;
+			if (this->_registers.p.x_b)
+				this->_registers.ah = 0;
+		}
+		this->_registers.p.n = this->_registers.a & negativeFlag;
+		this->_registers.p.z = this->_registers.a == 0;
+		return 0;
+	}
+
+	int CPU::TYA(uint24_t, AddressingMode)
+	{
+		unsigned negativeFlag = this->_registers.p.m ? 0x80u : 0x8000u;
+
+		if (this->_registers.p.m)
+			this->_registers.al = this->_registers.yl;
+		else {
+			this->_registers.a = this->_registers.y;
+			if (this->_registers.p.x_b)
+				this->_registers.ah = 0;
+		}
+		this->_registers.p.n = this->_registers.a & negativeFlag;
+		this->_registers.p.z = this->_registers.a == 0;
+		return 0;
+	}
+
+	int CPU::TXY(uint24_t, AddressingMode)
+	{
+		unsigned negativeFlag = this->_registers.p.x_b ? 0x80u : 0x8000u;
+
+		if (this->_registers.p.x_b)
+			this->_registers.yl = this->_registers.xl;
+		else
+			this->_registers.y = this->_registers.x;
+		this->_registers.p.n = this->_registers.y & negativeFlag;
+		this->_registers.p.z = this->_registers.y == 0;
+		return 0;
+	}
+
+	int CPU::TYX(uint24_t, AddressingMode)
+	{
+		unsigned negativeFlag = this->_registers.p.x_b ? 0x80u : 0x8000u;
+
+		if (this->_registers.p.x_b)
+			this->_registers.xl = this->_registers.yl;
+		else
+			this->_registers.x = this->_registers.y;
+		this->_registers.p.n = this->_registers.y & negativeFlag;
+		this->_registers.p.z = this->_registers.y == 0;
+		return 0;
+	}
 }

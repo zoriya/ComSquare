@@ -150,10 +150,14 @@ namespace ComSquare::Debugger
 
 	uint8_t MemoryBusDebug::read(uint24_t addr, bool silence)
 	{
-		if (!silence) {
+		if (!silence && !forceSilence) {
 			auto accessor = this->getAccessor(addr);
-			uint8_t value = accessor->read(addr - accessor->getStart());
-			this->_model.log(BusLog(false, addr, accessor, value, value));
+			if (!accessor) {
+				this->_model.log(BusLog(true, addr, accessor, this->_openBus, this->_openBus));
+			} else {
+				uint8_t value = accessor->read(addr - accessor->getStart());
+				this->_model.log(BusLog(false, addr, accessor, value, value));
+			}
 		}
 		return MemoryBus::read(addr);
 	}
@@ -167,7 +171,8 @@ namespace ComSquare::Debugger
 		} catch (InvalidAddress &) {
 			value = std::nullopt;
 		}
-		this->_model.log(BusLog(true, addr, accessor, value, data));
+		if (!forceSilence)
+			this->_model.log(BusLog(true, addr, accessor, value, data));
 		MemoryBus::write(addr, data);
 	}
 

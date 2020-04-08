@@ -67,7 +67,7 @@ Test(ADC, overflowEmulation)
 Test(ADC, signedOverflow)
 {
 	Init()
-	snes.cpu->_isEmulationMode = false;
+	snes.cpu->_registers.p.m = false;
 	snes.cpu->_registers.a = 0x7FFF;
 	snes.wram->_data[0] = 0x1;
 	snes.cpu->ADC(0x0, ComSquare::CPU::AddressingMode::Implied);
@@ -81,7 +81,7 @@ Test(ADC, signedOverflow)
 Test(ADC, signedOverflowEmulated)
 {
 	Init()
-	snes.cpu->_isEmulationMode = true;
+	snes.cpu->_registers.p.m = true;
 	snes.cpu->_registers.a = 0x007F;
 	snes.wram->_data[0] = 0x1;
 	snes.cpu->ADC(0x0, ComSquare::CPU::AddressingMode::Implied);
@@ -95,7 +95,7 @@ Test(ADC, signedOverflowEmulated)
 Test(ADC, negative)
 {
 	Init()
-	snes.cpu->_isEmulationMode = false;
+	snes.cpu->_registers.p.m = false;
 	snes.cpu->_registers.a = 0x8FFF;
 	snes.wram->_data[0] = 0x1;
 	snes.cpu->ADC(0x0, ComSquare::CPU::AddressingMode::Implied);

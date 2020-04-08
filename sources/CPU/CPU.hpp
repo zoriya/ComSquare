@@ -226,12 +226,10 @@ namespace ComSquare::CPU
 		uint24_t _getAbsoluteIndexedByYAddr();
 		//! @brief The effective address is formed by adding the <long exp> with X.
 		uint24_t _getAbsoluteIndexedByXLongAddr();
-		//! @brief The <8-bit signed exp> is added to PC (program counter) to form the new location.
-		uint24_t _getProgramCounterRelativeAddr();
-		//! @brief The <16-bit signed exp> is added to PC (program counter) to form the new location.
-		uint24_t _getProgramCounterRelativeLongAddr();
 		//! @brief 2 bytes are pulled from the <abs exp> to form the effective address.
 		uint24_t _getAbsoluteIndirectAddr();
+		//! @brief 3 bytes are pulled from the <abs exp> to form the effective address.
+		uint24_t _getAbsoluteIndirectLongAddr();
 		//! @brief The <abs exp> is added with X, then 2 bytes are pulled from that address to form the new location.
 		uint24_t _getAbsoluteIndirectIndexedByXAddr();
 		//! @brief 2 bytes are pulled from the direct page address to form the 16-bit address. It is combined with DBR to form a 24-bit effective address.
@@ -259,6 +257,11 @@ namespace ComSquare::CPU
 		//! @brief Execute a single instruction.
 		//! @return The number of CPU cycles that the instruction took.
 		virtual unsigned _executeInstruction(uint8_t opcode);
+
+		//! @brief Get the parameter address of an instruction from it's addressing mode.
+		//! @info The current program counter should point to the instruction's opcode + 1.
+		//! @return The address of the data to read on the instruction.
+		uint24_t _getValueAddr(Instruction &instruction);
 
 		//! @brief Break instruction - Causes a software break. The PC is loaded from a vector table.
 		int BRK(uint24_t, AddressingMode);
@@ -376,107 +379,147 @@ namespace ComSquare::CPU
 		int JML(uint24_t valueAddr, AddressingMode);
 		//! @brief No OP.
 		int NOP(uint24_t, AddressingMode);
+		//! @brief Decrement the X register.
+		int DEX(uint24_t, AddressingMode);
+		//! @brief Decrement the Y register.
+		int DEY(uint24_t, AddressingMode);
+		//! @brief Or accumulator with memory.
+		int ORA(uint24_t valueAddr, AddressingMode mode);
+		//! @brief Return from subroutine.
+		int RTS(uint24_t, AddressingMode);
+		//! @brief Return from subroutine long.
+		int RTL(uint24_t, AddressingMode);
+		//! @brief Compare Accumulator with Memory.
+		int CMP(uint24_t, AddressingMode);
+		//! @brief Increment
+		int INC(uint24_t, AddressingMode);
+		//! @brief Decrement
+		int DEC(uint24_t, AddressingMode);
+		//! @brief XOR, Exclusive OR accumulator with memory.
+		int EOR(uint24_t, AddressingMode);
+		//! @brief Transfer 16 bit A to DP
+		int TCD(uint24_t, AddressingMode);
+		//! @brief Transfer 16 bit A to SP
+		int TCS(uint24_t, AddressingMode);
+		//! @brief Transfer DP to 16 bit A
+		int TDC(uint24_t, AddressingMode);
+		//! @brief Transfer DP to 16 bit A
+		int TSC(uint24_t, AddressingMode);
+		//! @brief Transfer SP to X
+		int TSX(uint24_t, AddressingMode);
+		//! @brief Transfer X to A
+		int TXA(uint24_t, AddressingMode);
+		//! @brief Transfer Y to A
+		int TYA(uint24_t, AddressingMode);
+		//! @brief Transfer X to Y
+		int TXY(uint24_t, AddressingMode);
+		//! @brief Transfer Y to X
+		int TYX(uint24_t, AddressingMode);
+		//! @brief Test and Set Memory Bits Against Accumulator
+		int TSB(uint24_t, AddressingMode);
+		//! @brief Exchange the B and A Accumulators
+		int XBA(uint24_t, AddressingMode);
 
 		//! @brief All the instructions of the CPU.
 		//! @info Instructions are indexed by their opcode
 		Instruction _instructions[0x100] = {
-			{&CPU::BRK, 7, "brk", AddressingMode::Implied, 2}, // 00
-			{&CPU::BRK, 7, "ora #-#", AddressingMode::Implied, 2}, // 01
-			{&CPU::COP, 7, "cop", AddressingMode::Implied, 2}, // 02
-			{&CPU::BRK, 7, "ora #-#", AddressingMode::Implied, 2}, // 03
-			{&CPU::BRK, 7, "tsb #-#", AddressingMode::Implied, 2}, // 04
-			{&CPU::BRK, 7, "ora #-#", AddressingMode::Implied, 2}, // 05
+			{&CPU::BRK, 7, "brk", AddressingMode::Immediate8bits, 2}, // 00
+			{&CPU::ORA, 6, "ora", AddressingMode::DirectPageIndirectIndexedByX, 2}, // 01
+			{&CPU::COP, 7, "cop", AddressingMode::Immediate8bits, 2}, // 02
+			{&CPU::ORA, 4, "ora", AddressingMode::StackRelative, 2}, // 03
+			{&CPU::TSB, 5, "tsb", AddressingMode::DirectPage, 2}, // 04
+			{&CPU::ORA, 3, "ora", AddressingMode::DirectPage, 2}, // 05
 			{&CPU::BRK, 7, "asl #-#", AddressingMode::Implied, 2}, // 06
-			{&CPU::BRK, 7, "ora #-#", AddressingMode::Implied, 2}, // 07
+			{&CPU::ORA, 6, "ora", AddressingMode::DirectPageIndirectLong, 2}, // 07
 			{&CPU::PHP, 3, "php", AddressingMode::Implied, 3}, // 08
-			{&CPU::BRK, 7, "ora #-#", AddressingMode::Implied, 2}, // 09
+			{&CPU::ORA, 2, "ora", AddressingMode::ImmediateForA, 2}, // 09
 			{&CPU::BRK, 7, "asl #-#", AddressingMode::Implied, 2}, // 0A
 			{&CPU::PHD, 4, "phd", AddressingMode::Implied, 1}, // 0B
-			{&CPU::BRK, 7, "tsb #-#", AddressingMode::Implied, 2}, // 0C
-			{&CPU::BRK, 7, "ora #-#", AddressingMode::Implied, 2}, // 0D
+			{&CPU::TSB, 6, "tsb", AddressingMode::Absolute, 3}, // 0C
+			{&CPU::ORA, 3, "ora", AddressingMode::Absolute, 4}, // 0D
 			{&CPU::BRK, 7, "asl #-#", AddressingMode::Implied, 2}, // 0E
-			{&CPU::BRK, 7, "ora #-#", AddressingMode::Implied, 2}, // 0F
-			{&CPU::BPL, 7, "bpl", AddressingMode::Implied, 2}, // 10
-			{&CPU::BRK, 7, "ora #-#", AddressingMode::Implied, 2}, // 11
-			{&CPU::BRK, 7, "ora #-#", AddressingMode::Implied, 2}, // 12
-			{&CPU::BRK, 7, "ora #-#", AddressingMode::Implied, 2}, // 13
+			{&CPU::ORA, 5, "ora", AddressingMode::AbsoluteLong, 5}, // 0F
+			{&CPU::BPL, 7, "bpl", AddressingMode::Immediate8bits, 2}, // 10
+			{&CPU::ORA, 5, "ora", AddressingMode::DirectPageIndirectIndexedByY, 2}, // 11
+			{&CPU::ORA, 5, "ora", AddressingMode::DirectPageIndirect, 2}, // 12
+			{&CPU::ORA, 7, "ora", AddressingMode::StackRelativeIndirectIndexedByY, 2}, // 13
 			{&CPU::BRK, 7, "trb #-#", AddressingMode::Implied, 2}, // 14
-			{&CPU::BRK, 7, "ora #-#", AddressingMode::Implied, 2}, // 15
+			{&CPU::ORA, 4, "ora", AddressingMode::DirectPageIndexedByX, 2}, // 15
 			{&CPU::BRK, 7, "asl #-#", AddressingMode::Implied, 2}, // 16
-			{&CPU::BRK, 7, "ora #-#", AddressingMode::Implied, 2}, // 17
+			{&CPU::ORA, 6, "ora", AddressingMode::DirectPageIndirectIndexedByYLong, 2}, // 17
 			{&CPU::CLC, 2, "clc", AddressingMode::Implied, 1}, // 18
-			{&CPU::BRK, 7, "ora #-#", AddressingMode::Implied, 2}, // 19
-			{&CPU::BRK, 7, "inc #-#", AddressingMode::Implied, 2}, // 1A
-			{&CPU::BRK, 7, "tcs #-#", AddressingMode::Implied, 2}, // 1B
+			{&CPU::ORA, 4, "ora", AddressingMode::AbsoluteIndexedByY, 3}, // 19
+			{&CPU::INC, 2, "inc", AddressingMode::Implied, 1}, // 1A
+			{&CPU::TCS, 2, "tcs", AddressingMode::Implied, 1}, // 1B
 			{&CPU::BRK, 7, "trb #-#", AddressingMode::Implied, 2}, // 1C
-			{&CPU::BRK, 7, "ora #-#", AddressingMode::Implied, 2}, // 1D
+			{&CPU::ORA, 4, "ora", AddressingMode::AbsoluteIndexedByX, 3}, // 1D
 			{&CPU::BRK, 7, "asl #-#", AddressingMode::Implied, 2}, // 1E
-			{&CPU::BRK, 7, "ora #-#", AddressingMode::Implied, 2}, // 1F
+			{&CPU::ORA, 5, "ora", AddressingMode::AbsoluteIndexedByXLong, 4}, // 1F
 			{&CPU::JSR, 6, "jsr", AddressingMode::Absolute, 3}, // 20
-			{&CPU::BRK, 7, "and #-#", AddressingMode::Implied, 2}, // 21
+			{&CPU::AND, 6, "and", AddressingMode::DirectPageIndirectIndexedByX, 2}, // 21
 			{&CPU::JSL, 8, "jsl", AddressingMode::AbsoluteLong, 4}, // 22
-			{&CPU::BRK, 7, "and #-#", AddressingMode::Implied, 2}, // 23
+			{&CPU::AND, 4, "and", AddressingMode::StackRelative, 2}, // 23
 			{&CPU::BRK, 7, "bit #-#", AddressingMode::Implied, 2}, // 24
-			{&CPU::BRK, 7, "and #-#", AddressingMode::Implied, 2}, // 25
+			{&CPU::AND, 3, "and", AddressingMode::DirectPage, 2}, // 25
 			{&CPU::BRK, 7, "rol #-#", AddressingMode::Implied, 2}, // 26
-			{&CPU::BRK, 7, "and #-#", AddressingMode::Implied, 2}, // 27
+			{&CPU::AND, 6, "and", AddressingMode::DirectPageIndirectLong, 2}, // 27
 			{&CPU::PLP, 4, "plp", AddressingMode::Implied, 1}, // 28
-			{&CPU::BRK, 7, "and #-#", AddressingMode::Implied, 2}, // 29
+			{&CPU::AND, 2, "and", AddressingMode::ImmediateForA, 2}, // 29
 			{&CPU::BRK, 7, "rol #-#", AddressingMode::Implied, 2}, // 2A
 			{&CPU::PLD, 5, "pld", AddressingMode::Implied, 1}, // 2B
 			{&CPU::BRK, 7, "bit #-#", AddressingMode::Implied, 2}, // 2C
-			{&CPU::BRK, 7, "and #-#", AddressingMode::Implied, 2}, // 2D
+			{&CPU::AND, 4, "and", AddressingMode::Absolute, 3}, // 2D
 			{&CPU::BRK, 7, "rol #-#", AddressingMode::Implied, 2}, // 2E
-			{&CPU::BRK, 7, "and #-#", AddressingMode::Implied, 2}, // 2F
-			{&CPU::BMI, 2, "bmi", AddressingMode::Implied, 2}, // 30
-			{&CPU::BRK, 7, "and #-#", AddressingMode::Implied, 2}, // 31
-			{&CPU::BRK, 7, "and #-#", AddressingMode::Implied, 2}, // 32
-			{&CPU::BRK, 7, "and #-#", AddressingMode::Implied, 2}, // 33
+			{&CPU::AND, 5, "and", AddressingMode::AbsoluteLong, 4}, // 2F
+			{&CPU::BMI, 2, "bmi", AddressingMode::Immediate8bits, 2}, // 30
+			{&CPU::AND, 5, "and", AddressingMode::DirectPageIndirectIndexedByY, 2}, // 31
+			{&CPU::AND, 5, "and", AddressingMode::DirectPageIndirect, 2}, // 32
+			{&CPU::AND, 7, "and", AddressingMode::StackRelativeIndirectIndexedByY, 2}, // 33
 			{&CPU::BRK, 7, "bit #-#", AddressingMode::Implied, 2}, // 34
-			{&CPU::BRK, 7, "and #-#", AddressingMode::Implied, 2}, // 35
+			{&CPU::AND, 4, "and", AddressingMode::DirectPageIndexedByX, 2}, // 35
 			{&CPU::BRK, 7, "rol #-#", AddressingMode::Implied, 2}, // 36
-			{&CPU::BRK, 7, "and #-#", AddressingMode::Implied, 2}, // 37
+			{&CPU::AND, 6, "and", AddressingMode::DirectPageIndirectIndexedByYLong, 2}, // 37
 			{&CPU::SEC, 2, "sec", AddressingMode::Implied, 1}, // 38
-			{&CPU::BRK, 7, "and #-#", AddressingMode::Implied, 2}, // 39
-			{&CPU::BRK, 7, "dec #-#", AddressingMode::Implied, 2}, // 3A
-			{&CPU::BRK, 7, "tsc #-#", AddressingMode::Implied, 2}, // 3B
+			{&CPU::AND, 4, "and", AddressingMode::AbsoluteIndexedByY, 3}, // 39
+			{&CPU::DEC, 2, "dec", AddressingMode::Implied, 1}, // 3A
+			{&CPU::TSC, 2, "tsc", AddressingMode::Implied, 1}, // 3B
 			{&CPU::BRK, 7, "bit #-#", AddressingMode::Implied, 2}, // 3C
-			{&CPU::BRK, 7, "and #-#", AddressingMode::Implied, 2}, // 3D
+			{&CPU::AND, 4, "and", AddressingMode::AbsoluteIndexedByX, 3}, // 3D
 			{&CPU::BRK, 7, "rol #-#", AddressingMode::Implied, 2}, // 3E
-			{&CPU::BRK, 7, "and #-#", AddressingMode::Implied, 2}, // 3F
+			{&CPU::AND, 5, "and", AddressingMode::AbsoluteIndexedByXLong, 4}, // 3F
 			{&CPU::RTI, 6, "rti", AddressingMode::Implied, 1}, // 40
-			{&CPU::BRK, 7, "eor #-#", AddressingMode::Implied, 2}, // 41
+			{&CPU::EOR, 6, "eor", AddressingMode::DirectPageIndirectIndexedByX, 2}, // 41
 			{&CPU::BRK, 7, "wdm #-#", AddressingMode::Implied, 2}, // 42
-			{&CPU::BRK, 7, "eor #-#", AddressingMode::Implied, 2}, // 43
+			{&CPU::EOR, 4, "eor", AddressingMode::StackRelative, 2}, // 43
 			{&CPU::BRK, 7, "mvp #-#", AddressingMode::Implied, 2}, // 44
-			{&CPU::BRK, 7, "eor #-#", AddressingMode::Implied, 2}, // 45
+			{&CPU::EOR, 3, "eor", AddressingMode::DirectPage, 2}, // 45
 			{&CPU::BRK, 7, "lsr #-#", AddressingMode::Implied, 2}, // 46
-			{&CPU::BRK, 7, "eor #-#", AddressingMode::Implied, 2}, // 47
+			{&CPU::EOR, 6, "eor", AddressingMode::DirectPageIndirectLong, 2}, // 47
 			{&CPU::PHA, 3, "pha", AddressingMode::Implied, 1}, // 48
-			{&CPU::BRK, 7, "eor #-#", AddressingMode::Implied, 2}, // 49
+			{&CPU::EOR, 2, "eor", AddressingMode::ImmediateForA, 2}, // 49
 			{&CPU::BRK, 7, "lsr #-#", AddressingMode::Implied, 2}, // 4A
 			{&CPU::PHK, 3, "phk", AddressingMode::Implied, 1}, // 4B
 			{&CPU::JMP, 3, "jmp", AddressingMode::Absolute, 3}, // 4C
-			{&CPU::BRK, 7, "eor #-#", AddressingMode::Implied, 2}, // 4D
+			{&CPU::EOR, 4, "eor", AddressingMode::Absolute, 3}, // 4D
 			{&CPU::BRK, 7, "lsr #-#", AddressingMode::Implied, 2}, // 4E
-			{&CPU::BRK, 7, "eor #-#", AddressingMode::Implied, 2}, // 4F
-			{&CPU::BVC, 2, "bvc", AddressingMode::Implied, 2}, // 50
-			{&CPU::BRK, 7, "eor #-#", AddressingMode::Implied, 2}, // 51
-			{&CPU::BRK, 7, "eor #-#", AddressingMode::Implied, 2}, // 52
-			{&CPU::BRK, 7, "eor #-#", AddressingMode::Implied, 2}, // 53
+			{&CPU::EOR, 5, "eor", AddressingMode::AbsoluteLong, 4}, // 4F
+			{&CPU::BVC, 2, "bvc", AddressingMode::Immediate8bits, 2}, // 50
+			{&CPU::EOR, 5, "eor", AddressingMode::DirectPageIndirectIndexedByY, 2}, // 51
+			{&CPU::EOR, 5, "eor", AddressingMode::DirectPageIndirect, 2}, // 52
+			{&CPU::EOR, 4, "eor", AddressingMode::StackRelativeIndirectIndexedByY, 2}, // 53
 			{&CPU::BRK, 7, "mvn #-#", AddressingMode::Implied, 2}, // 54
-			{&CPU::BRK, 7, "eor #-#", AddressingMode::Implied, 2}, // 55
+			{&CPU::EOR, 4, "eor", AddressingMode::DirectPageIndexedByX, 2}, // 55
 			{&CPU::BRK, 7, "lsr #-#", AddressingMode::Implied, 2}, // 56
-			{&CPU::BRK, 7, "eor #-#", AddressingMode::Implied, 2}, // 57
+			{&CPU::EOR, 6, "eor", AddressingMode::DirectPageIndirectIndexedByYLong, 2}, // 57
 			{&CPU::CLI, 2, "cli", AddressingMode::Implied, 1}, // 58
-			{&CPU::BRK, 7, "eor #-#", AddressingMode::Implied, 2}, // 59
+			{&CPU::EOR, 4, "eor", AddressingMode::AbsoluteIndexedByY, 3}, // 59
 			{&CPU::PHY, 3, "phy", AddressingMode::Implied, 1}, // 5A
-			{&CPU::BRK, 7, "tcd #-#", AddressingMode::Implied, 2}, // 5B
+			{&CPU::TCD, 2, "tcd", AddressingMode::Implied, 1}, // 5B
 			{&CPU::JML, 4, "jml", AddressingMode::Implied, 4}, // 5C
-			{&CPU::BRK, 7, "eor #-#", AddressingMode::Implied, 2}, // 5D
+			{&CPU::EOR, 4, "eor", AddressingMode::AbsoluteIndexedByX, 3}, // 5D
 			{&CPU::BRK, 7, "lsr #-#", AddressingMode::Implied, 2}, // 5E
-			{&CPU::BRK, 7, "eor #-#", AddressingMode::Implied, 2}, // 5F
-			{&CPU::BRK, 7, "rtl #-#", AddressingMode::Implied, 2}, // 60
+			{&CPU::EOR, 5, "eor", AddressingMode::AbsoluteIndexedByXLong, 4}, // 5F
+			{&CPU::RTL, 6, "rtl", AddressingMode::Implied, 1}, // 60
 			{&CPU::ADC, 6, "adc", AddressingMode::DirectPageIndirectIndexedByX, 2}, // 61
 			{&CPU::BRK, 7, "per #-#", AddressingMode::Implied, 2}, // 62
 			{&CPU::ADC, 4, "adc", AddressingMode::StackRelative, 2}, // 63
@@ -487,12 +530,12 @@ namespace ComSquare::CPU
 			{&CPU::PLA, 4, "pla", AddressingMode::Implied, 1}, // 68
 			{&CPU::ADC, 2, "adc", AddressingMode::ImmediateForA, 2}, // 69
 			{&CPU::BRK, 7, "ror #-#", AddressingMode::Implied, 2}, // 6A
-			{&CPU::BRK, 7, "rts #-#", AddressingMode::Implied, 2}, // 6B
+			{&CPU::RTS, 6, "rts", AddressingMode::Implied, 1}, // 6B
 			{&CPU::JMP, 5, "jmp", AddressingMode::AbsoluteIndirect, 3}, // 6C
 			{&CPU::ADC, 4, "adc", AddressingMode::Absolute, 3}, // 6D
 			{&CPU::BRK, 7, "ror #-#", AddressingMode::Implied, 2}, // 6E
 			{&CPU::ADC, 5, "adc", AddressingMode::AbsoluteLong, 4}, // 6F
-			{&CPU::BVS, 2, "bvs", AddressingMode::Implied, 2}, // 70
+			{&CPU::BVS, 2, "bvs", AddressingMode::Immediate8bits, 2}, // 70
 			{&CPU::ADC, 5, "adc", AddressingMode::DirectPageIndirectIndexedByY, 2}, // 71
 			{&CPU::ADC, 5, "adc", AddressingMode::DirectPageIndirect, 2}, // 72
 			{&CPU::ADC, 7, "adc", AddressingMode::StackRelativeIndirectIndexedByY, 2}, // 73
@@ -503,28 +546,28 @@ namespace ComSquare::CPU
 			{&CPU::SEI, 2, "sei", AddressingMode::Implied, 1}, // 78
 			{&CPU::ADC, 4, "adc", AddressingMode::AbsoluteIndexedByY, 2}, // 79
 			{&CPU::PLY, 4, "ply", AddressingMode::Implied, 1}, // 7A
-			{&CPU::BRK, 7, "tdc #-#", AddressingMode::Implied, 2}, // 7B
+			{&CPU::TDC, 2, "tdc", AddressingMode::Implied, 1}, // 7B
 			{&CPU::JMP, 6, "jmp", AddressingMode::AbsoluteIndirectIndexedByX, 3}, // 7C
 			{&CPU::ADC, 4, "adc", AddressingMode::AbsoluteIndexedByX, 3}, // 7D
 			{&CPU::BRK, 7, "ror #-#", AddressingMode::Implied, 2}, // 7E
 			{&CPU::ADC, 5, "adc", AddressingMode::AbsoluteIndexedByXLong, 4}, // 7F
-			{&CPU::BRA, 3, "bra", AddressingMode::Implied, 2}, // 80
+			{&CPU::BRA, 3, "bra", AddressingMode::Immediate8bits, 2}, // 80
 			{&CPU::STA, 6, "sta", AddressingMode::DirectPageIndexedByX, 2}, // 81
-			{&CPU::BRL, 4, "brl", AddressingMode::Implied, 3}, // 82
+			{&CPU::BRL, 4, "brl", AddressingMode::Absolute, 3}, // 82
 			{&CPU::STA, 4, "sta", AddressingMode::StackRelative, 2}, // 83
 			{&CPU::STY, 3, "sty", AddressingMode::DirectPage, 2}, // 84
 			{&CPU::STA, 3, "sta", AddressingMode::DirectPage, 2}, // 85
 			{&CPU::STX, 3, "stx", AddressingMode::DirectPage, 2}, // 86
 			{&CPU::STA, 6, "sta", AddressingMode::DirectPageIndirectLong, 2}, // 87
-			{&CPU::BRK, 7, "dey #-#", AddressingMode::Implied, 2}, // 88
+			{&CPU::DEY, 2, "dey", AddressingMode::Implied, 1}, // 88
 			{&CPU::BRK, 7, "bit #-#", AddressingMode::Implied, 2}, // 89
-			{&CPU::BRK, 7, "txa #-#", AddressingMode::Implied, 2}, // 8A
+			{&CPU::TXA, 2, "txa", AddressingMode::Implied, 2}, // 8A
 			{&CPU::PHB, 3, "phb", AddressingMode::Implied, 1}, // 8B
 			{&CPU::STY, 4, "sty", AddressingMode::Absolute, 3}, // 8C
 			{&CPU::STA, 4, "sta", AddressingMode::Absolute, 3}, // 8D
 			{&CPU::STX, 4, "stx", AddressingMode::Absolute, 3}, // 8E
 			{&CPU::STA, 5, "sta", AddressingMode::AbsoluteLong, 4}, // 8F
-			{&CPU::BCC, 2, "bcc", AddressingMode::Implied, 2}, // 90
+			{&CPU::BCC, 2, "bcc", AddressingMode::Immediate8bits, 2}, // 90
 			{&CPU::STA, 6, "sta", AddressingMode::DirectPageIndirectIndexedByY, 2}, // 91
 			{&CPU::STA, 5, "sta", AddressingMode::DirectPageIndirect, 2}, // 92
 			{&CPU::STA, 7, "sta", AddressingMode::StackRelativeIndirectIndexedByY, 2}, // 93
@@ -532,10 +575,10 @@ namespace ComSquare::CPU
 			{&CPU::STA, 4, "sta", AddressingMode::DirectPageIndexedByX, 2}, // 95
 			{&CPU::STX, 4, "stx", AddressingMode::DirectPageIndexedByY, 2}, // 96
 			{&CPU::STA, 6, "sta", AddressingMode::DirectPageIndirectIndexedByYLong, 2}, // 97
-			{&CPU::BRK, 7, "tya #-#", AddressingMode::Implied, 2}, // 98
+			{&CPU::TYA, 2, "tya", AddressingMode::Implied, 1}, // 98
 			{&CPU::STA, 5, "sta", AddressingMode::AbsoluteIndexedByY, 3}, // 99
 			{&CPU::TXS, 2, "txs", AddressingMode::Implied, 1}, // 9A
-			{&CPU::BRK, 7, "txy #-#", AddressingMode::Implied, 2}, // 9B
+			{&CPU::TXY, 2, "txy", AddressingMode::Implied, 1}, // 9B
 			{&CPU::STZ, 4, "stz", AddressingMode::Absolute, 3}, // 9C
 			{&CPU::STA, 5, "sta", AddressingMode::AbsoluteIndexedByX, 3}, // 9D
 			{&CPU::STZ, 5, "stz", AddressingMode::AbsoluteIndexedByX, 3}, // 9E
@@ -556,7 +599,7 @@ namespace ComSquare::CPU
 			{&CPU::LDA, 4, "lda", AddressingMode::Absolute, 3}, // AD
 			{&CPU::LDX, 4, "ldx", AddressingMode::Absolute, 3}, // AE
 			{&CPU::LDA, 5, "lda", AddressingMode::AbsoluteLong, 4}, // AF
-			{&CPU::BCS, 2, "bcs", AddressingMode::Implied, 2}, // B0
+			{&CPU::BCS, 2, "bcs", AddressingMode::Immediate8bits, 2}, // B0
 			{&CPU::LDA, 5, "lda", AddressingMode::DirectPageIndirectIndexedByY, 2}, // B1
 			{&CPU::LDA, 5, "lda", AddressingMode::DirectPageIndirect, 2}, // B2
 			{&CPU::LDA, 7, "lda", AddressingMode::StackRelativeIndirectIndexedByY, 2}, // B3
@@ -566,67 +609,67 @@ namespace ComSquare::CPU
 			{&CPU::LDA, 6, "lda", AddressingMode::DirectPageIndirectIndexedByYLong, 2}, // B7
 			{&CPU::CLV, 7, "clv", AddressingMode::Implied, 1}, // B8
 			{&CPU::LDA, 4, "lda", AddressingMode::AbsoluteIndexedByY, 3}, // B9
-			{&CPU::BRK, 7, "mvn #-#", AddressingMode::Implied, 2}, // BA
-			{&CPU::BRK, 7, "tyx #-#", AddressingMode::Implied, 2}, // BB
+			{&CPU::TSX, 2, "tsx", AddressingMode::Implied, 1}, // BA
+			{&CPU::TYX, 2, "tyx", AddressingMode::Implied, 1}, // BB
 			{&CPU::LDY, 4, "ldy", AddressingMode::AbsoluteIndexedByX, 3}, // BC
 			{&CPU::LDA, 4, "lda", AddressingMode::AbsoluteIndexedByX, 3}, // BD
 			{&CPU::LDX, 4, "ldx", AddressingMode::AbsoluteIndexedByY, 3}, // BE
 			{&CPU::LDA, 5, "lda", AddressingMode::AbsoluteIndexedByXLong, 4}, // BF
-			{&CPU::BRK, 7, "cpy #-#", AddressingMode::Implied, 2}, // C0
-			{&CPU::BRK, 7, "cmp #-#", AddressingMode::Implied, 2}, // C1
+			{&CPU::CPY, 2, "cpy", AddressingMode::ImmediateForX, 2}, // C0
+			{&CPU::CMP, 6, "cmp", AddressingMode::DirectPageIndirectIndexedByX, 2}, // C1
 			{&CPU::REP, 3, "rep", AddressingMode::Immediate8bits, 2}, // C2
-			{&CPU::BRK, 7, "cmp #-#", AddressingMode::Implied, 2}, // C3
-			{&CPU::BRK, 7, "cpy #-#", AddressingMode::Implied, 2}, // C4
-			{&CPU::BRK, 7, "cmp #-#", AddressingMode::Implied, 2}, // C5
-			{&CPU::BRK, 7, "dec #-#", AddressingMode::Implied, 2}, // C6
-			{&CPU::BRK, 7, "cmp #-#", AddressingMode::Implied, 2}, // C7
+			{&CPU::CMP, 4, "cmp", AddressingMode::StackRelative, 2}, // C3
+			{&CPU::CPY, 3, "cpy", AddressingMode::DirectPage, 2}, // C4
+			{&CPU::CMP, 3, "cmp", AddressingMode::DirectPage, 2}, // C5
+			{&CPU::DEC, 5, "dec", AddressingMode::DirectPage, 2}, // C6
+			{&CPU::CMP, 6, "cmp", AddressingMode::DirectPageIndirectLong, 2}, // C7
 			{&CPU::INY, 2, "iny", AddressingMode::Implied, 1}, // C8
-			{&CPU::BRK, 7, "cmp #-#", AddressingMode::Implied, 2}, // C9
-			{&CPU::BRK, 7, "dex #-#", AddressingMode::Implied, 2}, // CA
+			{&CPU::CMP, 2, "cmp", AddressingMode::ImmediateForA, 2}, // C9
+			{&CPU::DEX, 2, "dex", AddressingMode::Implied, 1}, // CA
 			{&CPU::BRK, 7, "wai #-#", AddressingMode::Implied, 2}, // CB
-			{&CPU::BRK, 7, "cpy #-#", AddressingMode::Implied, 2}, // CC
-			{&CPU::BRK, 7, "cmp #-#", AddressingMode::Implied, 2}, // CD
-			{&CPU::BRK, 7, "dec #-#", AddressingMode::Implied, 2}, // CE
-			{&CPU::BRK, 7, "cmp #-#", AddressingMode::Implied, 2}, // CF
-			{&CPU::BNE, 2, "bne", AddressingMode::Implied, 2}, // D0
-			{&CPU::BRK, 7, "cmp #-#", AddressingMode::Implied, 2}, // D1
-			{&CPU::BRK, 7, "cmp #-#", AddressingMode::Implied, 2}, // D2
-			{&CPU::BRK, 7, "cmp #-#", AddressingMode::Implied, 2}, // D3
+			{&CPU::CPY, 4, "cpy", AddressingMode::Absolute, 3}, // CC
+			{&CPU::CMP, 4, "cmp", AddressingMode::Absolute, 3}, // CD
+			{&CPU::DEC, 6, "dec", AddressingMode::Absolute, 3}, // CE
+			{&CPU::CMP, 6, "cmp", AddressingMode::AbsoluteLong, 4}, // CF
+			{&CPU::BNE, 2, "bne", AddressingMode::Immediate8bits, 2}, // D0
+			{&CPU::CMP, 5, "cmp", AddressingMode::DirectPageIndirectIndexedByY, 2}, // D1
+			{&CPU::CMP, 5, "cmp", AddressingMode::DirectPageIndirect, 2}, // D2
+			{&CPU::CMP, 7, "cmp", AddressingMode::StackRelativeIndirectIndexedByY, 2}, // D3
 			{&CPU::BRK, 7, "pei #-#", AddressingMode::Implied, 2}, // D4
-			{&CPU::BRK, 7, "cmp #-#", AddressingMode::Implied, 2}, // D5
-			{&CPU::BRK, 7, "dec #-#", AddressingMode::Implied, 2}, // D6
-			{&CPU::BRK, 7, "cmp #-#", AddressingMode::Implied, 2}, // D7
-			{&CPU::CLD, 27, "cld", AddressingMode::Implied, 2}, // D8
-			{&CPU::BRK, 7, "cmp #-#", AddressingMode::Implied, 2}, // D9
+			{&CPU::CMP, 4, "cmp", AddressingMode::DirectPageIndexedByX, 2}, // D5
+			{&CPU::DEC, 6, "dec", AddressingMode::DirectPageIndexedByX, 2}, // D6
+			{&CPU::CMP, 6, "cmp", AddressingMode::DirectPageIndirectIndexedByYLong, 2}, // D7
+			{&CPU::CLD, 2, "cld", AddressingMode::Implied, 2}, // D8
+			{&CPU::CMP, 4, "cmp", AddressingMode::AbsoluteIndexedByY, 3}, // D9
 			{&CPU::PHX, 3, "phx", AddressingMode::Implied, 1}, // DA
 			{&CPU::BRK, 7, "stp #-#", AddressingMode::Implied, 2}, // DB
 			{&CPU::JML, 7, "jml", AddressingMode::AbsoluteIndirectLong, 2}, // DC
-			{&CPU::BRK, 7, "cmp #-#", AddressingMode::Implied, 2}, // DD
-			{&CPU::BRK, 7, "dec #-#", AddressingMode::Implied, 2}, // DE
-			{&CPU::BRK, 7, "cmp #-#", AddressingMode::Implied, 2}, // DF
-			{&CPU::BRK, 7, "cpx #-#", AddressingMode::Implied, 2}, // E0
+			{&CPU::CMP, 4, "cmp", AddressingMode::AbsoluteIndexedByX, 3}, // DD
+			{&CPU::DEC, 7, "dec", AddressingMode::AbsoluteIndexedByX, 3}, // DE
+			{&CPU::CMP, 5, "cmp", AddressingMode::AbsoluteIndexedByXLong, 4}, // DF
+			{&CPU::CPX, 2, "cpx", AddressingMode::ImmediateForX, 2}, // E0
 			{&CPU::SBC, 6, "sbc", AddressingMode::DirectPageIndirectIndexedByX, 2}, // E1
 			{&CPU::SEP, 3, "sep", AddressingMode::Immediate8bits, 2}, // E2
 			{&CPU::SBC, 4, "sbc", AddressingMode::StackRelative, 2}, // E3
-			{&CPU::BRK, 7, "cpx #-#", AddressingMode::Implied, 2}, // E4
+			{&CPU::CPX, 3, "cpx", AddressingMode::DirectPage, 2}, // E4
 			{&CPU::SBC, 3, "sbc", AddressingMode::DirectPage, 2}, // E5
-			{&CPU::BRK, 7, "inc #-#", AddressingMode::Implied, 2}, // E6
+			{&CPU::INC, 5, "inc", AddressingMode::DirectPage, 2}, // E6
 			{&CPU::SBC, 6, "sbc", AddressingMode::DirectPageIndirectLong, 2}, // E7
 			{&CPU::INX, 2, "inx", AddressingMode::Implied, 1}, // E8
 			{&CPU::SBC, 2, "sbc", AddressingMode::ImmediateForA, 2}, // E9
 			{&CPU::NOP, 2, "nop", AddressingMode::Implied, 1}, // EA
-			{&CPU::BRK, 7, "xba #-#", AddressingMode::Implied, 2}, // EB
-			{&CPU::BRK, 7, "cpx #-#", AddressingMode::Implied, 2}, // EC
+			{&CPU::XBA, 3, "xba", AddressingMode::Implied, 1}, // EB
+			{&CPU::CPX, 4, "cpx", AddressingMode::Absolute, 3}, // EC
 			{&CPU::SBC, 4, "sbc", AddressingMode::Absolute, 3}, // ED
-			{&CPU::BRK, 7, "inc #-#", AddressingMode::Implied, 2}, // EE
+			{&CPU::INC, 6, "inc", AddressingMode::Absolute, 3}, // EE
 			{&CPU::SBC, 5, "sbc", AddressingMode::AbsoluteLong, 4}, // EF
-			{&CPU::BEQ, 2, "beq", AddressingMode::Implied, 2}, // F0
+			{&CPU::BEQ, 2, "beq", AddressingMode::Immediate8bits, 2}, // F0
 			{&CPU::SBC, 5, "sbc", AddressingMode::DirectPageIndirectIndexedByY, 2}, // F1
 			{&CPU::SBC, 5, "sbc", AddressingMode::DirectPageIndirect, 2}, // F2
 			{&CPU::SBC, 7, "sbc", AddressingMode::StackRelativeIndirectIndexedByY, 2}, // F3
 			{&CPU::BRK, 7, "pea #-#", AddressingMode::Implied, 2}, // F4
 			{&CPU::SBC, 4, "sbc", AddressingMode::DirectPageIndexedByX, 2}, // F5
-			{&CPU::BRK, 7, "inc #-#", AddressingMode::Implied, 2}, // F6
+			{&CPU::INC, 6, "inc", AddressingMode::DirectPageIndexedByX, 2}, // F6
 			{&CPU::SBC, 6, "sbc", AddressingMode::DirectPageIndirectIndexedByYLong, 2}, // F7
 			{&CPU::SED, 2, "sed", AddressingMode::Implied, 1}, // F8
 			{&CPU::SBC, 4, "sbc", AddressingMode::AbsoluteIndexedByY, 3}, // F9
@@ -634,7 +677,7 @@ namespace ComSquare::CPU
 			{&CPU::XCE, 2, "xce", AddressingMode::Implied, 1}, // FB
 			{&CPU::JSR, 8, "jsr", AddressingMode::AbsoluteIndirectIndexedByX, 3}, // FC
 			{&CPU::SBC, 4, "sbc", AddressingMode::AbsoluteIndexedByX, 3}, // FD
-			{&CPU::BRK, 7, "inc #-#", AddressingMode::Implied, 2}, // FE
+			{&CPU::INC, 7, "inc", AddressingMode::AbsoluteIndexedByX, 3}, // FE
 			{&CPU::SBC, 5, "sbc", AddressingMode::AbsoluteIndexedByXLong, 4}, // FF
 		};
 	public:

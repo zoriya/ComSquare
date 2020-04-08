@@ -22,7 +22,7 @@ namespace ComSquare::Memory
 		explicit RectangleShadow(std::shared_ptr<ARectangleMemory> initial, uint8_t startBank, uint8_t endBank, uint16_t startPage, uint16_t endPage);
 		RectangleShadow(const RectangleShadow &) = default;
 		RectangleShadow &operator=(const RectangleShadow &) = default;
-		~RectangleShadow() = default;
+		~RectangleShadow() override = default;
 
 		//! @brief Internal component read. Implement this as you would implement a basic AMemory's read.
 		//! @param addr The local address to read from. 0x0 refer to the first byte of your data and the address is in the component's space. That means that you can consider this address as continuous
