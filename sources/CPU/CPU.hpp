@@ -415,6 +415,8 @@ namespace ComSquare::CPU
 		int TXY(uint24_t, AddressingMode);
 		//! @brief Transfer Y to X
 		int TYX(uint24_t, AddressingMode);
+		//! @brief Test and Set Memory Bits Against Accumulator
+		int TSB(uint24_t, AddressingMode);
 
 		//! @brief All the instructions of the CPU.
 		//! @info Instructions are indexed by their opcode
@@ -423,7 +425,7 @@ namespace ComSquare::CPU
 			{&CPU::ORA, 6, "ora", AddressingMode::DirectPageIndirectIndexedByX, 2}, // 01
 			{&CPU::COP, 7, "cop", AddressingMode::Immediate8bits, 2}, // 02
 			{&CPU::ORA, 4, "ora", AddressingMode::StackRelative, 2}, // 03
-			{&CPU::BRK, 7, "tsb #-#", AddressingMode::Implied, 2}, // 04
+			{&CPU::TSB, 5, "tsb", AddressingMode::DirectPage, 2}, // 04
 			{&CPU::ORA, 3, "ora", AddressingMode::DirectPage, 2}, // 05
 			{&CPU::BRK, 7, "asl #-#", AddressingMode::Implied, 2}, // 06
 			{&CPU::ORA, 6, "ora", AddressingMode::DirectPageIndirectLong, 2}, // 07
@@ -431,7 +433,7 @@ namespace ComSquare::CPU
 			{&CPU::ORA, 2, "ora", AddressingMode::ImmediateForA, 2}, // 09
 			{&CPU::BRK, 7, "asl #-#", AddressingMode::Implied, 2}, // 0A
 			{&CPU::PHD, 4, "phd", AddressingMode::Implied, 1}, // 0B
-			{&CPU::BRK, 7, "tsb #-#", AddressingMode::Implied, 2}, // 0C
+			{&CPU::TSB, 6, "tsb", AddressingMode::Absolute, 3}, // 0C
 			{&CPU::ORA, 3, "ora", AddressingMode::Absolute, 4}, // 0D
 			{&CPU::BRK, 7, "asl #-#", AddressingMode::Implied, 2}, // 0E
 			{&CPU::ORA, 5, "ora", AddressingMode::AbsoluteLong, 5}, // 0F

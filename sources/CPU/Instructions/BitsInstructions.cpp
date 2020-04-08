@@ -7,5 +7,19 @@
 
 namespace ComSquare::CPU
 {
+	int CPU::TSB(uint24_t valueAddr, AddressingMode mode)
+	{
+		uint8_t value = this->_bus->read(valueAddr);
+		value |= this->_registers.a;
+		this->_bus->write(valueAddr, value);
 
+		this->_registers.p.z = value == 0;
+
+		int cycles = 0;
+		if (!this->_registers.p.m)
+			cycles += 2;
+		if (mode == DirectPage)
+			cycles += this->_registers.dl != 0;
+		return cycles;
+	}
 }
