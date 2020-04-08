@@ -35,7 +35,6 @@ Test(AND, nativeNegative)
 	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flag should be set.");
 }
 
-
 Test(AND, emulationTest)
 {
 	Init()
@@ -46,5 +45,29 @@ Test(AND, emulationTest)
 	cr_assert_eq(snes.cpu->_registers.a, 0b00110011, "The flags should be 0b00110011 but it was %x", snes.cpu->_registers.a);
 	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should not be set.");
 	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flag should not be set.");
+}
+
+Test(TSB, emulationTest)
+{
+	Init()
+	snes.wram->_data[0] = 0b00110011;
+	snes.cpu->_registers.a = 0b00110111;
+	snes.cpu->_registers.p.m = true;
+	snes.cpu->TSB(0x0, ComSquare::CPU::AddressingMode::Implied);
+	cr_assert_eq(snes.wram->_data[0], 0b00110111, "The data in ram should be 0b00110111 but it was %x", snes.wram->_data[0]);
+	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should not be set.");
+}
+
+Test(TSB, nativeTest)
+{
+	Init()
+	snes.wram->_data[0] = 0xF0;
+	snes.wram->_data[1] = 0x0F;
+	snes.cpu->_registers.a = 0x8008;
+	snes.cpu->_registers.p.m = false;
+	snes.cpu->TSB(0x0, ComSquare::CPU::AddressingMode::Implied);
+	cr_assert_eq(snes.wram->_data[0], 0xF8, "The first data in ram should be 0xF8 but it was %x", snes.wram->_data[0]);
+	cr_assert_eq(snes.wram->_data[1], 0x8F, "The second data in ram should be 0x8F but it was %x", snes.wram->_data[1]);
+	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should not be set.");
 }
 
