@@ -411,6 +411,10 @@ namespace ComSquare::CPU
 		int TXA(uint24_t, AddressingMode);
 		//! @brief Transfer Y to A
 		int TYA(uint24_t, AddressingMode);
+		//! @brief Transfer X to Y
+		int TXY(uint24_t, AddressingMode);
+		//! @brief Transfer Y to X
+		int TYX(uint24_t, AddressingMode);
 
 		//! @brief All the instructions of the CPU.
 		//! @info Instructions are indexed by their opcode
@@ -570,7 +574,7 @@ namespace ComSquare::CPU
 			{&CPU::TYA, 2, "tya", AddressingMode::Implied, 1}, // 98
 			{&CPU::STA, 5, "sta", AddressingMode::AbsoluteIndexedByY, 3}, // 99
 			{&CPU::TXS, 2, "txs", AddressingMode::Implied, 1}, // 9A
-			{&CPU::BRK, 7, "txy #-#", AddressingMode::Implied, 2}, // 9B
+			{&CPU::TXY, 2, "txy", AddressingMode::Implied, 1}, // 9B
 			{&CPU::STZ, 4, "stz", AddressingMode::Absolute, 3}, // 9C
 			{&CPU::STA, 5, "sta", AddressingMode::AbsoluteIndexedByX, 3}, // 9D
 			{&CPU::STZ, 5, "stz", AddressingMode::AbsoluteIndexedByX, 3}, // 9E
@@ -602,7 +606,7 @@ namespace ComSquare::CPU
 			{&CPU::CLV, 7, "clv", AddressingMode::Implied, 1}, // B8
 			{&CPU::LDA, 4, "lda", AddressingMode::AbsoluteIndexedByY, 3}, // B9
 			{&CPU::TSX, 2, "tsx", AddressingMode::Implied, 1}, // BA
-			{&CPU::BRK, 7, "tyx #-#", AddressingMode::Implied, 2}, // BB
+			{&CPU::TYX, 2, "tyx", AddressingMode::Implied, 1}, // BB
 			{&CPU::LDY, 4, "ldy", AddressingMode::AbsoluteIndexedByX, 3}, // BC
 			{&CPU::LDA, 4, "lda", AddressingMode::AbsoluteIndexedByX, 3}, // BD
 			{&CPU::LDX, 4, "ldx", AddressingMode::AbsoluteIndexedByY, 3}, // BE

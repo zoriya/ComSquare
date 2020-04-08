@@ -124,4 +124,30 @@ namespace ComSquare::CPU
 		this->_registers.p.z = this->_registers.a == 0;
 		return 0;
 	}
+
+	int CPU::TXY(uint24_t, AddressingMode)
+	{
+		unsigned negativeFlag = this->_registers.p.x_b ? 0x80u : 0x8000u;
+
+		if (this->_registers.p.x_b)
+			this->_registers.yl = this->_registers.xl;
+		else
+			this->_registers.y = this->_registers.x;
+		this->_registers.p.n = this->_registers.y & negativeFlag;
+		this->_registers.p.z = this->_registers.y == 0;
+		return 0;
+	}
+
+	int CPU::TYX(uint24_t, AddressingMode)
+	{
+		unsigned negativeFlag = this->_registers.p.x_b ? 0x80u : 0x8000u;
+
+		if (this->_registers.p.x_b)
+			this->_registers.xl = this->_registers.yl;
+		else
+			this->_registers.x = this->_registers.y;
+		this->_registers.p.n = this->_registers.y & negativeFlag;
+		this->_registers.p.z = this->_registers.y == 0;
+		return 0;
+	}
 }

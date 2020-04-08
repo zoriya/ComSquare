@@ -384,3 +384,55 @@ Test(TYA, double16bits)
 	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flag should be set.");
 	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should be not set.");
 }
+
+Test(TXY, emulationMode)
+{
+	Init()
+	snes.cpu->_isEmulationMode = true;
+	snes.cpu->_registers.p.x_b = true;
+	snes.cpu->_registers.x = 0x0BCD;
+	snes.cpu->_registers.y = 0x5656;
+	snes.cpu->TXY(0x0, ComSquare::CPU::AddressingMode::Implied);
+	cr_assert_eq(snes.cpu->_registers.y, 0x56CD, "The y index should be 0x56CD but it was %x", snes.cpu->_registers.y);
+	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flag should be set.");
+	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should be not set.");
+}
+
+Test(TXY, nativeMode)
+{
+	Init()
+	snes.cpu->_isEmulationMode = false;
+	snes.cpu->_registers.p.x_b = false;
+	snes.cpu->_registers.x = 0xAB0D;
+	snes.cpu->_registers.y = 0x5656;
+	snes.cpu->TXY(0x0, ComSquare::CPU::AddressingMode::Implied);
+	cr_assert_eq(snes.cpu->_registers.y, 0xAB0D, "The y index should be 0xAB0D but it was %x", snes.cpu->_registers.y);
+	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flag should be set.");
+	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should be not set.");
+}
+
+Test(TYX, emulationMode)
+{
+	Init()
+	snes.cpu->_isEmulationMode = true;
+	snes.cpu->_registers.p.x_b = true;
+	snes.cpu->_registers.y = 0x0BCD;
+	snes.cpu->_registers.x = 0x5656;
+	snes.cpu->TYX(0x0, ComSquare::CPU::AddressingMode::Implied);
+	cr_assert_eq(snes.cpu->_registers.x, 0x56CD, "The x index should be 0x56CD but it was %x", snes.cpu->_registers.x);
+	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flag should be set.");
+	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should be not set.");
+}
+
+Test(TYX, nativeMode)
+{
+	Init()
+	snes.cpu->_isEmulationMode = false;
+	snes.cpu->_registers.p.x_b = false;
+	snes.cpu->_registers.y = 0xAB0D;
+	snes.cpu->_registers.x = 0x5656;
+	snes.cpu->TYX(0x0, ComSquare::CPU::AddressingMode::Implied);
+	cr_assert_eq(snes.cpu->_registers.x, 0xAB0D, "The x index should be 0xAB0D but it was %x", snes.cpu->_registers.x);
+	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flag should be set.");
+	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should be not set.");
+}
