@@ -41,9 +41,6 @@ namespace ComSquare::CPU
 		StackRelativeIndirectIndexedByY,
 
 
-		ProgramCounterRelative,
-		ProgramCounterRelativeLong,
-
 		AbsoluteIndirect,
 		AbsoluteIndirectIndexedByX,
 

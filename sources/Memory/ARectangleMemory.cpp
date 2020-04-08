@@ -5,6 +5,7 @@
 #include <iostream>
 #include "ARectangleMemory.hpp"
 #include "../Exceptions/InvalidAddress.hpp"
+#include "../Utility/Utility.hpp"
 
 namespace ComSquare::Memory
 {

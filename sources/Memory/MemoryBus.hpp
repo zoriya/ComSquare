@@ -22,19 +22,21 @@ namespace ComSquare
 			//! @brief The list of components registered inside the bus. Every components that can read/write to a public address should be in this vector.
 			std::vector<std::shared_ptr<AMemory>> _memoryAccessors;
 
-			//! @brief The last value read via the memory bus.
-			uint8_t _openBus = 0;
-
 			//! @brief WRam, CPU, PPU & APU registers are mirrored to all banks of Q1 & Q3. This function is used for the mirroring.
 			//! @param console All the components.
 			//! @param i Base address for the mirrors.
 			void _mirrorComponents(SNES &console, unsigned i);
-
+		protected:
+			//! @brief The last value read via the memory bus.
+			uint8_t _openBus = 0;
 		public:
 			MemoryBus() = default;
 			MemoryBus(const MemoryBus &) = default;
 			MemoryBus &operator=(const MemoryBus &) = default;
 			~MemoryBus() = default;
+
+			//! @brief Force silencing read to the bus.
+			bool forceSilence = false;
 
 			//! @brief Read data at a global address.
 			//! @param addr The address to read from.
