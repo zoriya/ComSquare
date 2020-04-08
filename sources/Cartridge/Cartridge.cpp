@@ -15,22 +15,18 @@ namespace ComSquare::Cartridge
 	Cartridge::Cartridge(const std::string &romPath)
 		: Ram::Ram(0, Rom, "Cartridge")
 	{
-		try {
-			if (romPath.empty())
-				throw InvalidRomException("Path is empty.");
-			size_t size = Cartridge::getRomSize(romPath);
-			FILE *rom = fopen(romPath.c_str(), "rb");
+		if (romPath.empty())
+			throw InvalidRomException("Path is empty.");
+		size_t size = Cartridge::getRomSize(romPath);
+		FILE *rom = fopen(romPath.c_str(), "rb");
 
-			if (!rom)
-				throw InvalidRomException("Could not open the rom file at " + romPath + ". " + strerror(errno));
-			this->_size = size;
-			this->_data = new uint8_t[size];
-			std::memset(this->_data, 0, size);
-			fread(this->_data, 1, size, rom);
-			this->_loadHeader();
-		} catch (InvalidRomException &ex) {
-			std::cerr << "Invalid Rom Error: " << ex.what() << std::endl;
-		}
+		if (!rom)
+			throw InvalidRomException("Could not open the rom file at " + romPath + ". " + strerror(errno));
+		this->_size = size;
+		this->_data = new uint8_t[size];
+		std::memset(this->_data, 0, size);
+		fread(this->_data, 1, size, rom);
+		this->_loadHeader();
 	}
 
 	size_t Cartridge::getRomSize(const std::string &romPath)

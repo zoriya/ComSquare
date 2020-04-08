@@ -12,7 +12,7 @@ namespace ComSquare::Debugger
 {
 	APUDebug::APUDebug(APU &apu, SNES &snes) :
 			APU(apu),
-			_window(new ClosableWindow(*this, &APUDebug::disableDebugger)),
+			_window(new ClosableWindow<APUDebug>(*this, &APUDebug::disableDebugger)),
 			_ui(),
 			_snes(snes)
 	{

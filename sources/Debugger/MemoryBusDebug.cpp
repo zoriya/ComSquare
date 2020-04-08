@@ -12,7 +12,7 @@ namespace ComSquare::Debugger
 {
 	MemoryBusDebug::MemoryBusDebug(SNES &snes, const Memory::MemoryBus &bus)
 		: MemoryBus(bus),
-		_window(new ClosableWindow(*this, &MemoryBusDebug::disableViewer)),
+		_window(new ClosableWindow<MemoryBusDebug>(*this, &MemoryBusDebug::disableViewer)),
 		_snes(snes),
 		_ui(),
 		_model(),
@@ -25,6 +25,8 @@ namespace ComSquare::Debugger
 		this->_ui.setupUi(this->_window);
 		this->_proxy.setSourceModel(&this->_model);
 		this->_ui.log->setModel(&this->_proxy);
+		this->_ui.log->setAlternatingRowColors(true);
+		this->_ui.log->verticalHeader()->hide();
 		this->_ui.log->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
 		this->_ui.log->horizontalHeader()->setStretchLastSection(true);
 		this->_ui.log->horizontalHeader()->setSectionsMovable(true);

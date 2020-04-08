@@ -12,11 +12,17 @@
 
 namespace ComSquare::Utility
 {
-	std::string to_hex(uint8_t i);
+	enum HexString {
+		NoPrefix,
+		AsmPrefix,
+		StandardPrefix
+	};
 
-	std::string to_hex(uint16_t i);
+	std::string to_hex(uint8_t i, HexString prefix = StandardPrefix);
 
-	std::string to_hex(uint24_t i);
+	std::string to_hex(uint16_t i, HexString prefix = StandardPrefix);
+
+	std::string to_hex(uint24_t i, HexString prefix = StandardPrefix);
 
 	std::string to_binary(uint8_t i);
 
