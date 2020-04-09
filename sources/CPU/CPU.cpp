@@ -211,96 +211,69 @@ namespace ComSquare::CPU
 		return cycles;
 	}
 
+	uint24_t CPU::_getValueAddr(Instruction &instruction)
+	{
+		switch (instruction.addressingMode) {
+		case Implied:
+			return 0;
+		case Immediate8bits:
+			return this->_getImmediateAddr8Bits();
+		case ImmediateForA:
+			return this->_getImmediateAddrForA();
+		case ImmediateForX:
+			return this->_getImmediateAddrForX();
+
+		case Absolute:
+			return this->_getAbsoluteAddr();
+		case AbsoluteLong:
+			return this->_getAbsoluteLongAddr();
+		case AbsoluteIndirect:
+			return this->_getAbsoluteIndirectAddr();
+		case AbsoluteIndirectLong:
+			return this->_getAbsoluteIndirectLongAddr();
+
+		case DirectPage:
+			return this->_getDirectAddr();
+		case DirectPageIndirect:
+			return this->_getDirectIndirectAddr();
+		case DirectPageIndirectLong:
+			return this->_getDirectIndirectLongAddr();
+
+		case DirectPageIndexedByX:
+			return this->_getDirectIndexedByXAddr();
+		case DirectPageIndexedByY:
+			return this->_getDirectIndexedByYAddr();
+		case DirectPageIndirectIndexedByX:
+			return this->_getDirectIndirectIndexedXAddr();
+		case DirectPageIndirectIndexedByY:
+			return this->_getDirectIndirectIndexedYAddr();
+		case DirectPageIndirectIndexedByYLong:
+			return this->_getDirectIndirectIndexedYLongAddr();
+
+		case AbsoluteIndexedByX:
+			return this->_getAbsoluteIndexedByXAddr();
+		case AbsoluteIndexedByXLong:
+			return this->_getAbsoluteIndexedByXLongAddr();
+		case AbsoluteIndexedByY:
+			return this->_getAbsoluteIndexedByYAddr();
+
+		case StackRelative:
+			return this->_getStackRelativeAddr();
+		case StackRelativeIndirectIndexedByY:
+			return this->_getStackRelativeIndirectIndexedYAddr();
+
+		case AbsoluteIndirectIndexedByX:
+			return this->_getAbsoluteIndirectIndexedByXAddr();
+		default:
+			return 0;
+		}
+	}
+
 	unsigned CPU::_executeInstruction(uint8_t opcode)
 	{
 		Instruction instruction = this->_instructions[opcode];
-		uint24_t valueAddr = 0;
-
 		this->_hasIndexCrossedPageBoundary = false;
-
-		switch (instruction.addressingMode) {
-		case Implied:
-			break;
-		case Immediate8bits:
-			valueAddr = this->_getImmediateAddr8Bits();
-			break;
-		case ImmediateForA:
-			valueAddr = this->_getImmediateAddrForA();
-			break;
-		case ImmediateForX:
-			valueAddr = this->_getImmediateAddrForX();
-			break;
-
-			// TODO implement the relative addressing mode
-			// TODO implement the relative long addressing mode
-
-		case Absolute:
-			valueAddr = this->_getAbsoluteAddr();
-			break;
-		case AbsoluteLong:
-			valueAddr = this->_getAbsoluteLongAddr();
-			break;
-		case AbsoluteIndirect:
-			valueAddr = this->_getAbsoluteIndirectAddr();
-			break;
-
-			//TODO implement absolute indirect long addressing mode
-
-		case DirectPage:
-			valueAddr = this->_getDirectAddr();
-			break;
-		case DirectPageIndirect:
-			valueAddr = this->_getDirectIndirectAddr();
-			break;
-		case DirectPageIndirectLong:
-			valueAddr = this->_getDirectIndirectLongAddr();
-			break;
-
-		case DirectPageIndexedByX:
-			valueAddr = this->_getDirectIndexedByXAddr();
-			break;
-		case DirectPageIndexedByY:
-			valueAddr = this->_getDirectIndexedByYAddr();
-			break;
-		case DirectPageIndirectIndexedByX:
-			valueAddr = this->_getDirectIndirectIndexedXAddr();
-			break;
-		case DirectPageIndirectIndexedByY:
-			valueAddr = this->_getDirectIndirectIndexedYAddr();
-			break;
-		case DirectPageIndirectIndexedByYLong:
-			valueAddr = this->_getDirectIndirectIndexedYLongAddr();
-			break;
-
-		case AbsoluteIndexedByX:
-			valueAddr = this->_getAbsoluteIndexedByXAddr();
-			break;
-		case AbsoluteIndexedByXLong:
-			valueAddr = this->_getAbsoluteIndexedByXLongAddr();
-			break;
-		case AbsoluteIndexedByY:
-			valueAddr = this->_getAbsoluteIndexedByYAddr();
-			break;
-
-		case StackRelative:
-			valueAddr = this->_getStackRelativeAddr();
-			break;
-		case StackRelativeIndirectIndexedByY:
-			valueAddr = this->_getStackRelativeIndirectIndexedYAddr();
-			break;
-
-		case ProgramCounterRelative:
-			valueAddr = this->_getProgramCounterRelativeAddr();
-			break;
-		case ProgramCounterRelativeLong:
-			valueAddr = this->_getProgramCounterRelativeLongAddr();
-			break;
-		case AbsoluteIndirectIndexedByX:
-			valueAddr = this->_getAbsoluteIndirectIndexedByXAddr();
-			break;
-		default:
-			break;
-		}
+		uint24_t valueAddr = this->_getValueAddr(instruction);
 
 		return instruction.cycleCount + (this->*instruction.call)(valueAddr, instruction.addressingMode);
 	}

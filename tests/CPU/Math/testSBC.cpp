@@ -62,7 +62,7 @@ Test(SBC, overflowEmulation)
 	Init()
 	snes.cpu->_isEmulationMode = true;
 	snes.cpu->_registers.a = 0x1;
-	snes.cpu->_registers.p.m = false;
+	snes.cpu->_registers.p.m = true;
 	snes.cpu->_registers.p.c = false;
 	snes.wram->_data[0] = 0x02;
 	snes.cpu->SBC(0x0, ComSquare::CPU::AddressingMode::Implied);

@@ -3,6 +3,7 @@
 //
 
 #include "RectangleShadow.hpp"
+#include "../Utility/Utility.hpp"
 
 #include <utility>
 #include <iostream>
@@ -17,13 +18,13 @@ namespace ComSquare::Memory
 
 	uint8_t RectangleShadow::read_internal(uint24_t addr)
 	{
-		addr += this->_bankOffset << 16u;
+		addr += this->_bankOffset * (this->_endPage - this->_startPage);
 		return this->_initial->read_internal(addr);
 	}
 
 	void RectangleShadow::write_internal(uint24_t addr, uint8_t data)
 	{
-		addr += this->_bankOffset << 16u;
+		addr += this->_bankOffset * (this->_endPage - this->_startPage);
 		this->_initial->write_internal(addr, data);
 	}
 
