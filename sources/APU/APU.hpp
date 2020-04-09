@@ -264,31 +264,31 @@ namespace ComSquare::APU
 		int RETI();
 
 		//! @brief Branch Always, go to the specified location from the next instruction.
-		int BRA();
+		int BRA(int8_t offset);
 		//! @brief Branch if Zero Flag is set.
-		int BEQ();
+		int BEQ(int8_t offset);
 		//! @brief Branch if Zero Flag is clear.
-		int BNE();
+		int BNE(int8_t offset);
 		//! @brief Branch if Carry Flag is set.
-		int BCS();
+		int BCS(int8_t offset);
 		//! @brief Branch if Carry Flag is clear.
-		int BCC();
+		int BCC(int8_t offset);
 		//! @brief Branch if Overflow Flag is set.
-		int BVS();
+		int BVS(int8_t offset);
 		//! @brief Branch if Overflow Flag is set.
-		int BVC();
+		int BVC(int8_t offset);
 		//! @brief Branch if Negative Flag is set.
-		int BMI();
+		int BMI(int8_t offset);
 		//! @brief Branch if Negative Flag is clear.
-		int BPL();
+		int BPL(int8_t offset);
 		//! @brief Branch if the specified is set in the address, go to the specified location from the next instruction.
-		int BBS(uint24_t addr, uint8_t bit);
+		int BBS(uint24_t addr, uint8_t bit, int8_t offset);
 		//! @brief Branch if the specified is clear in the address, go to the specified location from the next instruction.
-		int BBC(uint24_t addr, uint8_t bit);
+		int BBC(uint24_t addr, uint8_t bit, int8_t offset);
 		//! @brief Branch if the value at the specified address is not equal to the Accumulator Flag.
-		int CBNE(uint24_t addr, bool by_x = false);
+		int CBNE(uint24_t addr, int8_t offset, bool by_x = false);
 		//! @brief Decrement a value then branch to the specified location if the value is not zero.
-		int DBNZ(bool direct_addr = false);
+		int DBNZ(int8_t offset, bool direct_addr = false);
 		//! @brief Jump to the specified location.
 		int JMP(uint24_t addr, bool by_x = false);
 
@@ -363,9 +363,9 @@ namespace ComSquare::APU
 		int CMPreg(uint8_t  &reg, uint24_t addr, int cycles);
 
 		int MOV(uint8_t &regFrom, uint8_t &regTo, bool setFlags = true);
-		int MOV(uint24_t memFrom, uint24_t memTo);
 		int MOV(uint8_t &regFrom, uint24_t memTo, int cycles, bool incrementX = false);
 		int MOV(uint24_t memFrom, uint8_t &regTo, int cycles, bool incrementX = false);
+		int MOV(uint24_t memTo, uint24_t memFrom);
 	public:
 		explicit APU(std::shared_ptr<MemoryMap> &map);
 		APU(const APU &) = default;

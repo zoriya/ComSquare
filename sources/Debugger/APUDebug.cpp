@@ -35,11 +35,11 @@ namespace ComSquare::Debugger
 		this->_ui.port1hexaLineEdit->setText(Utility::to_hex(this->_registers.port1).c_str());
 		this->_ui.port1LineEdit->setText(Utility::to_binary(this->_registers.port1).c_str());
 
-		this->_ui.port2hexaLineEdit->setText(Utility::to_hex(this->_registers.port1).c_str());
-		this->_ui.port2LineEdit->setText(Utility::to_binary(this->_registers.port1).c_str());
+		this->_ui.port2hexaLineEdit->setText(Utility::to_hex(this->_registers.port2).c_str());
+		this->_ui.port2LineEdit->setText(Utility::to_binary(this->_registers.port2).c_str());
 
-		this->_ui.port3hexaLineEdit->setText(Utility::to_hex(this->_registers.port1).c_str());
-		this->_ui.port3LineEdit->setText(Utility::to_binary(this->_registers.port1).c_str());
+		this->_ui.port3hexaLineEdit->setText(Utility::to_hex(this->_registers.port2).c_str());
+		this->_ui.port3LineEdit->setText(Utility::to_binary(this->_registers.port2).c_str());
 
 		this->_ui.controlhexaLineEdit->setText(Utility::to_hex(this->_registers.ctrlreg).c_str());
 		this->_ui.controlLineEdit->setText(Utility::to_binary(this->_registers.ctrlreg).c_str());
@@ -475,6 +475,8 @@ namespace ComSquare::Debugger
 
 	int APUDebug::_executeInstruction()
 	{
+		int cycles = 0;
+
 		if (this->_isPaused)
 			return 0xFF;
 		if (this->_isStepping) {
@@ -482,8 +484,9 @@ namespace ComSquare::Debugger
 			this->_isPaused = true;
 		}
 		this->_ui.logger->append(APUDebug::_getInstructionString().c_str());
+		cycles = APU::_executeInstruction();
 		this->_updatePanel();
-		return APU::_executeInstruction();
+		return cycles;
 	}
 
 	void APUDebug::update(unsigned cycles)
