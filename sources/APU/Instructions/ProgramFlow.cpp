@@ -76,7 +76,7 @@ namespace ComSquare::APU
 		return 4;
 	}
 
-	int APU::BBS(uint24_t addr, uint8_t bit, int8_t offset)
+	int APU::BBS(uint24_t addr,  int8_t offset, uint8_t bit)
 	{
 		uint8_t data = this->_internalRead(addr);
 
@@ -86,7 +86,7 @@ namespace ComSquare::APU
 		return 7;
 	}
 
-	int APU::BBC(uint24_t addr, uint8_t bit, int8_t offset)
+	int APU::BBC(uint24_t addr, int8_t offset, uint8_t bit)
 	{
 		uint8_t data = this->_internalRead(addr);
 

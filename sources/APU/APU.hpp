@@ -282,9 +282,9 @@ namespace ComSquare::APU
 		//! @brief Branch if Negative Flag is clear.
 		int BPL(int8_t offset);
 		//! @brief Branch if the specified is set in the address, go to the specified location from the next instruction.
-		int BBS(uint24_t addr, uint8_t bit, int8_t offset);
+		int BBS(uint24_t addr, int8_t offset, uint8_t bit);
 		//! @brief Branch if the specified is clear in the address, go to the specified location from the next instruction.
-		int BBC(uint24_t addr, uint8_t bit, int8_t offset);
+		int BBC(uint24_t addr, int8_t offset, uint8_t bit);
 		//! @brief Branch if the value at the specified address is not equal to the Accumulator Flag.
 		int CBNE(uint24_t addr, int8_t offset, bool by_x = false);
 		//! @brief Decrement a value then branch to the specified location if the value is not zero.

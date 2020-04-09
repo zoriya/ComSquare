@@ -472,7 +472,7 @@ namespace ComSquare::APU
 		case 0x8E:
 			return this->POP(this->_internalRegisters.psw);
 		case 0x8F:
-			return this->MOV(this->_getImmediateData(), this->_getDirectAddr());
+			return this->MOV(this->_getDirectAddr(), this->_getImmediateData());
 		case 0x90:
 			return this->BCC(this->_getImmediateData());
 		case 0x91:
