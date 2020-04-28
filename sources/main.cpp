@@ -20,8 +20,6 @@ void usage(char *bin)
 		<< "\t-m, --memory: \tEnable the memory viewer panel." << std::endl
 		<< "\t-h, --header: \tShow the header of the cartridge." << std::endl
 		<< "\t-b, --bus:    \tShow the memory bus's log." << std::endl;
-		<< "\t-b, --bus:    \tShow the memory bus's log." << std::endl
-		<< "\t-g, --cgram:  \tShow the palette viewer." << std::endl;
 }
 
 void parseArguments(int argc, char **argv, SNES &snes)
@@ -34,11 +32,10 @@ void parseArguments(int argc, char **argv, SNES &snes)
 			{"memory", no_argument, 0, 'm'},
 			{"header", no_argument, 0, 'h'},
 			{"bus",    no_argument, 0, 'b'},
-			{"cgram",  no_argument, 0, 'g'},
 			{0, 0,                  0, 0}
 		};
 
-		int c = getopt_long(argc, argv, "camhbg", long_options, &option_index);
+		int c = getopt_long(argc, argv, "camhb", long_options, &option_index);
 		if (c == -1)
 			break;
 		switch (c) {
@@ -59,9 +56,6 @@ void parseArguments(int argc, char **argv, SNES &snes)
 			break;
 		case 'b':
 			snes.enableMemoryBusDebugging();
-			break;
-		case 'g':
-			snes.enableCgramDebugging();
 			break;
 		default:
 			break;

@@ -5,7 +5,6 @@
 #ifndef COMSQUARE_CPU_HPP
 #define COMSQUARE_CPU_HPP
 
-#include <iostream>
 #include "../Memory/AMemory.hpp"
 #include "../Memory/MemoryBus.hpp"
 #include "../Models/Int24.hpp"

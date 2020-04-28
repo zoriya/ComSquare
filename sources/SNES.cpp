@@ -6,10 +6,9 @@
 #include <iostream>
 #include "SNES.hpp"
 #ifdef DEBUGGER_ENABLED
-#include "Debugger/CPU/CPUDebug.hpp"
+#include "Debugger/CPUDebug.hpp"
 #include "Debugger/APUDebug.hpp"
 #include "Debugger/MemoryBusDebug.hpp"
-#include "Debugger/CGramDebug.hpp"
 
 #endif
 
@@ -135,23 +134,6 @@ namespace ComSquare
 			this->cpu->setMemoryBus(this->_bus);
 		#else
 			std::cerr << "Debugging features are not enabled. You can't enable the debugger." << std::endl;
-		#endif
-	}
-
-	void SNES::enableCgramDebugging()
-	{
-		#ifdef DEBUGGER_ENABLED
-			if (this->_cgramViewer)
-				this->_cgramViewer->focus();
-			else
-				this->_cgramViewer = std::make_unique<Debugger::CGramDebug>(*this, *this->ppu);
-		#endif
-	}
-
-	void SNES::disableCgramDebugging()
-	{
-		#ifdef DEBUGGER_ENABLED
-			this->_cgramViewer = nullptr;
 		#endif
 	}
 }
