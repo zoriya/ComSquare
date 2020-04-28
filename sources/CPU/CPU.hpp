@@ -419,6 +419,8 @@ namespace ComSquare::CPU
 		int TSB(uint24_t, AddressingMode);
 		//! @brief Exchange the B and A Accumulators
 		int XBA(uint24_t, AddressingMode);
+		//! @brief Test Memory Bits against Accumulator
+		int BIT(uint24_t, AddressingMode);
 
 		//! @brief All the instructions of the CPU.
 		//! @info Instructions are indexed by their opcode
@@ -459,7 +461,7 @@ namespace ComSquare::CPU
 			{&CPU::AND, 6, "and", AddressingMode::DirectPageIndirectIndexedByX, 2}, // 21
 			{&CPU::JSL, 8, "jsl", AddressingMode::AbsoluteLong, 4}, // 22
 			{&CPU::AND, 4, "and", AddressingMode::StackRelative, 2}, // 23
-			{&CPU::BRK, 7, "bit #-#", AddressingMode::Implied, 2}, // 24
+			{&CPU::BIT, 3, "bit", AddressingMode::DirectPage, 2}, // 24
 			{&CPU::AND, 3, "and", AddressingMode::DirectPage, 2}, // 25
 			{&CPU::BRK, 7, "rol #-#", AddressingMode::Implied, 2}, // 26
 			{&CPU::AND, 6, "and", AddressingMode::DirectPageIndirectLong, 2}, // 27
@@ -467,7 +469,7 @@ namespace ComSquare::CPU
 			{&CPU::AND, 2, "and", AddressingMode::ImmediateForA, 2}, // 29
 			{&CPU::BRK, 7, "rol #-#", AddressingMode::Implied, 2}, // 2A
 			{&CPU::PLD, 5, "pld", AddressingMode::Implied, 1}, // 2B
-			{&CPU::BRK, 7, "bit #-#", AddressingMode::Implied, 2}, // 2C
+			{&CPU::BIT, 4, "bit", AddressingMode::Absolute, 3}, // 2C
 			{&CPU::AND, 4, "and", AddressingMode::Absolute, 3}, // 2D
 			{&CPU::BRK, 7, "rol #-#", AddressingMode::Implied, 2}, // 2E
 			{&CPU::AND, 5, "and", AddressingMode::AbsoluteLong, 4}, // 2F
@@ -475,7 +477,7 @@ namespace ComSquare::CPU
 			{&CPU::AND, 5, "and", AddressingMode::DirectPageIndirectIndexedByY, 2}, // 31
 			{&CPU::AND, 5, "and", AddressingMode::DirectPageIndirect, 2}, // 32
 			{&CPU::AND, 7, "and", AddressingMode::StackRelativeIndirectIndexedByY, 2}, // 33
-			{&CPU::BRK, 7, "bit #-#", AddressingMode::Implied, 2}, // 34
+			{&CPU::BIT, 4, "bit", AddressingMode::DirectPageIndexedByX, 2}, // 34
 			{&CPU::AND, 4, "and", AddressingMode::DirectPageIndexedByX, 2}, // 35
 			{&CPU::BRK, 7, "rol #-#", AddressingMode::Implied, 2}, // 36
 			{&CPU::AND, 6, "and", AddressingMode::DirectPageIndirectIndexedByYLong, 2}, // 37
@@ -483,7 +485,7 @@ namespace ComSquare::CPU
 			{&CPU::AND, 4, "and", AddressingMode::AbsoluteIndexedByY, 3}, // 39
 			{&CPU::DEC, 2, "dec", AddressingMode::Implied, 1}, // 3A
 			{&CPU::TSC, 2, "tsc", AddressingMode::Implied, 1}, // 3B
-			{&CPU::BRK, 7, "bit #-#", AddressingMode::Implied, 2}, // 3C
+			{&CPU::BIT, 4, "bit", AddressingMode::AbsoluteIndexedByX, 3}, // 3C
 			{&CPU::AND, 4, "and", AddressingMode::AbsoluteIndexedByX, 3}, // 3D
 			{&CPU::BRK, 7, "rol #-#", AddressingMode::Implied, 2}, // 3E
 			{&CPU::AND, 5, "and", AddressingMode::AbsoluteIndexedByXLong, 4}, // 3F
@@ -560,7 +562,7 @@ namespace ComSquare::CPU
 			{&CPU::STX, 3, "stx", AddressingMode::DirectPage, 2}, // 86
 			{&CPU::STA, 6, "sta", AddressingMode::DirectPageIndirectLong, 2}, // 87
 			{&CPU::DEY, 2, "dey", AddressingMode::Implied, 1}, // 88
-			{&CPU::BRK, 7, "bit #-#", AddressingMode::Implied, 2}, // 89
+			{&CPU::BIT, 2, "bit", AddressingMode::ImmediateForA, 2}, // 89
 			{&CPU::TXA, 2, "txa", AddressingMode::Implied, 2}, // 8A
 			{&CPU::PHB, 3, "phb", AddressingMode::Implied, 1}, // 8B
 			{&CPU::STY, 4, "sty", AddressingMode::Absolute, 3}, // 8C

@@ -27,4 +27,32 @@ namespace ComSquare::CPU
 			cycles += this->_registers.dl != 0;
 		return cycles;
 	}
+
+	int CPU::BIT(uint24_t valueAddr, AddressingMode mode)
+	{
+		unsigned negativeMask = this->_registers.p.m ? 0x80u : 0x8000u;
+		unsigned value = this->_bus->read(valueAddr);
+		if (!this->_registers.p.m)
+			value += this->_bus->read(valueAddr + 1) << 8u;
+
+		if (mode != ImmediateForA) {
+			this->_registers.p.n = value & negativeMask;
+			this->_registers.p.v = value & (negativeMask >> 1u);
+		}
+		this->_registers.p.z = (value & this->_registers.a) == 0;
+
+		int cycles = !this->_registers.p.m;
+		switch (mode) {
+		case DirectPage:
+		case DirectPageIndexedByX:
+			cycles += this->_registers.dl != 0;
+			break;
+		case AbsoluteIndexedByX:
+			cycles += this->_hasIndexCrossedPageBoundary;
+			break;
+		default:
+			break;
+		}
+		return cycles;
+	}
 }

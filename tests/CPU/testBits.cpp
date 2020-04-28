@@ -71,3 +71,47 @@ Test(TSB, nativeTest)
 	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should not be set.");
 }
 
+Test(BIT, immediate)
+{
+	Init()
+	snes.wram->_data[0] = 0xFF;
+	snes.wram->_data[1] = 0x00;
+	snes.cpu->_registers.p.m = false;
+	snes.cpu->_registers.a = 0x8008;
+	snes.cpu->_registers.p.v = false;
+	snes.cpu->_registers.p.n = false;
+	snes.cpu->BIT(0x0, ComSquare::CPU::AddressingMode::ImmediateForA);
+	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should not be set.");
+	cr_assert_eq(snes.cpu->_registers.p.v, false, "The overflow flag should not be set.");
+	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flag should not be set.");
+}
+
+Test(BIT, immediateZero)
+{
+	Init()
+	snes.wram->_data[0] = 0x00;
+	snes.wram->_data[1] = 0xFF;
+	snes.cpu->_registers.p.m = false;
+	snes.cpu->_registers.a = 0x0008;
+	snes.cpu->_registers.p.v = true;
+	snes.cpu->_registers.p.n = true;
+	snes.cpu->BIT(0x0, ComSquare::CPU::AddressingMode::ImmediateForA);
+	cr_assert_eq(snes.cpu->_registers.p.z, true, "The zero flag should be set.");
+	cr_assert_eq(snes.cpu->_registers.p.v, true, "The overflow flag should be set.");
+	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flag should be set.");
+}
+
+Test(BIT, other)
+{
+	Init()
+	snes.wram->_data[0] = 0x00;
+	snes.wram->_data[1] = 0xFF;
+	snes.cpu->_registers.p.m = false;
+	snes.cpu->_registers.a = 0x8008;
+	snes.cpu->_registers.p.v = false;
+	snes.cpu->_registers.p.n = false;
+	snes.cpu->BIT(0x0, ComSquare::CPU::AddressingMode::Implied);
+	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should not be set.");
+	cr_assert_eq(snes.cpu->_registers.p.v, true, "The overflow flag should be set.");
+	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flag should be set.");
+}
