@@ -56,6 +56,8 @@ namespace ComSquare::Memory
 
 	void MemoryBus::mapComponents(SNES &console)
 	{
+		this->_memoryAccessors.clear();
+
 		// The WRam and PU registers are always mapped at the same address no matter the mapping mode.
 		console.wram->setMemoryRegion(0x7E, 0x7F, 0x0000, 0xFFFF);
 		this->_memoryAccessors.push_back(console.wram);

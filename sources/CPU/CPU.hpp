@@ -5,6 +5,7 @@
 #ifndef COMSQUARE_CPU_HPP
 #define COMSQUARE_CPU_HPP
 
+#include <iostream>
 #include "../Memory/AMemory.hpp"
 #include "../Memory/MemoryBus.hpp"
 #include "../Models/Int24.hpp"
@@ -642,6 +643,7 @@ namespace ComSquare::CPU
 		CPU(const CPU &) = default;
 		CPU &operator=(const CPU &) = delete;
 		~CPU() override = default;
+
 		//! @brief This function continue to execute the Cartridge code.
 		//! @return The number of CPU cycles that elapsed
 		virtual unsigned update();
