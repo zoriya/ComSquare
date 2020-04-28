@@ -12,7 +12,7 @@ namespace ComSquare::Memory
 {
 	//! @brief Superset of the AMemory to map non continuous rectangle to the memory. (A rectangle that spam across more than one bank but that does not start at 0000 or end at FFFF).
 	class ARectangleMemory : public AMemory {
-	private:
+	protected:
 		//! @brief The first bank to map to.
 		uint8_t _startBank = 0;
 		//! @brief The last bank to map to.

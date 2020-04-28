@@ -24,16 +24,14 @@ namespace ComSquare::CPU
 	int CPU::BRK(uint24_t, AddressingMode)
 	{
 		if (this->_isEmulationMode) {
-			this->_registers.pc += 2;
 			this->_push(this->_registers.pc);
-			this->_registers.p.x_b = true;
 			this->_push(this->_registers.p.flags);
 			this->_registers.p.i = true;
 			this->_registers.p.d = false;
+			this->_registers.pbr = 0x0;
 			this->_registers.pc = this->_cartridgeHeader.emulationInterrupts.brk;
 		} else {
 			this->_push(this->_registers.pbr);
-			this->_registers.pc += 2;
 			this->_push(this->_registers.pc);
 			this->_push(this->_registers.p.flags);
 			this->_registers.p.i = true;
@@ -47,16 +45,14 @@ namespace ComSquare::CPU
 	int CPU::COP(uint24_t, AddressingMode)
 	{
 		if (this->_isEmulationMode) {
-			this->_registers.pc += 2;
 			this->_push(this->_registers.pc);
 			this->_push(this->_registers.p.flags);
 			this->_registers.p.i = true;
 			this->_registers.p.d = false;
+			this->_registers.pbr = 0x0;
 			this->_registers.pc = this->_cartridgeHeader.emulationInterrupts.cop;
-
 		} else {
 			this->_push(this->_registers.pbr);
-			this->_registers.pc += 2;
 			this->_push(this->_registers.pc);
 			this->_push(this->_registers.p.flags);
 			this->_registers.p.i = true;

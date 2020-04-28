@@ -20,14 +20,14 @@ Test(CPU_emulated, BRK)
 	snes.cpu->_registers.pbr = 0x15;
 	snes.cpu->BRK(0x0, ComSquare::CPU::AddressingMode::Implied);
 	cr_assert_eq(snes.cpu->_registers.pc, 0x123u, "The program counter should be 0x123u but it was 0x%X", snes.cpu->_registers.pc);
-	cr_assert_eq(snes.cpu->_registers.pbr, 0x15, "The PBR should be 0x15 but it was 0x%X", snes.cpu->_registers.pbr);
+	cr_assert_eq(snes.cpu->_registers.pbr, 0x0, "The PBR should be 0x0 but it was 0x%X", snes.cpu->_registers.pbr);
 	cr_assert_eq(snes.cpu->_registers.p.d, false, "The decimal flag should not be set.");
 	cr_assert_eq(snes.cpu->_registers.p.i, true, "The Interrupt disable flag should be set.");
 	cr_assert_eq(snes.cpu->_registers.p.x_b, true, "The break flag should be set.");
 	int data = snes.cpu->_pop();
 	cr_assert_eq(data, 0xF1, "The Status Registers should be pushed into the stack with the value 0xF1 but it was 0x%X  (expected 0xF1).", data);
 	data = snes.cpu->_pop16();
-	cr_assert_eq(data, 0x158u, "The program counter should be incremented by two and pushed on the stack but it was 0x%X (expected 0x158).", data);
+	cr_assert_eq(data, 0x156u, "The program counter should be incremented by two and pushed on the stack but it was 0x%X (expected 0x158).", data);
 }
 
 Test(CPU_native, BRK)
@@ -46,7 +46,7 @@ Test(CPU_native, BRK)
 	int data = snes.cpu->_pop();
 	cr_assert_eq(data, 0xF1, "The Status Registers should be pushed into the stack with the value 0xF1 but it was 0x%X  (expected 0xF1).", data);
 	data = snes.cpu->_pop16();
-	cr_assert_eq(data, 0x158u, "The program counter should be incremented by two and pushed on the stack but it was 0x%X (expected 0x158).", data);
+	cr_assert_eq(data, 0x156u, "The program counter should be incremented by two and pushed on the stack but it was 0x%X (expected 0x156).", data);
 	data = snes.cpu->_pop();
 	cr_assert_eq(data, 0x15, "The program bank register should be pushed on the stack but it was 0x%X  (expected 0x15).", data);
 }
@@ -61,14 +61,14 @@ Test(CPU_emulated, COP)
 	snes.cpu->_registers.pbr = 0x15;
 	snes.cpu->COP(0x0, ComSquare::CPU::AddressingMode::Implied);
 	cr_assert_eq(snes.cpu->_registers.pc, 0x123u, "The program counter should be 0x123u but it was 0x%X", snes.cpu->_registers.pc);
-	cr_assert_eq(snes.cpu->_registers.pbr, 0x15, "The PBR should be 0x15 but it was 0x%X", snes.cpu->_registers.pbr);
+	cr_assert_eq(snes.cpu->_registers.pbr, 0x0, "The PBR should be 0x0 but it was 0x%X", snes.cpu->_registers.pbr);
 	cr_assert_eq(snes.cpu->_registers.p.d, false, "The decimal flag should not be set.");
 	cr_assert_eq(snes.cpu->_registers.p.i, true, "The Interrupt disable flag should be set.");
 	cr_assert_eq(snes.cpu->_registers.p.x_b, false, "The break flag should not be set.");
 	int data = snes.cpu->_pop();
 	cr_assert_eq(data, 0x0F, "The Status Registers should be pushed into the stack with the value 0x0F but it was 0x%X  (expected 0xF1).", data);
 	data = snes.cpu->_pop16();
-	cr_assert_eq(data, 0x158u, "The program counter should be incremented by two and pushed on the stack but it was 0x%X (expected 0x158).", data);
+	cr_assert_eq(data, 0x156u, "The program counter should be incremented by two and pushed on the stack but it was 0x%X (expected 0x158).", data);
 }
 
 Test(CPU_native, COP)
@@ -87,7 +87,7 @@ Test(CPU_native, COP)
 	int data = snes.cpu->_pop();
 	cr_assert_eq(data, 0xF1, "The Status Registers should be pushed into the stack with the value 0xF1 but it was 0x%X  (expected 0xF1).", data);
 	data = snes.cpu->_pop16();
-	cr_assert_eq(data, 0x158u, "The program counter should be incremented by two and pushed on the stack but it was 0x%X (expected 0x158).", data);
+	cr_assert_eq(data, 0x156u, "The program counter should be incremented by two and pushed on the stack but it was 0x%X (expected 0x156).", data);
 	data = snes.cpu->_pop();
 	cr_assert_eq(data, 0x15, "The program bank register should be pushed on the stack but it was 0x%X  (expected 0x15).", data);
 }
