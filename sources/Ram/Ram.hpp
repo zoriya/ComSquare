@@ -6,6 +6,7 @@
 #define COMSQUARE_RAM_HPP
 
 #include "../Memory/ARectangleMemory.hpp"
+#include <string>
 
 namespace ComSquare::Ram
 {
