@@ -685,6 +685,7 @@ namespace ComSquare::CPU
 		CPU(const CPU &) = default;
 		CPU &operator=(const CPU &) = delete;
 		~CPU() override = default;
+
 		//! @brief This function continue to execute the Cartridge code.
 		//! @return The number of CPU cycles that elapsed
 		virtual unsigned update();
