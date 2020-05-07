@@ -38,8 +38,8 @@ namespace ComSquare::Debugger
 		this->_ui.port2hexaLineEdit->setText(Utility::to_hex(this->_registers.port2).c_str());
 		this->_ui.port2LineEdit->setText(Utility::to_binary(this->_registers.port2).c_str());
 
-		this->_ui.port3hexaLineEdit->setText(Utility::to_hex(this->_registers.port2).c_str());
-		this->_ui.port3LineEdit->setText(Utility::to_binary(this->_registers.port2).c_str());
+		this->_ui.port3hexaLineEdit->setText(Utility::to_hex(this->_registers.port3).c_str());
+		this->_ui.port3LineEdit->setText(Utility::to_binary(this->_registers.port3).c_str());
 
 		this->_ui.controlhexaLineEdit->setText(Utility::to_hex(this->_registers.ctrlreg).c_str());
 		this->_ui.controlLineEdit->setText(Utility::to_binary(this->_registers.ctrlreg).c_str());
@@ -81,7 +81,7 @@ namespace ComSquare::Debugger
 		this->_ui.xIndexLineEdit->setText(Utility::to_hex(this->_internalRegisters.x).c_str());
 		this->_ui.yIndexLineEdit->setText(Utility::to_hex(this->_internalRegisters.y).c_str());
 		this->_ui.accumlatorLineEdit->setText(Utility::to_hex(this->_internalRegisters.a).c_str());
-		this->_ui.programCounterLineEdit->setText(Utility::to_hex(this->_internalRegisters.pc).c_str());
+		this->_ui.programCounterLineEdit->setText(Utility::to_hex(this->_internalRegisters.pc + 0x0001u).c_str());
 		this->_ui.programStatusWordLineEdit->setText(this->_getPSWString().c_str());
 
 		this->_ui.mvolLprogressBar->setValue(this->_dsp->getRegisters().mvolL);
