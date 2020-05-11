@@ -370,7 +370,7 @@ namespace ComSquare::APU
 		explicit APU(std::shared_ptr<MemoryMap> &map);
 		APU(const APU &) = default;
 		APU &operator=(const APU &) = default;
-		~APU() = default;
+		~APU() override = default;
 
 		//! @brief Read from the internal APU register.
 		//! @param addr The address to read from. The address 0x00 should refer to the first byte of the register.

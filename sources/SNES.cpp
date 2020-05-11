@@ -43,8 +43,10 @@ namespace ComSquare
 				cpuDebug->focus();
 				if (pause)
 					cpuDebug->pause();
-			} else
+			} else {
 				this->cpu = std::make_shared<Debugger::CPUDebug>(*this->cpu, *this);
+				this->_bus->mapComponents(*this);
+			}
 		#else
 			std::cerr << "Debugging features are not enabled. You can't enable the debugger." << std::endl;
 			(void)pause;
@@ -54,6 +56,7 @@ namespace ComSquare
 	void SNES::disableCPUDebugging()
 	{
 		this->cpu = std::make_shared<CPU::CPU>(*this->cpu);
+		this->_bus->mapComponents(*this);
 	}
 
 	void SNES::enableRamViewer()
@@ -95,8 +98,10 @@ namespace ComSquare
 		#ifdef DEBUGGER_ENABLED
 			if (this->apu->isDebugger())
 				std::static_pointer_cast<Debugger::APUDebug>(this->apu)->focus();
-			else
+			else {
 				this->apu = std::make_shared<Debugger::APUDebug>(*this->apu, *this);
+				this->_bus->mapComponents(*this);
+			}
 		#else
 			std::cerr << "Debugging features are not enabled. You can't enable the debugger." << std::endl;
 		#endif
@@ -105,6 +110,7 @@ namespace ComSquare
 	void SNES::disableAPUDebugging()
 	{
 		this->apu = std::make_shared<APU::APU>(*this->apu);
+		this->_bus->mapComponents(*this);
 	}
 
 	void SNES::enableMemoryBusDebugging()
