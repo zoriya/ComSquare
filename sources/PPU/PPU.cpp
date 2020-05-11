@@ -32,6 +32,16 @@ namespace ComSquare::PPU
 			return this->_registers._mpy.mpym;
 		case ppuRegisters::mpyh:
 			return this->_registers._mpy.mpyh;
+		case ppuRegisters::slhv:
+			return this->_registers._slhv;
+		case ppuRegisters::oamdataread:
+		case ppuRegisters::vmdatalread:
+		case ppuRegisters::vmdatahread:
+		case ppuRegisters::ophct:
+		case ppuRegisters::opvct:
+		case ppuRegisters::stat77:
+		case ppuRegisters::stat78:
+			return 0;
 		default:
 			throw InvalidAddress("PPU Internal Registers read ", addr);
  		}
@@ -136,6 +146,10 @@ namespace ComSquare::PPU
 		case ppuRegisters::m7c:
 		case ppuRegisters::m7d:
 			this->_registers._m7[addr - ppuRegisters::m7a].m7 = (this->_registers._m7[addr - ppuRegisters::m7a].m7 << 8) | data;
+			break;
+		case ppuRegisters::m7x:
+		case ppuRegisters::m7y:
+			// TODO these registers
 			break;
 		case ppuRegisters::cgadd:
 			this->_registers._cgadd = data;

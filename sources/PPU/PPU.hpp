@@ -482,7 +482,7 @@ namespace ComSquare::PPU
 			uint8_t raw;
 		} _setini;
 
-		// <READ registers> not in priority
+		// <READ registers>
 
 		//! @brief MPYL - MPYM - MPYH Registers (Multiplication Result)
 		union {
@@ -493,6 +493,56 @@ namespace ComSquare::PPU
 			};
 			uint32_t mpy;
 		} _mpy;
+		//! @brief SLHV - Software Latch for H/V Counter
+		uint8_t _slhv;
+		//! @brief OAMDATAREAD - Data for OAM read
+		uint8_t _oamdataread;
+		//! @brief VMDATALREAD/VMDATAHREAD - VRAM Data Read low/high byte
+		union {
+			struct {
+				uint8_t vmDataLRead;
+				uint8_t vmDataHRead;
+			};
+			uint16_t raw;
+		} _vmdataread;
+		//! @brief CGRAM Data read
+		union {
+			struct {
+				uint8_t cgDataLRead;
+				uint8_t cgDataHRead;
+			};
+			uint16_t raw;
+		} _cgdataread;
+		//! @brief OPHCT/OPVCT - Horizontal/Vertical Scanline Location
+		union {
+			struct {
+				uint16_t opct: 9;
+				uint8_t _: 7;
+			};
+			uint16_t raw;
+		} _opct;
+		//! @brief STAT77 - PPU Status Flag and Version
+		union {
+			struct {
+				uint8_t chipVersionNumber: 4;
+				bool _: 1;
+				bool modeSelect: 1;
+				bool rangeOverFlag: 1;
+				bool timeOverFlag: 1;
+			};
+			uint8_t raw;
+		} _stat77;
+		//! @brief STAT78 - PPU Status Flag and Version
+		union {
+			struct {
+				uint8_t chipVersionNumber: 4;
+				bool mode: 1;
+				bool _: 1;
+				bool externalLatchFlag: 1;
+				bool interlaceField: 1;
+			};
+			uint8_t raw;
+		} _stat78;
 	};
 
 	//! @brief The class containing all the registers of the PPU
