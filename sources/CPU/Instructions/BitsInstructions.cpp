@@ -61,6 +61,7 @@ namespace ComSquare::CPU
 		unsigned highByte = this->_registers.p.m ? 0x80u : 0x8000u;
 
 		if (mode == Implied) {
+			this->_registers.p.c = this->_registers.a & highByte;
 			this->_registers.a <<= 1u;
 			this->_registers.p.n = this->_registers.a & highByte;
 			this->_registers.p.z = this->_registers.a == 0;
@@ -72,14 +73,51 @@ namespace ComSquare::CPU
 			value += this->_bus->read(valueAddr + 1) << 8u;
 
 		this->_registers.p.c = value & highByte;
-
 		value <<= 1u;
+		this->_registers.p.n = value & highByte;
+		this->_registers.p.z = value == 0;
+
 		this->_bus->write(valueAddr, value);
 		if (!this->_registers.p.m)
 			this->_bus->write(valueAddr + 1, value >> 8u);
 
-		this->_registers.p.n = value & highByte;
+		int cycles = 2 * !this->_registers.p.m;
+		switch (mode) {
+		case DirectPage:
+		case DirectPageIndexedByX:
+			cycles += this->_registers.dl != 0;
+			break;
+		case AbsoluteIndexedByX:
+			cycles += this->_hasIndexCrossedPageBoundary;
+			break;
+		default:
+			break;
+		}
+		return cycles;
+	}
+
+	int CPU::LSR(uint24_t valueAddr, AddressingMode mode)
+	{
+		this->_registers.p.n = false;
+
+		if (mode == Implied) {
+			this->_registers.p.c = this->_registers.a & 1u;
+			this->_registers.a >>= 1u;
+			this->_registers.p.z = this->_registers.a == 0;
+			return 0;
+		}
+
+		uint16_t value = this->_bus->read(valueAddr);
+		if (!this->_registers.p.m)
+			value += this->_bus->read(valueAddr + 1) << 8u;
+
+		this->_registers.p.c = value & 1u;
+		value >>= 1u;
 		this->_registers.p.z = value == 0;
+
+		this->_bus->write(valueAddr, value);
+		if (!this->_registers.p.m)
+			this->_bus->write(valueAddr + 1, value >> 8u);
 
 		int cycles = 2 * !this->_registers.p.m;
 		switch (mode) {

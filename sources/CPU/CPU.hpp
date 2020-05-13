@@ -423,6 +423,8 @@ namespace ComSquare::CPU
 		int BIT(uint24_t, AddressingMode);
 		//! @brief Arithmetic Shift Left
 		int ASL(uint24_t, AddressingMode);
+		// !@brief Logical Shift Right
+		int LSR(uint24_t, AddressingMode);
 
 		//! @brief All the instructions of the CPU.
 		//! @info Instructions are indexed by their opcode
@@ -497,15 +499,15 @@ namespace ComSquare::CPU
 			{&CPU::EOR, 4, "eor", AddressingMode::StackRelative, 2}, // 43
 			{&CPU::BRK, 7, "mvp #-#", AddressingMode::Implied, 2}, // 44
 			{&CPU::EOR, 3, "eor", AddressingMode::DirectPage, 2}, // 45
-			{&CPU::BRK, 7, "lsr #-#", AddressingMode::Implied, 2}, // 46
+			{&CPU::LSR, 5, "lsr", AddressingMode::DirectPage, 2}, // 46
 			{&CPU::EOR, 6, "eor", AddressingMode::DirectPageIndirectLong, 2}, // 47
 			{&CPU::PHA, 3, "pha", AddressingMode::Implied, 1}, // 48
 			{&CPU::EOR, 2, "eor", AddressingMode::ImmediateForA, 2}, // 49
-			{&CPU::BRK, 7, "lsr #-#", AddressingMode::Implied, 2}, // 4A
+			{&CPU::LSR, 2, "lsr", AddressingMode::Implied, 1}, // 4A
 			{&CPU::PHK, 3, "phk", AddressingMode::Implied, 1}, // 4B
 			{&CPU::JMP, 3, "jmp", AddressingMode::Absolute, 3}, // 4C
 			{&CPU::EOR, 4, "eor", AddressingMode::Absolute, 3}, // 4D
-			{&CPU::BRK, 7, "lsr #-#", AddressingMode::Implied, 2}, // 4E
+			{&CPU::LSR, 6, "lsr", AddressingMode::Absolute, 3}, // 4E
 			{&CPU::EOR, 5, "eor", AddressingMode::AbsoluteLong, 4}, // 4F
 			{&CPU::BVC, 2, "bvc", AddressingMode::Immediate8bits, 2}, // 50
 			{&CPU::EOR, 5, "eor", AddressingMode::DirectPageIndirectIndexedByY, 2}, // 51
@@ -513,7 +515,7 @@ namespace ComSquare::CPU
 			{&CPU::EOR, 4, "eor", AddressingMode::StackRelativeIndirectIndexedByY, 2}, // 53
 			{&CPU::BRK, 7, "mvn #-#", AddressingMode::Implied, 2}, // 54
 			{&CPU::EOR, 4, "eor", AddressingMode::DirectPageIndexedByX, 2}, // 55
-			{&CPU::BRK, 7, "lsr #-#", AddressingMode::Implied, 2}, // 56
+			{&CPU::LSR, 6, "lsr", AddressingMode::DirectPageIndexedByX, 2}, // 56
 			{&CPU::EOR, 6, "eor", AddressingMode::DirectPageIndirectIndexedByYLong, 2}, // 57
 			{&CPU::CLI, 2, "cli", AddressingMode::Implied, 1}, // 58
 			{&CPU::EOR, 4, "eor", AddressingMode::AbsoluteIndexedByY, 3}, // 59
@@ -521,7 +523,7 @@ namespace ComSquare::CPU
 			{&CPU::TCD, 2, "tcd", AddressingMode::Implied, 1}, // 5B
 			{&CPU::JML, 4, "jml", AddressingMode::Implied, 4}, // 5C
 			{&CPU::EOR, 4, "eor", AddressingMode::AbsoluteIndexedByX, 3}, // 5D
-			{&CPU::BRK, 7, "lsr #-#", AddressingMode::Implied, 2}, // 5E
+			{&CPU::LSR, 7, "lsr", AddressingMode::AbsoluteIndexedByX, 3}, // 5E
 			{&CPU::EOR, 5, "eor", AddressingMode::AbsoluteIndexedByXLong, 4}, // 5F
 			{&CPU::RTL, 6, "rtl", AddressingMode::Implied, 1}, // 60
 			{&CPU::ADC, 6, "adc", AddressingMode::DirectPageIndirectIndexedByX, 2}, // 61
