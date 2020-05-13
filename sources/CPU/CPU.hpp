@@ -435,6 +435,8 @@ namespace ComSquare::CPU
 		int ROR(uint24_t, AddressingMode);
 		//! @brief Push Effective PC Relative Indirect Address
 		int PER(uint24_t, AddressingMode);
+		//! @brief Push Effective Indirect Address
+		int PEI(uint24_t, AddressingMode);
 
 		//! @brief All the instructions of the CPU.
 		//! @info Instructions are indexed by their opcode
@@ -651,7 +653,7 @@ namespace ComSquare::CPU
 			{&CPU::CMP, 5, "cmp", AddressingMode::DirectPageIndirectIndexedByY, 2}, // D1
 			{&CPU::CMP, 5, "cmp", AddressingMode::DirectPageIndirect, 2}, // D2
 			{&CPU::CMP, 7, "cmp", AddressingMode::StackRelativeIndirectIndexedByY, 2}, // D3
-			{&CPU::BRK, 7, "pei #-#", AddressingMode::Implied, 2}, // D4
+			{&CPU::PEI, 6, "pei", AddressingMode::DirectPage, 2}, // D4
 			{&CPU::CMP, 4, "cmp", AddressingMode::DirectPageIndexedByX, 2}, // D5
 			{&CPU::DEC, 6, "dec", AddressingMode::DirectPageIndexedByX, 2}, // D6
 			{&CPU::CMP, 6, "cmp", AddressingMode::DirectPageIndirectIndexedByYLong, 2}, // D7

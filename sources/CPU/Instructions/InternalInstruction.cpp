@@ -193,6 +193,12 @@ namespace ComSquare::CPU
 		return 0;
 	}
 
+	int CPU::PEI(uint24_t value, AddressingMode)
+	{
+		this->_push(static_cast<uint16_t>(value));
+		return 0;
+	}
+
 	int CPU::XCE(uint24_t, AddressingMode)
 	{
 		bool oldCarry = this->_registers.p.c;

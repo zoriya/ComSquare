@@ -7,6 +7,7 @@
 #include <utility>
 #include <iostream>
 #include "../Exceptions/InvalidAddress.hpp"
+#include "../Exceptions/InvalidOpcode.hpp"
 
 namespace ComSquare::CPU
 {
@@ -265,6 +266,7 @@ namespace ComSquare::CPU
 		case AbsoluteIndirectIndexedByX:
 			return this->_getAbsoluteIndirectIndexedByXAddr();
 		}
+		throw InvalidOpcode("Unknown addressing mode for.");
 	}
 
 	unsigned CPU::_executeInstruction(uint8_t opcode)
