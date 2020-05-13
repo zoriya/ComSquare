@@ -421,6 +421,8 @@ namespace ComSquare::CPU
 		int XBA(uint24_t, AddressingMode);
 		//! @brief Test Memory Bits against Accumulator
 		int BIT(uint24_t, AddressingMode);
+		//! @brief Arithmetic Shift Left
+		int ASL(uint24_t, AddressingMode);
 
 		//! @brief All the instructions of the CPU.
 		//! @info Instructions are indexed by their opcode
@@ -431,15 +433,15 @@ namespace ComSquare::CPU
 			{&CPU::ORA, 4, "ora", AddressingMode::StackRelative, 2}, // 03
 			{&CPU::TSB, 5, "tsb", AddressingMode::DirectPage, 2}, // 04
 			{&CPU::ORA, 3, "ora", AddressingMode::DirectPage, 2}, // 05
-			{&CPU::BRK, 7, "asl #-#", AddressingMode::Implied, 2}, // 06
+			{&CPU::ASL, 5, "asl", AddressingMode::DirectPage, 2}, // 06
 			{&CPU::ORA, 6, "ora", AddressingMode::DirectPageIndirectLong, 2}, // 07
 			{&CPU::PHP, 3, "php", AddressingMode::Implied, 3}, // 08
 			{&CPU::ORA, 2, "ora", AddressingMode::ImmediateForA, 2}, // 09
-			{&CPU::BRK, 7, "asl #-#", AddressingMode::Implied, 2}, // 0A
+			{&CPU::ASL, 2, "asl", AddressingMode::Implied, 1}, // 0A
 			{&CPU::PHD, 4, "phd", AddressingMode::Implied, 1}, // 0B
 			{&CPU::TSB, 6, "tsb", AddressingMode::Absolute, 3}, // 0C
 			{&CPU::ORA, 3, "ora", AddressingMode::Absolute, 4}, // 0D
-			{&CPU::BRK, 7, "asl #-#", AddressingMode::Implied, 2}, // 0E
+			{&CPU::ASL, 6, "asl", AddressingMode::Absolute, 3}, // 0E
 			{&CPU::ORA, 5, "ora", AddressingMode::AbsoluteLong, 5}, // 0F
 			{&CPU::BPL, 7, "bpl", AddressingMode::Immediate8bits, 2}, // 10
 			{&CPU::ORA, 5, "ora", AddressingMode::DirectPageIndirectIndexedByY, 2}, // 11
@@ -447,7 +449,7 @@ namespace ComSquare::CPU
 			{&CPU::ORA, 7, "ora", AddressingMode::StackRelativeIndirectIndexedByY, 2}, // 13
 			{&CPU::BRK, 7, "trb #-#", AddressingMode::Implied, 2}, // 14
 			{&CPU::ORA, 4, "ora", AddressingMode::DirectPageIndexedByX, 2}, // 15
-			{&CPU::BRK, 7, "asl #-#", AddressingMode::Implied, 2}, // 16
+			{&CPU::ASL, 6, "asl", AddressingMode::DirectPageIndexedByX, 2}, // 16
 			{&CPU::ORA, 6, "ora", AddressingMode::DirectPageIndirectIndexedByYLong, 2}, // 17
 			{&CPU::CLC, 2, "clc", AddressingMode::Implied, 1}, // 18
 			{&CPU::ORA, 4, "ora", AddressingMode::AbsoluteIndexedByY, 3}, // 19
@@ -455,7 +457,7 @@ namespace ComSquare::CPU
 			{&CPU::TCS, 2, "tcs", AddressingMode::Implied, 1}, // 1B
 			{&CPU::BRK, 7, "trb #-#", AddressingMode::Implied, 2}, // 1C
 			{&CPU::ORA, 4, "ora", AddressingMode::AbsoluteIndexedByX, 3}, // 1D
-			{&CPU::BRK, 7, "asl #-#", AddressingMode::Implied, 2}, // 1E
+			{&CPU::ASL, 7, "asl", AddressingMode::AbsoluteIndexedByX, 3}, // 1E
 			{&CPU::ORA, 5, "ora", AddressingMode::AbsoluteIndexedByXLong, 4}, // 1F
 			{&CPU::JSR, 6, "jsr", AddressingMode::Absolute, 3}, // 20
 			{&CPU::AND, 6, "and", AddressingMode::DirectPageIndirectIndexedByX, 2}, // 21

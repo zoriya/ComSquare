@@ -115,3 +115,41 @@ Test(BIT, other)
 	cr_assert_eq(snes.cpu->_registers.p.v, true, "The overflow flag should be set.");
 	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flag should be set.");
 }
+
+Test(ASL, emulationTest)
+{
+	Init()
+	snes.wram->_data[0] = 0b10110011;
+	snes.cpu->_registers.p.m = true;
+	snes.cpu->ASL(0x0, ComSquare::CPU::AddressingMode::Absolute);
+	cr_assert_eq(snes.wram->_data[0], 0b01100110, "The data in ram should be 0b01100110 but it was %x", snes.wram->_data[0]);
+	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should not be set.");
+	cr_assert_eq(snes.cpu->_registers.p.c, true, "The carry flag should be set.");
+	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flag should not be set.");
+}
+
+Test(ASL, nativeTest)
+{
+	Init()
+	snes.wram->_data[0] = 0b10110011;
+	snes.wram->_data[1] = 0b10000011;
+	snes.cpu->_registers.p.m = false;
+	snes.cpu->ASL(0x0, ComSquare::CPU::AddressingMode::Absolute);
+	cr_assert_eq(snes.wram->_data[0], 0b01100110, "The data in ram should be 0b01100110 but it was %x", snes.wram->_data[0]);
+	cr_assert_eq(snes.wram->_data[1], 0b00000111, "The data in ram should be 0b00000111 but it was %x", snes.wram->_data[1]);
+	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should not be set.");
+	cr_assert_eq(snes.cpu->_registers.p.c, true, "The carry flag should be set.");
+	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flag should not be set.");
+}
+
+Test(ASL, accumulator)
+{
+	Init()
+	snes.cpu->_registers.a = 0b10110011;
+	snes.cpu->_registers.p.m = true;
+	snes.cpu->ASL(0x0, ComSquare::CPU::AddressingMode::Implied);
+	cr_assert_eq(snes.cpu->_registers.al, 0b01100110, "The accumulator should be 0b01100110 but it was %x", snes.cpu->_registers.al);
+	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should not be set.");
+	cr_assert_eq(snes.cpu->_registers.p.c, false, "The carry flag should not be set.");
+	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flag should not be set.");
+}
