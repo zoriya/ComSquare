@@ -422,25 +422,21 @@ namespace ComSquare::PPU
 
 	void PPU::renderBackground(int bgNumber, Vector2<int> characterSize, int bpp, bool priority)
 	{
-		int nbCharactersHeight = (this->_registers._bgsc[bgNumber - 1].tilemapVerticalMirroring) ? 2 : 1;
-		int nbCharactersWidth = (this->_registers._bgsc[bgNumber - 1].tilemapHorizontalMirroring) ? 2 : 1;
+		int nbBgHeight = (this->_registers._bgsc[bgNumber - 1].tilemapVerticalMirroring) ? 2 : 1;
+		int nbBgWidth = (this->_registers._bgsc[bgNumber - 1].tilemapHorizontalMirroring) ? 2 : 1;
 		uint16_t vramAddress = this->_registers._bgsc[bgNumber - 1].tilemapAddress << 1U;
 		Vector2<int> offset(0, 0);
-		// find an efficient way to render tilemap in order with correct offset and vramaddresses:
-		for (int i = 0; i < nbCharactersWidth ; i++) {
-			drawBasicTileMap(vramAddress, bgNumber, bpp, characterSize, offset);
-			vramAddress += 0x800;
-			offset.x += 32 * characterSize.x;
-		}
-		if (nbCharactersWidth == 1 && nbCharactersHeight == 2) {
-			vramAddress += 0x800;
-			nbCharactersHeight = 1;
-			offset.x = 0;
-		}
-		for (int i = 0; i < nbCharactersHeight ; i++) {
-			drawBasicTileMap(vramAddress, bgNumber, bpp, characterSize, offset);
-			vramAddress += 0x800;
 
+		for (int i = 0; i < 4; i++) {
+			if (!(i == 1 && nbBgWidth == 1) && !(i > 1 && nbBgHeight == 1)) {
+				drawBasicTileMap(vramAddress, bgNumber, bpp, characterSize, offset);
+			}
+			vramAddress+= 0x800;
+			offset.x += 32 * characterSize.x;
+			if (i == 2) {
+				offset.x = 0;
+				offset.y += 32 * characterSize.y;
+			}
 		}
 	}
 
@@ -466,7 +462,6 @@ namespace ComSquare::PPU
 
 		tileData.raw = data;
 		graphicAddress = this->getGraphicVramAddress(tileData.posX, tileData.posY, bg, bpp);
-		// loop on all pixels of the tile 8x8 6x16 16x8 8x16
 		for (int i = 0; i < characterSize.y; i++) {
 			for (int j = 0; j < characterSize.x; j++) {
 				palette = getPalette(tileData.palette);
@@ -475,7 +470,7 @@ namespace ComSquare::PPU
 				this->_renderer.putPixel(pos.x, pos.y, color);
 				index++;
 				pos.x++;
-				if (index == 8 / bpp - 1) {
+				if (index == (8 / bpp) - 1) {
 					index = 0;
 					graphicAddress++;
 				}
@@ -539,14 +534,18 @@ namespace ComSquare::PPU
 		Vector2<int> pos(0,0);
 		uint16_t vramAddress = baseAddress;
 
-		for (int j = baseAddress; j < (0x800 / 2) + baseAddress; j++) {
+		while (vramAddress < 0x800 + baseAddress) {
 			tileMapValue = this->vram->read_internal(vramAddress);
 			tileMapValue += this->vram->read_internal(vramAddress + 1) << 8U;
 			vramAddress += 2;
-			drawBgTile(tileMapValue, {((pos.x - pos.y * 32) * characterSize.x) + offset.x, (pos.y * characterSize.y) + offset.x}, bgNumber, bpp, characterSize);
-			pos.x++;
-			if (j % 32 == 0)
+			drawBgTile(tileMapValue, {(pos.x * characterSize.x) + offset.x, (pos.y * characterSize.y) + offset.y}, bgNumber, bpp, characterSize);
+			//pos.x++;
+			if (pos.x % 31 == 0 && pos.x) {
 				pos.y++;
+				pos.x = 0;
+			}
+			else
+				pos.x++;
 		}
 	}
 }
