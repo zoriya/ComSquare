@@ -11,6 +11,7 @@
 #include "../Renderer/IRenderer.hpp"
 //#include "../Ram/ExtendedRam.hpp"
 #include "../Ram/Ram.hpp"
+#include "../Models/Vector2.hpp"
 
 //#define max2BitTiles		4096
 //#define max4BitTiles		2048
@@ -592,7 +593,7 @@ namespace ComSquare::PPU
 		//! @brief Get the correct Vram address for a gien x and y
 		uint16_t getGraphicVramAddress(int x, int y, int bg, int bpp);
 		//! @brief Draw a tile on the screen at x y pos
-		void drawBgTile(uint16_t data, std::vector<int>  pos, int bg, int bpp);
+		void drawBgTile(uint16_t data, Vector2<int> pos, int bg, int bpp);
 	};
 }
 #endif //COMSQUARE_PPU_HPP
