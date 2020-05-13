@@ -6,12 +6,7 @@
 #define COMSQUARE_VECTOR2_HPP
 
 #include <ostream>
-#include <cmath>
-#include <SFML/Graphics.h>
-#include <SFML/Window.h>
-#include <SFML/System.hpp>
-#include <SFML/Window.hpp>
-#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/System/Vector2.hpp>
 
 namespace ComSquare
 {
@@ -25,8 +20,8 @@ namespace ComSquare
 		Vector2<T>()
 			: x(0), y(0) {}
 
-		Vector2<T>(T x, T y)
-			: x(x), y(y) {}
+		Vector2<T>(T _x, T _y)
+			: x(_x), y(_y) {}
 
 		Vector2<T>(sf::Vector2<T> v)
 			: x(v.x), y(v.y) {}
