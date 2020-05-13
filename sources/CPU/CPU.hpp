@@ -437,6 +437,8 @@ namespace ComSquare::CPU
 		int PER(uint24_t, AddressingMode);
 		//! @brief Push Effective Indirect Address
 		int PEI(uint24_t, AddressingMode);
+		//! @brief Push Effective Absolute Address
+		int PEA(uint24_t, AddressingMode);
 
 		//! @brief All the instructions of the CPU.
 		//! @info Instructions are indexed by their opcode
@@ -685,7 +687,7 @@ namespace ComSquare::CPU
 			{&CPU::SBC, 5, "sbc", AddressingMode::DirectPageIndirectIndexedByY, 2}, // F1
 			{&CPU::SBC, 5, "sbc", AddressingMode::DirectPageIndirect, 2}, // F2
 			{&CPU::SBC, 7, "sbc", AddressingMode::StackRelativeIndirectIndexedByY, 2}, // F3
-			{&CPU::BRK, 7, "pea #-#", AddressingMode::Implied, 2}, // F4
+			{&CPU::PEA, 5, "pea", AddressingMode::Immediate16bits, 3}, // F4
 			{&CPU::SBC, 4, "sbc", AddressingMode::DirectPageIndexedByX, 2}, // F5
 			{&CPU::INC, 6, "inc", AddressingMode::DirectPageIndexedByX, 2}, // F6
 			{&CPU::SBC, 6, "sbc", AddressingMode::DirectPageIndirectIndexedByYLong, 2}, // F7

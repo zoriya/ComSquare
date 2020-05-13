@@ -933,9 +933,19 @@ Test(PEI, simple)
 {
 	Init()
 	snes.cpu->_registers.s = 0x1FFF;
+	snes.cpu->PEI(0xFFFF, ComSquare::CPU::AddressingMode::Implied);
+	cr_assert_eq(snes.cpu->_registers.s, 0x1FFD, "The stack pointer should be equal to 0x1FFD but it was 0x%x.", snes.cpu->_registers.s);
+	uint16_t value = snes.cpu->_pop16();
+	cr_assert_eq(value, 0xFFFF, "The pushed value should be equal to 0xFFFF but it was 0x%x.", value);
+}
+
+Test(PEA, simple)
+{
+	Init()
+	snes.cpu->_registers.s = 0x1FFF;
 	snes.wram->_data[0x0] = 0xFF;
 	snes.wram->_data[0x1] = 0xFF;
-	snes.cpu->PER(0x0, ComSquare::CPU::AddressingMode::Implied);
+	snes.cpu->PEA(0xFFFF, ComSquare::CPU::AddressingMode::Implied);
 	cr_assert_eq(snes.cpu->_registers.s, 0x1FFD, "The stack pointer should be equal to 0x1FFD but it was 0x%x.", snes.cpu->_registers.s);
 	uint16_t value = snes.cpu->_pop16();
 	cr_assert_eq(value, 0xFFFF, "The pushed value should be equal to 0xFFFF but it was 0x%x.", value);
