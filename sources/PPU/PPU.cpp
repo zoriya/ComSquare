@@ -456,7 +456,6 @@ namespace ComSquare::PPU
 		union TileMapData tileData;
 		std::vector<uint16_t> palette;
 		int index = 0;
-		uint16_t tmp;
 		uint8_t reference = 0;
 		uint32_t color = 0;
 
