@@ -450,6 +450,11 @@ namespace ComSquare::CPU
 		//! @param Y_register Destination address
 		//! @param C_register (16 bits accumulator) Length -1
 		int MVN(uint24_t, AddressingMode);
+		//! @brief Block Move Previous. This instruction is special: it takes parameter in the registers
+		//! @param X_register Source address (last byte)
+		//! @param Y_register Destination address (last byte)
+		//! @param C_register (16 bits accumulator) Length -1
+		int MVP(uint24_t, AddressingMode);
 
 		//! @brief All the instructions of the CPU.
 		//! @info Instructions are indexed by their opcode
@@ -522,7 +527,7 @@ namespace ComSquare::CPU
 			{&CPU::EOR, 6, "eor", AddressingMode::DirectPageIndirectIndexedByX, 2}, // 41
 			{&CPU::WDM, 2, "wdm", AddressingMode::Immediate8bits, 2}, // 42
 			{&CPU::EOR, 4, "eor", AddressingMode::StackRelative, 2}, // 43
-			{&CPU::BRK, 7, "mvp #-#", AddressingMode::Implied, 2}, // 44
+			{&CPU::MVP, 0, "mvp", AddressingMode::Immediate16bits, 3}, // 44
 			{&CPU::EOR, 3, "eor", AddressingMode::DirectPage, 2}, // 45
 			{&CPU::LSR, 5, "lsr", AddressingMode::DirectPage, 2}, // 46
 			{&CPU::EOR, 6, "eor", AddressingMode::DirectPageIndirectLong, 2}, // 47
