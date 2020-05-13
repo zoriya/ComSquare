@@ -18,6 +18,7 @@ namespace ComSquare::CPU
 		this->_registers.d = 0x0000;
 		this->_registers.sh = 0x01; // the low bit of the stack pointer is undefined on reset.
 		this->_registers.pc = this->_cartridgeHeader.emulationInterrupts.reset;
+		this->_isStopped = false;
 		return 0;
 	}
 

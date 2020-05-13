@@ -14,6 +14,13 @@ namespace ComSquare::CPU
 		return ret;
 	}
 
+	uint24_t CPU::_getImmediateAddr16Bits()
+	{
+		uint24_t ret = this->_registers.pac;
+		this->_registers.pc += 2;
+		return ret;
+	}
+
 	uint24_t CPU::_getImmediateAddrForA()
 	{
 		uint24_t effective = this->_registers.pac;

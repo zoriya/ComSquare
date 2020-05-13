@@ -6,7 +6,6 @@
 
 #include <utility>
 #include <iostream>
-#include "../Exceptions/NotImplementedException.hpp"
 #include "../Exceptions/InvalidAddress.hpp"
 #include "../Exceptions/InvalidOpcode.hpp"
 
@@ -206,6 +205,8 @@ namespace ComSquare::CPU
 	{
 		unsigned cycles = 0;
 
+		if (this->_isStopped)
+			return 0xFF;
 		for (int i = 0; i < 0xFF; i++)
 			cycles += this->_executeInstruction(this->readPC());
 		return cycles;
@@ -218,6 +219,8 @@ namespace ComSquare::CPU
 			return 0;
 		case Immediate8bits:
 			return this->_getImmediateAddr8Bits();
+		case Immediate16bits:
+			return this->_getImmediateAddr16Bits();
 		case ImmediateForA:
 			return this->_getImmediateAddrForA();
 		case ImmediateForX:
@@ -264,9 +267,8 @@ namespace ComSquare::CPU
 
 		case AbsoluteIndirectIndexedByX:
 			return this->_getAbsoluteIndirectIndexedByXAddr();
-		default:
-			return 0;
 		}
+		throw InvalidOpcode("Unknown addressing mode for.");
 	}
 
 	unsigned CPU::_executeInstruction(uint8_t opcode)
