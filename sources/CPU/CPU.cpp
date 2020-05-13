@@ -205,6 +205,8 @@ namespace ComSquare::CPU
 	{
 		unsigned cycles = 0;
 
+		if (this->_isStopped)
+			return 0xFF;
 		for (int i = 0; i < 0xFF; i++)
 			cycles += this->_executeInstruction(this->readPC());
 		return cycles;

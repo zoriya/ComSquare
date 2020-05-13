@@ -188,6 +188,8 @@ namespace ComSquare::CPU
 		Registers _registers{};
 		//! @brief Is the CPU running in emulation mode (in 8bits)
 		bool _isEmulationMode = true;
+		//! @brief If the processor is stopped (using an STP instruction), the clock is stopped and no instruction will be run until a manual reset.
+		bool _isStopped = false;
 		//! @brief Internal registers of the CPU (accessible from the bus via addr $4200 to $421F).
 		InternalRegisters _internalRegisters{};
 		//! @brief The memory bus to use for read/write.
@@ -439,6 +441,8 @@ namespace ComSquare::CPU
 		int PEI(uint24_t, AddressingMode);
 		//! @brief Push Effective Absolute Address
 		int PEA(uint24_t, AddressingMode);
+		//! @brief Stop the processor
+		int STP(uint24_t, AddressingMode);
 
 		//! @brief All the instructions of the CPU.
 		//! @info Instructions are indexed by their opcode
@@ -662,7 +666,7 @@ namespace ComSquare::CPU
 			{&CPU::CLD, 2, "cld", AddressingMode::Implied, 2}, // D8
 			{&CPU::CMP, 4, "cmp", AddressingMode::AbsoluteIndexedByY, 3}, // D9
 			{&CPU::PHX, 3, "phx", AddressingMode::Implied, 1}, // DA
-			{&CPU::BRK, 7, "stp #-#", AddressingMode::Implied, 2}, // DB
+			{&CPU::STP, 3, "stp", AddressingMode::Implied, 1}, // DB
 			{&CPU::JML, 7, "jml", AddressingMode::AbsoluteIndirectLong, 2}, // DC
 			{&CPU::CMP, 4, "cmp", AddressingMode::AbsoluteIndexedByX, 3}, // DD
 			{&CPU::DEC, 7, "dec", AddressingMode::AbsoluteIndexedByX, 3}, // DE

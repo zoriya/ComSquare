@@ -320,4 +320,10 @@ namespace ComSquare::CPU
 		this->_registers.dbr = this->_pop();
 		return 0;
 	}
+
+	int CPU::STP(uint24_t, AddressingMode)
+	{
+		this->_isStopped = true;
+		return 0;
+	}
 }
