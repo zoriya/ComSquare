@@ -260,6 +260,7 @@ namespace ComSquare::PPU
 						this->_renderer.putPixel(x, y, pixelTmp);
 				}
 		}
+		renderBackground(1, {0, 0}, 4, false);
 		this->_renderer.drawScreen();
 	}
 
@@ -421,17 +422,20 @@ namespace ComSquare::PPU
 
 	void PPU::renderBackground(int bgNumber, std::vector<int> characterSize, int bpp, bool priority)
 	{
-		int nbCharactersHeight = (this->_registers._bgsc[bgNumber].tilemapVerticalMirroring) ? 64 : 32;
-		int nbCharactersWidth = (this->_registers._bgsc[bgNumber].tilemapHorizontalMirroring) ? 64 : 32;
-		uint16_t vramAddress = this->_registers._bgsc[bgNumber].tilemapAddress << 1U;
-		uint16_t tilemapValue;
+		int nbCharactersHeight = (this->_registers._bgsc[bgNumber - 1].tilemapVerticalMirroring) ? 64 : 32;
+		int nbCharactersWidth = (this->_registers._bgsc[bgNumber - 1].tilemapHorizontalMirroring) ? 64 : 32;
+		uint16_t vramAddress = this->_registers._bgsc[bgNumber - 1].tilemapAddress << 1U;
+		int size = 8;
+		uint16_t tileMapValue;
 
-		for (int i = 0; i < nbCharactersHeight * nbCharactersWidth; i++) {
-			for (int j = 0; j < 0x800; j++) {
-				tilemapValue = this->vram->read_internal(vramAddress);
-				tilemapValue += this->vram->read_internal(vramAddress + 1) << 8U;
+		if (this->_registers._bgmode.raw & (1U << (bgNumber + 3U)))
+			size = 16;
+		for (int i = 0; i < nbCharactersHeight; i++) {
+			for (int j = 0; j < nbCharactersWidth; j++) {
+				tileMapValue = this->vram->read_internal(vramAddress);
+				tileMapValue += this->vram->read_internal(vramAddress + 1) << 8U;
 				vramAddress += 2;
-
+				drawBgTile(tileMapValue, {i * size, j * size}, bgNumber, bpp, size);
 			}
 		}
 	}
@@ -446,13 +450,82 @@ namespace ComSquare::PPU
 		return baseAddress + (x * 16 * step) + (y * step);
 	}
 
-	void PPU::drawBgTile(uint16_t data, Vector2<int> pos, int bg, int bpp)
+	void PPU::drawBgTile(uint16_t data, Vector2<int> pos, int bg, int bpp, int size)
 	{
 		uint16_t graphicAddress;
 		union TileMapData tileData;
+		std::vector<uint16_t> palette;
+		int index = 0;
+		uint16_t tmp;
+		uint8_t reference = 0;
+		uint32_t color = 0;
 
 		tileData.raw = data;
 		graphicAddress = this->getGraphicVramAddress(tileData.posX, tileData.posY, bg, bpp);
 		// loop on all pixels of the tile 8x8 6x16 16x8 8x16
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				palette = getPalette(tileData.palette);
+				reference = getTilePixelReference(graphicAddress, bpp, index);
+				color = getRealColor(palette[reference]);
+				this->_renderer.putPixel(pos.x, pos.y, color);
+				index++;
+				pos.x++;
+				if (index == 8 / bpp - 1) {
+					index = 0;
+					graphicAddress++;
+				}
+			}
+			index = 0;
+			pos.x -= size;
+			pos.y++;
+		}
+	}
+
+	std::vector<uint16_t> PPU::getPalette(int nbPalette)
+	{
+		std::vector<uint16_t> palette(0xF);
+
+		uint16_t addr = nbPalette * 0x10;
+		for (int i = 0; i < 0xF; i++) {
+			palette[i] = this->cgramRead(addr);
+			palette[i] += this->cgramRead(addr + 1) << 8U;
+		}
+		return palette;
+	}
+
+	uint32_t PPU::getRealColor(uint16_t color)
+	{
+		uint8_t blue;
+		uint8_t red;
+		uint8_t green;
+		uint32_t pixelTmp;
+
+		blue = (color & 0x7D00U) >> 10U;
+		green = (color & 0x03E0U) >> 5U;
+		red = (color & 0x001FU);
+
+		pixelTmp = this->_registers._inidisp.brightness * 255U / 15U;
+		pixelTmp += (red * 255U / 31U) << 24U;
+		pixelTmp += (green * 255U / 31U) << 16U;
+		pixelTmp += (blue * 255U / 31U) << 8U;
+		return pixelTmp;
+	}
+
+	uint8_t PPU::getTilePixelReference(uint16_t addr, int bpp, int nb)
+	{
+		uint8_t reference = this->vram->read_internal(addr);
+
+		switch (bpp) {
+		case 8:
+			return reference;
+		case 4:
+			return (reference & (0xFU << ((1 - nb) * 4U))) >> (1 - nb) * 4U;
+		case 2:
+			return (reference & (0x3U << ((3 - nb) * 2U))) >> (3 - nb) * 2U;
+		default:
+			break;
+		}
+		return 0;
 	}
 }

@@ -593,7 +593,13 @@ namespace ComSquare::PPU
 		//! @brief Get the correct Vram address for a gien x and y
 		uint16_t getGraphicVramAddress(int x, int y, int bg, int bpp);
 		//! @brief Draw a tile on the screen at x y pos
-		void drawBgTile(uint16_t data, Vector2<int> pos, int bg, int bpp);
+		void drawBgTile(uint16_t data, Vector2<int> pos, int bg, int bpp, int size);
+		//! @brief Get a palette from the number of the palette (0 - 7)
+		std::vector<uint16_t> getPalette(int nbPalette);
+		//! @brief Transform SNES color code BGR to uint32_t RGB
+		uint32_t getRealColor(uint16_t color);
+		//! @brief Get the color reference of a nb pixel tile
+		uint8_t getTilePixelReference(uint16_t addr, int bpp, int nb);
 	};
 }
 #endif //COMSQUARE_PPU_HPP

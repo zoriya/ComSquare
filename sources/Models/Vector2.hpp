@@ -7,6 +7,11 @@
 
 #include <ostream>
 #include <cmath>
+#include <SFML/Graphics.h>
+#include <SFML/Window.h>
+#include <SFML/System.hpp>
+#include <SFML/Window.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 
 namespace ComSquare
 {

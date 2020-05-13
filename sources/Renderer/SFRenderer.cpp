@@ -7,7 +7,7 @@
 #include <SFML/Audio.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
-#include <SFML/Graphics//RenderWindow.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 #include <iostream>
 
 namespace ComSquare::Renderer
