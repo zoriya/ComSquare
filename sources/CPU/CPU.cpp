@@ -6,9 +6,7 @@
 
 #include <utility>
 #include <iostream>
-#include "../Exceptions/NotImplementedException.hpp"
 #include "../Exceptions/InvalidAddress.hpp"
-#include "../Exceptions/InvalidOpcode.hpp"
 
 namespace ComSquare::CPU
 {
@@ -218,6 +216,8 @@ namespace ComSquare::CPU
 			return 0;
 		case Immediate8bits:
 			return this->_getImmediateAddr8Bits();
+		case Immediate16bits:
+			return this->_getImmediateAddr16Bits();
 		case ImmediateForA:
 			return this->_getImmediateAddrForA();
 		case ImmediateForX:
@@ -264,8 +264,6 @@ namespace ComSquare::CPU
 
 		case AbsoluteIndirectIndexedByX:
 			return this->_getAbsoluteIndirectIndexedByXAddr();
-		default:
-			return 0;
 		}
 	}
 

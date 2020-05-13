@@ -184,6 +184,15 @@ namespace ComSquare::CPU
 		return !this->_registers.p.x_b;
 	}
 
+	int CPU::PER(uint24_t valueAddr, AddressingMode)
+	{
+		uint16_t value = this->_bus->read(valueAddr);
+		value += this->_bus->read(valueAddr + 1) << 8u;
+		value += this->_registers.pc;
+		this->_push(value);
+		return 0;
+	}
+
 	int CPU::XCE(uint24_t, AddressingMode)
 	{
 		bool oldCarry = this->_registers.p.c;

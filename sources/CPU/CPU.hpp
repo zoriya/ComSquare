@@ -198,8 +198,10 @@ namespace ComSquare::CPU
 		//! @brief True if an addressing mode with an iterator (x, y) has crossed the page. (Used because crossing the page boundary take one more cycle to run certain instructions).
 		bool _hasIndexCrossedPageBoundary = false;
 
-		//! @brief Immediate address mode is specified with a value in 8. (This functions returns the 24bit space address of the value).
+		//! @brief Immediate address mode is specified with a value in 8 bits. (This functions returns the 24bit space address of the value).
 		uint24_t _getImmediateAddr8Bits();
+		//! @brief Immediate address mode is specified with a value in 16 bits. (This functions returns the 24bit space address of the value).
+		uint24_t _getImmediateAddr16Bits();
 		//! @brief Immediate address mode is specified with a value in 8 or 16 bits. The value is 16 bits if the m flag is unset. (This functions returns the 24bit space address of the value).
 		uint24_t _getImmediateAddrForA();
 		//! @brief Immediate address mode is specified with a value in 8 or 16 bits. The value is 16 bits if the x flag is unset. (This functions returns the 24bit space address of the value).
@@ -431,6 +433,8 @@ namespace ComSquare::CPU
 		int ROL(uint24_t, AddressingMode);
 		// !@brief Rotate Right
 		int ROR(uint24_t, AddressingMode);
+		//! @brief Push Effective PC Relative Indirect Address
+		int PER(uint24_t, AddressingMode);
 
 		//! @brief All the instructions of the CPU.
 		//! @info Instructions are indexed by their opcode
@@ -533,7 +537,7 @@ namespace ComSquare::CPU
 			{&CPU::EOR, 5, "eor", AddressingMode::AbsoluteIndexedByXLong, 4}, // 5F
 			{&CPU::RTL, 6, "rtl", AddressingMode::Implied, 1}, // 60
 			{&CPU::ADC, 6, "adc", AddressingMode::DirectPageIndirectIndexedByX, 2}, // 61
-			{&CPU::BRK, 7, "per #-#", AddressingMode::Implied, 2}, // 62
+			{&CPU::PER, 6, "per", AddressingMode::Immediate16bits, 3}, // 62
 			{&CPU::ADC, 4, "adc", AddressingMode::StackRelative, 2}, // 63
 			{&CPU::STZ, 3, "stz", AddressingMode::DirectPage, 2}, // 64
 			{&CPU::ADC, 3, "adc", AddressingMode::DirectPage, 2}, // 65
@@ -606,7 +610,7 @@ namespace ComSquare::CPU
 			{&CPU::TAY, 2, "tay", AddressingMode::Implied, 1}, // A8
 			{&CPU::LDA, 2, "lda", AddressingMode::ImmediateForA, 2}, // A9
 			{&CPU::TAX, 2, "tax", AddressingMode::Implied, 1}, // AA
-			{&CPU::BRK, 7, "trb #-#", AddressingMode::Implied, 2}, // AB
+			{&CPU::BRK, 7, "plb #-#", AddressingMode::Implied, 2}, // AB
 			{&CPU::LDY, 4, "ldy", AddressingMode::Absolute, 4}, // AC
 			{&CPU::LDA, 4, "lda", AddressingMode::Absolute, 3}, // AD
 			{&CPU::LDX, 4, "ldx", AddressingMode::Absolute, 3}, // AE

@@ -915,3 +915,16 @@ Test(JML, simpleJump)
 	snes.cpu->JML(0x10AB00, ComSquare::CPU::AddressingMode::Implied);
 	cr_assert_eq(snes.cpu->_registers.pac, 0x10AB00, "The program counter should be equal to 0x10AB00 but it was 0x%x.", snes.cpu->_registers.pac);
 }
+
+Test(PER, simple)
+{
+	Init()
+	snes.cpu->_registers.pac = 0x008005;
+	snes.cpu->_registers.s = 0x1FFF;
+	snes.wram->_data[0x0] = 0xFF;
+	snes.wram->_data[0x1] = 0xFF;
+	snes.cpu->PER(0x0, ComSquare::CPU::AddressingMode::Implied);
+	cr_assert_eq(snes.cpu->_registers.s, 0x1FFD, "The stack pointer should be equal to 0x1FFD but it was 0x%x.", snes.cpu->_registers.s);
+	uint16_t value = snes.cpu->_pop16();
+	cr_assert_eq(value, 0x8004, "The pushed value should be equal to 0x8004 but it was 0x%x.", value);
+}
