@@ -244,3 +244,57 @@ Test(ROL, accumulator)
 	cr_assert_eq(snes.cpu->_registers.p.c, true, "The carry flag should be set.");
 	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flag should not be set.");
 }
+
+Test(ROR, emulationTestWithtoutCarry)
+{
+	Init()
+	snes.wram->_data[0] = 0b01100110;
+	snes.cpu->_registers.p.m = true;
+	snes.cpu->_registers.p.c = false;
+	snes.cpu->ROR(0x0, ComSquare::CPU::AddressingMode::Absolute);
+	cr_assert_eq(snes.wram->_data[0], 0b00110011, "The data in ram should be 0b00110011 but it was %x", snes.wram->_data[0]);
+	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should not be set.");
+	cr_assert_eq(snes.cpu->_registers.p.c, false, "The carry flag should not be set.");
+	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flag should not be set.");
+}
+
+Test(ROR, emulationTest)
+{
+	Init()
+	snes.wram->_data[0] = 0b01100110;
+	snes.cpu->_registers.p.m = true;
+	snes.cpu->_registers.p.c = true;
+	snes.cpu->ROR(0x0, ComSquare::CPU::AddressingMode::Absolute);
+	cr_assert_eq(snes.wram->_data[0], 0b10110011, "The data in ram should be 0b10110011 but it was %x", snes.wram->_data[0]);
+	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should not be set.");
+	cr_assert_eq(snes.cpu->_registers.p.c, false, "The carry flag should not be set.");
+	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flag should not be set.");
+}
+
+Test(ROR, nativeTest)
+{
+	Init()
+	snes.wram->_data[0] = 0b10110011;
+	snes.wram->_data[1] = 0b10000011;
+	snes.cpu->_registers.p.m = false;
+	snes.cpu->_registers.p.c = true;
+	snes.cpu->ROR(0x0, ComSquare::CPU::AddressingMode::Absolute);
+	cr_assert_eq(snes.wram->_data[0], 0b11011001, "The data in ram should be 0b11011001 but it was %x", snes.wram->_data[0]);
+	cr_assert_eq(snes.wram->_data[1], 0b11000001, "The data in ram should be 0b11000001 but it was %x", snes.wram->_data[1]);
+	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should not be set.");
+	cr_assert_eq(snes.cpu->_registers.p.c, true, "The carry flag should be set.");
+	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flag should not be set.");
+}
+
+Test(ROR, accumulator)
+{
+	Init()
+	snes.cpu->_registers.a = 0b10110011;
+	snes.cpu->_registers.p.m = true;
+	snes.cpu->_registers.p.c = true;
+	snes.cpu->ROR(0x0, ComSquare::CPU::AddressingMode::Implied);
+	cr_assert_eq(snes.cpu->_registers.al, 0b11011001, "The accumulator should be 0b11011001 but it was %x", snes.cpu->_registers.al);
+	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should not be set.");
+	cr_assert_eq(snes.cpu->_registers.p.c, true, "The carry flag should be set.");
+	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flag should not be set.");
+}
