@@ -417,6 +417,8 @@ namespace ComSquare::CPU
 		int TYX(uint24_t, AddressingMode);
 		//! @brief Test and Set Memory Bits Against Accumulator
 		int TSB(uint24_t, AddressingMode);
+		//! @brief Test and Reset Memory Bits Against Accumulator
+		int TRB(uint24_t, AddressingMode);
 		//! @brief Exchange the B and A Accumulators
 		int XBA(uint24_t, AddressingMode);
 		//! @brief Test Memory Bits against Accumulator
@@ -453,7 +455,7 @@ namespace ComSquare::CPU
 			{&CPU::ORA, 5, "ora", AddressingMode::DirectPageIndirectIndexedByY, 2}, // 11
 			{&CPU::ORA, 5, "ora", AddressingMode::DirectPageIndirect, 2}, // 12
 			{&CPU::ORA, 7, "ora", AddressingMode::StackRelativeIndirectIndexedByY, 2}, // 13
-			{&CPU::BRK, 7, "trb #-#", AddressingMode::Implied, 2}, // 14
+			{&CPU::TRB, 5, "trb", AddressingMode::DirectPage, 2}, // 14
 			{&CPU::ORA, 4, "ora", AddressingMode::DirectPageIndexedByX, 2}, // 15
 			{&CPU::ASL, 6, "asl", AddressingMode::DirectPageIndexedByX, 2}, // 16
 			{&CPU::ORA, 6, "ora", AddressingMode::DirectPageIndirectIndexedByYLong, 2}, // 17
@@ -461,7 +463,7 @@ namespace ComSquare::CPU
 			{&CPU::ORA, 4, "ora", AddressingMode::AbsoluteIndexedByY, 3}, // 19
 			{&CPU::INC, 2, "inc", AddressingMode::Implied, 1}, // 1A
 			{&CPU::TCS, 2, "tcs", AddressingMode::Implied, 1}, // 1B
-			{&CPU::BRK, 7, "trb #-#", AddressingMode::Implied, 2}, // 1C
+			{&CPU::TRB, 6, "trb", AddressingMode::Absolute, 3}, // 1C
 			{&CPU::ORA, 4, "ora", AddressingMode::AbsoluteIndexedByX, 3}, // 1D
 			{&CPU::ASL, 7, "asl", AddressingMode::AbsoluteIndexedByX, 3}, // 1E
 			{&CPU::ORA, 5, "ora", AddressingMode::AbsoluteIndexedByXLong, 4}, // 1F
