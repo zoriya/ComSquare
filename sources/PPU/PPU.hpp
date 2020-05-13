@@ -589,6 +589,10 @@ namespace ComSquare::PPU
 		uint16_t cgramRead(uint16_t addr);
 		//! @brief Render a background on the screen
 		void renderBackground(int bgNumber, std::vector<int> characterSize, int bpp, bool priority);
+		//! @brief Get the correct Vram address for a gien x and y
+		uint16_t getGraphicVramAddress(int x, int y, int bg, int bpp);
+		//! @brief Draw a tile on the screen at x y pos
+		void drawBgTile(uint16_t data, std::vector<int>  pos, int bg, int bpp);
 	};
 }
 #endif //COMSQUARE_PPU_HPP

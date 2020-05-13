@@ -5,9 +5,11 @@
 #include <iostream>
 #include <bitset>
 #include "PPU.hpp"
+#include "PPUUtils.hpp"
 #include "../Exceptions/NotImplementedException.hpp"
 #include "../Exceptions/InvalidAddress.hpp"
 #include "../Ram/Ram.hpp"
+#include "../Models/Vector2.hpp"
 
 namespace ComSquare::PPU
 {
@@ -421,15 +423,36 @@ namespace ComSquare::PPU
 	{
 		int nbCharactersHeight = (this->_registers._bgsc[bgNumber].tilemapVerticalMirroring) ? 64 : 32;
 		int nbCharactersWidth = (this->_registers._bgsc[bgNumber].tilemapHorizontalMirroring) ? 64 : 32;
-		uint16_t vramAddress = this->_registers._bgsc[bgNumber].tilemapAddress >> 8U;
+		uint16_t vramAddress = this->_registers._bgsc[bgNumber].tilemapAddress << 1U;
 		uint16_t tilemapValue;
 
 		for (int i = 0; i < nbCharactersHeight * nbCharactersWidth; i++) {
 			for (int j = 0; j < 0x800; j++) {
-				tilemapValue = this->vram->read(vramAddress);
-				vramAddress++;
+				tilemapValue = this->vram->read_internal(vramAddress);
+				tilemapValue += this->vram->read_internal(vramAddress + 1) << 8U;
+				vramAddress += 2;
 
 			}
 		}
+	}
+
+	uint16_t PPU::getGraphicVramAddress(int x, int y, int bg, int bpp)
+	{
+		uint16_t baseAddress = this->_registers._bgnba[bg > 2].raw;
+		int step = bpp * 8;
+
+		baseAddress = (bg % 2) ? baseAddress & 0xFU : (baseAddress & 0xFU) >> 4U;
+		baseAddress = baseAddress << 12U;
+		return baseAddress + (x * 16 * step) + (y * step);
+	}
+
+	void PPU::drawBgTile(uint16_t data, Vector2<int> pos, int bg, int bpp)
+	{
+		uint16_t graphicAddress;
+		union TileMapData tileData;
+
+		tileData.raw = data;
+		graphicAddress = this->getGraphicVramAddress(tileData.posX, tileData.posY, bg, bpp);
+		// loop on all pixels of the tile 8x8 6x16 16x8 8x16
 	}
 }
