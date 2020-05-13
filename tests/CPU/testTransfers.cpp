@@ -436,3 +436,22 @@ Test(TYX, nativeMode)
 	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flag should be set.");
 	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should be not set.");
 }
+
+Test(MVN, hardCase)
+{
+	Init()
+	snes.cpu->_registers.a = 0x10;
+	snes.cpu->_registers.x = 0x0000;
+	snes.cpu->_registers.y = 0x1000;
+	for (int i = 0; i <= snes.cpu->_registers.a; i++)
+		snes.wram->_data[i] = i;
+
+	int cycles = snes.cpu->MVN(0x2010, ComSquare::CPU::AddressingMode::Implied);
+	cr_assert_eq(cycles, 0x77, "The MVN should take 0x77 cycles but it took %x.", cycles);
+	cr_assert_eq(snes.cpu->_registers.dbr, 0x20, "The data bank register should be 0x20 but it was %x", snes.cpu->_registers.dbr);
+	cr_assert_eq(snes.cpu->_registers.a, 0xFFFF, "The c accumulator should be 0xFFFF but it was %x", snes.cpu->_registers.a);
+	cr_assert_eq(snes.cpu->_registers.x, 0x0011, "The x index should be 0x0011 but it was %x", snes.cpu->_registers.x);
+	cr_assert_eq(snes.cpu->_registers.y, 0x1011, "The y index should be 0x1011 but it was %x", snes.cpu->_registers.y);
+	for (int i = 0; i < 0x11; i++)
+		cr_assert_eq(snes.wram->_data[i + 0x1000], i, "The data in ram should be %x but it was %x", i, snes.wram->_data[i + 0x1000]);
+}

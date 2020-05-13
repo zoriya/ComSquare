@@ -326,4 +326,9 @@ namespace ComSquare::CPU
 		this->_isStopped = true;
 		return 0;
 	}
+
+	int CPU::WDM(uint24_t, AddressingMode)
+	{
+		return 0;
+	}
 }

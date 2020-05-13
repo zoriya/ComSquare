@@ -90,7 +90,7 @@ add_executable(unit_tests
         sources/APU/IPL/IPL.cpp
         tests/CPU/Math/testSBC.cpp
         sources/CPU/Instructions/TransferRegisters.cpp
-        tests/CPU/TransferRegisters.cpp
+        tests/CPU/testTransfers.cpp
         sources/CPU/AddressingModes.cpp
         sources/Models/Components.hpp
         sources/CPU/Instruction.hpp

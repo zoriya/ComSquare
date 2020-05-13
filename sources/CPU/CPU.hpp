@@ -443,6 +443,13 @@ namespace ComSquare::CPU
 		int PEA(uint24_t, AddressingMode);
 		//! @brief Stop the processor
 		int STP(uint24_t, AddressingMode);
+		//! @brief WDM Reserved for Future Expansion (used as a code breakpoint)
+		int WDM(uint24_t, AddressingMode);
+		//! @brief Block Move Next. This instruction is special: it takes parameter in the registers
+		//! @param X_register Source address
+		//! @param Y_register Destination address
+		//! @param C_register (16 bits accumulator) Length -1
+		int MVN(uint24_t, AddressingMode);
 
 		//! @brief All the instructions of the CPU.
 		//! @info Instructions are indexed by their opcode
@@ -513,7 +520,7 @@ namespace ComSquare::CPU
 			{&CPU::AND, 5, "and", AddressingMode::AbsoluteIndexedByXLong, 4}, // 3F
 			{&CPU::RTI, 6, "rti", AddressingMode::Implied, 1}, // 40
 			{&CPU::EOR, 6, "eor", AddressingMode::DirectPageIndirectIndexedByX, 2}, // 41
-			{&CPU::BRK, 7, "wdm #-#", AddressingMode::Implied, 2}, // 42
+			{&CPU::WDM, 2, "wdm", AddressingMode::Immediate8bits, 2}, // 42
 			{&CPU::EOR, 4, "eor", AddressingMode::StackRelative, 2}, // 43
 			{&CPU::BRK, 7, "mvp #-#", AddressingMode::Implied, 2}, // 44
 			{&CPU::EOR, 3, "eor", AddressingMode::DirectPage, 2}, // 45
@@ -531,7 +538,7 @@ namespace ComSquare::CPU
 			{&CPU::EOR, 5, "eor", AddressingMode::DirectPageIndirectIndexedByY, 2}, // 51
 			{&CPU::EOR, 5, "eor", AddressingMode::DirectPageIndirect, 2}, // 52
 			{&CPU::EOR, 4, "eor", AddressingMode::StackRelativeIndirectIndexedByY, 2}, // 53
-			{&CPU::BRK, 7, "mvn #-#", AddressingMode::Implied, 2}, // 54
+			{&CPU::MVN, 0, "mvn", AddressingMode::Immediate16bits, 2}, // 54
 			{&CPU::EOR, 4, "eor", AddressingMode::DirectPageIndexedByX, 2}, // 55
 			{&CPU::LSR, 6, "lsr", AddressingMode::DirectPageIndexedByX, 2}, // 56
 			{&CPU::EOR, 6, "eor", AddressingMode::DirectPageIndirectIndexedByYLong, 2}, // 57
@@ -618,7 +625,7 @@ namespace ComSquare::CPU
 			{&CPU::TAY, 2, "tay", AddressingMode::Implied, 1}, // A8
 			{&CPU::LDA, 2, "lda", AddressingMode::ImmediateForA, 2}, // A9
 			{&CPU::TAX, 2, "tax", AddressingMode::Implied, 1}, // AA
-			{&CPU::BRK, 7, "plb #-#", AddressingMode::Implied, 2}, // AB
+			{&CPU::PLB, 4, "plb", AddressingMode::Implied, 1}, // AB
 			{&CPU::LDY, 4, "ldy", AddressingMode::Absolute, 4}, // AC
 			{&CPU::LDA, 4, "lda", AddressingMode::Absolute, 3}, // AD
 			{&CPU::LDX, 4, "ldx", AddressingMode::Absolute, 3}, // AE
