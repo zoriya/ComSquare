@@ -133,4 +133,47 @@ namespace ComSquare::CPU
 		}
 		return cycles;
 	}
+
+	int CPU::ROL(uint24_t valueAddr, AddressingMode mode)
+	{
+		unsigned highByte = this->_registers.p.m ? 0x80u : 0x8000u;
+		bool oldCarry = this->_registers.p.c;
+
+		if (mode == Implied) {
+			this->_registers.p.c = this->_registers.a & highByte;
+			this->_registers.a <<= 1u;
+			this->_registers.a |= oldCarry;
+			this->_registers.p.n = this->_registers.a & highByte;
+			this->_registers.p.z = this->_registers.a == 0;
+			return 0;
+		}
+
+		uint16_t value = this->_bus->read(valueAddr);
+		if (!this->_registers.p.m)
+			value += this->_bus->read(valueAddr + 1) << 8u;
+
+		this->_registers.p.c = value & highByte;
+		value <<= 1u;
+		value |= oldCarry;
+		this->_registers.p.n = value & highByte;
+		this->_registers.p.z = value == 0;
+
+		this->_bus->write(valueAddr, value);
+		if (!this->_registers.p.m)
+			this->_bus->write(valueAddr + 1, value >> 8u);
+
+		int cycles = 2 * !this->_registers.p.m;
+		switch (mode) {
+		case DirectPage:
+		case DirectPageIndexedByX:
+			cycles += this->_registers.dl != 0;
+			break;
+		case AbsoluteIndexedByX:
+			cycles += this->_hasIndexCrossedPageBoundary;
+			break;
+		default:
+			break;
+		}
+		return cycles;
+	}
 }

@@ -425,6 +425,8 @@ namespace ComSquare::CPU
 		int ASL(uint24_t, AddressingMode);
 		// !@brief Logical Shift Right
 		int LSR(uint24_t, AddressingMode);
+		// !@brief Rotate Left
+		int ROL(uint24_t, AddressingMode);
 
 		//! @brief All the instructions of the CPU.
 		//! @info Instructions are indexed by their opcode
@@ -467,15 +469,15 @@ namespace ComSquare::CPU
 			{&CPU::AND, 4, "and", AddressingMode::StackRelative, 2}, // 23
 			{&CPU::BIT, 3, "bit", AddressingMode::DirectPage, 2}, // 24
 			{&CPU::AND, 3, "and", AddressingMode::DirectPage, 2}, // 25
-			{&CPU::BRK, 7, "rol #-#", AddressingMode::Implied, 2}, // 26
+			{&CPU::ROL, 5, "rol", AddressingMode::DirectPage, 2}, // 26
 			{&CPU::AND, 6, "and", AddressingMode::DirectPageIndirectLong, 2}, // 27
 			{&CPU::PLP, 4, "plp", AddressingMode::Implied, 1}, // 28
 			{&CPU::AND, 2, "and", AddressingMode::ImmediateForA, 2}, // 29
-			{&CPU::BRK, 7, "rol #-#", AddressingMode::Implied, 2}, // 2A
+			{&CPU::ROL, 2, "rol", AddressingMode::Implied, 1}, // 2A
 			{&CPU::PLD, 5, "pld", AddressingMode::Implied, 1}, // 2B
 			{&CPU::BIT, 4, "bit", AddressingMode::Absolute, 3}, // 2C
 			{&CPU::AND, 4, "and", AddressingMode::Absolute, 3}, // 2D
-			{&CPU::BRK, 7, "rol #-#", AddressingMode::Implied, 2}, // 2E
+			{&CPU::ROL, 6, "rol", AddressingMode::Absolute, 3}, // 2E
 			{&CPU::AND, 5, "and", AddressingMode::AbsoluteLong, 4}, // 2F
 			{&CPU::BMI, 2, "bmi", AddressingMode::Immediate8bits, 2}, // 30
 			{&CPU::AND, 5, "and", AddressingMode::DirectPageIndirectIndexedByY, 2}, // 31
@@ -483,7 +485,7 @@ namespace ComSquare::CPU
 			{&CPU::AND, 7, "and", AddressingMode::StackRelativeIndirectIndexedByY, 2}, // 33
 			{&CPU::BIT, 4, "bit", AddressingMode::DirectPageIndexedByX, 2}, // 34
 			{&CPU::AND, 4, "and", AddressingMode::DirectPageIndexedByX, 2}, // 35
-			{&CPU::BRK, 7, "rol #-#", AddressingMode::Implied, 2}, // 36
+			{&CPU::ROL, 6, "rol", AddressingMode::DirectPageIndexedByX, 2}, // 36
 			{&CPU::AND, 6, "and", AddressingMode::DirectPageIndirectIndexedByYLong, 2}, // 37
 			{&CPU::SEC, 2, "sec", AddressingMode::Implied, 1}, // 38
 			{&CPU::AND, 4, "and", AddressingMode::AbsoluteIndexedByY, 3}, // 39
@@ -491,7 +493,7 @@ namespace ComSquare::CPU
 			{&CPU::TSC, 2, "tsc", AddressingMode::Implied, 1}, // 3B
 			{&CPU::BIT, 4, "bit", AddressingMode::AbsoluteIndexedByX, 3}, // 3C
 			{&CPU::AND, 4, "and", AddressingMode::AbsoluteIndexedByX, 3}, // 3D
-			{&CPU::BRK, 7, "rol #-#", AddressingMode::Implied, 2}, // 3E
+			{&CPU::ROL, 7, "rol", AddressingMode::AbsoluteIndexedByX, 3}, // 3E
 			{&CPU::AND, 5, "and", AddressingMode::AbsoluteIndexedByXLong, 4}, // 3F
 			{&CPU::RTI, 6, "rti", AddressingMode::Implied, 1}, // 40
 			{&CPU::EOR, 6, "eor", AddressingMode::DirectPageIndirectIndexedByX, 2}, // 41
