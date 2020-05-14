@@ -713,7 +713,7 @@ namespace ComSquare::CPU
 		virtual bool isDebugger();
 
 		//! @brief Change the memory bus used by the CPU.
-		void setMemoryBus(std::shared_ptr<Memory::MemoryBus> bus);
+		virtual void setMemoryBus(std::shared_ptr<Memory::MemoryBus> bus);
 	};
 }
 
