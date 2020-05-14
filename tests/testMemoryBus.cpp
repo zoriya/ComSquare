@@ -350,7 +350,7 @@ Test(BusRead, ReadPPU)
 	Init()
 	uint8_t data;
 
-	snes.ppu->mpy.mpyl = 123;
+	snes.ppu->_registers._mpy.mpyl = 123;
 	data = snes._bus->read(0x002134);
 	cr_assert_eq(data, 123);
 }
@@ -428,7 +428,7 @@ Test(BusWrite, WritePPU)
 	Init()
 
 	snes._bus->write(0x002106, 123);
-	cr_assert_eq(snes.ppu->_mosaic.raw, 123);
+	cr_assert_eq(snes.ppu->_registers._mosaic.raw, 123);
 }
 
 Test(BusWrite, WriteCPU)

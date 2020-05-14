@@ -9,17 +9,16 @@
 #include "../Memory/AMemory.hpp"
 #include "../Memory/MemoryBus.hpp"
 #include "../Renderer/IRenderer.hpp"
-#include "../Ram/ExtendedRam.hpp"
+//#include "../Ram/ExtendedRam.hpp"
+#include "../Ram/Ram.hpp"
+#include "../Models/Vector2.hpp"
 
 //#define max2BitTiles		4096
 //#define max4BitTiles		2048
 //#define max8BitTiles		1024
 
-
-
 namespace ComSquare::PPU
 {
-
 	enum ppuRegisters {
 	//! @brief INIDISP Register (F-blank and Brightness)
 	inidisp = 0x00,
@@ -132,7 +131,7 @@ namespace ComSquare::PPU
 	//! @brief MPYL (Multiplication Result low byte)
 	mpyl = 0x34,
 	//! @brief MPYM (Multiplication Result middle byte)
-	mpum = 0x35,
+	mpym = 0x35,
 	//! @brief MPYH (Multiplication Result high byte)
 	mpyh = 0x36,
 	//! @brief SLHV (Software Latch for H/V Counter)
@@ -148,72 +147,14 @@ namespace ComSquare::PPU
 	//! @brief OPHCT (Horizontal Scanline Location)
 	ophct = 0x3C,
 	//! @brief OPVCT (Vertical Scanline Location)
-	opcvt = 0x3D,
+	opvct = 0x3D,
 	//! @brief STAT77 (PPU Status Flag and Version)
 	stat77 = 0x3E,
 	//! @brief STAT78 (PPU Status Flag and Version)
 	stat78 = 0x3F
 	};
 
-	//! @brief The class containing all the registers the PPU
-	class PPU : public Memory::AMemory {
-	private:
-	/*	struct _layerInfo {
-			bool _characterSize;
-		};
-
-		struct {
-			unsigned int _height;
-			unsigned int _width;
-			bool verticalMirroring;
-			bool horizontalMirroring;
-			int verticalOffset;
-			int horizontalOffset;
-			//! @brief A Character is the base unit of the background it can be 16x16 or 8x8 (16x8 under certain circumstances)
-			unsigned char characterHeight;
-			unsigned char characterWidth;
-		} _BG[4];
-
-		struct object {
-			bool verticalMirroring;
-			bool horizontalMirroring;
-			bool priority;
-			unsigned short graphicAddress;
-		};
-
-		//! @brief INIDISP variables (F-blank and Brightness)
-		struct {
-			bool _fBlank;
-			//! @brief F=max, 0="off".
-			unsigned short _brightness;
-		} _inidisp;
-
-		//! @brief OBSEL variables (Object Size and Character Address)
-		struct {
-			//! @brief "OamMode" this contains the size of the Objects (ex: 8x8 and 16x16)
-			unsigned char _objectSize;
-			//! @brief "OamBaseAddress"
-			unsigned char _baseSelect;
-			//! @brief "OamAddressOffset"
-			unsigned char _nameSelect;
-		} _obsel;
-
-		//! @brief OAMADD variables (OAM Address and Obj Priority)
-		struct {
-			uint16_t _oamAddress;
-			bool _objPriority;
-		} _oamadd;
-
-		//! @brief BGMODE (BG Mode and Character Size)
-		struct {
-			unsigned char _bgMode;
-			bool _mode1Bg3Priority;
-			_layerInfo layers[4];
-		} _bgmode;*/
-
-
-
-
+	struct Registers {
 		//! @brief INIDISP Register (F-blank and Brightness)
 		union {
 			struct {
@@ -368,8 +309,14 @@ namespace ComSquare::PPU
 			};
 			uint8_t raw;
 		} _m7sel;
-		//! M7A M7B M7C M7D i didn't understand how they works so they will be added later.
-
+		//! @brief M7A M7B M7C M7C registers, M7A and M7B are also used with ($2134/6) (multiplactions registers)
+		union {
+			struct {
+				uint8_t m7l;
+				uint8_t m7h;
+			};
+			uint16_t m7;
+		} _m7[4];
 		// <to work>
 
 		//! @brief M7X Register (Mode 7 Center X)
@@ -421,13 +368,13 @@ namespace ComSquare::PPU
 			};
 			uint8_t raw;
 		} _wsel[3];
-		//! @brief WH0 Register (CWindow 1 Left Position)
+		//! @brief WH0 Register (Window 1 Left Position)
 		uint8_t _wh0;
-		//! @brief WH1 Register (CWindow 1 Right Position)
+		//! @brief WH1 Register (Window 1 Right Position)
 		uint8_t _wh1;
-		//! @brief WH2 Register (CWindow 2 Left Position)
+		//! @brief WH2 Register (Window 2 Left Position)
 		uint8_t _wh2;
-		//! @brief WH3 Register (CWindow 2 Right Position)
+		//! @brief WH3 Register (Window 2 Right Position)
 		uint8_t _wh3;
 		//! @brief WBGLOG Register (Window mask logic for BGs)
 		union {
@@ -533,7 +480,7 @@ namespace ComSquare::PPU
 			uint8_t raw;
 		} _setini;
 
-		// <READ registers> not in priority
+		// <READ registers>
 
 		//! @brief MPYL - MPYM - MPYH Registers (Multiplication Result)
 		union {
@@ -542,13 +489,71 @@ namespace ComSquare::PPU
 				uint8_t mpym;
 				uint8_t mpyh;
 			};
-			uint32_t  mpy;
-		} mpy;
+			uint32_t mpy;
+		} _mpy;
+		//! @brief SLHV - Software Latch for H/V Counter
+		uint8_t _slhv;
+		//! @brief OAMDATAREAD - Data for OAM read
+		uint8_t _oamdataread;
+		//! @brief VMDATALREAD/VMDATAHREAD - VRAM Data Read low/high byte
+		union {
+			struct {
+				uint8_t vmDataLRead;
+				uint8_t vmDataHRead;
+			};
+			uint16_t raw;
+		} _vmdataread;
+		//! @brief CGRAM Data read
+		union {
+			struct {
+				uint8_t cgDataLRead;
+				uint8_t cgDataHRead;
+			};
+			uint16_t raw;
+		} _cgdataread;
+		//! @brief OPHCT/OPVCT - Horizontal/Vertical Scanline Location
+		union {
+			struct {
+				uint16_t opct: 9;
+				uint8_t _: 7;
+			};
+			uint16_t raw;
+		} _opct;
+		//! @brief STAT77 - PPU Status Flag and Version
+		union {
+			struct {
+				uint8_t chipVersionNumber: 4;
+				bool _: 1;
+				bool modeSelect: 1;
+				bool rangeOverFlag: 1;
+				bool timeOverFlag: 1;
+			};
+			uint8_t raw;
+		} _stat77;
+		//! @brief STAT78 - PPU Status Flag and Version
+		union {
+			struct {
+				uint8_t chipVersionNumber: 4;
+				bool mode: 1;
+				bool _: 1;
+				bool externalLatchFlag: 1;
+				bool interlaceField: 1;
+			};
+			uint8_t raw;
+		} _stat78;
+	};
+
+	//! @brief The class containing all the registers of the PPU
+	class PPU : public Memory::AMemory {
+	private:
+		//! @brief Init ppuRegisters
+		Registers _registers{};
 		Renderer::IRenderer &_renderer;
-		Ram::ExtendedRam _vram;
-		Ram::ExtendedRam _oamram;
-		Ram::ExtendedRam _cgram;
 	public:
+		std::shared_ptr<Ram::Ram> vram;
+		std::shared_ptr<Ram::Ram> oamram;
+		std::shared_ptr<Ram::Ram> cgram;
+
 		explicit PPU(Renderer::IRenderer &renderer);
 		PPU(const PPU &) = delete;
 		PPU &operator=(const PPU &) = delete;
@@ -571,9 +576,29 @@ namespace ComSquare::PPU
 
 		//! @brief Update the PPU of n cycles.
 		//! @param The number of cycles to update.
-		void update(unsigned cycles);
+		virtual void update(unsigned cycles);
 		//! @brief Give the Vram Address with the right Address remapping
-		uint8_t getVramAddress();
+		uint16_t getVramAddress();
+		//! @brief Give the name of the Address register (used for debug)
+		std::string getValueName(uint24_t addr);
+		//! @brief Return true if the CPU is overloaded with debugging features.
+		virtual bool isDebugger();
+		//! @brief Allow others components to read the CGRAM (Debuggers)
+		uint16_t cgramRead(uint16_t addr);
+		//! @brief Render a background on the screen
+		void renderBackground(int bgNumber, Vector2<int> characterSize, int bpp, bool priority);
+		//! @brief Get the correct Vram address for a gien x and y
+		uint16_t getGraphicVramAddress(int x, int y, int bg, int bpp);
+		//! @brief Draw a tile on the screen at x y pos
+		void drawBgTile(uint16_t data, Vector2<int> pos, int bg, int bpp, Vector2<int> characterSize);
+		//! @brief Get a palette from the number of the palette (0 - 7)
+		std::vector<uint16_t> getPalette(int nbPalette);
+		//! @brief Transform SNES color code BGR to uint32_t RGB
+		uint32_t getRealColor(uint16_t color);
+		//! @brief Get the color reference of a nb pixel tile
+		uint8_t getTilePixelReference(uint16_t addr, int bpp, int nb);
+		//! @brief draw a tilemap 32x32 starting at baseAddress
+		void drawBasicTileMap(uint16_t baseAddress, int bgNumber, int bpp, Vector2<int> characterSize, Vector2<int> offset);
 	};
 }
 #endif //COMSQUARE_PPU_HPP
