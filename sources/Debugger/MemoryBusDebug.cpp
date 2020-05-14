@@ -165,11 +165,12 @@ namespace ComSquare::Debugger
 	void MemoryBusDebug::write(uint24_t addr, uint8_t data)
 	{
 		auto accessor = this->getAccessor(addr);
-		std::optional<uint8_t> value;
+		uint8_t value = 0;
 		try {
-			value = accessor->read(addr - accessor->getStart());
+			if (accessor)
+				value = accessor->read(addr - accessor->getStart());
 		} catch (InvalidAddress &) {
-			value = std::nullopt;
+			value = 0;
 		}
 		if (!forceSilence)
 			this->_model.log(BusLog(true, addr, accessor, value, data));
