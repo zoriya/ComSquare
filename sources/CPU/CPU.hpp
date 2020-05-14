@@ -732,6 +732,7 @@ namespace ComSquare::CPU
 		CPU(const CPU &) = default;
 		CPU &operator=(const CPU &) = delete;
 		~CPU() override = default;
+
 		//! @brief This function continue to execute the Cartridge code.
 		//! @return The number of CPU cycles that elapsed
 		virtual unsigned update();
@@ -766,7 +767,7 @@ namespace ComSquare::CPU
 		virtual bool isDebugger();
 
 		//! @brief Change the memory bus used by the CPU.
-		void setMemoryBus(std::shared_ptr<Memory::MemoryBus> bus);
+		virtual void setMemoryBus(std::shared_ptr<Memory::MemoryBus> bus);
 	};
 }
 

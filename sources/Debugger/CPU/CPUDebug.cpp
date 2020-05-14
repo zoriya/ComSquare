@@ -5,11 +5,9 @@
 #include "CPUDebug.hpp"
 #include "../../Utility/Utility.hpp"
 #include "../../Exceptions/InvalidOpcode.hpp"
-#include "../../CPU/CPU.hpp"
 #include <QtEvents>
 #include <QPainter>
 #include <iostream>
-#include <utility>
 
 using namespace ComSquare::CPU;
 
@@ -21,7 +19,7 @@ namespace ComSquare::Debugger
 		_ui(),
 		_model(*this),
 		_painter(*this),
-		_stackModel(*this->_bus, *this),
+		_stackModel(this->_bus, *this),
 		_snes(snes)
 	{
 		this->_window->setContextMenuPolicy(Qt::NoContextMenu);
@@ -68,6 +66,12 @@ namespace ComSquare::Debugger
 	void CPUDebug::disableDebugger()
 	{
 		this->_snes.disableCPUDebugging();
+	}
+
+	void CPUDebug::setMemoryBus(std::shared_ptr<Memory::MemoryBus> bus)
+	{
+		this->_stackModel.setMemoryBus(bus);
+		CPU::setMemoryBus(bus);
 	}
 
 	unsigned CPUDebug::update()
@@ -379,7 +383,12 @@ QSize RowPainter::sizeHint(const QStyleOptionViewItem &, const QModelIndex &) co
 	return QSize();
 }
 
-StackModel::StackModel(ComSquare::Memory::MemoryBus &bus, ComSquare::Debugger::CPUDebug &cpu) : _bus(bus), _cpu(cpu) { }
+StackModel::StackModel(std::shared_ptr<ComSquare::Memory::MemoryBus> bus, ComSquare::Debugger::CPUDebug &cpu) : _bus(bus), _cpu(cpu) { }
+
+void StackModel::setMemoryBus(std::shared_ptr<ComSquare::Memory::MemoryBus> bus)
+{
+	this->_bus = std::move(bus);
+}
 
 int StackModel::rowCount(const QModelIndex &) const
 {
@@ -405,7 +414,7 @@ QVariant StackModel::data(const QModelIndex &index, int role) const
 		return QVariant();
 	uint16_t addr = index.row() * 2 + index.column();
 	try {
-		uint8_t value = this->_bus.read(addr);
+		uint8_t value = this->_bus->read(addr);
 		return (ComSquare::Utility::to_hex(value, ComSquare::Utility::NoPrefix).c_str());
 	} catch (std::exception &) {
 		return "??";

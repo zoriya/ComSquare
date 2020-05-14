@@ -7,7 +7,6 @@
 #include <utility>
 #include <iostream>
 #include "../Exceptions/InvalidAddress.hpp"
-#include "../Exceptions/InvalidOpcode.hpp"
 
 namespace ComSquare::CPU
 {

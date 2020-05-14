@@ -165,9 +165,10 @@ namespace ComSquare::Debugger
 	void MemoryBusDebug::write(uint24_t addr, uint8_t data)
 	{
 		auto accessor = this->getAccessor(addr);
-		uint8_t value;
+		uint8_t value = 0;
 		try {
-			value = accessor->read(addr - accessor->getStart());
+			if (accessor)
+				value = accessor->read(addr - accessor->getStart());
 		} catch (InvalidAddress &) {
 			value = 0;
 		}
