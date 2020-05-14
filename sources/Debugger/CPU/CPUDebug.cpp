@@ -414,7 +414,7 @@ QVariant StackModel::data(const QModelIndex &index, int role) const
 		return QVariant();
 	uint16_t addr = index.row() * 2 + index.column();
 	try {
-		uint8_t value = this->_bus->read(addr);
+		uint8_t value = this->_bus->read(addr, true);
 		return (ComSquare::Utility::to_hex(value, ComSquare::Utility::NoPrefix).c_str());
 	} catch (std::exception &) {
 		return "??";
