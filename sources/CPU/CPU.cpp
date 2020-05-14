@@ -205,11 +205,38 @@ namespace ComSquare::CPU
 	{
 		unsigned cycles = 0;
 
-		if (this->_isStopped)
-			return 0xFF;
-		for (int i = 0; i < 0xFF; i++)
-			cycles += this->_executeInstruction(this->readPC());
+		for (int i = 0; i < 0xFF; i++) {
+			if (this->_isStopped) {
+				cycles += 1;
+				continue;
+			}
+
+			this->_checkInterrupts();
+
+			if (!this->_isWaitingForInterrupt)
+				cycles += this->_executeInstruction(this->readPC());
+		}
 		return cycles;
+	}
+
+	void CPU::_checkInterrupts()
+	{
+		if (!this->IsNMIRequested && !this->IsIRQRequested && !this->IsAbortRequested)
+			return;
+		this->_isWaitingForInterrupt = false;
+
+		if (this->IsNMIRequested) {
+			this->_runInterrupt(
+				this->_cartridgeHeader.nativeInterrupts.nmi,
+				this->_cartridgeHeader.emulationInterrupts.nmi);
+			return;
+		}
+		if (this->IsIRQRequested && !this->_registers.p.i) {
+			this->_runInterrupt(
+				this->_cartridgeHeader.nativeInterrupts.irq,
+				this->_cartridgeHeader.emulationInterrupts.irq);
+			return;
+		}
 	}
 
 	uint24_t CPU::_getValueAddr(Instruction &instruction)
