@@ -15,6 +15,7 @@ namespace ComSquare::PPU
 {
 	void PPU::renderBackground(int bgNumber, Vector2<int> characterSize, int bpp, bool priority)
 	{
+		(void)priority;
 		int nbBgHeight = (this->_registers._bgsc[bgNumber - 1].tilemapVerticalMirroring) ? 2 : 1;
 		int nbBgWidth = (this->_registers._bgsc[bgNumber - 1].tilemapHorizontalMirroring) ? 2 : 1;
 		uint16_t vramAddress = this->_registers._bgsc[bgNumber - 1].tilemapAddress << 1U;

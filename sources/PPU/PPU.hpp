@@ -17,11 +17,8 @@
 //#define max4BitTiles		2048
 //#define max8BitTiles		1024
 
-
-
 namespace ComSquare::PPU
 {
-
 	enum ppuRegisters {
 	//! @brief INIDISP Register (F-blank and Brightness)
 	inidisp = 0x00,

@@ -260,7 +260,7 @@ namespace ComSquare::PPU
 						this->_renderer.putPixel(x, y, pixelTmp);
 				}
 		}
-		renderBackground(1, {8, 8}, 4, false);
+		this->renderBackground(1, {8, 8}, 4, false);
 		this->_renderer.drawScreen();
 	}
 
