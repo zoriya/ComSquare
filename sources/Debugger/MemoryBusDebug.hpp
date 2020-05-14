@@ -15,7 +15,11 @@ namespace ComSquare::Debugger
 {
 	//! @brief The struct used to represent memory bus logs.
 	struct BusLog {
-		BusLog(bool write, uint24_t addr, std::shared_ptr<Memory::AMemory> &accessor, std::optional<uint8_t> oldData, uint8_t newData);
+		BusLog(bool write,
+			uint24_t addr,
+			std::shared_ptr<Memory::AMemory> &accessor,
+			std::optional<uint8_t> oldData,
+			uint8_t newData);
 
 		bool write;
 		uint24_t addr;
