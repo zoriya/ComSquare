@@ -186,12 +186,16 @@ namespace ComSquare::CPU
 	protected:
 		//! @brief All the registers of the CPU
 		Registers _registers{};
+		//! @brief Internal registers of the CPU (accessible from the bus via addr $4200 to $421F).
+		InternalRegisters _internalRegisters{};
+
 		//! @brief Is the CPU running in emulation mode (in 8bits)
 		bool _isEmulationMode = true;
 		//! @brief If the processor is stopped (using an STP instruction), the clock is stopped and no instruction will be run until a manual reset.
 		bool _isStopped = false;
-		//! @brief Internal registers of the CPU (accessible from the bus via addr $4200 to $421F).
-		InternalRegisters _internalRegisters{};
+		//! @brief Is the processor waiting for an interrupt (if true, instructions are not run until an interrupt is requested).
+		bool _isWaitingForInterrupt = false;
+
 		//! @brief The memory bus to use for read/write.
 		std::shared_ptr<Memory::MemoryBus> _bus;
 		//! @brief The cartridge header (stored for interrupt vectors..
@@ -257,6 +261,11 @@ namespace ComSquare::CPU
 
 		//! @brief Return the data at the program bank concatenated with the program counter. It also increment the program counter (the program bank is not incremented on overflows).
 		uint8_t readPC();
+
+		//! @brief Check if an interrupt is requested and handle it.
+		void _checkInterrupts();
+		//! @brief Run an interrupt (save state of the processor and jump to the interrupt handler)
+		void _runInterrupt(uint24_t nativeHandler, uint24_t emulationHandler);
 
 		//! @brief Execute a single instruction.
 		//! @return The number of CPU cycles that the instruction took.
@@ -443,6 +452,8 @@ namespace ComSquare::CPU
 		int PEA(uint24_t, AddressingMode);
 		//! @brief Stop the processor
 		int STP(uint24_t, AddressingMode);
+		//! @brief Wait for Interrupt
+		int WAI(uint24_t, AddressingMode);
 		//! @brief WDM Reserved for Future Expansion (used as a code breakpoint)
 		int WDM(uint24_t, AddressingMode);
 		//! @brief Block Move Next. This instruction is special: it takes parameter in the registers
@@ -662,7 +673,7 @@ namespace ComSquare::CPU
 			{&CPU::INY, 2, "iny", AddressingMode::Implied, 1}, // C8
 			{&CPU::CMP, 2, "cmp", AddressingMode::ImmediateForA, 2}, // C9
 			{&CPU::DEX, 2, "dex", AddressingMode::Implied, 1}, // CA
-			{&CPU::BRK, 7, "wai #-#", AddressingMode::Implied, 2}, // CB
+			{&CPU::WAI, 3, "wai", AddressingMode::Implied, 1}, // CB
 			{&CPU::CPY, 4, "cpy", AddressingMode::Absolute, 3}, // CC
 			{&CPU::CMP, 4, "cmp", AddressingMode::Absolute, 3}, // CD
 			{&CPU::DEC, 6, "dec", AddressingMode::Absolute, 3}, // CE
@@ -745,11 +756,18 @@ namespace ComSquare::CPU
 		//! @brief Reset interrupt - Called on boot and when the reset button is pressed.
 		virtual int RESB();
 
+		//! @brief Is an NMI (non-maskable interrupt) requested.
+		bool IsNMIRequested = false;
+		//! @brief Is an interrupt (maskable) requested.
+		bool IsIRQRequested = false;
+		//! @brief Is an abort requested
+		bool IsAbortRequested = false;
+
 		//! @brief Return true if the CPU is overloaded with debugging features.
 		virtual bool isDebugger();
 
 		//! @brief Change the memory bus used by the CPU.
-		void setMemoryBus(std::shared_ptr<Memory::MemoryBus> bus);
+		virtual void setMemoryBus(std::shared_ptr<Memory::MemoryBus> bus);
 	};
 }
 

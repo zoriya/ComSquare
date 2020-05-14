@@ -42,13 +42,13 @@ namespace ComSquare::Debugger
 					ctx.mFlag = true;
 					ctx.xFlag = true;
 				} else {
-					uint8_t m = this->_bus->read(pc - 1);
+					uint8_t m = this->_bus->read(pc - 1, true);
 					ctx.mFlag &= ~m & 0b00100000u;
 					ctx.xFlag &= ~m & 0b00010000u;
 				}
 			}
 			if (instruction.opcode == 0xE2) { // SEP
-				uint8_t m = this->_bus->read(pc - 1);
+				uint8_t m = this->_bus->read(pc - 1, true);
 				ctx.mFlag |= m & 0b00100000u;
 				ctx.xFlag |= m & 0b00010000u;
 			}
@@ -150,7 +150,7 @@ namespace ComSquare::Debugger
 
 	std::string CPUDebug::_getAbsoluteValue(uint24_t pc)
 	{
-		uint24_t value = this->_bus->read(pc) + (this->_bus->read(pc + 1, true) << 8u);
+		uint24_t value = this->_bus->read(pc, true) + (this->_bus->read(pc + 1, true) << 8u);
 		return Utility::to_hex(value, Utility::HexString::AsmPrefix);
 	}
 
@@ -193,13 +193,13 @@ namespace ComSquare::Debugger
 
 	std::string CPUDebug::_getAbsoluteIndexByXValue(uint24_t pc)
 	{
-		uint24_t value = this->_bus->read(pc) + (this->_bus->read(pc + 1, true) << 8u);
+		uint24_t value = this->_bus->read(pc, true) + (this->_bus->read(pc + 1, true) << 8u);
 		return Utility::to_hex(value, Utility::HexString::AsmPrefix) + ", x";
 	}
 
 	std::string CPUDebug::_getAbsoluteIndexByYValue(uint24_t pc)
 	{
-		uint24_t value = this->_bus->read(pc) + (this->_bus->read(pc + 1, true) << 8u);
+		uint24_t value = this->_bus->read(pc, true) + (this->_bus->read(pc + 1, true) << 8u);
 		return Utility::to_hex(value, Utility::HexString::AsmPrefix) + ", y";
 	}
 

@@ -150,7 +150,7 @@ namespace ComSquare::Debugger
 
 	uint8_t MemoryBusDebug::read(uint24_t addr, bool silence)
 	{
-		if (!silence && !forceSilence) {
+		if (!silence && !this->forceSilence) {
 			auto accessor = this->getAccessor(addr);
 			if (!accessor) {
 				this->_model.log(BusLog(true, addr, accessor, this->_openBus, this->_openBus));
