@@ -3,12 +3,14 @@
 //
 
 #include <ios>
+#include <iostream>
 #include "SNES.hpp"
 #ifdef DEBUGGER_ENABLED
 #include "Debugger/CPU/CPUDebug.hpp"
 #include "Debugger/APUDebug.hpp"
 #include "Debugger/MemoryBusDebug.hpp"
 #include "Debugger/CGramDebug.hpp"
+
 
 #endif
 
