@@ -4,7 +4,7 @@
 
 #include "Background.hpp"
 
-namespace PPU
+namespace ComSquare::PPU
 {
 	/*void PPU::renderBackground(int bgNumber, Vector2<int> characterSize, int bpp, bool priority)
 	{

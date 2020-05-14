@@ -10,6 +10,7 @@
 #include "../Exceptions/InvalidAddress.hpp"
 #include "../Ram/Ram.hpp"
 #include "../Models/Vector2.hpp"
+#include <random>
 
 namespace ComSquare::PPU
 {
