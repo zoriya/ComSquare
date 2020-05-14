@@ -3,6 +3,7 @@
 //
 
 #include <ios>
+#include <iostream>
 #include "SNES.hpp"
 #ifdef DEBUGGER_ENABLED
 #include "Debugger/CPU/CPUDebug.hpp"
