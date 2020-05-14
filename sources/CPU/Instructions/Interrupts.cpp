@@ -18,10 +18,11 @@ namespace ComSquare::CPU
 		this->_registers.d = 0x0000;
 		this->_registers.sh = 0x01; // the low bit of the stack pointer is undefined on reset.
 		this->_registers.pc = this->_cartridgeHeader.emulationInterrupts.reset;
+		this->_isStopped = false;
 		return 0;
 	}
 
-	int CPU::BRK(uint24_t, AddressingMode)
+	void CPU::_runInterrupt(uint24_t nativeHandler, uint24_t emulationHandler)
 	{
 		if (this->_isEmulationMode) {
 			this->_push(this->_registers.pc);
@@ -29,7 +30,7 @@ namespace ComSquare::CPU
 			this->_registers.p.i = true;
 			this->_registers.p.d = false;
 			this->_registers.pbr = 0x0;
-			this->_registers.pc = this->_cartridgeHeader.emulationInterrupts.brk;
+			this->_registers.pc = emulationHandler;
 		} else {
 			this->_push(this->_registers.pbr);
 			this->_push(this->_registers.pc);
@@ -37,29 +38,23 @@ namespace ComSquare::CPU
 			this->_registers.p.i = true;
 			this->_registers.p.d = false;
 			this->_registers.pbr = 0x0;
-			this->_registers.pc = this->_cartridgeHeader.nativeInterrupts.brk;
+			this->_registers.pc = nativeHandler;
 		}
+	}
+
+	int CPU::BRK(uint24_t, AddressingMode)
+	{
+		this->_runInterrupt(
+			this->_cartridgeHeader.nativeInterrupts.brk,
+			this->_cartridgeHeader.emulationInterrupts.brk);
 		return !this->_isEmulationMode;
 	}
 
 	int CPU::COP(uint24_t, AddressingMode)
 	{
-		if (this->_isEmulationMode) {
-			this->_push(this->_registers.pc);
-			this->_push(this->_registers.p.flags);
-			this->_registers.p.i = true;
-			this->_registers.p.d = false;
-			this->_registers.pbr = 0x0;
-			this->_registers.pc = this->_cartridgeHeader.emulationInterrupts.cop;
-		} else {
-			this->_push(this->_registers.pbr);
-			this->_push(this->_registers.pc);
-			this->_push(this->_registers.p.flags);
-			this->_registers.p.i = true;
-			this->_registers.p.d = false;
-			this->_registers.pbr = 0x0;
-			this->_registers.pc = this->_cartridgeHeader.nativeInterrupts.cop;
-		}
+		this->_runInterrupt(
+			this->_cartridgeHeader.nativeInterrupts.cop,
+			this->_cartridgeHeader.emulationInterrupts.cop);
 		return !this->_isEmulationMode;
 	}
 
@@ -71,5 +66,11 @@ namespace ComSquare::CPU
 		if (!this->_isEmulationMode)
 			this->_registers.pbr = this->_pop16();
 		return !this->_isEmulationMode;
+	}
+
+	int CPU::WAI(uint24_t, AddressingMode)
+	{
+		this->_isWaitingForInterrupt = true;
+		return 0;
 	}
 }

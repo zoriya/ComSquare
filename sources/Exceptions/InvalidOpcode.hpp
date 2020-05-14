@@ -17,6 +17,11 @@ namespace ComSquare
 	private:
 		std::string _msg;
 	public:
+		explicit InvalidOpcode(const std::string &what)
+		{
+			this->_msg = what;
+		}
+
 		explicit InvalidOpcode(const std::string &pu, unsigned opcode)
 		{
 			std::stringstream stream;
