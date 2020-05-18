@@ -22,7 +22,7 @@
     <item row="0" column="0">
      <widget class="QTabWidget" name="tabs">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="general">
        <attribute name="title">
@@ -180,7 +180,7 @@
           <height>351</height>
          </rect>
         </property>
-        <layout class="QFormLayout" name="formLayout_2">
+        <layout class="QFormLayout" name="formLayout_4">
          <item row="0" column="0">
           <widget class="QLabel" name="coProcessorLabel">
            <property name="text">
@@ -272,7 +272,7 @@
        <attribute name="title">
         <string>Native</string>
        </attribute>
-       <widget class="QWidget" name="formLayoutWidget_2">
+       <widget class="QWidget" name="formLayoutWidget_3">
         <property name="geometry">
          <rect>
           <x>0</x>
@@ -281,7 +281,7 @@
           <height>351</height>
          </rect>
         </property>
-        <layout class="QFormLayout" name="formLayout_2">
+        <layout class="QFormLayout" name="formLayout_3">
          <item row="0" column="0">
           <widget class="QLabel" name="coProcessorLabelNat">
            <property name="text">

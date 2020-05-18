@@ -90,14 +90,16 @@ add_executable(unit_tests
         sources/APU/IPL/IPL.cpp
         tests/CPU/Math/testSBC.cpp
         sources/CPU/Instructions/TransferRegisters.cpp
-        tests/CPU/TransferRegisters.cpp
+        tests/CPU/testTransfers.cpp
         sources/CPU/AddressingModes.cpp
         sources/Models/Components.hpp
         sources/CPU/Instruction.hpp
         sources/Exceptions/DebuggableError.hpp
         tests/CPU/Math/testOthersMath.cpp
         tests/testRectangleMemory.cpp
-        tests/CPU/Math/testCMP.cpp)
+        tests/CPU/Math/testCMP.cpp
+        sources/PPU/Backgrounds.cpp
+        sources/PPU/Background.cpp sources/PPU/Background.hpp)
 
 # include criterion & coverage
 target_link_libraries(unit_tests criterion -lgcov)
@@ -207,7 +209,13 @@ add_executable(ComSquare
         sources/Models/Components.hpp
         sources/CPU/Instruction.hpp
         sources/Exceptions/DebuggableError.hpp
-        sources/Debugger/CPU/Disassembly.cpp)
+        sources/Debugger/CPU/Disassembly.cpp
+        sources/Models/Components.hpp
+        sources/Debugger/CGramDebug.cpp
+        sources/Debugger/CGramDebug.hpp
+        sources/Models/Vector2.hpp
+        sources/PPU/Backgrounds.cpp
+        sources/PPU/Background.cpp sources/PPU/Background.hpp)
 
 target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)
 

@@ -34,10 +34,10 @@ class StackModel : public QAbstractTableModel
 {
 Q_OBJECT
 private:
-	ComSquare::Memory::MemoryBus &_bus;
+	std::shared_ptr<ComSquare::Memory::MemoryBus> _bus;
 	ComSquare::Debugger::CPUDebug &_cpu;
 public:
-	explicit StackModel(ComSquare::Memory::MemoryBus &bus, ComSquare::Debugger::CPUDebug &cpu);
+	explicit StackModel(std::shared_ptr<ComSquare::Memory::MemoryBus> bus, ComSquare::Debugger::CPUDebug &cpu);
 	StackModel(const StackModel &) = delete;
 	const StackModel &operator=(const StackModel &) = delete;
 	~StackModel() override = default;
@@ -50,6 +50,9 @@ public:
 	QVariant data(const QModelIndex &index, int role) const override;
 	//! @brief Override the headers to use hex values.
 	QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
+
+	//! @brief Change the memory bus used by the view.
+	void setMemoryBus(std::shared_ptr<ComSquare::Memory::MemoryBus> bus);
 };
 
 //! @brief The qt model that show the history.
@@ -285,6 +288,9 @@ namespace ComSquare::Debugger
 
 		//! @brief Override the basic cpu's update to allow pausing of the CPU only.
 		unsigned update() override;
+
+		//! @brief Change the memory bus used by the CPU.
+		void setMemoryBus(std::shared_ptr<Memory::MemoryBus> bus) override;
 	};
 }
 

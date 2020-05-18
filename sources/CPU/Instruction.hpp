@@ -17,6 +17,7 @@ namespace ComSquare::CPU
 		Implied,
 
 		Immediate8bits,
+		Immediate16bits,
 		ImmediateForA,
 		ImmediateForX,
 

@@ -15,6 +15,7 @@
 #ifdef DEBUGGER_ENABLED
 #include "Debugger/MemoryViewer.hpp"
 #include "Debugger/HeaderViewer.hpp"
+#include "Debugger/CGramDebug.hpp"
 
 #endif
 
@@ -28,6 +29,8 @@ namespace ComSquare
 		std::unique_ptr<Debugger::MemoryViewer> _ramViewer;
 		//! @brief The window that allow the user to view the cartridge's header.
 		std::unique_ptr<Debugger::HeaderViewer> _headerViewer;
+		//! @brief The window that allow the user to view the CGRAM.
+		std::unique_ptr<Debugger::CGramDebug> _cgramViewer;
 #endif
 		//! @brief The memory bus that map addresses to components.
 		std::shared_ptr<Memory::MemoryBus> _bus;
@@ -70,6 +73,10 @@ namespace ComSquare
 		void disableMemoryBusDebugging();
 		//! @brief Enable the Memory Bus's debugging window.
 		void enableMemoryBusDebugging();
+		//! @brief Disable the Cgram's debugging window.
+		void disableCgramDebugging();
+		//! @brief Enable the Cgram's debugging window.
+		void enableCgramDebugging();
 
 		//! @brief Create all the components using a common memory bus for all of them.
 		SNES(const std::string &ramPath, Renderer::IRenderer &renderer);

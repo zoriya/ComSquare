@@ -6,7 +6,6 @@
 
 #include <utility>
 #include <iostream>
-#include "../Exceptions/NotImplementedException.hpp"
 #include "../Exceptions/InvalidAddress.hpp"
 #include "../Exceptions/InvalidOpcode.hpp"
 
@@ -206,9 +205,38 @@ namespace ComSquare::CPU
 	{
 		unsigned cycles = 0;
 
-		for (int i = 0; i < 0xFF; i++)
-			cycles += this->_executeInstruction(this->readPC());
+		for (int i = 0; i < 0xFF; i++) {
+			if (this->_isStopped) {
+				cycles += 1;
+				continue;
+			}
+
+			this->_checkInterrupts();
+
+			if (!this->_isWaitingForInterrupt)
+				cycles += this->_executeInstruction(this->readPC());
+		}
 		return cycles;
+	}
+
+	void CPU::_checkInterrupts()
+	{
+		if (!this->IsNMIRequested && !this->IsIRQRequested && !this->IsAbortRequested)
+			return;
+		this->_isWaitingForInterrupt = false;
+
+		if (this->IsNMIRequested) {
+			this->_runInterrupt(
+				this->_cartridgeHeader.nativeInterrupts.nmi,
+				this->_cartridgeHeader.emulationInterrupts.nmi);
+			return;
+		}
+		if (this->IsIRQRequested && !this->_registers.p.i) {
+			this->_runInterrupt(
+				this->_cartridgeHeader.nativeInterrupts.irq,
+				this->_cartridgeHeader.emulationInterrupts.irq);
+			return;
+		}
 	}
 
 	uint24_t CPU::_getValueAddr(Instruction &instruction)
@@ -218,6 +246,8 @@ namespace ComSquare::CPU
 			return 0;
 		case Immediate8bits:
 			return this->_getImmediateAddr8Bits();
+		case Immediate16bits:
+			return this->_getImmediateAddr16Bits();
 		case ImmediateForA:
 			return this->_getImmediateAddrForA();
 		case ImmediateForX:
@@ -264,9 +294,8 @@ namespace ComSquare::CPU
 
 		case AbsoluteIndirectIndexedByX:
 			return this->_getAbsoluteIndirectIndexedByXAddr();
-		default:
-			return 0;
 		}
+		throw InvalidOpcode("Unknown addressing mode for.");
 	}
 
 	unsigned CPU::_executeInstruction(uint8_t opcode)

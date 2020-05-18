@@ -184,6 +184,27 @@ namespace ComSquare::CPU
 		return !this->_registers.p.x_b;
 	}
 
+	int CPU::PER(uint24_t valueAddr, AddressingMode)
+	{
+		uint16_t value = this->_bus->read(valueAddr);
+		value += this->_bus->read(valueAddr + 1) << 8u;
+		value += this->_registers.pc;
+		this->_push(value);
+		return 0;
+	}
+
+	int CPU::PEA(uint24_t value, AddressingMode)
+	{
+		this->_push(static_cast<uint16_t>(value));
+		return 0;
+	}
+
+	int CPU::PEI(uint24_t value, AddressingMode)
+	{
+		this->_push(static_cast<uint16_t>(value));
+		return 0;
+	}
+
 	int CPU::XCE(uint24_t, AddressingMode)
 	{
 		bool oldCarry = this->_registers.p.c;
@@ -297,6 +318,17 @@ namespace ComSquare::CPU
 	{
 		this->_registers.pc = this->_pop16() + 1;
 		this->_registers.dbr = this->_pop();
+		return 0;
+	}
+
+	int CPU::STP(uint24_t, AddressingMode)
+	{
+		this->_isStopped = true;
+		return 0;
+	}
+
+	int CPU::WDM(uint24_t, AddressingMode)
+	{
 		return 0;
 	}
 }

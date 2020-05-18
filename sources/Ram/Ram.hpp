@@ -14,7 +14,7 @@ namespace ComSquare::Ram
 	protected:
 		//! @brief The ram. (Can be used for WRam, SRam, VRam etc)
 		uint8_t *_data;
-		//! @brief The size of the ram (iny bytes).
+		//! @brief The size of the ram (in bytes).
 		size_t _size;
 		//! @brief An id identifying the type of memory this is (for the debugger)
 		Component _ramType;
