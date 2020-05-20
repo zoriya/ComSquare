@@ -506,11 +506,11 @@ Test(ProgramFlow, BRA)
 	auto apu = snes.apu;
 	int result = 0;
 
+	apu->_internalRegisters.pc = 0;
 	apu->_internalWrite(apu->_internalRegisters.pc, 23);
-	apu->_internalWrite(apu->_internalRegisters.pc + 24, 101);
-	result = apu->BRA();
+	result = apu->BRA(apu->_getImmediateData());
 	cr_assert_eq(result, 4);
-	cr_assert_eq(apu->_internalRead(apu->_internalRegisters.pc), 101);
+	cr_assert_eq(apu->_internalRegisters.pc, 24);
 }
 
 Test(ProgramFlow, BEQ)
@@ -519,14 +519,14 @@ Test(ProgramFlow, BEQ)
 	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalWrite(apu->_internalRegisters.pc, 23);
-	apu->_internalWrite(apu->_internalRegisters.pc + 24, 101);
-	result = apu->BEQ();
+	apu->_internalRegisters.pc = 0;
+	apu->_internalWrite(apu->_internalRegisters.pc + 1, 23);
+	result = apu->BEQ(apu->_getImmediateData());
 	cr_assert_eq(result, 2);
 	apu->_internalRegisters.z = true;
-	result = apu->BEQ();
+	result = apu->BEQ(apu->_getImmediateData());
 	cr_assert_eq(result, 4);
-	cr_assert_eq(apu->_internalRead(apu->_internalRegisters.pc), 101);
+	cr_assert_eq(apu->_internalRegisters.pc, 25);
 }
 
 Test(ProgramFlow, BNE)
@@ -535,15 +535,15 @@ Test(ProgramFlow, BNE)
 	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalWrite(apu->_internalRegisters.pc, 23);
-	apu->_internalWrite(apu->_internalRegisters.pc + 24, 101);
+	apu->_internalRegisters.pc = 0;
+	apu->_internalWrite(apu->_internalRegisters.pc + 1, 23);
 	apu->_internalRegisters.z = true;
-	result = apu->BNE();
+	result = apu->BNE(apu->_getImmediateData());
 	cr_assert_eq(result, 2);
 	apu->_internalRegisters.z = false;
-	result = apu->BNE();
+	result = apu->BNE(apu->_getImmediateData());
 	cr_assert_eq(result, 4);
-	cr_assert_eq(apu->_internalRead(apu->_internalRegisters.pc), 101);
+	cr_assert_eq(apu->_internalRegisters.pc, 25);
 }
 
 Test(ProgramFlow, BCS)
@@ -552,14 +552,14 @@ Test(ProgramFlow, BCS)
 	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalWrite(apu->_internalRegisters.pc, 23);
-	apu->_internalWrite(apu->_internalRegisters.pc + 24, 101);
-	result = apu->BCS();
+	apu->_internalRegisters.pc = 0;
+	apu->_internalWrite(apu->_internalRegisters.pc + 1, 23);
+	result = apu->BCS(apu->_getImmediateData());
 	cr_assert_eq(result, 2);
 	apu->_internalRegisters.c = true;
-	result = apu->BCS();
+	result = apu->BCS(apu->_getImmediateData());
 	cr_assert_eq(result, 4);
-	cr_assert_eq(apu->_internalRead(apu->_internalRegisters.pc), 101);
+	cr_assert_eq(apu->_internalRegisters.pc, 25);
 }
 
 Test(ProgramFlow, BCC)
@@ -568,15 +568,15 @@ Test(ProgramFlow, BCC)
 	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalWrite(apu->_internalRegisters.pc, 23);
-	apu->_internalWrite(apu->_internalRegisters.pc + 24, 101);
+	apu->_internalRegisters.pc = 0;
+	apu->_internalWrite(apu->_internalRegisters.pc + 1, 23);
 	apu->_internalRegisters.c = true;
-	result = apu->BCC();
+	result = apu->BCC(apu->_getImmediateData());
 	cr_assert_eq(result, 2);
 	apu->_internalRegisters.c = false;
-	result = apu->BCC();
+	result = apu->BCC(apu->_getImmediateData());
 	cr_assert_eq(result, 4);
-	cr_assert_eq(apu->_internalRead(apu->_internalRegisters.pc), 101);
+	cr_assert_eq(apu->_internalRegisters.pc, 25);
 }
 
 Test(ProgramFlow, BVS)
@@ -585,14 +585,14 @@ Test(ProgramFlow, BVS)
 	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalWrite(apu->_internalRegisters.pc, 23);
-	apu->_internalWrite(apu->_internalRegisters.pc + 24, 101);
-	result = apu->BVS();
+	apu->_internalRegisters.pc = 0;
+	apu->_internalWrite(apu->_internalRegisters.pc + 1, 23);
+	result = apu->BVS(apu->_getImmediateData());
 	cr_assert_eq(result, 2);
 	apu->_internalRegisters.v = true;
-	result = apu->BVS();
+	result = apu->BVS(apu->_getImmediateData());
 	cr_assert_eq(result, 4);
-	cr_assert_eq(apu->_internalRead(apu->_internalRegisters.pc), 101);
+	cr_assert_eq(apu->_internalRegisters.pc, 25);
 }
 
 Test(ProgramFlow, BVC)
@@ -601,15 +601,15 @@ Test(ProgramFlow, BVC)
 	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalWrite(apu->_internalRegisters.pc, 23);
-	apu->_internalWrite(apu->_internalRegisters.pc + 24, 101);
+	apu->_internalRegisters.pc = 0;
+	apu->_internalWrite(apu->_internalRegisters.pc + 1, 23);
 	apu->_internalRegisters.v = true;
-	result = apu->BVC();
+	result = apu->BVC(apu->_getImmediateData());
 	cr_assert_eq(result, 2);
 	apu->_internalRegisters.v = false;
-	result = apu->BVC();
+	result = apu->BVC(apu->_getImmediateData());
 	cr_assert_eq(result, 4);
-	cr_assert_eq(apu->_internalRead(apu->_internalRegisters.pc), 101);
+	cr_assert_eq(apu->_internalRegisters.pc, 25);
 }
 
 Test(ProgramFlow, BMI)
@@ -618,14 +618,14 @@ Test(ProgramFlow, BMI)
 	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalWrite(apu->_internalRegisters.pc, 23);
-	apu->_internalWrite(apu->_internalRegisters.pc + 24, 101);
-	result = apu->BMI();
+	apu->_internalRegisters.pc = 0;
+	apu->_internalWrite(apu->_internalRegisters.pc + 1, 23);
+	result = apu->BMI(apu->_getImmediateData());
 	cr_assert_eq(result, 2);
 	apu->_internalRegisters.n = true;
-	result = apu->BMI();
+	result = apu->BMI(apu->_getImmediateData());
 	cr_assert_eq(result, 4);
-	cr_assert_eq(apu->_internalRead(apu->_internalRegisters.pc), 101);
+	cr_assert_eq(apu->_internalRegisters.pc, 25);
 }
 
 Test(ProgramFlow, BPL)
@@ -634,15 +634,15 @@ Test(ProgramFlow, BPL)
 	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalWrite(apu->_internalRegisters.pc, 23);
-	apu->_internalWrite(apu->_internalRegisters.pc + 24, 101);
+	apu->_internalRegisters.pc = 0;
+	apu->_internalWrite(apu->_internalRegisters.pc + 1, 23);
 	apu->_internalRegisters.n = true;
-	result = apu->BPL();
+	result = apu->BPL(apu->_getImmediateData());
 	cr_assert_eq(result, 2);
 	apu->_internalRegisters.n = false;
-	result = apu->BPL();
+	result = apu->BPL(apu->_getImmediateData());
 	cr_assert_eq(result, 4);
-	cr_assert_eq(apu->_internalRead(apu->_internalRegisters.pc), 101);
+	cr_assert_eq(apu->_internalRegisters.pc, 25);
 }
 
 Test(ProgramFlow, BBS)
@@ -652,14 +652,14 @@ Test(ProgramFlow, BBS)
 	int result = 0;
 
 	apu->_internalRegisters.pc = 0;
-	apu->_internalWrite(apu->_internalRegisters.pc, 23);
+	apu->_internalWrite(apu->_internalRegisters.pc + 1, 23);
 	apu->_internalWrite(23, 0);
-	result = apu->BBS(apu->_getDirectAddr(), 2);
+	result = apu->BBS(apu->_getDirectAddr(), apu->_getImmediateData(), 2);
 	cr_assert_eq(result, 5);
 	apu->_internalRegisters.pc = 0;
-	apu->_internalWrite(apu->_internalRegisters.pc + 1, 10);
-	apu->_internalWrite(23, 255);
-	result = apu->BBS(apu->_getDirectAddr(), 2);
+	apu->_internalWrite(apu->_internalRegisters.pc, 10);
+	apu->_internalWrite(23, 100);
+	result = apu->BBS(apu->_getDirectAddr(), apu->_getImmediateData(), 2);
 	cr_assert_eq(result, 7);
 	cr_assert_eq(apu->_internalRegisters.pc, 12);
 }
@@ -671,16 +671,16 @@ Test(ProgramFlow, BBC)
 	int result = 0;
 
 	apu->_internalRegisters.pc = 0;
-	apu->_internalWrite(apu->_internalRegisters.pc, 10);
-	apu->_internalWrite( 10, 255);
-	apu->_internalWrite(apu->_internalRegisters.pc + 1, 23);
-	result = apu->BBC(apu->_getDirectAddr(), 2);
+	apu->_internalWrite(apu->_internalRegisters.pc + 1, 10);
+	apu->_internalWrite(10, 255);
+	result = apu->BBC(apu->_getDirectAddr(), apu->_getImmediateData(), 2);
 	cr_assert_eq(result, 5);
 	apu->_internalRegisters.pc = 0;
-	apu->_internalWrite( 10, 0);
-	result = apu->BBC(apu->_getDirectAddr(), 2);
+	apu->_internalWrite(apu->_internalRegisters.pc, 10);
+	apu->_internalWrite(apu->_internalRegisters.pc + 1, 0);
+	result = apu->BBC(apu->_getDirectAddr(), apu->_getImmediateData(), 2);
 	cr_assert_eq(result, 7);
-	cr_assert_eq(apu->_internalRegisters.pc, 25);
+	cr_assert_eq(apu->_internalRegisters.pc, 12);
 }
 
 Test(ProgramFlow, CBNE)
@@ -691,16 +691,16 @@ Test(ProgramFlow, CBNE)
 
 	apu->_internalRegisters.pc = 0;
 	apu->_internalRegisters.a = 4;
-	apu->_internalWrite(apu->_internalRegisters.pc, 10);
-	apu->_internalWrite( 10, 4);
-	apu->_internalWrite(apu->_internalRegisters.pc + 1, 23);
-	result = apu->CBNE(apu->_getDirectAddr());
+	apu->_internalWrite(apu->_internalRegisters.pc + 1, 10);
+	apu->_internalWrite(10, 4);
+	result = apu->CBNE(apu->_getDirectAddr(), apu->_getImmediateData());
 	cr_assert_eq(result, 5);
 	apu->_internalRegisters.pc = 0;
-	apu->_internalWrite( 10, 0);
-	result = apu->CBNE(apu->_getDirectAddrByX(), true);
+	apu->_internalRegisters.a = 0;
+	apu->_internalWrite(apu->_internalRegisters.pc, 10);
+	result = apu->CBNE(apu->_getDirectAddrByX(), apu->_getImmediateData(), true);
 	cr_assert_eq(result, 8);
-	cr_assert_eq(apu->_internalRegisters.pc, 25);
+	cr_assert_eq(apu->_internalRegisters.pc, 12);
 }
 
 Test(ProgramFlow, DBNZ)
@@ -711,14 +711,15 @@ Test(ProgramFlow, DBNZ)
 
 	apu->_internalRegisters.pc = 0;
 	apu->_internalRegisters.y = 1;
-	result = apu->DBNZ();
+	result = apu->DBNZ(apu->_getImmediateData());
 	cr_assert_eq(result, 4);
 	apu->_internalWrite(apu->_internalRegisters.pc, 10);
-	apu->_internalWrite(apu->_internalRegisters.pc + 1, 23);
-	apu->_internalWrite( 10, 0);
-	result = apu->DBNZ(true);
+	apu->_internalWrite(apu->_internalRegisters.pc + 1, 5);
+	apu->_internalWrite(5, 55);
+	result = apu->DBNZ(apu->_getImmediateData(), true);
 	cr_assert_eq(result, 7);
-	cr_assert_eq(apu->_internalRegisters.pc, 25);
+	cr_assert_eq(	apu->_internalRead(5), 54);
+	cr_assert_eq(apu->_internalRegisters.pc, 13);
 }
 
 Test(ProgramFlow, JMP)
@@ -1308,9 +1309,9 @@ Test(VIIIDataTransmission, MovMemToMem)
 	apu->_internalWrite(0x24, 0x33);
 	apu->_internalWrite(0x56, 99);
 	apu->_internalWrite(0x33, 66);
-	result = apu->MOV(apu->_getDirectAddr(), apu->_getDirectAddr());
+	result = apu->MOV(apu->_getDirectAddr(), apu->_getImmediateData());
 	cr_assert_eq(result, 5);
-	cr_assert_eq(apu->_internalRead(0x56), 66);
+	cr_assert_eq(apu->_internalRead(0x33), 0x56);
 }
 
 Test(VIIIDataTransmission, MovRegToMem)

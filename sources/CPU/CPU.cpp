@@ -205,7 +205,7 @@ namespace ComSquare::CPU
 	{
 		unsigned cycles = 0;
 
-		for (int i = 0; i < 0xFF; i++) {
+		for (int i = 0; i < 0x17; i++) {
 			if (this->_isStopped) {
 				cycles += 1;
 				continue;
