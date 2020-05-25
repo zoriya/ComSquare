@@ -8,11 +8,11 @@
 namespace ComSquare::PPU
 {
 	Background::Background(int bpp, Vector2<int> backgroundSize, Vector2<int> characterSize, bool directColor, bool highRes, bool priority, uint16_t vramAddress, uint16_t graphicVramAddress):
-		_bpp(bpp),
 		_backgroundSize(backgroundSize),
 		_characterSize(characterSize),
-		_highRes(highRes),
+		_bpp(bpp),
 		_directColor(directColor),
+		_highRes(highRes),
 		_priority(priority),
 		_vramAddress(vramAddress),
 		_graphicVramAddress(graphicVramAddress)
@@ -74,8 +74,8 @@ namespace ComSquare::PPU
 
 		uint16_t addr = nbPalette * 0x10;
 		for (int i = 0; i < 0xF; i++) {
-			palette[i] = this->cgramRead(addr);
-			palette[i] += this->cgramRead(addr + 1) << 8U;
+			palette[i] = this->cgram->read_internal(addr);
+			palette[i] += this->cgram->read_internal(addr + 1) << 8U;
 		}
 		return palette;
 	}
@@ -125,7 +125,7 @@ namespace ComSquare::PPU
 			tileMapValue = this->vram->read_internal(vramAddress);
 			tileMapValue += this->vram->read_internal(vramAddress + 1) << 8U;
 			vramAddress += 2;
-			drawBgTile(tileMapValue, {(pos.x * this->_characterSize.x) + offset.x, (pos.y * this->_characterSize.y) + offset.y}, this->_bpp);
+			drawBgTile(tileMapValue, {(pos.x * this->_characterSize.x) + offset.x, (pos.y * this->_characterSize.y) + offset.y});
 			if (pos.x % 31 == 0 && pos.x) {
 				pos.y++;
 				pos.x = 0;
