@@ -38,16 +38,6 @@ namespace ComSquare::PPU
 		}
 	}
 
-	/*uint16_t Background::getGraphicVramAddress(int x, int y, int bg, int bpp)
-	{
-		uint16_t baseAddress = this->_registers._bgnba[bg > 2].raw;
-		int step = bpp * 8;
-
-		baseAddress = (bg % 2) ? baseAddress & 0xFU : (baseAddress & 0xFU) >> 4U;
-		baseAddress = baseAddress << 12U;
-		return baseAddress + (x * 16 * step) + (y * step);
-	}*/
-
 	void Background::drawBgTile(uint16_t data, Vector2<int> pos)
 	{
 		uint16_t graphicAddress;
@@ -64,7 +54,7 @@ namespace ComSquare::PPU
 				palette = getPalette(tileData.palette);
 				reference = getTilePixelReference(graphicAddress, index);
 				color = getRealColor(palette[reference]);
-				this->_renderer.putPixel(pos.x, pos.y, color);
+				this->_buffer[pos.x][pos.y] = color;
 				index++;
 				pos.x++;
 				if (index == (8 / this->_bpp) - 1) {

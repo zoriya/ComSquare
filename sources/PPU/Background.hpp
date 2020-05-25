@@ -22,12 +22,8 @@ namespace ComSquare::PPU
 		bool _priority;
 		uint16_t _vramAddress;
 		uint16_t _graphicVramAddress;
-
 		std::array<std::array<uint32_t, 1024>, 1024> _buffer;
-	public:
-		Background(int bpp, Vector2<int> backgroundSize, Vector2<int> characterSize, bool directColor, bool highRes, bool priority, uint16_t vramAddress, uint16_t graphicVramAddress);
-		//! @brief Render a background on the screen
-		void renderBackground(void);
+
 		//! @brief Draw a tile on the screen at x y pos
 		void drawBgTile(uint16_t data, Vector2<int> pos);
 		//! @brief Get a palette from the number of the palette (0 - 7)
@@ -38,6 +34,10 @@ namespace ComSquare::PPU
 		uint8_t getTilePixelReference(uint16_t addr, int nb);
 		//! @brief draw a tilemap 32x32 starting at baseAddress
 		void drawBasicTileMap(uint16_t baseAddress, Vector2<int> offset);
+	public:
+		Background(int bpp, Vector2<int> backgroundSize, Vector2<int> characterSize, bool directColor, bool highRes, bool priority, uint16_t vramAddress, uint16_t graphicVramAddress);
+		//! @brief Render a background on the screen
+		void renderBackground(void);
 	};
 }
 
