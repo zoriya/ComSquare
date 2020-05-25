@@ -5,7 +5,7 @@
 #ifndef COMSQUARE_PPU_UTILS_HPP
 #define COMSQUARE_PPU_UTILS_HPP
 
-
+#include <stdint-gcc.h>
 
 namespace ComSquare::PPU
 {

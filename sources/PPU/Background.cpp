@@ -2,9 +2,9 @@
 // Created by cbihan on 5/14/20.
 //
 
-#include "Background.hpp"
 #include "PPUUtils.hpp"
 #include "PPU.hpp"
+#include "Background.hpp"
 
 namespace ComSquare::PPU
 {
@@ -17,19 +17,21 @@ namespace ComSquare::PPU
 		_characterSize = _ppu.getCharacterSize(bgNumber);
 		_TileMapStartAddress = _ppu.getTileMapStartAddress(bgNumber);
 		_tileSetAddress = _ppu.getTileSetAddress(bgNumber);
-		_backgroundSize = _ppu.getBackgroundSize(bgNumber);
+		_tileMaps = _ppu.getBackgroundSize(bgNumber);
 		_directColor = false;
 		_highRes = false;
 	}
 
 
-	std::array<std::array<uint32_t, 1024>, 1024> Background::renderBackground(void)
+	void Background::renderBackground(void)
 	{
 		uint16_t vramAddress = this->_TileMapStartAddress;
 		Vector2<int> offset(0, 0);
+		this->_backgroundSize.x = this->_tileMaps.x * this->_characterSize.x * 32;
+		this->_backgroundSize.y = this->_tileMaps.y * this->_characterSize.y * 32;
 
 		for (int i = 0; i < 4; i++) {
-			if (!(i == 1 && this->_backgroundSize.x == 1) && !(i > 1 && this->_backgroundSize.y == 1)) {
+			if (!(i == 1 && this->_tileMaps.x == 1) && !(i > 1 && this->_tileMaps.y == 1)) {
 				drawBasicTileMap(vramAddress, offset);
 			}
 			vramAddress+= 0x800;
@@ -94,7 +96,7 @@ namespace ComSquare::PPU
 		green = (color & 0x03E0U) >> 5U;
 		red = (color & 0x001FU);
 
-		pixelTmp = 0xFFFF;
+		pixelTmp = 0xFF;
 		pixelTmp += (red * 255U / 31U) << 24U;
 		pixelTmp += (green * 255U / 31U) << 16U;
 		pixelTmp += (blue * 255U / 31U) << 8U;

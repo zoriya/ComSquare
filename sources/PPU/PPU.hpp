@@ -12,6 +12,7 @@
 //#include "../Ram/ExtendedRam.hpp"
 #include "../Ram/Ram.hpp"
 #include "../Models/Vector2.hpp"
+#include "Background.hpp"
 
 //#define max2BitTiles		4096
 //#define max4BitTiles		2048
@@ -19,6 +20,7 @@
 
 namespace ComSquare::PPU
 {
+	class Background;
 	enum ppuRegisters {
 	//! @brief INIDISP Register (F-blank and Brightness)
 	inidisp = 0x00,
@@ -545,14 +547,22 @@ namespace ComSquare::PPU
 
 	//! @brief The class containing all the registers of the PPU
 	class PPU : public Memory::AMemory {
+	public:
+		//! @brief Rams
+		std::shared_ptr<Ram::Ram> vram;
+		std::shared_ptr<Ram::Ram> oamram;
+		std::shared_ptr<Ram::Ram> cgram;
 	private:
 		//! @brief Init ppuRegisters
 		Registers _registers{};
 		Renderer::IRenderer &_renderer;
+		//! @brief Backgrounds buffers
+		Background _backgrounds[8];
+		//! @brief Main Screen buffer
+		std::array<std::array<uint32_t, 1024>, 1024> _mainScreen;
+		//! @brief Sub Screen buffer
+		std::array<std::array<uint32_t, 1024>, 1024> _subScreen;
 	public:
-		std::shared_ptr<Ram::Ram> vram;
-		std::shared_ptr<Ram::Ram> oamram;
-		std::shared_ptr<Ram::Ram> cgram;
 
 		explicit PPU(Renderer::IRenderer &renderer);
 		PPU(const PPU &) = delete;
@@ -585,7 +595,7 @@ namespace ComSquare::PPU
 		virtual bool isDebugger();
 		//! @brief Allow others components to read the CGRAM
 		uint16_t cgramRead(uint16_t addr);
-		//! @brief Render a background on the screen
+	/*	//! @brief Render a background on the screen
 		void renderBackground(int bgNumber, Vector2<int> characterSize, int bpp, bool priority);
 		//! @brief Get the correct Vram address for a gien x and y
 		uint16_t getGraphicVramAddress(int x, int y, int bg, int bpp);
@@ -598,7 +608,7 @@ namespace ComSquare::PPU
 		//! @brief Get the color reference of a nb pixel tile
 		uint8_t getTilePixelReference(uint16_t addr, int bpp, int nb);
 		//! @brief draw a tilemap 32x32 starting at baseAddress
-		void drawBasicTileMap(uint16_t baseAddress, int bgNumber, int bpp, Vector2<int> characterSize, Vector2<int> offset);
+		void drawBasicTileMap(uint16_t baseAddress, int bgNumber, int bpp, Vector2<int> characterSize, Vector2<int> offset); */
 		//! @brief get the bpp depending of the bgNumber and the Bgmode
 		int getBPP(int bgNumber);
 		//! @brief Give the correct character size depending of the bgMode

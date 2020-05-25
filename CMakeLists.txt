@@ -98,7 +98,6 @@ add_executable(unit_tests
         tests/CPU/Math/testOthersMath.cpp
         tests/testRectangleMemory.cpp
         tests/CPU/Math/testCMP.cpp
-        sources/PPU/Backgrounds.cpp
         sources/PPU/Background.cpp sources/PPU/Background.hpp)
 
 # include criterion & coverage
@@ -214,7 +213,6 @@ add_executable(ComSquare
         sources/Debugger/CGramDebug.cpp
         sources/Debugger/CGramDebug.hpp
         sources/Models/Vector2.hpp
-        sources/PPU/Backgrounds.cpp
         sources/PPU/Background.cpp sources/PPU/Background.hpp)
 
 target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)

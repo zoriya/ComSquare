@@ -15,10 +15,20 @@
 namespace ComSquare::PPU
 {
 	PPU::PPU(Renderer::IRenderer &renderer):
-		_renderer(renderer),
 		vram(new Ram::Ram(65536, ComSquare::VRam, "VRAM")),
 		oamram(new Ram::Ram(544, ComSquare::OAMRam, "OAMRAM")),
-		cgram(new Ram::Ram(512, ComSquare::CGRam, "CGRAM"))
+		cgram(new Ram::Ram(512, ComSquare::CGRam, "CGRAM")),
+		_renderer(renderer),
+		_backgrounds{
+			Background(*this, 1, false),
+			Background(*this, 1, true),
+			Background(*this, 2, false),
+			Background(*this, 2, true),
+			Background(*this, 3, false),
+			Background(*this, 3, true),
+			Background(*this, 4, false),
+			Background(*this, 4, true)
+		}
 	{
 		this->_registers._isLowByte = true;
 		for (int i = 0; i < 512; i++) {
@@ -263,7 +273,12 @@ namespace ComSquare::PPU
 						this->_renderer.putPixel(x, y, pixelTmp);
 				}
 		}
-		this->renderBackground(1, {8, 8}, 4, false);
+		this->_backgrounds[0].renderBackground();
+		for (int i = 0; i < this->_backgrounds[0]._backgroundSize.y; i++) {
+			for (int j = 0; j < this->_backgrounds[0]._backgroundSize.x; j++) {
+				this->_renderer.putPixel(j, i, this->_backgrounds[0]._buffer[i][j]);
+			}
+		}
 		this->_renderer.drawScreen();
 	}
 

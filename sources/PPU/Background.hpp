@@ -14,9 +14,10 @@
 
 namespace ComSquare::PPU
 {
+	class PPU;
 	class Background {
 	private:
-		Vector2<int> _backgroundSize;
+		Vector2<int> _tileMaps;
 		Vector2<int> _characterSize;
 		int _bpp;
 		bool _directColor;
@@ -24,7 +25,6 @@ namespace ComSquare::PPU
 		bool _priority;
 		uint16_t _TileMapStartAddress;
 		uint16_t _tileSetAddress;
-		std::array<std::array<uint32_t, 1024>, 1024> _buffer;
 
 		std::shared_ptr<Ram::Ram> _vram;
 		std::shared_ptr<Ram::Ram> _cgram;
@@ -39,9 +39,11 @@ namespace ComSquare::PPU
 		//! @brief draw a tilemap 32x32 starting at baseAddress
 		void drawBasicTileMap(uint16_t baseAddress, Vector2<int> offset);
 	public:
+		Vector2<int> _backgroundSize;
+		std::array<std::array<uint32_t, 1024>, 1024> _buffer;
 		Background(ComSquare::PPU::PPU &_ppu, int bgNumber, bool priority);
 		//! @brief Render a background on the screen
-		std::array<std::array<uint32_t, 1024>, 1024> renderBackground(void);
+		void renderBackground(void);
 	};
 }
 
