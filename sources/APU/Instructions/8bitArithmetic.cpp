@@ -63,10 +63,9 @@ namespace ComSquare::APU
 	int APU::CMP(uint24_t operand1, uint24_t operand2, int cycles)
 	{
 		uint8_t data1 = this->_internalRead(operand1);
-		uint8_t data2 = this->_internalRead(operand2);
 
-		this->_internalRegisters.c = data1 >= data2;
-		this->_setNZflags(data1 - data2);
+		this->_internalRegisters.c = data1 >= operand2;
+		this->_setNZflags(data1 - operand2);
 		return cycles;
 	}
 

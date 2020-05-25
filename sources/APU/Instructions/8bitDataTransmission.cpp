@@ -32,9 +32,9 @@ namespace ComSquare::APU
 		return 2;
 	}
 
-	int APU::MOV(uint24_t memFrom, uint24_t memTo)
+	int APU::MOV(uint24_t memTo, uint24_t memFrom)
 	{
-		this->_internalWrite(memTo, this->_internalRead(memFrom));
+		this->_internalWrite(memTo, memFrom);
 		return 5;
 	}
 }
