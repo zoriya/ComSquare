@@ -252,10 +252,12 @@ namespace ComSquare::PPU
 	{
 		(void)cycles;
 
-		this->_backgrounds[0].renderBackground();
-		for (int i = 0; i < this->_backgrounds[0].backgroundSize.y; i++) {
-			for (int j = 0; j < this->_backgrounds[0].backgroundSize.x; j++) {
-				this->_renderer.putPixel(j, i, this->_backgrounds[0].buffer[i][j]);
+		this->renderMainAndSubScreen();
+		add_buffer(this->_screen, this->_subScreen);
+		add_buffer(this->_screen, this->_mainScreen);
+		for (unsigned long i = 0; i < this->_screen.size(); i++) {
+			for (unsigned long j = 0; j < this->_screen[i].size(); j++) {
+				this->_renderer.putPixel(j, i, this->_screen[i][j]);
 			}
 		}
 		this->_renderer.drawScreen();
@@ -489,7 +491,8 @@ namespace ComSquare::PPU
 		for (auto & _background : this->_backgrounds)
 			_background.renderBackground();
 
-		// the buffer is overwrite if necessery by a new bg so the background priority is from back to front
+		// the buffer is overwrite if necessary by a new bg so the background priority is from back to front
+		// the starting palette index isn't implemented
 		switch (this->_registers._bgmode.bgMode) {
 		case 0:
 			this->addToMainSubScreen(this->_backgrounds[bgName::bg4NoPriority]);
@@ -505,16 +508,82 @@ namespace ComSquare::PPU
 			this->addToMainSubScreen(this->_backgrounds[bgName::bg1Priority]);
 			//sprites priority 3
 			break;
+		case 1:
+			this->addToMainSubScreen(this->_backgrounds[bgName::bg3NoPriority]);
+			//sprites priority 0
+			if (!this->_registers._bgmode.mode1Bg3PriorityBit)
+				this->addToMainSubScreen(this->_backgrounds[bgName::bg3Priority]);
+			//sprites priority 1
+			this->addToMainSubScreen(this->_backgrounds[bgName::bg2NoPriority]);
+			this->addToMainSubScreen(this->_backgrounds[bgName::bg1NoPriority]);
+			//sprites priority 2
+			this->addToMainSubScreen(this->_backgrounds[bgName::bg2Priority]);
+			this->addToMainSubScreen(this->_backgrounds[bgName::bg1Priority]);
+			//sprites priority 3
+			if (this->_registers._bgmode.mode1Bg3PriorityBit)
+				this->addToMainSubScreen(this->_backgrounds[bgName::bg3Priority]);
+			break;
+		case 2:
+			this->addToMainSubScreen(this->_backgrounds[bgName::bg2NoPriority]);
+			//sprites priority 0
+			this->addToMainSubScreen(this->_backgrounds[bgName::bg1NoPriority]);
+			//sprites priority 1
+			this->addToMainSubScreen(this->_backgrounds[bgName::bg2Priority]);
+			//sprites priority 2
+			this->addToMainSubScreen(this->_backgrounds[bgName::bg1Priority]);
+			//sprites priority 3
+			break;
+		case 3:
+			this->addToMainSubScreen(this->_backgrounds[bgName::bg2NoPriority]);
+			//sprites priority 0
+			this->addToMainSubScreen(this->_backgrounds[bgName::bg1NoPriority]);
+			//sprites priority 1
+			this->addToMainSubScreen(this->_backgrounds[bgName::bg2Priority]);
+			//sprites priority 2
+			this->addToMainSubScreen(this->_backgrounds[bgName::bg1Priority]);
+			//sprites priority 3
+			break;
+		case 4:
+			this->addToMainSubScreen(this->_backgrounds[bgName::bg2NoPriority]);
+			//sprites priority 0
+			this->addToMainSubScreen(this->_backgrounds[bgName::bg1NoPriority]);
+			//sprites priority 1
+			this->addToMainSubScreen(this->_backgrounds[bgName::bg2Priority]);
+			//sprites priority 2
+			this->addToMainSubScreen(this->_backgrounds[bgName::bg1Priority]);
+			//sprites priority 3
+			break;
+		case 5:
+			this->addToMainSubScreen(this->_backgrounds[bgName::bg2NoPriority]);
+			//sprites priority 0
+			this->addToMainSubScreen(this->_backgrounds[bgName::bg1NoPriority]);
+			//sprites priority 1
+			this->addToMainSubScreen(this->_backgrounds[bgName::bg2Priority]);
+			//sprites priority 2
+			this->addToMainSubScreen(this->_backgrounds[bgName::bg1Priority]);
+			//sprites priority 3
+			break;
+		case 6:
+			//sprites priority 0
+			this->addToMainSubScreen(this->_backgrounds[bgName::bg1NoPriority]);
+			//sprites priority 1
+			//sprites priority 2
+			this->addToMainSubScreen(this->_backgrounds[bgName::bg1Priority]);
+			//sprites priority 3
+		case 7:
+			// Not implemented
+		default:
+			break;
 		}
 	}
 
-	template <std::size_t SIZE>
-	void PPU::add_buffer(std::array<std::array<uint32_t, SIZE>, SIZE> &buffer, Background &bg)
+	template <std::size_t DEST_SIZE, std::size_t SRC_SIZE>
+	void PPU::add_buffer(std::array<std::array<uint32_t, DEST_SIZE>, DEST_SIZE> &bufferDest, std::array<std::array<uint32_t, SRC_SIZE>, SRC_SIZE> &bufferSrc)
 	{
-		for (int i = 0; i < bg.backgroundSize.y; i++) {
-			for (int j = 0; j < bg.backgroundSize.x; j++) {
-				if (bg.buffer[i][j])
-					buffer[i][j] = bg.buffer[i][j];
+		for (unsigned long i = 0; i < bufferSrc.size(); i++) {
+			for (unsigned long j = 0; j < bufferSrc[i].size(); j++) {
+				if (bufferSrc[i][j])
+					bufferDest[i][j] = bufferSrc[i][j];
 			}
 		}
 	}
@@ -523,9 +592,9 @@ namespace ComSquare::PPU
 	{
 		int i = bg.bgNumber + bg.priority;
 
-		if (this->_registers._t[0].raw & (1U << bg.bgNumber - 1U))
-			this->add_buffer(this->_mainScreen, this->_backgrounds[i]);
-		if (this->_registers._t[1].raw & (1U << bg.bgNumber - 1U))
-			this->add_buffer(this->_subScreen, this->_backgrounds[i]);
+		if (this->_registers._t[0].raw & (1U << (bg.bgNumber - 1U)))
+			this->add_buffer(this->_mainScreen, this->_backgrounds[i].buffer);
+		if (this->_registers._t[1].raw & (1U << (bg.bgNumber - 1U)))
+			this->add_buffer(this->_subScreen, this->_backgrounds[i].buffer);
 	}
 }

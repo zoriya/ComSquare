@@ -573,6 +573,8 @@ namespace ComSquare::PPU
 		std::array<std::array<uint32_t, 1024>, 1024> _mainScreen;
 		//! @brief Sub Screen buffer
 		std::array<std::array<uint32_t, 1024>, 1024> _subScreen;
+		//! @brief Final Screen buffer
+		std::array<std::array<uint32_t, 1024>, 1024> _screen;
 	public:
 
 		explicit PPU(Renderer::IRenderer &renderer);
@@ -619,8 +621,8 @@ namespace ComSquare::PPU
 		//! @brief Render the Main and sub screen correctly
 		void renderMainAndSubScreen(void);
 		//! @brief Add a bg buffer to another buffer
-		template <std::size_t SIZE>
-		void PPU::add_buffer(std::array<std::array<uint32_t, SIZE>, SIZE> &buffer, Background &bg);
+		template <std::size_t DEST_SIZE, std::size_t SRC_SIZE>
+		void add_buffer(std::array<std::array<uint32_t, DEST_SIZE>, DEST_SIZE> &bufferDest, std::array<std::array<uint32_t, SRC_SIZE>, SRC_SIZE> &bufferSrc);
 		//! @brief Add a bg to the sub and/or main screen
 		void addToMainSubScreen(Background &bg);
 	};
