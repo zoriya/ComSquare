@@ -50,6 +50,10 @@ namespace ComSquare::PPU
 		case ppuRegisters::oamdataread:
 		case ppuRegisters::vmdatalread:
 		case ppuRegisters::vmdatahread:
+			return 0;
+		case ppuRegisters::cgdataread: {
+			return this->cgram->read_internal(this->_registers._cgadd++);
+		}
 		case ppuRegisters::ophct:
 		case ppuRegisters::opvct:
 		case ppuRegisters::stat77:
