@@ -583,7 +583,7 @@ namespace ComSquare::PPU
 		std::string getValueName(uint24_t addr);
 		//! @brief Return true if the CPU is overloaded with debugging features.
 		virtual bool isDebugger();
-		//! @brief Allow others components to read the CGRAM (Debuggers)
+		//! @brief Allow others components to read the CGRAM
 		uint16_t cgramRead(uint16_t addr);
 		//! @brief Render a background on the screen
 		void renderBackground(int bgNumber, Vector2<int> characterSize, int bpp, bool priority);
@@ -599,6 +599,16 @@ namespace ComSquare::PPU
 		uint8_t getTilePixelReference(uint16_t addr, int bpp, int nb);
 		//! @brief draw a tilemap 32x32 starting at baseAddress
 		void drawBasicTileMap(uint16_t baseAddress, int bgNumber, int bpp, Vector2<int> characterSize, Vector2<int> offset);
+		//! @brief get the bpp depending of the bgNumber and the Bgmode
+		int getBPP(int bgNumber);
+		//! @brief Give the correct character size depending of the bgMode
+		Vector2<int> getCharacterSize(int bgNumber);
+		//! @brief Give the address where the tilemap starts
+		uint16_t getTileMapStartAddress(int bgNumber);
+		//! @brief Give the address to find the correct tileset for a given x and y
+		uint16_t getTileSetAddress(int bgNumber);
+		//! @brief Give the number of tilemaps to be rendered
+		Vector2<int> getBackgroundSize(int bgNumber);
 	};
 }
 #endif //COMSQUARE_PPU_HPP

@@ -10,6 +10,7 @@
 #include <vector>
 #include "../Models/Vector2.hpp"
 #include "../Ram/Ram.hpp"
+#include "PPU.hpp"
 
 namespace ComSquare::PPU
 {
@@ -21,12 +22,12 @@ namespace ComSquare::PPU
 		bool _directColor;
 		bool _highRes;
 		bool _priority;
-		uint16_t _vramAddress;
-		uint16_t _graphicVramAddress;
+		uint16_t _TileMapStartAddress;
+		uint16_t _tileSetAddress;
 		std::array<std::array<uint32_t, 1024>, 1024> _buffer;
 
-		std::shared_ptr<Ram::Ram> vram;
-		std::shared_ptr<Ram::Ram> cgram;
+		std::shared_ptr<Ram::Ram> _vram;
+		std::shared_ptr<Ram::Ram> _cgram;
 		//! @brief Draw a tile on the screen at x y pos
 		void drawBgTile(uint16_t data, Vector2<int> pos);
 		//! @brief Get a palette from the number of the palette (0 - 7)
@@ -38,9 +39,9 @@ namespace ComSquare::PPU
 		//! @brief draw a tilemap 32x32 starting at baseAddress
 		void drawBasicTileMap(uint16_t baseAddress, Vector2<int> offset);
 	public:
-		Background(int bpp, Vector2<int> backgroundSize, Vector2<int> characterSize, bool directColor, bool highRes, bool priority, uint16_t vramAddress, uint16_t graphicVramAddress);
+		Background(ComSquare::PPU::PPU &_ppu, int bgNumber, bool priority);
 		//! @brief Render a background on the screen
-		void renderBackground(void);
+		std::array<std::array<uint32_t, 1024>, 1024> renderBackground(void);
 	};
 }
 

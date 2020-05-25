@@ -422,4 +422,71 @@ namespace ComSquare::PPU
 	{
 		return this->cgram->read_internal(addr);
 	}
+
+	int PPU::getBPP(int bgNumber)
+	{
+		switch (this->_registers._bgmode.bgMode) {
+		case 0:
+			return (2);
+		case 1:
+			if (bgNumber < 3)
+				return (4);
+			return (2);
+		case 2:
+			return (4);
+		case 3:
+			if (bgNumber == 1)
+				return (8);
+			return (4);
+		case 4:
+			if (bgNumber == 1)
+				return (8);
+			return (2);
+		case 5:
+			if (bgNumber == 1)
+				return (4);
+			return (2);
+		case 6:
+			return (4);
+		case 7:
+			if (bgNumber == 1)
+				return (8);
+			return (7);
+		default:
+			return (-1);
+		}
+	}
+
+	Vector2<int> PPU::getCharacterSize(int bgNumber)
+	{
+		Vector2<int> characterSize(8, 8);
+
+		//this wont work for modes 5 and 6 and will be reworked
+		if (this->_registers._bgmode.raw & (1U << (4 + bgNumber)))
+			characterSize = {16, 16};
+		return characterSize;
+	}
+
+	uint16_t PPU::getTileMapStartAddress(int bgNumber)
+	{
+		return this->_registers._bgsc[bgNumber - 1].tilemapAddress << 1U;
+	}
+
+	uint16_t PPU::getTileSetAddress(int bgNumber)
+	{
+		uint16_t baseAddress = this->_registers._bgnba[bgNumber > 2].raw;
+
+		baseAddress = (bgNumber % 2) ? baseAddress & 0xFU : (baseAddress & 0xFU) >> 4U;
+		baseAddress = baseAddress << 12U;
+		return baseAddress;
+	}
+
+	Vector2<int> PPU::getBackgroundSize(int bgNumber)
+	{
+		Vector2<int> backgroundSize(0,0);
+
+		backgroundSize.y = (this->_registers._bgsc[bgNumber - 1].tilemapVerticalMirroring) ? 2 : 1;
+		backgroundSize.x = (this->_registers._bgsc[bgNumber - 1].tilemapHorizontalMirroring) ? 2 : 1;
+		return backgroundSize;
+	}
 }

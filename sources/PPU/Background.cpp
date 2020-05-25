@@ -4,25 +4,28 @@
 
 #include "Background.hpp"
 #include "PPUUtils.hpp"
+#include "PPU.hpp"
 
 namespace ComSquare::PPU
 {
-	Background::Background(int bpp, Vector2<int> backgroundSize, Vector2<int> characterSize, bool directColor, bool highRes, bool priority, uint16_t vramAddress, uint16_t graphicVramAddress):
-		_backgroundSize(backgroundSize),
-		_characterSize(characterSize),
-		_bpp(bpp),
-		_directColor(directColor),
-		_highRes(highRes),
-		_priority(priority),
-		_vramAddress(vramAddress),
-		_graphicVramAddress(graphicVramAddress)
+	Background::Background(ComSquare::PPU::PPU &_ppu, int bgNumber, bool priority):
+		_priority(priority)
 	{
+		_cgram = _ppu.cgram;
+		_vram = _ppu.vram;
+		_bpp = _ppu.getBPP(bgNumber);
+		_characterSize = _ppu.getCharacterSize(bgNumber);
+		_TileMapStartAddress = _ppu.getTileMapStartAddress(bgNumber);
+		_tileSetAddress = _ppu.getTileSetAddress(bgNumber);
+		_backgroundSize = _ppu.getBackgroundSize(bgNumber);
+		_directColor = false;
+		_highRes = false;
 	}
 
 
-	void Background::renderBackground(void)
+	std::array<std::array<uint32_t, 1024>, 1024> Background::renderBackground(void)
 	{
-		uint16_t vramAddress = this->_vramAddress;
+		uint16_t vramAddress = this->_TileMapStartAddress;
 		Vector2<int> offset(0, 0);
 
 		for (int i = 0; i < 4; i++) {
@@ -48,7 +51,7 @@ namespace ComSquare::PPU
 		uint32_t color = 0;
 
 		tileData.raw = data;
-		graphicAddress = this->_graphicVramAddress;
+		graphicAddress = this->_tileSetAddress + (tileData.posX * 16 * this->_bpp * 8) + (tileData.posY * this->_bpp * 8);
 		for (int i = 0; i < this->_characterSize.y; i++) {
 			for (int j = 0; j < this->_characterSize.x; j++) {
 				palette = getPalette(tileData.palette);
@@ -74,8 +77,8 @@ namespace ComSquare::PPU
 
 		uint16_t addr = nbPalette * 0x10;
 		for (int i = 0; i < 0xF; i++) {
-			palette[i] = this->cgram->read_internal(addr);
-			palette[i] += this->cgram->read_internal(addr + 1) << 8U;
+			palette[i] = this->_cgram->read_internal(addr);
+			palette[i] += this->_cgram->read_internal(addr + 1) << 8U;
 		}
 		return palette;
 	}
@@ -100,7 +103,7 @@ namespace ComSquare::PPU
 
 	uint8_t Background::getTilePixelReference(uint16_t addr, int nb)
 	{
-		uint8_t reference = this->vram->read_internal(addr);
+		uint8_t reference = this->_vram->read_internal(addr);
 
 		switch (this->_bpp) {
 		case 8:
@@ -122,8 +125,8 @@ namespace ComSquare::PPU
 		uint16_t vramAddress = baseAddress;
 
 		while (vramAddress < 0x800 + baseAddress) {
-			tileMapValue = this->vram->read_internal(vramAddress);
-			tileMapValue += this->vram->read_internal(vramAddress + 1) << 8U;
+			tileMapValue = this->_vram->read_internal(vramAddress);
+			tileMapValue += this->_vram->read_internal(vramAddress + 1) << 8U;
 			vramAddress += 2;
 			drawBgTile(tileMapValue, {(pos.x * this->_characterSize.x) + offset.x, (pos.y * this->_characterSize.y) + offset.y});
 			if (pos.x % 31 == 0 && pos.x) {
@@ -134,4 +137,6 @@ namespace ComSquare::PPU
 				pos.x++;
 		}
 	}
+
+
 }
