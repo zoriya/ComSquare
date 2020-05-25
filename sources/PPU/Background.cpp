@@ -78,8 +78,8 @@ namespace ComSquare::PPU
 	std::vector<uint16_t> Background::getPalette(int nbPalette)
 	{
 		std::vector<uint16_t> palette(0xF);
-
 		uint16_t addr = nbPalette * 0x10;
+
 		for (int i = 0; i < 0xF; i++) {
 			palette[i] = this->_cgram->read_internal(addr);
 			palette[i] += this->_cgram->read_internal(addr + 1) << 8U;
