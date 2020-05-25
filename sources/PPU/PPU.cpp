@@ -251,28 +251,7 @@ namespace ComSquare::PPU
 	void PPU::update(unsigned cycles)
 	{
 		(void)cycles;
-		uint16_t tmp;
-		uint8_t red;
-		uint8_t green;
-		uint8_t blue;
-		uint32_t pixelTmp = 0x0;
-		if (!this->_registers._inidisp.fblank) {
-				for (int y = 0; y <= 255; y += 2) {
-					tmp = this->cgram->read_internal(y);
-					tmp += this->cgram->read_internal(y + 1) << 8;
-					blue = (tmp & 0x7D00U) >> 10U;
-					green = (tmp & 0x03E0U) >> 5U;
-					red = (tmp & 0x001FU);
 
-					pixelTmp = this->_registers._inidisp.brightness * 255U / 15U;
-					pixelTmp += (red * 255U / 31U) << 24U;
-					pixelTmp += (green * 255U / 31U) << 16U;
-					pixelTmp += (blue * 255U / 31U) << 8U;
-
-					for (int x = 0; x < 100; x++)
-						this->_renderer.putPixel(x, y, pixelTmp);
-				}
-		}
 		this->_backgrounds[0].renderBackground();
 		for (int i = 0; i < this->_backgrounds[0]._backgroundSize.y; i++) {
 			for (int j = 0; j < this->_backgrounds[0]._backgroundSize.x; j++) {

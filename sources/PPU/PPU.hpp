@@ -595,20 +595,6 @@ namespace ComSquare::PPU
 		virtual bool isDebugger();
 		//! @brief Allow others components to read the CGRAM
 		uint16_t cgramRead(uint16_t addr);
-	/*	//! @brief Render a background on the screen
-		void renderBackground(int bgNumber, Vector2<int> characterSize, int bpp, bool priority);
-		//! @brief Get the correct Vram address for a gien x and y
-		uint16_t getGraphicVramAddress(int x, int y, int bg, int bpp);
-		//! @brief Draw a tile on the screen at x y pos
-		void drawBgTile(uint16_t data, Vector2<int> pos, int bg, int bpp, Vector2<int> characterSize);
-		//! @brief Get a palette from the number of the palette (0 - 7)
-		std::vector<uint16_t> getPalette(int nbPalette);
-		//! @brief Transform SNES color code BGR to uint32_t RGB
-		uint32_t getRealColor(uint16_t color);
-		//! @brief Get the color reference of a nb pixel tile
-		uint8_t getTilePixelReference(uint16_t addr, int bpp, int nb);
-		//! @brief draw a tilemap 32x32 starting at baseAddress
-		void drawBasicTileMap(uint16_t baseAddress, int bgNumber, int bpp, Vector2<int> characterSize, Vector2<int> offset); */
 		//! @brief get the bpp depending of the bgNumber and the Bgmode
 		int getBPP(int bgNumber);
 		//! @brief Give the correct character size depending of the bgMode
