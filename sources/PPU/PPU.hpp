@@ -21,6 +21,17 @@
 namespace ComSquare::PPU
 {
 	class Background;
+	enum bgName {
+		bg1NoPriority = 0,
+		bg1Priority,
+		bg2NoPriority,
+		bg2Priority,
+		bg3NoPriority,
+		bg3Priority,
+		bg4NoPriority,
+		bg4Priority
+	};
+
 	enum ppuRegisters {
 	//! @brief INIDISP Register (F-blank and Brightness)
 	inidisp = 0x00,
@@ -605,6 +616,13 @@ namespace ComSquare::PPU
 		uint16_t getTileSetAddress(int bgNumber);
 		//! @brief Give the number of tilemaps to be rendered
 		Vector2<int> getBackgroundSize(int bgNumber);
+		//! @brief Render the Main and sub screen correctly
+		void renderMainAndSubScreen(void);
+		//! @brief Add a bg buffer to another buffer
+		template <std::size_t SIZE>
+		void PPU::add_buffer(std::array<std::array<uint32_t, SIZE>, SIZE> &buffer, Background &bg);
+		//! @brief Add a bg to the sub and/or main screen
+		void addToMainSubScreen(Background &bg);
 	};
 }
 #endif //COMSQUARE_PPU_HPP

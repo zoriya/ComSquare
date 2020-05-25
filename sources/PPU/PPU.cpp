@@ -253,9 +253,9 @@ namespace ComSquare::PPU
 		(void)cycles;
 
 		this->_backgrounds[0].renderBackground();
-		for (int i = 0; i < this->_backgrounds[0]._backgroundSize.y; i++) {
-			for (int j = 0; j < this->_backgrounds[0]._backgroundSize.x; j++) {
-				this->_renderer.putPixel(j, i, this->_backgrounds[0]._buffer[i][j]);
+		for (int i = 0; i < this->_backgrounds[0].backgroundSize.y; i++) {
+			for (int j = 0; j < this->_backgrounds[0].backgroundSize.x; j++) {
+				this->_renderer.putPixel(j, i, this->_backgrounds[0].buffer[i][j]);
 			}
 		}
 		this->_renderer.drawScreen();
@@ -482,5 +482,50 @@ namespace ComSquare::PPU
 		backgroundSize.y = (this->_registers._bgsc[bgNumber - 1].tilemapVerticalMirroring) ? 2 : 1;
 		backgroundSize.x = (this->_registers._bgsc[bgNumber - 1].tilemapHorizontalMirroring) ? 2 : 1;
 		return backgroundSize;
+	}
+
+	void PPU::renderMainAndSubScreen(void)
+	{
+		for (auto & _background : this->_backgrounds)
+			_background.renderBackground();
+
+		// the buffer is overwrite if necessery by a new bg so the background priority is from back to front
+		switch (this->_registers._bgmode.bgMode) {
+		case 0:
+			this->addToMainSubScreen(this->_backgrounds[bgName::bg4NoPriority]);
+			this->addToMainSubScreen(this->_backgrounds[bgName::bg3NoPriority]);
+			//sprites  priority 0
+			this->addToMainSubScreen(this->_backgrounds[bgName::bg4Priority]);
+			this->addToMainSubScreen(this->_backgrounds[bgName::bg3Priority]);
+			//sprites priority 1
+			this->addToMainSubScreen(this->_backgrounds[bgName::bg2NoPriority]);
+			this->addToMainSubScreen(this->_backgrounds[bgName::bg1NoPriority]);
+			//sprites priority 2
+			this->addToMainSubScreen(this->_backgrounds[bgName::bg2Priority]);
+			this->addToMainSubScreen(this->_backgrounds[bgName::bg1Priority]);
+			//sprites priority 3
+			break;
+		}
+	}
+
+	template <std::size_t SIZE>
+	void PPU::add_buffer(std::array<std::array<uint32_t, SIZE>, SIZE> &buffer, Background &bg)
+	{
+		for (int i = 0; i < bg.backgroundSize.y; i++) {
+			for (int j = 0; j < bg.backgroundSize.x; j++) {
+				if (bg.buffer[i][j])
+					buffer[i][j] = bg.buffer[i][j];
+			}
+		}
+	}
+
+	void PPU::addToMainSubScreen(Background &bg)
+	{
+		int i = bg.bgNumber + bg.priority;
+
+		if (this->_registers._t[0].raw & (1U << bg.bgNumber - 1U))
+			this->add_buffer(this->_mainScreen, this->_backgrounds[i]);
+		if (this->_registers._t[1].raw & (1U << bg.bgNumber - 1U))
+			this->add_buffer(this->_subScreen, this->_backgrounds[i]);
 	}
 }

@@ -9,7 +9,8 @@
 namespace ComSquare::PPU
 {
 	Background::Background(ComSquare::PPU::PPU &_ppu, int bgNumber, bool priority):
-		_priority(priority)
+		priority(priority),
+		bgNumber(bgNumber)
 	{
 		_cgram = _ppu.cgram;
 		_vram = _ppu.vram;
@@ -27,8 +28,8 @@ namespace ComSquare::PPU
 	{
 		uint16_t vramAddress = this->_TileMapStartAddress;
 		Vector2<int> offset(0, 0);
-		this->_backgroundSize.x = this->_tileMaps.x * this->_characterSize.x * 32;
-		this->_backgroundSize.y = this->_tileMaps.y * this->_characterSize.y * 32;
+		this->backgroundSize.x = this->_tileMaps.x * this->_characterSize.x * 32;
+		this->backgroundSize.y = this->_tileMaps.y * this->_characterSize.y * 32;
 
 		for (int i = 0; i < 4; i++) {
 			if (!(i == 1 && this->_tileMaps.x == 1) && !(i > 1 && this->_tileMaps.y == 1)) {
@@ -59,7 +60,8 @@ namespace ComSquare::PPU
 				palette = getPalette(tileData.palette);
 				reference = getTilePixelReference(graphicAddress, index);
 				color = getRealColor(palette[reference]);
-				this->_buffer[pos.x][pos.y] = color;
+				if (tileData.tilePriority == this->priority)
+					this->buffer[pos.x][pos.y] = color;
 				index++;
 				pos.x++;
 				if (index == (8 / this->_bpp) - 1) {
