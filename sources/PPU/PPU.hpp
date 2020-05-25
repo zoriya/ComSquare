@@ -626,5 +626,9 @@ namespace ComSquare::PPU
 		//! @brief Add a bg to the sub and/or main screen
 		void addToMainSubScreen(Background &bg);
 	};
+
 }
+
+//! @brief Transform SNES color code BGR to uint32_t RGB
+uint32_t getRealColor(uint16_t color);
 #endif //COMSQUARE_PPU_HPP

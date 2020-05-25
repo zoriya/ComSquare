@@ -213,7 +213,7 @@ add_executable(ComSquare
         sources/Debugger/CGramDebug.cpp
         sources/Debugger/CGramDebug.hpp
         sources/Models/Vector2.hpp
-        sources/PPU/Background.cpp sources/PPU/Background.hpp)
+        sources/PPU/Background.cpp sources/PPU/Background.hpp sources/PPU/PPUUtils.cpp)
 
 target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)
 

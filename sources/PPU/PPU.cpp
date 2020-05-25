@@ -488,9 +488,15 @@ namespace ComSquare::PPU
 
 	void PPU::renderMainAndSubScreen(void)
 	{
+		uint16_t colorPalette;
 		for (auto & _background : this->_backgrounds)
 			_background.renderBackground();
 
+		colorPalette = this->cgram->read_internal(0);
+		colorPalette += this->cgram->read_internal(1) << 8U;
+		for (unsigned long i = 0; i < this->_mainScreen.size(); i++)
+			for (unsigned long j = 0; j < this->_mainScreen[i].size(); j++)
+				this->_mainScreen[i][j] = getRealColor(colorPalette);
 		// the buffer is overwrite if necessary by a new bg so the background priority is from back to front
 		// the starting palette index isn't implemented
 		switch (this->_registers._bgmode.bgMode) {

@@ -8,17 +8,17 @@
 
 namespace ComSquare::PPU
 {
-	Background::Background(ComSquare::PPU::PPU &_ppu, int bgNumber, bool priority):
-		priority(priority),
-		bgNumber(bgNumber)
+	Background::Background(ComSquare::PPU::PPU &_ppu, int backGroundNumber, bool hasPriority):
+		priority(hasPriority),
+		bgNumber(backGroundNumber)
 	{
 		_cgram = _ppu.cgram;
 		_vram = _ppu.vram;
-		_bpp = _ppu.getBPP(bgNumber);
-		_characterSize = _ppu.getCharacterSize(bgNumber);
-		_TileMapStartAddress = _ppu.getTileMapStartAddress(bgNumber);
-		_tileSetAddress = _ppu.getTileSetAddress(bgNumber);
-		_tileMaps = _ppu.getBackgroundSize(bgNumber);
+		_bpp = _ppu.getBPP(backGroundNumber);
+		_characterSize = _ppu.getCharacterSize(backGroundNumber);
+		_TileMapStartAddress = _ppu.getTileMapStartAddress(backGroundNumber);
+		_tileSetAddress = _ppu.getTileSetAddress(backGroundNumber);
+		_tileMaps = _ppu.getBackgroundSize(backGroundNumber);
 		_directColor = false;
 		_highRes = false;
 	}
@@ -85,24 +85,6 @@ namespace ComSquare::PPU
 			palette[i] += this->_cgram->read_internal(addr + 1) << 8U;
 		}
 		return palette;
-	}
-
-	uint32_t Background::getRealColor(uint16_t color)
-	{
-		uint8_t blue;
-		uint8_t red;
-		uint8_t green;
-		uint32_t pixelTmp;
-
-		blue = (color & 0x7D00U) >> 10U;
-		green = (color & 0x03E0U) >> 5U;
-		red = (color & 0x001FU);
-
-		pixelTmp = 0xFF;
-		pixelTmp += (red * 255U / 31U) << 24U;
-		pixelTmp += (green * 255U / 31U) << 16U;
-		pixelTmp += (blue * 255U / 31U) << 8U;
-		return pixelTmp;
 	}
 
 	uint8_t Background::getTilePixelReference(uint16_t addr, int nb)

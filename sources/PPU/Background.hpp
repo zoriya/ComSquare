@@ -12,6 +12,9 @@
 #include "../Ram/Ram.hpp"
 #include "PPU.hpp"
 
+//! @brief Transform SNES color code BGR to uint32_t RGB
+uint32_t getRealColor(uint16_t color);
+
 namespace ComSquare::PPU
 {
 	class PPU;
@@ -31,8 +34,6 @@ namespace ComSquare::PPU
 		void drawBgTile(uint16_t data, Vector2<int> pos);
 		//! @brief Get a palette from the number of the palette (0 - 7)
 		std::vector<uint16_t> getPalette(int nbPalette);
-		//! @brief Transform SNES color code BGR to uint32_t RGB
-		uint32_t getRealColor(uint16_t color);
 		//! @brief Get the color reference of a nb pixel tile
 		uint8_t getTilePixelReference(uint16_t addr, int nb);
 		//! @brief draw a tilemap 32x32 starting at baseAddress
@@ -42,7 +43,7 @@ namespace ComSquare::PPU
 		int bgNumber;
 		Vector2<int> backgroundSize;
 		std::array<std::array<uint32_t, 1024>, 1024> buffer;
-		Background(ComSquare::PPU::PPU &_ppu, int bgNumber, bool priority);
+		Background(ComSquare::PPU::PPU &_ppu, int backGroundNumber, bool hasPriority);
 		//! @brief Render a background on the screen
 		void renderBackground(void);
 	};
