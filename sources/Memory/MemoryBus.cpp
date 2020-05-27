@@ -22,12 +22,13 @@ namespace ComSquare::Memory
 		return *it;
 	}
 
-	uint8_t MemoryBus::read(uint24_t addr, bool)
+	uint8_t MemoryBus::read(uint24_t addr, bool silence)
 	{
 		std::shared_ptr<AMemory> handler = this->getAccessor(addr);
 
 		if (!handler) {
-			std::cout << "Unknown memory accessor for address " << std::hex << addr << ". Using open bus." << std::endl;
+			if (!silence)
+				std::cout << "Unknown memory accessor for address $" << std::hex << addr << ". Using open bus." << std::endl;
 			return this->_openBus;
 		}
 		uint8_t data =  handler->read(addr - handler->getStart());
