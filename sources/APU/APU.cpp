@@ -656,7 +656,7 @@ namespace ComSquare::APU
 		case 0xEA:
 			return this->NOT1(this->_getAbsoluteBit());
 		case 0xEB:
-			return this->MOV(this->_getDirectAddr(), this->_internalRegisters.y, 3);
+			return this->MOV(this->_internalRead(this->_getDirectAddr()), this->_internalRegisters.y, 3);
 		case 0xEC:
 			return this->MOV(this->_getAbsoluteAddr(), this->_internalRegisters.y, 4);
 		case 0xED:

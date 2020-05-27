@@ -209,7 +209,7 @@ namespace ComSquare::CPU
 	unsigned CPU::update()
 	{
 		unsigned cycles = 0;
-		const unsigned maxCycles = 0x17;
+		const unsigned maxCycles = 0x0C;
 
 		for (int i = 0; i < 8; i++) {
 			if (!(this->_internalRegisters.dmaEnableRegister & (0xF << i)))
