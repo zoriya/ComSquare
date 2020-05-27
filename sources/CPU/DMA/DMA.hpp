@@ -46,13 +46,24 @@ namespace ComSquare::CPU
 		//! @brief If this is 'xx', the register accessed will be $21xx.
 		uint8_t port;
 		//! @brief The absolute long address of the data from the A bus.
-		uint24_t aAddress;
+		union {
+			uint8_t bytes[3];
+			uint24_t raw: 24;
+		} aAddress;
 		//! @brief The number of bytes to be transferred.
-		uint16_t count;
+		union {
+			uint8_t bytes[2];
+			uint16_t raw;
+		} count;
+
+		//! @brief Bus helper to read from this channel.
+		uint8_t read(uint8_t addr);
+		//! @brief Bus helper to write to this channel.
+		void write(uint8_t addr, uint8_t data);
 
 		DMA() = default;
-		DMA(DMA &) = default;
-		DMA &operator=(DMA &) = default;
+		DMA(const DMA &) = default;
+		DMA &operator=(const DMA &) = default;
 		~DMA() = default;
 	};
 }

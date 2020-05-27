@@ -91,8 +91,10 @@ namespace ComSquare::CPU
 			return this->_internalRegisters.joy4l;
 		case 0x1F:
 			return this->_internalRegisters.joy4h;
+		case 0x100 ... 0x180:
+			return this->_dmaChannels[(addr - 0x100) >> 8u].read(addr & 0xF);
 		default:
-			throw InvalidAddress("CPU Internal Registers read", addr);
+			throw InvalidAddress("CPU Internal Registers read", addr + this->getStart());
 		}
 	}
 
@@ -189,8 +191,11 @@ namespace ComSquare::CPU
 		case 0x1F:
 			this->_internalRegisters.joy4h = data;
 			break;
+		case 0x100 ... 0x180:
+			this->_dmaChannels[(addr - 0x100) >> 8u].write(addr & 0xF, data);
+			break;
 		default:
-			throw InvalidAddress("CPU Internal Registers write", addr);
+			throw InvalidAddress("CPU Internal Registers write", addr + this->getStart());
 		}
 	}
 
