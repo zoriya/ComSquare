@@ -43,6 +43,7 @@ namespace ComSquare::CPU
 			break;
 		case 0x3:
 			this->aAddress.bytes[1] = data;
+			break;
 		case 0x4:
 			this->aAddress.bytes[2] = data;
 			break;

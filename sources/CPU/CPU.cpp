@@ -135,7 +135,7 @@ namespace ComSquare::CPU
 			this->_internalRegisters.vtimeh = data;
 			break;
 		case 0xB:
-			this->_internalRegisters.mdmaen = data;
+			this->_internalRegisters.dmaEnableRegister = data;
 			break;
 		case 0xC:
 			this->_internalRegisters.hdmaen = data;
