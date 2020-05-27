@@ -46,6 +46,8 @@ namespace ComSquare::PPU
 		Background(ComSquare::PPU::PPU &_ppu, int backGroundNumber, bool hasPriority);
 		//! @brief Render a background on the screen
 		void renderBackground(void);
+		//! @brief Set the tilemap start address
+		void setTileMapStartAddress(uint16_t address);
 	};
 }
 

@@ -62,12 +62,12 @@ namespace ComSquare::PPU
 				color = getRealColor(palette[reference]);
 				if (tileData.tilePriority == this->priority)
 					this->buffer[pos.x][pos.y] = color;
+				if (index == 7 || this->_bpp == 8) {
+					index = 0;
+					graphicAddress += 2;
+				}
 				index++;
 				pos.x++;
-				if (index == (8 / this->_bpp) - 1) {
-					index = 0;
-					graphicAddress++;
-				}
 			}
 			index = 0;
 			pos.x -= this->_characterSize.x;
@@ -83,25 +83,33 @@ namespace ComSquare::PPU
 		for (int i = 0; i < 0xF; i++) {
 			palette[i] = this->_cgram->read_internal(addr);
 			palette[i] += this->_cgram->read_internal(addr + 1) << 8U;
+			addr += 2;
 		}
 		return palette;
 	}
 
 	uint8_t Background::getTilePixelReference(uint16_t addr, int nb)
 	{
-		uint8_t reference = this->_vram->read_internal(addr);
+		uint8_t highByte = this->_vram->read_internal(addr % VRAMSIZE);
+		uint8_t lowByte = this->_vram->read_internal((addr + 1) % VRAMSIZE);
+		uint8_t secondHightByte;
+		uint8_t secondLowByte;
+		uint8_t result = 0;
+		// C000
 
 		switch (this->_bpp) {
 		case 8:
-			return reference;
+			return highByte;
 		case 4:
-			return (reference & (0xFU << ((1 - nb) * 4U))) >> (1 - nb) * 4U;
+			secondHightByte =  this->_vram->read_internal((addr + 32) % VRAMSIZE);
+			secondLowByte = this->_vram->read_internal((addr + 33) %VRAMSIZE);
+			result = (((secondLowByte & (1U << (7U - nb))) + ((secondHightByte & (1U << (7U - nb))) << 1U)) << 2U) >> (7U - nb - 2);
 		case 2:
-			return (reference & (0x3U << ((3 - nb) * 2U))) >> (3 - nb) * 2U;
+			result += ((lowByte & (1U << (7U - nb))) + ((highByte & (1U << (7U - nb))) << 1U)) >> (7U - nb - 1);
 		default:
 			break;
 		}
-		return 0;
+		return result;
 	}
 
 	void Background::drawBasicTileMap(uint16_t baseAddress, Vector2<int> offset)
@@ -113,8 +121,8 @@ namespace ComSquare::PPU
 		while (vramAddress < 0x800 + baseAddress) {
 			tileMapValue = this->_vram->read_internal(vramAddress);
 			tileMapValue += this->_vram->read_internal(vramAddress + 1) << 8U;
-			vramAddress += 2;
 			drawBgTile(tileMapValue, {(pos.x * this->_characterSize.x) + offset.x, (pos.y * this->_characterSize.y) + offset.y});
+			vramAddress += 2;
 			if (pos.x % 31 == 0 && pos.x) {
 				pos.y++;
 				pos.x = 0;
@@ -122,6 +130,11 @@ namespace ComSquare::PPU
 			else
 				pos.x++;
 		}
+	}
+
+	void Background::setTileMapStartAddress(uint16_t address)
+	{
+		this->_TileMapStartAddress = address;
 	}
 
 

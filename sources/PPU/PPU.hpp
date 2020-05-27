@@ -18,6 +18,10 @@
 //#define max4BitTiles		2048
 //#define max8BitTiles		1024
 
+#define VRAMSIZE 65536
+#define CGRAMSIZE 512
+#define OAMRAMSIZE 544
+
 namespace ComSquare::PPU
 {
 	class Background;
