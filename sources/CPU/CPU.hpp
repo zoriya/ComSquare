@@ -132,7 +132,7 @@ namespace ComSquare::CPU
 		uint8_t vtimeh;
 
 		//! @brief DMA Enable Register
-		uint8_t mdmaen;
+		uint8_t dmaEnableRegister;
 
 		//! @brief HDMA Enable Register
 		uint8_t hdmaen;

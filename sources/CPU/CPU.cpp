@@ -54,7 +54,7 @@ namespace ComSquare::CPU
 		case 0xA:
 			return this->_internalRegisters.vtimeh;
 		case 0xB:
-			return this->_internalRegisters.mdmaen;
+			return this->_internalRegisters.dmaEnableRegister;
 		case 0xC:
 			return this->_internalRegisters.hdmaen;
 		case 0xD:
@@ -209,8 +209,14 @@ namespace ComSquare::CPU
 	unsigned CPU::update()
 	{
 		unsigned cycles = 0;
+		const unsigned maxCycles = 0x17;
 
-		for (int i = 0; i < 0x17; i++) {
+		for (int i = 0; i < 8; i++) {
+			if (!(this->_internalRegisters.dmaEnableRegister & (0xF << i)))
+				continue;
+			cycles += this->_dmaChannels[i].run(maxCycles - cycles);
+		}
+		for (unsigned i = 0; i < maxCycles; i++) {
 			if (this->_isStopped) {
 				cycles += 1;
 				continue;

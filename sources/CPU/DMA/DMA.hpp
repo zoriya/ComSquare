@@ -61,6 +61,11 @@ namespace ComSquare::CPU
 		//! @brief Bus helper to write to this channel.
 		void write(uint8_t addr, uint8_t data);
 
+		//! @brief Run the DMA for x cycles
+		//! @param cycles The maximum number of cycles this DMA should run.
+		//! @return the number of cycles taken
+		uint8_t run(unsigned cycles);
+
 		DMA() = default;
 		DMA(const DMA &) = default;
 		DMA &operator=(const DMA &) = default;

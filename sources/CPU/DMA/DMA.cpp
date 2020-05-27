@@ -56,4 +56,9 @@ namespace ComSquare::CPU
 			throw InvalidAddress("DMA read", addr);
 		}
 	}
+
+	uint8_t DMA::run(unsigned int cycles)
+	{
+		return 0;
+	}
 }
