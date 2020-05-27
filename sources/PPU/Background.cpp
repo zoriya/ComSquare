@@ -5,6 +5,7 @@
 #include "PPUUtils.hpp"
 #include "PPU.hpp"
 #include "Background.hpp"
+#include "../Models/Vector2.hpp"
 
 namespace ComSquare::PPU
 {
@@ -72,6 +73,8 @@ namespace ComSquare::PPU
 			index = 0;
 			pos.x -= this->_characterSize.x;
 			pos.y++;
+			if (i == 7)
+				graphicAddress += 0x100 - this->_characterSize.x * this->_bpp;
 		}
 	}
 
@@ -103,9 +106,9 @@ namespace ComSquare::PPU
 		case 4:
 			secondHightByte =  this->_vram->read_internal((addr + 32) % VRAMSIZE);
 			secondLowByte = this->_vram->read_internal((addr + 33) %VRAMSIZE);
-			result = (((secondLowByte & (1U << (7U - nb))) + ((secondHightByte & (1U << (7U - nb))) << 1U)) << 2U) >> (7U - nb - 2);
+			result = ((secondHightByte & (1U << (7U - nb))) | ((secondLowByte & (1U << (7U - nb))) << 1U)) >> (7U - nb - 2);
 		case 2:
-			result += ((lowByte & (1U << (7U - nb))) + ((highByte & (1U << (7U - nb))) << 1U)) >> (7U - nb - 1);
+			result += ((highByte & (1U << (7U - nb))) | ((lowByte & (1U << (7U - nb))) << 1U)) >> (7U - nb);
 		default:
 			break;
 		}
@@ -135,6 +138,11 @@ namespace ComSquare::PPU
 	void Background::setTileMapStartAddress(uint16_t address)
 	{
 		this->_TileMapStartAddress = address;
+	}
+
+	void Background::setCharacterSize(Vector2<int> size)
+	{
+		this->_characterSize = size;
 	}
 
 

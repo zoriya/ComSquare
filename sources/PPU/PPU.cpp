@@ -80,22 +80,16 @@ namespace ComSquare::PPU
 		for (int i = 0; vram_test[i] != -1; i++) {
 			this->vram->write_internal(i, vram_test[i]);
 		}
-	int vram_test_2[] = {8, 00, 02, 00, 0x0A, 00, 02, 00, 0x0A, 00, 00, 00, 00, 00, 00, -1};
-		for (int i = 0; vram_test[i] != -1; i++) {
+		int vram_test_2[] = {8, 00, 02, 00, 0x0A, 00, 02, 00, 0x0A, 00, 00, 00, 00, 00, 00, -1};
+		for (int i = 0; vram_test_2[i] != -1; i++) {
 			this->vram->write_internal(i + 0x8000, vram_test_2[i]);
 		}
-		for (int i = 0; vram_test[i] != -1; i++) {
-			this->vram->write_internal(i, vram_test[i]);
-		}
-		int vram_test_3[] = {8, 00, 02, 00, 0x0A, 00, 02, 00, 0x0A, 00, 00, 00, 00, 00, 00, -1};
-		for (int i = 0; vram_test[i] != -1; i++) {
+		int vram_test_3[] = {8, 00, 02, 00, 0x8, 00, 02, 00, 0x8, 00, 00, 00, 00, 00, 00, -1};
+		for (int i = 0; vram_test_3[i] != -1; i++) {
 			this->vram->write_internal(i + 0x8080, vram_test_3[i]);
 		}
-		for (int i = 0; vram_test[i] != -1; i++) {
-			this->vram->write_internal(i, vram_test[i]);
-		}
 		int vram_test_4[] = {8, 00, 02, 00, 0x0A, 00, 02, 00, 0x0A, 00, 00, 00, 00, 00, 00, -1};
-		for (int i = 0; vram_test[i] != -1; i++) {
+		for (int i = 0; vram_test_4[i] != -1; i++) {
 			this->vram->write_internal(i + 0x8100, vram_test_4[i]);
 		}
 		this->vram->write_internal(0x8040, 04);
@@ -125,6 +119,10 @@ namespace ComSquare::PPU
 
 		this->_registers._t[0].enableWindowDisplayBg1 = true;
 		this->_registers._t[0].enableWindowDisplayBg2 = true;
+		this->_backgrounds[0].setCharacterSize(this->getCharacterSize(1));
+		this->_backgrounds[1].setCharacterSize(this->getCharacterSize(1));
+		this->_backgrounds[2].setCharacterSize(this->getCharacterSize(2));
+		this->_backgrounds[3].setCharacterSize(this->getCharacterSize(2));
 	}
 
 	uint8_t PPU::read(uint24_t addr)
@@ -349,9 +347,11 @@ namespace ComSquare::PPU
 	{
 		(void)cycles;
 
-		this->renderMainAndSubScreen();
-		add_buffer(this->_screen, this->_subScreen);
-		add_buffer(this->_screen, this->_mainScreen);
+		//this->renderMainAndSubScreen();
+		//add_buffer(this->_screen, this->_subScreen);
+		//add_buffer(this->_screen, this->_mainScreen);
+		this->_backgrounds[0].renderBackground();
+		add_buffer(this->_screen, this->_backgrounds[0].buffer);
 		for (unsigned long i = 0; i < this->_screen.size(); i++) {
 			for (unsigned long j = 0; j < this->_screen[i].size(); j++) {
 				this->_renderer.putPixel(j, i, this->_screen[i][j]);
@@ -693,8 +693,6 @@ namespace ComSquare::PPU
 
 	void PPU::addToMainSubScreen(Background &bg)
 	{
-		int i = bg.bgNumber + bg.priority;
-
 		if (this->_registers._t[0].raw & (1U << (bg.bgNumber - 1U)))
 			this->add_buffer(this->_mainScreen, bg.buffer);
 		if (this->_registers._t[1].raw & (1U << (bg.bgNumber - 1U)))

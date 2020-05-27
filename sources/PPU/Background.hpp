@@ -48,6 +48,8 @@ namespace ComSquare::PPU
 		void renderBackground(void);
 		//! @brief Set the tilemap start address
 		void setTileMapStartAddress(uint16_t address);
+		//! @brief Set the character Size
+		void setCharacterSize(Vector2<int> size);
 	};
 }
 
