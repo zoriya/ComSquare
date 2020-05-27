@@ -36,7 +36,9 @@ namespace ComSquare::CPU
 	private:
 		//! @brief Write one byte using the A address, the port and the direction. Handle special cases where no write occurs.
 		//! @return The number of cycles used.
-		unsigned _writeOneByte();
+		unsigned _writeOneByte(uint24_t aAddress, uint24_t bAddress);
+		//! @brief Get an offset corresponding to the current DMAMode and the index of the currently transferred byte.
+		int getModeOffset(int index);
 	public:
 		//! @brief DMA Control register (various information about the transfer)
 		union {

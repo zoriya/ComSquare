@@ -65,24 +65,24 @@ namespace ComSquare::CPU
 		}
 	}
 
-	unsigned DMA::_writeOneByte()
+	unsigned DMA::_writeOneByte(uint24_t aAddress, uint24_t bAddress)
 	{
 		// Address $2180 refers to the WRam data register. Write to/Read from this port when the a address is on the vram cause different behaviors.
 		if (this->port == 0x80) {
-			auto accessor = this->_bus->getAccessor(this->aAddress.raw);
+			auto accessor = this->_bus->getAccessor(aAddress);
 			if (accessor && accessor->getComponent() == WRam) {
 				if (this->controlRegister.direction == AToB)
 					return 8;
-				this->_bus->write(this->aAddress.raw, 0xFF);
+				this->_bus->write(aAddress, 0xFF);
 				return 4;
 			}
 		}
 		if (this->controlRegister.direction == AToB) {
-			uint8_t data = this->_bus->read(this->aAddress.raw);
-			this->_bus->write(0x2100 | this->port, data);
+			uint8_t data = this->_bus->read(aAddress);
+			this->_bus->write(bAddress, data);
 		} else {
-			uint8_t data = this->_bus->read(0x2100 | this->port);
-			this->_bus->write(this->aAddress.raw, data);
+			uint8_t data = this->_bus->read(bAddress);
+			this->_bus->write(aAddress, data);
 		}
 		return 8;
 	}
@@ -90,14 +90,33 @@ namespace ComSquare::CPU
 	uint8_t DMA::run(unsigned int maxCycles)
 	{
 		unsigned cycles = 8;
+		int i = 0;
 
 		do {
-			cycles += this->_writeOneByte();
+			cycles += this->_writeOneByte(this->aAddress.raw, 0x2100 | this->port  + this->getModeOffset(i));
 			if (!this->controlRegister.fixed)
 				this->aAddress.page += this->controlRegister.increment ? -1 : 1;
 			this->count.raw--;
+			i++;
 		} while (this->count.raw > 0 && cycles < maxCycles);
 		this->enabled = false;
 		return cycles;
+	}
+
+	int DMA::getModeOffset(int index)
+	{
+		switch (this->controlRegister.mode) {
+		case OneToOne:
+			return 0;
+		case TwoToTwo:
+			return index % 2;
+		case TwoToOne:
+			return 0;
+		case FourToTwo:
+			return (index & 0b11) > 1;
+		case FourToFour:
+			return (index & 0b11);
+		}
+		return 0;
 	}
 }
