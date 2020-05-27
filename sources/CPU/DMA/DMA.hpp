@@ -6,7 +6,9 @@
 #define COMSQUARE_DMA_HPP
 
 #include <cstdint>
+#include <memory>
 #include "../../Models/Int24.hpp"
+#include "../../Memory/MemoryBus.hpp"
 
 namespace ComSquare::CPU
 {
@@ -24,22 +26,31 @@ namespace ComSquare::CPU
 		FourToFour = 0b100
 	};
 
+	enum Direction {
+		AToB,
+		BToA
+	};
+
 	//! @brief Class handling all DMA/HDMA transfers (Direct Memory Access or H-Blank Direct Memory Access)
 	class DMA {
+	private:
+		//! @brief Write one byte using the A address, the port and the direction. Handle special cases where no write occurs.
+		//! @return The number of cycles used.
+		unsigned _writeOneByte();
 	public:
 		//! @brief DMA Control register (various information about the transfer)
 		union {
 			struct {
-				//! @brief The direction of the transfer (0: CPU to PPU aka A to B, 1: PPU to CPU aka B to A).
-				bool direction: 1;
-				//! @brief Two unused bites.
-				bool _: 2;
-				//! @brief if this flag is 0: increment. Else: decrement. (The A address)
-				bool increment: 1;
+				//! @brief DMA's mode: how many bytes/registers there is, how many writes...
+				DMAMode mode: 3;
 				//! @brief If this flag is set, no increment/decrement will be done.
 				bool fixed: 1;
-				//! @brief DMA's mode: how many bytes/registers there is, how many writes...
-				enum DMAMode mode: 3;
+				//! @brief if this flag is 0: increment. Else: decrement. (The A address)
+				bool increment: 1;
+				//! @brief Two unused bites.
+				bool _: 2;
+				//! @brief The direction of the transfer.
+				Direction direction: 1;
 			};
 			uint8_t raw;
 		} controlRegister;
@@ -48,6 +59,10 @@ namespace ComSquare::CPU
 		//! @brief The absolute long address of the data from the A bus.
 		union {
 			uint8_t bytes[3];
+			struct {
+				uint16_t page;
+				uint8_t bank;
+			};
 			uint24_t raw: 24;
 		} aAddress;
 		//! @brief The number of bytes to be transferred.
@@ -55,6 +70,13 @@ namespace ComSquare::CPU
 			uint8_t bytes[2];
 			uint16_t raw;
 		} count;
+		//! @brief Is this channel set to run?
+		bool enabled;
+
+		//! @brief The memory bus to use for read/write.
+		std::shared_ptr<Memory::MemoryBus> _bus;
+		//! @brief Set the memory bus used by this dma channel.
+		void setBus(std::shared_ptr<Memory::MemoryBus> bus);
 
 		//! @brief Bus helper to read from this channel.
 		uint8_t read(uint8_t addr);
@@ -67,6 +89,7 @@ namespace ComSquare::CPU
 		uint8_t run(unsigned cycles);
 
 		DMA() = default;
+		DMA(std::shared_ptr<Memory::MemoryBus> bus);
 		DMA(const DMA &) = default;
 		DMA &operator=(const DMA &) = default;
 		~DMA() = default;

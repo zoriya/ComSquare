@@ -7,6 +7,13 @@
 
 namespace ComSquare::CPU
 {
+	DMA::DMA(std::shared_ptr<Memory::MemoryBus> bus) : _bus(std::move(bus)) {}
+
+	void DMA::setBus(std::shared_ptr<Memory::MemoryBus> bus)
+	{
+		this->_bus = std::move(bus);
+	}
+
 	uint8_t DMA::read(uint8_t addr)
 	{
 		switch (addr) {
@@ -58,8 +65,39 @@ namespace ComSquare::CPU
 		}
 	}
 
-	uint8_t DMA::run(unsigned int cycles)
+	unsigned DMA::_writeOneByte()
 	{
-		return 0;
+		// Address $2180 refers to the WRam data register. Write to/Read from this port when the a address is on the vram cause different behaviors.
+		if (this->port == 0x80) {
+			auto accessor = this->_bus->getAccessor(this->aAddress.raw);
+			if (accessor && accessor->getComponent() == WRam) {
+				if (this->controlRegister.direction == AToB)
+					return 8;
+				this->_bus->write(this->aAddress.raw, 0xFF);
+				return 4;
+			}
+		}
+		if (this->controlRegister.direction == AToB) {
+			uint8_t data = this->_bus->read(this->aAddress.raw);
+			this->_bus->write(0x2100 | this->port, data);
+		} else {
+			uint8_t data = this->_bus->read(0x2100 | this->port);
+			this->_bus->write(this->aAddress.raw, data);
+		}
+		return 8;
+	}
+
+	uint8_t DMA::run(unsigned int maxCycles)
+	{
+		unsigned cycles = 8;
+
+		do {
+			cycles += this->_writeOneByte();
+			if (!this->controlRegister.fixed)
+				this->aAddress.page += this->controlRegister.increment ? -1 : 1;
+			this->count.raw--;
+		} while (this->count.raw > 0 && cycles < maxCycles);
+		this->enabled = false;
+		return cycles;
 	}
 }

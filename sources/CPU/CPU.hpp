@@ -131,9 +131,6 @@ namespace ComSquare::CPU
 		//! @brief IRQ Timer Registers (Vertical - High)
 		uint8_t vtimeh;
 
-		//! @brief DMA Enable Register
-		uint8_t dmaEnableRegister;
-
 		//! @brief HDMA Enable Register
 		uint8_t hdmaen;
 

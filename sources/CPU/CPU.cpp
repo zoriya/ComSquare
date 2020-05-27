@@ -12,9 +12,12 @@
 namespace ComSquare::CPU
 {
 	CPU::CPU(std::shared_ptr<Memory::MemoryBus> bus, Cartridge::Header &cartridgeHeader)
-		: _bus(std::move(bus)), _cartridgeHeader(cartridgeHeader)
+		: _bus(std::move(bus)),
+		_cartridgeHeader(cartridgeHeader)
 	{
 		this->RESB();
+		for (DMA &channel : this->_dmaChannels)
+			channel.setBus(_bus);
 	}
 
 	bool CPU::isDebugger()
@@ -30,6 +33,8 @@ namespace ComSquare::CPU
 	//! @bref The CPU's internal registers starts at $4200	and finish at $421F.
 	uint8_t CPU::read(uint24_t addr)
 	{
+		uint8_t tmp = 0;
+
 		switch (addr) {
 		case 0x0:
 			return this->_internalRegisters.nmitimen;
@@ -54,7 +59,9 @@ namespace ComSquare::CPU
 		case 0xA:
 			return this->_internalRegisters.vtimeh;
 		case 0xB:
-			return this->_internalRegisters.dmaEnableRegister;
+			for (int i = 0; i < 8; i++)
+				tmp |= this->_dmaChannels[i].enabled << i;
+			return tmp;
 		case 0xC:
 			return this->_internalRegisters.hdmaen;
 		case 0xD:
@@ -135,7 +142,8 @@ namespace ComSquare::CPU
 			this->_internalRegisters.vtimeh = data;
 			break;
 		case 0xB:
-			this->_internalRegisters.dmaEnableRegister = data;
+			for (int i = 0; i < 8; i++)
+				this->_dmaChannels[i].enabled = data & (0b1 << i);
 			break;
 		case 0xC:
 			this->_internalRegisters.hdmaen = data;
@@ -211,10 +219,10 @@ namespace ComSquare::CPU
 		unsigned cycles = 0;
 		const unsigned maxCycles = 0x17;
 
-		for (int i = 0; i < 8; i++) {
-			if (!(this->_internalRegisters.dmaEnableRegister & (0xF << i)))
+		for (DMA &channel : this->_dmaChannels) {
+			if (!channel.enabled)
 				continue;
-			cycles += this->_dmaChannels[i].run(maxCycles - cycles);
+			cycles += channel.run(maxCycles - cycles);
 		}
 		for (unsigned i = 0; i < maxCycles; i++) {
 			if (this->_isStopped) {
