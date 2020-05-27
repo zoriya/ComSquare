@@ -6,109 +6,107 @@
 
 namespace ComSquare::APU
 {
-	int APU::BRA()
+	int APU::BRA(int8_t offset)
 	{
-		int8_t offset = this->_getImmediateData();
-
 		this->_internalRegisters.pc += offset;
 		return 4;
 	}
 
-	int APU::BEQ()
+	int APU::BEQ(int8_t offset)
 	{
 		if (!this->_internalRegisters.z)
 			return 2;
-		this->BRA();
+		this->BRA(offset);
 		return 4;
 	}
 
-	int APU::BNE()
+	int APU::BNE(int8_t offset)
 	{
 		if (this->_internalRegisters.z)
 			return 2;
-		this->BRA();
+		this->BRA(offset);
 		return 4;
 	}
 
-	int APU::BCS()
+	int APU::BCS(int8_t offset)
 	{
 		if (!this->_internalRegisters.c)
 			return 2;
-		this->BRA();
+		this->BRA(offset);
 		return 4;
 	}
 
-	int APU::BCC()
+	int APU::BCC(int8_t offset)
 	{
 		if (this->_internalRegisters.c)
 			return 2;
-		this->BRA();
+		this->BRA(offset);
 		return 4;
 	}
 
-	int APU::BVS()
+	int APU::BVS(int8_t offset)
 	{
 		if (!this->_internalRegisters.v)
 			return 2;
-		this->BRA();
+		this->BRA(offset);
 		return 4;
 	}
 
-	int APU::BVC()
+	int APU::BVC(int8_t offset)
 	{
 		if (this->_internalRegisters.v)
 			return 2;
-		this->BRA();
+		this->BRA(offset);
 		return 4;
 	}
 
-	int APU::BMI()
+	int APU::BMI(int8_t offset)
 	{
 		if (!this->_internalRegisters.n)
 			return 2;
-		this->BRA();
+		this->BRA(offset);
 		return 4;
 	}
 
-	int APU::BPL()
+	int APU::BPL(int8_t offset)
 	{
 		if (this->_internalRegisters.n)
 			return 2;
-		this->BRA();
+		this->BRA(offset);
 		return 4;
 	}
 
-	int APU::BBS(uint24_t addr, uint8_t bit)
+	int APU::BBS(uint24_t addr,  int8_t offset, uint8_t bit)
 	{
 		uint8_t data = this->_internalRead(addr);
 
 		if (!(data & (1u << bit)))
 			return 5;
-		this->BRA();
+		this->BRA(offset);
 		return 7;
 	}
 
-	int APU::BBC(uint24_t addr, uint8_t bit)
+	int APU::BBC(uint24_t addr, int8_t offset, uint8_t bit)
 	{
 		uint8_t data = this->_internalRead(addr);
 
 		if (data & (1u << bit))
 			return 5;
-		this->BRA();
+		this->BRA(offset);
 		return 7;
 	}
 
-	int APU::CBNE(uint24_t addr, bool by_x)
+	int APU::CBNE(uint24_t addr, int8_t offset, bool by_x)
 	{
 		uint8_t data = this->_internalRead(addr);
 
 		if (this->_internalRegisters.a == data)
 			return 5 + by_x;
-		this->BRA();
+		this->BRA(offset);
 		return 7 + by_x;
 	}
 
-	int APU::DBNZ(bool direct_addr)
+	int APU::DBNZ(int8_t offset, bool direct_addr)
 	{
 		uint8_t data;
 
@@ -122,7 +120,7 @@ namespace ComSquare::APU
 			data = --this->_internalRegisters.y;
 		if (!data)
 			return 4 + direct_addr;
-		this->BRA();
+		this->BRA(offset);
 		return 6 + direct_addr;
 	}
 
