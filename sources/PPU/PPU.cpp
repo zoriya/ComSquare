@@ -45,7 +45,7 @@ namespace ComSquare::PPU
 		case ppuRegisters::stat78:
 			return 0;
 		default:
-			throw InvalidAddress("PPU Internal Registers read ", addr);
+			throw InvalidAddress("PPU Internal Registers read ", addr + this->getStart());
  		}
 	}
 
@@ -215,7 +215,7 @@ namespace ComSquare::PPU
 			break;
 		//TODO adding the rest of the registers. oaf !
 		default:
-			throw InvalidAddress("PPU Internal Registers write", addr);
+			throw InvalidAddress("PPU Internal Registers write", addr + this->getStart());
 		}
 	}
 

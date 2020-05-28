@@ -478,7 +478,7 @@ namespace ComSquare::CPU
 			{&CPU::ORA, 3, "ora", AddressingMode::DirectPage, 2}, // 05
 			{&CPU::ASL, 5, "asl", AddressingMode::DirectPage, 2}, // 06
 			{&CPU::ORA, 6, "ora", AddressingMode::DirectPageIndirectLong, 2}, // 07
-			{&CPU::PHP, 3, "php", AddressingMode::Implied, 3}, // 08
+			{&CPU::PHP, 3, "php", AddressingMode::Implied, 1}, // 08
 			{&CPU::ORA, 2, "ora", AddressingMode::ImmediateForA, 2}, // 09
 			{&CPU::ASL, 2, "asl", AddressingMode::Implied, 1}, // 0A
 			{&CPU::PHD, 4, "phd", AddressingMode::Implied, 1}, // 0B

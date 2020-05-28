@@ -105,9 +105,21 @@ Test(PHA, basic)
 	Init()
 	snes.cpu->_registers.a = 0xABCD;
 	snes.cpu->_registers.s = 0x02;
+	snes.cpu->_registers.p.m = false;
 	snes.cpu->PHA(0x0, ComSquare::CPU::AddressingMode::Implied);
 	cr_assert_eq(snes.wram->_data[1], 0xCD, "The second value pushed to the stack should be 0xCD but it was %x", snes.wram->_data[1]);
 	cr_assert_eq(snes.wram->_data[2], 0xAB, "The first value pushed to the stack should be 0xAB but it was %x", snes.wram->_data[2]);
+	cr_assert_eq(snes.cpu->_registers.s, 0x0, "The Stack pointer should be equal to 0x0 but it was %x", snes.cpu->_registers.s);
+}
+
+Test(PHA, 8bits)
+{
+	Init()
+	snes.cpu->_registers.a = 0xCD;
+	snes.cpu->_registers.s = 0x02;
+	snes.cpu->_registers.p.m = false;
+	snes.cpu->PHA(0x0, ComSquare::CPU::AddressingMode::Implied);
+	cr_assert_eq(snes.wram->_data[1], 0xCD, "The second value pushed to the stack should be 0xCD but it was %x", snes.wram->_data[1]);
 	cr_assert_eq(snes.cpu->_registers.s, 0x0, "The Stack pointer should be equal to 0x0 but it was %x", snes.cpu->_registers.s);
 }
 
