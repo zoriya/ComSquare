@@ -2,6 +2,7 @@
 // Created by anonymus-raccoon on 5/26/20.
 //
 
+#include <iostream>
 #include "DMA.hpp"
 #include "../../Exceptions/InvalidAddress.hpp"
 
@@ -18,19 +19,19 @@ namespace ComSquare::CPU
 	{
 		switch (addr) {
 		case 0x0:
-			return this->controlRegister.raw;
+			return this->_controlRegister.raw;
 		case 0x1:
-			return this->port;
+			return this->_port;
 		case 0x2:
-			return this->aAddress.bytes[0];
+			return this->_aAddress.bytes[0];
 		case 0x3:
-			return this->aAddress.bytes[1];
+			return this->_aAddress.bytes[1];
 		case 0x4:
-			return this->aAddress.bytes[2];
+			return this->_aAddress.bytes[2];
 		case 0x5:
-			return this->count.bytes[0];
+			return this->_count.bytes[0];
 		case 0x6:
-			return this->count.bytes[1];
+			return this->_count.bytes[1];
 		default:
 			throw InvalidAddress("DMA read", addr);
 		}
@@ -40,25 +41,25 @@ namespace ComSquare::CPU
 	{
 		switch (addr) {
 		case 0x0:
-			this->controlRegister.raw = data;
+			this->_controlRegister.raw = data;
 			break;
 		case 0x1:
-			this->port = data;
+			this->_port = data;
 			break;
 		case 0x2:
-			this->aAddress.bytes[0] = data;
+			this->_aAddress.bytes[0] = data;
 			break;
 		case 0x3:
-			this->aAddress.bytes[1] = data;
+			this->_aAddress.bytes[1] = data;
 			break;
 		case 0x4:
-			this->aAddress.bytes[2] = data;
+			this->_aAddress.bytes[2] = data;
 			break;
 		case 0x5:
-			this->count.bytes[0] = data;
+			this->_count.bytes[0] = data;
 			break;
 		case 0x6:
-			this->count.bytes[1] = data;
+			this->_count.bytes[1] = data;
 			break;
 		default:
 			throw InvalidAddress("DMA read", addr);
@@ -68,16 +69,16 @@ namespace ComSquare::CPU
 	unsigned DMA::_writeOneByte(uint24_t aAddress, uint24_t bAddress)
 	{
 		// Address $2180 refers to the WRam data register. Write to/Read from this port when the a address is on the vram cause different behaviors.
-		if (this->port == 0x80) {
+		if (this->_port == 0x80) {
 			auto accessor = this->_bus->getAccessor(aAddress);
 			if (accessor && accessor->getComponent() == WRam) {
-				if (this->controlRegister.direction == AToB)
+				if (this->_controlRegister.direction == AToB)
 					return 8;
 				this->_bus->write(aAddress, 0xFF);
 				return 4;
 			}
 		}
-		if (this->controlRegister.direction == AToB) {
+		if (this->_controlRegister.direction == AToB) {
 			uint8_t data = this->_bus->read(aAddress);
 			this->_bus->write(bAddress, data);
 		} else {
@@ -91,21 +92,22 @@ namespace ComSquare::CPU
 	{
 		unsigned cycles = 8;
 		int i = 0;
+		std::cout << "Starting a DMA transfer" << std::endl;
 
 		do {
-			cycles += this->_writeOneByte(this->aAddress.raw, 0x2100 | this->port  + this->getModeOffset(i));
-			if (!this->controlRegister.fixed)
-				this->aAddress.page += this->controlRegister.increment ? -1 : 1;
-			this->count.raw--;
+			cycles += this->_writeOneByte(this->_aAddress.raw, 0x2100 | (this->_port + this->_getModeOffset(i)));
+			if (!this->_controlRegister.fixed)
+				this->_aAddress.page += this->_controlRegister.increment ? -1 : 1;
+			this->_count.raw--;
 			i++;
-		} while (this->count.raw > 0 && cycles < maxCycles);
+		} while (this->_count.raw > 0);
 		this->enabled = false;
 		return cycles;
 	}
 
-	int DMA::getModeOffset(int index)
+	int DMA::_getModeOffset(int index)
 	{
-		switch (this->controlRegister.mode) {
+		switch (this->_controlRegister.mode) {
 		case OneToOne:
 			return 0;
 		case TwoToTwo:

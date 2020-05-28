@@ -34,12 +34,12 @@ namespace ComSquare::CPU
 	//! @brief Class handling all DMA/HDMA transfers (Direct Memory Access or H-Blank Direct Memory Access)
 	class DMA {
 	private:
-		//! @brief Write one byte using the A address, the port and the direction. Handle special cases where no write occurs.
+		//! @brief Write one byte using the A address, the port and the _direction. Handle special cases where no write occurs.
 		//! @return The number of cycles used.
 		unsigned _writeOneByte(uint24_t aAddress, uint24_t bAddress);
 		//! @brief Get an offset corresponding to the current DMAMode and the index of the currently transferred byte.
-		int getModeOffset(int index);
-	public:
+		int _getModeOffset(int index);
+
 		//! @brief DMA Control register (various information about the transfer)
 		union {
 			struct {
@@ -55,9 +55,9 @@ namespace ComSquare::CPU
 				Direction direction: 1;
 			};
 			uint8_t raw;
-		} controlRegister;
+		} _controlRegister;
 		//! @brief If this is 'xx', the register accessed will be $21xx.
-		uint8_t port;
+		uint8_t _port;
 		//! @brief The absolute long address of the data from the A bus.
 		union {
 			uint8_t bytes[3];
@@ -66,17 +66,20 @@ namespace ComSquare::CPU
 				uint8_t bank;
 			};
 			uint24_t raw: 24;
-		} aAddress;
+		} _aAddress;
 		//! @brief The number of bytes to be transferred.
 		union {
 			uint8_t bytes[2];
 			uint16_t raw;
-		} count;
-		//! @brief Is this channel set to run?
-		bool enabled;
+		} _count;
 
 		//! @brief The memory bus to use for read/write.
 		std::shared_ptr<Memory::MemoryBus> _bus;
+
+	public:
+		//! @brief Is this channel set to run?
+		bool enabled;
+
 		//! @brief Set the memory bus used by this dma channel.
 		void setBus(std::shared_ptr<Memory::MemoryBus> bus);
 
