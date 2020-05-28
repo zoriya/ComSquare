@@ -180,6 +180,9 @@ namespace ComSquare::PPU
 			break;
 		case ppuRegisters::bgmode:
 			this->_registers._bgmode.raw = data;
+			// update backgrounds
+			for (int i = 0; i < 8; i++)
+				this->_backgrounds[i].setCharacterSize(this->getCharacterSize((i / 2) + 1));
 			break;
 		case ppuRegisters::mosaic:
 			this->_registers._mosaic.raw = data;
@@ -189,6 +192,9 @@ namespace ComSquare::PPU
 		case ppuRegisters::bg3sc:
 		case ppuRegisters::bg4sc:
 			this->_registers._bgsc[addr - 0x07].raw = data;
+			// update background tilemap address
+			this->_backgrounds[addr - 0x07].setTileMapStartAddress(this->getTileMapStartAddress(addr - 0x07 + 1));
+			this->_backgrounds[addr - 0x07 + 1].setTileMapStartAddress(this->getTileMapStartAddress(addr - 0x07 + 1));
 			break;
 		case ppuRegisters::bg12nba:
 		case ppuRegisters::bg34nba:
@@ -253,7 +259,7 @@ namespace ComSquare::PPU
 		case ppuRegisters::m7b:
 		case ppuRegisters::m7c:
 		case ppuRegisters::m7d:
-			this->_registers._m7[addr - ppuRegisters::m7a].m7 = (this->_registers._m7[addr - ppuRegisters::m7a].m7 << 8) | data;
+			this->_registers._m7[addr - ppuRegisters::m7a].m7 = (this->_registers._m7[addr - ppuRegisters::m7a].m7 << 8U) | data;
 			break;
 		case ppuRegisters::m7x:
 		case ppuRegisters::m7y:
