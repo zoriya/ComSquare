@@ -2,13 +2,13 @@
 // Created by anonymus-raccoon on 5/28/20.
 //
 
-#include "DMADebug.hpp"
-#include "../../../SNES.hpp"
+#include "RegisterViewer.hpp"
+#include "../SNES.hpp"
 
 namespace ComSquare::Debugger
 {
-	DMADebug::DMADebug(SNES &snes)
-		: _window(new ClosableWindow<DMADebug>(*this, &DMADebug::disableDebugger)),
+	RegisterViewer::RegisterViewer(SNES &snes)
+		: _window(new ClosableWindow<RegisterViewer>(*this, &RegisterViewer::disableDebugger)),
 		_ui(),
 		_snes(snes)
 	{
@@ -20,13 +20,13 @@ namespace ComSquare::Debugger
 		this->_window->show();
 	}
 
-	void DMADebug::focus()
+	void RegisterViewer::focus()
 	{
 		this->_window->activateWindow();
 	}
 
-	void DMADebug::disableDebugger()
+	void RegisterViewer::disableDebugger()
 	{
-		this->_snes.disableDMADebugging();
+		this->_snes.disableRegisterDebugging();
 	}
 }

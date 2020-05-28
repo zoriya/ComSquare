@@ -36,7 +36,7 @@ namespace ComSquare::Renderer
 		//! @brief Action called when clicking on the enable Palette viewer button.
 		void enableCgramViewer();
 		//! @brief Action called when clicking on the enable DMA viewer button.
-		void enableDMAViewer();
+		void enableRegisterViewer();
 
 		//! @brief Action called when clicking on the reset button.
 		void reset();

@@ -223,9 +223,9 @@ add_executable(ComSquare
         sources/PPU/Background.hpp
         sources/CPU/DMA/DMA.cpp
         sources/CPU/DMA/DMA.hpp
-        sources/Debugger/CPU/DMA/DMADebug.cpp
-        sources/Debugger/CPU/DMA/DMADebug.hpp
-        ui/dmaView.ui
+        ui/registersView.ui
+        sources/Debugger/RegisterViewer.cpp
+        sources/Debugger/RegisterViewer.hpp
 )
 
 target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)

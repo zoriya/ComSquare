@@ -9,7 +9,6 @@
 #include <iostream>
 #include "QtSFML.hpp"
 #include "../../Exceptions/InvalidOpcode.hpp"
-#include "../../Exceptions/InvalidAddress.hpp"
 #include "../../Exceptions/InvalidAction.hpp"
 
 #ifdef Q_WS_X11
@@ -33,7 +32,7 @@ namespace ComSquare::Renderer
 		this->_window.setCentralWidget(this->_sfWidget.get());
 
 		QMenu *file = this->_window.menuBar()->addMenu("&File");
-		//TODO implement rom openning from this menu.
+		//TODO implement rom opening from this menu.
 		(void)file;
 
 		QMenu *game = this->_window.menuBar()->addMenu("&Game");
@@ -74,10 +73,10 @@ namespace ComSquare::Renderer
 		QMainWindow::connect(cgramDebugger, &QAction::triggered, this->_sfWidget.get(), &QtFullSFML::enableCgramViewer);
 		debugger->addAction(cgramDebugger);
 
-		QAction *dmaDebugger = new QAction("DMA Viewer", &this->_window);
-		dmaDebugger->setShortcut(Qt::Key_F7);
-		QMainWindow::connect(dmaDebugger, &QAction::triggered, this->_sfWidget.get(), &QtFullSFML::enableDMAViewer);
-		debugger->addAction(dmaDebugger);
+		QAction *registerDebugger = new QAction("Registers Viewer", &this->_window);
+		registerDebugger->setShortcut(Qt::Key_F7);
+		QMainWindow::connect(registerDebugger, &QAction::triggered, this->_sfWidget.get(), &QtFullSFML::enableRegisterViewer);
+		debugger->addAction(registerDebugger);
 
 		this->_window.show();
 	}
@@ -147,8 +146,8 @@ namespace ComSquare::Renderer
 		this->_snes.enableCgramDebugging();
 	}
 
-	void QtFullSFML::enableDMAViewer()
+	void QtFullSFML::enableRegisterViewer()
 	{
-		this->_snes.enableDMADebugging();
+		this->_snes.enableRegisterDebugging();
 	}
 }

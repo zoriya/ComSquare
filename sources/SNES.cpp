@@ -154,20 +154,20 @@ namespace ComSquare
 		#endif
 	}
 
-	void SNES::disableDMADebugging()
+	void SNES::disableRegisterDebugging()
 	{
 		#ifdef DEBUGGER_ENABLED
-			this->_dmaViewer = nullptr;
+			this->_registerViewer = nullptr;
 		#endif
 	}
 
-	void SNES::enableDMADebugging()
+	void SNES::enableRegisterDebugging()
 	{
 		#ifdef DEBUGGER_ENABLED
-			if (this->_dmaViewer)
-				this->_dmaViewer->focus();
+			if (this->_registerViewer)
+				this->_registerViewer->focus();
 			else
-				this->_dmaViewer = std::make_unique<Debugger::DMADebug>(*this);
+				this->_registerViewer = std::make_unique<Debugger::RegisterViewer>(*this);
 		#endif
 	}
 }

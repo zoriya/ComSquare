@@ -16,7 +16,7 @@
 #include "Debugger/MemoryViewer.hpp"
 #include "Debugger/HeaderViewer.hpp"
 #include "Debugger/CGramDebug.hpp"
-#include "Debugger/CPU/DMA/DMADebug.hpp"
+#include "Debugger/RegisterViewer.hpp"
 
 #endif
 
@@ -32,8 +32,8 @@ namespace ComSquare
 		std::unique_ptr<Debugger::HeaderViewer> _headerViewer;
 		//! @brief The window that allow the user to view the CGRAM.
 		std::unique_ptr<Debugger::CGramDebug> _cgramViewer;
-		//! @brief The window that allow the user to view the DMA's properties.
-		std::unique_ptr<Debugger::DMADebug> _dmaViewer;
+		//! @brief The window that allow the user to view registers.
+		std::unique_ptr<Debugger::RegisterViewer> _registerViewer;
 #endif
 		//! @brief The memory bus that map addresses to components.
 		std::shared_ptr<Memory::MemoryBus> _bus;
@@ -80,10 +80,10 @@ namespace ComSquare
 		void disableCgramDebugging();
 		//! @brief Enable the Cgram's debugging window.
 		void enableCgramDebugging();
-		//! @brief Disable the DMA's debugging window.
-		void disableDMADebugging();
-		//! @brief Enable the DMA's debugging window.
-		void enableDMADebugging();
+		//! @brief Disable the Register's debugging window.
+		void disableRegisterDebugging();
+		//! @brief Enable the Register's debugging window.
+		void enableRegisterDebugging();
 
 		//! @brief Create all the components using a common memory bus for all of them.
 		SNES(const std::string &ramPath, Renderer::IRenderer &renderer);

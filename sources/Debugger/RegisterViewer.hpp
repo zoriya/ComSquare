@@ -2,12 +2,12 @@
 // Created by anonymus-raccoon on 5/28/20.
 //
 
-#ifndef COMSQUARE_DMADEBUG_HPP
-#define COMSQUARE_DMADEBUG_HPP
+#ifndef COMSQUARE_REGISTERVIEWER_HPP
+#define COMSQUARE_REGISTERVIEWER_HPP
 
 #include <QtCore/QObject>
-#include "../../ClosableWindow.hpp"
-#include "../../../../ui/ui_dmaView.h"
+#include "ClosableWindow.hpp"
+#include "../../ui/ui_registersView.h"
 
 namespace ComSquare
 {
@@ -15,12 +15,12 @@ namespace ComSquare
 
 	namespace Debugger
 	{
-		class DMADebug : public QObject {
+		class RegisterViewer : public QObject {
 		private:
 			//! @brief The QT window for this debugger.
-			ClosableWindow <DMADebug> *_window;
+			ClosableWindow<RegisterViewer> *_window;
 			//! @brief A widget that contain the whole UI.
-			Ui::DMAView _ui;
+			Ui::RegistersView _ui;
 
 			//! @brief The snes instance to read/write to DMA channels.
 			SNES &_snes;
@@ -28,11 +28,11 @@ namespace ComSquare
 			//! @brief Called when the window is closed. Turn off the debugger.
 			void disableDebugger();
 
-			explicit DMADebug(SNES &snes);
-			DMADebug(
-			const DMADebug &) = delete;
-			DMADebug &operator=(const DMADebug &) = delete;
-			~DMADebug() =default;
+			explicit RegisterViewer(SNES &snes);
+			RegisterViewer(
+			const RegisterViewer &) = delete;
+			RegisterViewer &operator=(const RegisterViewer &) = delete;
+			~RegisterViewer() =default;
 
 			//! @brief Focus the debugger's window.
 			void focus();
@@ -40,4 +40,4 @@ namespace ComSquare
 	};
 }
 
-#endif //COMSQUARE_DMADEBUG_HPP
+#endif //COMSQUARE_REGISTERVIEWER_HPP
