@@ -153,4 +153,21 @@ namespace ComSquare
 				this->_cgramViewer = nullptr;
 		#endif
 	}
+
+	void SNES::disableDMADebugging()
+	{
+		#ifdef DEBUGGER_ENABLED
+			this->_dmaViewer = nullptr;
+		#endif
+	}
+
+	void SNES::enableDMADebugging()
+	{
+		#ifdef DEBUGGER_ENABLED
+			if (this->_dmaViewer)
+				this->_dmaViewer->focus();
+			else
+				this->_dmaViewer = std::make_unique<Debugger::DMADebug>(*this);
+		#endif
+	}
 }

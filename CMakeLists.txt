@@ -99,7 +99,11 @@ add_executable(unit_tests
         tests/testRectangleMemory.cpp
         tests/CPU/Math/testCMP.cpp
         sources/PPU/Backgrounds.cpp
-        sources/PPU/Background.cpp sources/PPU/Background.hpp sources/CPU/DMA/DMA.cpp sources/CPU/DMA/DMA.hpp)
+        sources/PPU/Background.cpp
+        sources/PPU/Background.hpp
+        sources/CPU/DMA/DMA.cpp
+        sources/CPU/DMA/DMA.hpp
+)
 
 # include criterion & coverage
 target_link_libraries(unit_tests criterion -lgcov)
@@ -169,7 +173,7 @@ add_executable(ComSquare
         sources/Renderer/QtRenderer/QtSFML.hpp
         sources/Renderer/QtRenderer/QtWidgetSFML.cpp
         sources/Renderer/QtRenderer/QtWidgetSFML.hpp
-        ui/cpu.ui
+        ui/cpuView.ui
         ui/ramView.ui
         ui/cartridgeView.ui
         ui/apuView.ui
@@ -215,7 +219,14 @@ add_executable(ComSquare
         sources/Debugger/CGramDebug.hpp
         sources/Models/Vector2.hpp
         sources/PPU/Backgrounds.cpp
-        sources/PPU/Background.cpp sources/PPU/Background.hpp sources/CPU/DMA/DMA.cpp sources/CPU/DMA/DMA.hpp)
+        sources/PPU/Background.cpp
+        sources/PPU/Background.hpp
+        sources/CPU/DMA/DMA.cpp
+        sources/CPU/DMA/DMA.hpp
+        sources/Debugger/CPU/DMA/DMADebug.cpp
+        sources/Debugger/CPU/DMA/DMADebug.hpp
+        ui/dmaView.ui
+)
 
 target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)
 

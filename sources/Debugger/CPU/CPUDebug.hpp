@@ -9,7 +9,7 @@
 #include "../../CPU/CPU.hpp"
 #include "../../Renderer/SFRenderer.hpp"
 #include "../../SNES.hpp"
-#include "../../../ui/ui_cpu.h"
+#include "../../../ui/ui_cpuView.h"
 #include "../ClosableWindow.hpp"
 
 namespace ComSquare::Debugger

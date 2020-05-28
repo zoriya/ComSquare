@@ -41,31 +41,43 @@ namespace ComSquare::Renderer
 		QMainWindow::connect(reset, &QAction::triggered, this->_sfWidget.get(), &QtFullSFML::reset);
 		game->addAction(reset);
 
+
+
 		QMenu *debugger = this->_window.menuBar()->addMenu("&Debugger");
 		QAction *cpuDebugger = new QAction("CPU's Debugger", &this->_window);
 		cpuDebugger->setShortcut(Qt::Key_F1);
 		QMainWindow::connect(cpuDebugger, &QAction::triggered, this->_sfWidget.get(), &QtFullSFML::enableDebugCPU);
 		debugger->addAction(cpuDebugger);
+
 		QAction *ramViewer = new QAction("Memory viewer", &this->_window);
 		ramViewer->setShortcut(Qt::Key_F2);
 		QMainWindow::connect(ramViewer, &QAction::triggered, this->_sfWidget.get(), &QtFullSFML::enableRamViewer);
 		debugger->addAction(ramViewer);
+
 		QAction *headerViewer = new QAction("Header viewer", &this->_window);
 		headerViewer->setShortcut(Qt::Key_F3);
 		QMainWindow::connect(headerViewer, &QAction::triggered, this->_sfWidget.get(), &QtFullSFML::enableHeaderViewer);
 		debugger->addAction(headerViewer);
+
 		QAction *apuDebugger = new QAction("APU's Debugger", &this->_window);
 		apuDebugger->setShortcut(Qt::Key_F4);
 		QMainWindow::connect(apuDebugger, &QAction::triggered, this->_sfWidget.get(), &QtFullSFML::enableDebugAPU);
 		debugger->addAction(apuDebugger);
+
 		QAction *busDebugger = new QAction("Memory bus Viewer", &this->_window);
 		busDebugger->setShortcut(Qt::Key_F5);
 		QMainWindow::connect(busDebugger, &QAction::triggered, this->_sfWidget.get(), &QtFullSFML::enableDebugBus);
 		debugger->addAction(busDebugger);
+
 		QAction *cgramDebugger = new QAction("Palette Viewer", &this->_window);
 		cgramDebugger->setShortcut(Qt::Key_F6);
 		QMainWindow::connect(cgramDebugger, &QAction::triggered, this->_sfWidget.get(), &QtFullSFML::enableCgramViewer);
 		debugger->addAction(cgramDebugger);
+
+		QAction *dmaDebugger = new QAction("DMA Viewer", &this->_window);
+		dmaDebugger->setShortcut(Qt::Key_F7);
+		QMainWindow::connect(dmaDebugger, &QAction::triggered, this->_sfWidget.get(), &QtFullSFML::enableDMAViewer);
+		debugger->addAction(dmaDebugger);
 
 		this->_window.show();
 	}
@@ -133,5 +145,10 @@ namespace ComSquare::Renderer
 	void QtFullSFML::enableCgramViewer()
 	{
 		this->_snes.enableCgramDebugging();
+	}
+
+	void QtFullSFML::enableDMAViewer()
+	{
+		this->_snes.enableDMADebugging();
 	}
 }
