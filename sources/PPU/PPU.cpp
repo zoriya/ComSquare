@@ -38,7 +38,7 @@ namespace ComSquare::PPU
 		//colors for the cgram
 		this->cgram->write_internal(2, 0xE0);
 		this->cgram->write_internal(3, 0x7F);
-		this->cgram->write_internal(4, 0x1F);
+		this->cgram->write_internal(4, 0x10); // 0x1F
 		this->cgram->write_internal(6, 0xFF);
 		this->cgram->write_internal(7, 0x03);
 		this->cgram->write_internal(66, 0xE0);
@@ -127,7 +127,6 @@ namespace ComSquare::PPU
 
 	uint8_t PPU::read(uint24_t addr)
 	{
-		return 0;
 		switch (addr) {
 		case ppuRegisters::mpyl:
 			return  this->_registers._mpy.mpyl;
@@ -156,7 +155,6 @@ namespace ComSquare::PPU
 
 	void PPU::write(uint24_t addr, uint8_t data)
 	{
-		return;
 		switch (addr) {
 		case ppuRegisters::inidisp:
 			this->_registers._inidisp.raw = data;
@@ -347,11 +345,11 @@ namespace ComSquare::PPU
 	{
 		(void)cycles;
 
-		//this->renderMainAndSubScreen();
-		//add_buffer(this->_screen, this->_subScreen);
-		//add_buffer(this->_screen, this->_mainScreen);
-		this->_backgrounds[0].renderBackground();
-		add_buffer(this->_screen, this->_backgrounds[0].buffer);
+		this->renderMainAndSubScreen();
+		add_buffer(this->_screen, this->_subScreen);
+		add_buffer(this->_screen, this->_mainScreen);
+		//this->_backgrounds[0].renderBackground();
+		//add_buffer(this->_screen, this->_backgrounds[0].buffer);
 		for (unsigned long i = 0; i < this->_screen.size(); i++) {
 			for (unsigned long j = 0; j < this->_screen[i].size(); j++) {
 				this->_renderer.putPixel(j, i, this->_screen[i][j]);

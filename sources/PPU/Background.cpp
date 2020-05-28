@@ -55,26 +55,32 @@ namespace ComSquare::PPU
 		uint32_t color = 0;
 
 		tileData.raw = data;
+		palette = getPalette(tileData.palette);
 		graphicAddress = this->_tileSetAddress + (tileData.posX * 16 * this->_bpp * 8) + (tileData.posY * this->_bpp * 8);
 		for (int i = 0; i < this->_characterSize.y; i++) {
 			for (int j = 0; j < this->_characterSize.x; j++) {
-				palette = getPalette(tileData.palette);
 				reference = getTilePixelReference(graphicAddress, index);
 				color = getRealColor(palette[reference]);
 				if (tileData.tilePriority == this->priority)
 					this->buffer[pos.x][pos.y] = color;
+				if (j == 7) {
+					index = -1;
+					// to go to the tile to the right
+					graphicAddress += 0x8 * this->_bpp;
+				}
 				if (index == 7 || this->_bpp == 8) {
-					index = 0;
+					index = -1;
 					graphicAddress += 2;
 				}
 				index++;
 				pos.x++;
 			}
+			graphicAddress -= (0x8 * this->_bpp);
 			index = 0;
 			pos.x -= this->_characterSize.x;
 			pos.y++;
 			if (i == 7)
-				graphicAddress += 0x100 - this->_characterSize.x * this->_bpp;
+				graphicAddress += 0x100 - 8 * this->_bpp;
 		}
 	}
 
@@ -105,7 +111,7 @@ namespace ComSquare::PPU
 			return highByte;
 		case 4:
 			secondHightByte =  this->_vram->read_internal((addr + 32) % VRAMSIZE);
-			secondLowByte = this->_vram->read_internal((addr + 33) %VRAMSIZE);
+			secondLowByte = this->_vram->read_internal((addr + 33) % VRAMSIZE);
 			result = ((secondHightByte & (1U << (7U - nb))) | ((secondLowByte & (1U << (7U - nb))) << 1U)) >> (7U - nb - 2);
 		case 2:
 			result += ((highByte & (1U << (7U - nb))) | ((lowByte & (1U << (7U - nb))) << 1U)) >> (7U - nb);
@@ -144,6 +150,4 @@ namespace ComSquare::PPU
 	{
 		this->_characterSize = size;
 	}
-
-
 }
