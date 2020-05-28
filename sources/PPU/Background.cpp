@@ -61,7 +61,7 @@ namespace ComSquare::PPU
 			for (int j = 0; j < this->_characterSize.x; j++) {
 				reference = getTilePixelReference(graphicAddress, index);
 				color = getRealColor(palette[reference]);
-				if (tileData.tilePriority == this->priority)
+				if (tileData.tilePriority == this->priority && reference != 0) // reference 0 is considered as transparency
 					this->buffer[pos.x][pos.y] = color;
 				if (j == 7) {
 					index = -1;

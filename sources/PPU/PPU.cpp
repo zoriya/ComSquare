@@ -38,7 +38,7 @@ namespace ComSquare::PPU
 		//colors for the cgram
 		this->cgram->write_internal(2, 0xE0);
 		this->cgram->write_internal(3, 0x7F);
-		this->cgram->write_internal(4, 0x10); // 0x1F
+		this->cgram->write_internal(4, 0x0F); // 0x1F
 		this->cgram->write_internal(6, 0xFF);
 		this->cgram->write_internal(7, 0x03);
 		this->cgram->write_internal(66, 0xE0);
@@ -104,11 +104,17 @@ namespace ComSquare::PPU
 		this->vram->write_internal(0x80C6, 06);
 		this->vram->write_internal(0x80C8, 04);
 
+		this->vram->write_internal(0xC000, 0x0C);
+
 		//registers
 
 		this->_registers._bgmode.bgMode = 0;
 		this->_registers._bgmode.characterSizeBg1 = true;
 		this->_registers._bgmode.characterSizeBg2 = true;
+		this->_backgrounds[0].setCharacterSize(this->getCharacterSize(1));
+		this->_backgrounds[1].setCharacterSize(this->getCharacterSize(1));
+		this->_backgrounds[2].setCharacterSize(this->getCharacterSize(2));
+		this->_backgrounds[3].setCharacterSize(this->getCharacterSize(2));
 
 		this->_registers._bgsc[0].tilemapAddress = 0x4000U >> 10U;
 		this->_registers._bgsc[1].tilemapAddress = 0x6000U >> 10U;
@@ -119,10 +125,6 @@ namespace ComSquare::PPU
 
 		this->_registers._t[0].enableWindowDisplayBg1 = true;
 		this->_registers._t[0].enableWindowDisplayBg2 = true;
-		this->_backgrounds[0].setCharacterSize(this->getCharacterSize(1));
-		this->_backgrounds[1].setCharacterSize(this->getCharacterSize(1));
-		this->_backgrounds[2].setCharacterSize(this->getCharacterSize(2));
-		this->_backgrounds[3].setCharacterSize(this->getCharacterSize(2));
 	}
 
 	uint8_t PPU::read(uint24_t addr)
@@ -346,10 +348,10 @@ namespace ComSquare::PPU
 		(void)cycles;
 
 		this->renderMainAndSubScreen();
-		add_buffer(this->_screen, this->_subScreen);
-		add_buffer(this->_screen, this->_mainScreen);
-		//this->_backgrounds[0].renderBackground();
-		//add_buffer(this->_screen, this->_backgrounds[0].buffer);
+		this->add_buffer(this->_screen, this->_subScreen);
+		this->add_buffer(this->_screen, this->_mainScreen);
+		//this->_backgrounds[2].renderBackground();
+		//add_buffer(this->_screen, this->_backgrounds[2].buffer);
 		for (unsigned long i = 0; i < this->_screen.size(); i++) {
 			for (unsigned long j = 0; j < this->_screen[i].size(); j++) {
 				this->_renderer.putPixel(j, i, this->_screen[i][j]);
@@ -553,7 +555,7 @@ namespace ComSquare::PPU
 		Vector2<int> characterSize(8, 8);
 
 		//this wont work for modes 5 and 6 and will be reworked
-		if (this->_registers._bgmode.raw & (1U << (4 + bgNumber)))
+		if (this->_registers._bgmode.raw & (1U << (3 + bgNumber)))
 			characterSize = {16, 16};
 		return characterSize;
 	}
@@ -683,7 +685,7 @@ namespace ComSquare::PPU
 	{
 		for (unsigned long i = 0; i < bufferSrc.size(); i++) {
 			for (unsigned long j = 0; j < bufferSrc[i].size(); j++) {
-				if (bufferSrc[i][j])
+				if (bufferSrc[i][j] > 0xFF) // 0xFF correspond to a black pixel with full brightness
 					bufferDest[i][j] = bufferSrc[i][j];
 			}
 		}
