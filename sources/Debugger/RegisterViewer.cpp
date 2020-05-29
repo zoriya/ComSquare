@@ -26,9 +26,30 @@ namespace ComSquare::Debugger
 	{
 		for (int i = 0; i < 8; i++) {
 			RegistersViewerModel *model = new RegistersViewerModel(this->_snes);
-			model->addRegister(Register(0x420B, "-0", "Enabled", [i](SNES &snes) {
+			model->addRegister(Register(0x420B, ":0", "Enabled", [i](SNES &snes) {
 				return snes.cpu->_dmaChannels[i].enabled;
 			}, nullptr, Boolean));
+			model->addRegister(Register(0x4302, "-4", "A address", [i](SNES &snes) {
+				return snes.cpu->_dmaChannels[i]._aAddress.raw;
+			}, nullptr, TwentyFourBits));
+			model->addRegister(Register(0x4301, "", "B address", [i](SNES &snes) {
+				return 0x2100 | snes.cpu->_dmaChannels[i]._port;
+			}, nullptr, SixteenBits));
+			model->addRegister(Register(0x4305, "-6", "Count", [i](SNES &snes) {
+				return snes.cpu->_dmaChannels[i]._count.raw;
+			}, nullptr, SixteenBits));
+			model->addRegister(Register(0x4300, ":7", "B To A", [i](SNES &snes) {
+				return snes.cpu->_dmaChannels[i]._controlRegister.direction;
+			}, nullptr, Boolean));
+			model->addRegister(Register(0x4300, ":3", "Fixed", [i](SNES &snes) {
+				return snes.cpu->_dmaChannels[i]._controlRegister.fixed;
+			}, nullptr, Boolean));
+			model->addRegister(Register(0x4300, ":4", "Increment", [i](SNES &snes) {
+				return snes.cpu->_dmaChannels[i]._controlRegister.increment;
+			}, nullptr, Boolean));
+			model->addRegister(Register(0x4300, ":0-2", "Mode", [i](SNES &snes) {
+				return snes.cpu->_dmaChannels[i]._controlRegister.increment;
+			}, nullptr, EightBits));
 			this->_ui.dmaChannel1->setModel(model);
 			this->_models.push_back(model);
 		}
