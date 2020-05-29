@@ -9,6 +9,7 @@
 #include <memory>
 #include "../../Models/Int24.hpp"
 #include "../../Memory/MemoryBus.hpp"
+#include "../../Debugger/RegisterViewer.hpp"
 
 namespace ComSquare::CPU
 {
@@ -98,6 +99,10 @@ namespace ComSquare::CPU
 		DMA(const DMA &) = default;
 		DMA &operator=(const DMA &) = default;
 		~DMA() = default;
+
+	#ifdef DEBUGGER_ENABLED
+		friend Debugger::RegisterViewer;
+	#endif
 	};
 }
 

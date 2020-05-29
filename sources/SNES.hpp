@@ -35,9 +35,10 @@ namespace ComSquare
 		//! @brief The window that allow the user to view registers.
 		std::unique_ptr<Debugger::RegisterViewer> _registerViewer;
 #endif
-		//! @brief The memory bus that map addresses to components.
-		std::shared_ptr<Memory::MemoryBus> _bus;
 	public:
+		//! @brief The memory bus that map addresses to components.
+		std::shared_ptr<Memory::MemoryBus> bus;
+
 		//! @brief Cartridge containing instructions (ROM).
 		std::shared_ptr<Cartridge::Cartridge> cartridge;
 		//! @brief Work Ram shared by all the components.

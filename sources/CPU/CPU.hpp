@@ -12,6 +12,7 @@
 #include "../Memory/AMemory.hpp"
 #include "Instruction.hpp"
 #include "DMA/DMA.hpp"
+#include "../Debugger/RegisterViewer.hpp"
 
 namespace ComSquare::CPU
 {
@@ -199,6 +200,7 @@ namespace ComSquare::CPU
 		//! @brief The cartridge header (stored for interrupt vectors..
 		Cartridge::Header &_cartridgeHeader;
 
+		//! @brief DMA channels witch are mapped to the bus.
 		std::array<DMA, 8> _dmaChannels;
 
 		//! @brief True if an addressing mode with an iterator (x, y) has crossed the page. (Used because crossing the page boundary take one more cycle to run certain instructions).
@@ -768,6 +770,10 @@ namespace ComSquare::CPU
 
 		//! @brief Change the memory bus used by the CPU.
 		virtual void setMemoryBus(std::shared_ptr<Memory::MemoryBus> bus);
+
+	#ifdef DEBUGGER_ENABLED
+		friend Debugger::RegisterViewer;
+	#endif
 	};
 }
 

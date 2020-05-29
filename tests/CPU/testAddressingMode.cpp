@@ -13,7 +13,7 @@ using namespace ComSquare;
 Test(AddrModeInit, LegitBus)
 {
 	Init()
-	cr_assert_eq(snes._bus.get(), snes.cpu->_bus.get(), "Warning, the CPU's bus is not the same the SNES's bus. Next tests of the CPU may fail.");
+	cr_assert_eq(snes.bus.get(), snes.cpu->_bus.get(), "Warning, the CPU's bus is not the same the SNES's bus. Next tests of the CPU may fail.");
 }
 
 Test(AddrMode, Immediate)
