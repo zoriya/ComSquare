@@ -526,33 +526,33 @@ namespace ComSquare::PPU
 	{
 		switch (this->_registers._bgmode.bgMode) {
 		case 0:
-			return (2);
+			return 2;
 		case 1:
 			if (bgNumber < 3)
-				return (4);
-			return (2);
+				return 4;
+			return 2;
 		case 2:
-			return (4);
+			return 4;
 		case 3:
 			if (bgNumber == 1)
-				return (8);
-			return (4);
+				return 8;
+			return 4;
 		case 4:
 			if (bgNumber == 1)
-				return (8);
-			return (2);
+				return 8;
+			return 2;
 		case 5:
 			if (bgNumber == 1)
-				return (4);
-			return (2);
+				return 4;
+			return 2;
 		case 6:
-			return (4);
+			return 4;
 		case 7:
 			if (bgNumber == 1)
-				return (8);
-			return (7);
+				return 8;
+			return 7;
 		default:
-			return (-1);
+			return -1;
 		}
 	}
 
