@@ -25,7 +25,7 @@
 #include <QtWidgets/QTableView>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
-
+//efef
 QT_BEGIN_NAMESPACE
 
 class Ui_CPUView
