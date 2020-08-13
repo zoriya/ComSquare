@@ -595,8 +595,10 @@ namespace ComSquare::PPU
 		for (auto & _background : this->_backgrounds)
 			_background.renderBackground();
 
+		// TODO make a function getDefaultBgColor
 		colorPalette = this->cgram->read_internal(0);
 		colorPalette += this->cgram->read_internal(1) << 8U;
+
 		for (unsigned long i = 0; i < this->_subScreen.size(); i++)
 			for (unsigned long j = 0; j < this->_subScreen[i].size(); j++)
 				this->_subScreen[i][j] = getRealColor(colorPalette);
@@ -679,6 +681,7 @@ namespace ComSquare::PPU
 			//sprites priority 2
 			this->addToMainSubScreen(this->_backgrounds[bgName::bg1Priority]);
 			//sprites priority 3
+            break;
 		case 7:
 			// Not implemented
 		default:

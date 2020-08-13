@@ -56,6 +56,7 @@ namespace ComSquare::PPU
 
 		tileData.raw = data;
 		palette = getPalette(tileData.palette);
+		// TODO explain X and Y and rethink the formula
 		graphicAddress = this->_tileSetAddress + (tileData.posX * 16 * this->_bpp * 8) + (tileData.posY * this->_bpp * 8);
 		for (int i = 0; i < this->_characterSize.y; i++) {
 			for (int j = 0; j < this->_characterSize.x; j++) {
@@ -127,7 +128,7 @@ namespace ComSquare::PPU
 		Vector2<int> pos(0,0);
 		uint16_t vramAddress = baseAddress;
 
-		while (vramAddress < 0x800 + baseAddress) {
+		while (vramAddress < baseAddress + 0x800) {
 			tileMapValue = this->_vram->read_internal(vramAddress);
 			tileMapValue += this->_vram->read_internal(vramAddress + 1) << 8U;
 			drawBgTile(tileMapValue, {(pos.x * this->_characterSize.x) + offset.x, (pos.y * this->_characterSize.y) + offset.y});
