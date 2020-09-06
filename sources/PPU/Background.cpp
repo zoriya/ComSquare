@@ -29,18 +29,18 @@ namespace ComSquare::PPU
 	{
 		uint16_t vramAddress = this->_TileMapStartAddress;
 		Vector2<int> offset(0, 0);
-		this->backgroundSize.x = this->_tileMaps.x * this->_characterSize.x * 32;
-		this->backgroundSize.y = this->_tileMaps.y * this->_characterSize.y * 32;
+		this->backgroundSize.x = this->_tileMaps.x * this->_characterSize.x * NB_CHARACTER_WIDTH;
+		this->backgroundSize.y = this->_tileMaps.y * this->_characterSize.y * NB_CHARACTER_HEIGHT;
 
 		for (int i = 0; i < 4; i++) {
 			if (!(i == 1 && this->_tileMaps.x == 1) && !(i > 1 && this->_tileMaps.y == 1)) {
 				drawBasicTileMap(vramAddress, offset);
 			}
-			vramAddress+= 0x800;
-			offset.x += 32 * this->_characterSize.x;
+			vramAddress += 0x800;
+			offset.x += NB_CHARACTER_WIDTH * this->_characterSize.x;
 			if (i == 2) {
 				offset.x = 0;
-				offset.y += 32 * this->_characterSize.y;
+				offset.y += NB_CHARACTER_HEIGHT * this->_characterSize.y;
 			}
 		}
 	}
@@ -57,7 +57,9 @@ namespace ComSquare::PPU
 		tileData.raw = data;
 		palette = getPalette(tileData.palette);
 		// TODO explain X and Y and rethink the formula
-		graphicAddress = this->_tileSetAddress + (tileData.posX * 16 * this->_bpp * 8) + (tileData.posY * this->_bpp * 8);
+		// X horizontal
+		// Y vertical
+		graphicAddress = this->_tileSetAddress + (tileData.posY * 16 * this->_bpp * 8) + (tileData.posX * this->_bpp * 8);
 		for (int i = 0; i < this->_characterSize.y; i++) {
 			for (int j = 0; j < this->_characterSize.x; j++) {
 				reference = getTilePixelReference(graphicAddress, index);
@@ -129,6 +131,7 @@ namespace ComSquare::PPU
 		uint16_t vramAddress = baseAddress;
 
 		while (vramAddress < baseAddress + 0x800) {
+			// TODO function to read 2 bytes (LSB order or bits reversed)
 			tileMapValue = this->_vram->read_internal(vramAddress);
 			tileMapValue += this->_vram->read_internal(vramAddress + 1) << 8U;
 			drawBgTile(tileMapValue, {(pos.x * this->_characterSize.x) + offset.x, (pos.y * this->_characterSize.y) + offset.y});

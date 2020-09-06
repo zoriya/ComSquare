@@ -19,6 +19,8 @@ namespace ComSquare::PPU
 {
 	class PPU;
 	class Background {
+	#define NB_CHARACTER_WIDTH 32
+	#define NB_CHARACTER_HEIGHT 32
 	private:
 		Vector2<int> _tileMaps;
 		Vector2<int> _characterSize;
@@ -39,6 +41,7 @@ namespace ComSquare::PPU
 		//! @brief draw a tilemap 32x32 starting at baseAddress
 		void drawBasicTileMap(uint16_t baseAddress, Vector2<int> offset);
 	public:
+		// TODO getter setter for priority and bgNumber
 		bool priority;
 		int bgNumber;
 		Vector2<int> backgroundSize;

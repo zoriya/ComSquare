@@ -38,7 +38,7 @@ namespace ComSquare::PPU
 		//colors for the cgram
 		this->cgram->write_internal(2, 0xE0);
 		this->cgram->write_internal(3, 0x7F);
-		this->cgram->write_internal(4, 0x0F); // 0x1F
+		this->cgram->write_internal(4, 0x1F); // 0x1F
 		this->cgram->write_internal(6, 0xFF);
 		this->cgram->write_internal(7, 0x03);
 		this->cgram->write_internal(66, 0xE0);
@@ -129,6 +129,7 @@ namespace ComSquare::PPU
 
 	uint8_t PPU::read(uint24_t addr)
 	{
+		return 0;
 		switch (addr) {
 		case ppuRegisters::mpyl:
 			return  this->_registers._mpy.mpyl;
@@ -157,6 +158,7 @@ namespace ComSquare::PPU
 
 	void PPU::write(uint24_t addr, uint8_t data)
 	{
+		return;
 		switch (addr) {
 		case ppuRegisters::inidisp:
 			this->_registers._inidisp.raw = data;

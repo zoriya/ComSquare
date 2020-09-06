@@ -11,8 +11,8 @@ namespace ComSquare::PPU
 {
 	union TileMapData {
 		struct {
-			uint8_t posY: 4;
-			uint8_t posX: 6;
+			uint8_t posX: 4;
+			uint8_t posY: 6;
 			uint8_t palette: 3;
 			bool tilePriority: 1;
 			bool horizontalFlip: 1;
