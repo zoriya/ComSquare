@@ -129,7 +129,7 @@ namespace ComSquare::PPU
 
 	uint8_t PPU::read(uint24_t addr)
 	{
-		return 0;
+	//	return 0;
 		switch (addr) {
 		case ppuRegisters::mpyl:
 			return  this->_registers._mpy.mpyl;
@@ -158,7 +158,7 @@ namespace ComSquare::PPU
 
 	void PPU::write(uint24_t addr, uint8_t data)
 	{
-		return;
+		//return;
 		switch (addr) {
 		case ppuRegisters::inidisp:
 			this->_registers._inidisp.raw = data;

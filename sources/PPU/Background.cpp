@@ -100,13 +100,15 @@ namespace ComSquare::PPU
 		return palette;
 	}
 
-	uint8_t Background::getTilePixelReference(uint16_t addr, int nb)
+	uint8_t Background::getTilePixelReference(uint16_t addr, int index)
 	{
+		//line by line for each pixel of the line
 		uint8_t highByte = this->_vram->read_internal(addr % VRAMSIZE);
 		uint8_t lowByte = this->_vram->read_internal((addr + 1) % VRAMSIZE);
 		uint8_t secondHightByte;
 		uint8_t secondLowByte;
 		uint8_t result = 0;
+		uint8_t shift = (TILE_PIXEL_WIDTH - 1 - index);
 		// C000
 
 		switch (this->_bpp) {
@@ -115,9 +117,9 @@ namespace ComSquare::PPU
 		case 4:
 			secondHightByte =  this->_vram->read_internal((addr + 32) % VRAMSIZE);
 			secondLowByte = this->_vram->read_internal((addr + 33) % VRAMSIZE);
-			result = ((secondHightByte & (1U << (7U - nb))) | ((secondLowByte & (1U << (7U - nb))) << 1U)) >> (7U - nb - 2);
+			result = ((secondHightByte & (1U << (7U - index))) | ((secondLowByte & (1U << (7U - index))) << 1U)) >> (7U - index - 2);
 		case 2:
-			result += ((highByte & (1U << (7U - nb))) | ((lowByte & (1U << (7U - nb))) << 1U)) >> (7U - nb);
+			result += ((highByte & (1U << (7U - index))) | ((lowByte & (1U << (7U - index))) << 1U)) >> (7U - index);
 		default:
 			break;
 		}

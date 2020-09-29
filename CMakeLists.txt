@@ -100,7 +100,9 @@ add_executable(unit_tests
         tests/CPU/Math/testCMP.cpp
         sources/PPU/Background.cpp
         sources/PPU/Background.hpp
-        sources/PPU/PPUUtils.cpp)
+        sources/PPU/PPUUtils.cpp
+        tests/PPU/testBackground.cpp
+        )
 
 # include criterion & coverage
 target_link_libraries(unit_tests criterion -lgcov)
@@ -217,7 +219,8 @@ add_executable(ComSquare
         sources/Models/Vector2.hpp
         sources/PPU/Background.cpp
         sources/PPU/Background.hpp
-        sources/PPU/PPUUtils.cpp)
+        sources/PPU/PPUUtils.cpp
+        )
 
 target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)
 
