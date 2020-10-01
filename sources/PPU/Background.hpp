@@ -21,8 +21,8 @@ namespace ComSquare::PPU
 	class Background {
 	#define NB_CHARACTER_WIDTH 32
 	#define NB_CHARACTER_HEIGHT 32
-	#define TILE_PIXEL_WIDTH 8
-	#define TILE_PIXEL_HEIGHT 8
+	#define TILE_PIXEL_WIDTH 8U
+	#define TILE_PIXEL_HEIGHT 8U
 	private:
 		Vector2<int> _tileMaps;
 		Vector2<int> _characterSize;
@@ -41,7 +41,7 @@ namespace ComSquare::PPU
 		//! @brief Get the color reference of a index pixel tile
 		//! @param addr The address of the line of pixel
 		//TODO support addr as the address of the start of the tile and index goes from 0 to 63 regardless of the bpp
-		uint8_t getTilePixelReference(uint16_t addr, int index);
+		uint8_t getPixelReferenceFromTileAddress(uint16_t addr, uint8_t index);
 		//! @brief draw a tilemap 32x32 starting at baseAddress
 		void drawBasicTileMap(uint16_t baseAddress, Vector2<int> offset);
 	public:
