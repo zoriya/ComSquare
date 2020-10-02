@@ -62,10 +62,10 @@ namespace ComSquare::PPU
 		graphicAddress = this->_tileSetAddress + (tileData.posY * 16 * this->_bpp * 8) + (tileData.posX * this->_bpp * 8);
 		for (int i = 0; i < this->_characterSize.y; i++) {
 			for (int j = 0; j < this->_characterSize.x; j++) {
-				if (index == 14) {
+				/*if (index == 14) {
 					printf("cc");
-				}
-				reference = getPixelReferenceFromTileAddress(graphicAddress, index);
+				}*/
+				reference = getPixelReferenceFromTile(graphicAddress, index);
 				color = getRealColor(palette[reference]);
 				if (tileData.tilePriority == this->priority) // reference 0 is considered as transparency
 					this->buffer[pos.x][pos.y] = (reference) ? color : 0;
@@ -103,34 +103,40 @@ namespace ComSquare::PPU
 		return palette;
 	}
 
-	uint8_t Background::getPixelReferenceFromTileAddress(uint16_t addr, uint8_t index)
+	uint8_t Background::getPixelReferenceFromTile(uint16_t tileAddress, uint8_t pixelIndex)
+	{
+		this->getCorrespondingBasicTileRowAndPixelIndex(&tileAddress, &pixelIndex);
+		return this->getPixelReferenceFromTileRow(tileAddress, pixelIndex);
+	}
+
+	uint8_t Background::getPixelReferenceFromTileRow(uint16_t tileAddress, uint8_t pixelIndex)
 	{
 		//line by line for each pixel of the line
 		uint8_t highByte;
 		uint8_t lowByte;
-		uint8_t secondHightByte;
+		uint8_t secondHighByte;
 		uint8_t secondLowByte;
 		uint8_t result = 0;
 		uint8_t shift;
-		uint8_t rowNumber = index / TILE_PIXEL_WIDTH;
+		uint8_t rowNumber = pixelIndex / TILE_PIXEL_WIDTH;
 		// C000
 		//gérer le character size mauvais pour le retour de ligne
 
-		index -= rowNumber * TILE_PIXEL_WIDTH; //get the index relative to the row
-		addr += rowNumber * TILE_PIXEL_WIDTH * this->_bpp; // get row address
+		//pixelIndex -= rowNumber * TILE_PIXEL_WIDTH; //get the index relative to the row
+		//tileAddress += rowNumber * TILE_PIXEL_WIDTH * this->_bpp; // get row address
 
-		highByte = this->_vram->read_internal(addr % VRAMSIZE);
-		lowByte = this->_vram->read_internal((addr + 1) % VRAMSIZE);
+		highByte = this->_vram->read_internal(tileAddress % VRAMSIZE);
+		lowByte = this->_vram->read_internal((tileAddress + 1) % VRAMSIZE);
 
-		shift = (TILE_PIXEL_WIDTH - 1U - index);
+		shift = (TILE_PIXEL_WIDTH - 1U - pixelIndex);
 
 		switch (this->_bpp) {
 		case 8:
 			return highByte;
 		case 4:
-			secondHightByte =  this->_vram->read_internal((addr + 32) % VRAMSIZE);
-			secondLowByte = this->_vram->read_internal((addr + 33) % VRAMSIZE);
-			result = ((secondHightByte & (1U << shift)) | ((secondLowByte & (1U << shift)) << 1U)) >> (shift - 2U);
+			secondHighByte =  this->_vram->read_internal((tileAddress + 32) % VRAMSIZE);
+			secondLowByte = this->_vram->read_internal((tileAddress + 33) % VRAMSIZE);
+			result = ((secondHighByte & (1U << shift)) | ((secondLowByte & (1U << shift)) << 1U)) >> (shift - 2U);
 		case 2:
 			result += ((highByte & (1U << shift)) | ((lowByte & (1U << shift)) << 1U)) >> shift;
 		default:
@@ -168,5 +174,28 @@ namespace ComSquare::PPU
 	void Background::setCharacterSize(Vector2<int> size)
 	{
 		this->_characterSize = size;
+	}
+
+	void Background::getCorrespondingBasicTileRowAndPixelIndex(uint16_t *tileAddress, uint8_t *pixelIndex)
+	{
+		uint16_t tmpTileAddress = *tileAddress;
+		uint16_t tmpPixelIndex = *pixelIndex;
+
+		uint8_t row = tmpPixelIndex / this->_characterSize.x;
+		uint8_t column = tmpPixelIndex / this->_characterSize.y;
+
+		if (row >= TILE_PIXEL_HEIGHT) {
+			tmpTileAddress += 0x80 * this->_bpp;
+			row -= TILE_PIXEL_HEIGHT;
+		}
+		if (column >= TILE_PIXEL_WIDTH) {
+			tmpTileAddress += 0x8 * this->_bpp;
+			column -= TILE_PIXEL_WIDTH;
+		}
+		// might not work with 8 bpp must check
+		tmpTileAddress += this->_bpp * row;
+
+		*tileAddress = tmpTileAddress;
+		*pixelIndex = tmpPixelIndex;
 	}
 }

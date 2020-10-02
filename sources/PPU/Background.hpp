@@ -39,9 +39,11 @@ namespace ComSquare::PPU
 		//! @brief Get a palette from the number of the palette (0 - 7)
 		std::vector<uint16_t> getPalette(int nbPalette);
 		//! @brief Get the color reference of a index pixel tile
-		//! @param addr The address of the line of pixel
+		//! @param tileAddress The address of the line of pixel
 		//TODO support addr as the address of the start of the tile and index goes from 0 to 63 regardless of the bpp
-		uint8_t getPixelReferenceFromTileAddress(uint16_t addr, uint8_t index);
+		uint8_t getPixelReferenceFromTileRow(uint16_t tileAddress, uint8_t pixelIndex);
+		uint8_t getPixelReferenceFromTile(uint16_t tileAddress, uint8_t pixelIndex);
+		void getCorrespondingBasicTileRowAndPixelIndex(uint16_t *tileAddress, uint8_t *pixelIndex);
 		//! @brief draw a tilemap 32x32 starting at baseAddress
 		void drawBasicTileMap(uint16_t baseAddress, Vector2<int> offset);
 	public:
