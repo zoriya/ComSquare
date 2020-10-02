@@ -43,7 +43,7 @@ namespace ComSquare::PPU
 		//TODO support addr as the address of the start of the tile and index goes from 0 to 63 regardless of the bpp
 		uint8_t getPixelReferenceFromTileRow(uint16_t tileAddress, uint8_t pixelIndex);
 		uint8_t getPixelReferenceFromTile(uint16_t tileAddress, uint8_t pixelIndex);
-		void getCorrespondingBasicTileRowAndPixelIndex(uint16_t *tileAddress, uint8_t *pixelIndex);
+
 		//! @brief draw a tilemap 32x32 starting at baseAddress
 		void drawBasicTileMap(uint16_t baseAddress, Vector2<int> offset);
 	public:
