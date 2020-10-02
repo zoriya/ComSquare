@@ -55,7 +55,7 @@ namespace ComSquare::PPU
 		uint32_t color = 0;
 
 		tileData.raw = data;
-		palette = getPalette(tileData.palette);
+		palette = getPalettes(tileData.palette);
 		// X horizontal
 		// Y vertical
 		graphicAddress = this->_tileSetAddress + (tileData.posY * 16 * this->_bpp * 8) + (tileData.posX * this->_bpp * 8);
@@ -73,7 +73,7 @@ namespace ComSquare::PPU
 		}
 	}
 
-	std::vector<uint16_t> Background::getPalette(int nbPalette)
+	std::vector<uint16_t> Background::getPalettes(int nbPalette)
 	{
 		std::vector<uint16_t> palette(0xF);
 		uint16_t addr = nbPalette * 0x10;

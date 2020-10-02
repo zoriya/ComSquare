@@ -36,15 +36,23 @@ namespace ComSquare::PPU
 		std::shared_ptr<Ram::Ram> _cgram;
 		//! @brief Draw a tile on the screen at x y pos
 		void drawBgTile(uint16_t data, Vector2<int> pos);
-		//! @brief Get a palette from the number of the palette (0 - 7)
-		std::vector<uint16_t> getPalette(int nbPalette);
-		//! @brief Get the color reference of a index pixel tile
+		//! @brief Get a palette from the number of the palette
+		//! @param nbPalette The palette number (0 - 7)
+		//! @return The array of color of the palette
+		std::vector<uint16_t> getPalettes(int nbPalette);
+		//! @brief Get the color reference of a pixel from the address of the row
 		//! @param tileAddress The address of the line of pixel
-		//TODO support addr as the address of the start of the tile and index goes from 0 to 63 regardless of the bpp
+		//! @param pixelIndex The index of the pixel (0 - 7)
+		//! @return The color Reference
 		uint8_t getPixelReferenceFromTileRow(uint16_t tileAddress, uint8_t pixelIndex);
+		//! @brief Get the color pixel reference from the tile address
+		//! @param tileAddress The starting address of the tile
+		//! @param pixelIndex The index of the pixel (0 - 255)
+		//! @return The color reference
 		uint8_t getPixelReferenceFromTile(uint16_t tileAddress, uint8_t pixelIndex);
-
 		//! @brief draw a tilemap 32x32 starting at baseAddress
+		//! @param baseAddress The starting address of the tileMap
+		//! @param offset The rendering offeset in pixels
 		void drawBasicTileMap(uint16_t baseAddress, Vector2<int> offset);
 	public:
 		// TODO getter setter for priority and bgNumber
@@ -53,11 +61,13 @@ namespace ComSquare::PPU
 		Vector2<int> backgroundSize;
 		std::array<std::array<uint32_t, 1024>, 1024> buffer;
 		Background(ComSquare::PPU::PPU &_ppu, int backGroundNumber, bool hasPriority);
-		//! @brief Render a background on the screen
+		//! @brief Render a background on his internal buffer
 		void renderBackground(void);
 		//! @brief Set the tilemap start address
+		//! @param address TileMap start address
 		void setTileMapStartAddress(uint16_t address);
 		//! @brief Set the character Size
+		//! @param size The character size (8x8, 16x16, 16x8, 8x16)
 		void setCharacterSize(Vector2<int> size);
 	};
 }
