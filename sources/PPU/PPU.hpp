@@ -619,7 +619,7 @@ namespace ComSquare::PPU
 		//! @brief Give the address where the tilemap starts
 		uint16_t getTileMapStartAddress(int bgNumber);
 		//! @brief Give the address to find the correct tileset for a given x and y
-		uint16_t getTileSetAddress(int bgNumber);
+		uint16_t getTilesetAddress(int bgNumber);
 		//! @brief Give the number of tilemaps to be rendered
 		Vector2<int> getBackgroundSize(int bgNumber);
 		//! @brief Render the Main and sub screen correctly
@@ -635,4 +635,6 @@ namespace ComSquare::PPU
 
 //! @brief Transform SNES color code BGR to uint32_t RGB
 uint32_t getRealColor(uint16_t color);
+int *get_dump_vram();
+int *get_dump_cgram();
 #endif //COMSQUARE_PPU_HPP

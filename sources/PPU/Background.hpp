@@ -30,7 +30,7 @@ namespace ComSquare::PPU
 		bool _directColor;
 		bool _highRes;
 		uint16_t _TileMapStartAddress;
-		uint16_t _tileSetAddress;
+		uint16_t _tilesetAddress;
 
 		std::shared_ptr<Ram::Ram> _vram;
 		std::shared_ptr<Ram::Ram> _cgram;
@@ -69,6 +69,8 @@ namespace ComSquare::PPU
 		//! @brief Set the character Size
 		//! @param size The character size (8x8, 16x16, 16x8, 8x16)
 		void setCharacterSize(Vector2<int> size);
+		//! @brief Set the tileset address of the background
+		void setTilesetAddress(uint16_t address);
 	};
 }
 

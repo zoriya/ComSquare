@@ -18,7 +18,7 @@ namespace ComSquare::PPU
 		_bpp = _ppu.getBPP(backGroundNumber);
 		_characterSize = _ppu.getCharacterSize(backGroundNumber);
 		_TileMapStartAddress = _ppu.getTileMapStartAddress(backGroundNumber);
-		_tileSetAddress = _ppu.getTileSetAddress(backGroundNumber);
+		_tilesetAddress = _ppu.getTilesetAddress(backGroundNumber);
 		_tileMaps = _ppu.getBackgroundSize(backGroundNumber);
 		_directColor = false;
 		_highRes = false;
@@ -54,11 +54,12 @@ namespace ComSquare::PPU
 		uint8_t reference = 0;
 		uint32_t color = 0;
 
+		//union isn't working as intended
 		tileData.raw = data;
 		palette = getPalettes(tileData.palette);
 		// X horizontal
 		// Y vertical
-		graphicAddress = this->_tileSetAddress + (tileData.posY * 16 * this->_bpp * 8) + (tileData.posX * this->_bpp * 8);
+		graphicAddress = this->_tilesetAddress + (tileData.posY * 16 * this->_bpp * 8) + (tileData.posX * this->_bpp * 8);
 		for (int i = 0; i < this->_characterSize.y; i++) {
 			for (int j = 0; j < this->_characterSize.x; j++) {
 				reference = getPixelReferenceFromTile(graphicAddress, index);
@@ -153,6 +154,11 @@ namespace ComSquare::PPU
 	void Background::setTileMapStartAddress(uint16_t address)
 	{
 		this->_TileMapStartAddress = address;
+	}
+
+	void Background::setTilesetAddress(uint16_t address)
+	{
+		this->_tilesetAddress = address;
 	}
 
 	void Background::setCharacterSize(Vector2<int> size)

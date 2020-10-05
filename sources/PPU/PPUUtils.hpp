@@ -20,5 +20,6 @@ namespace ComSquare::PPU
 		};
 		uint16_t raw;
 	};
+
 }
 #endif //COMSQUARE_PPU_UTILS_HPP
