@@ -54,9 +54,8 @@ namespace ComSquare::PPU
 		uint8_t reference = 0;
 		uint32_t color = 0;
 
-		//union isn't working as intended
 		tileData.raw = data;
-		palette = getPalettes(tileData.palette);
+		palette = getPalette(tileData.palette);
 		// X horizontal
 		// Y vertical
 		graphicAddress = this->_tilesetAddress + (tileData.posY * 16 * this->_bpp * 8) + (tileData.posX * this->_bpp * 8);
@@ -74,12 +73,12 @@ namespace ComSquare::PPU
 		}
 	}
 
-	std::vector<uint16_t> Background::getPalettes(int nbPalette)
+	std::vector<uint16_t> Background::getPalette(int nbPalette)
 	{
-		std::vector<uint16_t> palette(0xF);
-		uint16_t addr = nbPalette * 0x10;
+		std::vector<uint16_t> palette(0x10);
+		uint16_t addr = nbPalette * 0x20;
 
-		for (int i = 0; i < 0xF; i++) {
+		for (int i = 0; i < 0x10; i++) {
 			palette[i] = this->_cgram->read_internal(addr);
 			palette[i] += this->_cgram->read_internal(addr + 1) << 8U;
 			addr += 2;
@@ -119,8 +118,8 @@ namespace ComSquare::PPU
 		case 8:
 			return highByte;
 		case 4:
-			secondHighByte =  this->_vram->read_internal((tileAddress + 32) % VRAMSIZE);
-			secondLowByte = this->_vram->read_internal((tileAddress + 33) % VRAMSIZE);
+			secondHighByte =  this->_vram->read_internal((tileAddress + 16) % VRAMSIZE);
+			secondLowByte = this->_vram->read_internal((tileAddress + 17) % VRAMSIZE);
 			result = ((secondHighByte & (1U << shift)) | ((secondLowByte & (1U << shift)) << 1U)) >> (shift - 2U);
 		case 2:
 			result += ((highByte & (1U << shift)) | ((lowByte & (1U << shift)) << 1U)) >> shift;
@@ -164,5 +163,13 @@ namespace ComSquare::PPU
 	void Background::setCharacterSize(Vector2<int> size)
 	{
 		this->_characterSize = size;
+	}
+
+	void Background::setBpp(int bpp)
+	{
+		if (bpp == 2 || bpp == 4 || bpp == 8 || bpp == 7)
+			this->_bpp = bpp;
+		else
+			this->_bpp = 2;
 	}
 }

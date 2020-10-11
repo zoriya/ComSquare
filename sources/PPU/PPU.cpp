@@ -115,6 +115,12 @@ namespace ComSquare::PPU
 		//registers
 
 		this->_registers._bgmode.bgMode = 1;
+		this->_backgrounds[0].setBpp(this->getBPP(1));
+		this->_backgrounds[1].setBpp(this->getBPP(1));
+		this->_backgrounds[2].setBpp(this->getBPP(2));
+		this->_backgrounds[3].setBpp(this->getBPP(2));
+		this->_backgrounds[4].setBpp(this->getBPP(3));
+		this->_backgrounds[5].setBpp(this->getBPP(3));
 		//this->_registers._bgmode.characterSizeBg1 = false;
 		//this->_registers._bgmode.characterSizeBg2 = false;
 		this->_registers._bgmode.mode1Bg3PriorityBit = true;
@@ -159,6 +165,7 @@ namespace ComSquare::PPU
 
 	uint8_t PPU::read(uint24_t addr)
 	{
+		return 0;
 		switch (addr) {
 		case ppuRegisters::mpyl:
 			return  this->_registers._mpy.mpyl;
@@ -187,6 +194,7 @@ namespace ComSquare::PPU
 
 	void PPU::write(uint24_t addr, uint8_t data)
 	{
+		return;
 		switch (addr) {
 		case ppuRegisters::inidisp:
 			this->_registers._inidisp.raw = data;
@@ -211,8 +219,10 @@ namespace ComSquare::PPU
 		case ppuRegisters::bgmode:
 			this->_registers._bgmode.raw = data;
 			// update backgrounds
-			for (int i = 0; i < 8; i++)
+			for (int i = 0; i < 8; i++) {
+				this->_backgrounds[i].setBpp(this->getBPP((i / 2) + 1));
 				this->_backgrounds[i].setCharacterSize(this->getCharacterSize((i / 2) + 1));
+			}
 			break;
 		case ppuRegisters::mosaic:
 			this->_registers._mosaic.raw = data;
@@ -634,6 +644,9 @@ namespace ComSquare::PPU
 				this->_subScreen[i][j] = getRealColor(colorPalette);
 		// the buffer is overwrite if necessary by a new bg so the background priority is from back to front
 		// the starting palette index isn't implemented
+		this->addToMainSubScreen(this->_backgrounds[bgName::bg1NoPriority]);
+		this->addToMainSubScreen(this->_backgrounds[bgName::bg1Priority]);
+		return;
 		switch (this->_registers._bgmode.bgMode) {
 		case 0:
 			this->addToMainSubScreen(this->_backgrounds[bgName::bg4NoPriority]);

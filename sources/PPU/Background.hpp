@@ -39,7 +39,7 @@ namespace ComSquare::PPU
 		//! @brief Get a palette from the number of the palette
 		//! @param nbPalette The palette number (0 - 7)
 		//! @return The array of color of the palette
-		std::vector<uint16_t> getPalettes(int nbPalette);
+		std::vector<uint16_t> getPalette(int nbPalette);
 		//! @brief Get the color reference of a pixel from the address of the row
 		//! @param tileAddress The address of the line of pixel
 		//! @param pixelIndex The index of the pixel (0 - 7)
@@ -71,6 +71,9 @@ namespace ComSquare::PPU
 		void setCharacterSize(Vector2<int> size);
 		//! @brief Set the tileset address of the background
 		void setTilesetAddress(uint16_t address);
+		//! @brief Set the bpp (bits per pixels) of the Background
+		//! @info The bpp can be 2, 4 or 8 (7 can be possible when BgMode is 7)
+		void setBpp(int bpp);
 	};
 }
 
