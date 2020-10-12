@@ -100,7 +100,7 @@ namespace ComSquare::PPU
 			column -= TILE_PIXEL_WIDTH;
 		}
 		// might not work with 8 bpp must check
-		tileAddress += this->_bpp * row;
+		tileAddress += this->_bpp * row / 2;
 
 		return this->getPixelReferenceFromTileRow(tileAddress, column);
 	}
@@ -111,8 +111,9 @@ namespace ComSquare::PPU
 		uint8_t lowByte = this->_vram->read_internal((tileAddress + 1) % VRAMSIZE);
 		uint8_t secondHighByte;
 		uint8_t secondLowByte;
-		uint8_t result = 0;
+		uint16_t result = 0;
 		uint8_t shift = (TILE_PIXEL_WIDTH - 1U - pixelIndex);
+		uint16_t tmp;
 
 		switch (this->_bpp) {
 		case 8:
@@ -120,9 +121,11 @@ namespace ComSquare::PPU
 		case 4:
 			secondHighByte =  this->_vram->read_internal((tileAddress + 16) % VRAMSIZE);
 			secondLowByte = this->_vram->read_internal((tileAddress + 17) % VRAMSIZE);
-			result = ((secondHighByte & (1U << shift)) | ((secondLowByte & (1U << shift)) << 1U)) >> (shift - 2U);
+			result = ((secondHighByte & (1U << shift)) | ((secondLowByte & (1U << shift)) << 1U));
+			result = (shift - 2 >= 0) ? result >> (shift - 2) : result << ((shift - 2) * -1);
 		case 2:
-			result += ((highByte & (1U << shift)) | ((lowByte & (1U << shift)) << 1U)) >> shift;
+			tmp = ((highByte & (1U << shift)) | ((lowByte & (1U << shift)) << 1U));
+			result += (shift >= 0) ? tmp >> shift : tmp << shift;
 		default:
 			break;
 		}

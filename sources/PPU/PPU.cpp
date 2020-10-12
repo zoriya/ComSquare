@@ -644,9 +644,6 @@ namespace ComSquare::PPU
 				this->_subScreen[i][j] = getRealColor(colorPalette);
 		// the buffer is overwrite if necessary by a new bg so the background priority is from back to front
 		// the starting palette index isn't implemented
-		this->addToMainSubScreen(this->_backgrounds[bgName::bg1NoPriority]);
-		this->addToMainSubScreen(this->_backgrounds[bgName::bg1Priority]);
-		return;
 		switch (this->_registers._bgmode.bgMode) {
 		case 0:
 			this->addToMainSubScreen(this->_backgrounds[bgName::bg4NoPriority]);
