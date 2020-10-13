@@ -616,7 +616,7 @@ namespace ComSquare::PPU
 		uint16_t baseAddress = this->_registers._bgnba[bgNumber > 2].raw;
 
 		baseAddress = (bgNumber % 2) ? baseAddress & 0xFU : (baseAddress & 0xFU) >> 4U;
-		baseAddress = baseAddress << 12U;
+		baseAddress = baseAddress << 13U;
 		return baseAddress;
 	}
 
@@ -632,9 +632,9 @@ namespace ComSquare::PPU
 	void PPU::renderMainAndSubScreen(void)
 	{
 		uint16_t colorPalette;
+		// should only render backgrounds needed (depending of th bgMode)
 		for (auto & _background : this->_backgrounds)
 			_background.renderBackground();
-
 		// TODO make a function getDefaultBgColor
 		colorPalette = this->cgram->read_internal(0);
 		colorPalette += this->cgram->read_internal(1) << 8U;

@@ -5,6 +5,7 @@
 #include "PPUUtils.hpp"
 #include "PPU.hpp"
 #include "Background.hpp"
+#include <cmath>
 #include "../Models/Vector2.hpp"
 
 namespace ComSquare::PPU
@@ -75,10 +76,11 @@ namespace ComSquare::PPU
 
 	std::vector<uint16_t> Background::getPalette(int nbPalette)
 	{
-		std::vector<uint16_t> palette(0x10);
-		uint16_t addr = nbPalette * 0x20;
+		uint8_t nbColors = std::pow(2, this->_bpp);
+		uint16_t addr = nbPalette * this->_bpp * this->_bpp * 2;
+		std::vector<uint16_t> palette(nbColors);
 
-		for (int i = 0; i < 0x10; i++) {
+		for (int i = 0; i < nbColors; i++) {
 			palette[i] = this->_cgram->read_internal(addr);
 			palette[i] += this->_cgram->read_internal(addr + 1) << 8U;
 			addr += 2;
@@ -100,7 +102,7 @@ namespace ComSquare::PPU
 			column -= TILE_PIXEL_WIDTH;
 		}
 		// might not work with 8 bpp must check
-		tileAddress += this->_bpp * row / 2;
+		tileAddress += 2 * row;
 
 		return this->getPixelReferenceFromTileRow(tileAddress, column);
 	}
