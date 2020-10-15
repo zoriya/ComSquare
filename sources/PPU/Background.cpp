@@ -61,12 +61,17 @@ namespace ComSquare::PPU
 		// Y vertical
 		graphicAddress = this->_tilesetAddress + (tileData.posY * 16 * this->_bpp * 8) + (tileData.posX * this->_bpp * 8);
 		for (int i = 0; i < this->_characterSize.y; i++) {
+			index = i * this->_characterSize.x;
+			if (tileData.verticalFlip)
+				index = (this->_characterSize.y - 1 - i) * this->_characterSize.x;
+			if (tileData.horizontalFlip)
+				index += this->_characterSize.x - 1;
 			for (int j = 0; j < this->_characterSize.x; j++) {
 				reference = getPixelReferenceFromTile(graphicAddress, index);
 				color = getRealColor(palette[reference]);
 				if (tileData.tilePriority == this->priority) // reference 0 is considered as transparency
 					this->buffer[pos.x][pos.y] = (reference) ? color : 0;
-				index++;
+				index += (tileData.horizontalFlip) ? -1 : 1;
 				pos.x++;
 			}
 			pos.x -= this->_characterSize.x;
@@ -115,7 +120,6 @@ namespace ComSquare::PPU
 		uint8_t secondLowByte;
 		uint16_t result = 0;
 		uint8_t shift = (TILE_PIXEL_WIDTH - 1U - pixelIndex);
-		uint16_t tmp;
 
 		switch (this->_bpp) {
 		case 8:
@@ -126,8 +130,7 @@ namespace ComSquare::PPU
 			result = ((secondHighByte & (1U << shift)) | ((secondLowByte & (1U << shift)) << 1U));
 			result = (shift - 2 >= 0) ? result >> (shift - 2) : result << ((shift - 2) * -1);
 		case 2:
-			tmp = ((highByte & (1U << shift)) | ((lowByte & (1U << shift)) << 1U));
-			result += (shift >= 0) ? tmp >> shift : tmp << shift;
+			result += ((highByte & (1U << shift)) | ((lowByte & (1U << shift)) << 1U)) >> shift;
 		default:
 			break;
 		}
