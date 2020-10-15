@@ -129,13 +129,19 @@ namespace ComSquare::PPU
 		this->_backgrounds[2].setCharacterSize(this->getCharacterSize(2));
 		this->_backgrounds[3].setCharacterSize(this->getCharacterSize(2));
 
-		this->_registers._bgsc[0].tilemapAddress = 0x4800U >> 10U;
-		this->_registers._bgsc[1].tilemapAddress = 0x4000U >> 10U;
+		this->_registers._bgsc[0].tilemapAddress = 0x4800U >> 10U; // 0x4800
+		this->_registers._bgsc[0].tilemapHorizontalMirroring = 1;
+		this->_registers._bgsc[1].tilemapAddress = 0x4000U >> 10U; // 0x4000
+		this->_registers._bgsc[1].tilemapHorizontalMirroring = 1;
 		this->_registers._bgsc[2].tilemapAddress = 0x5C00U >> 10U;
 		this->_backgrounds[0].setTileMapStartAddress(this->getTileMapStartAddress(1));
+		this->_backgrounds[0].setTilemaps(this->getBackgroundSize(1));
 		this->_backgrounds[1].setTileMapStartAddress(this->getTileMapStartAddress(1));
+		this->_backgrounds[1].setTilemaps(this->getBackgroundSize(1));
 		this->_backgrounds[2].setTileMapStartAddress(this->getTileMapStartAddress(2));
+		this->_backgrounds[2].setTilemaps(this->getBackgroundSize(2));
 		this->_backgrounds[3].setTileMapStartAddress(this->getTileMapStartAddress(2));
+		this->_backgrounds[3].setTilemaps(this->getBackgroundSize(2));
 		this->_backgrounds[4].setTileMapStartAddress(this->getTileMapStartAddress(3));
 		this->_backgrounds[5].setTileMapStartAddress(this->getTileMapStartAddress(3));
 
@@ -235,6 +241,8 @@ namespace ComSquare::PPU
 			// update background tilemap address
 			this->_backgrounds[addr - 0x07].setTileMapStartAddress(this->getTileMapStartAddress(addr - 0x07 + 1));
 			this->_backgrounds[addr - 0x07 + 1].setTileMapStartAddress(this->getTileMapStartAddress(addr - 0x07 + 1));
+			this->_backgrounds[addr - 0x07].setTilemaps({this->_registers._bgsc[addr - 0x07].tilemapHorizontalMirroring, this->_registers._bgsc[addr - 0x07].tilemapVerticalMirroring});
+			this->_backgrounds[addr - 0x07 + 1].setTilemaps({this->_registers._bgsc[addr - 0x07].tilemapHorizontalMirroring, this->_registers._bgsc[addr - 0x07].tilemapVerticalMirroring});
 			break;
 		case ppuRegisters::bg12nba:
 		case ppuRegisters::bg34nba:

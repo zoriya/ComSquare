@@ -74,6 +74,7 @@ namespace ComSquare::PPU
 		//! @brief Set the bpp (bits per pixels) of the Background
 		//! @info The bpp can be 2, 4 or 8 (7 can be possible when BgMode is 7)
 		void setBpp(int bpp);
+		void setTilemaps(Vector2<int> tilemaps);
 	};
 }
 

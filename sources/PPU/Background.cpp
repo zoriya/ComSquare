@@ -181,4 +181,9 @@ namespace ComSquare::PPU
 		else
 			this->_bpp = 2;
 	}
+
+	void Background::setTilemaps(Vector2<int> tilemaps)
+	{
+		this->_tileMaps = tilemaps;
+	}
 }
