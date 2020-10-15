@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'cpu.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.5
+** Created by: Qt User Interface Compiler version 5.13.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,9 +10,9 @@
 #define UI_CPU_H
 
 #include <QtCore/QVariant>
+#include <QtGui/QIcon>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QFormLayout>
 #include <QtWidgets/QGridLayout>
@@ -88,39 +88,39 @@ public:
     void setupUi(QMainWindow *CPUView)
     {
         if (CPUView->objectName().isEmpty())
-            CPUView->setObjectName(QStringLiteral("CPUView"));
+            CPUView->setObjectName(QString::fromUtf8("CPUView"));
         CPUView->resize(1058, 673);
         QIcon icon;
-        icon.addFile(QStringLiteral(":/resources/Logo.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QString::fromUtf8(":/resources/Logo.png"), QSize(), QIcon::Normal, QIcon::Off);
         CPUView->setWindowIcon(icon);
         CPUView->setAutoFillBackground(false);
         actionPause = new QAction(CPUView);
-        actionPause->setObjectName(QStringLiteral("actionPause"));
+        actionPause->setObjectName(QString::fromUtf8("actionPause"));
         QIcon icon1;
-        icon1.addFile(QStringLiteral(":/resources/icons/play.svg"), QSize(), QIcon::Normal, QIcon::Off);
+        icon1.addFile(QString::fromUtf8(":/resources/icons/play.svg"), QSize(), QIcon::Normal, QIcon::Off);
         actionPause->setIcon(icon1);
         actionStep = new QAction(CPUView);
-        actionStep->setObjectName(QStringLiteral("actionStep"));
+        actionStep->setObjectName(QString::fromUtf8("actionStep"));
         QIcon icon2;
-        icon2.addFile(QStringLiteral(":/resources/icons/step.svg"), QSize(), QIcon::Normal, QIcon::Off);
+        icon2.addFile(QString::fromUtf8(":/resources/icons/step.svg"), QSize(), QIcon::Normal, QIcon::Off);
         actionStep->setIcon(icon2);
         actionNext = new QAction(CPUView);
-        actionNext->setObjectName(QStringLiteral("actionNext"));
+        actionNext->setObjectName(QString::fromUtf8("actionNext"));
         QIcon icon3;
-        icon3.addFile(QStringLiteral(":/resources/icons/continue.svg"), QSize(), QIcon::Normal, QIcon::Off);
+        icon3.addFile(QString::fromUtf8(":/resources/icons/continue.svg"), QSize(), QIcon::Normal, QIcon::Off);
         actionNext->setIcon(icon3);
         centralwidget = new QWidget(CPUView);
-        centralwidget->setObjectName(QStringLiteral("centralwidget"));
+        centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         gridLayout_3 = new QGridLayout(centralwidget);
-        gridLayout_3->setObjectName(QStringLiteral("gridLayout_3"));
+        gridLayout_3->setObjectName(QString::fromUtf8("gridLayout_3"));
         disassembly = new QTableView(centralwidget);
-        disassembly->setObjectName(QStringLiteral("disassembly"));
+        disassembly->setObjectName(QString::fromUtf8("disassembly"));
         QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy.setHorizontalStretch(1);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(disassembly->sizePolicy().hasHeightForWidth());
         disassembly->setSizePolicy(sizePolicy);
-        disassembly->setStyleSheet(QStringLiteral(""));
+        disassembly->setStyleSheet(QString::fromUtf8(""));
         disassembly->setSelectionMode(QAbstractItemView::ExtendedSelection);
         disassembly->setSelectionBehavior(QAbstractItemView::SelectRows);
         disassembly->setShowGrid(false);
@@ -131,15 +131,15 @@ public:
         gridLayout_3->addWidget(disassembly, 0, 0, 3, 1);
 
         gridLayout_2 = new QGridLayout();
-        gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
+        gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
         stackView = new QTableView(centralwidget);
-        stackView->setObjectName(QStringLiteral("stackView"));
+        stackView->setObjectName(QString::fromUtf8("stackView"));
         stackView->horizontalHeader()->setVisible(false);
 
         gridLayout_2->addWidget(stackView, 1, 0, 1, 1);
 
         label = new QLabel(centralwidget);
-        label->setObjectName(QStringLiteral("label"));
+        label->setObjectName(QString::fromUtf8("label"));
         label->setAlignment(Qt::AlignCenter);
 
         gridLayout_2->addWidget(label, 0, 0, 1, 1);
@@ -148,94 +148,94 @@ public:
         gridLayout_3->addLayout(gridLayout_2, 0, 1, 1, 1);
 
         formLayout = new QFormLayout();
-        formLayout->setObjectName(QStringLiteral("formLayout"));
+        formLayout->setObjectName(QString::fromUtf8("formLayout"));
         accumulatorLabel = new QLabel(centralwidget);
-        accumulatorLabel->setObjectName(QStringLiteral("accumulatorLabel"));
+        accumulatorLabel->setObjectName(QString::fromUtf8("accumulatorLabel"));
 
         formLayout->setWidget(0, QFormLayout::LabelRole, accumulatorLabel);
 
         accumulatorLineEdit = new QLineEdit(centralwidget);
-        accumulatorLineEdit->setObjectName(QStringLiteral("accumulatorLineEdit"));
+        accumulatorLineEdit->setObjectName(QString::fromUtf8("accumulatorLineEdit"));
 
         formLayout->setWidget(0, QFormLayout::FieldRole, accumulatorLineEdit);
 
         programBankRegisterLabel = new QLabel(centralwidget);
-        programBankRegisterLabel->setObjectName(QStringLiteral("programBankRegisterLabel"));
+        programBankRegisterLabel->setObjectName(QString::fromUtf8("programBankRegisterLabel"));
 
         formLayout->setWidget(1, QFormLayout::LabelRole, programBankRegisterLabel);
 
         programBankRegisterLineEdit = new QLineEdit(centralwidget);
-        programBankRegisterLineEdit->setObjectName(QStringLiteral("programBankRegisterLineEdit"));
+        programBankRegisterLineEdit->setObjectName(QString::fromUtf8("programBankRegisterLineEdit"));
 
         formLayout->setWidget(1, QFormLayout::FieldRole, programBankRegisterLineEdit);
 
         programCounterLabel = new QLabel(centralwidget);
-        programCounterLabel->setObjectName(QStringLiteral("programCounterLabel"));
+        programCounterLabel->setObjectName(QString::fromUtf8("programCounterLabel"));
 
         formLayout->setWidget(2, QFormLayout::LabelRole, programCounterLabel);
 
         programCounterLineEdit = new QLineEdit(centralwidget);
-        programCounterLineEdit->setObjectName(QStringLiteral("programCounterLineEdit"));
+        programCounterLineEdit->setObjectName(QString::fromUtf8("programCounterLineEdit"));
 
         formLayout->setWidget(2, QFormLayout::FieldRole, programCounterLineEdit);
 
         directBankLabel = new QLabel(centralwidget);
-        directBankLabel->setObjectName(QStringLiteral("directBankLabel"));
+        directBankLabel->setObjectName(QString::fromUtf8("directBankLabel"));
 
         formLayout->setWidget(3, QFormLayout::LabelRole, directBankLabel);
 
         directBankLineEdit = new QLineEdit(centralwidget);
-        directBankLineEdit->setObjectName(QStringLiteral("directBankLineEdit"));
+        directBankLineEdit->setObjectName(QString::fromUtf8("directBankLineEdit"));
 
         formLayout->setWidget(3, QFormLayout::FieldRole, directBankLineEdit);
 
         directPageLabel = new QLabel(centralwidget);
-        directPageLabel->setObjectName(QStringLiteral("directPageLabel"));
+        directPageLabel->setObjectName(QString::fromUtf8("directPageLabel"));
 
         formLayout->setWidget(4, QFormLayout::LabelRole, directPageLabel);
 
         directPageLineEdit = new QLineEdit(centralwidget);
-        directPageLineEdit->setObjectName(QStringLiteral("directPageLineEdit"));
+        directPageLineEdit->setObjectName(QString::fromUtf8("directPageLineEdit"));
 
         formLayout->setWidget(4, QFormLayout::FieldRole, directPageLineEdit);
 
         stackPointerLabel = new QLabel(centralwidget);
-        stackPointerLabel->setObjectName(QStringLiteral("stackPointerLabel"));
+        stackPointerLabel->setObjectName(QString::fromUtf8("stackPointerLabel"));
 
         formLayout->setWidget(5, QFormLayout::LabelRole, stackPointerLabel);
 
         stackPointerLineEdit = new QLineEdit(centralwidget);
-        stackPointerLineEdit->setObjectName(QStringLiteral("stackPointerLineEdit"));
+        stackPointerLineEdit->setObjectName(QString::fromUtf8("stackPointerLineEdit"));
 
         formLayout->setWidget(5, QFormLayout::FieldRole, stackPointerLineEdit);
 
         xIndexLabel = new QLabel(centralwidget);
-        xIndexLabel->setObjectName(QStringLiteral("xIndexLabel"));
+        xIndexLabel->setObjectName(QString::fromUtf8("xIndexLabel"));
 
         formLayout->setWidget(6, QFormLayout::LabelRole, xIndexLabel);
 
         xIndexLineEdit = new QLineEdit(centralwidget);
-        xIndexLineEdit->setObjectName(QStringLiteral("xIndexLineEdit"));
+        xIndexLineEdit->setObjectName(QString::fromUtf8("xIndexLineEdit"));
 
         formLayout->setWidget(6, QFormLayout::FieldRole, xIndexLineEdit);
 
         yIndexLabel = new QLabel(centralwidget);
-        yIndexLabel->setObjectName(QStringLiteral("yIndexLabel"));
+        yIndexLabel->setObjectName(QString::fromUtf8("yIndexLabel"));
 
         formLayout->setWidget(7, QFormLayout::LabelRole, yIndexLabel);
 
         yIndexLineEdit = new QLineEdit(centralwidget);
-        yIndexLineEdit->setObjectName(QStringLiteral("yIndexLineEdit"));
+        yIndexLineEdit->setObjectName(QString::fromUtf8("yIndexLineEdit"));
 
         formLayout->setWidget(7, QFormLayout::FieldRole, yIndexLineEdit);
 
         emulationModeLabel = new QLabel(centralwidget);
-        emulationModeLabel->setObjectName(QStringLiteral("emulationModeLabel"));
+        emulationModeLabel->setObjectName(QString::fromUtf8("emulationModeLabel"));
 
         formLayout->setWidget(8, QFormLayout::LabelRole, emulationModeLabel);
 
         emulationModeCheckBox = new QCheckBox(centralwidget);
-        emulationModeCheckBox->setObjectName(QStringLiteral("emulationModeCheckBox"));
+        emulationModeCheckBox->setObjectName(QString::fromUtf8("emulationModeCheckBox"));
         emulationModeCheckBox->setLayoutDirection(Qt::RightToLeft);
         emulationModeCheckBox->setCheckable(true);
 
@@ -245,20 +245,20 @@ public:
         gridLayout_3->addLayout(formLayout, 0, 2, 2, 1);
 
         gridLayout = new QGridLayout();
-        gridLayout->setObjectName(QStringLiteral("gridLayout"));
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         loggerLabel = new QLabel(centralwidget);
-        loggerLabel->setObjectName(QStringLiteral("loggerLabel"));
+        loggerLabel->setObjectName(QString::fromUtf8("loggerLabel"));
         loggerLabel->setAlignment(Qt::AlignCenter);
 
         gridLayout->addWidget(loggerLabel, 0, 0, 1, 1);
 
         clear = new QPushButton(centralwidget);
-        clear->setObjectName(QStringLiteral("clear"));
+        clear->setObjectName(QString::fromUtf8("clear"));
 
         gridLayout->addWidget(clear, 2, 0, 1, 1);
 
         history = new QTableView(centralwidget);
-        history->setObjectName(QStringLiteral("history"));
+        history->setObjectName(QString::fromUtf8("history"));
 
         gridLayout->addWidget(history, 1, 0, 1, 1);
 
@@ -266,111 +266,111 @@ public:
         gridLayout_3->addLayout(gridLayout, 1, 1, 2, 1);
 
         formGroupBox = new QGroupBox(centralwidget);
-        formGroupBox->setObjectName(QStringLiteral("formGroupBox"));
+        formGroupBox->setObjectName(QString::fromUtf8("formGroupBox"));
         formGroupBox->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
         formGroupBox->setFlat(false);
         formGroupBox->setCheckable(false);
         formLayout_2 = new QFormLayout(formGroupBox);
-        formLayout_2->setObjectName(QStringLiteral("formLayout_2"));
+        formLayout_2->setObjectName(QString::fromUtf8("formLayout_2"));
         formLayout_2->setSizeConstraint(QLayout::SetDefaultConstraint);
         formLayout_2->setLabelAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
         formLayout_2->setFormAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
         formLayout_2->setContentsMargins(26, 7, 0, -1);
         negativeLabel = new QLabel(formGroupBox);
-        negativeLabel->setObjectName(QStringLiteral("negativeLabel"));
+        negativeLabel->setObjectName(QString::fromUtf8("negativeLabel"));
 
         formLayout_2->setWidget(0, QFormLayout::LabelRole, negativeLabel);
 
         mCheckbox = new QCheckBox(formGroupBox);
-        mCheckbox->setObjectName(QStringLiteral("mCheckbox"));
+        mCheckbox->setObjectName(QString::fromUtf8("mCheckbox"));
         mCheckbox->setLayoutDirection(Qt::RightToLeft);
 
         formLayout_2->setWidget(0, QFormLayout::FieldRole, mCheckbox);
 
         zeroLabel = new QLabel(formGroupBox);
-        zeroLabel->setObjectName(QStringLiteral("zeroLabel"));
+        zeroLabel->setObjectName(QString::fromUtf8("zeroLabel"));
 
         formLayout_2->setWidget(1, QFormLayout::LabelRole, zeroLabel);
 
         xCheckbox = new QCheckBox(formGroupBox);
-        xCheckbox->setObjectName(QStringLiteral("xCheckbox"));
+        xCheckbox->setObjectName(QString::fromUtf8("xCheckbox"));
         xCheckbox->setLayoutDirection(Qt::RightToLeft);
 
         formLayout_2->setWidget(1, QFormLayout::FieldRole, xCheckbox);
 
         carryLabel = new QLabel(formGroupBox);
-        carryLabel->setObjectName(QStringLiteral("carryLabel"));
+        carryLabel->setObjectName(QString::fromUtf8("carryLabel"));
 
         formLayout_2->setWidget(3, QFormLayout::LabelRole, carryLabel);
 
         iCheckbox = new QCheckBox(formGroupBox);
-        iCheckbox->setObjectName(QStringLiteral("iCheckbox"));
+        iCheckbox->setObjectName(QString::fromUtf8("iCheckbox"));
         iCheckbox->setLayoutDirection(Qt::RightToLeft);
 
         formLayout_2->setWidget(3, QFormLayout::FieldRole, iCheckbox);
 
         Overflow = new QLabel(formGroupBox);
-        Overflow->setObjectName(QStringLiteral("Overflow"));
+        Overflow->setObjectName(QString::fromUtf8("Overflow"));
 
         formLayout_2->setWidget(4, QFormLayout::LabelRole, Overflow);
 
         vCheckbox = new QCheckBox(formGroupBox);
-        vCheckbox->setObjectName(QStringLiteral("vCheckbox"));
+        vCheckbox->setObjectName(QString::fromUtf8("vCheckbox"));
         vCheckbox->setLayoutDirection(Qt::RightToLeft);
 
         formLayout_2->setWidget(4, QFormLayout::FieldRole, vCheckbox);
 
         decimalLabel = new QLabel(formGroupBox);
-        decimalLabel->setObjectName(QStringLiteral("decimalLabel"));
+        decimalLabel->setObjectName(QString::fromUtf8("decimalLabel"));
 
         formLayout_2->setWidget(5, QFormLayout::LabelRole, decimalLabel);
 
         dCheckbox = new QCheckBox(formGroupBox);
-        dCheckbox->setObjectName(QStringLiteral("dCheckbox"));
+        dCheckbox->setObjectName(QString::fromUtf8("dCheckbox"));
         dCheckbox->setLayoutDirection(Qt::RightToLeft);
 
         formLayout_2->setWidget(5, QFormLayout::FieldRole, dCheckbox);
 
         memoryAccumulatorSelectLabel = new QLabel(formGroupBox);
-        memoryAccumulatorSelectLabel->setObjectName(QStringLiteral("memoryAccumulatorSelectLabel"));
+        memoryAccumulatorSelectLabel->setObjectName(QString::fromUtf8("memoryAccumulatorSelectLabel"));
 
         formLayout_2->setWidget(6, QFormLayout::LabelRole, memoryAccumulatorSelectLabel);
 
         cCheckbox = new QCheckBox(formGroupBox);
-        cCheckbox->setObjectName(QStringLiteral("cCheckbox"));
+        cCheckbox->setObjectName(QString::fromUtf8("cCheckbox"));
         cCheckbox->setLayoutDirection(Qt::RightToLeft);
 
         formLayout_2->setWidget(6, QFormLayout::FieldRole, cCheckbox);
 
         indeXSelectLabel = new QLabel(formGroupBox);
-        indeXSelectLabel->setObjectName(QStringLiteral("indeXSelectLabel"));
+        indeXSelectLabel->setObjectName(QString::fromUtf8("indeXSelectLabel"));
 
         formLayout_2->setWidget(7, QFormLayout::LabelRole, indeXSelectLabel);
 
         irqDisableLabel = new QLabel(formGroupBox);
-        irqDisableLabel->setObjectName(QStringLiteral("irqDisableLabel"));
+        irqDisableLabel->setObjectName(QString::fromUtf8("irqDisableLabel"));
 
         formLayout_2->setWidget(8, QFormLayout::LabelRole, irqDisableLabel);
 
         nCheckbox = new QCheckBox(formGroupBox);
-        nCheckbox->setObjectName(QStringLiteral("nCheckbox"));
+        nCheckbox->setObjectName(QString::fromUtf8("nCheckbox"));
         nCheckbox->setLayoutDirection(Qt::RightToLeft);
 
         formLayout_2->setWidget(8, QFormLayout::FieldRole, nCheckbox);
 
         zCheckbox = new QCheckBox(formGroupBox);
-        zCheckbox->setObjectName(QStringLiteral("zCheckbox"));
+        zCheckbox->setObjectName(QString::fromUtf8("zCheckbox"));
         zCheckbox->setLayoutDirection(Qt::RightToLeft);
 
         formLayout_2->setWidget(7, QFormLayout::FieldRole, zCheckbox);
 
         breakBLabel = new QLabel(formGroupBox);
-        breakBLabel->setObjectName(QStringLiteral("breakBLabel"));
+        breakBLabel->setObjectName(QString::fromUtf8("breakBLabel"));
 
         formLayout_2->setWidget(2, QFormLayout::LabelRole, breakBLabel);
 
         bCheckbox = new QCheckBox(formGroupBox);
-        bCheckbox->setObjectName(QStringLiteral("bCheckbox"));
+        bCheckbox->setObjectName(QString::fromUtf8("bCheckbox"));
         bCheckbox->setLayoutDirection(Qt::RightToLeft);
 
         formLayout_2->setWidget(2, QFormLayout::FieldRole, bCheckbox);
@@ -380,7 +380,7 @@ public:
 
         CPUView->setCentralWidget(centralwidget);
         toolBar = new QToolBar(CPUView);
-        toolBar->setObjectName(QStringLiteral("toolBar"));
+        toolBar->setObjectName(QString::fromUtf8("toolBar"));
         toolBar->setMinimumSize(QSize(0, 0));
         toolBar->setMovable(false);
         toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
@@ -398,52 +398,52 @@ public:
 
     void retranslateUi(QMainWindow *CPUView)
     {
-        CPUView->setWindowTitle(QApplication::translate("CPUView", "CPU's Debugger", Q_NULLPTR));
-        actionPause->setText(QApplication::translate("CPUView", "Continue", Q_NULLPTR));
-#ifndef QT_NO_TOOLTIP
-        actionPause->setToolTip(QApplication::translate("CPUView", "Pause or Resume instruction execution.", Q_NULLPTR));
-#endif // QT_NO_TOOLTIP
-#ifndef QT_NO_SHORTCUT
-        actionPause->setShortcut(QApplication::translate("CPUView", "C", Q_NULLPTR));
-#endif // QT_NO_SHORTCUT
-        actionStep->setText(QApplication::translate("CPUView", "Step", Q_NULLPTR));
-#ifndef QT_NO_TOOLTIP
-        actionStep->setToolTip(QApplication::translate("CPUView", "Execute a single instruction", Q_NULLPTR));
-#endif // QT_NO_TOOLTIP
-#ifndef QT_NO_SHORTCUT
-        actionStep->setShortcut(QApplication::translate("CPUView", "S", Q_NULLPTR));
-#endif // QT_NO_SHORTCUT
-        actionNext->setText(QApplication::translate("CPUView", "Next", Q_NULLPTR));
-#ifndef QT_NO_TOOLTIP
-        actionNext->setToolTip(QApplication::translate("CPUView", "Continue execution to the next line.", Q_NULLPTR));
-#endif // QT_NO_TOOLTIP
-#ifndef QT_NO_SHORTCUT
-        actionNext->setShortcut(QApplication::translate("CPUView", "N", Q_NULLPTR));
-#endif // QT_NO_SHORTCUT
-        label->setText(QApplication::translate("CPUView", "Stack Viewer", Q_NULLPTR));
-        accumulatorLabel->setText(QApplication::translate("CPUView", "Accumulator", Q_NULLPTR));
+        CPUView->setWindowTitle(QCoreApplication::translate("CPUView", "CPU's Debugger", nullptr));
+        actionPause->setText(QCoreApplication::translate("CPUView", "Continue", nullptr));
+#if QT_CONFIG(tooltip)
+        actionPause->setToolTip(QCoreApplication::translate("CPUView", "Pause or Resume instruction execution.", nullptr));
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(shortcut)
+        actionPause->setShortcut(QCoreApplication::translate("CPUView", "C", nullptr));
+#endif // QT_CONFIG(shortcut)
+        actionStep->setText(QCoreApplication::translate("CPUView", "Step", nullptr));
+#if QT_CONFIG(tooltip)
+        actionStep->setToolTip(QCoreApplication::translate("CPUView", "Execute a single instruction", nullptr));
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(shortcut)
+        actionStep->setShortcut(QCoreApplication::translate("CPUView", "S", nullptr));
+#endif // QT_CONFIG(shortcut)
+        actionNext->setText(QCoreApplication::translate("CPUView", "Next", nullptr));
+#if QT_CONFIG(tooltip)
+        actionNext->setToolTip(QCoreApplication::translate("CPUView", "Continue execution to the next line.", nullptr));
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(shortcut)
+        actionNext->setShortcut(QCoreApplication::translate("CPUView", "N", nullptr));
+#endif // QT_CONFIG(shortcut)
+        label->setText(QCoreApplication::translate("CPUView", "Stack Viewer", nullptr));
+        accumulatorLabel->setText(QCoreApplication::translate("CPUView", "Accumulator", nullptr));
         accumulatorLineEdit->setText(QString());
-        programBankRegisterLabel->setText(QApplication::translate("CPUView", "Program Bank", Q_NULLPTR));
-        programCounterLabel->setText(QApplication::translate("CPUView", "Program Counter", Q_NULLPTR));
-        directBankLabel->setText(QApplication::translate("CPUView", "Direct Bank", Q_NULLPTR));
-        directPageLabel->setText(QApplication::translate("CPUView", "Direct Page", Q_NULLPTR));
-        stackPointerLabel->setText(QApplication::translate("CPUView", "Stack Pointer", Q_NULLPTR));
-        xIndexLabel->setText(QApplication::translate("CPUView", "X Index", Q_NULLPTR));
-        yIndexLabel->setText(QApplication::translate("CPUView", "Y Index", Q_NULLPTR));
-        emulationModeLabel->setText(QApplication::translate("CPUView", "Emulation mode", Q_NULLPTR));
-        loggerLabel->setText(QApplication::translate("CPUView", "Instructions History", Q_NULLPTR));
-        clear->setText(QApplication::translate("CPUView", "Clear History", Q_NULLPTR));
-        formGroupBox->setTitle(QApplication::translate("CPUView", "Flags", Q_NULLPTR));
-        negativeLabel->setText(QApplication::translate("CPUView", "Memory Select (M)", Q_NULLPTR));
-        zeroLabel->setText(QApplication::translate("CPUView", "Index Select (X)", Q_NULLPTR));
-        carryLabel->setText(QApplication::translate("CPUView", "Interupt Request Disable (I)", Q_NULLPTR));
-        Overflow->setText(QApplication::translate("CPUView", "Overflow (V)", Q_NULLPTR));
-        decimalLabel->setText(QApplication::translate("CPUView", "Decimal (D)", Q_NULLPTR));
-        memoryAccumulatorSelectLabel->setText(QApplication::translate("CPUView", "Carry (C)", Q_NULLPTR));
-        indeXSelectLabel->setText(QApplication::translate("CPUView", "Zero (Z)", Q_NULLPTR));
-        irqDisableLabel->setText(QApplication::translate("CPUView", "Negative (N)", Q_NULLPTR));
-        breakBLabel->setText(QApplication::translate("CPUView", "Break (B)", Q_NULLPTR));
-        toolBar->setWindowTitle(QApplication::translate("CPUView", "toolBar", Q_NULLPTR));
+        programBankRegisterLabel->setText(QCoreApplication::translate("CPUView", "Program Bank", nullptr));
+        programCounterLabel->setText(QCoreApplication::translate("CPUView", "Program Counter", nullptr));
+        directBankLabel->setText(QCoreApplication::translate("CPUView", "Direct Bank", nullptr));
+        directPageLabel->setText(QCoreApplication::translate("CPUView", "Direct Page", nullptr));
+        stackPointerLabel->setText(QCoreApplication::translate("CPUView", "Stack Pointer", nullptr));
+        xIndexLabel->setText(QCoreApplication::translate("CPUView", "X Index", nullptr));
+        yIndexLabel->setText(QCoreApplication::translate("CPUView", "Y Index", nullptr));
+        emulationModeLabel->setText(QCoreApplication::translate("CPUView", "Emulation mode", nullptr));
+        loggerLabel->setText(QCoreApplication::translate("CPUView", "Instructions History", nullptr));
+        clear->setText(QCoreApplication::translate("CPUView", "Clear History", nullptr));
+        formGroupBox->setTitle(QCoreApplication::translate("CPUView", "Flags", nullptr));
+        negativeLabel->setText(QCoreApplication::translate("CPUView", "Memory Select (M)", nullptr));
+        zeroLabel->setText(QCoreApplication::translate("CPUView", "Index Select (X)", nullptr));
+        carryLabel->setText(QCoreApplication::translate("CPUView", "Interupt Request Disable (I)", nullptr));
+        Overflow->setText(QCoreApplication::translate("CPUView", "Overflow (V)", nullptr));
+        decimalLabel->setText(QCoreApplication::translate("CPUView", "Decimal (D)", nullptr));
+        memoryAccumulatorSelectLabel->setText(QCoreApplication::translate("CPUView", "Carry (C)", nullptr));
+        indeXSelectLabel->setText(QCoreApplication::translate("CPUView", "Zero (Z)", nullptr));
+        irqDisableLabel->setText(QCoreApplication::translate("CPUView", "Negative (N)", nullptr));
+        breakBLabel->setText(QCoreApplication::translate("CPUView", "Break (B)", nullptr));
+        toolBar->setWindowTitle(QCoreApplication::translate("CPUView", "toolBar", nullptr));
     } // retranslateUi
 
 };
