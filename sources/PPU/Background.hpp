@@ -25,6 +25,7 @@ namespace ComSquare::PPU
 	#define TILE_PIXEL_HEIGHT 8U
 	#define TILE_SIZE 8
 	#define NB_TILE_PER_ROW 16
+
 	private:
 		Vector2<int> _tileMaps;
 		Vector2<int> _characterSize;
@@ -35,6 +36,7 @@ namespace ComSquare::PPU
 		uint16_t _tilesetAddress;
 		bool _priority;
 		int _bgNumber;
+		ComSquare::PPU::PPU &_ppu;
 
 		std::shared_ptr<Ram::Ram> _vram;
 		std::shared_ptr<Ram::Ram> _cgram;
@@ -59,8 +61,6 @@ namespace ComSquare::PPU
 		//! @param offset The rendering offeset in pixels
 		void drawBasicTileMap(uint16_t baseAddress, Vector2<int> offset);
 	public:
-		// TODO getter setter for priority and bgNumber
-
 		Vector2<int> backgroundSize;
 		std::array<std::array<uint32_t, 1024>, 1024> buffer;
 		Background(ComSquare::PPU::PPU &_ppu, int backGroundNumber, bool hasPriority);

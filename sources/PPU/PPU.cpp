@@ -381,7 +381,7 @@ namespace ComSquare::PPU
 		}
 	}
 
-	uint16_t PPU::getVramAddress()
+	uint16_t PPU::getVramAddress() const
 	{
 		uint16_t vanillaAddress = this->_registers._vmadd.vmadd;
 
@@ -419,7 +419,7 @@ namespace ComSquare::PPU
 		return "PPU";
 	}
 
-	std::string PPU::getValueName(uint24_t addr)
+	std::string PPU::getValueName(uint24_t addr) const
 	{
 		switch (addr) {
 		case PpuRegisters::inidisp:
@@ -560,7 +560,7 @@ namespace ComSquare::PPU
 		return Ppu;
 	}
 
-	bool PPU::isDebugger()
+	bool PPU::isDebugger() const
 	{
 		return false;
 	}
@@ -570,7 +570,7 @@ namespace ComSquare::PPU
 		return this->cgram->read_internal(addr);
 	}
 
-	int PPU::getBPP(int bgNumber)
+	int PPU::getBPP(int bgNumber) const
 	{
 		switch (this->_registers._bgmode.bgMode) {
 		case 0:
@@ -604,22 +604,22 @@ namespace ComSquare::PPU
 		}
 	}
 
-	Vector2<int> PPU::getCharacterSize(int bgNumber)
+	Vector2<int> PPU::getCharacterSize(int bgNumber) const
 	{
 		Vector2<int> characterSize(8, 8);
 
-		//this wont work for modes 5 and 6 and will be reworked
+		//TODO this wont work for modes 5 and 6 and will be reworked
 		if (this->_registers._bgmode.raw & (1U << (3 + bgNumber)))
 			characterSize = {16, 16};
 		return characterSize;
 	}
 
-	uint16_t PPU::getTileMapStartAddress(int bgNumber)
+	uint16_t PPU::getTileMapStartAddress(int bgNumber) const
 	{
 		return this->_registers._bgsc[bgNumber - 1].tilemapAddress << 11U;
 	}
 
-	uint16_t PPU::getTilesetAddress(int bgNumber)
+	uint16_t PPU::getTilesetAddress(int bgNumber) const
 	{
 		uint16_t baseAddress = this->_registers._bgnba[bgNumber > 2].raw;
 
@@ -628,7 +628,7 @@ namespace ComSquare::PPU
 		return baseAddress;
 	}
 
-	Vector2<int> PPU::getBackgroundSize(int bgNumber)
+	Vector2<int> PPU::getBackgroundSize(int bgNumber) const
 	{
 		Vector2<int> backgroundSize(0,0);
 
@@ -637,7 +637,7 @@ namespace ComSquare::PPU
 		return backgroundSize;
 	}
 
-	void PPU::renderMainAndSubScreen(void)
+	void PPU::renderMainAndSubScreen()
 	{
 		uint16_t colorPalette;
 		// should only render backgrounds needed (depending of th bgMode)
@@ -654,80 +654,80 @@ namespace ComSquare::PPU
 		// the starting palette index isn't implemented
 		switch (this->_registers._bgmode.bgMode) {
 		case 0:
-			this->addToMainSubScreen(this->_backgrounds[bgName::bg4NoPriority]);
-			this->addToMainSubScreen(this->_backgrounds[bgName::bg3NoPriority]);
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg4NoPriority]);
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg3NoPriority]);
 			//sprites  priority 0
-			this->addToMainSubScreen(this->_backgrounds[bgName::bg4Priority]);
-			this->addToMainSubScreen(this->_backgrounds[bgName::bg3Priority]);
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg4Priority]);
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg3Priority]);
 			//sprites priority 1
-			this->addToMainSubScreen(this->_backgrounds[bgName::bg2NoPriority]);
-			this->addToMainSubScreen(this->_backgrounds[bgName::bg1NoPriority]);
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg2NoPriority]);
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg1NoPriority]);
 			//sprites priority 2
-			this->addToMainSubScreen(this->_backgrounds[bgName::bg2Priority]);
-			this->addToMainSubScreen(this->_backgrounds[bgName::bg1Priority]);
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg2Priority]);
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg1Priority]);
 			//sprites priority 3
 			break;
 		case 1:
-			this->addToMainSubScreen(this->_backgrounds[bgName::bg3NoPriority]);
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg3NoPriority]);
 			//sprites priority 0
 			if (!this->_registers._bgmode.mode1Bg3PriorityBit)
-				this->addToMainSubScreen(this->_backgrounds[bgName::bg3Priority]);
+				this->addToMainSubScreen(this->_backgrounds[BgName::bg3Priority]);
 			//sprites priority 1
-			this->addToMainSubScreen(this->_backgrounds[bgName::bg2NoPriority]);
-			this->addToMainSubScreen(this->_backgrounds[bgName::bg1NoPriority]);
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg2NoPriority]);
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg1NoPriority]);
 			//sprites priority 2
-			this->addToMainSubScreen(this->_backgrounds[bgName::bg2Priority]);
-			this->addToMainSubScreen(this->_backgrounds[bgName::bg1Priority]);
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg2Priority]);
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg1Priority]);
 			//sprites priority 3
 			if (this->_registers._bgmode.mode1Bg3PriorityBit)
-				this->addToMainSubScreen(this->_backgrounds[bgName::bg3Priority]);
+				this->addToMainSubScreen(this->_backgrounds[BgName::bg3Priority]);
 			break;
 		case 2:
-			this->addToMainSubScreen(this->_backgrounds[bgName::bg2NoPriority]);
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg2NoPriority]);
 			//sprites priority 0
-			this->addToMainSubScreen(this->_backgrounds[bgName::bg1NoPriority]);
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg1NoPriority]);
 			//sprites priority 1
-			this->addToMainSubScreen(this->_backgrounds[bgName::bg2Priority]);
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg2Priority]);
 			//sprites priority 2
-			this->addToMainSubScreen(this->_backgrounds[bgName::bg1Priority]);
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg1Priority]);
 			//sprites priority 3
 			break;
 		case 3:
-			this->addToMainSubScreen(this->_backgrounds[bgName::bg2NoPriority]);
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg2NoPriority]);
 			//sprites priority 0
-			this->addToMainSubScreen(this->_backgrounds[bgName::bg1NoPriority]);
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg1NoPriority]);
 			//sprites priority 1
-			this->addToMainSubScreen(this->_backgrounds[bgName::bg2Priority]);
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg2Priority]);
 			//sprites priority 2
-			this->addToMainSubScreen(this->_backgrounds[bgName::bg1Priority]);
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg1Priority]);
 			//sprites priority 3
 			break;
 		case 4:
-			this->addToMainSubScreen(this->_backgrounds[bgName::bg2NoPriority]);
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg2NoPriority]);
 			//sprites priority 0
-			this->addToMainSubScreen(this->_backgrounds[bgName::bg1NoPriority]);
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg1NoPriority]);
 			//sprites priority 1
-			this->addToMainSubScreen(this->_backgrounds[bgName::bg2Priority]);
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg2Priority]);
 			//sprites priority 2
-			this->addToMainSubScreen(this->_backgrounds[bgName::bg1Priority]);
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg1Priority]);
 			//sprites priority 3
 			break;
 		case 5:
-			this->addToMainSubScreen(this->_backgrounds[bgName::bg2NoPriority]);
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg2NoPriority]);
 			//sprites priority 0
-			this->addToMainSubScreen(this->_backgrounds[bgName::bg1NoPriority]);
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg1NoPriority]);
 			//sprites priority 1
-			this->addToMainSubScreen(this->_backgrounds[bgName::bg2Priority]);
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg2Priority]);
 			//sprites priority 2
-			this->addToMainSubScreen(this->_backgrounds[bgName::bg1Priority]);
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg1Priority]);
 			//sprites priority 3
 			break;
 		case 6:
 			//sprites priority 0
-			this->addToMainSubScreen(this->_backgrounds[bgName::bg1NoPriority]);
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg1NoPriority]);
 			//sprites priority 1
 			//sprites priority 2
-			this->addToMainSubScreen(this->_backgrounds[bgName::bg1Priority]);
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg1Priority]);
 			//sprites priority 3
             break;
 		case 7:
@@ -754,5 +754,10 @@ namespace ComSquare::PPU
 			this->add_buffer(this->_mainScreen, bg.buffer);
 		if (this->_registers._t[1].raw & (1U << (bg.getBgNumber() - 1U)))
 			this->add_buffer(this->_subScreen, bg.buffer);
+	}
+
+	int PPU::getBgMode() const
+	{
+		return this->_registers._bgmode.bgMode;
 	}
 }

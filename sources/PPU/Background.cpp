@@ -10,17 +10,18 @@
 
 namespace ComSquare::PPU
 {
-	Background::Background(ComSquare::PPU::PPU &_ppu, int backGroundNumber, bool hasPriority):
+	Background::Background(ComSquare::PPU::PPU &ppu, int backGroundNumber, bool hasPriority):
 		_priority(hasPriority),
-		_bgNumber(backGroundNumber)
+		_bgNumber(backGroundNumber),
+		_ppu(ppu)
 	{
-		_cgram = _ppu.cgram;
-		_vram = _ppu.vram;
-		_bpp = _ppu.getBPP(backGroundNumber);
-		_characterSize = _ppu.getCharacterSize(backGroundNumber);
-		_tileMapStartAddress = _ppu.getTileMapStartAddress(backGroundNumber);
-		_tilesetAddress = _ppu.getTilesetAddress(backGroundNumber);
-		_tileMaps = _ppu.getBackgroundSize(backGroundNumber);
+		_cgram = ppu.cgram;
+		_vram = ppu.vram;
+		_bpp = ppu.getBPP(backGroundNumber);
+		_characterSize = ppu.getCharacterSize(backGroundNumber);
+		_tileMapStartAddress = ppu.getTileMapStartAddress(backGroundNumber);
+		_tilesetAddress = ppu.getTilesetAddress(backGroundNumber);
+		_tileMaps = ppu.getBackgroundSize(backGroundNumber);
 		_directColor = false;
 		_highRes = false;
 	}
@@ -82,8 +83,16 @@ namespace ComSquare::PPU
 	std::vector<uint16_t> Background::getPalette(int nbPalette)
 	{
 		uint8_t nbColors = std::pow(2, this->_bpp);
-		uint16_t addr = nbPalette * this->_bpp * this->_bpp * 2;
+		uint16_t addr = nbPalette * this->_bpp * this->_bpp * 2; // 2 because it's 2 addr for 1 color
 		std::vector<uint16_t> palette(nbColors);
+
+		switch (this->_ppu.getBgMode()) {
+		case 0:
+			addr += this->_bgNumber * (4 * 8) * 2;
+			break;
+		default:
+			break;
+		}
 
 		for (int i = 0; i < nbColors; i++) {
 			palette[i] = this->_cgram->read_internal(addr);

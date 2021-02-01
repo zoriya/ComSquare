@@ -25,7 +25,7 @@
 namespace ComSquare::PPU
 {
 	class Background;
-	enum bgName {
+	enum BgName {
 		bg1NoPriority = 0,
 		bg1Priority,
 		bg2NoPriority,
@@ -594,30 +594,32 @@ namespace ComSquare::PPU
 		//! @param The number of cycles to update.
 		virtual void update(unsigned cycles);
 		//! @brief Give the Vram Address with the right Address remapping
-		uint16_t getVramAddress();
+		uint16_t getVramAddress() const;
 		//! @brief Give the name of the Address register (used for debug)
-		std::string getValueName(uint24_t addr);
+		std::string getValueName(uint24_t addr) const;
 		//! @brief Return true if the CPU is overloaded with debugging features.
-		virtual bool isDebugger();
+		virtual bool isDebugger() const;
 		//! @brief Allow others components to read the CGRAM
 		uint16_t cgramRead(uint16_t addr);
 		//! @brief get the bpp depending of the bgNumber and the Bgmode
-		int getBPP(int bgNumber);
+		int getBPP(int bgNumber) const;
 		//! @brief Give the correct character size depending of the bgMode
-		Vector2<int> getCharacterSize(int bgNumber);
+		Vector2<int> getCharacterSize(int bgNumber) const;
 		//! @brief Give the address where the tilemap starts
-		uint16_t getTileMapStartAddress(int bgNumber);
+		uint16_t getTileMapStartAddress(int bgNumber) const;
 		//! @brief Give the address to find the correct tileset for a given x and y
-		uint16_t getTilesetAddress(int bgNumber);
+		uint16_t getTilesetAddress(int bgNumber) const;
 		//! @brief Give the number of tilemaps to be rendered
-		Vector2<int> getBackgroundSize(int bgNumber);
+		Vector2<int> getBackgroundSize(int bgNumber) const;
 		//! @brief Render the Main and sub screen correctly
-		void renderMainAndSubScreen(void);
+		void renderMainAndSubScreen();
 		//! @brief Add a bg buffer to another buffer
 		template <std::size_t DEST_SIZE, std::size_t SRC_SIZE>
 		void add_buffer(std::array<std::array<uint32_t, DEST_SIZE>, DEST_SIZE> &bufferDest, std::array<std::array<uint32_t, SRC_SIZE>, SRC_SIZE> &bufferSrc);
 		//! @brief Add a bg to the sub and/or main screen
 		void addToMainSubScreen(Background &bg);
+		//! @brief Get the current background Mode
+		int getBgMode() const;
 	};
 
 }
