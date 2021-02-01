@@ -12,7 +12,6 @@
 #include "../Memory/AMemory.hpp"
 #include "Instruction.hpp"
 #include "DMA/DMA.hpp"
-#include "../Debugger/RegisterViewer.hpp"
 
 namespace ComSquare::CPU
 {

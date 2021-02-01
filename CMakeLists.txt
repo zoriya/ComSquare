@@ -103,7 +103,7 @@ add_executable(unit_tests
         sources/PPU/Background.hpp
         sources/CPU/DMA/DMA.cpp
         sources/CPU/DMA/DMA.hpp
-)
+        tests/CPU/testDMA.cpp)
 
 # include criterion & coverage
 target_link_libraries(unit_tests criterion -lgcov)

@@ -24,7 +24,8 @@ namespace ComSquare::Debugger
 
 	void RegisterViewer::_setupUi()
 	{
-		for (int i = 0; i < 8; i++) {
+		int i = 0;
+		//		for (int i = 0; i < 8; i++) {
 			RegistersViewerModel *model = new RegistersViewerModel(this->_snes);
 			model->addRegister(Register(0x420B, ":0", "Enabled", [i](SNES &snes) {
 				return snes.cpu->_dmaChannels[i].enabled;
@@ -52,7 +53,7 @@ namespace ComSquare::Debugger
 			}, nullptr, EightBits));
 			this->_ui.dmaChannel1->setModel(model);
 			this->_models.push_back(model);
-		}
+//		}
 	}
 
 	void RegisterViewer::focus()

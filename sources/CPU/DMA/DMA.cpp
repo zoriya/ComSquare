@@ -72,13 +72,13 @@ namespace ComSquare::CPU
 		if (this->_port == 0x80) {
 			auto accessor = this->_bus->getAccessor(aAddress);
 			if (accessor && accessor->getComponent() == WRam) {
-				if (this->_controlRegister.direction == AToB)
+				if (this->_controlRegister.direction == AtoB)
 					return 8;
 				this->_bus->write(aAddress, 0xFF);
 				return 4;
 			}
 		}
-		if (this->_controlRegister.direction == AToB) {
+		if (this->_controlRegister.direction == AtoB) {
 			uint8_t data = this->_bus->read(aAddress);
 			this->_bus->write(bAddress, data);
 		} else {
@@ -88,11 +88,10 @@ namespace ComSquare::CPU
 		return 8;
 	}
 
-	uint8_t DMA::run(unsigned int maxCycles)
+	unsigned DMA::run(unsigned int maxCycles)
 	{
 		unsigned cycles = 8;
 		int i = 0;
-		std::cout << "Starting a DMA transfer" << std::endl;
 
 		do {
 			cycles += this->_writeOneByte(this->_aAddress.raw, 0x2100 | (this->_port + this->_getModeOffset(i)));
@@ -100,7 +99,7 @@ namespace ComSquare::CPU
 				this->_aAddress.page += this->_controlRegister.increment ? -1 : 1;
 			this->_count.raw--;
 			i++;
-		} while (this->_count.raw > 0);
+		} while (this->_count.raw > 0 && this->enabled);
 		this->enabled = false;
 		return cycles;
 	}

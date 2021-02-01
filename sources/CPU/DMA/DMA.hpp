@@ -9,31 +9,34 @@
 #include <memory>
 #include "../../Models/Int24.hpp"
 #include "../../Memory/MemoryBus.hpp"
-#include "../../Debugger/RegisterViewer.hpp"
+
+#ifdef DEBUGGER_ENABLED
+		#include "../../Debugger/RegisterViewer.hpp"
+#endif
 
 namespace ComSquare::CPU
 {
-	//! @brief The first three bytes of the DMA's control register. Used to tell how many bytes/registers there is.
-	enum DMAMode {
-		//! @brief 1 byte is transferred to 1 register (write once)
-		OneToOne = 0b000,
-		//! @brief 2 byte is transferred to 2 register (write once)
-		TwoToTwo = 0b001,
-		//! @brief 2 byte is transferred to 1 register (write twice)
-		TwoToOne = 0b010,
-		//! @brief 4 byte is transferred to 2 register (write twice)
-		FourToTwo = 0b011,
-		//! @brief 4 byte is transferred to 4 register (write once)
-		FourToFour = 0b100
-	};
-
-	enum Direction {
-		AToB,
-		BToA
-	};
-
 	//! @brief Class handling all DMA/HDMA transfers (Direct Memory Access or H-Blank Direct Memory Access)
 	class DMA {
+	public:
+		//! @brief The first three bytes of the DMA's control register. Used to tell how many bytes/registers there is.
+		enum DMAMode {
+			//! @brief 1 byte is transferred to 1 register (write once)
+			OneToOne = 0b000,
+			//! @brief 2 byte is transferred to 2 register (write once)
+			TwoToTwo = 0b001,
+			//! @brief 2 byte is transferred to 1 register (write twice)
+			TwoToOne = 0b010,
+			//! @brief 4 byte is transferred to 2 register (write twice)
+			FourToTwo = 0b011,
+			//! @brief 4 byte is transferred to 4 register (write once)
+			FourToFour = 0b100
+		};
+
+		enum Direction {
+			AtoB,
+			BtoA
+		};
 	private:
 		//! @brief Write one byte using the A address, the port and the _direction. Handle special cases where no write occurs.
 		//! @return The number of cycles used.
@@ -92,7 +95,7 @@ namespace ComSquare::CPU
 		//! @brief Run the DMA for x cycles
 		//! @param cycles The maximum number of cycles this DMA should run.
 		//! @return the number of cycles taken
-		uint8_t run(unsigned cycles);
+		unsigned run(unsigned cycles);
 
 		DMA() = default;
 		DMA(std::shared_ptr<Memory::MemoryBus> bus);
