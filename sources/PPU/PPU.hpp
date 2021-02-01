@@ -568,6 +568,8 @@ namespace ComSquare::PPU
 		std::array<std::array<uint32_t, 1024>, 1024> _subScreen;
 		//! @brief Final Screen buffer
 		std::array<std::array<uint32_t, 1024>, 1024> _screen;
+		//! @brief Used for vram read registers (0x2139 - 0x213A)
+		uint16_t _vramReadBuffer = 0;
 	public:
 
 		explicit PPU(Renderer::IRenderer &renderer);
@@ -620,6 +622,7 @@ namespace ComSquare::PPU
 		void addToMainSubScreen(Background &bg);
 		//! @brief Get the current background Mode
 		int getBgMode() const;
+		void updateVramReadBuffer();
 	};
 
 }

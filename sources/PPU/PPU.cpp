@@ -77,7 +77,7 @@ namespace ComSquare::PPU
 00,0x00,0x00,0x00,0x80,0x00,0xc0,0x00,0xe0,0x00,0xf0,0x00,0xf8,0x00,0xfc,0x00,
 00,0x00,0x00,0x00,0x01,0x00,0x03,0x00,0x07,0x00,0x0f,00,0x1f,00,0x3f,00, -1
 		};*/
-		int *cgram_test = get_dump_cgram();
+	/*	int *cgram_test = get_dump_cgram();
 		for (int i = 0; cgram_test[i] != -1; i++) {
 			this->cgram->write_internal(i, cgram_test[i]);
 		}
@@ -85,7 +85,7 @@ namespace ComSquare::PPU
 		int *vram_test = get_dump_vram();
 		for (int i = 0; vram_test[i] != -1; i++) {
 			this->vram->write_internal(i, vram_test[i]);
-		}
+		} */
 		/*int vram_test_2[] = {8, 00, 02, 00, 0x0A, 00, 02, 00, 0x0A, 00, 00, 00, 00, 00, 00, -1};
 		for (int i = 0; vram_test_2[i] != -1; i++) {
 			this->vram->write_internal(i + 0x8000, vram_test_2[i]);
@@ -114,7 +114,7 @@ namespace ComSquare::PPU
 
 		//registers
 
-		this->_registers._bgmode.bgMode = 1;
+	/*	this->_registers._bgmode.bgMode = 1;
 		this->_backgrounds[0].setBpp(this->getBPP(1));
 		this->_backgrounds[1].setBpp(this->getBPP(1));
 		this->_backgrounds[2].setBpp(this->getBPP(2));
@@ -166,12 +166,12 @@ namespace ComSquare::PPU
 		this->_registers._t[0].enableWindowDisplayBg2 = true;
 		this->_registers._t[0].enableWindowDisplayBg3 = true;
 
-
+*/
 	}
 
 	uint8_t PPU::read(uint24_t addr)
 	{
-		return 0;
+		//return 0;
 		switch (addr) {
 		case PpuRegisters::mpyl:
 			return  this->_registers._mpy.mpyl;
@@ -182,9 +182,25 @@ namespace ComSquare::PPU
 		case PpuRegisters::slhv:
 			return this->_registers._slhv;
 		case PpuRegisters::oamdataread:
-		case PpuRegisters::vmdatalread:
-		case PpuRegisters::vmdatahread:
 			return 0;
+		case PpuRegisters::vmdatalread: {
+			auto returnValue = static_cast<uint8_t>(this->_vramReadBuffer);
+			if (!this->_registers._vmain.incrementMode) {
+				this->updateVramReadBuffer();
+				// & 0x7FFF;
+				this->_registers._vmadd.vmadd += this->_registers._incrementAmount;
+			}
+			return returnValue;
+		}
+		case PpuRegisters::vmdatahread: {
+			auto returnValue = static_cast<uint8_t>(this->_vramReadBuffer >> 8);
+			if (this->_registers._vmain.incrementMode) {
+				this->updateVramReadBuffer();
+				// & 0x7FFF;
+				this->_registers._vmadd.vmadd += this->_registers._incrementAmount;
+			}
+			return returnValue;
+		}
 		case PpuRegisters::cgdataread: {
 			return this->cgram->read_internal(this->_registers._cgadd++);
 		}
@@ -200,7 +216,7 @@ namespace ComSquare::PPU
 
 	void PPU::write(uint24_t addr, uint8_t data)
 	{
-		return;
+		//return;
 		switch (addr) {
 		case PpuRegisters::inidisp:
 			this->_registers._inidisp.raw = data;
@@ -277,16 +293,18 @@ namespace ComSquare::PPU
 			break;
 		case PpuRegisters::vmaddl:
 			this->_registers._vmadd.vmaddl = data;
+			this->updateVramReadBuffer();
 			break;
 		case PpuRegisters::vmaddh:
 			this->_registers._vmadd.vmaddh = data;
+			this->updateVramReadBuffer();
 			break;
 		case PpuRegisters::vmdatal:
 			//throw InvalidAddress("vmdata", addr);
 			//std::cout << "vmdatal" << std::endl;
 			if (!this->_registers._inidisp.fblank) {
 				this->_registers._vmdata.vmdatal = data;
-				this->vram->write_internal(getVramAddress(), this->_registers._vmdata.vmdatal);
+				this->vram->write_internal(this->getVramAddress(), this->_registers._vmdata.vmdatal);
 			}
 			if (!this->_registers._vmain.incrementMode)
 				this->_registers._vmadd.vmadd += this->_registers._incrementAmount;
@@ -295,7 +313,7 @@ namespace ComSquare::PPU
 			//std::cout << "vmdatah" << std::endl;
 			if (!this->_registers._inidisp.fblank) {
 				this->_registers._vmdata.vmdatah = data;
-				this->vram->write_internal(getVramAddress(), this->_registers._vmdata.vmdatah);
+				this->vram->write_internal(this->getVramAddress(), this->_registers._vmdata.vmdatah);
 			}
 			if (this->_registers._vmain.incrementMode)
 				this->_registers._vmadd.vmadd += this->_registers._incrementAmount;
@@ -759,5 +777,10 @@ namespace ComSquare::PPU
 	int PPU::getBgMode() const
 	{
 		return this->_registers._bgmode.bgMode;
+	}
+
+	void PPU::updateVramReadBuffer()
+	{
+		this->_vramReadBuffer = this->vram->read_internal(this->getVramAddress())
 	}
 }
