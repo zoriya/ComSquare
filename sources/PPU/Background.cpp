@@ -11,14 +11,14 @@
 namespace ComSquare::PPU
 {
 	Background::Background(ComSquare::PPU::PPU &_ppu, int backGroundNumber, bool hasPriority):
-		priority(hasPriority),
-		bgNumber(backGroundNumber)
+		_priority(hasPriority),
+		_bgNumber(backGroundNumber)
 	{
 		_cgram = _ppu.cgram;
 		_vram = _ppu.vram;
 		_bpp = _ppu.getBPP(backGroundNumber);
 		_characterSize = _ppu.getCharacterSize(backGroundNumber);
-		_TileMapStartAddress = _ppu.getTileMapStartAddress(backGroundNumber);
+		_tileMapStartAddress = _ppu.getTileMapStartAddress(backGroundNumber);
 		_tilesetAddress = _ppu.getTilesetAddress(backGroundNumber);
 		_tileMaps = _ppu.getBackgroundSize(backGroundNumber);
 		_directColor = false;
@@ -26,9 +26,9 @@ namespace ComSquare::PPU
 	}
 
 
-	void Background::renderBackground(void)
+	void Background::renderBackground()
 	{
-		uint16_t vramAddress = this->_TileMapStartAddress;
+		uint16_t vramAddress = this->_tileMapStartAddress;
 		Vector2<int> offset(0, 0);
 		this->backgroundSize.x = this->_tileMaps.x * this->_characterSize.x * NB_CHARACTER_WIDTH;
 		this->backgroundSize.y = this->_tileMaps.y * this->_characterSize.y * NB_CHARACTER_HEIGHT;
@@ -69,7 +69,7 @@ namespace ComSquare::PPU
 			for (int j = 0; j < this->_characterSize.x; j++) {
 				reference = getPixelReferenceFromTile(graphicAddress, index);
 				color = getRealColor(palette[reference]);
-				if (tileData.tilePriority == this->priority) // reference 0 is considered as transparency
+				if (tileData.tilePriority == this->_priority) // reference 0 is considered as transparency
 					this->buffer[pos.x][pos.y] = (reference) ? color : 0;
 				index += (tileData.horizontalFlip) ? -1 : 1;
 				pos.x++;
@@ -161,7 +161,7 @@ namespace ComSquare::PPU
 
 	void Background::setTileMapStartAddress(uint16_t address)
 	{
-		this->_TileMapStartAddress = address;
+		this->_tileMapStartAddress = address;
 	}
 
 	void Background::setTilesetAddress(uint16_t address)
@@ -182,8 +182,28 @@ namespace ComSquare::PPU
 			this->_bpp = 2;
 	}
 
-	void Background::setTilemaps(Vector2<int> tilemaps)
+	void Background::setTilemaps(Vector2<int> tileMaps)
 	{
-		this->_tileMaps = tilemaps;
+		this->_tileMaps = tileMaps;
+	}
+
+	void Background::setBgNumber(int bgNumber)
+	{
+		this->_bgNumber = bgNumber;
+	}
+
+	int Background::getBgNumber() const
+	{
+		return this->_bgNumber;
+	}
+
+	void Background::setPriority(bool priority)
+	{
+		this->_priority = priority;
+	}
+
+	bool Background::getPriority() const
+	{
+		return this->_priority;
 	}
 }

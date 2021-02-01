@@ -750,9 +750,9 @@ namespace ComSquare::PPU
 
 	void PPU::addToMainSubScreen(Background &bg)
 	{
-		if (this->_registers._t[0].raw & (1U << (bg.bgNumber - 1U)))
+		if (this->_registers._t[0].raw & (1U << (bg.getBgNumber() - 1U)))
 			this->add_buffer(this->_mainScreen, bg.buffer);
-		if (this->_registers._t[1].raw & (1U << (bg.bgNumber - 1U)))
+		if (this->_registers._t[1].raw & (1U << (bg.getBgNumber() - 1U)))
 			this->add_buffer(this->_subScreen, bg.buffer);
 	}
 }

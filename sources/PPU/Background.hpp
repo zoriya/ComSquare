@@ -29,8 +29,10 @@ namespace ComSquare::PPU
 		int _bpp;
 		bool _directColor;
 		bool _highRes;
-		uint16_t _TileMapStartAddress;
+		uint16_t _tileMapStartAddress;
 		uint16_t _tilesetAddress;
+		bool _priority;
+		int _bgNumber;
 
 		std::shared_ptr<Ram::Ram> _vram;
 		std::shared_ptr<Ram::Ram> _cgram;
@@ -50,20 +52,19 @@ namespace ComSquare::PPU
 		//! @param pixelIndex The index of the pixel (0 - 255)
 		//! @return The color reference
 		uint8_t getPixelReferenceFromTile(uint16_t tileAddress, uint8_t pixelIndex);
-		//! @brief draw a tilemap 32x32 starting at baseAddress
+		//! @brief draw a tileMap 32x32 starting at baseAddress
 		//! @param baseAddress The starting address of the tileMap
 		//! @param offset The rendering offeset in pixels
 		void drawBasicTileMap(uint16_t baseAddress, Vector2<int> offset);
 	public:
 		// TODO getter setter for priority and bgNumber
-		bool priority;
-		int bgNumber;
+
 		Vector2<int> backgroundSize;
 		std::array<std::array<uint32_t, 1024>, 1024> buffer;
 		Background(ComSquare::PPU::PPU &_ppu, int backGroundNumber, bool hasPriority);
 		//! @brief Render a background on his internal buffer
-		void renderBackground(void);
-		//! @brief Set the tilemap start address
+		void renderBackground();
+		//! @brief Set the tileMap start address
 		//! @param address TileMap start address
 		void setTileMapStartAddress(uint16_t address);
 		//! @brief Set the character Size
@@ -74,7 +75,21 @@ namespace ComSquare::PPU
 		//! @brief Set the bpp (bits per pixels) of the Background
 		//! @info The bpp can be 2, 4 or 8 (7 can be possible when BgMode is 7)
 		void setBpp(int bpp);
-		void setTilemaps(Vector2<int> tilemaps);
+		//! @brief setter for private variable _tileMaps
+		//! @param tileMaps The tileMaps to set
+		void setTilemaps(Vector2<int> tileMaps);
+		//! @brief set the Background number
+		//! @param bgNumber the new Background Number
+		void setBgNumber(int bgNumber);
+		//! @brief Get the BackGround Number
+		//! @return the current Background number
+		int getBgNumber() const;
+		//! @brief set the Background priority
+		//! @param bgNumber the new Background priority
+		void setPriority(bool priority);
+		//! @brief Get the Background priority
+		//! @return the current Background priority
+		bool getPriority() const;
 	};
 }
 
