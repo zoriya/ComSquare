@@ -75,7 +75,7 @@ int main(int argc, char **argv)
 		return 1;
 	}
 	QApplication app(argc, argv);
-	//QApplication::setAttribute(Qt::AA_DisableWindowContextHelpButton);
+	QApplication::setAttribute(Qt::AA_DisableWindowContextHelpButton);
 	Renderer::QtSFML renderer(1100, 1100);
 	try {
 		SNES snes(argv[1], renderer);
