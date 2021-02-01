@@ -23,6 +23,8 @@ namespace ComSquare::PPU
 	#define NB_CHARACTER_HEIGHT 32
 	#define TILE_PIXEL_WIDTH 8U
 	#define TILE_PIXEL_HEIGHT 8U
+	#define TILE_SIZE 8
+	#define NB_TILE_PER_ROW 16
 	private:
 		Vector2<int> _tileMaps;
 		Vector2<int> _characterSize;

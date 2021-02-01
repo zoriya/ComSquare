@@ -59,7 +59,7 @@ namespace ComSquare::PPU
 		palette = getPalette(tileData.palette);
 		// X horizontal
 		// Y vertical
-		graphicAddress = this->_tilesetAddress + (tileData.posY * 16 * this->_bpp * 8) + (tileData.posX * this->_bpp * 8);
+		graphicAddress = this->_tilesetAddress + (tileData.posY * NB_TILE_PER_ROW * this->_bpp * TILE_SIZE) + (tileData.posX * this->_bpp * TILE_SIZE);
 		for (int i = 0; i < this->_characterSize.y; i++) {
 			index = i * this->_characterSize.x;
 			if (tileData.verticalFlip)
