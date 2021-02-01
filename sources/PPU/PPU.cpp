@@ -126,7 +126,7 @@ namespace ComSquare::PPU
 			//std::cout << "vmdatal" << std::endl;
 			if (!this->_registers._inidisp.fblank) {
 				this->_registers._vmdata.vmdatal = data;
-				this->vram->write_internal(getVramAddress(), data);
+				this->vram->write_internal(this->getVramAddress(), data);
 			}
 			if (!this->_registers._vmain.incrementMode)
 				this->_registers._vmadd.vmadd += this->_registers._incrementAmount;
@@ -135,7 +135,7 @@ namespace ComSquare::PPU
 			//std::cout << "vmdatah" << std::endl;
 			if (!this->_registers._inidisp.fblank) {
 				this->_registers._vmdata.vmdatah = data;
-				this->vram->write_internal(getVramAddress(), data);
+				this->vram->write_internal(this->getVramAddress() + 1, data);
 			}
 			if (this->_registers._vmain.incrementMode)
 				this->_registers._vmadd.vmadd += this->_registers._incrementAmount;
@@ -221,7 +221,7 @@ namespace ComSquare::PPU
 
 	uint16_t PPU::getVramAddress()
 	{
-		uint16_t vanillaAddress = this->_registers._vmadd.vmadd;
+		uint16_t vanillaAddress = this->_registers._vmadd.vmadd * 2;
 
 		switch (this->_registers._vmain.addressRemapping) {
 		case 0b00:

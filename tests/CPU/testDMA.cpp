@@ -55,6 +55,7 @@ using namespace ComSquare;
 Test(DMA, VramWrite)
 {
 	Init()
+	//snes.bus->write(0x2115, 0b10000000);
 	snes.bus->write(0x2117, 0x20);
 	snes.bus->write(0x2116, 0x0);
 	for (unsigned i = 0; i < 0x400; i++) {
@@ -63,8 +64,8 @@ Test(DMA, VramWrite)
 		cr_assert_eq(snes.ppu->_registers._vmadd.vmadd, 0x2001 + i, "The vram address was %x but it should have been %x", snes.ppu->_registers._vmadd.vmadd, 0x2001 + i);
 	}
 	for(unsigned i = 0; i < 0x400; i++) {
-		uint16_t value = snes.ppu->vram->_data[0x2000 + i * 2] | (snes.ppu->vram->_data[0x2000 + i * 2 + 1] << 8);
-		std::cout << std::hex << 0x2000 + i << ": " << value << std::endl;
-//		cr_assert_eq(value, (uint16_t)i, "The memory at %x should be %x but it was %x", 0x2000 + i, (uint16_t)i, value);
+		uint16_t value = snes.ppu->vram->_data[0x2000 * 2 + i * 2] | (snes.ppu->vram->_data[0x2000 * 2 + i * 2 + 1] << 8);
+		//std::cout << std::hex << 0x2000 + i << ": " << value << std::endl;
+		cr_assert_eq(value, (uint16_t)i, "The memory at %x should be %x but it was %x", 0x2000 + i, (uint16_t)i, value);
 	}
 }
