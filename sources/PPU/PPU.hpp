@@ -36,139 +36,139 @@ namespace ComSquare::PPU
 		bg4Priority
 	};
 
-	enum ppuRegisters {
-	//! @brief INIDISP Register (F-blank and Brightness)
-	inidisp = 0x00,
-	//! @brief OBSEL Register (Object Size and Character Address)
-	obsel = 0x01,
-	//! @brief OAMADDL (OAM Address low byte)
-	oamaddl = 0x02,
-	//! @brief OAMADDH (OAM Address high bit and Obj Priority)
-	oamaddh = 0x03,
-	//! @brief OAMDATA (Data for OAM write)
-	oamdata = 0x04,
-	//! @brief BGMODE (BG Mode and Character Size)
-	bgmode = 0x05,
-	//! @brief MOSAIC (Screen Pixelation)
-	mosaic = 0x06,
-	//! @brief BG1SC (BG1 Tilemap Address and Size)
-	bg1sc = 0x07,
-	//! @brief BG2SC (BG2 Tilemap Address and Size)
-	bg2sc = 0x08,
-	//! @brief BG3SC (BG3 Tilemap Address and Size)
-	bg3sc = 0x09,
-	//! @brief BG4SC (BG4 Tilemap Address and Size)
-	bg4sc = 0x0A,
-	//! @brief BG12NBA (BG1 and 2 Chr Address)
-	bg12nba = 0x0B,
-	//! @brief BG34NBA (BG3 and 4 Chr Address)
-	bg34nba = 0x0C,
-	//! @brief BG1HOFS (BG1 Horizontal Scroll)
-	//! @brief M7HOFS (Mode 7 BG Horizontal Scroll)
-	//! @info When bg mode is 7 the register is used as M7HOFS
-	bg1hofs = 0x0D,
-	//! @brief BG1VOFS (BG1 Vertical Scroll)
-	//! @brief M7VOFS (Mode 7 BG Vertical Scroll)
-	//! @info When bg mode is 7 the register is used as M7VOFS
-	bg1vofs = 0x0E,
-	//! @brief BG2HOFS (BG2 Horizontal Scroll)
-	bg2hofs = 0x0F,
-	//! @brief BG2VOFS (BG2 Vertical Scroll)
-	bg2vofs = 0x10,
-	//! @brief BG3HOFS (BG3 Horizontal Scroll)
-	bg3hofs = 0x11,
-	//! @brief BG3VOFS (BG3 Vertical Scroll)
-	bg3vofs = 0x12,
-	//! @brief BG4HOFS (BG4 Horizontal Scroll)
-	bg4hofs = 0x13,
-	//! @brief BG4VOFS (BG4 Vertical Scroll)
-	bg4vofs = 0x14,
-	//! @brief VMAIN (Video Port Control)
-	vmain = 0x15,
-	//! @brief VMADDL (VRAM Address low byte)
-	vmaddl = 0x16,
-	//! @brief VMADDH (VRAM Address high byte)
-	vmaddh = 0x17,
-	//! @brief VMDATAL (VRAM Data Write low byte)
-	vmdatal = 0x18,
-	//! @brief VMDATAH (VRAM Data Write high byte)
-	vmdatah = 0x19,
-	//! @brief M7SEL (Mode 7 Settings)
-	m7sel = 0x1A,
-	//! @brief M7A (Mode 7 Matrix A) also used with $2134/6
-	m7a = 0x1B,
-	//! @brief M7B (Mode 7 Matrix B) also used with $2134/6
-	m7b = 0x1C,
-	//! @brief M7C (Mode 7 Matrix C)
-	m7c = 0x1D,
-	//! @brief M7D (Mode 7 Matrix D)
-	m7d = 0x1E,
-	//! @brief M7X (Mode 7 Center X)
-	m7x = 0x1F,
-	//! @brief M7Y (Mode 7 Center Y)
-	m7y = 0x20,
-	//! @brief CGADD (CGRAM Address)
-	cgadd = 0x21,
-	//! @brief CGDATA (CGRAM Data write)
-	cgdata = 0x22,
-	//! @brief W12SEL (Window Mask Settings for BG1 and BG2)
-	w12sel = 0x23,
-	//! @brief W34SEL (Window Mask Settings for BG3 and BG4)
-	w34sel = 0x24,
-	//! @brief WOBJSEL (Window Mask Settings for OBJ and Color Window)
-	wobjsel = 0x25,
-	//! @brief WH0 (Window 1 Left Position)
-	wh0 = 0x26,
-	//! @brief WH1 (Window 1 Right Position)
-	wh1 = 0x27,
-	//! @brief WH2 (Window 2 Left Position)
-	wh2 = 0x28,
-	//! @brief WH3 (Window 2 Right Position)
-	wh3 = 0x29,
-	//! @brief WBGLOG (Window mask logic for BGs)
-	wbjlog = 0x2A,
-	//! @brief WOBJLOG (Window mask logic for OBJs and Color Window)
-	wobjlog = 0x2B,
-	//! @brief TM (Main Screen Designation)
-	tm = 0x2C,
-	//! @brief TS (Subscreen Designation)
-	ts = 0x2D,
-	//! @brief TMW (Window Mask Designation for the Main Screen)
-	tmw = 0x2E,
-	//! @brief TSW (Window Mask Designation for the Subscreen)
-	tsw = 0x2F,
-	//! @brief CGWSEL (Color Addition Select)
-	cgwsel = 0x30,
-	//! @brief CGADSUB (Color math designation)
-	cgadsub = 0x31,
-	//! @brief COLDATA (Fixed Color Data)
-	coldata = 0x32,
-	//! @brief SETINI (Screen Mode/Video Select)
-	setini = 0x33,
-	//! @brief MPYL (Multiplication Result low byte)
-	mpyl = 0x34,
-	//! @brief MPYM (Multiplication Result middle byte)
-	mpym = 0x35,
-	//! @brief MPYH (Multiplication Result high byte)
-	mpyh = 0x36,
-	//! @brief SLHV (Software Latch for H/V Counter)
-	slhv = 0x37,
-	//! @brief OAMDATAREAD (Data for OAM read)
-	oamdataread = 0x38,
-	//! @brief VMDATALREAD (VRAM Data Read low byte)
-	vmdatalread = 0x39,
-	//! @brief VMDATAHREAD (VRAM Data Read high byte)
-	vmdatahread = 0x3A,
-	//! @brief CGDATAREAD (CGRAM Data read)
-	cgdataread = 0x3B,
-	//! @brief OPHCT (Horizontal Scanline Location)
-	ophct = 0x3C,
-	//! @brief OPVCT (Vertical Scanline Location)
-	opvct = 0x3D,
-	//! @brief STAT77 (PPU Status Flag and Version)
-	stat77 = 0x3E,
-	//! @brief STAT78 (PPU Status Flag and Version)
-	stat78 = 0x3F
+	enum PpuRegisters {
+		//! @brief INIDISP Register (F-blank and Brightness)
+		inidisp = 0x00,
+		//! @brief OBSEL Register (Object Size and Character Address)
+		obsel = 0x01,
+		//! @brief OAMADDL (OAM Address low byte)
+		oamaddl = 0x02,
+		//! @brief OAMADDH (OAM Address high bit and Obj Priority)
+		oamaddh = 0x03,
+		//! @brief OAMDATA (Data for OAM write)
+		oamdata = 0x04,
+		//! @brief BGMODE (BG Mode and Character Size)
+		bgmode = 0x05,
+		//! @brief MOSAIC (Screen Pixelation)
+		mosaic = 0x06,
+		//! @brief BG1SC (BG1 Tilemap Address and Size)
+		bg1sc = 0x07,
+		//! @brief BG2SC (BG2 Tilemap Address and Size)
+		bg2sc = 0x08,
+		//! @brief BG3SC (BG3 Tilemap Address and Size)
+		bg3sc = 0x09,
+		//! @brief BG4SC (BG4 Tilemap Address and Size)
+		bg4sc = 0x0A,
+		//! @brief BG12NBA (BG1 and 2 Chr Address)
+		bg12nba = 0x0B,
+		//! @brief BG34NBA (BG3 and 4 Chr Address)
+		bg34nba = 0x0C,
+		//! @brief BG1HOFS (BG1 Horizontal Scroll)
+		//! @brief M7HOFS (Mode 7 BG Horizontal Scroll)
+		//! @info When bg mode is 7 the register is used as M7HOFS
+		bg1hofs = 0x0D,
+		//! @brief BG1VOFS (BG1 Vertical Scroll)
+		//! @brief M7VOFS (Mode 7 BG Vertical Scroll)
+		//! @info When bg mode is 7 the register is used as M7VOFS
+		bg1vofs = 0x0E,
+		//! @brief BG2HOFS (BG2 Horizontal Scroll)
+		bg2hofs = 0x0F,
+		//! @brief BG2VOFS (BG2 Vertical Scroll)
+		bg2vofs = 0x10,
+		//! @brief BG3HOFS (BG3 Horizontal Scroll)
+		bg3hofs = 0x11,
+		//! @brief BG3VOFS (BG3 Vertical Scroll)
+		bg3vofs = 0x12,
+		//! @brief BG4HOFS (BG4 Horizontal Scroll)
+		bg4hofs = 0x13,
+		//! @brief BG4VOFS (BG4 Vertical Scroll)
+		bg4vofs = 0x14,
+		//! @brief VMAIN (Video Port Control)
+		vmain = 0x15,
+		//! @brief VMADDL (VRAM Address low byte)
+		vmaddl = 0x16,
+		//! @brief VMADDH (VRAM Address high byte)
+		vmaddh = 0x17,
+		//! @brief VMDATAL (VRAM Data Write low byte)
+		vmdatal = 0x18,
+		//! @brief VMDATAH (VRAM Data Write high byte)
+		vmdatah = 0x19,
+		//! @brief M7SEL (Mode 7 Settings)
+		m7sel = 0x1A,
+		//! @brief M7A (Mode 7 Matrix A) also used with $2134/6
+		m7a = 0x1B,
+		//! @brief M7B (Mode 7 Matrix B) also used with $2134/6
+		m7b = 0x1C,
+		//! @brief M7C (Mode 7 Matrix C)
+		m7c = 0x1D,
+		//! @brief M7D (Mode 7 Matrix D)
+		m7d = 0x1E,
+		//! @brief M7X (Mode 7 Center X)
+		m7x = 0x1F,
+		//! @brief M7Y (Mode 7 Center Y)
+		m7y = 0x20,
+		//! @brief CGADD (CGRAM Address)
+		cgadd = 0x21,
+		//! @brief CGDATA (CGRAM Data write)
+		cgdata = 0x22,
+		//! @brief W12SEL (Window Mask Settings for BG1 and BG2)
+		w12sel = 0x23,
+		//! @brief W34SEL (Window Mask Settings for BG3 and BG4)
+		w34sel = 0x24,
+		//! @brief WOBJSEL (Window Mask Settings for OBJ and Color Window)
+		wobjsel = 0x25,
+		//! @brief WH0 (Window 1 Left Position)
+		wh0 = 0x26,
+		//! @brief WH1 (Window 1 Right Position)
+		wh1 = 0x27,
+		//! @brief WH2 (Window 2 Left Position)
+		wh2 = 0x28,
+		//! @brief WH3 (Window 2 Right Position)
+		wh3 = 0x29,
+		//! @brief WBGLOG (Window mask logic for BGs)
+		wbjlog = 0x2A,
+		//! @brief WOBJLOG (Window mask logic for OBJs and Color Window)
+		wobjlog = 0x2B,
+		//! @brief TM (Main Screen Designation)
+		tm = 0x2C,
+		//! @brief TS (Subscreen Designation)
+		ts = 0x2D,
+		//! @brief TMW (Window Mask Designation for the Main Screen)
+		tmw = 0x2E,
+		//! @brief TSW (Window Mask Designation for the Subscreen)
+		tsw = 0x2F,
+		//! @brief CGWSEL (Color Addition Select)
+		cgwsel = 0x30,
+		//! @brief CGADSUB (Color math designation)
+		cgadsub = 0x31,
+		//! @brief COLDATA (Fixed Color Data)
+		coldata = 0x32,
+		//! @brief SETINI (Screen Mode/Video Select)
+		setini = 0x33,
+		//! @brief MPYL (Multiplication Result low byte)
+		mpyl = 0x34,
+		//! @brief MPYM (Multiplication Result middle byte)
+		mpym = 0x35,
+		//! @brief MPYH (Multiplication Result high byte)
+		mpyh = 0x36,
+		//! @brief SLHV (Software Latch for H/V Counter)
+		slhv = 0x37,
+		//! @brief OAMDATAREAD (Data for OAM read)
+		oamdataread = 0x38,
+		//! @brief VMDATALREAD (VRAM Data Read low byte)
+		vmdatalread = 0x39,
+		//! @brief VMDATAHREAD (VRAM Data Read high byte)
+		vmdatahread = 0x3A,
+		//! @brief CGDATAREAD (CGRAM Data read)
+		cgdataread = 0x3B,
+		//! @brief OPHCT (Horizontal Scanline Location)
+		ophct = 0x3C,
+		//! @brief OPVCT (Vertical Scanline Location)
+		opvct = 0x3D,
+		//! @brief STAT77 (PPU Status Flag and Version)
+		stat77 = 0x3E,
+		//! @brief STAT78 (PPU Status Flag and Version)
+		stat78 = 0x3F
 	};
 
 	struct Registers {

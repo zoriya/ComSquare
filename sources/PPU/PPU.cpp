@@ -173,25 +173,25 @@ namespace ComSquare::PPU
 	{
 		return 0;
 		switch (addr) {
-		case ppuRegisters::mpyl:
+		case PpuRegisters::mpyl:
 			return  this->_registers._mpy.mpyl;
-		case ppuRegisters::mpym:
+		case PpuRegisters::mpym:
 			return this->_registers._mpy.mpym;
-		case ppuRegisters::mpyh:
+		case PpuRegisters::mpyh:
 			return this->_registers._mpy.mpyh;
-		case ppuRegisters::slhv:
+		case PpuRegisters::slhv:
 			return this->_registers._slhv;
-		case ppuRegisters::oamdataread:
-		case ppuRegisters::vmdatalread:
-		case ppuRegisters::vmdatahread:
+		case PpuRegisters::oamdataread:
+		case PpuRegisters::vmdatalread:
+		case PpuRegisters::vmdatahread:
 			return 0;
-		case ppuRegisters::cgdataread: {
+		case PpuRegisters::cgdataread: {
 			return this->cgram->read_internal(this->_registers._cgadd++);
 		}
-		case ppuRegisters::ophct:
-		case ppuRegisters::opvct:
-		case ppuRegisters::stat77:
-		case ppuRegisters::stat78:
+		case PpuRegisters::ophct:
+		case PpuRegisters::opvct:
+		case PpuRegisters::stat77:
+		case PpuRegisters::stat78:
 			return 0;
 		default:
 			throw InvalidAddress("PPU Internal Registers read ", addr);
@@ -202,19 +202,19 @@ namespace ComSquare::PPU
 	{
 		return;
 		switch (addr) {
-		case ppuRegisters::inidisp:
+		case PpuRegisters::inidisp:
 			this->_registers._inidisp.raw = data;
 			break;
-		case ppuRegisters::obsel:
+		case PpuRegisters::obsel:
 			this->_registers._obsel.raw = data;
 			break;
-		case ppuRegisters::oamaddl:
+		case PpuRegisters::oamaddl:
 			this->_registers._oamadd.oamaddl = data;
 			break;
-		case ppuRegisters::oamaddh:
+		case PpuRegisters::oamaddh:
 			this->_registers._oamadd.oamaddh = data;
 			break;
-		case ppuRegisters::oamdata:
+		case PpuRegisters::oamdata:
 			this->_registers._oamdata = data;
 			//throw InvalidAddress("oamdata", addr);
 			std::cout << "oamdata" << std::endl;
@@ -222,7 +222,7 @@ namespace ComSquare::PPU
 			oamram->write_internal(this->_registers._oamadd.oamAddress, this->_registers._oamdata);
 			this->_registers._oamadd.oamAddress++;
 			break;
-		case ppuRegisters::bgmode:
+		case PpuRegisters::bgmode:
 			this->_registers._bgmode.raw = data;
 			// update backgrounds
 			for (int i = 0; i < 8; i++) {
@@ -230,13 +230,13 @@ namespace ComSquare::PPU
 				this->_backgrounds[i].setCharacterSize(this->getCharacterSize((i / 2) + 1));
 			}
 			break;
-		case ppuRegisters::mosaic:
+		case PpuRegisters::mosaic:
 			this->_registers._mosaic.raw = data;
 			break;
-		case ppuRegisters::bg1sc:
-		case ppuRegisters::bg2sc:
-		case ppuRegisters::bg3sc:
-		case ppuRegisters::bg4sc:
+		case PpuRegisters::bg1sc:
+		case PpuRegisters::bg2sc:
+		case PpuRegisters::bg3sc:
+		case PpuRegisters::bg4sc:
 			this->_registers._bgsc[addr - 0x07].raw = data;
 			// update background tilemap address
 			this->_backgrounds[addr - 0x07].setTileMapStartAddress(this->getTileMapStartAddress(addr - 0x07 + 1));
@@ -244,24 +244,24 @@ namespace ComSquare::PPU
 			this->_backgrounds[addr - 0x07].setTilemaps({this->_registers._bgsc[addr - 0x07].tilemapHorizontalMirroring, this->_registers._bgsc[addr - 0x07].tilemapVerticalMirroring});
 			this->_backgrounds[addr - 0x07 + 1].setTilemaps({this->_registers._bgsc[addr - 0x07].tilemapHorizontalMirroring, this->_registers._bgsc[addr - 0x07].tilemapVerticalMirroring});
 			break;
-		case ppuRegisters::bg12nba:
-		case ppuRegisters::bg34nba:
+		case PpuRegisters::bg12nba:
+		case PpuRegisters::bg34nba:
 			this->_registers._bgnba[addr - 0x0B].raw = data;
 			break;
-		case ppuRegisters::bg1hofs:
-		case ppuRegisters::bg1vofs:
-		case ppuRegisters::bg2hofs:
-		case ppuRegisters::bg2vofs:
-		case ppuRegisters::bg3hofs:
-		case ppuRegisters::bg3vofs:
-		case ppuRegisters::bg4hofs:
-		case ppuRegisters::bg4vofs:
+		case PpuRegisters::bg1hofs:
+		case PpuRegisters::bg1vofs:
+		case PpuRegisters::bg2hofs:
+		case PpuRegisters::bg2vofs:
+		case PpuRegisters::bg3hofs:
+		case PpuRegisters::bg3vofs:
+		case PpuRegisters::bg4hofs:
+		case PpuRegisters::bg4vofs:
 			// Work in progress !
-			if (addr == ppuRegisters::bg1hofs || addr == ppuRegisters::bg1vofs)
-				this->_registers._m7ofs[addr - ppuRegisters::bg1hofs].raw = data;
-			this->_registers._bgofs[addr - ppuRegisters::bg1hofs].raw = data;
+			if (addr == PpuRegisters::bg1hofs || addr == PpuRegisters::bg1vofs)
+				this->_registers._m7ofs[addr - PpuRegisters::bg1hofs].raw = data;
+			this->_registers._bgofs[addr - PpuRegisters::bg1hofs].raw = data;
 			break;
-		case ppuRegisters::vmain:
+		case PpuRegisters::vmain:
 			this->_registers._vmain.raw = data;
 			switch (this->_registers._vmain.incrementAmount) {
 			case 0b00:
@@ -275,13 +275,13 @@ namespace ComSquare::PPU
 				this->_registers._incrementAmount = 128;
 			}
 			break;
-		case ppuRegisters::vmaddl:
+		case PpuRegisters::vmaddl:
 			this->_registers._vmadd.vmaddl = data;
 			break;
-		case ppuRegisters::vmaddh:
+		case PpuRegisters::vmaddh:
 			this->_registers._vmadd.vmaddh = data;
 			break;
-		case ppuRegisters::vmdatal:
+		case PpuRegisters::vmdatal:
 			//throw InvalidAddress("vmdata", addr);
 			//std::cout << "vmdatal" << std::endl;
 			if (!this->_registers._inidisp.fblank) {
@@ -291,7 +291,7 @@ namespace ComSquare::PPU
 			if (!this->_registers._vmain.incrementMode)
 				this->_registers._vmadd.vmadd += this->_registers._incrementAmount;
 			break;
-		case ppuRegisters::vmdatah:
+		case PpuRegisters::vmdatah:
 			//std::cout << "vmdatah" << std::endl;
 			if (!this->_registers._inidisp.fblank) {
 				this->_registers._vmdata.vmdatah = data;
@@ -300,24 +300,24 @@ namespace ComSquare::PPU
 			if (this->_registers._vmain.incrementMode)
 				this->_registers._vmadd.vmadd += this->_registers._incrementAmount;
 			break;
-		case ppuRegisters::m7sel:
+		case PpuRegisters::m7sel:
 			this->_registers._m7sel.raw = data;
 			break;
-		case ppuRegisters::m7a:
-		case ppuRegisters::m7b:
-		case ppuRegisters::m7c:
-		case ppuRegisters::m7d:
-			this->_registers._m7[addr - ppuRegisters::m7a].m7 = (this->_registers._m7[addr - ppuRegisters::m7a].m7 << 8U) | data;
+		case PpuRegisters::m7a:
+		case PpuRegisters::m7b:
+		case PpuRegisters::m7c:
+		case PpuRegisters::m7d:
+			this->_registers._m7[addr - PpuRegisters::m7a].m7 = (this->_registers._m7[addr - PpuRegisters::m7a].m7 << 8U) | data;
 			break;
-		case ppuRegisters::m7x:
-		case ppuRegisters::m7y:
+		case PpuRegisters::m7x:
+		case PpuRegisters::m7y:
 			// TODO these registers
 			break;
-		case ppuRegisters::cgadd:
+		case PpuRegisters::cgadd:
 			this->_registers._cgadd = data;
 			this->_registers._isLowByte = true;
 			break;
-		case ppuRegisters::cgdata:
+		case PpuRegisters::cgdata:
 			if (this->_registers._isLowByte) {
 				this->_registers._cgdata.cgdatal = data;
 			}
@@ -330,51 +330,51 @@ namespace ComSquare::PPU
 			}
 			this->_registers._isLowByte = !this->_registers._isLowByte;
 			break;
-		case ppuRegisters::w12sel:
-		case ppuRegisters::w34sel:
-		case ppuRegisters::wobjsel:
-			this->_registers._wsel[addr - ppuRegisters::w12sel].raw = data;
+		case PpuRegisters::w12sel:
+		case PpuRegisters::w34sel:
+		case PpuRegisters::wobjsel:
+			this->_registers._wsel[addr - PpuRegisters::w12sel].raw = data;
 			break;
-		case ppuRegisters::wh0:
+		case PpuRegisters::wh0:
 			this->_registers._wh0 = data;
 			break;
-		case ppuRegisters::wh1:
+		case PpuRegisters::wh1:
 			this->_registers._wh1 = data;
 			break;
-		case ppuRegisters::wh2:
+		case PpuRegisters::wh2:
 			this->_registers._wh2 = data;
 			break;
-		case ppuRegisters::wh3:
+		case PpuRegisters::wh3:
 			this->_registers._wh3 = data;
 			break;
-		case ppuRegisters::wbjlog:
+		case PpuRegisters::wbjlog:
 			this->_registers._wbglog.raw = data;
 			break;
-		case ppuRegisters::wobjlog:
+		case PpuRegisters::wobjlog:
 			this->_registers._wobjlog.raw = data;
 			break;
-		case ppuRegisters::tm:
-		case ppuRegisters::ts:
-			this->_registers._t[addr - ppuRegisters::tm].raw = data;
+		case PpuRegisters::tm:
+		case PpuRegisters::ts:
+			this->_registers._t[addr - PpuRegisters::tm].raw = data;
 			break;
-		case ppuRegisters::tmw:
-		case ppuRegisters::tsw:
-			this->_registers._tw[addr - ppuRegisters::tmw].raw = data;
+		case PpuRegisters::tmw:
+		case PpuRegisters::tsw:
+			this->_registers._tw[addr - PpuRegisters::tmw].raw = data;
 			break;
-		case ppuRegisters::cgwsel:
+		case PpuRegisters::cgwsel:
 			this->_registers._cgwsel.raw = data;
 			break;
-		case ppuRegisters::cgadsub:
+		case PpuRegisters::cgadsub:
 			this->_registers._cgadsub.raw = data;
 			break;
-		case ppuRegisters::coldata:
+		case PpuRegisters::coldata:
 			this->_registers._coldata.raw = data;
 			break;
-		case ppuRegisters::setini:
+		case PpuRegisters::setini:
 			this->_registers._setini.raw = data;
 			break;
 		//TODO adding the rest of the registers. oaf !
-		case ppuRegisters::stat77: // some roms write here but it is useless
+		case PpuRegisters::stat77: // some roms write here but it is useless
 			break;
 		default:
 			throw InvalidAddress("PPU Internal Registers write", addr);
@@ -422,133 +422,133 @@ namespace ComSquare::PPU
 	std::string PPU::getValueName(uint24_t addr)
 	{
 		switch (addr) {
-		case ppuRegisters::inidisp:
+		case PpuRegisters::inidisp:
 			return "INIDISP";
-		case ppuRegisters::obsel:
+		case PpuRegisters::obsel:
 			return "OBSEL";
-		case ppuRegisters::oamaddl:
+		case PpuRegisters::oamaddl:
 			return "OAMADDL";
-		case ppuRegisters::oamaddh:
+		case PpuRegisters::oamaddh:
 			return "OAMDDH";
-		case ppuRegisters::oamdata:
+		case PpuRegisters::oamdata:
 			return "OAMDATA";
-		case ppuRegisters::bgmode:
+		case PpuRegisters::bgmode:
 			return "BGMODE";
-		case ppuRegisters::mosaic:
+		case PpuRegisters::mosaic:
 			return "MOSAIC";
-		case ppuRegisters::bg1sc:
+		case PpuRegisters::bg1sc:
 			return "BG1SC";
-		case ppuRegisters::bg2sc:
+		case PpuRegisters::bg2sc:
 			return "BG2SC";
-		case ppuRegisters::bg3sc:
+		case PpuRegisters::bg3sc:
 			return "BG3SC";
-		case ppuRegisters::bg4sc:
+		case PpuRegisters::bg4sc:
 			return "BG4SC";
-		case ppuRegisters::bg12nba:
+		case PpuRegisters::bg12nba:
 			return "BG12NBA";
-		case ppuRegisters::bg34nba:
+		case PpuRegisters::bg34nba:
 			return "BG34NBA";
-		case ppuRegisters::bg1hofs:
+		case PpuRegisters::bg1hofs:
 			return "BG1HOFS";
-		case ppuRegisters::bg1vofs:
+		case PpuRegisters::bg1vofs:
 			return "BG1VOFS";
-		case ppuRegisters::bg2hofs:
+		case PpuRegisters::bg2hofs:
 			return "BG2HOFS";
-		case ppuRegisters::bg2vofs:
+		case PpuRegisters::bg2vofs:
 			return "BG2VOFS";
-		case ppuRegisters::bg3hofs:
+		case PpuRegisters::bg3hofs:
 			return "BG3HOFS";
-		case ppuRegisters::bg3vofs:
+		case PpuRegisters::bg3vofs:
 			return "BG3VOFS";
-		case ppuRegisters::bg4hofs:
+		case PpuRegisters::bg4hofs:
 			return "BG4HOFS";
-		case ppuRegisters::bg4vofs:
+		case PpuRegisters::bg4vofs:
 			return "BG4VOFS";
-		case ppuRegisters::vmain:
+		case PpuRegisters::vmain:
 			return "VMAIN";
-		case ppuRegisters::vmaddl:
+		case PpuRegisters::vmaddl:
 			return "VMADDL";
-		case ppuRegisters::vmaddh:
+		case PpuRegisters::vmaddh:
 			return "VMADDH";
-		case ppuRegisters::vmdatal:
+		case PpuRegisters::vmdatal:
 			return "VMDATAL";
-		case ppuRegisters::vmdatah:
+		case PpuRegisters::vmdatah:
 			return "VMDATAH";
-		case ppuRegisters::m7sel:
+		case PpuRegisters::m7sel:
 			return "M7SEL";
-		case ppuRegisters ::m7a:
+		case PpuRegisters ::m7a:
 			return "M7A";
-		case ppuRegisters ::m7b:
+		case PpuRegisters ::m7b:
 			return "M7B";
-		case ppuRegisters ::m7c:
+		case PpuRegisters ::m7c:
 			return "M7C";
-		case ppuRegisters ::m7d:
+		case PpuRegisters ::m7d:
 			return "M7D";
-		case ppuRegisters ::m7x:
+		case PpuRegisters ::m7x:
 			return "M7X";
-		case ppuRegisters ::m7y:
+		case PpuRegisters ::m7y:
 			return "M7Y";
-		case ppuRegisters::cgadd:
+		case PpuRegisters::cgadd:
 			return "CGADD";
-		case ppuRegisters::cgdata:
+		case PpuRegisters::cgdata:
 			return "CGDATA";
-		case ppuRegisters::w12sel:
+		case PpuRegisters::w12sel:
 			return "W12SEL";
-		case ppuRegisters::w34sel:
+		case PpuRegisters::w34sel:
 			return "W34SEL";
-		case ppuRegisters::wobjsel:
+		case PpuRegisters::wobjsel:
 			return "WOBJSEL";
-		case ppuRegisters::wh0:
+		case PpuRegisters::wh0:
 			return "WH0";
-		case ppuRegisters::wh1:
+		case PpuRegisters::wh1:
 			return "WH1";
-		case ppuRegisters::wh2:
+		case PpuRegisters::wh2:
 			return "WH2";
-		case ppuRegisters::wh3:
+		case PpuRegisters::wh3:
 			return "WH3";
-		case ppuRegisters::wbjlog:
+		case PpuRegisters::wbjlog:
 			return "WBJLOG";
-		case ppuRegisters::wobjlog:
+		case PpuRegisters::wobjlog:
 			return "WOBJLOG";
-		case ppuRegisters::tm:
+		case PpuRegisters::tm:
 			return "TM";
-		case ppuRegisters::ts:
+		case PpuRegisters::ts:
 			return "TS";
-		case ppuRegisters::tmw:
+		case PpuRegisters::tmw:
 			return "TMW";
-		case ppuRegisters::tsw:
+		case PpuRegisters::tsw:
 			return "TSW";
-		case ppuRegisters::cgwsel:
+		case PpuRegisters::cgwsel:
 			return "CGWSEL";
-		case ppuRegisters::cgadsub:
+		case PpuRegisters::cgadsub:
 			return "CGADDSUB";
-		case ppuRegisters::coldata:
+		case PpuRegisters::coldata:
 			return "COLDATA";
-		case ppuRegisters::setini:
+		case PpuRegisters::setini:
 			return "SETINI";
-		case ppuRegisters::mpyl:
+		case PpuRegisters::mpyl:
 			return "MPYL";
-		case ppuRegisters::mpym:
+		case PpuRegisters::mpym:
 			return "MPYM";
-		case ppuRegisters::mpyh:
+		case PpuRegisters::mpyh:
 			return "MPYH";
-		case ppuRegisters::slhv:
+		case PpuRegisters::slhv:
 			return "SLHV";
-		case ppuRegisters::oamdataread:
+		case PpuRegisters::oamdataread:
 			return "OAMDATAREAD";
-		case ppuRegisters::vmdatalread:
+		case PpuRegisters::vmdatalread:
 			return "VMDATALREAD";
-		case ppuRegisters::vmdatahread:
+		case PpuRegisters::vmdatahread:
 			return "VMDATAHREAD";
-		case ppuRegisters::cgdataread:
+		case PpuRegisters::cgdataread:
 			return "CGDATAREAD";
-		case ppuRegisters::ophct:
+		case PpuRegisters::ophct:
 			return "OPHCT";
-		case ppuRegisters::opvct:
+		case PpuRegisters::opvct:
 			return "OPVCT";
-		case ppuRegisters::stat77:
+		case PpuRegisters::stat77:
 			return "STAT77";
-		case ppuRegisters::stat78:
+		case PpuRegisters::stat78:
 			return "STAT78";
 		default:
 			return "???";
