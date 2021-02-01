@@ -102,7 +102,7 @@ add_executable(unit_tests
         sources/PPU/Background.hpp
         sources/PPU/PPUUtils.cpp
         tests/PPU/testBackground.cpp
-        )
+        tests/PPU/testPpuRead.cpp)
 
 # include criterion & coverage
 target_link_libraries(unit_tests criterion -lgcov)

@@ -622,6 +622,7 @@ namespace ComSquare::PPU
 		void addToMainSubScreen(Background &bg);
 		//! @brief Get the current background Mode
 		int getBgMode() const;
+		//! @brief update the Vram buffer
 		void updateVramReadBuffer();
 	};
 
