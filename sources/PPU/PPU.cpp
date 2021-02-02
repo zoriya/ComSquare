@@ -36,16 +36,16 @@ namespace ComSquare::PPU
 		}*/
 
 		//colors for the cgram
-	/*	this->cgram->write_internal(2, 0xE0);
+		this->cgram->write_internal(2, 0xE0);
 		this->cgram->write_internal(3, 0x7F);
 		this->cgram->write_internal(4, 0x1F); // 0x1F
 		this->cgram->write_internal(6, 0xFF);
 		this->cgram->write_internal(7, 0x03);
 		this->cgram->write_internal(66, 0xE0);
-		this->cgram->write_internal(67, 0x7F);*/
+		this->cgram->write_internal(67, 0x7F);
 
 		//tiles
-		/*int vram_test[] = {
+		int vram_test[] = {
 			00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
 00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
 03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,
@@ -76,17 +76,17 @@ namespace ComSquare::PPU
 00,0x03,0x00,0x03,0x00,0x03,0x00,0x06,0x00,0x0c,0x00,0x18,0x00,0xf0,0x00,0xe0,
 00,0x00,0x00,0x00,0x80,0x00,0xc0,0x00,0xe0,0x00,0xf0,0x00,0xf8,0x00,0xfc,0x00,
 00,0x00,0x00,0x00,0x01,0x00,0x03,0x00,0x07,0x00,0x0f,00,0x1f,00,0x3f,00, -1
-		};*/
+		};
 	/*	int *cgram_test = get_dump_cgram();
 		for (int i = 0; cgram_test[i] != -1; i++) {
 			this->cgram->write_internal(i, cgram_test[i]);
 		}
 
-		int *vram_test = get_dump_vram();
+		int *vram_test = get_dump_vram();*/
 		for (int i = 0; vram_test[i] != -1; i++) {
 			this->vram->write_internal(i, vram_test[i]);
-		} */
-		/*int vram_test_2[] = {8, 00, 02, 00, 0x0A, 00, 02, 00, 0x0A, 00, 00, 00, 00, 00, 00, -1};
+		}
+		int vram_test_2[] = {8, 00, 02, 00, 0x0A, 00, 02, 00, 0x0A, 00, 00, 00, 00, 00, 00, -1};
 		for (int i = 0; vram_test_2[i] != -1; i++) {
 			this->vram->write_internal(i + 0x8000, vram_test_2[i]);
 		}
@@ -110,7 +110,39 @@ namespace ComSquare::PPU
 		this->vram->write_internal(0x80C6, 06);
 		this->vram->write_internal(0x80C8, 04);
 
-		this->vram->write_internal(0xC000, 0x0C);*/
+		this->vram->write_internal(0xC000, 0x0C);
+
+		//registers tic tac toe
+		this->_registers._bgmode.bgMode = 0;
+		this->_backgrounds[0].setBpp(this->getBPP(1));
+		this->_backgrounds[1].setBpp(this->getBPP(1));
+		this->_backgrounds[2].setBpp(this->getBPP(2));
+		this->_backgrounds[3].setBpp(this->getBPP(2));
+		this->_backgrounds[4].setBpp(this->getBPP(3));
+		this->_backgrounds[5].setBpp(this->getBPP(3));
+		this->_backgrounds[6].setBpp(this->getBPP(4));
+		this->_backgrounds[7].setBpp(this->getBPP(4));
+
+		this->_registers._bgmode.characterSizeBg1 = true;
+		this->_registers._bgmode.characterSizeBg2 = true;
+		this->_backgrounds[0].setCharacterSize(this->getCharacterSize(1));
+		this->_backgrounds[1].setCharacterSize(this->getCharacterSize(1));
+		this->_backgrounds[2].setCharacterSize(this->getCharacterSize(2));
+		this->_backgrounds[3].setCharacterSize(this->getCharacterSize(2));
+		this->_backgrounds[4].setCharacterSize(this->getCharacterSize(3));
+		this->_backgrounds[5].setCharacterSize(this->getCharacterSize(3));
+		this->_backgrounds[6].setCharacterSize(this->getCharacterSize(4));
+		this->_backgrounds[7].setCharacterSize(this->getCharacterSize(4));
+
+		this->_registers._bgsc[0].tilemapAddress = 0x4000 >> 10U;
+		this->_registers._bgsc[1].tilemapAddress = 0x6000 >> 10U;
+		this->_backgrounds[0].setTileMapStartAddress(this->getTileMapStartAddress(1));
+		this->_backgrounds[1].setTileMapStartAddress(this->getTileMapStartAddress(1));
+		this->_backgrounds[2].setTileMapStartAddress(this->getTileMapStartAddress(2));
+		this->_backgrounds[3].setTileMapStartAddress(this->getTileMapStartAddress(2));
+
+		this->_registers._t[0].enableWindowDisplayBg1 = true;
+		this->_registers._t[0].enableWindowDisplayBg2 = true;
 
 		//registers
 
@@ -171,7 +203,7 @@ namespace ComSquare::PPU
 
 	uint8_t PPU::read(uint24_t addr)
 	{
-		//return 0;
+		return 0;
 		switch (addr) {
 		case PpuRegisters::mpyl:
 			return  this->_registers._mpy.mpyl;
@@ -216,7 +248,7 @@ namespace ComSquare::PPU
 
 	void PPU::write(uint24_t addr, uint8_t data)
 	{
-		//return;
+		return;
 		switch (addr) {
 		case PpuRegisters::inidisp:
 			this->_registers._inidisp.raw = data;

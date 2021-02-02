@@ -88,7 +88,7 @@ namespace ComSquare::PPU
 
 		switch (this->_ppu.getBgMode()) {
 		case 0:
-			addr += this->_bgNumber * (4 * 8) * 2;
+			addr += (this->_bgNumber - 1) * (4 * 8) * 2;
 			break;
 		default:
 			break;
