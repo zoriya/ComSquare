@@ -13,6 +13,7 @@
 #include "../Ram/Ram.hpp"
 #include "../Models/Vector2.hpp"
 #include "Background.hpp"
+#include "PPUUtils.hpp"
 
 //#define max2BitTiles		4096
 //#define max4BitTiles		2048
@@ -570,6 +571,8 @@ namespace ComSquare::PPU
 		std::array<std::array<uint32_t, 1024>, 1024> _screen;
 		//! @brief Used for vram read registers (0x2139 - 0x213A)
 		uint16_t _vramReadBuffer = 0;
+		//! @brief Struct that contain all necessary vars for the use of the registers
+		struct PpuState _ppuState;
 	public:
 
 		explicit PPU(Renderer::IRenderer &renderer);

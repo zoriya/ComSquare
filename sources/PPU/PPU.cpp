@@ -203,7 +203,7 @@ namespace ComSquare::PPU
 
 	uint8_t PPU::read(uint24_t addr)
 	{
-		return 0;
+		//return 0;
 		switch (addr) {
 		case PpuRegisters::mpyl:
 			return  this->_registers._mpy.mpyl;
@@ -248,7 +248,7 @@ namespace ComSquare::PPU
 
 	void PPU::write(uint24_t addr, uint8_t data)
 	{
-		return;
+		//return;
 		switch (addr) {
 		case PpuRegisters::inidisp:
 			this->_registers._inidisp.raw = data;
@@ -294,20 +294,28 @@ namespace ComSquare::PPU
 			break;
 		case PpuRegisters::bg12nba:
 		case PpuRegisters::bg34nba:
-			this->_registers._bgnba[addr - 0x0B].raw = data;
+			this->_registers._bgnba[addr - PpuRegisters::bg12nba].raw = data;
 			break;
 		case PpuRegisters::bg1hofs:
-		case PpuRegisters::bg1vofs:
+			// TODO need of special var for prev value for Mode 7
+			this->_registers._m7ofs[addr - PpuRegisters::bg1hofs].raw = data;
+			__attribute__((fallthrough));
 		case PpuRegisters::bg2hofs:
-		case PpuRegisters::bg2vofs:
 		case PpuRegisters::bg3hofs:
-		case PpuRegisters::bg3vofs:
 		case PpuRegisters::bg4hofs:
+			this->_registers._bgofs[addr - PpuRegisters::bg1hofs].raw = ((data << 8) | (this->_ppuState.hvSharedScrollPrevValue & ~7) | (this->_ppuState.hScrollPrevValue & 7)) & 0x3FF;
+			this->_ppuState.hScrollPrevValue = data;
+			this->_ppuState.hvSharedScrollPrevValue = data;
+			break;
+		case PpuRegisters::bg1vofs:
+			// TODO need of special var for prev value for Mode 7
+			this->_registers._bgnba[addr - PpuRegisters::bg12nba].raw = data;
+			__attribute__((fallthrough));
+		case PpuRegisters::bg2vofs:
+		case PpuRegisters::bg3vofs:
 		case PpuRegisters::bg4vofs:
-			// Work in progress !
-			if (addr == PpuRegisters::bg1hofs || addr == PpuRegisters::bg1vofs)
-				this->_registers._m7ofs[addr - PpuRegisters::bg1hofs].raw = data;
-			this->_registers._bgofs[addr - PpuRegisters::bg1hofs].raw = data;
+			this->_registers._bgofs[addr - PpuRegisters::bg1hofs].raw = ((data << 8) | this->_ppuState.hvSharedScrollPrevValue) & 0x3FF;
+			this->_ppuState.hvSharedScrollPrevValue = data;
 			break;
 		case PpuRegisters::vmain:
 			this->_registers._vmain.raw = data;

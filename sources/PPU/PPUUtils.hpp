@@ -28,5 +28,13 @@ namespace ComSquare::PPU
 		uint16_t raw = 0;
 	};
 
+	//! @brief Struct to save all specific variables needed for the registers (prev values for example)
+	struct PpuState {
+		//! @brief Used by by all eight BGnxOFS registers (0x210D - 0x2114)
+		uint8_t hvSharedScrollPrevValue;
+		//! @brief Shared by the four BGnHOFS registers
+		uint8_t hScrollPrevValue;
+	};
+
 }
 #endif //COMSQUARE_PPU_UTILS_HPP
