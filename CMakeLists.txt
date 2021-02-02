@@ -99,7 +99,11 @@ add_executable(unit_tests
         tests/testRectangleMemory.cpp
         tests/CPU/Math/testCMP.cpp
         sources/PPU/Backgrounds.cpp
-        sources/PPU/Background.cpp sources/PPU/Background.hpp sources/CPU/DMA/DMA.cpp sources/CPU/DMA/DMA.hpp)
+        sources/PPU/Background.cpp
+        sources/PPU/Background.hpp
+        sources/CPU/DMA/DMA.cpp
+        sources/CPU/DMA/DMA.hpp
+        )
 
 # include criterion & coverage
 target_link_libraries(unit_tests criterion -lgcov)
@@ -215,7 +219,11 @@ add_executable(ComSquare
         sources/Debugger/CGramDebug.hpp
         sources/Models/Vector2.hpp
         sources/PPU/Backgrounds.cpp
-        sources/PPU/Background.cpp sources/PPU/Background.hpp sources/CPU/DMA/DMA.cpp sources/CPU/DMA/DMA.hpp)
+        sources/PPU/Background.cpp
+        sources/PPU/Background.hpp
+        sources/CPU/DMA/DMA.cpp
+        sources/CPU/DMA/DMA.hpp
+        )
 
 target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)
 

@@ -36,6 +36,11 @@ namespace ComSquare::Renderer
 		sf::Sprite _sprite;
 		//! @brief The texture to render the array of pixels
 		sf::Texture _texture;
+
+		//! @brief The buffer containing samples to be played
+		sf::SoundBuffer _soundBuffer;
+		//! @brief the sound played
+        sf::Sound _sound;
 	public:
 		//! @brief Tells to the program if the window has been closed, and therefore if he should stop
 		bool shouldExit = false;
@@ -49,6 +54,10 @@ namespace ComSquare::Renderer
 		//! @param Y vertical index.
 		//! @param rgba The color of the pixel.
 		void putPixel(unsigned y, unsigned x, uint32_t rgba) override;
+        //! @brief Playing all samples from buffer
+        //! @param samples Buffer containing samples
+        //! @param sampleCount number of samples inside buffer
+		void playAudio(int16_t *samples, uint64_t sampleCount) override;
 		//! @brief Get the inputs from the Window
 		void getEvents();
 		//! @brief Use this function to create the window.

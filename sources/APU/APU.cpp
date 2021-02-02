@@ -7,13 +7,14 @@
 #include "../Exceptions/NotImplementedException.hpp"
 #include "../Exceptions/InvalidAddress.hpp"
 #include "../Exceptions/InvalidOpcode.hpp"
-#include "../Utility/Utility.hpp"
 
 namespace ComSquare::APU
 {
-	APU::APU(std::shared_ptr<MemoryMap> &map) :
+	APU::APU(std::shared_ptr<MemoryMap> &map, Renderer::IRenderer &renderer) :
+        _renderer(renderer),
 		_map(map),
-		_dsp(new DSP::DSP())
+		_soundBuffer(),
+		_dsp(new DSP::DSP(_soundBuffer, APU::bufferSize / 2))
 	{
 		this->reset();
 	}
@@ -42,7 +43,7 @@ namespace ComSquare::APU
 		case 0xF2:
 			return this->_registers.dspregAddr;
 		case 0xF3:
-			return this->_registers.dspregData;
+			return this->_dsp->read(this->_registers.dspregAddr);
 		case 0xF4:
 			return this->_registers.port0;
 		case 0xF5:
@@ -87,7 +88,7 @@ namespace ComSquare::APU
 			this->_registers.dspregAddr = data;
 			break;
 		case 0xF3:
-			this->_registers.dspregData = data;
+			this->_dsp->write(this->_registers.dspregAddr, data);
 			break;
 		case 0xF4:
 			this->_registers.port0 = data;
@@ -705,6 +706,7 @@ namespace ComSquare::APU
 	void APU::update(unsigned cycles)
 	{
 		unsigned total = 0;
+        int32_t samples = 0;
 
 		if (this->_paddingCycles > cycles) {
 			this->_paddingCycles -= cycles;
@@ -715,6 +717,10 @@ namespace ComSquare::APU
 			total += this->_executeInstruction();
 		if (this->_state == Running)
 			this->_paddingCycles = total - cycles;
+
+        samples = this->_dsp->getSamplesCount();
+        if (samples > 0)
+		    this->_renderer.playAudio(this->_soundBuffer, samples / 2);
 	}
 
 	void APU::_setNZflags(uint8_t value)

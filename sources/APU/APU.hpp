@@ -10,6 +10,7 @@
 #include "../Memory/AMemory.hpp"
 #include "../Ram/Ram.hpp"
 #include "IPL/IPL.hpp"
+#include "../Renderer/IRenderer.hpp"
 
 namespace ComSquare::APU
 {
@@ -75,8 +76,6 @@ namespace ComSquare::APU
 
 		//! @brief DSP Register Address register
 		uint8_t dspregAddr;
-		//! @brief DSP Register data register
-		uint8_t dspregData;
 
 		//! @brief Port 0 register
 		uint8_t port0;
@@ -138,12 +137,19 @@ namespace ComSquare::APU
 		Registers _registers{};
 		//! @brief Internal registers of the CPU (accessible from the bus via addr $4200 to $421F).
 		InternalRegisters _internalRegisters{};
+		//! @brief Renderer used to play sounds
+		Renderer::IRenderer &_renderer;
 
 		//! @brief Internal APU memory separated according to their utility
 		std::shared_ptr<MemoryMap> _map;
 
-		//! @brief The DSP component used to produce sound
-		std::shared_ptr<DSP::DSP> _dsp;
+		//! @brief Total size of the buffer containing samples
+        static constexpr int32_t bufferSize = 0x20000;
+        //! @brief Buffer containing samples to be played
+		int16_t _soundBuffer[bufferSize];
+
+        //! @brief The DSP component used to produce sound
+        std::shared_ptr<DSP::DSP> _dsp;
 
 		//! @brief Read from the APU ram.
 		//! @param addr The address to read from. The address 0x0000 should refer to the first byte of the register.
@@ -367,7 +373,7 @@ namespace ComSquare::APU
 		int MOV(uint24_t memFrom, uint8_t &regTo, int cycles, bool incrementX = false);
 		int MOV(uint24_t memTo, uint24_t memFrom);
 	public:
-		explicit APU(std::shared_ptr<MemoryMap> &map);
+		explicit APU(std::shared_ptr<MemoryMap> &map, Renderer::IRenderer &renderer);
 		APU(const APU &) = default;
 		APU &operator=(const APU &) = default;
 		~APU() override = default;

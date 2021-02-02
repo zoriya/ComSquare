@@ -30,6 +30,11 @@ namespace ComSquare
 			//! @param snes The snes game object (to call the update method).
 			//! @param maxFPS The number of FPS you aim to run on.
 			virtual void createWindow(SNES &snes, int maxFPS) = 0;
+
+            //! @brief Playing all samples from buffer
+            //! @param samples Buffer containing samples
+            //! @param sampleCount number of samples inside buffer
+			virtual void playAudio(int16_t *samples, uint64_t sampleCount) = 0;
 		};
 	}
 }

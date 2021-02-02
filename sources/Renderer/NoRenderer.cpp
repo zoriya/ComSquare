@@ -20,6 +20,10 @@ namespace ComSquare::Renderer
 		(void)rgba;
 	}
 
+    void NoRenderer::playAudio(int16_t *, uint64_t)
+    {
+    }
+
 	void NoRenderer::getEvents() { }
 
 	NoRenderer::NoRenderer(unsigned int height, unsigned int width, int maxFPS)

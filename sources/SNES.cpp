@@ -22,7 +22,7 @@ namespace ComSquare
 		apuRam(new APU::MemoryMap()),
 		cpu(new CPU::CPU(this->_bus, cartridge->header)),
 		ppu(new PPU::PPU(renderer)),
-		apu(new APU::APU(this->apuRam))
+		apu(new APU::APU(this->apuRam, renderer))
 	{
 		this->_bus->mapComponents(*this);
 	}

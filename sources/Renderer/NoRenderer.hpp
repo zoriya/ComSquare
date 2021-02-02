@@ -21,7 +21,11 @@ namespace ComSquare::Renderer
 		//! @param X horizontal index.
 		//! @param Y vertical index.
 		//! @param rgba The color of the pixel.
-		void putPixel(unsigned y, unsigned x, uint32_t rgba) override ;
+		void putPixel(unsigned y, unsigned x, uint32_t rgba) override;
+        //! @brief Playing all samples from buffer
+        //! @param samples Buffer containing samples
+        //! @param sampleCount number of samples inside buffer
+        void playAudio(int16_t *samples, uint64_t sampleCount) override;
 		//! @brief Get the inputs from the Window
 		void getEvents();
 		//! @brief Use this function to create the window.
