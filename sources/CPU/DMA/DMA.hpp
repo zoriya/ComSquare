@@ -30,7 +30,13 @@ namespace ComSquare::CPU
 			//! @brief 4 byte is transferred to 2 register (write twice)
 			FourToTwo = 0b011,
 			//! @brief 4 byte is transferred to 4 register (write once)
-			FourToFour = 0b100
+			FourToFour = 0b100,
+			//! @brief Exactly the same as TwoToTwo (not implemented on the SNES so this fallbacks)
+			TwoToTwoBis = 0b101,
+			//! @brief Exactly the same as TwoToOne (not implemented on the SNES so this fallbacks)
+			TwoToOneBis = 0b110,
+			//! @brief Exactly the same as FourToTwo (not implemented on the SNES so this fallbacks)
+			FourToTwoBis = 0b111
 		};
 
 		enum Direction {

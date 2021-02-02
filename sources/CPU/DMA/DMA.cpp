@@ -72,8 +72,10 @@ namespace ComSquare::CPU
 		if (this->_port == 0x80) {
 			auto accessor = this->_bus->getAccessor(aAddress);
 			if (accessor && accessor->getComponent() == WRam) {
+				// WRAM->$2180 The write is not performed but the time is consumed anyway.
 				if (this->_controlRegister.direction == AtoB)
 					return 8;
+				// $2180->WRAM No read is performed (so only 4 master cycles are needed) but the value written is invalid.
 				this->_bus->write(aAddress, 0xFF);
 				return 4;
 			}
@@ -108,13 +110,18 @@ namespace ComSquare::CPU
 	{
 		switch (this->_controlRegister.mode) {
 		case OneToOne:
-			return 0;
-		case TwoToTwo:
-			return index % 2;
 		case TwoToOne:
+		case TwoToOneBis:
 			return 0;
+
+		case TwoToTwo:
+		case TwoToTwoBis:
+			return index % 2;
+
 		case FourToTwo:
+		case FourToTwoBis:
 			return (index & 0b11) > 1;
+
 		case FourToFour:
 			return (index & 0b11);
 		}
