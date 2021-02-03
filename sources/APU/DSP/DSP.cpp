@@ -18,37 +18,37 @@ namespace ComSquare::APU::DSP
 	{
 		switch (addr) {
 		case 0x00:
-			return this->_voices[0].volL;
+			return this->_voices[0].volume[0];
 		case 0x10:
-			return this->_voices[1].volL;
+			return this->_voices[1].volume[0];
 		case 0x20:
-			return this->_voices[2].volL;
+			return this->_voices[2].volume[0];
 		case 0x30:
-			return this->_voices[3].volL;
+			return this->_voices[3].volume[0];
 		case 0x40:
-			return this->_voices[4].volL;
+			return this->_voices[4].volume[0];
 		case 0x50:
-			return this->_voices[5].volL;
+			return this->_voices[5].volume[0];
 		case 0x60:
-			return this->_voices[6].volL;
+			return this->_voices[6].volume[0];
 		case 0x70:
-			return this->_voices[7].volL;
+			return this->_voices[7].volume[0];
 		case 0x01:
-			return this->_voices[0].volR;
+			return this->_voices[0].volume[1];
 		case 0x11:
-			return this->_voices[1].volR;
+			return this->_voices[1].volume[1];
 		case 0x21:
-			return this->_voices[2].volR;
+			return this->_voices[2].volume[1];
 		case 0x31:
-			return this->_voices[3].volR;
+			return this->_voices[3].volume[1];
 		case 0x41:
-			return this->_voices[4].volR;
+			return this->_voices[4].volume[1];
 		case 0x51:
-			return this->_voices[5].volR;
+			return this->_voices[5].volume[1];
 		case 0x61:
-			return this->_voices[6].volR;
+			return this->_voices[6].volume[1];
 		case 0x71:
-			return this->_voices[7].volR;
+			return this->_voices[7].volume[1];
 		case 0x02:
 			return this->_voices[0].pitchL;
 		case 0x12:
@@ -146,45 +146,31 @@ namespace ComSquare::APU::DSP
 		case 0x77:
 			return this->_voices[7].gain;
 		case 0x08:
-			return this->_voices[0].envx;
 		case 0x18:
-			return this->_voices[1].envx;
 		case 0x28:
-			return this->_voices[2].envx;
 		case 0x38:
-			return this->_voices[3].envx;
 		case 0x48:
-			return this->_voices[4].envx;
 		case 0x58:
-			return this->_voices[5].envx;
 		case 0x68:
-			return this->_voices[6].envx;
 		case 0x78:
-			return this->_voices[7].envx;
+			return this->_latch.envx;
 		case 0x09:
-			return this->_voices[0].outx;
 		case 0x19:
-			return this->_voices[1].outx;
 		case 0x29:
-			return this->_voices[2].outx;
 		case 0x39:
-			return this->_voices[3].outx;
 		case 0x49:
-			return this->_voices[4].outx;
 		case 0x59:
-			return this->_voices[5].outx;
 		case 0x69:
-			return this->_voices[6].outx;
 		case 0x79:
-			return this->_voices[7].outx;
+			return this->_latch.outx;
 		case 0x0C:
-			return this->_registers.mvolL;
+			return this->_master.volume[0];
 		case 0x1C:
-			return this->_registers.mvolR;
+			return this->_master.volume[1];
 		case 0x2C:
-			return this->_registers.evolL;
+			return this->_echo.volume[0];
 		case 0x3C:
-			return this->_registers.evolR;
+			return this->_echo.volume[1];
 		case 0x4C: {
 			uint8_t kon = 0;
 
@@ -199,8 +185,14 @@ namespace ComSquare::APU::DSP
 				kof |= this->_voices[i].kof << i;
 			return kof;
 		}
-		case 0x6C:
-			return this->_registers.flg;
+		case 0x6C: {
+            uint8_t flg = 0;
+            flg += this->_master.reset << 7;
+            flg += this->_master.mute << 6;
+            flg += this->_echo.enabled << 5;
+            flg += this->_noise.clock;
+            return flg;
+        }
 		case 0x7C: {
 			uint8_t endx = 0;
 
@@ -209,9 +201,9 @@ namespace ComSquare::APU::DSP
 			return endx;
 		}
 		case 0x0D:
-			return this->_registers.efb;
+			return this->_echo.feedback;
 		case 0x1D:
-			return this->_registers.unused;
+			return this->_master.unused;
 		case 0x2D: {
 			uint8_t pmon = 0;
 
@@ -234,27 +226,27 @@ namespace ComSquare::APU::DSP
 			return eon;
 		}
 		case 0x5D:
-			return this->_registers.dir;
+			return this->_brr.offset;
 		case 0x6D:
-			return this->_registers.esa;
+			return this->_echo.data;
 		case 0x7D:
-			return this->_registers.edl;
+			return this->_echo.delay;
 		case 0x0F:
-			return this->_voices[0].coeff;
+			return this->_echo.FIR[0];
 		case 0x1F:
-			return this->_voices[1].coeff;
+			return this->_echo.FIR[1];
 		case 0x2F:
-			return this->_voices[2].coeff;
+			return this->_echo.FIR[2];
 		case 0x3F:
-			return this->_voices[3].coeff;
+			return this->_echo.FIR[3];
 		case 0x4F:
-			return this->_voices[4].coeff;
+			return this->_echo.FIR[4];
 		case 0x5F:
-			return this->_voices[5].coeff;
+			return this->_echo.FIR[5];
 		case 0x6F:
-			return this->_voices[6].coeff;
+			return this->_echo.FIR[6];
 		case 0x7F:
-			return this->_voices[7].coeff;
+			return this->_echo.FIR[7];
 		default:
 			throw InvalidAddress("DSP Registers read", addr);
 		}
@@ -264,52 +256,52 @@ namespace ComSquare::APU::DSP
 	{
 		switch (addr) {
 		case 0x00:
-			this->_voices[0].volL = data;
+			this->_voices[0].volume[0] = data;
 			break;
 		case 0x10:
-			this->_voices[1].volL = data;
+			this->_voices[1].volume[0] = data;
 			break;
 		case 0x20:
-			this->_voices[2].volL = data;
+			this->_voices[2].volume[0] = data;
 			break;
 		case 0x30:
-			this->_voices[3].volL = data;
+			this->_voices[3].volume[0] = data;
 			break;
 		case 0x40:
-			this->_voices[4].volL = data;
+			this->_voices[4].volume[0] = data;
 			break;
 		case 0x50:
-			this->_voices[5].volL = data;
+			this->_voices[5].volume[0] = data;
 			break;
 		case 0x60:
-			this->_voices[6].volL = data;
+			this->_voices[6].volume[0] = data;
 			break;
 		case 0x70:
-			this->_voices[7].volL = data;
+			this->_voices[7].volume[0] = data;
 			break;
 		case 0x01:
-			this->_voices[0].volR = data;
+			this->_voices[0].volume[1] = data;
 			break;
 		case 0x11:
-			this->_voices[1].volR = data;
+			this->_voices[1].volume[1] = data;
 			break;
 		case 0x21:
-			this->_voices[2].volR = data;
+			this->_voices[2].volume[1] = data;
 			break;
 		case 0x31:
-			this->_voices[3].volR = data;
+			this->_voices[3].volume[1] = data;
 			break;
 		case 0x41:
-			this->_voices[4].volR = data;
+			this->_voices[4].volume[1] = data;
 			break;
 		case 0x51:
-			this->_voices[5].volR = data;
+			this->_voices[5].volume[1] = data;
 			break;
 		case 0x61:
-			this->_voices[6].volR = data;
+			this->_voices[6].volume[1] = data;
 			break;
 		case 0x71:
-			this->_voices[7].volR = data;
+			this->_voices[7].volume[1] = data;
 			break;
 		case 0x02:
 			this->_voices[0].pitchL = data;
@@ -480,61 +472,51 @@ namespace ComSquare::APU::DSP
 			this->_voices[7].envx = data;
 			break;
 		case 0x09:
-			this->_voices[0].outx = data;
-			break;
 		case 0x19:
-			this->_voices[1].outx = data;
-			break;
 		case 0x29:
-			this->_voices[2].outx = data;
-			break;
 		case 0x39:
-			this->_voices[3].outx = data;
-			break;
 		case 0x49:
-			this->_voices[4].outx = data;
-			break;
 		case 0x59:
-			this->_voices[5].outx = data;
-			break;
 		case 0x69:
-			this->_voices[6].outx = data;
-			break;
 		case 0x79:
-			this->_voices[7].outx = data;
+			this->_latch.outx = data;
 			break;
 		case 0x0C:
-			this->_registers.mvolL = data;
+			this->_master.volume[0] = data;
 			break;
 		case 0x1C:
-			this->_registers.mvolR = data;
+			this->_master.volume[1] = data;
 			break;
 		case 0x2C:
-			this->_registers.evolL = data;
+			this->_echo.volume[0] = data;
 			break;
 		case 0x3C:
-			this->_registers.evolR = data;
+			this->_echo.volume[1] = data;
 			break;
 		case 0x4C:
-			for (int i = 0; i < 8; i++)
-				this->_voices[i].kon |= data << i;
+			for (int i = 0; i < 8; i++) {
+                this->_voices[i].kon |= data << i;
+            }
 			break;
 		case 0x5C:
 			for (int i = 0; i < 8; i++)
 				this->_voices[i].kof |= data << i;
 			break;
 		case 0x6C:
-			this->_registers.flg = data;
+		    this->_master.reset = data >> 7;
+            this->_master.mute = (data >> 6) & 0b1;
+            this->_echo.enabled = (data >> 5) & 0b1;
+            this->_noise.clock = data & 0b1111;
 			break;
 		case 0x7C:
 			for (int i = 0; i < 8; i++)
 				this->_voices[i].endx |= data << i;
 			break;
 		case 0x0D:
-			this->_registers.efb = data;
+			this->_echo.feedback = data;
 			break;
 		case 0x1D:
-			this->_registers.unused = data;
+			this->_master.unused = data;
 			break;
 		case 0x2D:
 			for (int i = 0; i < 8; i++)
@@ -549,37 +531,37 @@ namespace ComSquare::APU::DSP
 				this->_voices[i].eon |= data << i;
 			break;
 		case 0x5D:
-			this->_registers.dir = data;
+			this->_brr.offset = data;
 			break;
 		case 0x6D:
-			this->_registers.esa = data;
+			this->_echo.data = data;
 			break;
 		case 0x7D:
-			this->_registers.edl = data;
+			this->_echo.delay = data;
 			break;
 		case 0x0F:
-			this->_voices[0].coeff = data;
+			this->_echo.FIR[0] = data;
 			break;
 		case 0x1F:
-			this->_voices[1].coeff = data;
+			this->_echo.FIR[1] = data;
 			break;
 		case 0x2F:
-			this->_voices[2].coeff = data;
+			this->_echo.FIR[2] = data;
 			break;
 		case 0x3F:
-			this->_voices[3].coeff = data;
+			this->_echo.FIR[3] = data;
 			break;
 		case 0x4F:
-			this->_voices[4].coeff = data;
+			this->_echo.FIR[4] = data;
 			break;
 		case 0x5F:
-			this->_voices[5].coeff = data;
+			this->_echo.FIR[5] = data;
 			break;
 		case 0x6F:
-			this->_voices[6].coeff = data;
+			this->_echo.FIR[6] = data;
 			break;
 		case 0x7F:
-			this->_voices[7].coeff = data;
+			this->_echo.FIR[7] = data;
 			break;
 		default:
 			throw InvalidAddress("DSP Registers write", addr);
@@ -588,20 +570,193 @@ namespace ComSquare::APU::DSP
 
 	void DSP::update()
     {
+        switch (this->_state.voice) {
+            case 0:
+                this->voice5(this->_voices[0]);
+                this->voice2(this->_voices[1]);
+                break;
+            case 1:
+                this->voice6(this->_voices[0]);
+                this->voice3(this->_voices[1]);
+                break;
+            case 2:
+                this->voice7(this->_voices[0]);
+                this->voice4(this->_voices[1]);
+                this->voice1(this->_voices[3]);
+                break;
+            case 3:
+                this->voice8(this->_voices[0]);
+                this->voice5(this->_voices[1]);
+                this->voice2(this->_voices[2]);
+                break;
+            case 4:
+                this->voice9(this->_voices[0]);
+                this->voice6(this->_voices[1]);
+                this->voice3(this->_voices[2]);
+                break;
+            case 5:
+                this->voice7(this->_voices[1]);
+                this->voice4(this->_voices[2]);
+                this->voice1(this->_voices[4]);
+                break;
+            case 6:
+                this->voice8(this->_voices[1]);
+                this->voice5(this->_voices[2]);
+                this->voice2(this->_voices[3]);
+                break;
+            case 7:
+                this->voice9(this->_voices[1]);
+                this->voice6(this->_voices[2]);
+                this->voice3(this->_voices[3]);
+                break;
+            case 8:
+                this->voice7(this->_voices[2]);
+                this->voice4(this->_voices[3]);
+                this->voice1(this->_voices[5]);
+                break;
+            case 9:
+                this->voice8(this->_voices[2]);
+                this->voice5(this->_voices[3]);
+                this->voice2(this->_voices[4]);
+                break;
+            case 10:
+                this->voice9(this->_voices[2]);
+                this->voice6(this->_voices[3]);
+                this->voice3(this->_voices[4]);
+                break;
+            case 11:
+                this->voice7(this->_voices[3]);
+                this->voice4(this->_voices[4]);
+                this->voice1(this->_voices[6]);
+                break;
+            case 12:
+                this->voice8(this->_voices[3]);
+                this->voice5(this->_voices[4]);
+                this->voice2(this->_voices[5]);
+                break;
+            case 13:
+                this->voice9(this->_voices[3]);
+                this->voice6(this->_voices[4]);
+                this->voice3(this->_voices[5]);
+                break;
+            case 14:
+                this->voice7(this->_voices[4]);
+                this->voice4(this->_voices[5]);
+                this->voice1(this->_voices[7]);
+                break;
+            case 15:
+                this->voice8(this->_voices[4]);
+                this->voice5(this->_voices[5]);
+                this->voice2(this->_voices[6]);
+                break;
+            case 16:
+                this->voice9(this->_voices[4]);
+                this->voice6(this->_voices[5]);
+                this->voice3(this->_voices[6]);
+                break;
+            case 17:
+                this->voice1(this->_voices[0]);
+                this->voice7(this->_voices[5]);
+                this->voice4(this->_voices[6]);
+                break;
+            case 18:
+                this->voice8(this->_voices[5]);
+                this->voice5(this->_voices[6]);
+                this->voice2(this->_voices[7]);
+                break;
+            case 19:
+                this->voice9(this->_voices[5]);
+                this->voice6(this->_voices[6]);
+                this->voice3(this->_voices[7]);
+                break;
+            case 20:
+                this->voice1(this->_voices[1]);
+                this->voice7(this->_voices[6]);
+                this->voice4(this->_voices[7]);
+                break;
+            case 21:
+                this->voice8(this->_voices[6]);
+                this->voice5(this->_voices[7]);
+                this->voice2(this->_voices[0]);
+                break;
+            case 22:
+                this->voice3a(this->_voices[0]);
+                this->voice9(this->_voices[6]);
+                this->voice6(this->_voices[7]);
+                echo22();
+                break;
+            case 23:
+                this->voice7(this->_voices[7]);
+                echo23();
+                break;
+            case 24:
+                this->voice8(this->_voices[7]);
+                echo24();
+                break;
+            case 25:
+                this->voice3b(this->_voices[0]);
+                this->voice9(this->_voices[7]);
+                echo25();
+                break;
+            case 26:
+                echo26();
+                break;
+            case 27:
+                this->misc27();
+                this->echo27();
+                break;
+            case 28:
+                this->misc28();
+                this->echo28();
+                break;
+            case 29:
+                this->misc29();
+                this->echo29();
+                break;
+            case 30:
+                this->misc30();
+                this->voice3c(this->_voices[0]);
+                this->echo30();
+                break;
+            case 31:
+                this->voice4(this->_voices[0]);
+                this->voice1(this->_voices[2]);
+                break;
+        }
 	    this->_state.voice = (this->_state.voice + 1) % 32;
     }
 
-	Registers DSP::getRegisters()
-	{
-		return this->_registers;
-	}
-
-	std::array<Voice, 8> DSP::getVoices()
+	const std::array<Voice, 8> &DSP::getVoices()
 	{
 		return this->_voices;
 	}
 
-    int32_t DSP::getSamplesCount()
+    const Master &DSP::getMaster()
+    {
+        return this->_master;
+    }
+
+    const Echo &DSP::getEcho()
+    {
+        return this->_echo;
+    }
+
+    const Noise &DSP::getNoise()
+    {
+        return this->_noise;
+    }
+
+    const BRR &DSP::getBrr()
+    {
+        return this->_brr;
+    }
+
+    const Latch &DSP::getLatch()
+    {
+        return this->_latch;
+    }
+
+    int32_t DSP::getSamplesCount() const
     {
         return this->_state.buffer - this->_state.bufferStart;
     }

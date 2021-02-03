@@ -11,34 +11,159 @@
 
 namespace ComSquare::APU::DSP
 {
-	//! @brief All the registers of the DSP
-	struct Registers {
-		//! @brief Left output of the Main Volume register
-		uint8_t mvolL;
-		//! @brief Right output of the Main Volume register
-		uint8_t mvolR;
+    struct Master {
+        //! @brief Main Volume register (MVOL)
+        std::array<uint8_t, 2> volume;
+        //! @brief Mutes all channel (6th bit FLG)
+        bool mute : 1;
+        //! @brief Soft reset DSP (7th bit FLG)
+        bool reset : 1;
+        //! @brief Current sound produced
+        std::array<uint16_t, 2> output;
+        //! @brief Not used register
+        uint8_t unused;
+    };
 
-		//! @brief Left output of the Echo Volume register
-		uint8_t evolL;
-		//! @brief Right output of the Echo Volume register
-		uint8_t evolR;
+    struct Echo {
+        //! @brief Echo Volume register (EVOL)
+        std::array<uint8_t , 2> volume;
+        //! @brief Echo feedback register (EFB)
+        uint8_t feedback;
+        //! @brief Echo FIR filter coefficients (COEF)
+        std::array<uint8_t, 8> FIR;
+        //! @brief Echo data start register (ESA)
+        uint8_t data;
+        //! @brief Echo delay size register (EDL)
+        uint8_t delay;
+        //! @brief Echo enabled (5th bit FLG)
+        bool enabled = true;
+        //! @brief Last sound produced for each voice in each channel
+        std::array<std::array<int16_t, 8>, 2> history;
+        //! @brief Current sound to echo
+        std::array<uint16_t, 2> input;
+        //! @brief Current sound echoed produced
+        std::array<uint16_t, 2> output;
+    };
+
+    struct Noise {
+        //! @brief Frequency of white noise (the first 4 bits FLG)
+        uint8_t clock : 5;
+        //! @brief Linear feedback shift register used to shift final output
+        uint16_t lfsr = 0x4000;
+    };
+
+    struct BRR {
+        //! @brief Offset pointing to sample directory in external RAM (DIR)
+        uint8_t offset;
+    };
+
+    struct Latch {
+        //! @brief Current voice's adsr1 in use
+        uint8_t adsr1;
+        //! @brief Envelope value register (ENVX)
+        uint8_t envx;
+        //! @brief Wave height register (OUTX)
+        uint8_t outx;
+        //! @brief Current voice's pitch in use
+        uint16_t pitch;
+        //! @brief Output currently being modified
+        uint16_t output;
+    };
+
+    struct Voice {
+        //! @brief Volume register (VOL)
+        std::array<int8_t, 2> volume;
+        //! @brief Pitch register (P)
+        union {
+            struct {
+                //! @brief Lower 8 bits of pitch register
+                uint8_t pitchL;
+                //! @brief Higher 8 bits of pitch register
+                uint8_t pitchH;
+            };
+            uint16_t pitch;
+        };
+        //! @brief Source number register (SRCN)
+        uint8_t srcn;
+        union {
+            struct {
+                //! @brief Envelope register (ADSR)
+                uint8_t adsr1;
+                //! @brief Envelope controllers register (ADSR)
+                uint8_t adsr2;
+            };
+            uint16_t envelope;
+        };
+        //! @brief Gain register (GAIN)
+        uint8_t gain;
+        //! @brief envelope associated with this voice
+        uint8_t envx;
+        //! @brief Sample end register (ENDX)
+        bool endx : 1;
+
+        //! @brief Key On register (KON)
+        bool kon : 1;
+        //! @brief Key Off register (KOF)
+        bool kof : 1;
+        //! @brief Pitch modulation register (PMON)
+        bool pmon : 1;
+        //! @brief Noise enable register (NON)
+        bool non : 1;
+        //! @brief Echo enable register (EON)
+        bool eon : 1;
+
+        //! @brief Check if voice is in setup phase
+        uint8_t konDelay;
+        //! @brief Check if the output will be echoed
+        bool echo;
+        //! @brief Check if this voice will be looped
+        bool loop;
+    };
+
+    //! @brief Current state of the DSP
+    struct State
+    {
+        //! @brief Current voice modification to do
+        uint8_t voice = 0;
+        //! @brief Current buffer of samples
+        int16_t *buffer;
+        //! @brief Limit of the buffer
+        int16_t *bufferEnd;
+        //! @brief Beginning of the buffer
+        int16_t *bufferStart;
+    };
+	/*//! @brief All the registers of the DSP
+	struct Registers {
+        //! @brief Main Volume register
+	    std::array<uint8_t, 2> mVol; //master.volume
+
+        //! @brief Echo Volume register
+        std::array<uint8_t, 2> eVol; //echo.volume
 
 		//! @brief Flags register
-		uint8_t flg;
+		union {
+		    struct {
+		        uint8_t noiseClock : 5; //noise.frequency
+		        bool ecen : 1; //echo.readonly
+		        bool mute : 1; //master.mute
+		        bool reset : 1; //master.reset
+		    };
+            uint8_t flg;
+        };
 
 		//! @brief Echo feedback register
-		uint8_t efb;
+		uint8_t efb; //echo.feedback
 
 		//! @brief Not used register
 		uint8_t unused;
 
 		//! @brief Source Directory offset register
-		uint8_t dir;
+		uint8_t dir; //brr.bank
 
 		//! @brief Echo data start register
-		uint8_t esa;
+		uint8_t esa; //echo.bank
 		//! @brief Echo delay size register
-		uint8_t edl;
+		uint8_t edl; //echo.delay
 	};
 
     struct BRR {
@@ -61,10 +186,8 @@ namespace ComSquare::APU::DSP
     };
 
     struct Voice {
-		//! @brief Left channel volume register
-		uint8_t volL;
-		//! @brief Left channel volume register
-		uint8_t volR;
+        //! @brief Volume register
+        std::array<uint8_t, 2> volume; //voice.volume
 
 		union {
 			struct {
@@ -73,78 +196,61 @@ namespace ComSquare::APU::DSP
 				//! @brief Higher 8 bits of pitch register
 				uint8_t pitchH;
 			};
-			uint16_t pitch;
+			uint16_t pitch; //voice.pitch
 		};
 
         //! @brief Source number register
-        uint8_t srcn;
+        uint8_t srcn; //voice.source
 
         union {
             struct {
                 //! @brief Envelope register
-                uint8_t adsr1;
+                uint8_t adsr1; //voice.adsr0
                 //! @brief Envelope controllers register
-                uint8_t adsr2;
+                uint8_t adsr2; //voice.adsr1
             };
             uint16_t envelope;
         };
 
         //! @brief Gain register
-        uint8_t gain;
+        uint8_t gain; //voice.gain
 
         //! @brief Envelope value register
-        uint8_t envx;
+        uint8_t envx; //latch.envx
         //! @brief Wave height register
-        uint8_t outx;
+        uint8_t outx; //latch.outx
 
 		//! @brief Key On register
-		bool kon : 1;
+		bool kon : 1; //voice.keyon
 		//! @brief Key Off register
-		bool kof : 1;
+		bool kof : 1; //voice.keyoff
+		bool keyLatch : 1; //voice._keylatch
 
 		//! @brief Sample end register
-		bool endx : 1;
+		bool endx : 1; //voice._end
 		//! @brief Noise enable register
-		bool non : 1;
+		bool non : 1; //voice.noise
 		//! @brief Echo enable register
-		bool eon : 1;
+		bool eon : 1; //voice.echo
 
 		//! @brief Pitch modulation register
-		bool pmon : 1;
+		bool pmon : 1; //voice.modulate
 
 		//! @brief Echo FIR filter coefficients
-		uint8_t coeff;
+		uint8_t coeff; //echo.fir
 
-		//! @brief Bit Rate Reduction associated to
-		BRR brr;
-		//! @brief Relative position in sample
-		uint16_t gaussOffset;
-		//! @brief Position of the next sample
-		unsigned sampleOffset : 4;
-		std::array<int16_t, 12> decodedSamples;
+		bool latchEon : 1; //voice._echo
 	};
 
-    //! @brief Current state of the DSP
-    struct State
+    struct Latch
     {
-        //! @brief Current voice modification to do
-        uint8_t voice = 0;
-        //! @brief Current buffer of samples
-        int16_t *buffer;
-        //! @brief Limit of the buffer
-        int16_t *bufferEnd;
-        //! @brief Beginning of the buffer
-        int16_t *bufferStart;
-    };
+        uint8_t adsr0;
+        uint16_t pitch;
+        uint16_t output;
+    };*/
 
 	class DSP : public Memory::AMemory {
 	private:
-		//! @brief All registers of the DSP
-		Registers _registers{};
-
-		//! @brief 8x voices of sample used to make sound
-		std::array<Voice, 8> _voices{};
-
 		//! @brief Gaussian table used for making waves
 		std::array<int16_t, 512> _gauss = {
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -181,18 +287,54 @@ namespace ComSquare::APU::DSP
             1299, 1300, 1300, 1301, 1302, 1302, 1303, 1303, 1303, 1304, 1304, 1304, 1304, 1304, 1305, 1305
         };
 
-		//! @brief State of DSP with buffer
-		State _state {};
-    public:
+        //! @brief 8x voices of sample used to make sound
+        std::array<Voice, 8> _voices {};
+        Master _master {};
+        Echo _echo {};
+        Noise _noise {};
+        BRR _brr {};
+        Latch _latch {};
+        State _state {};
+
+        void voiceOutput(Voice &voice, bool channel);
+        void voice1(Voice &voice);
+        void voice2(Voice &voice);
+        void voice3(Voice &voice);
+        void voice3a(Voice &voice);
+        void voice3b(Voice &voice);
+        void voice3c(Voice &voice);
+        void voice4(Voice &voice);
+        void voice5(Voice &voice);
+        void voice6(Voice &voice);
+        void voice7(Voice &voice);
+        void voice8(Voice &voice);
+        void voice9(Voice &voice);
+        void echo22();
+        void echo23();
+        void echo24();
+        void echo25();
+        void echo26();
+        void echo27();
+        void echo28();
+        void echo29();
+        void echo30();
+        void misc27();
+        void misc28();
+        void misc29();
+        void misc30();
+	public:
 		DSP(int16_t *buffer, int32_t size);
 		DSP(const DSP &) = default;
 		DSP &operator=(const DSP &) = default;
 		~DSP() override = default;
 
-		Registers getRegisters();
-
 		//! @brief Return all 8 voices from DSP
-		std::array<Voice, 8> getVoices();
+		const std::array<Voice, 8> &getVoices();
+        const Master &getMaster();
+        const Echo &getEcho();
+        const Noise &getNoise();
+        const BRR &getBrr();
+        const Latch &getLatch();
 
 		//! @brief Read from the internal DSP register.
 		//! @param addr The address to read from. The address 0x0 should refer to the first byte of the register.
@@ -209,7 +351,7 @@ namespace ComSquare::APU::DSP
         void update();
 
         //! @brief Return the number of samples written
-        int32_t getSamplesCount();
+        int32_t getSamplesCount() const;
 
 		//! @brief Get the name of this accessor (used for debug purpose)
 		std::string getName() override;

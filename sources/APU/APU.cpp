@@ -718,6 +718,7 @@ namespace ComSquare::APU
 		if (this->_state == Running)
 			this->_paddingCycles = total - cycles;
 
+		this->_dsp->update();
         samples = this->_dsp->getSamplesCount();
         if (samples > 0)
 		    this->_renderer.playAudio(this->_soundBuffer, samples / 2);

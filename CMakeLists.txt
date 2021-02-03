@@ -103,6 +103,8 @@ add_executable(unit_tests
         sources/PPU/Background.hpp
         sources/CPU/DMA/DMA.cpp
         sources/CPU/DMA/DMA.hpp
+        sources/APU/DSP/Voice.cpp
+        sources/APU/DSP/Echo.cpp
         )
 
 # include criterion & coverage
@@ -223,6 +225,8 @@ add_executable(ComSquare
         sources/PPU/Background.hpp
         sources/CPU/DMA/DMA.cpp
         sources/CPU/DMA/DMA.hpp
+        sources/APU/DSP/Voice.cpp
+        sources/APU/DSP/Echo.cpp
         )
 
 target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)
