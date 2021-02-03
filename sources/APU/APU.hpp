@@ -149,7 +149,7 @@ namespace ComSquare::APU
 		int16_t _soundBuffer[bufferSize];
 
         //! @brief The DSP component used to produce sound
-        std::shared_ptr<DSP::DSP> _dsp;
+        DSP::DSP _dsp;
 
 		//! @brief Read from the APU ram.
 		//! @param addr The address to read from. The address 0x0000 should refer to the first byte of the register.
@@ -373,7 +373,7 @@ namespace ComSquare::APU
 		int MOV(uint24_t memFrom, uint8_t &regTo, int cycles, bool incrementX = false);
 		int MOV(uint24_t memTo, uint24_t memFrom);
 	public:
-		explicit APU(std::shared_ptr<MemoryMap> &map, Renderer::IRenderer &renderer);
+		explicit APU(Renderer::IRenderer &renderer);
 		APU(const APU &) = default;
 		APU &operator=(const APU &) = default;
 		~APU() override = default;

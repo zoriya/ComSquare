@@ -9,8 +9,21 @@
 #include <array>
 #include "../../Memory/AMemory.hpp"
 
+namespace ComSquare::APU
+{
+    class APU;
+    struct MemoryMap;
+}
+
 namespace ComSquare::APU::DSP
 {
+    enum Envelope : uint {
+        Release,
+        Attack,
+        Decay,
+        Sustain
+    };
+
     struct Master {
         //! @brief Main Volume register (MVOL)
         std::array<uint8_t, 2> volume;
@@ -55,6 +68,18 @@ namespace ComSquare::APU::DSP
     struct BRR {
         //! @brief Offset pointing to sample directory in external RAM (DIR)
         uint8_t offset;
+        //! @brief Address of the offset
+        uint8_t offsetAddr;
+        //! @brief Current address of the BRR in APU's RAM
+        uint16_t address;
+        //! @brief Next address of the BRR in APU's RAM
+        uint16_t nextAddress;
+        //! @brief Current value inside BRR
+        uint8_t value;
+        //! @brief Current header of BRR
+        uint8_t header;
+        //! @brief Current value of Voice ADSR1 loaded
+        uint8_t source;
     };
 
     struct Latch {
@@ -92,7 +117,7 @@ namespace ComSquare::APU::DSP
                 //! @brief Envelope controllers register (ADSR)
                 uint8_t adsr2;
             };
-            uint16_t envelope;
+            uint16_t adsr;
         };
         //! @brief Gain register (GAIN)
         uint8_t gain;
@@ -118,6 +143,30 @@ namespace ComSquare::APU::DSP
         bool echo;
         //! @brief Check if this voice will be looped
         bool loop;
+        //! @brief Current BRR associated with this voice
+        uint16_t brrAddress;
+        //! @brief Current Offset in the BRR block
+        uint8_t brrOffset = 1;
+        //! @brief Previous modulation
+        bool prevPmon : 1;
+        //! @brief temporary NON register value
+        bool tempNon : 1;
+        //! @brief temporary Key On register value
+        bool tempKon : 1;
+        //! @brief temporary Key Off register value
+        bool tempKof : 1;
+        //! @brief all samples Decoded from BRR
+        std::array<uint16_t, 12> samples;
+        //! @brief Offset of current sample in samples buffer
+        uint8_t sampleOffset;
+        //! @brief Current envelope level
+        uint16_t envelope;
+        //! @brief Second envelope level used to make "special" waveforms
+        uint16_t hiddenEnvelope;
+        //! @brief current envelope Mode
+        Envelope envelopeMode;
+        //! @brief Relative fractional position in sample
+        uint16_t gaussOffset;
     };
 
     //! @brief Current state of the DSP
@@ -132,6 +181,14 @@ namespace ComSquare::APU::DSP
         //! @brief Beginning of the buffer
         int16_t *bufferStart;
     };
+
+    struct Timer {
+        //! @brief Ticks remaining in the timer
+        uint16_t counter;
+        //! @brief output every samples
+        bool sample = true;
+    };
+
 	/*//! @brief All the registers of the DSP
 	struct Registers {
         //! @brief Main Volume register
@@ -249,8 +306,28 @@ namespace ComSquare::APU::DSP
         uint16_t output;
     };*/
 
-	class DSP : public Memory::AMemory {
+	class DSP {
 	private:
+	    //! @brief Number of samples per counter event
+        std::array<uint16_t, 32> _rateModulus = {
+                0, 2048, 1536, 1280, 1024, 768,
+                640, 512, 384, 320, 256, 192,
+                160, 128, 96, 80, 64, 48,
+                40, 32, 24, 20, 16, 12,
+                10, 8, 6, 5, 4, 3,
+                2, 1
+        };
+
+	    //! @brief Counter offset
+        std::array<uint16_t, 32> _counterOffset = {
+                0, 0, 1040, 536, 0, 1040,
+                536, 0, 1040, 536, 0, 1040,
+                536, 0, 1040, 536, 0, 1040,
+                536, 0, 1040, 536, 0, 1040,
+                536, 0, 1040, 536, 0, 1040,
+                0,0
+        };
+
 		//! @brief Gaussian table used for making waves
 		std::array<int16_t, 512> _gauss = {
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -295,6 +372,7 @@ namespace ComSquare::APU::DSP
         BRR _brr {};
         Latch _latch {};
         State _state {};
+        Timer _timer {};
 
         void voiceOutput(Voice &voice, bool channel);
         void voice1(Voice &voice);
@@ -322,11 +400,24 @@ namespace ComSquare::APU::DSP
         void misc28();
         void misc29();
         void misc30();
+
+        int32_t interpolate(const Voice &voice);
+        void runEnvelope(Voice &voice);
+
+        void timerTick();
+        bool timerPoll(uint32_t rate);
+
+        void decodeBRR(Voice &voice);
+
+        std::weak_ptr<MemoryMap> _map;
+
+        uint8_t _readRAM(uint24_t addr);
+        void _writeRAM(uint24_t addr, uint8_t data);
 	public:
-		DSP(int16_t *buffer, int32_t size);
+		DSP(int16_t *buffer, int32_t size, std::weak_ptr<MemoryMap> map);
 		DSP(const DSP &) = default;
 		DSP &operator=(const DSP &) = default;
-		~DSP() override = default;
+		~DSP() = default;
 
 		//! @brief Return all 8 voices from DSP
 		const std::array<Voice, 8> &getVoices();
@@ -340,24 +431,18 @@ namespace ComSquare::APU::DSP
 		//! @param addr The address to read from. The address 0x0 should refer to the first byte of the register.
 		//! @throw InvalidAddress will be thrown if the address is more than $7F (the number of register).
 		//! @return Return the value of the register.
-		uint8_t read(uint24_t addr) override;
+		uint8_t read(uint24_t addr);
 		//! @brief Write data to the internal DSP register.
 		//! @param addr The address to write to. The address 0x0 should refer to the first byte of register.
 		//! @param data The new value of the register.
 		//! @throw InvalidAddress will be thrown if the address is more than $7F (the number of register).
-		void write(uint24_t addr, uint8_t data) override;
+		void write(uint24_t addr, uint8_t data);
 
         //! @brief Execute current voice transformation
         void update();
 
         //! @brief Return the number of samples written
         int32_t getSamplesCount() const;
-
-		//! @brief Get the name of this accessor (used for debug purpose)
-		std::string getName() override;
-
-		//! @brief Get the component of this accessor (used for debug purpose)
-		Component getComponent() override;
 	};
 }
 

@@ -10,11 +10,11 @@
 
 namespace ComSquare::APU
 {
-	APU::APU(std::shared_ptr<MemoryMap> &map, Renderer::IRenderer &renderer) :
+	APU::APU(Renderer::IRenderer &renderer) :
         _renderer(renderer),
-		_map(map),
+		_map(new MemoryMap()),
 		_soundBuffer(),
-		_dsp(new DSP::DSP(_soundBuffer, APU::bufferSize / 2))
+		_dsp(_soundBuffer, APU::bufferSize / 2, _map)
 	{
 		this->reset();
 	}
@@ -43,7 +43,7 @@ namespace ComSquare::APU
 		case 0xF2:
 			return this->_registers.dspregAddr;
 		case 0xF3:
-			return this->_dsp->read(this->_registers.dspregAddr);
+			return this->_dsp.read(this->_registers.dspregAddr);
 		case 0xF4:
 			return this->_registers.port0;
 		case 0xF5:
@@ -88,7 +88,7 @@ namespace ComSquare::APU
 			this->_registers.dspregAddr = data;
 			break;
 		case 0xF3:
-			this->_dsp->write(this->_registers.dspregAddr, data);
+			this->_dsp.write(this->_registers.dspregAddr, data);
 			break;
 		case 0xF4:
 			this->_registers.port0 = data;
@@ -718,8 +718,8 @@ namespace ComSquare::APU
 		if (this->_state == Running)
 			this->_paddingCycles = total - cycles;
 
-		this->_dsp->update();
-        samples = this->_dsp->getSamplesCount();
+		this->_dsp.update();
+        samples = this->_dsp.getSamplesCount();
         if (samples > 0)
 		    this->_renderer.playAudio(this->_soundBuffer, samples / 2);
 	}

@@ -3,11 +3,12 @@
 //
 
 #include "DSP.hpp"
+#include "../APU.hpp"
 #include "../../Exceptions/InvalidAddress.hpp"
 
 namespace ComSquare::APU::DSP
 {
-    DSP::DSP(int16_t *buffer, int32_t size)
+    DSP::DSP(int16_t *buffer, int32_t size, std::weak_ptr<MemoryMap> map) : _map(map)
     {
         this->_state.buffer = buffer;
         this->_state.bufferStart = buffer;
@@ -568,6 +569,40 @@ namespace ComSquare::APU::DSP
 		}
 	}
 
+    uint8_t DSP::_readRAM(uint24_t addr) {
+        switch (addr) {
+            case 0x0000 ... 0x00EF:
+                return this->_map.lock()->Page0.read_internal(addr);
+            case 0x0100 ... 0x01FF:
+                return this->_map.lock()->Page1.read_internal(addr - 0x0100);
+            case 0x0200 ... 0xFFBF:
+                return this->_map.lock()->Memory.read_internal(addr - 0x200);
+            case 0xFFC0 ... 0xFFFF:
+                return this->_map.lock()->IPL.read(addr - 0xFFC0);
+            default:
+                throw InvalidAddress("DSP read", addr);
+        }
+    }
+
+    void DSP::_writeRAM(uint24_t addr, uint8_t data) {
+        switch (addr) {
+            case 0x0000 ... 0x00EF:
+                this->_map.lock()->Page0.write_internal(addr, data);
+                break;
+            case 0x0100 ... 0x01FF:
+                this->_map.lock()->Page1.write_internal(addr - 0x0100, data);
+                break;
+            case 0x0200 ... 0xFFBF:
+                this->_map.lock()->Memory.write_internal(addr - 0x200, data);
+                break;
+            case 0xFFC0 ... 0xFFFF:
+                this->_map.lock()->IPL.write(addr - 0xFFC0, data);
+                break;
+            default:
+                throw InvalidAddress("DSP write", addr);
+        }
+    }
+
 	void DSP::update()
     {
         switch (this->_state.voice) {
@@ -760,14 +795,4 @@ namespace ComSquare::APU::DSP
     {
         return this->_state.buffer - this->_state.bufferStart;
     }
-
-    std::string DSP::getName()
-	{
-		return "DSP";
-	}
-
-	Component DSP::getComponent()
-	{
-		return Apu;
-	}
 }

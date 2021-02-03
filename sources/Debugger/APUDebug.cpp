@@ -47,8 +47,8 @@ namespace ComSquare::Debugger
 		this->_ui.dSPRegAddresshexaLineEdit->setText(Utility::to_hex(this->_registers.dspregAddr).c_str());
 		this->_ui.dSPRegAddressLineEdit->setText(Utility::to_binary(this->_registers.dspregAddr).c_str());
 
-		this->_ui.dSPRegDatahexaLineEdit->setText(Utility::to_hex(this->_dsp->read(this->_registers.dspregAddr)).c_str());
-		this->_ui.dSPRegDataLineEdit->setText(Utility::to_binary(this->_dsp->read(this->_registers.dspregAddr)).c_str());
+		this->_ui.dSPRegDatahexaLineEdit->setText(Utility::to_hex(this->_dsp.read(this->_registers.dspregAddr)).c_str());
+		this->_ui.dSPRegDataLineEdit->setText(Utility::to_binary(this->_dsp.read(this->_registers.dspregAddr)).c_str());
 
 		this->_ui.timer0hexaLineEdit->setText(Utility::to_hex(this->_registers.timer0).c_str());
 		this->_ui.timer0LineEdit->setText(Utility::to_binary(this->_registers.timer0).c_str());
@@ -84,12 +84,12 @@ namespace ComSquare::Debugger
 		this->_ui.programCounterLineEdit->setText(Utility::to_hex(this->_internalRegisters.pc + 0x0001u).c_str());
 		this->_ui.programStatusWordLineEdit->setText(this->_getPSWString().c_str());
 
-		auto voices = this->_dsp->getVoices();
-		auto master = this->_dsp->getMaster();
-		auto echo = this->_dsp->getEcho();
-		auto noise = this->_dsp->getNoise();
-		auto brr = this->_dsp->getBrr();
-		auto latch = this->_dsp->getLatch();
+		auto voices = this->_dsp.getVoices();
+		auto master = this->_dsp.getMaster();
+		auto echo = this->_dsp.getEcho();
+		auto noise = this->_dsp.getNoise();
+		auto brr = this->_dsp.getBrr();
+		auto latch = this->_dsp.getLatch();
 
 		this->_ui.mvolLprogressBar->setValue(master.volume[0]);
 		this->_ui.mvolRprogressBar->setValue(master.volume[1]);
