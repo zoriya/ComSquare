@@ -137,7 +137,7 @@ namespace ComSquare::Debugger
 	{
 		this->_isPaused = !this->_isPaused;
 		if (this->_isPaused)
-			this->_ui.actionPause->setText("Resume");
+			this->_ui.actionPause->setText("Continue");
 		else
 			this->_ui.actionPause->setText("Pause");
 		this->_updateDisassembly(this->_registers.pac);
