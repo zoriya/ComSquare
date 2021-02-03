@@ -11,9 +11,9 @@
 
 namespace ComSquare::Memory
 {
-	std::shared_ptr<AMemory> MemoryBus::getAccessor(uint24_t addr)
+	std::shared_ptr<IMemory> MemoryBus::getAccessor(uint24_t addr)
 	{
-		auto it = std::find_if(this->_memoryAccessors.begin(), this->_memoryAccessors.end(), [addr](std::shared_ptr<AMemory> &accessor)
+		auto it = std::find_if(this->_memoryAccessors.begin(), this->_memoryAccessors.end(), [addr](std::shared_ptr<IMemory> &accessor)
 		{
 			return accessor->hasMemoryAt(addr);
 		});
@@ -24,27 +24,27 @@ namespace ComSquare::Memory
 
 	uint8_t MemoryBus::read(uint24_t addr, bool silence)
 	{
-		std::shared_ptr<AMemory> handler = this->getAccessor(addr);
+		std::shared_ptr<IMemory> handler = this->getAccessor(addr);
 
 		if (!handler) {
 			if (!silence)
 				std::cout << "Unknown memory accessor for address $" << std::hex << addr << ". Using open bus." << std::endl;
 			return this->_openBus;
 		}
-		uint8_t data =  handler->read(addr - handler->getStart());
+		uint8_t data =  handler->read(handler->getRelativeAddress(addr));
 		this->_openBus = data;
 		return data;
 	}
 
 	void MemoryBus::write(uint24_t addr, uint8_t data)
 	{
-		std::shared_ptr<AMemory> handler = this->getAccessor(addr);
+		std::shared_ptr<IMemory> handler = this->getAccessor(addr);
 
 		if (!handler) {
 			std::cout << "Unknown memory accessor for address " << std::hex << addr << ". Warning, it was a write." << std::endl;
 			return;
 		}
-		handler->write(addr - handler->getStart(), data);
+		handler->write(handler->getRelativeAddress(addr), data);
 	}
 
 	void MemoryBus::_mirrorComponents(SNES &console, unsigned i)
@@ -72,7 +72,6 @@ namespace ComSquare::Memory
 		console.cpu->setMemoryRegion(0x4200, 0x44FF);
 		this->_memoryAccessors.push_back(console.cpu);
 
-		// TODO implement DMA & HDMA (4220 to 4300)
 		// TODO implement Joys.
 
 		// Mirror to the quarter 1.

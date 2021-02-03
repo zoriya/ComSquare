@@ -5,7 +5,7 @@
 #ifndef COMSQUARE_IPL_HPP
 #define COMSQUARE_IPL_HPP
 
-#include "../../Memory/ARectangleMemory.hpp"
+#include "../../Memory/AMemory.hpp"
 
 namespace ComSquare::APU::IPL
 {

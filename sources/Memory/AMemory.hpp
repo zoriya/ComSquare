@@ -2,9 +2,7 @@
 // Created by anonymus-raccoon on 1/23/20.
 //
 
-#ifndef COMSQUARE_AMEMORY_HPP
-#define COMSQUARE_AMEMORY_HPP
-
+#pragma once
 
 #include <cstdint>
 #include <vector>
@@ -12,27 +10,23 @@
 #include <string>
 #include "../Models/Int24.hpp"
 #include "../Models/Components.hpp"
+#include "IMemory.hpp"
 
 namespace ComSquare::Memory
 {
-	//! @brief Common interface implemented by all components mapping memory.
-	class AMemory {
-	private:
+	//! @brief Abstract class representing a continuous block of memory.
+	class AMemory : public IMemory {
+	protected:
 		//! @brief The starting address mapped to this component.
 		uint24_t _start = 0;
 		//! @brief The last continuous address mapped to this components. For shadows, see the MemoryShadow class.
 		uint24_t _end = 0;
 	public:
-		//! @brief Read data from the component.
-		//! @param addr The local address to read from (0x0 should refer to the first byte of this component).
-		//! @throw This function should thrown an InvalidAddress for address that are not mapped to the component.
-		//! @return Return the data at the address given as parameter.
-		virtual uint8_t read(uint24_t addr) = 0;
-		//! @brief Write data to this component.
-		//! @param addr The local address to write data (0x0 should refer to the first byte of this component).
-		//! @param data The new data to write.
-		//! @throw This function should thrown an InvalidAddress for address that are not mapped to the component.
-		virtual void write(uint24_t addr, uint8_t data) = 0;
+		//! @brief Translate an absolute address to a relative address
+		//! @param addr The absolute address (in the 24 bit bus)
+		//! @return The local address (0 refers to the first byte of this component).
+		//! @throw InvalidAddress is thrown if the address is not mapped by this component.
+		virtual uint24_t getRelativeAddress(uint24_t addr) override;
 		//! @brief Change starting and ending points of this mapped memory.
 		//! @param start The first address mapped to this component.
 		//! @param end The last address mapped to this component.
@@ -41,26 +35,16 @@ namespace ComSquare::Memory
 		//! @brief Return true if this component has mapped the address.
 		//! @param addr The address to check.
 		//! @return True if this address is mapped to the component. False otherwise.
-		virtual bool hasMemoryAt(uint24_t addr);
-		//! @brief Get the first address mapped to this component.
-		//! @return the _start value.
-		virtual uint24_t getStart();
+		virtual bool hasMemoryAt(uint24_t addr) override;
 		//! @brief Check if this memory is a mirror or not.
 		//! @return True if this memory is a mirror. False otherwise.
-		virtual bool isMirror();
-		//! @brief Get the name of this accessor (used for debug purpose)
-		virtual std::string getName() = 0;
-		//! @brief Get the component of this accessor (used for debug purpose)
-		virtual Component getComponent() = 0;
+		virtual bool isMirror() override;
 		//! @brief Get the name of the data at the address
 		//! @param addr The address (in local space)
-		virtual std::string getValueName(uint24_t addr);
+		virtual std::string getValueName(uint24_t addr) override;
 		//! @brief Return the memory accessor this accessor mirror if any
 		//! @return nullptr if isMirror is false, the source otherwise.
-		virtual std::shared_ptr<AMemory> getMirrored();
-		virtual ~AMemory() = default;
+		virtual std::shared_ptr<IMemory> getMirrored() override;
+		virtual ~AMemory() override = default;
 	};
-};
-
-
-#endif //COMSQUARE_AMEMORY_HPP
+}

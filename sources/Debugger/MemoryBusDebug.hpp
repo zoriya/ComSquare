@@ -17,13 +17,13 @@ namespace ComSquare::Debugger
 	struct BusLog {
 		BusLog(bool write,
 			uint24_t addr,
-			std::shared_ptr<Memory::AMemory> &accessor,
+			std::shared_ptr<Memory::IMemory> &accessor,
 			std::optional<uint8_t> oldData,
 			uint8_t newData);
 
 		bool write;
 		uint24_t addr;
-		std::shared_ptr<Memory::AMemory> accessor;
+		std::shared_ptr<Memory::IMemory> accessor;
 		std::optional<uint8_t> oldData;
 		uint8_t newData;
 	};

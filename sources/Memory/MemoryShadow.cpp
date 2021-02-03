@@ -8,7 +8,7 @@
 
 namespace ComSquare::Memory
 {
-	MemoryShadow::MemoryShadow(std::shared_ptr<AMemory> initial, uint24_t start, uint24_t end)
+	MemoryShadow::MemoryShadow(std::shared_ptr<IMemory> initial, uint24_t start, uint24_t end)
 		: _initial(std::move(initial))
 	{
 		this->setMemoryRegion(start, end);
@@ -29,7 +29,7 @@ namespace ComSquare::Memory
 		return true;
 	}
 
-	std::shared_ptr<AMemory> MemoryShadow::getMirrored()
+	std::shared_ptr<IMemory> MemoryShadow::getMirrored()
 	{
 		return this->_initial;
 	}

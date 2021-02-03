@@ -20,7 +20,7 @@ namespace ComSquare
 		class MemoryBus {
 		private:
 			//! @brief The list of components registered inside the bus. Every components that can read/write to a public address should be in this vector.
-			std::vector<std::shared_ptr<AMemory>> _memoryAccessors;
+			std::vector<std::shared_ptr<IMemory>> _memoryAccessors;
 
 			//! @brief WRam, CPU, PPU & APU registers are mirrored to all banks of Q1 & Q3. This function is used for the mirroring.
 			//! @param console All the components.
@@ -56,7 +56,7 @@ namespace ComSquare
 			//! @brief Helper function to get the components that is responsible of read/write at an address.
 			//! @param addr The address you want to look for.
 			//! @return The components responsible for the address param or nullptr if none was found.
-			std::shared_ptr<AMemory> getAccessor(uint24_t addr);
+			std::shared_ptr<IMemory> getAccessor(uint24_t addr);
 
 			//! @brief Return true if the Bus is overloaded with debugging features.
 			virtual bool isDebugger();

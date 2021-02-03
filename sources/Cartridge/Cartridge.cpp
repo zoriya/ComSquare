@@ -3,7 +3,6 @@
 //
 
 #include <sys/stat.h>
-#include <iostream>
 #include <cstring>
 #include "Cartridge.hpp"
 #include "../Exceptions/InvalidAddress.hpp"
@@ -39,17 +38,13 @@ namespace ComSquare::Cartridge
 	}
 
 
-	uint8_t Cartridge::read_internal(uint24_t addr)
+	uint8_t Cartridge::read(uint24_t addr)
 	{
-		if (addr >= this->_size)
-			throw InvalidAddress("Cartridge read", addr);
-		return this->_data[addr + this->_romStart];
+		return Ram::read(addr + this->_romStart);
 	}
 
-	void Cartridge::write_internal(uint24_t addr, uint8_t data)
+	void Cartridge::write(uint24_t, uint8_t)
 	{
-		(void)addr;
-		(void)data;
 		throw InvalidAction("Witting to the ROM is not allowed.");
 	}
 
@@ -123,7 +118,8 @@ namespace ComSquare::Cartridge
 			if (info.checksum + info.checksumComplement == 0xFFFF && info.checksum != 0 && info.checksumComplement != 0)
 				score += 8;
 
-			if (info.emulationInterrupts.reset < 0x8000u) // The reset vector is the first thing called by the SNES so It must execute the code inside the ROM (the rom starts at 0x8000).
+			// The reset vector is the first thing called by the SNES so It must execute the code inside the ROM (the rom starts at 0x8000).
+			if (info.emulationInterrupts.reset < 0x8000u)
 				continue;
 			uint8_t resetOpCode = this->_data[info.emulationInterrupts.reset - 0x8000u];
 			switch (resetOpCode) {

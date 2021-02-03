@@ -103,7 +103,7 @@ add_executable(unit_tests
         sources/PPU/Background.hpp
         sources/CPU/DMA/DMA.cpp
         sources/CPU/DMA/DMA.hpp
-        tests/CPU/testDMA.cpp)
+        tests/CPU/testDMA.cpp sources/Memory/IMemory.hpp)
 
 # include criterion & coverage
 target_link_libraries(unit_tests criterion -lgcov)
@@ -226,7 +226,7 @@ add_executable(ComSquare
         ui/registersView.ui
         sources/Debugger/RegisterViewer.cpp
         sources/Debugger/RegisterViewer.hpp
-)
+        sources/Memory/IMemory.hpp)
 
 target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)
 

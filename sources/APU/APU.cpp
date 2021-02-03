@@ -7,7 +7,6 @@
 #include "../Exceptions/NotImplementedException.hpp"
 #include "../Exceptions/InvalidAddress.hpp"
 #include "../Exceptions/InvalidOpcode.hpp"
-#include "../Utility/Utility.hpp"
 
 namespace ComSquare::APU
 {
@@ -36,7 +35,7 @@ namespace ComSquare::APU
 	uint8_t APU::_internalRead(uint24_t addr) {
 		switch (addr) {
 		case 0x0000 ... 0x00EF:
-			return this->_map->Page0.read_internal(addr);
+			return this->_map->Page0.read(addr);
 		case 0xF0:
 			return this->_registers.unknown;
 		case 0xF2:
@@ -62,9 +61,9 @@ namespace ComSquare::APU
 		case 0xFF:
 			return this->_registers.counter2;
 		case 0x0100 ... 0x01FF:
-			return this->_map->Page1.read_internal(addr - 0x0100);
+			return this->_map->Page1.read(addr - 0x0100);
 		case 0x0200 ... 0xFFBF:
-			return this->_map->Memory.read_internal(addr - 0x200);
+			return this->_map->Memory.read(addr - 0x200);
 		case 0xFFC0 ... 0xFFFF:
 			return this->_map->IPL.read(addr - 0xFFC0);
 		default:
@@ -75,7 +74,7 @@ namespace ComSquare::APU
 	void APU::_internalWrite(uint24_t addr, uint8_t data) {
 		switch (addr) {
 		case 0x0000 ... 0x00EF:
-			this->_map->Page0.write_internal(addr, data);
+			this->_map->Page0.write(addr, data);
 			break;
 		case 0xF0:
 			this->_registers.unknown = data;
@@ -117,10 +116,10 @@ namespace ComSquare::APU
 			this->_registers.timer2 = data;
 			break;
 		case 0x0100 ... 0x01FF:
-			this->_map->Page1.write_internal(addr - 0x0100, data);
+			this->_map->Page1.write(addr - 0x0100, data);
 			break;
 		case 0x0200 ... 0xFFBF:
-			this->_map->Memory.write_internal(addr - 0x200, data);
+			this->_map->Memory.write(addr - 0x200, data);
 			break;
 		case 0xFFC0 ... 0xFFFF:
 			this->_map->IPL.write(addr - 0xFFC0, data);

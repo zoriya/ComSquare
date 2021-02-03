@@ -45,7 +45,7 @@ namespace ComSquare::Debugger
 			model->addRegister(Register(0x4300, ":3", "Fixed", [i](SNES &snes) {
 				return snes.cpu->_dmaChannels[i]._controlRegister.fixed;
 			}, nullptr, Boolean));
-			model->addRegister(Register(0x4300, ":4", "Increment", [i](SNES &snes) {
+			model->addRegister(Register(0x4300, ":4", "Decrement", [i](SNES &snes) {
 				return snes.cpu->_dmaChannels[i]._controlRegister.increment;
 			}, nullptr, Boolean));
 			model->addRegister(Register(0x4300, ":0-2", "Mode", [i](SNES &snes) {

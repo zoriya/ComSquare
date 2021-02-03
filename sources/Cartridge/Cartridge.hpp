@@ -2,8 +2,7 @@
 // Created by anonymus-raccoon on 1/27/20.
 //
 
-#ifndef COMSQUARE_CARTRIDGE_HPP
-#define COMSQUARE_CARTRIDGE_HPP
+#pragma once
 
 #include <string>
 #include "../Memory/AMemory.hpp"
@@ -99,13 +98,11 @@ namespace ComSquare::Cartridge
 		//! @param addr The address to read from. The address 0x0 should refer to the first byte of the rom's memory.
 		//! @throw InvalidAddress will be thrown if the address is more than the size of the rom's memory.
 		//! @return Return the data at the address.
-		uint8_t read_internal(uint24_t addr) override;
+		uint8_t read(uint24_t addr) override;
 		//! @brief Write data to the rom.
 		//! @param addr The address to write to. The address 0x0 should refer to the first byte of the rom's memory.
 		//! @param data The data to write.
 		//! @throw InvalidAddress will be thrown if the address is more than the size of the rom's memory.
-		void write_internal(uint24_t addr, uint8_t data) override;
+		void write(uint24_t addr, uint8_t data) override;
 	};
 }
-
-#endif //COMSQUARE_CARTRIDGE_HPP

@@ -3,29 +3,35 @@
 //
 
 #include "RectangleShadow.hpp"
-#include "../Utility/Utility.hpp"
-
 #include <utility>
 #include <iostream>
 
 namespace ComSquare::Memory
 {
-	RectangleShadow::RectangleShadow(std::shared_ptr<ARectangleMemory> initial, uint8_t startBank, uint8_t endBank, uint16_t startPage, uint16_t endPage)
+	RectangleShadow::RectangleShadow(std::shared_ptr<IMemory> initial,
+	                                 uint8_t startBank,
+	                                 uint8_t endBank,
+	                                 uint16_t startPage,
+	                                 uint16_t endPage)
 		: _initial(std::move(initial))
 	{
 		this->setMemoryRegion(startBank, endBank, startPage, endPage);
 	}
 
-	uint8_t RectangleShadow::read_internal(uint24_t addr)
+	uint24_t RectangleShadow::getRelativeAddress(uint24_t addr)
 	{
-		addr += this->_bankOffset * (this->_endPage - this->_startPage);
-		return this->_initial->read_internal(addr);
+		uint24_t base = ARectangleMemory::getRelativeAddress(addr);
+		return base + this->_bankOffset * (this->_endPage - this->_startPage);
 	}
 
-	void RectangleShadow::write_internal(uint24_t addr, uint8_t data)
+	uint8_t RectangleShadow::read(uint24_t addr)
 	{
-		addr += this->_bankOffset * (this->_endPage - this->_startPage);
-		this->_initial->write_internal(addr, data);
+		return this->_initial->read(addr);
+	}
+
+	void RectangleShadow::write(uint24_t addr, uint8_t data)
+	{
+		return this->_initial->write(addr, data);
 	}
 
 	RectangleShadow *RectangleShadow::setBankOffset(uint8_t bankOffset)
@@ -39,7 +45,7 @@ namespace ComSquare::Memory
 		return true;
 	}
 
-	std::shared_ptr<AMemory> RectangleShadow::getMirrored()
+	std::shared_ptr<IMemory> RectangleShadow::getMirrored()
 	{
 		return this->_initial;
 	}

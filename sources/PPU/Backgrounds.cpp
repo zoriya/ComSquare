@@ -2,14 +2,9 @@
 // Created by cbihan on 5/14/20.
 //
 
-#include <iostream>
 #include <bitset>
 #include "PPU.hpp"
 #include "PPUUtils.hpp"
-#include "../Exceptions/NotImplementedException.hpp"
-#include "../Exceptions/InvalidAddress.hpp"
-#include "../Ram/Ram.hpp"
-#include "../Models/Vector2.hpp"
 
 namespace ComSquare::PPU
 {
@@ -50,8 +45,8 @@ namespace ComSquare::PPU
 		union TileMapData tileData;
 		std::vector<uint16_t> palette;
 		int index = 0;
-		uint8_t reference = 0;
-		uint32_t color = 0;
+		uint8_t reference;
+		uint32_t color;
 
 		tileData.raw = data;
 		graphicAddress = this->getGraphicVramAddress(tileData.posX, tileData.posY, bg, bpp);
@@ -106,7 +101,7 @@ namespace ComSquare::PPU
 
 	uint8_t PPU::getTilePixelReference(uint16_t addr, int bpp, int nb)
 	{
-		uint8_t reference = this->vram->read_internal(addr);
+		uint8_t reference = this->vram->read(addr);
 
 		switch (bpp) {
 		case 8:
@@ -123,13 +118,13 @@ namespace ComSquare::PPU
 
 	void PPU::drawBasicTileMap(uint16_t baseAddress, int bgNumber, int bpp, Vector2<int> characterSize, Vector2<int> offset)
 	{
-		uint16_t tileMapValue = 0;
+		uint16_t tileMapValue;
 		Vector2<int> pos(0,0);
 		uint16_t vramAddress = baseAddress;
 
 		while (vramAddress < 0x800 + baseAddress) {
-			tileMapValue = this->vram->read_internal(vramAddress);
-			tileMapValue += this->vram->read_internal(vramAddress + 1) << 8U;
+			tileMapValue = this->vram->read(vramAddress);
+			tileMapValue += this->vram->read(vramAddress + 1) << 8U;
 			vramAddress += 2;
 			drawBgTile(tileMapValue, {(pos.x * characterSize.x) + offset.x, (pos.y * characterSize.y) + offset.y}, bgNumber, bpp, characterSize);
 			if (pos.x % 31 == 0 && pos.x) {

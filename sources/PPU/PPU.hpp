@@ -5,11 +5,10 @@
 #ifndef COMSQUARE_PPU_HPP
 #define COMSQUARE_PPU_HPP
 
-#include <stdint-gcc.h>
+#include <cstdint>
 #include "../Memory/AMemory.hpp"
 #include "../Memory/MemoryBus.hpp"
 #include "../Renderer/IRenderer.hpp"
-//#include "../Ram/ExtendedRam.hpp"
 #include "../Ram/Ram.hpp"
 #include "../Models/Vector2.hpp"
 

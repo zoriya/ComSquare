@@ -2,8 +2,7 @@
 // Created by anonymus-raccoon on 1/28/20.
 //
 
-#ifndef COMSQUARE_MEMORYSHADOW_HPP
-#define COMSQUARE_MEMORYSHADOW_HPP
+#pragma once
 
 #include <memory>
 #include "AMemory.hpp"
@@ -13,10 +12,10 @@ namespace ComSquare::Memory
 	class MemoryShadow : public AMemory {
 	private:
 		//! @brief Memory to shadow from.
-		std::shared_ptr<AMemory> _initial;
+		std::shared_ptr<IMemory> _initial;
 	public:
 		//! @brief Create a shadow for the memory given as parameter.
-		explicit MemoryShadow(std::shared_ptr<AMemory> initial, uint24_t start, uint24_t end);
+		MemoryShadow(std::shared_ptr<IMemory> initial, uint24_t start, uint24_t end);
 		MemoryShadow(const MemoryShadow &) = default;
 		MemoryShadow &operator=(const MemoryShadow &) = default;
 		~MemoryShadow() = default;
@@ -40,8 +39,6 @@ namespace ComSquare::Memory
 		Component getComponent() override;
 		//! @brief Return the memory accessor this accessor mirror if any
 		//! @return nullptr if isMirror is false, the source otherwise.
-		std::shared_ptr<AMemory> getMirrored() override;
+		std::shared_ptr<IMemory> getMirrored() override;
 	};
 }
-
-#endif //COMSQUARE_MEMORYSHADOW_HPP

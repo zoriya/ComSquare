@@ -3,10 +3,14 @@
 //
 
 #include "AMemory.hpp"
-#include <algorithm>
 
 namespace ComSquare::Memory
 {
+	uint24_t AMemory::getRelativeAddress(uint24_t addr)
+	{
+		return addr - this->_start;
+	}
+
 	void AMemory::setMemoryRegion(uint24_t start, uint24_t end)
 	{
 		this->_start = start;
@@ -18,17 +22,12 @@ namespace ComSquare::Memory
 		return this->_start <= addr && addr <= this->_end;
 	}
 
-	uint32_t AMemory::getStart()
-	{
-		return this->_start;
-	}
-
 	bool AMemory::isMirror()
 	{
 		return false;
 	}
 
-	std::shared_ptr<AMemory> AMemory::getMirrored()
+	std::shared_ptr<IMemory> AMemory::getMirrored()
 	{
 		return nullptr;
 	}

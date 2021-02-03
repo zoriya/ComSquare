@@ -7,7 +7,8 @@
 #include "../tests.hpp"
 using namespace ComSquare;
 
-Test(DMA, RomToVRAM)
+//Test(DMA, RomToVRAM)
+int main()
 {
 	Init()
 	snes.cartridge->_size = 4000000;
