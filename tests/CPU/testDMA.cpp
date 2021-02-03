@@ -54,6 +54,7 @@ Test(DMA, RomToVRAM)
 		uint16_t value = snes.ppu->vram->_data[0x2000 * 2 + i * 2] | (snes.ppu->vram->_data[0x2000 * 2 + i * 2 + 1] << 8);
 		cr_assert_eq(value, i, "The memory at %x should be %x but it was %x", 0x2000 + i, i, snes.ppu->vram->_data[i]);
 	}
+	cr_assert_eq(snes.cpu->_dmaChannels[0].enabled, false, "The DMA channel should be disabled.");
 }
 
 Test(DMA, VramWrite)

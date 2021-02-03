@@ -79,6 +79,10 @@ namespace ComSquare::Debugger
 		try {
 			unsigned cycles = 0;
 
+			for (auto &channel : this->_dmaChannels)
+				if (channel.enabled)
+					cycles += channel.run(INT_MAX);
+
 			if (this->_isPaused)
 				return 0xFF;
 			if (this->_isStepping) {
