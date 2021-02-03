@@ -12,16 +12,15 @@ Test(DMA, RomToVRAM)
 	Init()
 	snes.cartridge->_size = 4000000;
 	snes.cartridge->_data = new uint8_t[snes.cartridge->_size];
-	for(unsigned i = 0; i < 0x400; i++) {
-		snes.cartridge->_data[0xBE00 + i * 2] = i >> 8;
-		snes.cartridge->_data[0xBE00 + i * 2 + 1] = i;
-		uint16_t value = snes.cartridge->_data[0xBE00 + i * 2] | (snes.cartridge->_data[0xBE00 + i * 2 + 1] << 8);
-		std::cout << std::hex << 0xBE00 + i << ": " << value << std::endl;
+	for (unsigned i = 0; i < 0x400; i++) {
+		snes.cartridge->_data[0xBDED + i * 2] = i;
+		snes.cartridge->_data[0xBDED + i * 2 + 1] = i >> 8;
 	}
 
 	// Transferring $800 bytes from ROM ($13BE00) to VRam ($2000) via DMA channel 0
 
 	// Setting VRam address (since this is an indirect write)
+	snes.bus->write(0x2115, 0b10000000);
 	snes.bus->write(0x2117, 0x20);
 	snes.bus->write(0x2116, 0);
 
@@ -52,10 +51,8 @@ Test(DMA, RomToVRAM)
 	cr_assert_eq(snes.cpu->_dmaChannels[0]._port, 0x18, "The dma count should be $18 but it was $%x.", snes.cpu->_dmaChannels[0]._port);
 	cr_assert_eq(snes.ppu->_registers._vmadd.vmadd, 0x2400, "The vram address should be $2400 but it was %x.", snes.ppu->_registers._vmadd.vmadd);
 	for(unsigned i = 0; i < 0x400; i++) {
-		// TODO check endianess
 		uint16_t value = snes.ppu->vram->_data[0x2000 * 2 + i * 2] | (snes.ppu->vram->_data[0x2000 * 2 + i * 2 + 1] << 8);
-		std::cout << std::hex << 0x2000 + i << ": " << value << std::endl;
-//		cr_assert_eq(value, i, "The memory at %x should be %x but it was %x", 0x2000 + i, i, snes.ppu->vram->_data[i]);
+		cr_assert_eq(value, i, "The memory at %x should be %x but it was %x", 0x2000 + i, i, snes.ppu->vram->_data[i]);
 	}
 }
 
@@ -67,6 +64,23 @@ Test(DMA, VramWrite)
 	for (unsigned i = 0; i < 0x400; i++) {
 		snes.bus->write(0x2119, i >> 8);
 		snes.bus->write(0x2118, i);
+		cr_assert_eq(snes.ppu->_registers._vmadd.vmadd, 0x2001 + i, "The vram address was %x but it should have been %x", snes.ppu->_registers._vmadd.vmadd, 0x2001 + i);
+	}
+	for(unsigned i = 0; i < 0x400; i++) {
+		uint16_t value = snes.ppu->vram->_data[0x2000 * 2 + i * 2] | (snes.ppu->vram->_data[0x2000 * 2 + i * 2 + 1] << 8);
+		cr_assert_eq(value, (uint16_t)i, "The memory at %x should be %x but it was %x", 0x2000 + i, (uint16_t)i, value);
+	}
+}
+
+Test(DMA, VramWriteInvertedOrder)
+{
+	Init()
+	snes.bus->write(0x2115, 0b10000000);
+	snes.bus->write(0x2117, 0x20);
+	snes.bus->write(0x2116, 0x0);
+	for (unsigned i = 0; i < 0x400; i++) {
+		snes.bus->write(0x2118, i);
+		snes.bus->write(0x2119, i >> 8);
 		cr_assert_eq(snes.ppu->_registers._vmadd.vmadd, 0x2001 + i, "The vram address was %x but it should have been %x", snes.ppu->_registers._vmadd.vmadd, 0x2001 + i);
 	}
 	for(unsigned i = 0; i < 0x400; i++) {
