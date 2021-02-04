@@ -7,10 +7,8 @@
 #include <QIcon>
 #include <QMenuBar>
 #include <iostream>
+#include "../../Exceptions/DebuggableError.hpp"
 #include "QtSFML.hpp"
-#include "../../Exceptions/InvalidOpcode.hpp"
-#include "../../Exceptions/InvalidAddress.hpp"
-#include "../../Exceptions/InvalidAction.hpp"
 
 #ifdef Q_WS_X11
 	#include <Qt/qx11info_x11.h>
@@ -33,7 +31,7 @@ namespace ComSquare::Renderer
 		this->_window.setCentralWidget(this->_sfWidget.get());
 
 		QMenu *file = this->_window.menuBar()->addMenu("&File");
-		//TODO implement rom openning from this menu.
+		//TODO implement rom opening from this menu.
 		(void)file;
 
 		QMenu *game = this->_window.menuBar()->addMenu("&Game");
@@ -41,31 +39,43 @@ namespace ComSquare::Renderer
 		QMainWindow::connect(reset, &QAction::triggered, this->_sfWidget.get(), &QtFullSFML::reset);
 		game->addAction(reset);
 
+
+
 		QMenu *debugger = this->_window.menuBar()->addMenu("&Debugger");
 		QAction *cpuDebugger = new QAction("CPU's Debugger", &this->_window);
 		cpuDebugger->setShortcut(Qt::Key_F1);
 		QMainWindow::connect(cpuDebugger, &QAction::triggered, this->_sfWidget.get(), &QtFullSFML::enableDebugCPU);
 		debugger->addAction(cpuDebugger);
+
 		QAction *ramViewer = new QAction("Memory viewer", &this->_window);
 		ramViewer->setShortcut(Qt::Key_F2);
 		QMainWindow::connect(ramViewer, &QAction::triggered, this->_sfWidget.get(), &QtFullSFML::enableRamViewer);
 		debugger->addAction(ramViewer);
+
 		QAction *headerViewer = new QAction("Header viewer", &this->_window);
 		headerViewer->setShortcut(Qt::Key_F3);
 		QMainWindow::connect(headerViewer, &QAction::triggered, this->_sfWidget.get(), &QtFullSFML::enableHeaderViewer);
 		debugger->addAction(headerViewer);
+
 		QAction *apuDebugger = new QAction("APU's Debugger", &this->_window);
 		apuDebugger->setShortcut(Qt::Key_F4);
 		QMainWindow::connect(apuDebugger, &QAction::triggered, this->_sfWidget.get(), &QtFullSFML::enableDebugAPU);
 		debugger->addAction(apuDebugger);
+
 		QAction *busDebugger = new QAction("Memory bus Viewer", &this->_window);
 		busDebugger->setShortcut(Qt::Key_F5);
 		QMainWindow::connect(busDebugger, &QAction::triggered, this->_sfWidget.get(), &QtFullSFML::enableDebugBus);
 		debugger->addAction(busDebugger);
+
 		QAction *cgramDebugger = new QAction("Palette Viewer", &this->_window);
 		cgramDebugger->setShortcut(Qt::Key_F6);
 		QMainWindow::connect(cgramDebugger, &QAction::triggered, this->_sfWidget.get(), &QtFullSFML::enableCgramViewer);
 		debugger->addAction(cgramDebugger);
+
+		QAction *registerDebugger = new QAction("Registers Viewer", &this->_window);
+		registerDebugger->setShortcut(Qt::Key_F7);
+		QMainWindow::connect(registerDebugger, &QAction::triggered, this->_sfWidget.get(), &QtFullSFML::enableRegisterViewer);
+		debugger->addAction(registerDebugger);
 
 		this->_window.show();
 	}
@@ -91,9 +101,9 @@ namespace ComSquare::Renderer
 	{
 		try {
 			this->_snes.update();
-		} catch (DebuggableError &e) {
+		} catch (const DebuggableError &e) {
 			std::cout << "Invalid rom's instruction: " << e.what() << std::endl;
-			this->_snes.enableCPUDebugging(true);
+			this->_snes.enableCPUDebuggingWithError(e);
 		} catch (std::exception &e) {
 			std::cerr << "An error occurred: " << e.what() << std::endl;
 			QApplication::quit();
@@ -133,5 +143,10 @@ namespace ComSquare::Renderer
 	void QtFullSFML::enableCgramViewer()
 	{
 		this->_snes.enableCgramDebugging();
+	}
+
+	void QtFullSFML::enableRegisterViewer()
+	{
+		this->_snes.enableRegisterDebugging();
 	}
 }

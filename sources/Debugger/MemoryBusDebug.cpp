@@ -148,6 +148,13 @@ namespace ComSquare::Debugger
 		return true;
 	}
 
+	uint8_t MemoryBusDebug::read(uint24_t addr)
+	{
+		if (this->forceSilence)
+			return MemoryBus::read(addr);
+		return this->read(addr, false);
+	}
+
 	uint8_t MemoryBusDebug::read(uint24_t addr, bool silence)
 	{
 		if (!silence && !this->forceSilence) {
@@ -155,11 +162,11 @@ namespace ComSquare::Debugger
 			if (!accessor) {
 				this->_model.log(BusLog(true, addr, accessor, this->_openBus, this->_openBus));
 			} else {
-				uint8_t value = accessor->read(addr - accessor->getStart());
+				uint8_t value = accessor->read(accessor->getRelativeAddress(addr));
 				this->_model.log(BusLog(false, addr, accessor, value, value));
 			}
 		}
-		return MemoryBus::read(addr);
+		return MemoryBus::read(addr, silence);
 	}
 
 	void MemoryBusDebug::write(uint24_t addr, uint8_t data)
@@ -168,7 +175,7 @@ namespace ComSquare::Debugger
 		std::optional<uint8_t> value = std::nullopt;
 		try {
 			if (accessor)
-				value = accessor->read(addr - accessor->getStart());
+				value = accessor->read(accessor->getRelativeAddress(addr));
 		} catch (InvalidAddress &) {
 			value = std::nullopt;
 		}
@@ -177,7 +184,7 @@ namespace ComSquare::Debugger
 		MemoryBus::write(addr, data);
 	}
 
-	BusLog::BusLog(bool _write, uint24_t _addr, std::shared_ptr<Memory::AMemory> &_accessor, std::optional<uint8_t> _oldData, uint8_t _newData) :
+	BusLog::BusLog(bool _write, uint24_t _addr, std::shared_ptr<Memory::IMemory> &_accessor, std::optional<uint8_t> _oldData, uint8_t _newData) :
 		write(_write), addr(_addr), accessor(std::move(_accessor)), oldData(_oldData), newData(_newData)
 	{}
 }
@@ -206,8 +213,10 @@ QVariant BusLogModel::data(const QModelIndex &index, int role) const
 		return QString(ComSquare::Utility::to_hex(log.addr).c_str());
 	case 2:
 		return QString(log.accessor ? log.accessor->getName().c_str() : "Bus");
-	case 3:
-		return QString(log.accessor ? log.accessor->getValueName(log.addr - log.accessor->getStart()).c_str() : "Open bus");
+	case 3: {
+		uint24_t addr = log.accessor->getRelativeAddress(log.addr);
+		return QString(log.accessor ? log.accessor->getValueName(addr).c_str() : "Open bus");
+	}
 	case 4:
 		if (!log.oldData)
 			return QString("???");

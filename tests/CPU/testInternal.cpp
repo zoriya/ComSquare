@@ -3,13 +3,8 @@
 //
 
 #include <criterion/criterion.h>
-#include <iostream>
 #include <bitset>
 #include "../tests.hpp"
-#include "../../sources/SNES.hpp"
-#include "../../sources/Memory/MemoryBus.hpp"
-#include "../../sources/CPU/CPU.hpp"
-
 using namespace ComSquare;
 
 Test(SEP, setall)
@@ -105,9 +100,21 @@ Test(PHA, basic)
 	Init()
 	snes.cpu->_registers.a = 0xABCD;
 	snes.cpu->_registers.s = 0x02;
+	snes.cpu->_registers.p.m = false;
 	snes.cpu->PHA(0x0, ComSquare::CPU::AddressingMode::Implied);
 	cr_assert_eq(snes.wram->_data[1], 0xCD, "The second value pushed to the stack should be 0xCD but it was %x", snes.wram->_data[1]);
 	cr_assert_eq(snes.wram->_data[2], 0xAB, "The first value pushed to the stack should be 0xAB but it was %x", snes.wram->_data[2]);
+	cr_assert_eq(snes.cpu->_registers.s, 0x0, "The Stack pointer should be equal to 0x0 but it was %x", snes.cpu->_registers.s);
+}
+
+Test(PHA, 8bits)
+{
+	Init()
+	snes.cpu->_registers.a = 0xCD;
+	snes.cpu->_registers.s = 0x02;
+	snes.cpu->_registers.p.m = false;
+	snes.cpu->PHA(0x0, ComSquare::CPU::AddressingMode::Implied);
+	cr_assert_eq(snes.wram->_data[1], 0xCD, "The second value pushed to the stack should be 0xCD but it was %x", snes.wram->_data[1]);
 	cr_assert_eq(snes.cpu->_registers.s, 0x0, "The Stack pointer should be equal to 0x0 but it was %x", snes.cpu->_registers.s);
 }
 
@@ -184,8 +191,8 @@ Test(PLA, basic)
 	snes.cpu->PLA(0x0, ComSquare::CPU::AddressingMode::Implied);
 	auto data = snes.cpu->_registers.a;
 	cr_assert_eq(data, 0x7BCD, "The accumulator should be 0x7BCD but it was %x", data);
-	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should not be set.", snes.cpu->_registers.p.z);
-	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flag should not be set.", snes.cpu->_registers.p.n);
+	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should not be set.");
+	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flag should not be set.");
 	cr_assert_eq(snes.cpu->_registers.s, 0x2, "The Stack pointer should be equal to 0x2 but it was %x", snes.cpu->_registers.s);
 }
 
@@ -199,8 +206,8 @@ Test(PLA, zero)
 	snes.cpu->PLA(0x0, ComSquare::CPU::AddressingMode::Implied);
 	auto data = snes.cpu->_registers.a;
 	cr_assert_eq(data, 0x0000, "The accumulator should be 0x0000 but it was %x", data);
-	cr_assert_eq(snes.cpu->_registers.p.z, true, "The zero flag should be set.", snes.cpu->_registers.p.z);
-	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flag should not be set.", snes.cpu->_registers.p.n);
+	cr_assert_eq(snes.cpu->_registers.p.z, true, "The zero flag should be set.");
+	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flag should not be set.");
 	cr_assert_eq(snes.cpu->_registers.s, 0x2, "The Stack pointer should be equal to 0x2 but it was %x", snes.cpu->_registers.s);
 }
 
@@ -214,8 +221,8 @@ Test(PLA, negative)
 	snes.cpu->PLA(0x0, ComSquare::CPU::AddressingMode::Implied);
 	auto data = snes.cpu->_registers.a;
 	cr_assert_eq(data, 0xA000, "The accumulator should be 0xA000 but it was %x", data);
-	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag not should be set.", snes.cpu->_registers.p.z);
-	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flag should be set.", snes.cpu->_registers.p.n);
+	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag not should be set.");
+	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flag should be set.");
 	cr_assert_eq(snes.cpu->_registers.s, 0x2, "The Stack pointer should be equal to 0x2 but it was %x", snes.cpu->_registers.s);
 }
 
@@ -229,8 +236,8 @@ Test(PLX, basic)
 	snes.cpu->PLX(0x0, ComSquare::CPU::AddressingMode::Implied);
 	auto data = snes.cpu->_registers.x;
 	cr_assert_eq(data, 0x7BCD, "The X register should be 0x7BCD but it was %x", data);
-	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should not be set.", snes.cpu->_registers.p.z);
-	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flag should not be set.", snes.cpu->_registers.p.n);
+	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should not be set.");
+	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flag should not be set.");
 	cr_assert_eq(snes.cpu->_registers.s, 0x2, "The Stack pointer should be equal to 0x2 but it was %x", snes.cpu->_registers.s);
 }
 
@@ -244,8 +251,8 @@ Test(PLX, zero)
 	snes.cpu->PLX(0x0, ComSquare::CPU::AddressingMode::Implied);
 	auto data = snes.cpu->_registers.x;
 	cr_assert_eq(data, 0x0000, "The x register should be 0x0000 but it was %x", data);
-	cr_assert_eq(snes.cpu->_registers.p.z, true, "The zero flag should be set.", snes.cpu->_registers.p.z);
-	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flag should not be set.", snes.cpu->_registers.p.n);
+	cr_assert_eq(snes.cpu->_registers.p.z, true, "The zero flag should be set.");
+	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flag should not be set.");
 	cr_assert_eq(snes.cpu->_registers.s, 0x2, "The Stack pointer should be equal to 0x2 but it was %x", snes.cpu->_registers.s);
 }
 
@@ -259,8 +266,8 @@ Test(PLX, negative)
 	snes.cpu->PLX(0x0, ComSquare::CPU::AddressingMode::Implied);
 	auto data = snes.cpu->_registers.x;
 	cr_assert_eq(data, 0xA000, "The x register should be 0xA000 but it was %x", data);
-	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag not should be set.", snes.cpu->_registers.p.z);
-	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flag should be set.", snes.cpu->_registers.p.n);
+	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag not should be set.");
+	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flag should be set.");
 	cr_assert_eq(snes.cpu->_registers.s, 0x2, "The Stack pointer should be equal to 0x2 but it was %x", snes.cpu->_registers.s);
 }
 
@@ -274,8 +281,8 @@ Test(PLY, basic)
 	snes.cpu->PLY(0x0, ComSquare::CPU::AddressingMode::Implied);
 	auto data = snes.cpu->_registers.y;
 	cr_assert_eq(data, 0x7BCD, "The Y register should be 0x7BCD but it was %x", data);
-	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should not be set.", snes.cpu->_registers.p.z);
-	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flag should not be set.", snes.cpu->_registers.p.n);
+	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should not be set.");
+	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flag should not be set.");
 	cr_assert_eq(snes.cpu->_registers.s, 0x2, "The Stack pointer should be equal to 0x2 but it was %x", snes.cpu->_registers.s);
 }
 
@@ -289,8 +296,8 @@ Test(PLY, zero)
 	snes.cpu->PLY(0x0, ComSquare::CPU::AddressingMode::Implied);
 	auto data = snes.cpu->_registers.y;
 	cr_assert_eq(data, 0x0000, "The y register should be 0x0000 but it was %x", data);
-	cr_assert_eq(snes.cpu->_registers.p.z, true, "The zero flag should be set.", snes.cpu->_registers.p.z);
-	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flag should not be set.", snes.cpu->_registers.p.n);
+	cr_assert_eq(snes.cpu->_registers.p.z, true, "The zero flag should be set.");
+	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flag should not be set.");
 	cr_assert_eq(snes.cpu->_registers.s, 0x2, "The Stack pointer should be equal to 0x2 but it was %x", snes.cpu->_registers.s);
 }
 
@@ -304,8 +311,8 @@ Test(PLY, negative)
 	snes.cpu->PLY(0x0, ComSquare::CPU::AddressingMode::Implied);
 	auto data = snes.cpu->_registers.y;
 	cr_assert_eq(data, 0xA000, "The y register should be 0xA000 but it was %x", data);
-	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag not should be set.", snes.cpu->_registers.p.z);
-	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flag should be set.", snes.cpu->_registers.p.n);
+	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag not should be set.");
+	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flag should be set.");
 	cr_assert_eq(snes.cpu->_registers.s, 0x2, "The Stack pointer should be equal to 0x2 but it was %x", snes.cpu->_registers.s);
 }
 
@@ -318,8 +325,8 @@ Test(PLD, basic)
 	snes.cpu->PLD(0x0, ComSquare::CPU::AddressingMode::Implied);
 	auto data = snes.cpu->_registers.d;
 	cr_assert_eq(data, 0x7BCD, "The D register should be 0x7BCD but it was %x", data);
-	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should not be set.", snes.cpu->_registers.p.z);
-	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flag should not be set.", snes.cpu->_registers.p.n);
+	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should not be set.");
+	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flag should not be set.");
 	cr_assert_eq(snes.cpu->_registers.s, 0x2, "The Stack pointer should be equal to 0x2 but it was %x", snes.cpu->_registers.s);
 }
 
@@ -332,8 +339,8 @@ Test(PLD, zero)
 	snes.cpu->PLD(0x0, ComSquare::CPU::AddressingMode::Implied);
 	auto data = snes.cpu->_registers.d;
 	cr_assert_eq(data, 0x0000, "The d register should be 0x0000 but it was %x", data);
-	cr_assert_eq(snes.cpu->_registers.p.z, true, "The zero flag should be set.", snes.cpu->_registers.p.z);
-	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flag should not be set.", snes.cpu->_registers.p.n);
+	cr_assert_eq(snes.cpu->_registers.p.z, true, "The zero flag should be set.");
+	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flag should not be set.");
 	cr_assert_eq(snes.cpu->_registers.s, 0x2, "The Stack pointer should be equal to 0x2 but it was %x", snes.cpu->_registers.s);
 }
 
@@ -346,8 +353,8 @@ Test(PLD, negative)
 	snes.cpu->PLD(0x0, ComSquare::CPU::AddressingMode::Implied);
 	auto data = snes.cpu->_registers.d;
 	cr_assert_eq(data, 0xA000, "The D register should be 0xA000 but it was %x", data);
-	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag not should be set.", snes.cpu->_registers.p.z);
-	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flag should be set.", snes.cpu->_registers.p.n);
+	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag not should be set.");
+	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flag should be set.");
 	cr_assert_eq(snes.cpu->_registers.s, 0x2, "The Stack pointer should be equal to 0x2 but it was %x", snes.cpu->_registers.s);
 }
 
@@ -359,8 +366,8 @@ Test(PLB, basic)
 	snes.cpu->PLB(0x0, ComSquare::CPU::AddressingMode::Implied);
 	auto data = snes.cpu->_registers.dbr;
 	cr_assert_eq(data, 0x7D, "The DBR should be 0x7D but it was %x", data);
-	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should not be set.", snes.cpu->_registers.p.z);
-	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flag should not be set.", snes.cpu->_registers.p.n);
+	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should not be set.");
+	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flag should not be set.");
 	cr_assert_eq(snes.cpu->_registers.s, 0x1, "The Stack pointer should be equal to 0x1 but it was %x", snes.cpu->_registers.s);
 }
 
@@ -372,8 +379,8 @@ Test(PLB, zero)
 	snes.cpu->PLB(0x0, ComSquare::CPU::AddressingMode::Implied);
 	auto data = snes.cpu->_registers.dbr;
 	cr_assert_eq(data, 0x00, "The dbr should be 0x00 but it was %x", data);
-	cr_assert_eq(snes.cpu->_registers.p.z, true, "The zero flag should be set.", snes.cpu->_registers.p.z);
-	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flag should not be set.", snes.cpu->_registers.p.n);
+	cr_assert_eq(snes.cpu->_registers.p.z, true, "The zero flag should be set.");
+	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flag should not be set.");
 	cr_assert_eq(snes.cpu->_registers.s, 0x1, "The Stack pointer should be equal to 0x1 but it was %x", snes.cpu->_registers.s);
 }
 
@@ -385,8 +392,8 @@ Test(PLB, negative)
 	snes.cpu->PLB(0x0, ComSquare::CPU::AddressingMode::Implied);
 	auto data = snes.cpu->_registers.dbr;
 	cr_assert_eq(data, 0xA0, "The D register should be 0xA0 but it was %x", data);
-	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag not should be set.", snes.cpu->_registers.p.z);
-	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flag should be set.", snes.cpu->_registers.p.n);
+	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag not should be set.");
+	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flag should be set.");
 	cr_assert_eq(snes.cpu->_registers.s, 0x1, "The Stack pointer should be equal to 0x1 but it was %x", snes.cpu->_registers.s);
 }
 

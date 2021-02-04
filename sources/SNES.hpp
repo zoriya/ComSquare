@@ -12,11 +12,13 @@
 #include "PPU/PPU.hpp"
 #include "APU/APU.hpp"
 #include "Renderer/IRenderer.hpp"
-#ifdef DEBUGGER_ENABLED
-#include "Debugger/MemoryViewer.hpp"
-#include "Debugger/HeaderViewer.hpp"
-#include "Debugger/CGramDebug.hpp"
+#include "Exceptions/DebuggableError.hpp"
 
+#ifdef DEBUGGER_ENABLED
+	#include "Debugger/MemoryViewer.hpp"
+	#include "Debugger/HeaderViewer.hpp"
+	#include "Debugger/CGramDebug.hpp"
+	#include "Debugger/RegisterViewer.hpp"
 #endif
 
 namespace ComSquare
@@ -31,10 +33,13 @@ namespace ComSquare
 		std::unique_ptr<Debugger::HeaderViewer> _headerViewer;
 		//! @brief The window that allow the user to view the CGRAM.
 		std::unique_ptr<Debugger::CGramDebug> _cgramViewer;
+		//! @brief The window that allow the user to view registers.
+		std::unique_ptr<Debugger::RegisterViewer> _registerViewer;
 #endif
-		//! @brief The memory bus that map addresses to components.
-		std::shared_ptr<Memory::MemoryBus> _bus;
 	public:
+		//! @brief The memory bus that map addresses to components.
+		std::shared_ptr<Memory::MemoryBus> bus;
+
 		//! @brief Cartridge containing instructions (ROM).
 		std::shared_ptr<Cartridge::Cartridge> cartridge;
 		//! @brief Work Ram shared by all the components.
@@ -57,6 +62,9 @@ namespace ComSquare
 		void disableCPUDebugging();
 		//! @brief Enable the CPU's debugging window.
 		void enableCPUDebugging(bool pause = false);
+		//! @brief Enable the CPU's debugger and show an error message related to an exception.
+		//! @param exception The exception to inform the user about.
+		void enableCPUDebuggingWithError(const DebuggableError &exception);
 		//! @brief Disable the Ram's debugging window.
 		void disableRamViewer();
 		//! @brief Enable the Ram's debugging window.
@@ -77,6 +85,10 @@ namespace ComSquare
 		void disableCgramDebugging();
 		//! @brief Enable the Cgram's debugging window.
 		void enableCgramDebugging();
+		//! @brief Disable the Register's debugging window.
+		void disableRegisterDebugging();
+		//! @brief Enable the Register's debugging window.
+		void enableRegisterDebugging();
 
 		//! @brief Create all the components using a common memory bus for all of them.
 		SNES(const std::string &ramPath, Renderer::IRenderer &renderer);

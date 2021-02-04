@@ -12,12 +12,15 @@
 namespace ComSquare::CPU
 {
 	CPU::CPU(std::shared_ptr<Memory::MemoryBus> bus, Cartridge::Header &cartridgeHeader)
-		: _bus(std::move(bus)), _cartridgeHeader(cartridgeHeader)
+		: _bus(std::move(bus)),
+		_cartridgeHeader(cartridgeHeader)
 	{
 		this->RESB();
+		for (DMA &channel : this->_dmaChannels)
+			channel.setBus(_bus);
 	}
 
-	bool CPU::isDebugger()
+	bool CPU::isDebugger() const
 	{
 		return false;
 	}
@@ -28,8 +31,10 @@ namespace ComSquare::CPU
 	}
 
 	//! @bref The CPU's internal registers starts at $4200	and finish at $421F.
-	uint8_t CPU::read(uint24_t addr)
+	uint8_t CPU::read(uint24_t addr) const
 	{
+		uint8_t tmp = 0;
+
 		switch (addr) {
 		case 0x0:
 			return this->_internalRegisters.nmitimen;
@@ -54,7 +59,9 @@ namespace ComSquare::CPU
 		case 0xA:
 			return this->_internalRegisters.vtimeh;
 		case 0xB:
-			return this->_internalRegisters.mdmaen;
+			for (int i = 0; i < 8; i++)
+				tmp |= this->_dmaChannels[i].enabled << i;
+			return tmp;
 		case 0xC:
 			return this->_internalRegisters.hdmaen;
 		case 0xD:
@@ -91,8 +98,10 @@ namespace ComSquare::CPU
 			return this->_internalRegisters.joy4l;
 		case 0x1F:
 			return this->_internalRegisters.joy4h;
+		case 0x100 ... 0x180:
+			return this->_dmaChannels[(addr - 0x100) >> 8u].read(addr & 0xF);
 		default:
-			throw InvalidAddress("CPU Internal Registers read", addr);
+			throw InvalidAddress("CPU Internal Registers read", addr + this->_start);
 		}
 	}
 
@@ -133,7 +142,8 @@ namespace ComSquare::CPU
 			this->_internalRegisters.vtimeh = data;
 			break;
 		case 0xB:
-			this->_internalRegisters.mdmaen = data;
+			for (int i = 0; i < 8; i++)
+				this->_dmaChannels[i].enabled = data & (0b1 << i);
 			break;
 		case 0xC:
 			this->_internalRegisters.hdmaen = data;
@@ -189,9 +199,17 @@ namespace ComSquare::CPU
 		case 0x1F:
 			this->_internalRegisters.joy4h = data;
 			break;
+		case 0x100 ... 0x180:
+			this->_dmaChannels[(addr - 0x100) >> 8u].write(addr & 0xF, data);
+			break;
 		default:
-			throw InvalidAddress("CPU Internal Registers write", addr);
+			throw InvalidAddress("CPU Internal Registers write", addr + this->_start);
 		}
+	}
+
+	uint24_t CPU::getSize() const
+	{
+		return 0x180;
 	}
 
 	uint8_t CPU::readPC()
@@ -204,8 +222,14 @@ namespace ComSquare::CPU
 	unsigned CPU::update()
 	{
 		unsigned cycles = 0;
+		const unsigned maxCycles = 0x17;
 
-		for (int i = 0; i < 0x17; i++) {
+		for (DMA &channel : this->_dmaChannels) {
+			if (!channel.enabled)
+				continue;
+			cycles += channel.run(maxCycles - cycles);
+		}
+		for (unsigned i = 0; i < maxCycles; i++) {
 			if (this->_isStopped) {
 				cycles += 1;
 				continue;
@@ -330,12 +354,12 @@ namespace ComSquare::CPU
 		return value;
 	}
 
-	std::string CPU::getName()
+	std::string CPU::getName() const
 	{
 		return "CPU";
 	}
 
-	Component CPU::getComponent()
+	Component CPU::getComponent() const
 	{
 		return Cpu;
 	}

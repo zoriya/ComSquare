@@ -15,16 +15,16 @@
 namespace ComSquare
 {
 	SNES::SNES(const std::string &romPath, Renderer::IRenderer &renderer) :
-		_bus(std::make_shared<Memory::MemoryBus>()),
+		bus(std::make_shared<Memory::MemoryBus>()),
 		cartridge(new Cartridge::Cartridge(romPath)),
 		wram(new Ram::Ram(16384, WRam, "WRam")),
 		sram(new Ram::Ram(this->cartridge->header.sramSize, SRam, "SRam")),
 		apuRam(new APU::MemoryMap()),
-		cpu(new CPU::CPU(this->_bus, cartridge->header)),
+		cpu(new CPU::CPU(this->bus, cartridge->header)),
 		ppu(new PPU::PPU(renderer)),
 		apu(new APU::APU(this->apuRam))
 	{
-		this->_bus->mapComponents(*this);
+		this->bus->mapComponents(*this);
 	}
 
 	void SNES::update()
@@ -34,6 +34,17 @@ namespace ComSquare
 		this->apu->update(cycleCount);
 	}
 
+	void SNES::enableCPUDebuggingWithError(const DebuggableError &exception)
+	{
+		this->enableCPUDebugging(true);
+		#ifdef DEBUGGER_ENABLED
+			auto cpuDebug = std::static_pointer_cast<Debugger::CPUDebug>(this->cpu);
+			cpuDebug->showError(exception);
+		#else
+			(void)exception;
+		#endif
+	}
+
 	void SNES::enableCPUDebugging(bool pause)
 	{
 		#ifdef DEBUGGER_ENABLED
@@ -41,10 +52,10 @@ namespace ComSquare
 				auto cpuDebug = std::static_pointer_cast<Debugger::CPUDebug>(this->cpu);
 				cpuDebug->focus();
 				if (pause)
-					cpuDebug->pause();
+					cpuDebug->pause(true);
 			} else {
 				this->cpu = std::make_shared<Debugger::CPUDebug>(*this->cpu, *this);
-				this->_bus->mapComponents(*this);
+				this->bus->mapComponents(*this);
 			}
 		#else
 			std::cerr << "Debugging features are not enabled. You can't enable the debugger." << std::endl;
@@ -55,7 +66,7 @@ namespace ComSquare
 	void SNES::disableCPUDebugging()
 	{
 		this->cpu = std::make_shared<CPU::CPU>(*this->cpu);
-		this->_bus->mapComponents(*this);
+		this->bus->mapComponents(*this);
 	}
 
 	void SNES::enableRamViewer()
@@ -64,7 +75,7 @@ namespace ComSquare
 			if (this->_ramViewer)
 				this->_ramViewer->focus();
 			else
-				this->_ramViewer = std::make_unique<Debugger::MemoryViewer>(*this, *this->_bus);
+				this->_ramViewer = std::make_unique<Debugger::MemoryViewer>(*this, *this->bus);
 		#endif
 	}
 
@@ -99,7 +110,7 @@ namespace ComSquare
 				std::static_pointer_cast<Debugger::APUDebug>(this->apu)->focus();
 			else {
 				this->apu = std::make_shared<Debugger::APUDebug>(*this->apu, *this);
-				this->_bus->mapComponents(*this);
+				this->bus->mapComponents(*this);
 			}
 		#else
 			std::cerr << "Debugging features are not enabled. You can't enable the debugger." << std::endl;
@@ -109,18 +120,18 @@ namespace ComSquare
 	void SNES::disableAPUDebugging()
 	{
 		this->apu = std::make_shared<APU::APU>(*this->apu);
-		this->_bus->mapComponents(*this);
+		this->bus->mapComponents(*this);
 	}
 
 	void SNES::enableMemoryBusDebugging()
 	{
 	#ifdef DEBUGGER_ENABLED
-			if (this->_bus->isDebugger())
-				std::static_pointer_cast<Debugger::MemoryBusDebug>(this->_bus)->focus();
+			if (this->bus->isDebugger())
+				std::static_pointer_cast<Debugger::MemoryBusDebug>(this->bus)->focus();
 			else
 			{
-				this->_bus = std::make_shared<Debugger::MemoryBusDebug>(*this, *this->_bus);
-				this->cpu->setMemoryBus(this->_bus);
+				this->bus = std::make_shared<Debugger::MemoryBusDebug>(*this, *this->bus);
+				this->cpu->setMemoryBus(this->bus);
 			}
 	#else
 			std::cerr << "Debugging features are not enabled. You can't enable the debugger." << std::endl;
@@ -130,8 +141,8 @@ namespace ComSquare
 	void SNES::disableMemoryBusDebugging()
 	{
 		#ifdef DEBUGGER_ENABLED
-			this->_bus = std::make_shared<Memory::MemoryBus>(*this->_bus);
-			this->cpu->setMemoryBus(this->_bus);
+			this->bus = std::make_shared<Memory::MemoryBus>(*this->bus);
+			this->cpu->setMemoryBus(this->bus);
 		#else
 			std::cerr << "Debugging features are not enabled. You can't enable the debugger." << std::endl;
 		#endif
@@ -151,6 +162,23 @@ namespace ComSquare
 	{
 		#ifdef DEBUGGER_ENABLED
 				this->_cgramViewer = nullptr;
+		#endif
+	}
+
+	void SNES::disableRegisterDebugging()
+	{
+		#ifdef DEBUGGER_ENABLED
+			this->_registerViewer = nullptr;
+		#endif
+	}
+
+	void SNES::enableRegisterDebugging()
+	{
+		#ifdef DEBUGGER_ENABLED
+			if (this->_registerViewer)
+				this->_registerViewer->focus();
+			else
+				this->_registerViewer = std::make_unique<Debugger::RegisterViewer>(*this);
 		#endif
 	}
 }

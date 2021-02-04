@@ -7,7 +7,7 @@
 
 namespace ComSquare::APU::DSP
 {
-	uint8_t DSP::read(uint24_t addr)
+	uint8_t DSP::read(uint24_t addr) const
 	{
 		switch (addr) {
 		case 0x00:
@@ -579,6 +579,11 @@ namespace ComSquare::APU::DSP
 		}
 	}
 
+	uint24_t DSP::getSize() const
+	{
+		return 0x7F;
+	}
+
 	Registers DSP::getRegisters()
 	{
 		return this->_registers;
@@ -589,12 +594,12 @@ namespace ComSquare::APU::DSP
 		return this->_channels;
 	}
 
-	std::string DSP::getName()
+	std::string DSP::getName() const
 	{
 		return "DSP";
 	}
 
-	Component DSP::getComponent()
+	Component DSP::getComponent() const
 	{
 		return Apu;
 	}

@@ -18,11 +18,11 @@ namespace ComSquare::Utility
 		StandardPrefix
 	};
 
-	std::string to_hex(uint8_t i, HexString prefix = StandardPrefix);
+	std::string to_hex(uint8_t i, HexString prefix = AsmPrefix);
 
-	std::string to_hex(uint16_t i, HexString prefix = StandardPrefix);
+	std::string to_hex(uint16_t i, HexString prefix = AsmPrefix);
 
-	std::string to_hex(uint24_t i, HexString prefix = StandardPrefix);
+	std::string to_hex(uint24_t i, HexString prefix = AsmPrefix);
 
 	std::string to_binary(uint8_t i);
 

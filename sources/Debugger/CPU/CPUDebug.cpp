@@ -8,6 +8,8 @@
 #include <QtEvents>
 #include <QPainter>
 #include <iostream>
+#include <utility>
+#include <QMessageBox>
 
 using namespace ComSquare::CPU;
 
@@ -58,7 +60,7 @@ namespace ComSquare::Debugger
 		this->_updateDisassembly(this->_registers.pac, 0);
 	}
 
-	bool CPUDebug::isDebugger()
+	bool CPUDebug::isDebugger() const
 	{
 		return true;
 	}
@@ -78,6 +80,10 @@ namespace ComSquare::Debugger
 	{
 		try {
 			unsigned cycles = 0;
+
+			for (auto &channel : this->_dmaChannels)
+				if (channel.enabled)
+					cycles += channel.run(INT_MAX);
 
 			if (this->_isPaused)
 				return 0xFF;
@@ -129,11 +135,22 @@ namespace ComSquare::Debugger
 		return ret;
 	}
 
-	void CPUDebug::pause()
+	void CPUDebug::showError(const DebuggableError &error)
 	{
+		QMessageBox msg;
+		msg.setIcon(QMessageBox::Critical);
+		msg.setText("Invalid rom action");
+		msg.setInformativeText(error.what());
+		msg.exec();
+	}
+
+	void CPUDebug::pause(bool forcePause)
+	{
+		if (forcePause && this->_isPaused)
+			return;
 		this->_isPaused = !this->_isPaused;
 		if (this->_isPaused)
-			this->_ui.actionPause->setText("Resume");
+			this->_ui.actionPause->setText("Continue");
 		else
 			this->_ui.actionPause->setText("Pause");
 		this->_updateDisassembly(this->_registers.pac);
@@ -383,7 +400,9 @@ QSize RowPainter::sizeHint(const QStyleOptionViewItem &, const QModelIndex &) co
 	return QSize();
 }
 
-StackModel::StackModel(std::shared_ptr<ComSquare::Memory::MemoryBus> bus, ComSquare::Debugger::CPUDebug &cpu) : _bus(bus), _cpu(cpu) { }
+StackModel::StackModel(std::shared_ptr<ComSquare::Memory::MemoryBus> bus, ComSquare::Debugger::CPUDebug &cpu)
+	: _bus(std::move(bus)), _cpu(cpu)
+{ }
 
 void StackModel::setMemoryBus(std::shared_ptr<ComSquare::Memory::MemoryBus> bus)
 {

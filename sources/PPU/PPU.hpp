@@ -5,11 +5,10 @@
 #ifndef COMSQUARE_PPU_HPP
 #define COMSQUARE_PPU_HPP
 
-#include <stdint-gcc.h>
+#include <cstdint>
 #include "../Memory/AMemory.hpp"
 #include "../Memory/MemoryBus.hpp"
 #include "../Renderer/IRenderer.hpp"
-//#include "../Ram/ExtendedRam.hpp"
 #include "../Ram/Ram.hpp"
 #include "../Models/Vector2.hpp"
 
@@ -563,16 +562,19 @@ namespace ComSquare::PPU
 		//! @param addr The local address to read from (0x0 should refer to the first byte of this component).
 		//! @throw This function should thrown an InvalidAddress for address that are not mapped to the component.
 		//! @return Return the data at the address given as parameter.
-		uint8_t read(uint24_t addr) override;
+		uint8_t read(uint24_t addr) const override;
 		//! @brief Write data to this component.
 		//! @param addr The local address to write data (0x0 should refer to the first byte of this component).
 		//! @param data The new data to write.
 		//! @throw This function should thrown an InvalidAddress for address that are not mapped to the component.
 		void write(uint24_t addr, uint8_t data) override;
 		//! @brief Get the name of this accessor (used for debug purpose)
-		std::string getName() override;
+		std::string getName() const override;
 		//! @brief Get the component of this accessor (used for debug purpose)
-		Component getComponent() override;
+		Component getComponent() const override;
+		//! @brief Get the size of the data. This size can be lower than the mapped data.
+		//! @return The number of bytes inside this memory.
+		uint24_t getSize() const override;
 
 		//! @brief Update the PPU of n cycles.
 		//! @param The number of cycles to update.
@@ -580,9 +582,9 @@ namespace ComSquare::PPU
 		//! @brief Give the Vram Address with the right Address remapping
 		uint16_t getVramAddress();
 		//! @brief Give the name of the Address register (used for debug)
-		std::string getValueName(uint24_t addr);
+		std::string getValueName(uint24_t addr) const;
 		//! @brief Return true if the CPU is overloaded with debugging features.
-		virtual bool isDebugger();
+		virtual bool isDebugger() const;
 		//! @brief Allow others components to read the CGRAM (Debuggers)
 		uint16_t cgramRead(uint16_t addr);
 		//! @brief Render a background on the screen
