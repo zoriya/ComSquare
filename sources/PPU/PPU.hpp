@@ -627,6 +627,8 @@ namespace ComSquare::PPU
 		int getBgMode() const;
 		//! @brief update the Vram buffer
 		void updateVramReadBuffer();
+		//! @brief update the Vram buffer
+		Vector2<int> getBgScroll(int bgNumber) const;
 	};
 
 }

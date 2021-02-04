@@ -30,7 +30,7 @@ namespace ComSquare::PPU
 	void Background::renderBackground()
 	{
 		uint16_t vramAddress = this->_tileMapStartAddress;
-		Vector2<int> offset(0, 0);
+		Vector2<int> offset = this->_ppu.getBgScroll(this->_bgNumber);
 		this->backgroundSize.x = this->_tileMaps.x * this->_characterSize.x * NB_CHARACTER_WIDTH;
 		this->backgroundSize.y = this->_tileMaps.y * this->_characterSize.y * NB_CHARACTER_HEIGHT;
 

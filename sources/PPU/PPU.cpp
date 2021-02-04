@@ -141,6 +141,8 @@ namespace ComSquare::PPU
 		this->_backgrounds[2].setTileMapStartAddress(this->getTileMapStartAddress(2));
 		this->_backgrounds[3].setTileMapStartAddress(this->getTileMapStartAddress(2));
 
+		//this->_registers._bgofs[2].raw = 0x03E0;
+		//this->_registers._bgofs[3].raw = 0x03DF;
 		this->_registers._t[0].enableWindowDisplayBg1 = true;
 		this->_registers._t[0].enableWindowDisplayBg2 = true;
 
@@ -699,8 +701,11 @@ namespace ComSquare::PPU
 	{
 		uint16_t colorPalette;
 		// should only render backgrounds needed (depending of th bgMode)
-		for (auto & _background : this->_backgrounds)
+		int i = 0;
+		for (auto &_background : this->_backgrounds) {
+			i++;
 			_background.renderBackground();
+		}
 		// TODO make a function getDefaultBgColor
 		colorPalette = this->cgram->read_internal(0);
 		colorPalette += this->cgram->read_internal(1) << 8U;
@@ -823,5 +828,10 @@ namespace ComSquare::PPU
 	{
 		this->_vramReadBuffer = this->vram->read_internal(this->getVramAddress());
 		this->_vramReadBuffer += this->vram->read_internal(this->getVramAddress() + 1) << 8;
+	}
+
+	Vector2<int> PPU::getBgScroll(int bgNumber) const
+	{
+		return Vector2<int>(this->_registers._bgofs[(bgNumber - 1) * 2].offsetBg, this->_registers._bgofs[(bgNumber - 1) * 2 + 1].offsetBg);
 	}
 }
