@@ -248,8 +248,10 @@ namespace ComSquare::Debugger
 		std::string _getAbsoluteIndirectLongValue(uint24_t pc);
 
 	public:
+		//! @brief Show an error dialog related to an exception.
+		void showError(const DebuggableError &error);
 		//! @brief Pause/Resume the CPU.
-		void pause();
+		void pause(bool forcePause = false);
 		//! @brief Step - Execute a single instruction.
 		void step();
 		//! @brief Next - Continue running instructions until the next line is reached.

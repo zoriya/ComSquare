@@ -34,6 +34,15 @@ namespace ComSquare
 		this->apu->update(cycleCount);
 	}
 
+	void SNES::enableCPUDebuggingWithError(const DebuggableError &exception)
+	{
+		this->enableCPUDebugging(true);
+		#ifdef DEBUGGER_ENABLED
+			auto cpuDebug = std::static_pointer_cast<Debugger::CPUDebug>(this->cpu);
+			cpuDebug->showError(exception);
+		#endif
+	}
+
 	void SNES::enableCPUDebugging(bool pause)
 	{
 		#ifdef DEBUGGER_ENABLED
@@ -41,7 +50,7 @@ namespace ComSquare
 				auto cpuDebug = std::static_pointer_cast<Debugger::CPUDebug>(this->cpu);
 				cpuDebug->focus();
 				if (pause)
-					cpuDebug->pause();
+					cpuDebug->pause(true);
 			} else {
 				this->cpu = std::make_shared<Debugger::CPUDebug>(*this->cpu, *this);
 				this->bus->mapComponents(*this);

@@ -148,6 +148,13 @@ namespace ComSquare::Debugger
 		return true;
 	}
 
+	uint8_t MemoryBusDebug::read(uint24_t addr)
+	{
+		if (this->forceSilence)
+			return MemoryBus::read(addr);
+		return this->read(addr, false);
+	}
+
 	uint8_t MemoryBusDebug::read(uint24_t addr, bool silence)
 	{
 		if (!silence && !this->forceSilence) {
@@ -159,7 +166,7 @@ namespace ComSquare::Debugger
 				this->_model.log(BusLog(false, addr, accessor, value, value));
 			}
 		}
-		return MemoryBus::read(addr);
+		return MemoryBus::read(addr, silence);
 	}
 
 	void MemoryBusDebug::write(uint24_t addr, uint8_t data)

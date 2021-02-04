@@ -7,9 +7,8 @@
 #include <QIcon>
 #include <QMenuBar>
 #include <iostream>
+#include "../../Exceptions/DebuggableError.hpp"
 #include "QtSFML.hpp"
-#include "../../Exceptions/InvalidOpcode.hpp"
-#include "../../Exceptions/InvalidAction.hpp"
 
 #ifdef Q_WS_X11
 	#include <Qt/qx11info_x11.h>
@@ -102,9 +101,9 @@ namespace ComSquare::Renderer
 	{
 		try {
 			this->_snes.update();
-		} catch (DebuggableError &e) {
+		} catch (const DebuggableError &e) {
 			std::cout << "Invalid rom's instruction: " << e.what() << std::endl;
-			this->_snes.enableCPUDebugging(true);
+			this->_snes.enableCPUDebuggingWithError(e);
 		} catch (std::exception &e) {
 			std::cerr << "An error occurred: " << e.what() << std::endl;
 			QApplication::quit();

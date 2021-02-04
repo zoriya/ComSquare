@@ -18,6 +18,8 @@
 	#include "Debugger/HeaderViewer.hpp"
 	#include "Debugger/CGramDebug.hpp"
 	#include "Debugger/RegisterViewer.hpp"
+#include "Exceptions/DebuggableError.hpp"
+
 #endif
 
 namespace ComSquare
@@ -61,6 +63,9 @@ namespace ComSquare
 		void disableCPUDebugging();
 		//! @brief Enable the CPU's debugging window.
 		void enableCPUDebugging(bool pause = false);
+		//! @brief Enable the CPU's debugger and show an error message related to an exception.
+		//! @param exception The exception to inform the user about.
+		void enableCPUDebuggingWithError(const DebuggableError &exception);
 		//! @brief Disable the Ram's debugging window.
 		void disableRamViewer();
 		//! @brief Enable the Ram's debugging window.

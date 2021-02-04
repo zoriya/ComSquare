@@ -8,6 +8,7 @@
 #include "../SNES.hpp"
 #include "MemoryShadow.hpp"
 #include "RectangleShadow.hpp"
+#include "../Exceptions/InvalidAddress.hpp"
 
 namespace ComSquare::Memory
 {
@@ -22,18 +23,32 @@ namespace ComSquare::Memory
 		return *it;
 	}
 
-	uint8_t MemoryBus::read(uint24_t addr, bool silence)
+	uint8_t MemoryBus::read(uint24_t addr)
 	{
 		std::shared_ptr<IMemory> handler = this->getAccessor(addr);
 
 		if (!handler) {
-			if (!silence)
-				std::cout << "Unknown memory accessor for address $" << std::hex << addr << ". Using open bus." << std::endl;
+			std::cout << "Unknown memory accessor for address $" << std::hex << addr << ". Using open bus." << std::endl;
 			return this->_openBus;
 		}
-		uint8_t data =  handler->read(handler->getRelativeAddress(addr));
+		uint8_t data = handler->read(handler->getRelativeAddress(addr));
 		this->_openBus = data;
 		return data;
+	}
+
+	uint8_t MemoryBus::read(uint24_t addr, bool silence)
+	{
+		if (!silence)
+			return this->read(addr);
+		std::shared_ptr<IMemory> handler = this->getAccessor(addr);
+
+		if (!handler)
+			return this->_openBus;
+		try {
+			return handler->read(handler->getRelativeAddress(addr));
+		} catch (const InvalidAddress &) {
+			return 0;
+		}
 	}
 
 	void MemoryBus::write(uint24_t addr, uint8_t data)

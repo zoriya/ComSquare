@@ -211,6 +211,8 @@ namespace ComSquare::PPU
 			this->_registers._setini.raw = data;
 			break;
 		//TODO adding the rest of the registers. oaf !
+		case ppuRegisters::stat77: // some roms write here but it is useless
+			break;
 		default:
 			throw InvalidAddress("PPU Internal Registers write", addr + this->_start);
 		}

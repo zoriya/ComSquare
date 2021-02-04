@@ -9,6 +9,7 @@
 #include <QPainter>
 #include <iostream>
 #include <utility>
+#include <QMessageBox>
 
 using namespace ComSquare::CPU;
 
@@ -134,8 +135,19 @@ namespace ComSquare::Debugger
 		return ret;
 	}
 
-	void CPUDebug::pause()
+	void CPUDebug::showError(const DebuggableError &error)
 	{
+		QMessageBox msg;
+		msg.setIcon(QMessageBox::Critical);
+		msg.setText("Invalid rom action");
+		msg.setInformativeText(error.what());
+		msg.exec();
+	}
+
+	void CPUDebug::pause(bool forcePause)
+	{
+		if (forcePause && this->_isPaused)
+			return;
 		this->_isPaused = !this->_isPaused;
 		if (this->_isPaused)
 			this->_ui.actionPause->setText("Continue");

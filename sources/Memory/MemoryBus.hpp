@@ -40,9 +40,14 @@ namespace ComSquare
 
 			//! @brief Read data at a global address.
 			//! @param addr The address to read from.
-			//! @param silence Disable login to the memory bus's debugger (if enabled). Should only be used by other debuggers.
 			//! @return The value that the component returned for this address. If the address was mapped to ram, it simply returned the value. If the address was mapped to a register the component returned the register.
-			virtual uint8_t read(uint24_t addr, bool silence = false);
+			virtual uint8_t read(uint24_t addr);
+
+			//! @brief Read data at a global address. This form allow read to be silenced.
+			//! @param addr The address to read from.
+			//! @param silence Disable login to the memory bus's debugger (if enabled). Should only be used by other debuggers. This also won't affect the open bus.
+			//! @return The value that the component returned for this address. If the address was mapped to ram, it simply returned the value. If the address was mapped to a register the component returned the register.
+			virtual uint8_t read(uint24_t addr, bool silence);
 
 			//! @brief Write a data to a global address.
 			//! @param addr The address to write to.
