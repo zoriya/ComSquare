@@ -40,6 +40,8 @@ namespace ComSquare
 		#ifdef DEBUGGER_ENABLED
 			auto cpuDebug = std::static_pointer_cast<Debugger::CPUDebug>(this->cpu);
 			cpuDebug->showError(exception);
+		#else
+			(void)exception;
 		#endif
 	}
 
