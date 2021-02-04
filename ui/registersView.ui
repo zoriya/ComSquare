@@ -43,16 +43,6 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="ppu">
-       <attribute name="title">
-        <string>PPU</string>
-       </attribute>
-       <layout class="QGridLayout" name="gridLayout_3">
-        <item row="0" column="0">
-         <layout class="QFormLayout" name="formLayout_2"/>
-        </item>
-       </layout>
-      </widget>
       <widget class="QWidget" name="dma">
        <attribute name="title">
         <string>DMA</string>
@@ -144,6 +134,16 @@
            </layout>
           </widget>
          </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="ppu">
+       <attribute name="title">
+        <string>PPU</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_3">
+        <item row="0" column="0">
+         <layout class="QFormLayout" name="formLayout_2"/>
         </item>
        </layout>
       </widget>

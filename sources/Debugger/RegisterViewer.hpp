@@ -59,7 +59,7 @@ namespace ComSquare
 			//! @brief The list of models used by different panels.
 			std::vector<RegistersViewerModel *> _models;
 
-			//! @brief The snes instance to read/write to DMA channels.
+			//! @brief The snes instance to read/write to.
 			SNES &_snes;
 
 			//! @brief Set models to the different tables and initialize them.
