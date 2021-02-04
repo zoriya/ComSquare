@@ -147,7 +147,7 @@ namespace ComSquare::Debugger
 		if (dialogUI.checkBox->isChecked()) {
 			try {
 				value = this->switchToAddrTab(value);
-			} catch (InvalidAddress &) {}
+			} catch (const InvalidAddress &) {}
 		}
 		QModelIndex index = this->_ui.tableView->model()->index(value >> 4, value & 0x0F);
 		this->_ui.tableView->scrollTo(index);

@@ -13,8 +13,8 @@ Test(DMA, RomToVRAM)
 	snes.cartridge->_size = 4000000;
 	snes.cartridge->_data = new uint8_t[snes.cartridge->_size];
 	for (unsigned i = 0; i < 0x400; i++) {
-		snes.cartridge->_data[0xBDED + i * 2] = i;
-		snes.cartridge->_data[0xBDED + i * 2 + 1] = i >> 8;
+		snes.cartridge->_data[0x9bded + i * 2] = i;
+		snes.cartridge->_data[0x9bded + i * 2 + 1] = i >> 8;
 	}
 
 	// Transferring $800 bytes from ROM ($13BE00) to VRam ($2000) via DMA channel 0
