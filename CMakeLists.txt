@@ -109,12 +109,6 @@ add_executable(unit_tests
 target_link_libraries(unit_tests criterion -lgcov)
 target_compile_options(unit_tests PUBLIC -fprofile-arcs -ftest-coverage)
 
-if ("${GITBUILD}" STREQUAL true)
-    include_directories(ComSquare build/include)
-    link_directories(ComSquare build/lib)
-    message("Git build is true")
-endif ()
-
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
