@@ -6,6 +6,7 @@
 #include <cmath>
 #include <QtWidgets/QInputDialog>
 #include <QtWidgets/QSpinBox>
+#include <QMessageBox>
 #include "MemoryViewer.hpp"
 #include "../SNES.hpp"
 #include "../Memory/MemoryShadow.hpp"
@@ -35,7 +36,7 @@ QVariant MemoryViewerModel::data(const QModelIndex &index, int role) const
 	if (role != Qt::DisplayRole)
 		return QVariant();
 	char buf[3];
-	snprintf(buf, 3, "%02X", this->_memory->read_internal((index.row() << 4u) + index.column()));
+	snprintf(buf, 3, "%02X", this->_memory->read((index.row() << 4u) + index.column()));
 	return QString(buf);
 }
 
@@ -147,33 +148,48 @@ namespace ComSquare::Debugger
 		if (dialogUI.checkBox->isChecked()) {
 			try {
 				value = this->switchToAddrTab(value);
-			} catch (InvalidAddress &) {}
+			} catch (const InvalidAddress &) {
+				QMessageBox msgBox;
+				msgBox.setIcon(QMessageBox::Critical);
+				msgBox.setText("This address is not mapped. Reading it will result in OpenBus.");
+				msgBox.exec();
+				return;
+			}
 		}
-		QModelIndex index = this->_ui.tableView->model()->index(value >> 4, value & 0x0000000F);
+		QModelIndex index = this->_ui.tableView->model()->index(value >> 4, value & 0x0F);
 		this->_ui.tableView->scrollTo(index);
 		this->_ui.tableView->selectionModel()->select(index, QItemSelectionModel::ClearAndSelect);
+		this->_ui.tableView->setCurrentIndex(index);
 	}
 
 	unsigned MemoryViewer::switchToAddrTab(uint24_t addr)
 	{
-		std::shared_ptr<Memory::AMemory> accessor = this->_bus.getAccessor(addr);
+		std::shared_ptr<Memory::IMemory> accessor = this->_bus.getAccessor(addr);
 		if (!accessor)
 			throw InvalidAddress("Memory viewer switch to address", addr);
-		Memory::AMemory *ptr;
-		if (accessor->isMirror())
-			ptr = accessor->getMirrored().get();
-		else
-			ptr = accessor.get();
 
-		if (ptr == this->_snes.wram.get())
+		switch (accessor->getComponent()) {
+		case WRam:
 			this->_ui.tabs->setCurrentIndex(0);
-		else if (ptr == this->_snes.sram.get())
+			break;
+		case SRam:
 			this->_ui.tabs->setCurrentIndex(1);
-		else if (ptr == this->_snes.cartridge.get())
+			break;
+		case Rom:
 			this->_ui.tabs->setCurrentIndex(2);
-		else
+			break;
+		default:
 			throw InvalidAddress("Memory viewer switch to address", addr);
-		return addr - accessor->getStart();
+		}
+		addr = accessor->getRelativeAddress(addr);
+		if (addr > accessor->getSize()) {
+			QMessageBox msgBox;
+			msgBox.setIcon(QMessageBox::Critical);
+			msgBox.setText((std::string("The ") + accessor->getName() + " is too small to contain this address.").c_str());
+			msgBox.exec();
+			return 0;
+		}
+		return addr;
 	}
 
 	void MemoryViewer::focus()

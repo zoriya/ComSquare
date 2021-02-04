@@ -5,11 +5,10 @@
 #ifndef COMSQUARE_PPU_HPP
 #define COMSQUARE_PPU_HPP
 
-#include <stdint-gcc.h>
+#include <cstdint>
 #include "../Memory/AMemory.hpp"
 #include "../Memory/MemoryBus.hpp"
 #include "../Renderer/IRenderer.hpp"
-//#include "../Ram/ExtendedRam.hpp"
 #include "../Ram/Ram.hpp"
 #include "../Models/Vector2.hpp"
 #include "Background.hpp"
@@ -591,9 +590,12 @@ namespace ComSquare::PPU
 		//! @throw This function should thrown an InvalidAddress for address that are not mapped to the component.
 		void write(uint24_t addr, uint8_t data) override;
 		//! @brief Get the name of this accessor (used for debug purpose)
-		std::string getName() override;
+		std::string getName() const override;
 		//! @brief Get the component of this accessor (used for debug purpose)
-		Component getComponent() override;
+		Component getComponent() const override;
+		//! @brief Get the size of the data. This size can be lower than the mapped data.
+		//! @return The number of bytes inside this memory.
+		uint24_t getSize() const override;
 
 		//! @brief Update the PPU of n cycles.
 		//! @param The number of cycles to update.

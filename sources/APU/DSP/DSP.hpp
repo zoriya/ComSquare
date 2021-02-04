@@ -142,10 +142,14 @@ namespace ComSquare::APU::DSP
 		void write(uint24_t addr, uint8_t data) override;
 
 		//! @brief Get the name of this accessor (used for debug purpose)
-		std::string getName() override;
+		std::string getName() const override;
 
 		//! @brief Get the component of this accessor (used for debug purpose)
-		Component getComponent() override;
+		Component getComponent() const override;
+
+		//! @brief Get the size of the data. This size can be lower than the mapped data.
+		//! @return The number of bytes inside this memory.
+		uint24_t getSize() const override;
 	};
 }
 

@@ -2,8 +2,7 @@
 // Created by anonymus-raccoon on 1/28/20.
 //
 
-#ifndef COMSQUARE_MEMORYSHADOW_HPP
-#define COMSQUARE_MEMORYSHADOW_HPP
+#pragma once
 
 #include <memory>
 #include "AMemory.hpp"
@@ -13,10 +12,10 @@ namespace ComSquare::Memory
 	class MemoryShadow : public AMemory {
 	private:
 		//! @brief Memory to shadow from.
-		std::shared_ptr<AMemory> _initial;
+		std::shared_ptr<IMemory> _initial;
 	public:
 		//! @brief Create a shadow for the memory given as parameter.
-		explicit MemoryShadow(std::shared_ptr<AMemory> initial, uint24_t start, uint24_t end);
+		MemoryShadow(std::shared_ptr<IMemory> initial, uint24_t start, uint24_t end);
 		MemoryShadow(const MemoryShadow &) = default;
 		MemoryShadow &operator=(const MemoryShadow &) = default;
 		~MemoryShadow() = default;
@@ -31,17 +30,18 @@ namespace ComSquare::Memory
 		//! @param data The data to write.
 		//! @throw InvalidAddress will be thrown if the address is more than the size of the initial AMemory.
 		void write(uint24_t addr, uint8_t data) override;
+		//! @brief Get the size of the data. This size can be lower than the mapped data.
+		//! @return The number of bytes inside this memory.
+		virtual uint24_t getSize() const override;
 		//! @brief Check if this memory is a mirror or not.
 		//! @return True if this memory is a mirror. False otherwise.
-		bool isMirror() override;
+		bool isMirror() const override;
 		//! @brief Get the name of this accessor (used for debug purpose)
-		std::string getName() override;
+		std::string getName() const override;
 		//! @brief Get the component of this accessor (used for debug purpose)
-		Component getComponent() override;
+		Component getComponent() const override;
 		//! @brief Return the memory accessor this accessor mirror if any
 		//! @return nullptr if isMirror is false, the source otherwise.
-		std::shared_ptr<AMemory> getMirrored() override;
+		std::shared_ptr<IMemory> getMirrored() const override;
 	};
 }
-
-#endif //COMSQUARE_MEMORYSHADOW_HPP

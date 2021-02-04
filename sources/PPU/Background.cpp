@@ -95,8 +95,8 @@ namespace ComSquare::PPU
 		}
 
 		for (int i = 0; i < nbColors; i++) {
-			palette[i] = this->_cgram->read_internal(addr);
-			palette[i] += this->_cgram->read_internal(addr + 1) << 8U;
+			palette[i] = this->_cgram->read(addr);
+			palette[i] += this->_cgram->read(addr + 1) << 8U;
 			addr += 2;
 		}
 		return palette;
@@ -123,8 +123,8 @@ namespace ComSquare::PPU
 
 	uint8_t Background::getPixelReferenceFromTileRow(uint16_t tileAddress, uint8_t pixelIndex)
 	{
-		uint8_t highByte = this->_vram->read_internal(tileAddress % VRAMSIZE);
-		uint8_t lowByte = this->_vram->read_internal((tileAddress + 1) % VRAMSIZE);
+		uint8_t highByte = this->_vram->read(tileAddress % VRAMSIZE);
+		uint8_t lowByte = this->_vram->read((tileAddress + 1) % VRAMSIZE);
 		uint8_t secondHighByte;
 		uint8_t secondLowByte;
 		uint16_t result = 0;
@@ -134,8 +134,8 @@ namespace ComSquare::PPU
 		case 8:
 			return highByte;
 		case 4:
-			secondHighByte =  this->_vram->read_internal((tileAddress + 16) % VRAMSIZE);
-			secondLowByte = this->_vram->read_internal((tileAddress + 17) % VRAMSIZE);
+			secondHighByte =  this->_vram->read((tileAddress + 16) % VRAMSIZE);
+			secondLowByte = this->_vram->read((tileAddress + 17) % VRAMSIZE);
 			result = ((secondHighByte & (1U << shift)) | ((secondLowByte & (1U << shift)) << 1U));
 			result = (shift - 2 >= 0) ? result >> (shift - 2) : result << ((shift - 2) * -1);
 			__attribute__((fallthrough));
@@ -155,8 +155,8 @@ namespace ComSquare::PPU
 
 		while (vramAddress < baseAddress + 0x800) {
 			// TODO function to read 2 bytes (LSB order or bits reversed)
-			tileMapValue = this->_vram->read_internal(vramAddress);
-			tileMapValue += this->_vram->read_internal(vramAddress + 1) << 8U;
+			tileMapValue = this->_vram->read(vramAddress);
+			tileMapValue += this->_vram->read(vramAddress + 1) << 8U;
 			drawBgTile(tileMapValue, {(pos.x * this->_characterSize.x) + offset.x, (pos.y * this->_characterSize.y) + offset.y});
 			vramAddress += 2;
 			if (pos.x % 31 == 0 && pos.x) {

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>RegistersView</class>
+ <widget class="QMainWindow" name="RegistersView">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>431</width>
+    <height>646</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Registers's Debugger</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../resources/appResources.qrc">
+    <normaloff>:/resources/Logo.png</normaloff>:/resources/Logo.png</iconset>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <property name="documentMode">
+       <bool>false</bool>
+      </property>
+      <property name="tabsClosable">
+       <bool>false</bool>
+      </property>
+      <property name="movable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="cpu">
+       <attribute name="title">
+        <string>CPU</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0">
+         <layout class="QFormLayout" name="formLayout"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="dma">
+       <attribute name="title">
+        <string>DMA</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_4">
+        <item row="0" column="0">
+         <widget class="QTabWidget" name="tabWidget_2">
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <widget class="QWidget" name="channel1">
+           <attribute name="title">
+            <string>1</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_5">
+            <item row="0" column="0">
+             <widget class="QTableView" name="dmaChannel1"/>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="channel2">
+           <attribute name="title">
+            <string>2</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_6">
+            <item row="0" column="0">
+             <widget class="QTableView" name="dmaChannel2"/>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="channel3">
+           <attribute name="title">
+            <string>3</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_7">
+            <item row="0" column="0">
+             <widget class="QTableView" name="dmaChannel3"/>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="channel4">
+           <attribute name="title">
+            <string>4</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_8">
+            <item row="0" column="0">
+             <widget class="QTableView" name="dmaChannel4"/>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="channel5">
+           <attribute name="title">
+            <string>5</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_9">
+            <item row="0" column="0">
+             <widget class="QTableView" name="dmaChannel5"/>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="channel6">
+           <attribute name="title">
+            <string>6</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_10">
+            <item row="0" column="0">
+             <widget class="QTableView" name="dmaChannel6"/>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="channel7">
+           <attribute name="title">
+            <string>7</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_11">
+            <item row="0" column="0">
+             <widget class="QTableView" name="dmaChannel7"/>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="channel8">
+           <attribute name="title">
+            <string>8</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_12">
+            <item row="0" column="0">
+             <widget class="QTableView" name="dmaChannel8"/>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="ppu">
+       <attribute name="title">
+        <string>PPU</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_3">
+        <item row="0" column="0">
+         <layout class="QFormLayout" name="formLayout_2"/>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources>
+  <include location="../resources/appResources.qrc"/>
+ </resources>
+ <connections/>
+</ui>

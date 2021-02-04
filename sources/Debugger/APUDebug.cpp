@@ -522,7 +522,7 @@ namespace ComSquare::Debugger
 		this->_snes.disableAPUDebugging();
 	}
 
-	bool APUDebug::isDebugger()
+	bool APUDebug::isDebugger() const
 	{
 		return true;
 	}

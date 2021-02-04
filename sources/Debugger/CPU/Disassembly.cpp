@@ -251,7 +251,7 @@ namespace ComSquare::Debugger
 
 	std::string CPUDebug::_getAbsoluteIndirectValue(uint24_t pc)
 	{
-		uint24_t value = this->_bus->read(pc) + (this->_bus->read(pc + 1, true) << 8u);
+		uint24_t value = this->_bus->read(pc, true) + (this->_bus->read(pc + 1, true) << 8u);
 		return "(" + Utility::to_hex(value, Utility::HexString::AsmPrefix) + ")";
 	}
 
@@ -266,7 +266,7 @@ namespace ComSquare::Debugger
 
 	std::string CPUDebug::_getAbsoluteIndirectIndexedByXValue(uint24_t pc)
 	{
-		uint24_t value = this->_bus->read(pc) + (this->_bus->read(pc + 1, true) << 8u);
+		uint24_t value = this->_bus->read(pc, true) + (this->_bus->read(pc + 1, true) << 8u);
 		return "(" + Utility::to_hex(value, Utility::HexString::AsmPrefix) + ", x)";
 	}
 }

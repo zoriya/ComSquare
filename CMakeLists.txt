@@ -102,17 +102,15 @@ add_executable(unit_tests
         sources/PPU/Background.hpp
         sources/PPU/PPUUtils.cpp
         tests/PPU/testBackground.cpp
-        tests/PPU/testPpuRead.cpp)
+        tests/PPU/testPpuRead.cpp
+        sources/CPU/DMA/DMA.cpp
+        sources/CPU/DMA/DMA.hpp
+        tests/CPU/testDMA.cpp
+        sources/Memory/IMemory.hpp)
 
 # include criterion & coverage
 target_link_libraries(unit_tests criterion -lgcov)
 target_compile_options(unit_tests PUBLIC -fprofile-arcs -ftest-coverage)
-
-if ("${GITBUILD}" STREQUAL true)
-    include_directories(ComSquare build/include)
-    link_directories(ComSquare build/lib)
-    message("Git build is true")
-endif ()
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -172,7 +170,7 @@ add_executable(ComSquare
         sources/Renderer/QtRenderer/QtSFML.hpp
         sources/Renderer/QtRenderer/QtWidgetSFML.cpp
         sources/Renderer/QtRenderer/QtWidgetSFML.hpp
-        ui/cpu.ui
+        ui/cpuView.ui
         ui/ramView.ui
         ui/cartridgeView.ui
         ui/apuView.ui
@@ -219,6 +217,12 @@ add_executable(ComSquare
         sources/Models/Vector2.hpp
         sources/PPU/Background.cpp
         sources/PPU/Background.hpp
+        sources/CPU/DMA/DMA.cpp
+        sources/CPU/DMA/DMA.hpp
+        ui/registersView.ui
+        sources/Debugger/RegisterViewer.cpp
+        sources/Debugger/RegisterViewer.hpp
+        sources/Memory/IMemory.hpp
         sources/PPU/PPUUtils.cpp
         )
 

@@ -18,7 +18,7 @@ jobs:
         run: sudo apt-get update &&
           sudo apt-get install --yes libfreetype6-dev libxrandr-dev libudev-dev libogg-dev libflac-dev libvorbis-dev libopenal-dev freeglut3-dev
       - name: Install Qt
-        uses: ouuan/install-qt-action@v2.3.1
+        uses: jurplel/install-qt-action@v2
       - name: Install the SFML.
         run: |
           git clone https://github.com/SFML/SFML -b 2.5.x /tmp/sfml
