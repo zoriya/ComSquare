@@ -24,6 +24,7 @@ jobs:
           git add -A;
           git commit -m "Deploying the doc";
           git remote add origin https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@${GITHUB_REPO};
+          git checkout -b Documentation
           git push --force origin Documentation;
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
