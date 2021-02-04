@@ -150,6 +150,7 @@ namespace ComSquare::Debugger
 				value = this->switchToAddrTab(value);
 			} catch (const InvalidAddress &) {
 				QMessageBox msgBox;
+				msgBox.setIcon(QMessageBox::Critical);
 				msgBox.setText("This address is not mapped. Reading it will result in OpenBus.");
 				msgBox.exec();
 				return;
@@ -183,6 +184,7 @@ namespace ComSquare::Debugger
 		addr = accessor->getRelativeAddress(addr);
 		if (addr > accessor->getSize()) {
 			QMessageBox msgBox;
+			msgBox.setIcon(QMessageBox::Critical);
 			msgBox.setText((std::string("The ") + accessor->getName() + " is too small to contain this address.").c_str());
 			msgBox.exec();
 			return 0;
