@@ -15,7 +15,6 @@ jobs:
         run: sudo apt-get install --yes doxygen graphviz
       - name: Update the docs
         run: |
-          git clone -b gh-pages https://${GITHUB_REPO} docs
           rm -rf docs/*
           doxygen Doxyfile
           cd docs
