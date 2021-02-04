@@ -14,7 +14,7 @@ namespace ComSquare::Memory
 		this->setMemoryRegion(start, end);
 	}
 
-	uint8_t MemoryShadow::read(uint24_t addr)
+	uint8_t MemoryShadow::read(uint24_t addr) const
 	{
 		return this->_initial->read(addr);
 	}
@@ -24,22 +24,27 @@ namespace ComSquare::Memory
 		return this->_initial->write(addr, data);
 	}
 
-	bool MemoryShadow::isMirror()
+	uint24_t MemoryShadow::getSize() const
+	{
+		return this->_initial->getSize();
+	}
+
+	bool MemoryShadow::isMirror() const
 	{
 		return true;
 	}
 
-	std::shared_ptr<IMemory> MemoryShadow::getMirrored()
+	std::shared_ptr<IMemory> MemoryShadow::getMirrored() const
 	{
 		return this->_initial;
 	}
 
-	std::string MemoryShadow::getName()
+	std::string MemoryShadow::getName() const
 	{
 		return this->_initial->getName();
 	}
 
-	Component MemoryShadow::getComponent()
+	Component MemoryShadow::getComponent() const
 	{
 		return this->_initial->getComponent();
 	}

@@ -94,7 +94,7 @@ namespace ComSquare::CPU
 		void setBus(std::shared_ptr<Memory::MemoryBus> bus);
 
 		//! @brief Bus helper to read from this channel.
-		uint8_t read(uint8_t addr);
+		uint8_t read(uint8_t addr) const;
 		//! @brief Bus helper to write to this channel.
 		void write(uint8_t addr, uint8_t data);
 

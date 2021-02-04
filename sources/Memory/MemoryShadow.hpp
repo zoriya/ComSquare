@@ -24,21 +24,24 @@ namespace ComSquare::Memory
 		//! @param addr The address to read from. The address 0x0 should refer to the first byte of the initial AMemory.
 		//! @throw InvalidAddress will be thrown if the address is more than the size of the initial AMemory.
 		//! @return Return the data at the address.
-		uint8_t read(uint24_t addr) override;
+		uint8_t read(uint24_t addr) const override;
 		//! @brief Write data to the ram.
 		//! @param addr The address to write to. The address 0x0 should refer to the first byte of the initial AMemory.
 		//! @param data The data to write.
 		//! @throw InvalidAddress will be thrown if the address is more than the size of the initial AMemory.
 		void write(uint24_t addr, uint8_t data) override;
+		//! @brief Get the size of the data. This size can be lower than the mapped data.
+		//! @return The number of bytes inside this memory.
+		virtual uint24_t getSize() const override;
 		//! @brief Check if this memory is a mirror or not.
 		//! @return True if this memory is a mirror. False otherwise.
-		bool isMirror() override;
+		bool isMirror() const override;
 		//! @brief Get the name of this accessor (used for debug purpose)
-		std::string getName() override;
+		std::string getName() const override;
 		//! @brief Get the component of this accessor (used for debug purpose)
-		Component getComponent() override;
+		Component getComponent() const override;
 		//! @brief Return the memory accessor this accessor mirror if any
 		//! @return nullptr if isMirror is false, the source otherwise.
-		std::shared_ptr<IMemory> getMirrored() override;
+		std::shared_ptr<IMemory> getMirrored() const override;
 	};
 }

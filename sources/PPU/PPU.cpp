@@ -22,7 +22,7 @@ namespace ComSquare::PPU
 		}
 	}
 
-	uint8_t PPU::read(uint24_t addr)
+	uint8_t PPU::read(uint24_t addr) const
 	{
 		switch (addr) {
 		case ppuRegisters::mpyl:
@@ -216,6 +216,11 @@ namespace ComSquare::PPU
 		}
 	}
 
+	uint24_t PPU::getSize() const
+	{
+		return 0x3F;
+	}
+
 	uint16_t PPU::getVramAddress()
 	{
 		uint16_t vanillaAddress = this->_registers._vmadd.vmadd * 2;
@@ -262,12 +267,12 @@ namespace ComSquare::PPU
 		this->_renderer.drawScreen();
 	}
 
-	std::string PPU::getName()
+	std::string PPU::getName() const
 	{
 		return "PPU";
 	}
 
-	std::string PPU::getValueName(uint24_t addr)
+	std::string PPU::getValueName(uint24_t addr) const
 	{
 		switch (addr) {
 		case ppuRegisters::inidisp:
@@ -403,12 +408,12 @@ namespace ComSquare::PPU
 		}
 	}
 
-	Component PPU::getComponent()
+	Component PPU::getComponent() const
 	{
 		return Ppu;
 	}
 
-	bool PPU::isDebugger()
+	bool PPU::isDebugger() const
 	{
 		return false;
 	}

@@ -6,6 +6,7 @@
 #include <cmath>
 #include <QtWidgets/QInputDialog>
 #include <QtWidgets/QSpinBox>
+#include <QMessageBox>
 #include "MemoryViewer.hpp"
 #include "../SNES.hpp"
 #include "../Memory/MemoryShadow.hpp"
@@ -147,11 +148,17 @@ namespace ComSquare::Debugger
 		if (dialogUI.checkBox->isChecked()) {
 			try {
 				value = this->switchToAddrTab(value);
-			} catch (const InvalidAddress &) {}
+			} catch (const InvalidAddress &) {
+				QMessageBox msgBox;
+				msgBox.setText("This address is not mapped. Reading it will result in OpenBus.");
+				msgBox.exec();
+				return;
+			}
 		}
 		QModelIndex index = this->_ui.tableView->model()->index(value >> 4, value & 0x0F);
 		this->_ui.tableView->scrollTo(index);
 		this->_ui.tableView->selectionModel()->select(index, QItemSelectionModel::ClearAndSelect);
+		this->_ui.tableView->setCurrentIndex(index);
 	}
 
 	unsigned MemoryViewer::switchToAddrTab(uint24_t addr)
@@ -173,7 +180,14 @@ namespace ComSquare::Debugger
 		default:
 			throw InvalidAddress("Memory viewer switch to address", addr);
 		}
-		return accessor->getRelativeAddress(addr);
+		addr = accessor->getRelativeAddress(addr);
+		if (addr > accessor->getSize()) {
+			QMessageBox msgBox;
+			msgBox.setText((std::string("The ") + accessor->getName() + " is too small to contain this address.").c_str());
+			msgBox.exec();
+			return 0;
+		}
+		return addr;
 	}
 
 	void MemoryViewer::focus()

@@ -27,8 +27,9 @@ namespace ComSquare::Ram
 		delete[] this->_data;
 	}
 
-	uint8_t Ram::read(uint24_t addr)
+	uint8_t Ram::read(uint24_t addr) const
 	{
+		// TODO read/write after the size of the rom should noop or behave like a mirror. I don't really know.
 		if (addr >= this->_size)
 			throw InvalidAddress(this->getName() + " read", addr);
 		return this->_data[addr];
@@ -41,17 +42,17 @@ namespace ComSquare::Ram
 		this->_data[addr] = data;
 	}
 
-	size_t Ram::getSize()
+	uint24_t Ram::getSize() const
 	{
 		return this->_size;
 	}
 
-	std::string Ram::getName()
+	std::string Ram::getName() const
 	{
 		return this->_ramName;
 	}
 
-	Component Ram::getComponent()
+	Component Ram::getComponent() const
 	{
 		return this->_ramType;
 	}

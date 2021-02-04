@@ -57,7 +57,7 @@ namespace ComSquare::Debugger
 
 
 		//! @brief Return true if the CPU is overloaded with debugging features.
-		bool isDebugger() override;
+		bool isDebugger() const override;
 
 		//! @brief Focus the debugger's window.
 		void focus();

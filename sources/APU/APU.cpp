@@ -17,22 +17,23 @@ namespace ComSquare::APU
 		this->reset();
 	}
 
-	bool APU::isDebugger()
+	bool APU::isDebugger() const
 	{
 		return false;
 	}
 
-	std::string APU::getName()
+	std::string APU::getName() const
 	{
 		return "APU";
 	}
 
-	Component APU::getComponent()
+	Component APU::getComponent() const
 	{
 		return Apu;
 	}
 
-	uint8_t APU::_internalRead(uint24_t addr) {
+	uint8_t APU::_internalRead(uint24_t addr) const
+	{
 		switch (addr) {
 		case 0x0000 ... 0x00EF:
 			return this->_map->Page0.read(addr);
@@ -71,7 +72,8 @@ namespace ComSquare::APU
 		}
 	}
 
-	void APU::_internalWrite(uint24_t addr, uint8_t data) {
+	void APU::_internalWrite(uint24_t addr, uint8_t data)
+	{
 		switch (addr) {
 		case 0x0000 ... 0x00EF:
 			this->_map->Page0.write(addr, data);
@@ -129,7 +131,7 @@ namespace ComSquare::APU
 		}
 	}
 
-	uint8_t APU::read(uint24_t addr)
+	uint8_t APU::read(uint24_t addr) const
 	{
 		switch (addr) {
 		case 0x00:
@@ -163,6 +165,11 @@ namespace ComSquare::APU
 		default:
 			throw InvalidAddress("APU Registers write", addr);
 		}
+	}
+
+	uint24_t APU::getSize() const
+	{
+		return 0x3;
 	}
 
 	void APU::reset()

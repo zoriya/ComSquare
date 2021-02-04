@@ -8,6 +8,7 @@
 #include <QtEvents>
 #include <QPainter>
 #include <iostream>
+#include <utility>
 
 using namespace ComSquare::CPU;
 
@@ -58,7 +59,7 @@ namespace ComSquare::Debugger
 		this->_updateDisassembly(this->_registers.pac, 0);
 	}
 
-	bool CPUDebug::isDebugger()
+	bool CPUDebug::isDebugger() const
 	{
 		return true;
 	}
@@ -387,7 +388,9 @@ QSize RowPainter::sizeHint(const QStyleOptionViewItem &, const QModelIndex &) co
 	return QSize();
 }
 
-StackModel::StackModel(std::shared_ptr<ComSquare::Memory::MemoryBus> bus, ComSquare::Debugger::CPUDebug &cpu) : _bus(bus), _cpu(cpu) { }
+StackModel::StackModel(std::shared_ptr<ComSquare::Memory::MemoryBus> bus, ComSquare::Debugger::CPUDebug &cpu)
+	: _bus(std::move(bus)), _cpu(cpu)
+{ }
 
 void StackModel::setMemoryBus(std::shared_ptr<ComSquare::Memory::MemoryBus> bus)
 {

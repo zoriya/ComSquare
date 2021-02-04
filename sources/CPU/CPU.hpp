@@ -741,18 +741,22 @@ namespace ComSquare::CPU
 		//! @param addr The address to read from. The address 0x0 should refer to the first byte of the register.
 		//! @throw InvalidAddress will be thrown if the address is more than $1F (the number of register).
 		//! @return Return the value of the register.
-		uint8_t read(uint24_t addr) override;
+		uint8_t read(uint24_t addr) const override;
 		//! @brief Write data to the internal CPU register.
 		//! @param addr The address to write to. The address 0x0 should refer to the first byte of register.
 		//! @param data The new value of the register.
 		//! @throw InvalidAddress will be thrown if the address is more than $1F (the number of register).
 		void write(uint24_t addr, uint8_t data) override;
 
+		//! @brief Get the size of the data. This size can be lower than the mapped data.
+		//! @return The number of bytes inside this memory.
+		uint24_t getSize() const override;
+
 		//! @brief Get the name of this accessor (used for debug purpose)
-		std::string getName() override;
+		std::string getName() const override;
 
 		//! @brief Get the component of this accessor (used for debug purpose)
-		Component getComponent() override;
+		Component getComponent() const override;
 
 		//! @brief Reset interrupt - Called on boot and when the reset button is pressed.
 		virtual int RESB();
@@ -765,7 +769,7 @@ namespace ComSquare::CPU
 		bool IsAbortRequested = false;
 
 		//! @brief Return true if the CPU is overloaded with debugging features.
-		virtual bool isDebugger();
+		virtual bool isDebugger() const;
 
 		//! @brief Change the memory bus used by the CPU.
 		virtual void setMemoryBus(std::shared_ptr<Memory::MemoryBus> bus);

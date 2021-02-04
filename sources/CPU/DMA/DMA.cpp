@@ -15,7 +15,7 @@ namespace ComSquare::CPU
 		this->_bus = std::move(bus);
 	}
 
-	uint8_t DMA::read(uint8_t addr)
+	uint8_t DMA::read(uint8_t addr) const
 	{
 		switch (addr) {
 		case 0x0:

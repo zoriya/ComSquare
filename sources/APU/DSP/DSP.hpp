@@ -134,7 +134,7 @@ namespace ComSquare::APU::DSP
 		//! @param addr The address to read from. The address 0x0 should refer to the first byte of the register.
 		//! @throw InvalidAddress will be thrown if the address is more than $7F (the number of register).
 		//! @return Return the value of the register.
-		uint8_t read(uint24_t addr) override;
+		uint8_t read(uint24_t addr) const override;
 		//! @brief Write data to the internal DSP register.
 		//! @param addr The address to write to. The address 0x0 should refer to the first byte of register.
 		//! @param data The new value of the register.
@@ -142,10 +142,14 @@ namespace ComSquare::APU::DSP
 		void write(uint24_t addr, uint8_t data) override;
 
 		//! @brief Get the name of this accessor (used for debug purpose)
-		std::string getName() override;
+		std::string getName() const override;
 
 		//! @brief Get the component of this accessor (used for debug purpose)
-		Component getComponent() override;
+		Component getComponent() const override;
+
+		//! @brief Get the size of the data. This size can be lower than the mapped data.
+		//! @return The number of bytes inside this memory.
+		uint24_t getSize() const override;
 	};
 }
 

@@ -20,7 +20,7 @@ namespace ComSquare::CPU
 			channel.setBus(_bus);
 	}
 
-	bool CPU::isDebugger()
+	bool CPU::isDebugger() const
 	{
 		return false;
 	}
@@ -31,7 +31,7 @@ namespace ComSquare::CPU
 	}
 
 	//! @bref The CPU's internal registers starts at $4200	and finish at $421F.
-	uint8_t CPU::read(uint24_t addr)
+	uint8_t CPU::read(uint24_t addr) const
 	{
 		uint8_t tmp = 0;
 
@@ -207,6 +207,11 @@ namespace ComSquare::CPU
 		}
 	}
 
+	uint24_t CPU::getSize() const
+	{
+		return 0x180;
+	}
+
 	uint8_t CPU::readPC()
 	{
 		uint8_t ret = this->_bus->read(this->_registers.pac);
@@ -349,12 +354,12 @@ namespace ComSquare::CPU
 		return value;
 	}
 
-	std::string CPU::getName()
+	std::string CPU::getName() const
 	{
 		return "CPU";
 	}
 
-	Component CPU::getComponent()
+	Component CPU::getComponent() const
 	{
 		return Cpu;
 	}

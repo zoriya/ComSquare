@@ -5,11 +5,10 @@
 #include <iostream>
 #include "ARectangleMemory.hpp"
 #include "../Exceptions/InvalidAddress.hpp"
-#include "../Utility/Utility.hpp"
 
 namespace ComSquare::Memory
 {
-	uint24_t ARectangleMemory::getRelativeAddress(uint24_t addr)
+	uint24_t ARectangleMemory::getRelativeAddress(uint24_t addr) const
 	{
 		uint8_t bank = addr >> 16u;
 		uint16_t page = addr;
@@ -24,7 +23,7 @@ namespace ComSquare::Memory
 		return pageCount * bankCount + page;
 	}
 
-	bool ARectangleMemory::hasMemoryAt(uint24_t addr)
+	bool ARectangleMemory::hasMemoryAt(uint24_t addr) const
 	{
 		uint8_t bank = addr >> 16u;
 		uint16_t page = addr;
@@ -43,17 +42,17 @@ namespace ComSquare::Memory
 		this->_endPage = endPage;
 	}
 
-	bool ARectangleMemory::isMirror()
+	bool ARectangleMemory::isMirror() const
 	{
 		return false;
 	}
 
-	std::shared_ptr<IMemory> ARectangleMemory::getMirrored()
+	std::shared_ptr<IMemory> ARectangleMemory::getMirrored() const
 	{
 		return nullptr;
 	}
 
-	std::string ARectangleMemory::getValueName(uint24_t)
+	std::string ARectangleMemory::getValueName(uint24_t) const
 	{
 		return "???";
 	}
