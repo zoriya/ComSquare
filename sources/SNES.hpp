@@ -12,14 +12,13 @@
 #include "PPU/PPU.hpp"
 #include "APU/APU.hpp"
 #include "Renderer/IRenderer.hpp"
+#include "Exceptions/DebuggableError.hpp"
 
 #ifdef DEBUGGER_ENABLED
 	#include "Debugger/MemoryViewer.hpp"
 	#include "Debugger/HeaderViewer.hpp"
 	#include "Debugger/CGramDebug.hpp"
 	#include "Debugger/RegisterViewer.hpp"
-#include "Exceptions/DebuggableError.hpp"
-
 #endif
 
 namespace ComSquare
