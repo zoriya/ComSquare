@@ -28,7 +28,7 @@ jobs:
       - name: Install Gcovr
         run: python -m pip install --upgrade pip gcovr
       - name: Build Makefile with CMake
-        run: mkdir -p build && cd build && cmake ..
+        run: mkdir -p build && cd build && cmake .. --target unit_tests
       - name: Build with Makefile
         run: make -C build unit_tests
       - name: Execute tests
