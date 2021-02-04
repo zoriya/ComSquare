@@ -58,14 +58,14 @@ Test(PPU_write_2, vmadd_full_data)
 Test(PPU_write_2, vmadd_full_data_check_ram)
 {
 	Init()
-	snes._bus->write(0x2115, 0b10000000);
-	snes._bus->write(0x2116, 2);
-	snes._bus->write(0x2117, 0);
-	snes._bus->write(0x2118, 0xFF);
-	snes._bus->write(0x2119, 0xFF);
+	snes.bus->write(0x2115, 0b10000000);
+	snes.bus->write(0x2116, 2);
+	snes.bus->write(0x2117, 0);
+	snes.bus->write(0x2118, 0xFF);
+	snes.bus->write(0x2119, 0xFF);
 	cr_assert(snes.ppu->_registers._vmadd.vmadd == 3, "Got %d but expected 3", snes.ppu->_registers._vmadd.vmadd);
-	cr_assert(snes.ppu->vram->read_internal(4) == 0xFF, "Got %X but expected 0xFF", snes.ppu->vram->read_internal(4));
-	cr_assert(snes.ppu->vram->read_internal(5) == 0xFF, "Got %X but expected 0xFF", snes.ppu->vram->read_internal(5));
+	cr_assert(snes.ppu->vram->read(4) == 0xFF, "Got %X but expected 0xFF", snes.ppu->vram->read(4));
+	cr_assert(snes.ppu->vram->read(5) == 0xFF, "Got %X but expected 0xFF", snes.ppu->vram->read(5));
 }
 
 Test(PPU_write_2, vmadd_full_high_byte_null)
