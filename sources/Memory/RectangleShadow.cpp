@@ -21,7 +21,7 @@ namespace ComSquare::Memory
 	uint24_t RectangleShadow::getRelativeAddress(uint24_t addr) const
 	{
 		uint24_t base = ARectangleMemory::getRelativeAddress(addr);
-		return base + this->_bankOffset * (this->_endPage - this->_startPage);
+		return base + this->_bankOffset * (1 + this->_endPage - this->_startPage);
 	}
 
 	uint8_t RectangleShadow::read(uint24_t addr) const
@@ -34,7 +34,7 @@ namespace ComSquare::Memory
 		return this->_initial->write(addr, data);
 	}
 
-	RectangleShadow *RectangleShadow::setBankOffset(uint8_t bankOffset)
+	RectangleShadow *RectangleShadow::setBankOffset(int bankOffset)
 	{
 		this->_bankOffset = bankOffset;
 		return this;

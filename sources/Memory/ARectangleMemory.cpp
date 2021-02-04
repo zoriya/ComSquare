@@ -13,7 +13,7 @@ namespace ComSquare::Memory
 		uint8_t bank = addr >> 16u;
 		uint16_t page = addr;
 		unsigned bankCount = bank - this->_startBank;
-		unsigned pageCount = this->_endPage - this->_startPage;
+		unsigned pageCount = this->_endPage + 1 - this->_startPage;
 
 		if (bank < this->_startBank || bank > this->_endBank)
 			throw InvalidAddress("Rectangle memory: Invalid Bank", addr);

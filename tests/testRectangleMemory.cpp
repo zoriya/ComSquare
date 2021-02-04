@@ -12,7 +12,7 @@ using namespace ComSquare;
 Test(RectangleMemory, HorizontalRamRead)
 {
 	Ram::Ram ram(0xFF, Component::Rom, "Rom");
-	ram.setMemoryRegion(0x00, 0xFF, 0x0000, 0x0001);
+	ram.setMemoryRegion(0x00, 0xFF, 0x0000, 0x0000);
 	for (int i = 0x00; i < 0xFF; i++)
 		ram._data[i] = i;
 	for (uint24_t i = 0x000000; i < 0xFF0000; i += 0x010000) {
@@ -24,7 +24,7 @@ Test(RectangleMemory, HorizontalRamRead)
 Test(RectangleMemory, HorizontalRamWrite)
 {
 	Ram::Ram ram(0xFF, Component::Rom, "Rom");
-	ram.setMemoryRegion(0x00, 0xFF, 0x0000, 0x0001);
+	ram.setMemoryRegion(0x00, 0xFF, 0x0000, 0x0000);
 	for (uint24_t i = 0x000000; i < 0xFF0000; i += 0x010000)
 		ram.write(ram.getRelativeAddress(i), i >> 16u);
 	for (int i = 0x00; i < 0xFF; i++)
@@ -34,7 +34,7 @@ Test(RectangleMemory, HorizontalRamWrite)
 Test(RectangleMemory, DualLineRamRead)
 {
 	Ram::Ram ram(0xFF * 2, Component::Rom, "Rom");
-	ram.setMemoryRegion(0x00, 0xFF, 0x0000, 0x0002);
+	ram.setMemoryRegion(0x00, 0xFF, 0x0000, 0x0001);
 	for (int i = 0x00; i < 0xFF * 2; i++)
 		ram._data[i] = i;
 	for (uint24_t i = 0x000000, v = 0; v < 0xFF * 2; i += 0x010000, v += 2) {
@@ -48,8 +48,8 @@ Test(RectangleMemory, DualLineRamRead)
 Test(RectangleMemory, HorizontalRamShadowRead)
 {
 	std::shared_ptr<Ram::Ram> ram = std::make_shared<Ram::Ram>(0xFF, Component::Rom, "Rom");
-	ram->setMemoryRegion(0x00, 0xFF, 0x0000, 0x0001);
-	Memory::RectangleShadow shadow(ram, 0x00, 0xFF, 0x8000, 0x8001);
+	ram->setMemoryRegion(0x00, 0xFF, 0x0000, 0x0000);
+	Memory::RectangleShadow shadow(ram, 0x00, 0xFF, 0x8000, 0x8000);
 	for (int i = 0x00; i < 0xFF; i++)
 		ram->_data[i] = i;
 	for (uint24_t i = 0x008000; i < 0xFF8000; i += 0x010000) {
@@ -60,8 +60,8 @@ Test(RectangleMemory, HorizontalRamShadowRead)
 Test(RectangleMemory, HorizontalRamShadowReadWithBankOffset)
 {
 	std::shared_ptr<Ram::Ram> ram = std::make_shared<Ram::Ram>(0xFF, Component::Rom, "Rom");
-	ram->setMemoryRegion(0x00, 0xFF, 0x0000, 0x0001);
-	Memory::RectangleShadow shadow(ram, 0x80, 0xFF, 0x8000, 0x8001);
+	ram->setMemoryRegion(0x00, 0xFF, 0x0000, 0x0000);
+	Memory::RectangleShadow shadow(ram, 0x80, 0xFF, 0x8000, 0x8000);
 	for (int i = 0x00; i < 0xFF; i++)
 		ram->_data[i] = i;
 	shadow.setBankOffset(0x80);
@@ -79,7 +79,7 @@ Test(RectangleMemory, ShadowOffsetCartridge)
 	for (int i = 0x00; i < 0x3fff80; i++)
 		ram->_data[i] = i;
 	shadow.setBankOffset(0x40);
-	for (uint24_t i = 0xC00000; i < 0xEF7FFF; i += 0x1) {
+	for (uint24_t i = 0xC00000; i <= 0xEF7FFF; i += 0x1) {
 		if ((uint16_t)i > 0x7FFFu)
 			i += 0x010000 - 0x8000;
 		uint8_t v = shadow.read(shadow.getRelativeAddress(i));

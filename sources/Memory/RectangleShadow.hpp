@@ -15,7 +15,7 @@ namespace ComSquare::Memory
 		//! @brief Memory to shadow from.
 		std::shared_ptr<IMemory> _initial;
 		//! @brief The number of banks to add to the memory before accessing it from the initial data.
-		uint8_t _bankOffset = 0;
+		int _bankOffset = 0;
 	public:
 		//! @brief Create a shadow for the memory given as parameter.
 		explicit RectangleShadow(std::shared_ptr<IMemory> initial, uint8_t startBank, uint8_t endBank, uint16_t startPage, uint16_t endPage);
@@ -52,6 +52,7 @@ namespace ComSquare::Memory
 		//! @return nullptr if isMirror is false, the source otherwise.
 		std::shared_ptr<IMemory> getMirrored() const override;
 
-		RectangleShadow *setBankOffset(uint8_t bankOffset);
+		//! @brief Set the number of bank this component do not shadow. Referring to the first byte of this component will refer to the first byte of the bank at (bankOffset + start of initial memory).
+		RectangleShadow *setBankOffset(int bankOffset);
 	};
 }
