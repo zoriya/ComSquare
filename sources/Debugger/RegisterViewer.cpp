@@ -96,6 +96,25 @@ namespace ComSquare::Debugger
 			return ppuRegisters._obsel.objectSize;
 		}, nullptr, EightBits));
 
+		// OAMADDL - OAMADDH 0x2102 0x2103
+		model->addRegister(Register(0x2102, "", "OAMADDL", [ppuRegisters](SNES &) {
+			return ppuRegisters._oamadd.oamaddl;
+		}, nullptr, EightBits));
+		model->addRegister(Register(0x2103, "", "OAMADDH", [ppuRegisters](SNES &) {
+			return ppuRegisters._oamadd.oamaddh;
+		}, nullptr, EightBits));
+		model->addRegister(Register(0x2102, "", "OAM Address", [ppuRegisters](SNES &) {
+			return ppuRegisters._oamadd.oamAddress;
+		}, nullptr, SixteenBits));
+		model->addRegister(Register(0x2103, ":7", "Obj Priority bit", [ppuRegisters](SNES &) {
+			return ppuRegisters._oamadd.objPriorityActivationBit;
+		}, nullptr, Boolean));
+
+		//OAMDATA 0x2104
+		model->addRegister(Register(0x2104, "", "OAMDATA", [ppuRegisters](SNES &) {
+			return ppuRegisters._oamdata;
+		}, nullptr, EightBits));
+
 		//BGMODE 0x2105
 		model->addRegister(Register(0x2105, "", "BGMODE", [ppuRegisters](SNES &) {
 			return ppuRegisters._bgmode.raw;
@@ -111,6 +130,25 @@ namespace ComSquare::Debugger
 				return (ppuRegisters._bgmode.raw >> (i + 4)) & 1;
 			}, nullptr, Boolean));
 		}
+
+		//MOSAIC 0x2106
+		model->addRegister(Register(0x2106, "", "MOSAIC", [ppuRegisters](SNES &) {
+			return ppuRegisters._mosaic.raw;
+		}, nullptr, EightBits));
+		for (int i = 0; i < 4; i++) {
+			model->addRegister(Register(0x2106, ":" + std::to_string(i), "BG"+ std::to_string(i + 1) + " Mosaic", [ppuRegisters, i](SNES &) {
+				return (ppuRegisters._mosaic.raw >> i) & 1;
+			}, nullptr, Boolean));
+		}
+		model->addRegister(Register(0x2106, ":4-7", "Size", [ppuRegisters](SNES &) {
+			return ppuRegisters._mosaic.pixelSize;
+		}, nullptr, Integer));
+
+		// BG1SC 0x2107
+		model->addRegister(Register(0x2107, "", "BG1SC", [ppuRegisters](SNES &) {
+			return ppuRegisters._bgsc[0].raw;
+		}, nullptr, EightBits));
+
 		this->_ui.ppuRegisters->setModel(model);
 	}
 
