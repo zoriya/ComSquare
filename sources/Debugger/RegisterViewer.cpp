@@ -436,7 +436,6 @@ namespace ComSquare::Debugger
 		}, nullptr, Boolean));
 
 		// SETINI 0X2133
-		this->_ui.ppuRegisters->setModel(model);
 		model->addRegister(Register(0x2133, "", "SETINI", [ppuRegisters](SNES &) {
 			return ppuRegisters._setini.raw;
 		}, nullptr, EightBits));
@@ -459,6 +458,7 @@ namespace ComSquare::Debugger
 			return ppuRegisters._setini.externalSync;
 		}, nullptr, Boolean));
 
+		this->_ui.ppuRegisters->setModel(model);
 	}
 
 	void RegisterViewer::focus()
