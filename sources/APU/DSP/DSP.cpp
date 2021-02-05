@@ -8,11 +8,10 @@
 
 namespace ComSquare::APU::DSP
 {
-	DSP::DSP(int16_t *buffer, int32_t size, std::weak_ptr<MemoryMap> map) : _map(map)
+	DSP::DSP(int16_t *buffer, uint32_t size, std::weak_ptr<MemoryMap> map) : _map(map)
 	{
 		this->_state.buffer = buffer;
-		this->_state.bufferStart = buffer;
-		this->_state.bufferEnd = buffer + size;
+		this->_state.bufferSize = size;
 	}
 
 	uint8_t DSP::read(uint24_t addr) const
@@ -796,6 +795,6 @@ namespace ComSquare::APU::DSP
 
 	int32_t DSP::getSamplesCount() const
 	{
-		return this->_state.buffer - this->_state.bufferStart;
+		return this->_state.bufferOffset;
 	}
 }

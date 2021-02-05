@@ -144,7 +144,7 @@ namespace ComSquare::APU
 		std::shared_ptr<MemoryMap> _map;
 
 		//! @brief Total size of the buffer containing samples
-        static constexpr int32_t bufferSize = 0x20000;
+        static constexpr int32_t bufferSize = 0x10000;
         //! @brief Buffer containing samples to be played
 		int16_t _soundBuffer[bufferSize];
 

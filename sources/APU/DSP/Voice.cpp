@@ -141,16 +141,16 @@ namespace ComSquare::APU::DSP
 
 	void DSP::voice7(Voice &voice)
 	{
-
+		this->_latch.envx = voice.envx;
 	}
 
 	void DSP::voice8(Voice &voice)
 	{
-
+		voice.outx = this->_latch.outx;
 	}
 
 	void DSP::voice9(Voice &voice)
 	{
-
+		voice.envx = this->_latch.envx;
 	}
 }

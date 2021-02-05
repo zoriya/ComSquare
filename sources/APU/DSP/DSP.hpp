@@ -46,12 +46,20 @@ namespace ComSquare::APU::DSP
 		std::array<uint8_t, 8> FIR;
 		//! @brief Echo data start register (ESA)
 		uint8_t data;
+		//! @brief Offset position after data start
+		uint16_t offset;
 		//! @brief Echo delay size register (EDL)
 		uint8_t delay;
 		//! @brief Echo enabled (5th bit FLG)
 		bool enabled = true;
 		//! @brief Last sound produced for each voice in each channel
 		std::array<std::array<int16_t, 8>, 2> history;
+		//! @brief Current position inside history
+		uint8_t historyOffset;
+		//! @brief Address of the current echo
+		uint16_t address;
+		//! @brief Current of value of the echo
+		uint8_t value;
 		//! @brief Current sound to echo
 		std::array<uint16_t, 2> input;
 		//! @brief Current sound echoed produced
@@ -123,6 +131,8 @@ namespace ComSquare::APU::DSP
 		uint8_t gain;
 		//! @brief envelope associated with this voice
 		uint8_t envx;
+		//! @brief Wave height associated with this voice
+		uint8_t outx;
 		//! @brief Sample end register (ENDX)
 		bool endx : 1;
 
@@ -176,10 +186,10 @@ namespace ComSquare::APU::DSP
 		uint8_t voice = 0;
 		//! @brief Current buffer of samples
 		int16_t *buffer;
-		//! @brief Limit of the buffer
-		int16_t *bufferEnd;
-		//! @brief Beginning of the buffer
-		int16_t *bufferStart;
+		//! @brief Size of buffer
+		uint32_t bufferSize;
+		//! @brief Current position in the buffer of samples
+		uint32_t bufferOffset;
 	};
 
 	struct Timer {
@@ -404,6 +414,10 @@ namespace ComSquare::APU::DSP
 		int32_t interpolate(const Voice &voice);
 		void runEnvelope(Voice &voice);
 
+		int32_t loadFIR(bool channel, int fir);
+		void loadEcho(bool channel);
+		int16_t outputEcho(bool channel);
+
 		void timerTick();
 		bool timerPoll(uint32_t rate);
 
@@ -414,7 +428,7 @@ namespace ComSquare::APU::DSP
 		uint8_t _readRAM(uint24_t addr);
 		void _writeRAM(uint24_t addr, uint8_t data);
 	public:
-		DSP(int16_t *buffer, int32_t size, std::weak_ptr<MemoryMap> map);
+		DSP(int16_t *buffer, uint32_t size, std::weak_ptr<MemoryMap> map);
 		DSP(const DSP &) = default;
 		DSP &operator=(const DSP &) = default;
 		~DSP() = default;
