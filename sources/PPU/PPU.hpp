@@ -631,6 +631,8 @@ namespace ComSquare::PPU
 		void updateVramReadBuffer();
 		//! @brief update the Vram buffer
 		Vector2<int> getBgScroll(int bgNumber) const;
+		//! @brief Allow to look the value of each write register (used by Register debugger)
+		const Registers &getWriteRegisters() const;
 	};
 
 }

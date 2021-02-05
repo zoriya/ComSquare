@@ -266,7 +266,7 @@ namespace ComSquare::PPU
 		case PpuRegisters::oamdata:
 			this->_registers._oamdata = data;
 			//throw InvalidAddress("oamdata", addr);
-			std::cout << "oamdata" << std::endl;
+			//std::cout << "oamdata" << std::endl;
 			// the oamAddress have to be calculated if fblank or not (not implemented)
 			oamram->write(this->_registers._oamadd.oamAddress, this->_registers._oamdata);
 			this->_registers._oamadd.oamAddress++;
@@ -838,5 +838,10 @@ namespace ComSquare::PPU
 	Vector2<int> PPU::getBgScroll(int bgNumber) const
 	{
 		return Vector2<int>(this->_registers._bgofs[(bgNumber - 1) * 2].offsetBg, this->_registers._bgofs[(bgNumber - 1) * 2 + 1].offsetBg);
+	}
+
+	const Registers &PPU::getWriteRegisters() const
+	{
+		return this->_registers;
 	}
 }

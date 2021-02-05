@@ -36,8 +36,9 @@ namespace ComSquare::Debugger
 			this->_ui.dmaChannel7,
 			this->_ui.dmaChannel8
 		};
+		RegistersViewerModel *model;
 		for (int i = 0; i < 8; i++) {
-			RegistersViewerModel *model = new RegistersViewerModel(this->_snes);
+			model = new RegistersViewerModel(this->_snes);
 			model->addRegister(Register(0x420B, std::string(":") + std::to_string(i), "Enabled", [i](SNES &snes) {
 				return snes.cpu->_dmaChannels[i].enabled;
 			}, nullptr, Boolean));
@@ -65,6 +66,52 @@ namespace ComSquare::Debugger
 			channels[i]->setModel(model);
 			this->_models.push_back(model);
 		}
+
+		// ppuRegisters
+		model = new RegistersViewerModel(this->_snes);
+		const PPU::Registers &ppuRegisters = this->_snes.ppu->getWriteRegisters();
+
+		//INIDISP 0X2100
+		model->addRegister(Register(0x2100, "", "INIDISP", [ppuRegisters](SNES &) {
+			return ppuRegisters._inidisp.raw;
+		}, nullptr, EightBits));
+		model->addRegister(Register(0x2100, ":0-3", "Screen brightness", [ppuRegisters](SNES &) {
+			return ppuRegisters._inidisp.brightness;
+		}, nullptr, Integer));
+		model->addRegister(Register(0x2100, ":7", "F-Blank", [ppuRegisters](SNES &) {
+			return ppuRegisters._inidisp.fblank;
+		}, nullptr, Boolean));
+
+		//OBSEL 0x2101
+		model->addRegister(Register(0x2101, "", "OBSEL", [ppuRegisters](SNES &) {
+			return ppuRegisters._obsel.raw;
+		}, nullptr, EightBits));
+		model->addRegister(Register(0x2101, ":0-2", "Name base select", [ppuRegisters](SNES &) {
+			return ppuRegisters._obsel.nameBaseSelect;
+		}, nullptr, EightBits));
+		model->addRegister(Register(0x2101, ":3-4", "Name select", [ppuRegisters](SNES &) {
+			return ppuRegisters._obsel.nameSelect;
+		}, nullptr, EightBits));
+		model->addRegister(Register(0x2101, ":5-7", "Object Size", [ppuRegisters](SNES &) {
+			return ppuRegisters._obsel.objectSize;
+		}, nullptr, EightBits));
+
+		//BGMODE 0x2105
+		model->addRegister(Register(0x2105, "", "BGMODE", [ppuRegisters](SNES &) {
+			return ppuRegisters._bgmode.raw;
+		}, nullptr, EightBits));
+		model->addRegister(Register(0x2105, ":0-2", "BG Mode", [ppuRegisters](SNES &) {
+			return ppuRegisters._bgmode.bgMode;
+		}, nullptr, Integer));
+		model->addRegister(Register(0x2105, ":3", "BG3 Priority Bit", [ppuRegisters](SNES &) {
+			return ppuRegisters._bgmode.mode1Bg3PriorityBit;
+		}, nullptr, Boolean));
+		for (int i = 0; i < 4; i++) {
+			model->addRegister(Register(0x2105, ":" + std::to_string(i + 4), "BG"+ std::to_string(i + 1) + " 16x16 Tiles", [ppuRegisters, i](SNES &) {
+				return (ppuRegisters._bgmode.raw >> (i + 4)) & 1;
+			}, nullptr, Boolean));
+		}
+		this->_ui.ppuRegisters->setModel(model);
 	}
 
 	void RegisterViewer::focus()
@@ -141,6 +188,8 @@ QVariant RegistersViewerModel::data(const QModelIndex &index, int role) const
 		switch (reg.type) {
 		case Boolean:
 			return QString(reg.get(this->_snes) ? "True" : "False");
+		case Integer:
+			return QString::number(reg.get(this->_snes));
 		case EightBits:
 			return QString(Utility::to_hex(static_cast<uint8_t>(reg.get(this->_snes))).c_str());
 		case SixteenBits:
