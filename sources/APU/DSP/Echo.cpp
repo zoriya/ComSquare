@@ -23,6 +23,18 @@ namespace ComSquare::APU::DSP
 		this->_echo.history[channel][this->_echo.historyOffset] = echo >> 1;
 	}
 
+	void DSP::writeEcho(bool channel)
+	{
+		if (!this->_echo.toggle) {
+			uint16_t address = this->_echo.address + channel * 2;
+			int16_t sample = this->_echo.output[channel];
+
+			this->_writeRAM(address++, sample);
+			this->_writeRAM(address, sample >> 8);
+		}
+		this->_echo.output[channel] = 0;
+	}
+
 	int16_t DSP::outputEcho(bool channel)
 	{
 		int16_t master = this->_master.output[channel] * this->_master.volume[channel] >> 7;
@@ -93,36 +105,65 @@ namespace ComSquare::APU::DSP
 
 	void DSP::echo28()
 	{
-
+		this->_echo.toggle = this->_echo.enabled;
 	}
 
 	void DSP::echo29()
 	{
+		this->_echo.value = this->_echo.data;
 
+		if (!this->_echo.offset)
+			this->_echo.length = this->_echo.delay << 11;
+
+		this->_echo.offset += 4;
+		if (this->_echo.offset >= this->_echo.length)
+			this->_echo.offset = 0;
+
+		this->writeEcho(0);
+
+		echo28();
 	}
 
 	void DSP::echo30()
 	{
-
+		this->writeEcho(1);
 	}
 
 	void DSP::misc27()
 	{
-
+		for (int i = 0; i < 8; i++)
+			this->_voices[i].prevPmon = this->_voices[i].pmon;
 	}
 
 	void DSP::misc28()
 	{
-
+		for (int i = 0; i < 8; i++)
+			this->_voices[i].tempNon = this->_voices[i].non;
+		this->_brr.offsetAddr = this->_brr.offset;
 	}
 
 	void DSP::misc29()
 	{
-
+		this->_timer.sample = !this->_timer.sample;
+		if (this->_timer.sample) {
+			for (int i = 0; i < 8; i++)
+				this->_voices[i].kon = 0;
+		}
 	}
 
 	void DSP::misc30()
 	{
+		if (this->_timer.sample) {
+			for (int i = 0; i < 8; i++)
+				this->_voices[i].kof = 0;
+		}
 
+		this->timerTick();
+
+		if (!this->timerPoll(this->_noise.clock))
+			return;
+		int32_t feedback = this->_noise.lfsr << 13 ^ this->_noise.lfsr << 14;
+
+		this->_noise.lfsr = feedback & 0x4000 ^ this->_noise.lfsr >> 1;
 	}
 }

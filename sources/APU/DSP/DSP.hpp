@@ -48,10 +48,14 @@ namespace ComSquare::APU::DSP
 		uint8_t data;
 		//! @brief Offset position after data start
 		uint16_t offset;
+		//! @brief offset maximum
+		uint16_t length;
 		//! @brief Echo delay size register (EDL)
 		uint8_t delay;
 		//! @brief Echo enabled (5th bit FLG)
 		bool enabled = true;
+		//! @brief Application of enabled to channels.
+		bool toggle;
 		//! @brief Last sound produced for each voice in each channel
 		std::array<std::array<int16_t, 8>, 2> history;
 		//! @brief Current position inside history
@@ -417,6 +421,7 @@ namespace ComSquare::APU::DSP
 		int32_t loadFIR(bool channel, int fir);
 		void loadEcho(bool channel);
 		int16_t outputEcho(bool channel);
+		void writeEcho(bool channel);
 
 		void timerTick();
 		bool timerPoll(uint32_t rate);
