@@ -420,27 +420,35 @@ namespace ComSquare::APU::DSP
 		~DSP() = default;
 
 		//! @brief Return all 8 voices from DSP
-		const std::array<Voice, 8> &getVoices();
-        const Master &getMaster();
-        const Echo &getEcho();
-        const Noise &getNoise();
-        const BRR &getBrr();
-        const Latch &getLatch();
+		const std::array<Voice, 8> &getVoices() const;
+        const Master &getMaster() const;
+        const Echo &getEcho() const;
+        const Noise &getNoise() const;
+        const BRR &getBrr() const;
+        const Latch &getLatch() const;
 
 		//! @brief Read from the internal DSP register.
 		//! @param addr The address to read from. The address 0x0 should refer to the first byte of the register.
 		//! @throw InvalidAddress will be thrown if the address is more than $7F (the number of register).
 		//! @return Return the value of the register.
-		uint8_t read(uint24_t addr);
+		uint8_t read(uint24_t addr) const;
 		//! @brief Write data to the internal DSP register.
 		//! @param addr The address to write to. The address 0x0 should refer to the first byte of register.
 		//! @param data The new value of the register.
 		//! @throw InvalidAddress will be thrown if the address is more than $7F (the number of register).
 		void write(uint24_t addr, uint8_t data);
 
+		//! @brief Get the name of this accessor (used for debug purpose)
+		std::string getName() const;
         //! @brief Execute current voice transformation
         void update();
 
+		//! @brief Get the component of this accessor (used for debug purpose)
+		Component getComponent() const;
+
+		//! @brief Get the size of the data. This size can be lower than the mapped data.
+		//! @return The number of bytes inside this memory.
+		uint24_t getSize() const;
         //! @brief Return the number of samples written
         int32_t getSamplesCount() const;
 	};

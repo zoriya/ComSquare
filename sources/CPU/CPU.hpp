@@ -131,9 +131,6 @@ namespace ComSquare::CPU
 		//! @brief IRQ Timer Registers (Vertical - High)
 		uint8_t vtimeh;
 
-		//! @brief DMA Enable Register
-		uint8_t dmaEnableRegister;
-
 		//! @brief HDMA Enable Register
 		uint8_t hdmaen;
 
@@ -202,6 +199,7 @@ namespace ComSquare::CPU
 		//! @brief The cartridge header (stored for interrupt vectors..
 		Cartridge::Header &_cartridgeHeader;
 
+		//! @brief DMA channels witch are mapped to the bus.
 		std::array<DMA, 8> _dmaChannels;
 
 		//! @brief True if an addressing mode with an iterator (x, y) has crossed the page. (Used because crossing the page boundary take one more cycle to run certain instructions).
@@ -481,7 +479,7 @@ namespace ComSquare::CPU
 			{&CPU::ORA, 3, "ora", AddressingMode::DirectPage, 2}, // 05
 			{&CPU::ASL, 5, "asl", AddressingMode::DirectPage, 2}, // 06
 			{&CPU::ORA, 6, "ora", AddressingMode::DirectPageIndirectLong, 2}, // 07
-			{&CPU::PHP, 3, "php", AddressingMode::Implied, 3}, // 08
+			{&CPU::PHP, 3, "php", AddressingMode::Implied, 1}, // 08
 			{&CPU::ORA, 2, "ora", AddressingMode::ImmediateForA, 2}, // 09
 			{&CPU::ASL, 2, "asl", AddressingMode::Implied, 1}, // 0A
 			{&CPU::PHD, 4, "phd", AddressingMode::Implied, 1}, // 0B
@@ -743,18 +741,22 @@ namespace ComSquare::CPU
 		//! @param addr The address to read from. The address 0x0 should refer to the first byte of the register.
 		//! @throw InvalidAddress will be thrown if the address is more than $1F (the number of register).
 		//! @return Return the value of the register.
-		uint8_t read(uint24_t addr) override;
+		uint8_t read(uint24_t addr) const override;
 		//! @brief Write data to the internal CPU register.
 		//! @param addr The address to write to. The address 0x0 should refer to the first byte of register.
 		//! @param data The new value of the register.
 		//! @throw InvalidAddress will be thrown if the address is more than $1F (the number of register).
 		void write(uint24_t addr, uint8_t data) override;
 
+		//! @brief Get the size of the data. This size can be lower than the mapped data.
+		//! @return The number of bytes inside this memory.
+		uint24_t getSize() const override;
+
 		//! @brief Get the name of this accessor (used for debug purpose)
-		std::string getName() override;
+		std::string getName() const override;
 
 		//! @brief Get the component of this accessor (used for debug purpose)
-		Component getComponent() override;
+		Component getComponent() const override;
 
 		//! @brief Reset interrupt - Called on boot and when the reset button is pressed.
 		virtual int RESB();
@@ -767,10 +769,14 @@ namespace ComSquare::CPU
 		bool IsAbortRequested = false;
 
 		//! @brief Return true if the CPU is overloaded with debugging features.
-		virtual bool isDebugger();
+		virtual bool isDebugger() const;
 
 		//! @brief Change the memory bus used by the CPU.
 		virtual void setMemoryBus(std::shared_ptr<Memory::MemoryBus> bus);
+
+	#ifdef DEBUGGER_ENABLED
+		friend Debugger::RegisterViewer;
+	#endif
 	};
 }
 

@@ -82,7 +82,10 @@ namespace ComSquare::CPU
 
 	int CPU::PHA(uint24_t, AddressingMode)
 	{
-		this->_push(this->_registers.a);
+		if (this->_registers.p.m)
+			this->_push(this->_registers.al);
+		else
+			this->_push(this->_registers.a);
 		return !this->_registers.p.m;
 	}
 

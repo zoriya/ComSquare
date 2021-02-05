@@ -17,7 +17,7 @@ namespace ComSquare::APU::IPL
 	IPL::~IPL()
 	{ }
 
-	uint8_t IPL::read(uint24_t addr)
+	uint8_t IPL::read(uint24_t addr) const
 	{
 		if (addr >= this->_size)
 			throw InvalidAddress("IPL read", addr);
@@ -31,12 +31,17 @@ namespace ComSquare::APU::IPL
 		this->_data[addr] = data;
 	}
 
-	std::string IPL::getName()
+	uint24_t IPL::getSize() const
+	{
+		return this->_size;
+	}
+
+	std::string IPL::getName() const
 	{
 		return this->_iplName;
 	}
 
-	Component IPL::getComponent()
+	Component IPL::getComponent() const
 	{
 		return this->_iplType;
 	}

@@ -15,7 +15,7 @@ namespace ComSquare::APU::DSP
         this->_state.bufferEnd = buffer + size;
     }
 
-	uint8_t DSP::read(uint24_t addr)
+	uint8_t DSP::read(uint24_t addr) const
 	{
 		switch (addr) {
 		case 0x00:
@@ -568,15 +568,14 @@ namespace ComSquare::APU::DSP
 			throw InvalidAddress("DSP Registers write", addr);
 		}
 	}
-
     uint8_t DSP::_readRAM(uint24_t addr) {
         switch (addr) {
             case 0x0000 ... 0x00EF:
-                return this->_map.lock()->Page0.read_internal(addr);
+                return this->_map.lock()->Page0.read(addr);
             case 0x0100 ... 0x01FF:
-                return this->_map.lock()->Page1.read_internal(addr - 0x0100);
+                return this->_map.lock()->Page1.read(addr - 0x0100);
             case 0x0200 ... 0xFFBF:
-                return this->_map.lock()->Memory.read_internal(addr - 0x200);
+                return this->_map.lock()->Memory.read(addr - 0x200);
             case 0xFFC0 ... 0xFFFF:
                 return this->_map.lock()->IPL.read(addr - 0xFFC0);
             default:
@@ -587,13 +586,13 @@ namespace ComSquare::APU::DSP
     void DSP::_writeRAM(uint24_t addr, uint8_t data) {
         switch (addr) {
             case 0x0000 ... 0x00EF:
-                this->_map.lock()->Page0.write_internal(addr, data);
+                this->_map.lock()->Page0.write(addr, data);
                 break;
             case 0x0100 ... 0x01FF:
-                this->_map.lock()->Page1.write_internal(addr - 0x0100, data);
+                this->_map.lock()->Page1.write(addr - 0x0100, data);
                 break;
             case 0x0200 ... 0xFFBF:
-                this->_map.lock()->Memory.write_internal(addr - 0x200, data);
+                this->_map.lock()->Memory.write(addr - 0x200, data);
                 break;
             case 0xFFC0 ... 0xFFFF:
                 this->_map.lock()->IPL.write(addr - 0xFFC0, data);
@@ -760,33 +759,37 @@ namespace ComSquare::APU::DSP
         }
 	    this->_state.voice = (this->_state.voice + 1) % 32;
     }
+	uint24_t DSP::getSize() const
+	{
+		return 0x7F;
+	}
 
-	const std::array<Voice, 8> &DSP::getVoices()
+	const std::array<Voice, 8> &DSP::getVoices() const
 	{
 		return this->_voices;
 	}
 
-    const Master &DSP::getMaster()
+    const Master &DSP::getMaster() const
     {
         return this->_master;
     }
 
-    const Echo &DSP::getEcho()
+    const Echo &DSP::getEcho() const
     {
         return this->_echo;
     }
 
-    const Noise &DSP::getNoise()
+    const Noise &DSP::getNoise() const
     {
         return this->_noise;
     }
 
-    const BRR &DSP::getBrr()
+    const BRR &DSP::getBrr() const
     {
         return this->_brr;
     }
 
-    const Latch &DSP::getLatch()
+    const Latch &DSP::getLatch() const
     {
         return this->_latch;
     }

@@ -5,45 +5,25 @@
 #include <iostream>
 #include "ARectangleMemory.hpp"
 #include "../Exceptions/InvalidAddress.hpp"
-#include "../Utility/Utility.hpp"
 
 namespace ComSquare::Memory
 {
-	uint8_t ARectangleMemory::read(uint24_t addr)
+	uint24_t ARectangleMemory::getRelativeAddress(uint24_t addr) const
 	{
-		addr += this->getStart();
 		uint8_t bank = addr >> 16u;
 		uint16_t page = addr;
 		unsigned bankCount = bank - this->_startBank;
-		unsigned pageCount = this->_endPage - this->_startPage;
+		unsigned pageCount = this->_endPage + 1 - this->_startPage;
 
 		if (bank < this->_startBank || bank > this->_endBank)
-			throw InvalidAddress("Rectangle memory read Invalid Bank", addr);
+			throw InvalidAddress("Rectangle memory: Invalid Bank", addr);
 		if (page < this->_startPage || page > this->_endPage)
-			throw InvalidAddress("Rectangle memory read Invalid Page", addr);
+			throw InvalidAddress("Rectangle memory: Invalid Page", addr);
 		page -= this->_startPage;
-		page += pageCount * bankCount;
-		return this->read_internal(page);
+		return pageCount * bankCount + page;
 	}
 
-	void ARectangleMemory::write(uint24_t addr, uint8_t data)
-	{
-		addr += this->getStart();
-		uint8_t bank = addr >> 16u;
-		uint16_t page = addr;
-		unsigned bankCount = bank - this->_startBank;
-		unsigned pageCount = this->_endPage - this->_startPage;
-
-		if (bank < this->_startBank || bank > this->_endBank)
-			throw InvalidRectangleAddress("Rectangle memory write Invalid Bank", addr, bank, this->_startBank, this->_endBank);
-		if (page < this->_startPage || page > this->_endPage)
-			throw InvalidRectangleAddress("Rectangle memory write Invalid Page", addr, page, this->_startPage, this->_endPage);
-		page -= this->_startPage;
-		page += pageCount * bankCount;
-		this->write_internal(page, data);
-	}
-
-	bool ARectangleMemory::hasMemoryAt(uint24_t addr)
+	bool ARectangleMemory::hasMemoryAt(uint24_t addr) const
 	{
 		uint8_t bank = addr >> 16u;
 		uint16_t page = addr;
@@ -54,16 +34,26 @@ namespace ComSquare::Memory
 		return false;
 	}
 
-	uint24_t ARectangleMemory::getStart()
-	{
-		return (this->_startBank << 16u) + this->_startPage;
-	}
-
 	void ARectangleMemory::setMemoryRegion(uint8_t startBank, uint8_t endBank, uint16_t startPage, uint16_t endPage)
 	{
 		this->_startBank = startBank;
 		this->_endBank = endBank;
 		this->_startPage = startPage;
 		this->_endPage = endPage;
+	}
+
+	bool ARectangleMemory::isMirror() const
+	{
+		return false;
+	}
+
+	std::shared_ptr<IMemory> ARectangleMemory::getMirrored() const
+	{
+		return nullptr;
+	}
+
+	std::string ARectangleMemory::getValueName(uint24_t) const
+	{
+		return "???";
 	}
 }

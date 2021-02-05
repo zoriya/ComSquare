@@ -155,18 +155,13 @@ namespace ComSquare::APU
 		//! @param addr The address to read from. The address 0x0000 should refer to the first byte of the register.
 		//! @throw InvalidAddress will be thrown if the address is more than $FFFF (the number of register).
 		//! @return Return the data.
-		uint8_t _internalRead(uint24_t addr);
+		uint8_t _internalRead(uint24_t addr) const;
+
 		//! @brief Write data to the APU ram.
 		//! @param addr The address to write to. The address 0x0000 should refer to the first byte of register.
 		//! @param data The new value of the register.
 		//! @throw InvalidAddress will be thrown if the address is more than $FFFF (the number of register).
 		void _internalWrite(uint24_t addr, uint8_t data);
-
-		//! @brief Get the name of this accessor (used for debug purpose)
-		std::string getName() override;
-
-		//! @brief Get the component of this accessor (used for debug purpose)
-		Component getComponent() override;
 
 		//! @brief Current state of APU CPU
 		StateMode _state = Running;
@@ -378,16 +373,28 @@ namespace ComSquare::APU
 		APU &operator=(const APU &) = default;
 		~APU() override = default;
 
-		//! @brief Read from the internal APU register.
-		//! @param addr The address to read from. The address 0x00 should refer to the first byte of the register.
-		//! @throw InvalidAddress will be thrown if the address is more than $0F (the number of register).
-		//! @return Return the value of the register.
-		uint8_t read(uint24_t addr) override;
-		//! @brief Write data to the internal APU register.
-		//! @param addr The address to write to. The address 0x00 should refer to the first byte of register.
+		//! @brief Read from the APU ram.
+		//! @param addr The address to read from. The address 0x0000 should refer to the first byte of the register.
+		//! @throw InvalidAddress will be thrown if the address is more than $FFFF (the number of register).
+		//! @return Return the data.
+		uint8_t read(uint24_t addr) const override;
+
+		//! @brief Write data to the APU ram.
+		//! @param addr The address to write to. The address 0x0000 should refer to the first byte of register.
 		//! @param data The new value of the register.
-		//! @throw InvalidAddress will be thrown if the address is more than $0F (the number of register).
+		//! @throw InvalidAddress will be thrown if the address is more than $FFFF (the number of register).
 		void write(uint24_t addr, uint8_t data) override;
+
+		//! @brief Get the name of this accessor (used for debug purpose)
+		std::string getName() const override;
+
+		//! @brief Get the component of this accessor (used for debug purpose)
+		Component getComponent() const override;
+
+		//! @brief Get the size of the data. This size can be lower than the mapped data.
+		//! @return The number of bytes inside this memory.
+		uint24_t getSize() const override;
+
 		//! @brief This function execute the instructions received until the maximum number of cycles is reached.
 		//! @return The number of cycles that elapsed.
 		virtual void update(unsigned cycles);
@@ -396,7 +403,7 @@ namespace ComSquare::APU
 		void reset();
 
 		//! @brief Return true if the CPU is overloaded with debugging features.
-		virtual bool isDebugger();
+		virtual bool isDebugger() const;
 	};
 }
 

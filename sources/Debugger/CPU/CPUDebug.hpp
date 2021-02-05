@@ -9,7 +9,7 @@
 #include "../../CPU/CPU.hpp"
 #include "../../Renderer/SFRenderer.hpp"
 #include "../../SNES.hpp"
-#include "../../../ui/ui_cpu.h"
+#include "../../../ui/ui_cpuView.h"
 #include "../ClosableWindow.hpp"
 
 namespace ComSquare::Debugger
@@ -248,8 +248,10 @@ namespace ComSquare::Debugger
 		std::string _getAbsoluteIndirectLongValue(uint24_t pc);
 
 	public:
+		//! @brief Show an error dialog related to an exception.
+		void showError(const DebuggableError &error);
 		//! @brief Pause/Resume the CPU.
-		void pause();
+		void pause(bool forcePause = false);
 		//! @brief Step - Execute a single instruction.
 		void step();
 		//! @brief Next - Continue running instructions until the next line is reached.
@@ -281,7 +283,7 @@ namespace ComSquare::Debugger
 		~CPUDebug() override = default;
 
 		//! @brief Return true if the CPU is overloaded with debugging features.
-		bool isDebugger() override;
+		bool isDebugger() const override;
 
 		//! @brief Focus the debugger's window.
 		void focus();

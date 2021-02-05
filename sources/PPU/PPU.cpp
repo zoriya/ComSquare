@@ -5,11 +5,8 @@
 #include <iostream>
 #include <bitset>
 #include "PPU.hpp"
-#include "PPUUtils.hpp"
 #include "../Exceptions/NotImplementedException.hpp"
 #include "../Exceptions/InvalidAddress.hpp"
-#include "../Ram/Ram.hpp"
-#include "../Models/Vector2.hpp"
 
 namespace ComSquare::PPU
 {
@@ -21,11 +18,11 @@ namespace ComSquare::PPU
 	{
 		this->_registers._isLowByte = true;
 		for (int i = 0; i < 512; i++) {
-			this->cgram->write_internal(i, random() % 255);
+			this->cgram->write(i, random() % 255);
 		}
 	}
 
-	uint8_t PPU::read(uint24_t addr)
+	uint8_t PPU::read(uint24_t addr) const
 	{
 		switch (addr) {
 		case ppuRegisters::mpyl:
@@ -45,7 +42,7 @@ namespace ComSquare::PPU
 		case ppuRegisters::stat78:
 			return 0;
 		default:
-			throw InvalidAddress("PPU Internal Registers read ", addr);
+			throw InvalidAddress("PPU Internal Registers read ", addr + this->_start);
  		}
 	}
 
@@ -69,7 +66,7 @@ namespace ComSquare::PPU
 			//throw InvalidAddress("oamdata", addr);
 			std::cout << "oamdata" << std::endl;
 			// the oamAddress have to be calculated if fblank or not (not implemented)
-			oamram->write_internal(this->_registers._oamadd.oamAddress, this->_registers._oamdata);
+			oamram->write(this->_registers._oamadd.oamAddress, this->_registers._oamdata);
 			this->_registers._oamadd.oamAddress++;
 			break;
 		case ppuRegisters::bgmode:
@@ -126,7 +123,7 @@ namespace ComSquare::PPU
 			//std::cout << "vmdatal" << std::endl;
 			if (!this->_registers._inidisp.fblank) {
 				this->_registers._vmdata.vmdatal = data;
-				this->vram->write_internal(getVramAddress(), this->_registers._vmdata.vmdatal);
+				this->vram->write(this->getVramAddress(), data);
 			}
 			if (!this->_registers._vmain.incrementMode)
 				this->_registers._vmadd.vmadd += this->_registers._incrementAmount;
@@ -135,7 +132,7 @@ namespace ComSquare::PPU
 			//std::cout << "vmdatah" << std::endl;
 			if (!this->_registers._inidisp.fblank) {
 				this->_registers._vmdata.vmdatah = data;
-				this->vram->write_internal(getVramAddress(), this->_registers._vmdata.vmdatah);
+				this->vram->write(this->getVramAddress() + 1, data);
 			}
 			if (this->_registers._vmain.incrementMode)
 				this->_registers._vmadd.vmadd += this->_registers._incrementAmount;
@@ -163,9 +160,9 @@ namespace ComSquare::PPU
 			}
 			else {
 				this->_registers._cgdata.cgdatah = data;
-				this->cgram->write_internal(this->_registers._cgadd, this->_registers._cgdata.cgdatal);
+				this->cgram->write(this->_registers._cgadd, this->_registers._cgdata.cgdatal);
 				this->_registers._cgadd++;
-				this->cgram->write_internal(this->_registers._cgadd, this->_registers._cgdata.cgdatah);
+				this->cgram->write(this->_registers._cgadd, this->_registers._cgdata.cgdatah);
 				this->_registers._cgadd++;
 			}
 			this->_registers._isLowByte = !this->_registers._isLowByte;
@@ -214,14 +211,21 @@ namespace ComSquare::PPU
 			this->_registers._setini.raw = data;
 			break;
 		//TODO adding the rest of the registers. oaf !
+		case ppuRegisters::stat77: // some roms write here but it is useless
+			break;
 		default:
-			throw InvalidAddress("PPU Internal Registers write", addr);
+			throw InvalidAddress("PPU Internal Registers write", addr + this->_start);
 		}
+	}
+
+	uint24_t PPU::getSize() const
+	{
+		return 0x3F;
 	}
 
 	uint16_t PPU::getVramAddress()
 	{
-		uint16_t vanillaAddress = this->_registers._vmadd.vmadd;
+		uint16_t vanillaAddress = this->_registers._vmadd.vmadd * 2;
 
 		switch (this->_registers._vmain.addressRemapping) {
 		case 0b00:
@@ -233,6 +237,7 @@ namespace ComSquare::PPU
 		case 0b11:
 			return (vanillaAddress & 0xFC00U) | (vanillaAddress & 0x0380U) >> 7U | (vanillaAddress & 0x7FU) << 3U;
 		}
+		throw InvalidAddress("Invalid vram address", vanillaAddress);
 	}
 
 	void PPU::update(unsigned cycles)
@@ -242,34 +247,34 @@ namespace ComSquare::PPU
 		uint8_t red;
 		uint8_t green;
 		uint8_t blue;
-		uint32_t pixelTmp = 0x0;
+		uint32_t pixelTmp;
 		if (!this->_registers._inidisp.fblank) {
-				for (int y = 0; y <= 255; y += 2) {
-					tmp = this->cgram->read_internal(y);
-					tmp += this->cgram->read_internal(y + 1) << 8;
-					blue = (tmp & 0x7D00U) >> 10U;
-					green = (tmp & 0x03E0U) >> 5U;
-					red = (tmp & 0x001FU);
+			for (int y = 0; y <= 255; y += 2) {
+				tmp = this->cgram->read(y);
+				tmp += this->cgram->read(y + 1) << 8;
+				blue = (tmp & 0x7D00U) >> 10U;
+				green = (tmp & 0x03E0U) >> 5U;
+				red = (tmp & 0x001FU);
 
-					pixelTmp = this->_registers._inidisp.brightness * 255U / 15U;
-					pixelTmp += (red * 255U / 31U) << 24U;
-					pixelTmp += (green * 255U / 31U) << 16U;
-					pixelTmp += (blue * 255U / 31U) << 8U;
+				pixelTmp = this->_registers._inidisp.brightness * 255U / 15U;
+				pixelTmp += (red * 255U / 31U) << 24U;
+				pixelTmp += (green * 255U / 31U) << 16U;
+				pixelTmp += (blue * 255U / 31U) << 8U;
 
-					for (int x = 0; x < 100; x++)
-						this->_renderer.putPixel(x, y, pixelTmp);
-				}
+				for (int x = 0; x < 100; x++)
+					this->_renderer.putPixel(x, y, pixelTmp);
+			}
 		}
 		this->renderBackground(1, {8, 8}, 4, false);
 		this->_renderer.drawScreen();
 	}
 
-	std::string PPU::getName()
+	std::string PPU::getName() const
 	{
 		return "PPU";
 	}
 
-	std::string PPU::getValueName(uint24_t addr)
+	std::string PPU::getValueName(uint24_t addr) const
 	{
 		switch (addr) {
 		case ppuRegisters::inidisp:
@@ -405,18 +410,18 @@ namespace ComSquare::PPU
 		}
 	}
 
-	Component PPU::getComponent()
+	Component PPU::getComponent() const
 	{
 		return Ppu;
 	}
 
-	bool PPU::isDebugger()
+	bool PPU::isDebugger() const
 	{
 		return false;
 	}
 
 	uint16_t PPU::cgramRead(uint16_t addr)
 	{
-		return this->cgram->read_internal(addr);
+		return this->cgram->read(addr);
 	}
 }
