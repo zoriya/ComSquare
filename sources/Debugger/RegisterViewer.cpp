@@ -380,7 +380,85 @@ namespace ComSquare::Debugger
 			}, nullptr, Boolean));
 		}
 
+		// CGWSEL 0x2130
+		model->addRegister(Register(0x2130, "", "CGWSEL", [ppuRegisters](SNES &) {
+			return ppuRegisters._cgwsel.raw;
+		}, nullptr, EightBits));
+		model->addRegister(Register(0x2130, ":0", "Direct Color Mode", [ppuRegisters](SNES &) {
+			return ppuRegisters._cgwsel.directColorMode;
+		}, nullptr, Boolean));
+		model->addRegister(Register(0x2130, ":1", "CM Add SubScreen", [ppuRegisters](SNES &) {
+			return ppuRegisters._cgwsel.addSubscreen;
+		}, nullptr, Boolean));
+		model->addRegister(Register(0x2130, ":4-5", "CM Prevent Mode", [ppuRegisters](SNES &) {
+			return ppuRegisters._cgwsel.preventColorMath;
+		}, nullptr, Integer));
+		model->addRegister(Register(0x2130, ":6-7", "CM Clip Mode", [ppuRegisters](SNES &) {
+			return ppuRegisters._cgwsel.clipColorToBlackBeforeMath;
+		}, nullptr, Integer));
+
+		// CGADSUB 0x2131
+		model->addRegister(Register(0x2131, "", "CGADSUB", [ppuRegisters](SNES &) {
+			return ppuRegisters._cgadsub.raw;
+		}, nullptr, EightBits));
+
+		std::array<std::string, 8> tmp = {
+			"BG1 Enabled",
+			"BG2 Enabled",
+			"BG3 Enabled",
+			"BG4 Enabled",
+			"OAM Enabled",
+			"Background Enabled",
+			"Half Mode",
+			"Substract Mode",
+		};
+		for (int i = 0; i < 8; i++) {
+			model->addRegister(Register(0x2131, ":" + std::to_string(i), tmp[i], [ppuRegisters, i](SNES &) {
+				return (ppuRegisters._cgadsub.raw >> i) & 1;
+			}, nullptr, Boolean));
+		}
+
+		// COLDATA 0x2132
+		model->addRegister(Register(0x2132, "", "COLDATA", [ppuRegisters](SNES &) {
+			return ppuRegisters._coldata.raw;
+		}, nullptr, EightBits));
+		model->addRegister(Register(0x2132, ":0-4", "Color Intensity", [ppuRegisters](SNES &) {
+			return ppuRegisters._coldata.colorIntensity;
+		}, nullptr, Integer));
+		model->addRegister(Register(0x2132, ":5", "Red", [ppuRegisters](SNES &) {
+			return ppuRegisters._coldata.red;
+		}, nullptr, Boolean));
+		model->addRegister(Register(0x2132, ":6", "Green", [ppuRegisters](SNES &) {
+			return ppuRegisters._coldata.green;
+		}, nullptr, Boolean));
+		model->addRegister(Register(0x2132, ":7", "Blue", [ppuRegisters](SNES &) {
+			return ppuRegisters._coldata.blue;
+		}, nullptr, Boolean));
+
+		// SETINI 0X2133
 		this->_ui.ppuRegisters->setModel(model);
+		model->addRegister(Register(0x2133, "", "SETINI", [ppuRegisters](SNES &) {
+			return ppuRegisters._setini.raw;
+		}, nullptr, EightBits));
+		model->addRegister(Register(0x2133, ":0", "Screen Interlace", [ppuRegisters](SNES &) {
+			return ppuRegisters._setini.screenInterlace;
+		}, nullptr, Boolean));
+		model->addRegister(Register(0x2133, ":1", "Obj Interlace", [ppuRegisters](SNES &) {
+			return ppuRegisters._setini.screenInterlace;
+		}, nullptr, Boolean));
+		model->addRegister(Register(0x2133, ":2", "Overscan Mode", [ppuRegisters](SNES &) {
+			return ppuRegisters._setini.overscanMode;
+		}, nullptr, Boolean));
+		model->addRegister(Register(0x2133, ":3", "Pseudo Hires Mode", [ppuRegisters](SNES &) {
+			return ppuRegisters._setini.enablePseudoHiresMode;
+		}, nullptr, Boolean));
+		model->addRegister(Register(0x2133, ":6", "Mode 7 extra Bg", [ppuRegisters](SNES &) {
+			return ppuRegisters._setini.mode7ExtBg;
+		}, nullptr, Boolean));
+		model->addRegister(Register(0x2133, ":7", "External Sync", [ppuRegisters](SNES &) {
+			return ppuRegisters._setini.externalSync;
+		}, nullptr, Boolean));
+
 	}
 
 	void RegisterViewer::focus()
