@@ -342,7 +342,7 @@ namespace ComSquare::PPU
 				uint16_t _: 3;
 				uint16_t value: 13;
 			};
-			uint16_t center = 0;
+			uint16_t raw = 0;
 		} _m7x;
 		//! @brief M7Y Register (Mode 7 Center Y)
 		union { // Not sure if it is done correctly
@@ -350,7 +350,7 @@ namespace ComSquare::PPU
 				uint16_t _: 3;
 				uint16_t value: 13;
 			};
-			uint16_t center = 0;
+			uint16_t raw = 0;
 		} _m7y;
 		//! @brief CGADD Register (CGRAM Address)
 		uint8_t _cgadd = 0;
@@ -380,19 +380,16 @@ namespace ComSquare::PPU
 				uint8_t window1InversionForBg2Bg4Color: 1;
 				uint8_t enableWindow2ForBg1Bg3Obj: 1;
 				uint8_t window2InversionForBg1Bg3Obj: 1;
-				uint8_t enableWindow1ForBg1Bg2Obj: 1;
-				uint8_t window1InversionForBg1Bg2Obj: 1;
+				uint8_t enableWindow1ForBg1Bg3Obj: 1;
+				uint8_t window1InversionForBg1Bg3Obj: 1;
 			};
 			uint8_t raw = 0;
 		} _wsel[3];
 		//! @brief WH0 Register (Window 1 Left Position)
-		uint8_t _wh0 = 0;
 		//! @brief WH1 Register (Window 1 Right Position)
-		uint8_t _wh1 = 0;
 		//! @brief WH2 Register (Window 2 Left Position)
-		uint8_t _wh2 = 0;
 		//! @brief WH3 Register (Window 2 Right Position)
-		uint8_t _wh3 = 0;
+		uint8_t _wh[4] = {0};
 		//! @brief WBGLOG Register (Window mask logic for BGs)
 		union {
 			struct {

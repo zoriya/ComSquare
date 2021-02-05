@@ -395,16 +395,16 @@ namespace ComSquare::PPU
 			this->_registers._wsel[addr - PpuRegisters::w12sel].raw = data;
 			break;
 		case PpuRegisters::wh0:
-			this->_registers._wh0 = data;
+			this->_registers._wh[0] = data;
 			break;
 		case PpuRegisters::wh1:
-			this->_registers._wh1 = data;
+			this->_registers._wh[1] = data;
 			break;
 		case PpuRegisters::wh2:
-			this->_registers._wh2 = data;
+			this->_registers._wh[2] = data;
 			break;
 		case PpuRegisters::wh3:
-			this->_registers._wh3 = data;
+			this->_registers._wh[3] = data;
 			break;
 		case PpuRegisters::wbjlog:
 			this->_registers._wbglog.raw = data;
