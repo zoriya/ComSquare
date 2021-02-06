@@ -5,6 +5,7 @@
 #pragma once
 
 #include <string>
+#include <filesystem>
 #include "../Memory/AMemory.hpp"
 #include "../Models/Int24.hpp"
 #include "../Memory/ARectangleMemory.hpp"
@@ -65,6 +66,8 @@ namespace ComSquare::Cartridge
 	//! @brief Contains the rom's memory/instructions.
 	class Cartridge : public Ram::Ram {
 	private:
+		//! @brief The path of the currently loaded rom.
+		std::string _romPath;
 		//! @brief Sometime the rom's data has an offset for a SMC header. This value indicate the start of the real rom discarding this header.
 		uint16_t _romStart = 0;
 
@@ -104,5 +107,9 @@ namespace ComSquare::Cartridge
 		//! @param data The data to write.
 		//! @throw InvalidAddress will be thrown if the address is more than the size of the rom's memory.
 		void write(uint24_t addr, uint8_t data) override;
+
+		//! @brief The path of the rom file
+		//! @return The path of the currently loaded rom file.
+		std::filesystem::path getRomPath() const;
 	};
 }

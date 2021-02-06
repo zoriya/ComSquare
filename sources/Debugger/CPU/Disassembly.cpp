@@ -119,7 +119,7 @@ namespace ComSquare::Debugger
 		case StackRelative:
 			return this->_getStackRelativeValue(pc);
 		case StackRelativeIndirectIndexedByY:
-			return this->_getStackRelativeIndiretIndexdeByYValue(pc);
+			return this->_getStackRelativeIndirectIndexedByYValue(pc);
 		case AbsoluteIndirect:
 			return this->_getAbsoluteIndirectValue(pc);
 		case AbsoluteIndirectIndexedByX:
@@ -244,7 +244,7 @@ namespace ComSquare::Debugger
 		return Utility::to_hex(this->_bus->read(pc, true), Utility::AsmPrefix) + ", s";
 	}
 
-	std::string CPUDebug::_getStackRelativeIndiretIndexdeByYValue(uint24_t pc)
+	std::string CPUDebug::_getStackRelativeIndirectIndexedByYValue(uint24_t pc)
 	{
 		return "(" + Utility::to_hex(this->_bus->read(pc, true), Utility::AsmPrefix) + ", s), y";
 	}

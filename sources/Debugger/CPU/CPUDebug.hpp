@@ -168,6 +168,16 @@ namespace ComSquare::Debugger
 		bool oneTime;
 	};
 
+	//! @brief Struct representing a label.
+	struct Label {
+		//! @brief The address of this label
+		uint24_t address;
+		//! @brief The name of this label
+		std::string name;
+		//! @brief The size of the definition related to this label
+		std::optional<unsigned> size;
+	};
+
 	//! @brief A custom CPU with a window that show it's registers and the disassembly.
 	class CPUDebug : public CPU::CPU, public QObject {
 	private:
@@ -189,6 +199,11 @@ namespace ComSquare::Debugger
 		bool _isStepping = false;
 		//! @brief A reference to the snes (to disable the debugger).
 		SNES &_snes;
+		//! @brief A list of labels and their size.
+		std::vector<Label> _labels;
+
+		//! @brief Load labels from a symbol file.
+		std::vector<Label> _loadLabels(std::filesystem::path romPath) const;
 		//! @brief Reimplement the basic instruction execution method to log instructions inside the logger view.
 		unsigned _executeInstruction(uint8_t opcode) override;
 		//! @brief Return a disassembly context representing the current state of the processor.
@@ -239,7 +254,7 @@ namespace ComSquare::Debugger
 		//! @brief Return a printable string corresponding to the value of a stack relative addressing mode.
 		std::string _getStackRelativeValue(uint24_t pc);
 		//! @brief Return a printable string corresponding to the value of a stack relative indirect indexed by y addressing mode.
-		std::string _getStackRelativeIndiretIndexdeByYValue(uint24_t pc);
+		std::string _getStackRelativeIndirectIndexedByYValue(uint24_t pc);
 		//! @brief Return a printable string corresponding to the value of a absolute indirect addressing mode.
 		std::string _getAbsoluteIndirectValue(uint24_t pc);
 		//! @brief Return a printable string corresponding to the value of a absolute indirect indexed by x addressing mode.
@@ -276,8 +291,10 @@ namespace ComSquare::Debugger
 		uint16_t initialStackPointer = this->_registers.s;
 		//! @brief Update the UI when resetting the CPU.
 		int RESB() override;
+
+
 		//! @brief Convert a basic CPU to a debugging CPU.
-		explicit CPUDebug(ComSquare::CPU::CPU &cpu, SNES &snes);
+		CPUDebug(const ComSquare::CPU::CPU &cpu, SNES &snes);
 		CPUDebug(const CPUDebug &) = delete;
 		CPUDebug &operator=(const CPUDebug &) = delete;
 		~CPUDebug() override = default;

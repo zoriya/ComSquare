@@ -10,19 +10,21 @@
 #include <iostream>
 #include <utility>
 #include <QMessageBox>
+#include <fstream>
 
 using namespace ComSquare::CPU;
 
 namespace ComSquare::Debugger
 {
-	CPUDebug::CPUDebug(CPU &basicCPU, SNES &snes)
+	CPUDebug::CPUDebug(const CPU &basicCPU, SNES &snes)
 		: CPU(basicCPU),
 		_window(new ClosableWindow<CPUDebug>(*this, &CPUDebug::disableDebugger)),
 		_ui(),
 		_model(*this),
 		_painter(*this),
 		_stackModel(this->_bus, *this),
-		_snes(snes)
+		_snes(snes),
+		_labels(this->_loadLabels(snes.cartridge->getRomPath()))
 	{
 		this->_window->setContextMenuPolicy(Qt::NoContextMenu);
 		this->_window->setAttribute(Qt::WA_QuitOnClose, false);
@@ -305,6 +307,21 @@ namespace ComSquare::Debugger
 		if (instruction.size == 1)
 			return "";
 		return "[" + Utility::to_hex(valueAddr, Utility::AsmPrefix) + "]";
+	}
+
+	std::vector<Label> CPUDebug::_loadLabels(std::filesystem::path romPath) const
+	{
+		std::vector<Label> labels;
+		std::string symbolPath = romPath.replace_extension(".sym");
+		std::ifstream sym(symbolPath);
+
+		if (sym) {
+			std::vector<Label> symLabels = WlaDx.parse(sym);
+			labels.insert(labels.end(),
+			              std::make_move_iterator(symLabels.begin()),
+			              std::make_move_iterator(symLabels.end()));
+		}
+		return labels;
 	}
 }
 

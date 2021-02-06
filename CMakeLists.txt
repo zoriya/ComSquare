@@ -220,7 +220,7 @@ add_executable(ComSquare
         ui/registersView.ui
         sources/Debugger/RegisterViewer.cpp
         sources/Debugger/RegisterViewer.hpp
-        sources/Memory/IMemory.hpp)
+        sources/Memory/IMemory.hpp sources/Debugger/CPU/SymbolLoaders/WlaDx.cpp sources/Debugger/CPU/SymbolLoaders/WlaDx.hpp)
 
 target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)
 

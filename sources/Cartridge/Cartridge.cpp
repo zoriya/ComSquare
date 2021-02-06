@@ -12,7 +12,8 @@
 namespace ComSquare::Cartridge
 {
 	Cartridge::Cartridge(const std::string &romPath)
-		: Ram::Ram(0, Rom, "Cartridge")
+		: Ram::Ram(0, Rom, "Cartridge"),
+		_romPath(romPath)
 	{
 		if (romPath.empty())
 			throw InvalidRomException("Path is empty.");
@@ -46,6 +47,11 @@ namespace ComSquare::Cartridge
 	void Cartridge::write(uint24_t, uint8_t)
 	{
 		throw InvalidAction("Witting to the ROM is not allowed.");
+	}
+
+	std::filesystem::path Cartridge::getRomPath() const
+	{
+		return this->_romPath;
 	}
 
 	Header Cartridge::_mapHeader(uint32_t headerAddress)
