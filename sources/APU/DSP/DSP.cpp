@@ -568,7 +568,10 @@ namespace ComSquare::APU::DSP
 			throw InvalidAddress("DSP Registers write", addr);
 		}
 	}
-	uint8_t DSP::_readRAM(uint24_t addr) {
+	uint8_t DSP::_readRAM(uint24_t addr)
+	{
+		if (!this->_map.lock())
+			throw InvalidAddress("DSP read", addr);
 		switch (addr) {
 			case 0x0000 ... 0x00EF:
 				return this->_map.lock()->Page0.read(addr);
@@ -583,7 +586,10 @@ namespace ComSquare::APU::DSP
 		}
 	}
 
-	void DSP::_writeRAM(uint24_t addr, uint8_t data) {
+	void DSP::_writeRAM(uint24_t addr, uint8_t data)
+	{
+		if (!this->_map.lock())
+			throw InvalidAddress("DSP write", addr);
 		switch (addr) {
 			case 0x0000 ... 0x00EF:
 				this->_map.lock()->Page0.write(addr, data);
