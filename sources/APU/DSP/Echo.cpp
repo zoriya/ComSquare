@@ -95,9 +95,8 @@ namespace ComSquare::APU::DSP
 			outputRight = 0;
 		}
 
-		srand(time(NULL));
-		this->_state.buffer[this->_state.bufferOffset] = outputLeft + (INT16_MIN + rand() % (INT16_MAX + 1 - INT16_MIN));
-		this->_state.buffer[this->_state.bufferOffset + 1] = outputRight + (INT16_MIN + rand() % (INT16_MAX + 1 - INT16_MIN));
+		this->_state.buffer[this->_state.bufferOffset] = outputLeft;
+		this->_state.buffer[this->_state.bufferOffset + 1] = outputRight;
 		this->_state.bufferOffset += 2;
 		if (this->_state.bufferOffset >= this->_state.bufferSize)
 			this->_state.bufferOffset = 0;
@@ -164,6 +163,6 @@ namespace ComSquare::APU::DSP
 			return;
 		int32_t feedback = this->_noise.lfsr << 13 ^ this->_noise.lfsr << 14;
 
-		this->_noise.lfsr = feedback & 0x4000 ^ this->_noise.lfsr >> 1;
+		this->_noise.lfsr = (feedback & 0x4000) ^ this->_noise.lfsr >> 1;
 	}
 }
