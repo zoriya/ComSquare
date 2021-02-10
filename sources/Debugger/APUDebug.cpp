@@ -97,11 +97,11 @@ namespace ComSquare::Debugger
 		this->_ui.evolRprogressBar->setValue(echo.volume[1]);
 		this->_ui.echoprogressBar->setValue(echo.feedback);
 
-        uint8_t flg = 0;
-        flg += master.reset << 7;
-        flg += master.mute << 6;
-        flg += echo.enabled << 5;
-        flg += noise.clock;
+		uint8_t flg = 0;
+		flg += master.reset << 7;
+		flg += master.mute << 6;
+		flg += echo.enabled << 5;
+		flg += noise.clock;
 		this->_ui.flagslineEdit->setText(Utility::to_binary(flg).c_str());
 		this->_ui.sourceDirectoryLineEdit->setText(Utility::to_hex(brr.offset).c_str());
 		this->_ui.echoBufferOffsetLineEdit->setText(Utility::to_hex(echo.data).c_str());

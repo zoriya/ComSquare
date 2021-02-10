@@ -20,9 +20,9 @@ namespace ComSquare::Renderer
 		(void)rgba;
 	}
 
-    void NoRenderer::playAudio(int16_t *, uint64_t)
-    {
-    }
+	void NoRenderer::playAudio(int16_t *, uint64_t)
+	{
+	}
 
 	void NoRenderer::getEvents() { }
 

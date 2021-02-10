@@ -203,123 +203,6 @@ namespace ComSquare::APU::DSP
 		bool sample = true;
 	};
 
-	/*//! @brief All the registers of the DSP
-	struct Registers {
-		//! @brief Main Volume register
-		std::array<uint8_t, 2> mVol; //master.volume
-
-		//! @brief Echo Volume register
-		std::array<uint8_t, 2> eVol; //echo.volume
-
-		//! @brief Flags register
-		union {
-			struct {
-				uint8_t noiseClock : 5; //noise.frequency
-				bool ecen : 1; //echo.readonly
-				bool mute : 1; //master.mute
-				bool reset : 1; //master.reset
-			};
-			uint8_t flg;
-		};
-
-		//! @brief Echo feedback register
-		uint8_t efb; //echo.feedback
-
-		//! @brief Not used register
-		uint8_t unused;
-
-		//! @brief Source Directory offset register
-		uint8_t dir; //brr.bank
-
-		//! @brief Echo data start register
-		uint8_t esa; //echo.bank
-		//! @brief Echo delay size register
-		uint8_t edl; //echo.delay
-	};
-
-	struct BRR {
-		//! @brief BRR Header
-		union {
-			struct {
-				//! @brief Shift value range
-				unsigned range : 4;
-				//! @brief Decompression filter
-				unsigned filter : 2;
-				//! @brief Flag if the sample loops
-				bool loop : 1;
-				//! @brief Stop the sample (or restart from loop point)
-				bool end : 1;
-			};
-			uint8_t head;
-		};
-		//! @brief Sample data inside BRR
-		uint64_t block;
-	};
-
-	struct Voice {
-		//! @brief Volume register
-		std::array<uint8_t, 2> volume; //voice.volume
-
-		union {
-			struct {
-				//! @brief Lower 8 bits of pitch register
-				uint8_t pitchL;
-				//! @brief Higher 8 bits of pitch register
-				uint8_t pitchH;
-			};
-			uint16_t pitch; //voice.pitch
-		};
-
-		//! @brief Source number register
-		uint8_t srcn; //voice.source
-
-		union {
-			struct {
-				//! @brief Envelope register
-				uint8_t adsr1; //voice.adsr0
-				//! @brief Envelope controllers register
-				uint8_t adsr2; //voice.adsr1
-			};
-			uint16_t envelope;
-		};
-
-		//! @brief Gain register
-		uint8_t gain; //voice.gain
-
-		//! @brief Envelope value register
-		uint8_t envx; //latch.envx
-		//! @brief Wave height register
-		uint8_t outx; //latch.outx
-
-		//! @brief Key On register
-		bool kon : 1; //voice.keyon
-		//! @brief Key Off register
-		bool kof : 1; //voice.keyoff
-		bool keyLatch : 1; //voice._keylatch
-
-		//! @brief Sample end register
-		bool endx : 1; //voice._end
-		//! @brief Noise enable register
-		bool non : 1; //voice.noise
-		//! @brief Echo enable register
-		bool eon : 1; //voice.echo
-
-		//! @brief Pitch modulation register
-		bool pmon : 1; //voice.modulate
-
-		//! @brief Echo FIR filter coefficients
-		uint8_t coeff; //echo.fir
-
-		bool latchEon : 1; //voice._echo
-	};
-
-	struct Latch
-	{
-		uint8_t adsr0;
-		uint16_t pitch;
-		uint16_t output;
-	};*/
-
 	class DSP {
 	private:
 		//! @brief Number of samples per counter event
@@ -415,7 +298,9 @@ namespace ComSquare::APU::DSP
 		void misc29();
 		void misc30();
 
+		//! @brief Interpolate voice samples with gauss table
 		int32_t interpolate(const Voice &voice);
+		//! @brief Modify voice samples with its envelope
 		void runEnvelope(Voice &voice);
 
 		int32_t loadFIR(bool channel, int fir);
@@ -423,14 +308,20 @@ namespace ComSquare::APU::DSP
 		int16_t outputEcho(bool channel);
 		void writeEcho(bool channel);
 
+		//! @brief Remove one tick from timer
 		void timerTick();
+		//! @brief Check if timer value is equal to rate value
 		bool timerPoll(uint32_t rate);
 
+		//! @brief Transform BRR value to samples
 		void decodeBRR(Voice &voice);
 
+		//! @brief Whole APU RAM map
 		std::weak_ptr<MemoryMap> _map;
 
+		//! @brief Read inside APU RAM
 		uint8_t _readRAM(uint24_t addr);
+		//! @brief Write into APU RAM
 		void _writeRAM(uint24_t addr, uint8_t data);
 	public:
 		DSP(int16_t *buffer, uint32_t size, std::weak_ptr<MemoryMap> map);
