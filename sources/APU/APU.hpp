@@ -144,12 +144,12 @@ namespace ComSquare::APU
 		std::shared_ptr<MemoryMap> _map;
 
 		//! @brief Total size of the buffer containing samples
-        static constexpr int32_t bufferSize = 0x10000;
-        //! @brief Buffer containing samples to be played
+		static constexpr int32_t bufferSize = 0x10000;
+		//! @brief Buffer containing samples to be played
 		int16_t _soundBuffer[bufferSize];
 
-        //! @brief The DSP component used to produce sound
-        DSP::DSP _dsp;
+		//! @brief The DSP component used to produce sound
+		DSP::DSP _dsp;
 
 		//! @brief Read from the APU ram.
 		//! @param addr The address to read from. The address 0x0000 should refer to the first byte of the register.
