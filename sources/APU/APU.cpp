@@ -14,7 +14,7 @@ namespace ComSquare::APU
 		_renderer(renderer),
 		_map(new MemoryMap()),
 		_soundBuffer(),
-		_dsp(_soundBuffer, APU::bufferSize / 2, _map)
+		_dsp(this->_soundBuffer, this->_soundBuffer.size() / 2, _map)
 	{
 		this->reset();
 	}
@@ -728,7 +728,7 @@ namespace ComSquare::APU
 		this->_dsp.update();
 		samples = this->_dsp.getSamplesCount();
 		if (samples > 0)
-			this->_renderer.playAudio(this->_soundBuffer, samples / 2);
+			this->_renderer.playAudio(this->_soundBuffer.data(), samples / 2);
 	}
 
 	void APU::_setNZflags(uint8_t value)

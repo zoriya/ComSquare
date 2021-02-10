@@ -8,7 +8,8 @@
 
 namespace ComSquare::APU::DSP
 {
-	DSP::DSP(int16_t *buffer, uint32_t size, std::weak_ptr<MemoryMap> map) : _map(map)
+	DSP::DSP(std::array<int16_t, 0x10000> &buffer, uint32_t size, std::weak_ptr<MemoryMap> map) :
+	_state(buffer), _map(map)
 	{
 		this->_state.buffer = buffer;
 		this->_state.bufferSize = size;

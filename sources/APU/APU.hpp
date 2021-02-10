@@ -143,10 +143,8 @@ namespace ComSquare::APU
 		//! @brief Internal APU memory separated according to their utility
 		std::shared_ptr<MemoryMap> _map;
 
-		//! @brief Total size of the buffer containing samples
-		static constexpr int32_t bufferSize = 0x10000;
 		//! @brief Buffer containing samples to be played
-		int16_t _soundBuffer[bufferSize];
+		std::array<int16_t, 0x10000> _soundBuffer;
 
 		//! @brief The DSP component used to produce sound
 		DSP::DSP _dsp;

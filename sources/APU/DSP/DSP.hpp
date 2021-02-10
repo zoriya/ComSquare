@@ -186,10 +186,12 @@ namespace ComSquare::APU::DSP
 	//! @brief Current state of the DSP
 	struct State
 	{
+		State(std::array<int16_t, 0x10000> &array) : buffer(array) {};
+
 		//! @brief Current voice modification to do
 		uint8_t voice = 0;
 		//! @brief Current buffer of samples
-		int16_t *buffer;
+		std::array<int16_t, 0x10000> &buffer;
 		//! @brief Size of buffer
 		uint32_t bufferSize;
 		//! @brief Current position in the buffer of samples
@@ -268,7 +270,7 @@ namespace ComSquare::APU::DSP
 		Noise _noise {};
 		BRR _brr {};
 		Latch _latch {};
-		State _state {};
+		State _state;
 		Timer _timer {};
 
 		void voiceOutput(Voice &voice, bool channel);
@@ -324,7 +326,7 @@ namespace ComSquare::APU::DSP
 		//! @brief Write into APU RAM
 		void _writeRAM(uint24_t addr, uint8_t data);
 	public:
-		DSP(int16_t *buffer, uint32_t size, std::weak_ptr<MemoryMap> map);
+		DSP(std::array<int16_t, 0x10000> &buffer, uint32_t size, std::weak_ptr<MemoryMap> map);
 		DSP(const DSP &) = default;
 		DSP &operator=(const DSP &) = default;
 		~DSP() = default;
