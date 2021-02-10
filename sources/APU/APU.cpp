@@ -11,7 +11,7 @@
 namespace ComSquare::APU
 {
 	APU::APU(Renderer::IRenderer &renderer) :
-        _renderer(renderer),
+		_renderer(renderer),
 		_map(new MemoryMap()),
 		_soundBuffer(),
 		_dsp(_soundBuffer, APU::bufferSize / 2, _map)

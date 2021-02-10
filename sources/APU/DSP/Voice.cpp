@@ -131,7 +131,7 @@ namespace ComSquare::APU::DSP
 
 		voice.endx |= voice.loop;
 		if (voice.konDelay == 5)
-			voice.endx &= ~voice.endx;
+			voice.endx = 0x00;
 	}
 
 	void DSP::voice6(Voice &)
