@@ -713,7 +713,7 @@ namespace ComSquare::APU
 	void APU::update(unsigned cycles)
 	{
 		unsigned total = 0;
-        int32_t samples = 0;
+		int32_t samples = 0;
 
 		if (this->_paddingCycles > cycles) {
 			this->_paddingCycles -= cycles;
@@ -726,9 +726,9 @@ namespace ComSquare::APU
 			this->_paddingCycles = total - cycles;
 
 		this->_dsp.update();
-        samples = this->_dsp.getSamplesCount();
-        if (samples > 0)
-		    this->_renderer.playAudio(this->_soundBuffer, samples / 2);
+		samples = this->_dsp.getSamplesCount();
+		if (samples > 0)
+			this->_renderer.playAudio(this->_soundBuffer, samples / 2);
 	}
 
 	void APU::_setNZflags(uint8_t value)
@@ -741,6 +741,6 @@ namespace ComSquare::APU
 		Page0(0x00F0, Apu, "APU's Page 0"),
 		Page1(0x0100, Apu, "APU's Page 1"),
 		Memory(0xFDC0, Apu, "APU's Ram"),
-	    IPL(Apu, "IPL Rom")
+		IPL(Apu, "IPL Rom")
 	{ }
 }
