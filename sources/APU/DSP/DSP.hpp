@@ -17,10 +17,15 @@ namespace ComSquare::APU
 
 namespace ComSquare::APU::DSP
 {
+	//! @brief The 4 states of volume envelope adjustment
 	enum Envelope : uint {
+		//! @brief The voice is keyed off or a BRR end-without-loop block is reached
 		Release,
+		//! @brief The voice is keyed on
 		Attack,
+		//! @brief When the Envelope adjustment method bits exceeds 0x7ff
 		Decay,
+		//! @brief When the upper 3 bits of Envelope adjustment method bits equal the Sustain Level
 		Sustain
 	};
 
