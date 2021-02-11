@@ -728,7 +728,7 @@ namespace ComSquare::APU
 		this->_dsp.update();
 		samples = this->_dsp.getSamplesCount();
 		if (samples > 0)
-			this->_renderer.playAudio(this->_soundBuffer.data(), samples / 2);
+			this->_renderer.playAudio(std::span{this->_soundBuffer}, samples / 2);
 	}
 
 	void APU::_setNZflags(uint8_t value)
