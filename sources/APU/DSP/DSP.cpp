@@ -571,7 +571,7 @@ namespace ComSquare::APU::DSP
 	uint8_t DSP::_readRAM(uint24_t addr)
 	{
 		if (!this->_map.lock())
-			throw InvalidAddress("DSP read", addr);
+			throw std::runtime_error("DSP read : MemoryMap inaccessible");
 		switch (addr) {
 			case 0x0000 ... 0x00EF:
 				return this->_map.lock()->Page0.read(addr);
@@ -589,7 +589,7 @@ namespace ComSquare::APU::DSP
 	void DSP::_writeRAM(uint24_t addr, uint8_t data)
 	{
 		if (!this->_map.lock())
-			throw InvalidAddress("DSP write", addr);
+			throw std::runtime_error("DSP write : MemoryMap inaccessible");
 		switch (addr) {
 			case 0x0000 ... 0x00EF:
 				this->_map.lock()->Page0.write(addr, data);
