@@ -31,7 +31,7 @@ jobs:
       - name: Install Gcovr
         run: python -m pip install --upgrade pip gcovr
       - name: Update G++
-        run: sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10.1 100
+        run: sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 100
       - name: Build Makefile with CMake
         run: mkdir -p build && cd build && cmake ..
       - name: Build with Makefile
