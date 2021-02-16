@@ -13,7 +13,7 @@ on:
 
 jobs:
   Testing:
-    runs-on: [ubuntu-latest]
+    runs-on: [ubuntu-18.04]
 
     steps:
       - uses: actions/checkout@v1
@@ -25,11 +25,18 @@ jobs:
         run: sudo apt-get update &&
             sudo apt-get install --yes libsfml-dev qt5-default
       - name: Install Criterion
-        run: sudo add-apt-repository ppa:snaipewastaken/ppa &&
-          sudo apt-get update &&
-          sudo apt-get install --yes criterion-dev
+        run: git clone --recursive https://github.com/Snaipe/Criterion &&
+          cd Criterion &&
+          sudo apt install --yes ninja-build &&
+          pip3 install meson &&
+          meson build &&
+          ninja -C build &&
+          sudo ninja -C build install &&
+          sudo cp -r /usr/local/lib/x86_64-linux-gnu/libcriterion* /usr/lib
       - name: Install Gcovr
         run: python -m pip install --upgrade pip gcovr
+      - name: Update G++
+        run: sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 100
       - name: Build Makefile with CMake
         run: mkdir -p build && cd build && cmake ..
       - name: Build with Makefile

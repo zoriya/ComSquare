@@ -46,8 +46,6 @@ namespace ComSquare
 		std::shared_ptr<Ram::Ram> wram;
 		//! @brief Save Ram residing inside the Cartridge in a real SNES.
 		std::shared_ptr<Ram::Ram> sram;
-		//! @brief External Ram used only by the Audio Processing Unit
-		std::shared_ptr<APU::MemoryMap> apuRam;
 		//! @brief Central Processing Unit of the SNES.
 		std::shared_ptr<CPU::CPU> cpu;
 		//! @brief Picture Processing Unit of the SNES

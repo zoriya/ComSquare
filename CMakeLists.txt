@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.12)
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 
 # set the project name
 project(ComSquare)
@@ -103,7 +103,15 @@ add_executable(unit_tests
         sources/PPU/Background.hpp
         sources/CPU/DMA/DMA.cpp
         sources/CPU/DMA/DMA.hpp
-        tests/CPU/testDMA.cpp sources/Memory/IMemory.hpp)
+        tests/CPU/testDMA.cpp
+        sources/Memory/IMemory.hpp
+        sources/APU/DSP/Voice.cpp
+        sources/APU/DSP/Echo.cpp
+        sources/APU/DSP/Gauss.cpp
+        sources/APU/DSP/Envelope.cpp
+        sources/APU/DSP/Timer.cpp
+        sources/APU/DSP/BRR.cpp
+        )
 
 # include criterion & coverage
 target_link_libraries(unit_tests criterion -lgcov)
@@ -220,7 +228,14 @@ add_executable(ComSquare
         ui/registersView.ui
         sources/Debugger/RegisterViewer.cpp
         sources/Debugger/RegisterViewer.hpp
-        sources/Memory/IMemory.hpp)
+        sources/Memory/IMemory.hpp
+        sources/APU/DSP/Voice.cpp
+        sources/APU/DSP/Echo.cpp
+        sources/APU/DSP/Gauss.cpp
+        sources/APU/DSP/Envelope.cpp
+        sources/APU/DSP/Timer.cpp
+        sources/APU/DSP/BRR.cpp
+        )
 
 target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)
 

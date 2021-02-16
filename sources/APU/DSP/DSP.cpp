@@ -3,251 +3,251 @@
 //
 
 #include "DSP.hpp"
+#include "../APU.hpp"
 #include "../../Exceptions/InvalidAddress.hpp"
 
 namespace ComSquare::APU::DSP
 {
+	DSP::DSP(std::array<int16_t, 0x10000> &buffer, uint32_t size, std::weak_ptr<MemoryMap> map) :
+	_state(buffer), _map(map)
+	{
+		this->_state.buffer = buffer;
+		this->_state.bufferSize = size;
+	}
+
 	uint8_t DSP::read(uint24_t addr) const
 	{
 		switch (addr) {
 		case 0x00:
-			return this->_channels[0].volL;
+			return this->_voices[0].volume[0];
 		case 0x10:
-			return this->_channels[1].volL;
+			return this->_voices[1].volume[0];
 		case 0x20:
-			return this->_channels[2].volL;
+			return this->_voices[2].volume[0];
 		case 0x30:
-			return this->_channels[3].volL;
+			return this->_voices[3].volume[0];
 		case 0x40:
-			return this->_channels[4].volL;
+			return this->_voices[4].volume[0];
 		case 0x50:
-			return this->_channels[5].volL;
+			return this->_voices[5].volume[0];
 		case 0x60:
-			return this->_channels[6].volL;
+			return this->_voices[6].volume[0];
 		case 0x70:
-			return this->_channels[7].volL;
+			return this->_voices[7].volume[0];
 		case 0x01:
-			return this->_channels[0].volR;
+			return this->_voices[0].volume[1];
 		case 0x11:
-			return this->_channels[1].volR;
+			return this->_voices[1].volume[1];
 		case 0x21:
-			return this->_channels[2].volR;
+			return this->_voices[2].volume[1];
 		case 0x31:
-			return this->_channels[3].volR;
+			return this->_voices[3].volume[1];
 		case 0x41:
-			return this->_channels[4].volR;
+			return this->_voices[4].volume[1];
 		case 0x51:
-			return this->_channels[5].volR;
+			return this->_voices[5].volume[1];
 		case 0x61:
-			return this->_channels[6].volR;
+			return this->_voices[6].volume[1];
 		case 0x71:
-			return this->_channels[7].volR;
+			return this->_voices[7].volume[1];
 		case 0x02:
-			return this->_channels[0].pitchL;
+			return this->_voices[0].pitchL;
 		case 0x12:
-			return this->_channels[1].pitchL;
+			return this->_voices[1].pitchL;
 		case 0x22:
-			return this->_channels[2].pitchL;
+			return this->_voices[2].pitchL;
 		case 0x32:
-			return this->_channels[3].pitchL;
+			return this->_voices[3].pitchL;
 		case 0x42:
-			return this->_channels[4].pitchL;
+			return this->_voices[4].pitchL;
 		case 0x52:
-			return this->_channels[5].pitchL;
+			return this->_voices[5].pitchL;
 		case 0x62:
-			return this->_channels[6].pitchL;
+			return this->_voices[6].pitchL;
 		case 0x72:
-			return this->_channels[7].pitchL;
+			return this->_voices[7].pitchL;
 		case 0x03:
-			return this->_channels[0].pitchH;
+			return this->_voices[0].pitchH;
 		case 0x13:
-			return this->_channels[1].pitchH;
+			return this->_voices[1].pitchH;
 		case 0x23:
-			return this->_channels[2].pitchH;
+			return this->_voices[2].pitchH;
 		case 0x33:
-			return this->_channels[3].pitchH;
+			return this->_voices[3].pitchH;
 		case 0x43:
-			return this->_channels[4].pitchH;
+			return this->_voices[4].pitchH;
 		case 0x53:
-			return this->_channels[5].pitchH;
+			return this->_voices[5].pitchH;
 		case 0x63:
-			return this->_channels[6].pitchH;
+			return this->_voices[6].pitchH;
 		case 0x73:
-			return this->_channels[7].pitchH;
+			return this->_voices[7].pitchH;
 		case 0x04:
-			return this->_channels[0].srcn;
+			return this->_voices[0].srcn;
 		case 0x14:
-			return this->_channels[1].srcn;
+			return this->_voices[1].srcn;
 		case 0x24:
-			return this->_channels[2].srcn;
+			return this->_voices[2].srcn;
 		case 0x34:
-			return this->_channels[3].srcn;
+			return this->_voices[3].srcn;
 		case 0x44:
-			return this->_channels[4].srcn;
+			return this->_voices[4].srcn;
 		case 0x54:
-			return this->_channels[5].srcn;
+			return this->_voices[5].srcn;
 		case 0x64:
-			return this->_channels[6].srcn;
+			return this->_voices[6].srcn;
 		case 0x74:
-			return this->_channels[7].srcn;
+			return this->_voices[7].srcn;
 		case 0x05:
-			return this->_channels[0].adsr1;
+			return this->_voices[0].adsr1;
 		case 0x15:
-			return this->_channels[1].adsr1;
+			return this->_voices[1].adsr1;
 		case 0x25:
-			return this->_channels[2].adsr1;
+			return this->_voices[2].adsr1;
 		case 0x35:
-			return this->_channels[3].adsr1;
+			return this->_voices[3].adsr1;
 		case 0x45:
-			return this->_channels[4].adsr1;
+			return this->_voices[4].adsr1;
 		case 0x55:
-			return this->_channels[5].adsr1;
+			return this->_voices[5].adsr1;
 		case 0x65:
-			return this->_channels[6].adsr1;
+			return this->_voices[6].adsr1;
 		case 0x75:
-			return this->_channels[7].adsr1;
+			return this->_voices[7].adsr1;
 		case 0x06:
-			return this->_channels[0].adsr2;
+			return this->_voices[0].adsr2;
 		case 0x16:
-			return this->_channels[1].adsr2;
+			return this->_voices[1].adsr2;
 		case 0x26:
-			return this->_channels[2].adsr2;
+			return this->_voices[2].adsr2;
 		case 0x36:
-			return this->_channels[3].adsr2;
+			return this->_voices[3].adsr2;
 		case 0x46:
-			return this->_channels[4].adsr2;
+			return this->_voices[4].adsr2;
 		case 0x56:
-			return this->_channels[5].adsr2;
+			return this->_voices[5].adsr2;
 		case 0x66:
-			return this->_channels[6].adsr2;
+			return this->_voices[6].adsr2;
 		case 0x76:
-			return this->_channels[7].adsr2;
+			return this->_voices[7].adsr2;
 		case 0x07:
-			return this->_channels[0].gain;
+			return this->_voices[0].gain;
 		case 0x17:
-			return this->_channels[1].gain;
+			return this->_voices[1].gain;
 		case 0x27:
-			return this->_channels[2].gain;
+			return this->_voices[2].gain;
 		case 0x37:
-			return this->_channels[3].gain;
+			return this->_voices[3].gain;
 		case 0x47:
-			return this->_channels[4].gain;
+			return this->_voices[4].gain;
 		case 0x57:
-			return this->_channels[5].gain;
+			return this->_voices[5].gain;
 		case 0x67:
-			return this->_channels[6].gain;
+			return this->_voices[6].gain;
 		case 0x77:
-			return this->_channels[7].gain;
+			return this->_voices[7].gain;
 		case 0x08:
-			return this->_channels[0].envx;
 		case 0x18:
-			return this->_channels[1].envx;
 		case 0x28:
-			return this->_channels[2].envx;
 		case 0x38:
-			return this->_channels[3].envx;
 		case 0x48:
-			return this->_channels[4].envx;
 		case 0x58:
-			return this->_channels[5].envx;
 		case 0x68:
-			return this->_channels[6].envx;
 		case 0x78:
-			return this->_channels[7].envx;
+			return this->_latch.envx;
 		case 0x09:
-			return this->_channels[0].outx;
 		case 0x19:
-			return this->_channels[1].outx;
 		case 0x29:
-			return this->_channels[2].outx;
 		case 0x39:
-			return this->_channels[3].outx;
 		case 0x49:
-			return this->_channels[4].outx;
 		case 0x59:
-			return this->_channels[5].outx;
 		case 0x69:
-			return this->_channels[6].outx;
 		case 0x79:
-			return this->_channels[7].outx;
+			return this->_latch.outx;
 		case 0x0C:
-			return this->_registers.mvolL;
+			return this->_master.volume[0];
 		case 0x1C:
-			return this->_registers.mvolR;
+			return this->_master.volume[1];
 		case 0x2C:
-			return this->_registers.evolL;
+			return this->_echo.volume[0];
 		case 0x3C:
-			return this->_registers.evolR;
+			return this->_echo.volume[1];
 		case 0x4C: {
 			uint8_t kon = 0;
 
 			for (int i = 0; i < 8; i++)
-				kon |= this->_channels[i].kon << i;
+				kon |= this->_voices[i].kon << i;
 			return kon;
 		}
 		case 0x5C: {
 			uint8_t kof = 0;
 
 			for (int i = 0; i < 8; i++)
-				kof |= this->_channels[i].kof << i;
+				kof |= this->_voices[i].kof << i;
 			return kof;
 		}
-		case 0x6C:
-			return this->_registers.flg;
+		case 0x6C: {
+			uint8_t flg = 0;
+			flg += this->_master.reset << 7;
+			flg += this->_master.mute << 6;
+			flg += this->_echo.enabled << 5;
+			flg += this->_noise.clock;
+			return flg;
+		}
 		case 0x7C: {
 			uint8_t endx = 0;
 
 			for (int i = 0; i < 8; i++)
-				endx |= this->_channels[i].endx << i;
+				endx |= this->_voices[i].endx << i;
 			return endx;
 		}
 		case 0x0D:
-			return this->_registers.efb;
+			return this->_echo.feedback;
 		case 0x1D:
-			return this->_registers.unused;
+			return this->_master.unused;
 		case 0x2D: {
 			uint8_t pmon = 0;
 
 			for (int i = 0; i < 8; i++)
-				pmon |= this->_channels[i].pmon << i;
+				pmon |= this->_voices[i].pmon << i;
 			return pmon;
 		}
 		case 0x3D: {
 			uint8_t non = 0;
 
 			for (int i = 0; i < 8; i++)
-				non |= this->_channels[i].non << i;
+				non |= this->_voices[i].non << i;
 			return non;
 		}
 		case 0x4D: {
 			uint8_t eon = 0;
 
 			for (int i = 0; i < 8; i++)
-				eon |= this->_channels[i].eon << i;
+				eon |= this->_voices[i].eon << i;
 			return eon;
 		}
 		case 0x5D:
-			return this->_registers.dir;
+			return this->_brr.offset;
 		case 0x6D:
-			return this->_registers.esa;
+			return this->_echo.data;
 		case 0x7D:
-			return this->_registers.edl;
+			return this->_echo.delay;
 		case 0x0F:
-			return this->_channels[0].coeff;
+			return this->_echo.FIR[0];
 		case 0x1F:
-			return this->_channels[1].coeff;
+			return this->_echo.FIR[1];
 		case 0x2F:
-			return this->_channels[2].coeff;
+			return this->_echo.FIR[2];
 		case 0x3F:
-			return this->_channels[3].coeff;
+			return this->_echo.FIR[3];
 		case 0x4F:
-			return this->_channels[4].coeff;
+			return this->_echo.FIR[4];
 		case 0x5F:
-			return this->_channels[5].coeff;
+			return this->_echo.FIR[5];
 		case 0x6F:
-			return this->_channels[6].coeff;
+			return this->_echo.FIR[6];
 		case 0x7F:
-			return this->_channels[7].coeff;
+			return this->_echo.FIR[7];
 		default:
 			throw InvalidAddress("DSP Registers read", addr);
 		}
@@ -257,350 +257,551 @@ namespace ComSquare::APU::DSP
 	{
 		switch (addr) {
 		case 0x00:
-			this->_channels[0].volL = data;
+			this->_voices[0].volume[0] = data;
 			break;
 		case 0x10:
-			this->_channels[1].volL = data;
+			this->_voices[1].volume[0] = data;
 			break;
 		case 0x20:
-			this->_channels[2].volL = data;
+			this->_voices[2].volume[0] = data;
 			break;
 		case 0x30:
-			this->_channels[3].volL = data;
+			this->_voices[3].volume[0] = data;
 			break;
 		case 0x40:
-			this->_channels[4].volL = data;
+			this->_voices[4].volume[0] = data;
 			break;
 		case 0x50:
-			this->_channels[5].volL = data;
+			this->_voices[5].volume[0] = data;
 			break;
 		case 0x60:
-			this->_channels[6].volL = data;
+			this->_voices[6].volume[0] = data;
 			break;
 		case 0x70:
-			this->_channels[7].volL = data;
+			this->_voices[7].volume[0] = data;
 			break;
 		case 0x01:
-			this->_channels[0].volR = data;
+			this->_voices[0].volume[1] = data;
 			break;
 		case 0x11:
-			this->_channels[1].volR = data;
+			this->_voices[1].volume[1] = data;
 			break;
 		case 0x21:
-			this->_channels[2].volR = data;
+			this->_voices[2].volume[1] = data;
 			break;
 		case 0x31:
-			this->_channels[3].volR = data;
+			this->_voices[3].volume[1] = data;
 			break;
 		case 0x41:
-			this->_channels[4].volR = data;
+			this->_voices[4].volume[1] = data;
 			break;
 		case 0x51:
-			this->_channels[5].volR = data;
+			this->_voices[5].volume[1] = data;
 			break;
 		case 0x61:
-			this->_channels[6].volR = data;
+			this->_voices[6].volume[1] = data;
 			break;
 		case 0x71:
-			this->_channels[7].volR = data;
+			this->_voices[7].volume[1] = data;
 			break;
 		case 0x02:
-			this->_channels[0].pitchL = data;
+			this->_voices[0].pitchL = data;
 			break;
 		case 0x12:
-			this->_channels[1].pitchL = data;
+			this->_voices[1].pitchL = data;
 			break;
 		case 0x22:
-			this->_channels[2].pitchL = data;
+			this->_voices[2].pitchL = data;
 			break;
 		case 0x32:
-			this->_channels[3].pitchL = data;
+			this->_voices[3].pitchL = data;
 			break;
 		case 0x42:
-			this->_channels[4].pitchL = data;
+			this->_voices[4].pitchL = data;
 			break;
 		case 0x52:
-			this->_channels[5].pitchL = data;
+			this->_voices[5].pitchL = data;
 			break;
 		case 0x62:
-			this->_channels[6].pitchL = data;
+			this->_voices[6].pitchL = data;
 			break;
 		case 0x72:
-			this->_channels[7].pitchL = data;
+			this->_voices[7].pitchL = data;
 			break;
 		case 0x03:
-			this->_channels[0].pitchH = data;
+			this->_voices[0].pitchH = data;
 			break;
 		case 0x13:
-			this->_channels[1].pitchH = data;
+			this->_voices[1].pitchH = data;
 			break;
 		case 0x23:
-			this->_channels[2].pitchH = data;
+			this->_voices[2].pitchH = data;
 			break;
 		case 0x33:
-			this->_channels[3].pitchH = data;
+			this->_voices[3].pitchH = data;
 			break;
 		case 0x43:
-			this->_channels[4].pitchH = data;
+			this->_voices[4].pitchH = data;
 			break;
 		case 0x53:
-			this->_channels[5].pitchH = data;
+			this->_voices[5].pitchH = data;
 			break;
 		case 0x63:
-			this->_channels[6].pitchH = data;
+			this->_voices[6].pitchH = data;
 			break;
 		case 0x73:
-			this->_channels[7].pitchH = data;
+			this->_voices[7].pitchH = data;
 			break;
 		case 0x04:
-			this->_channels[0].srcn = data;
+			this->_voices[0].srcn = data;
 			break;
 		case 0x14:
-			this->_channels[1].srcn = data;
+			this->_voices[1].srcn = data;
 			break;
 		case 0x24:
-			this->_channels[2].srcn = data;
+			this->_voices[2].srcn = data;
 			break;
 		case 0x34:
-			this->_channels[3].srcn = data;
+			this->_voices[3].srcn = data;
 			break;
 		case 0x44:
-			this->_channels[4].srcn = data;
+			this->_voices[4].srcn = data;
 			break;
 		case 0x54:
-			this->_channels[5].srcn = data;
+			this->_voices[5].srcn = data;
 			break;
 		case 0x64:
-			this->_channels[6].srcn = data;
+			this->_voices[6].srcn = data;
 			break;
 		case 0x74:
-			this->_channels[7].srcn = data;
+			this->_voices[7].srcn = data;
 			break;
 		case 0x05:
-			this->_channels[0].adsr1 = data;
+			this->_voices[0].adsr1 = data;
 			break;
 		case 0x15:
-			this->_channels[1].adsr1 = data;
+			this->_voices[1].adsr1 = data;
 			break;
 		case 0x25:
-			this->_channels[2].adsr1 = data;
+			this->_voices[2].adsr1 = data;
 			break;
 		case 0x35:
-			this->_channels[3].adsr1 = data;
+			this->_voices[3].adsr1 = data;
 			break;
 		case 0x45:
-			this->_channels[4].adsr1 = data;
+			this->_voices[4].adsr1 = data;
 			break;
 		case 0x55:
-			this->_channels[5].adsr1 = data;
+			this->_voices[5].adsr1 = data;
 			break;
 		case 0x65:
-			this->_channels[6].adsr1 = data;
+			this->_voices[6].adsr1 = data;
 			break;
 		case 0x75:
-			this->_channels[7].adsr1 = data;
+			this->_voices[7].adsr1 = data;
 			break;
 		case 0x06:
-			this->_channels[0].adsr2 = data;
+			this->_voices[0].adsr2 = data;
 			break;
 		case 0x16:
-			this->_channels[1].adsr2 = data;
+			this->_voices[1].adsr2 = data;
 			break;
 		case 0x26:
-			this->_channels[2].adsr2 = data;
+			this->_voices[2].adsr2 = data;
 			break;
 		case 0x36:
-			this->_channels[3].adsr2 = data;
+			this->_voices[3].adsr2 = data;
 			break;
 		case 0x46:
-			this->_channels[4].adsr2 = data;
+			this->_voices[4].adsr2 = data;
 			break;
 		case 0x56:
-			this->_channels[5].adsr2 = data;
+			this->_voices[5].adsr2 = data;
 			break;
 		case 0x66:
-			this->_channels[6].adsr2 = data;
+			this->_voices[6].adsr2 = data;
 			break;
 		case 0x76:
-			this->_channels[7].adsr2 = data;
+			this->_voices[7].adsr2 = data;
 			break;
 		case 0x07:
-			this->_channels[0].gain = data;
+			this->_voices[0].gain = data;
 			break;
 		case 0x17:
-			this->_channels[1].gain = data;
+			this->_voices[1].gain = data;
 			break;
 		case 0x27:
-			this->_channels[2].gain = data;
+			this->_voices[2].gain = data;
 			break;
 		case 0x37:
-			this->_channels[3].gain = data;
+			this->_voices[3].gain = data;
 			break;
 		case 0x47:
-			this->_channels[4].gain = data;
+			this->_voices[4].gain = data;
 			break;
 		case 0x57:
-			this->_channels[5].gain = data;
+			this->_voices[5].gain = data;
 			break;
 		case 0x67:
-			this->_channels[6].gain = data;
+			this->_voices[6].gain = data;
 			break;
 		case 0x77:
-			this->_channels[7].gain = data;
+			this->_voices[7].gain = data;
 			break;
 		case 0x08:
-			this->_channels[0].envx = data;
+			this->_voices[0].envx = data;
 			break;
 		case 0x18:
-			this->_channels[1].envx = data;
+			this->_voices[1].envx = data;
 			break;
 		case 0x28:
-			this->_channels[2].envx = data;
+			this->_voices[2].envx = data;
 			break;
 		case 0x38:
-			this->_channels[3].envx = data;
+			this->_voices[3].envx = data;
 			break;
 		case 0x48:
-			this->_channels[4].envx = data;
+			this->_voices[4].envx = data;
 			break;
 		case 0x58:
-			this->_channels[5].envx = data;
+			this->_voices[5].envx = data;
 			break;
 		case 0x68:
-			this->_channels[6].envx = data;
+			this->_voices[6].envx = data;
 			break;
 		case 0x78:
-			this->_channels[7].envx = data;
+			this->_voices[7].envx = data;
 			break;
 		case 0x09:
-			this->_channels[0].outx = data;
-			break;
 		case 0x19:
-			this->_channels[1].outx = data;
-			break;
 		case 0x29:
-			this->_channels[2].outx = data;
-			break;
 		case 0x39:
-			this->_channels[3].outx = data;
-			break;
 		case 0x49:
-			this->_channels[4].outx = data;
-			break;
 		case 0x59:
-			this->_channels[5].outx = data;
-			break;
 		case 0x69:
-			this->_channels[6].outx = data;
-			break;
 		case 0x79:
-			this->_channels[7].outx = data;
+			this->_latch.outx = data;
 			break;
 		case 0x0C:
-			this->_registers.mvolL = data;
+			this->_master.volume[0] = data;
 			break;
 		case 0x1C:
-			this->_registers.mvolR = data;
+			this->_master.volume[1] = data;
 			break;
 		case 0x2C:
-			this->_registers.evolL = data;
+			this->_echo.volume[0] = data;
 			break;
 		case 0x3C:
-			this->_registers.evolR = data;
+			this->_echo.volume[1] = data;
 			break;
 		case 0x4C:
-			for (int i = 0; i < 8; i++)
-				this->_channels[i].kon |= data << i;
+			for (int i = 0; i < 8; i++) {
+				this->_voices[i].kon |= data << i;
+			}
 			break;
 		case 0x5C:
 			for (int i = 0; i < 8; i++)
-				this->_channels[i].kof |= data << i;
+				this->_voices[i].kof |= data << i;
 			break;
 		case 0x6C:
-			this->_registers.flg = data;
+			this->_master.reset = data >> 7;
+			this->_master.mute = (data >> 6) & 0b1;
+			this->_echo.enabled = (data >> 5) & 0b1;
+			this->_noise.clock = data & 0b1111;
 			break;
 		case 0x7C:
 			for (int i = 0; i < 8; i++)
-				this->_channels[i].endx |= data << i;
+				this->_voices[i].endx |= data << i;
 			break;
 		case 0x0D:
-			this->_registers.efb = data;
+			this->_echo.feedback = data;
 			break;
 		case 0x1D:
-			this->_registers.unused = data;
+			this->_master.unused = data;
 			break;
 		case 0x2D:
 			for (int i = 0; i < 8; i++)
-				this->_channels[i].pmon |= data << i;
+				this->_voices[i].pmon |= data << i;
 			break;
 		case 0x3D:
 			for (int i = 0; i < 8; i++)
-				this->_channels[i].non |= data << i;
+				this->_voices[i].non |= data << i;
 			break;
 		case 0x4D:
 			for (int i = 0; i < 8; i++)
-				this->_channels[i].eon |= data << i;
+				this->_voices[i].eon |= data << i;
 			break;
 		case 0x5D:
-			this->_registers.dir = data;
+			this->_brr.offset = data;
 			break;
 		case 0x6D:
-			this->_registers.esa = data;
+			this->_echo.data = data;
 			break;
 		case 0x7D:
-			this->_registers.edl = data;
+			this->_echo.delay = data;
 			break;
 		case 0x0F:
-			this->_channels[0].coeff = data;
+			this->_echo.FIR[0] = data;
 			break;
 		case 0x1F:
-			this->_channels[1].coeff = data;
+			this->_echo.FIR[1] = data;
 			break;
 		case 0x2F:
-			this->_channels[2].coeff = data;
+			this->_echo.FIR[2] = data;
 			break;
 		case 0x3F:
-			this->_channels[3].coeff = data;
+			this->_echo.FIR[3] = data;
 			break;
 		case 0x4F:
-			this->_channels[4].coeff = data;
+			this->_echo.FIR[4] = data;
 			break;
 		case 0x5F:
-			this->_channels[5].coeff = data;
+			this->_echo.FIR[5] = data;
 			break;
 		case 0x6F:
-			this->_channels[6].coeff = data;
+			this->_echo.FIR[6] = data;
 			break;
 		case 0x7F:
-			this->_channels[7].coeff = data;
+			this->_echo.FIR[7] = data;
 			break;
 		default:
 			throw InvalidAddress("DSP Registers write", addr);
 		}
 	}
+	uint8_t DSP::_readRAM(uint24_t addr)
+	{
+		if (!this->_map.lock())
+			throw std::runtime_error("DSP read : MemoryMap inaccessible");
+		switch (addr) {
+			case 0x0000 ... 0x00EF:
+				return this->_map.lock()->Page0.read(addr);
+			case 0x0100 ... 0x01FF:
+				return this->_map.lock()->Page1.read(addr - 0x0100);
+			case 0x0200 ... 0xFFBF:
+				return this->_map.lock()->Memory.read(addr - 0x200);
+			case 0xFFC0 ... 0xFFFF:
+				return this->_map.lock()->IPL.read(addr - 0xFFC0);
+			default:
+				throw InvalidAddress("DSP read", addr);
+		}
+	}
 
+	void DSP::_writeRAM(uint24_t addr, uint8_t data)
+	{
+		if (!this->_map.lock())
+			throw std::runtime_error("DSP write : MemoryMap inaccessible");
+		switch (addr) {
+			case 0x0000 ... 0x00EF:
+				this->_map.lock()->Page0.write(addr, data);
+				break;
+			case 0x0100 ... 0x01FF:
+				this->_map.lock()->Page1.write(addr - 0x0100, data);
+				break;
+			case 0x0200 ... 0xFFBF:
+				this->_map.lock()->Memory.write(addr - 0x200, data);
+				break;
+			case 0xFFC0 ... 0xFFFF:
+				this->_map.lock()->IPL.write(addr - 0xFFC0, data);
+				break;
+			default:
+				throw InvalidAddress("DSP write", addr);
+		}
+	}
+
+	void DSP::update()
+	{
+		switch (this->_state.voice) {
+			case 0:
+				this->voice5(this->_voices[0]);
+				this->voice2(this->_voices[1]);
+				break;
+			case 1:
+				this->voice6(this->_voices[0]);
+				this->voice3(this->_voices[1]);
+				break;
+			case 2:
+				this->voice7(this->_voices[0]);
+				this->voice4(this->_voices[1]);
+				this->voice1(this->_voices[3]);
+				break;
+			case 3:
+				this->voice8(this->_voices[0]);
+				this->voice5(this->_voices[1]);
+				this->voice2(this->_voices[2]);
+				break;
+			case 4:
+				this->voice9(this->_voices[0]);
+				this->voice6(this->_voices[1]);
+				this->voice3(this->_voices[2]);
+				break;
+			case 5:
+				this->voice7(this->_voices[1]);
+				this->voice4(this->_voices[2]);
+				this->voice1(this->_voices[4]);
+				break;
+			case 6:
+				this->voice8(this->_voices[1]);
+				this->voice5(this->_voices[2]);
+				this->voice2(this->_voices[3]);
+				break;
+			case 7:
+				this->voice9(this->_voices[1]);
+				this->voice6(this->_voices[2]);
+				this->voice3(this->_voices[3]);
+				break;
+			case 8:
+				this->voice7(this->_voices[2]);
+				this->voice4(this->_voices[3]);
+				this->voice1(this->_voices[5]);
+				break;
+			case 9:
+				this->voice8(this->_voices[2]);
+				this->voice5(this->_voices[3]);
+				this->voice2(this->_voices[4]);
+				break;
+			case 10:
+				this->voice9(this->_voices[2]);
+				this->voice6(this->_voices[3]);
+				this->voice3(this->_voices[4]);
+				break;
+			case 11:
+				this->voice7(this->_voices[3]);
+				this->voice4(this->_voices[4]);
+				this->voice1(this->_voices[6]);
+				break;
+			case 12:
+				this->voice8(this->_voices[3]);
+				this->voice5(this->_voices[4]);
+				this->voice2(this->_voices[5]);
+				break;
+			case 13:
+				this->voice9(this->_voices[3]);
+				this->voice6(this->_voices[4]);
+				this->voice3(this->_voices[5]);
+				break;
+			case 14:
+				this->voice7(this->_voices[4]);
+				this->voice4(this->_voices[5]);
+				this->voice1(this->_voices[7]);
+				break;
+			case 15:
+				this->voice8(this->_voices[4]);
+				this->voice5(this->_voices[5]);
+				this->voice2(this->_voices[6]);
+				break;
+			case 16:
+				this->voice9(this->_voices[4]);
+				this->voice6(this->_voices[5]);
+				this->voice3(this->_voices[6]);
+				break;
+			case 17:
+				this->voice1(this->_voices[0]);
+				this->voice7(this->_voices[5]);
+				this->voice4(this->_voices[6]);
+				break;
+			case 18:
+				this->voice8(this->_voices[5]);
+				this->voice5(this->_voices[6]);
+				this->voice2(this->_voices[7]);
+				break;
+			case 19:
+				this->voice9(this->_voices[5]);
+				this->voice6(this->_voices[6]);
+				this->voice3(this->_voices[7]);
+				break;
+			case 20:
+				this->voice1(this->_voices[1]);
+				this->voice7(this->_voices[6]);
+				this->voice4(this->_voices[7]);
+				break;
+			case 21:
+				this->voice8(this->_voices[6]);
+				this->voice5(this->_voices[7]);
+				this->voice2(this->_voices[0]);
+				break;
+			case 22:
+				this->voice3a(this->_voices[0]);
+				this->voice9(this->_voices[6]);
+				this->voice6(this->_voices[7]);
+				echo22();
+				break;
+			case 23:
+				this->voice7(this->_voices[7]);
+				echo23();
+				break;
+			case 24:
+				this->voice8(this->_voices[7]);
+				echo24();
+				break;
+			case 25:
+				this->voice3b(this->_voices[0]);
+				this->voice9(this->_voices[7]);
+				echo25();
+				break;
+			case 26:
+				echo26();
+				break;
+			case 27:
+				this->misc27();
+				this->echo27();
+				break;
+			case 28:
+				this->misc28();
+				this->echo28();
+				break;
+			case 29:
+				this->misc29();
+				this->echo29();
+				break;
+			case 30:
+				this->misc30();
+				this->voice3c(this->_voices[0]);
+				this->echo30();
+				break;
+			case 31:
+				this->voice4(this->_voices[0]);
+				this->voice1(this->_voices[2]);
+				break;
+		}
+		this->_state.voice = (this->_state.voice + 1) % 32;
+	}
 	uint24_t DSP::getSize() const
 	{
 		return 0x7F;
 	}
 
-	Registers DSP::getRegisters()
+	const std::array<Voice, 8> &DSP::getVoices() const
 	{
-		return this->_registers;
+		return this->_voices;
 	}
 
-	std::array<Channel, 8> DSP::getChannels()
+	const Master &DSP::getMaster() const
 	{
-		return this->_channels;
+		return this->_master;
 	}
 
-	std::string DSP::getName() const
+	const Echo &DSP::getEcho() const
 	{
-		return "DSP";
+		return this->_echo;
 	}
 
-	Component DSP::getComponent() const
+	const Noise &DSP::getNoise() const
 	{
-		return Apu;
+		return this->_noise;
+	}
+
+	const BRR &DSP::getBrr() const
+	{
+		return this->_brr;
+	}
+
+	const Latch &DSP::getLatch() const
+	{
+		return this->_latch;
+	}
+
+	int32_t DSP::getSamplesCount() const
+	{
+		return this->_state.bufferOffset;
 	}
 }
