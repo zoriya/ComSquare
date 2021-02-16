@@ -25,9 +25,12 @@ jobs:
         run: sudo apt-get update &&
             sudo apt-get install --yes libsfml-dev qt5-default
       - name: Install Criterion
-        run: sudo add-apt-repository ppa:snaipewastaken/ppa &&
-          sudo apt-get update &&
-          sudo apt-get install --yes criterion-dev
+        run: git clone --recursive https://github.com/Snaipe/Criterion &&
+          cd Criterion &&
+          sudo apt install --yes meson ninja &&
+          meson build &&
+          ninja -C build &&
+          sudo ninja -C build install
       - name: Install Gcovr
         run: python -m pip install --upgrade pip gcovr
       - name: Update G++
