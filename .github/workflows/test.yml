@@ -27,10 +27,12 @@ jobs:
       - name: Install Criterion
         run: git clone --recursive https://github.com/Snaipe/Criterion &&
           cd Criterion &&
-          sudo apt install --yes meson ninja-build &&
+          sudo apt install --yes ninja-build &&
+          pip3 install meson &&
           meson build &&
           ninja -C build &&
-          sudo ninja -C build install
+          sudo ninja -C build install &&
+          sudo cp -r /usr/local/lib/x86_64-linux-gnu/libcriterion* /usr/lib
       - name: Install Gcovr
         run: python -m pip install --upgrade pip gcovr
       - name: Update G++
