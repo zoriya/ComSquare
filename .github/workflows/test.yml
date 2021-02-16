@@ -27,7 +27,7 @@ jobs:
       - name: Install Criterion
         run: git clone --recursive https://github.com/Snaipe/Criterion &&
           cd Criterion &&
-          sudo apt install --yes meson ninja &&
+          sudo apt install --yes meson ninja-build &&
           meson build &&
           ninja -C build &&
           sudo ninja -C build install
