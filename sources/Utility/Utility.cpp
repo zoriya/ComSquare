@@ -55,4 +55,6 @@ namespace ComSquare::Utility
 	{
 		return std::bitset<24>(i).to_string();
 	}
+
+	const std::string WHITESPACES = " \t\n\r\f\v";
 }

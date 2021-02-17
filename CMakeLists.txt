@@ -7,6 +7,8 @@ project(ComSquare)
 # show compilation warnings
 add_compile_options(-W -Wall -Wextra -Wshadow)
 
+include_directories(sources)
+
 # make unit tests
 add_executable(unit_tests
         tests/CPU/testAddressingMode.cpp
