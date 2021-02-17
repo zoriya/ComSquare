@@ -10,7 +10,7 @@ on:
 
 jobs:
   Building:
-    runs-on: [ubuntu-latest]
+    runs-on: [ubuntu-18.04]
 
     steps:
       - uses: actions/checkout@v1
@@ -26,6 +26,8 @@ jobs:
           mkdir build
           cd build
           cmake .. && make -j 4 && sudo make install
+      - name: Update G++
+        run: sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 100
       - name: Build Makefile with CMake
         run: mkdir -p build && cd build && cmake ..
       - name: Build with Makefile

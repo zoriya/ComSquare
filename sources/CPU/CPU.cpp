@@ -222,7 +222,7 @@ namespace ComSquare::CPU
 	unsigned CPU::update()
 	{
 		unsigned cycles = 0;
-		const unsigned maxCycles = 0x17;
+		const unsigned maxCycles = 0x0C;
 
 		for (DMA &channel : this->_dmaChannels) {
 			if (!channel.enabled)

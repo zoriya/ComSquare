@@ -65,6 +65,10 @@ namespace ComSquare::Renderer
 		void putPixel(unsigned y, unsigned x, uint32_t rgba) override;
 		//! @brief This function doesn't do anything because QT internally handle drawing to the screen.
 		void drawScreen() override;
+		//! @brief Playing all samples from buffer
+		//! @param samples Buffer containing samples
+		//! @param sampleCount number of samples inside buffer
+		void playAudio(std::span<int16_t> samples, uint64_t sampleCount) override;
 		//! @brief Set a new name to the window, if there is already a name it will be overwrite.
 		//! @param newWindowName new title for the window.
 		void setWindowName(std::string &newWindowName) override;

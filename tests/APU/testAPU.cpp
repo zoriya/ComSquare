@@ -203,15 +203,6 @@ Test(executeInstruction, Valid)
 	cr_assert_eq(result, 2);
 }
 
-Test(executeInstruction, Invalid)
-{
-	Init()
-	auto apu = snes.apu;
-
-	apu->_internalRegisters.pc = 0xFFFF;
-	cr_assert_throw(apu->_executeInstruction(), InvalidOpcode);
-}
-
 ///////////////////////
 //					 //
 // APU::update tests //
