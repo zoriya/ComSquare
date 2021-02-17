@@ -12,7 +12,7 @@
 
 #ifdef Q_WS_X11
 	#include <Qt/qx11info_x11.h>
-    #include <X11/Xlib.h>
+	#include <X11/Xlib.h>
 #endif
 
 namespace ComSquare::Renderer
@@ -83,6 +83,11 @@ namespace ComSquare::Renderer
 	void QtSFML::putPixel(unsigned y, unsigned x, uint32_t rgba)
 	{
 		this->_sfWidget->putPixel(y, x, rgba);
+	}
+
+	void QtSFML::playAudio(std::span<int16_t> samples, uint64_t sampleCount)
+	{
+		this->_sfWidget->playAudio(samples, sampleCount);
 	}
 
 	void QtSFML::drawScreen() { }

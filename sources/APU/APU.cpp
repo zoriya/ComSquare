@@ -10,9 +10,11 @@
 
 namespace ComSquare::APU
 {
-	APU::APU(std::shared_ptr<MemoryMap> &map) :
-		_map(map),
-		_dsp(new DSP::DSP())
+	APU::APU(Renderer::IRenderer &renderer) :
+		_renderer(renderer),
+		_map(new MemoryMap()),
+		_soundBuffer(),
+		_dsp(this->_soundBuffer, this->_soundBuffer.size() / 2, _map)
 	{
 		this->reset();
 	}
@@ -42,7 +44,7 @@ namespace ComSquare::APU
 		case 0xF2:
 			return this->_registers.dspregAddr;
 		case 0xF3:
-			return this->_registers.dspregData;
+			return this->_dsp.read(this->_registers.dspregAddr);
 		case 0xF4:
 			return this->_registers.port0;
 		case 0xF5:
@@ -88,7 +90,7 @@ namespace ComSquare::APU
 			this->_registers.dspregAddr = data;
 			break;
 		case 0xF3:
-			this->_registers.dspregData = data;
+			this->_dsp.write(this->_registers.dspregAddr, data);
 			break;
 		case 0xF4:
 			this->_registers.port0 = data;
@@ -662,7 +664,7 @@ namespace ComSquare::APU
 		case 0xEA:
 			return this->NOT1(this->_getAbsoluteBit());
 		case 0xEB:
-			return this->MOV(this->_getDirectAddr(), this->_internalRegisters.y, 3);
+			return this->MOV(this->_internalRead(this->_getDirectAddr()), this->_internalRegisters.y, 3);
 		case 0xEC:
 			return this->MOV(this->_getAbsoluteAddr(), this->_internalRegisters.y, 4);
 		case 0xED:
@@ -711,6 +713,7 @@ namespace ComSquare::APU
 	void APU::update(unsigned cycles)
 	{
 		unsigned total = 0;
+		int32_t samples = 0;
 
 		if (this->_paddingCycles > cycles) {
 			this->_paddingCycles -= cycles;
@@ -721,6 +724,11 @@ namespace ComSquare::APU
 			total += this->_executeInstruction();
 		if (this->_state == Running)
 			this->_paddingCycles = total - cycles;
+
+		this->_dsp.update();
+		samples = this->_dsp.getSamplesCount();
+		if (samples > 0)
+			this->_renderer.playAudio(std::span{this->_soundBuffer}, samples / 2);
 	}
 
 	void APU::_setNZflags(uint8_t value)
@@ -733,6 +741,6 @@ namespace ComSquare::APU
 		Page0(0x00F0, Apu, "APU's Page 0"),
 		Page1(0x0100, Apu, "APU's Page 1"),
 		Memory(0xFDC0, Apu, "APU's Ram"),
-	    IPL(Apu, "IPL Rom")
+		IPL(Apu, "IPL Rom")
 	{ }
 }

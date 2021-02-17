@@ -19,10 +19,9 @@ namespace ComSquare
 		cartridge(new Cartridge::Cartridge(romPath)),
 		wram(new Ram::Ram(16384, WRam, "WRam")),
 		sram(new Ram::Ram(this->cartridge->header.sramSize, SRam, "SRam")),
-		apuRam(new APU::MemoryMap()),
 		cpu(new CPU::CPU(this->bus, cartridge->header)),
 		ppu(new PPU::PPU(renderer)),
-		apu(new APU::APU(this->apuRam))
+		apu(new APU::APU(renderer))
 	{
 		this->bus->mapComponents(*this);
 	}

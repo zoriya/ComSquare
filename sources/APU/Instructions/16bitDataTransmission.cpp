@@ -11,9 +11,11 @@ namespace ComSquare::APU
 		uint24_t addr2 = addr + 1 + (this->_internalRegisters.p ? 0x0100 : 0);
 
 		if (to_ya) {
-			uint16_t value = ((this->_internalRead(addr2) << 8u) | this->_internalRead(addr));
+			uint8_t tmp = this->_internalRead(addr2);
+			uint16_t value = (tmp << 8) | this->_internalRead(addr);
 
-			this->_internalRegisters.ya = value;
+			this->_internalRegisters.a = value;
+			this->_internalRegisters.y = (value >> 8);
 			this->_setNZflags(value);
 		}
 		else {

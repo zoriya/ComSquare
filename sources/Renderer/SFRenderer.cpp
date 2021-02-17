@@ -18,6 +18,7 @@ namespace ComSquare::Renderer
 		this->_texture.create(width, height);
 		this->_sprite.setTexture(this->_texture);
 		this->_pixelBuffer = new sf::Color[height * width];
+		this->_sound.setBuffer(this->_soundBuffer);
 	}
 
 	void SFRenderer::createWindow(SNES &snes, int maxFPS)
@@ -51,6 +52,12 @@ namespace ComSquare::Renderer
 		this->_sprite.setTexture(this->_texture);
 		this->_window.draw(this->_sprite);
 		this->_window.display();
+	}
+
+	void SFRenderer::playAudio(std::span<int16_t> samples, uint64_t sampleCount)
+	{
+		this->_soundBuffer.loadFromSamples(samples.data(), sampleCount, 2, 32040);
+		this->_sound.play();
 	}
 
 	void SFRenderer::putPixel(unsigned y, unsigned x, uint32_t rgba)
