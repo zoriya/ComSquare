@@ -28,6 +28,9 @@ namespace ComSquare
 
 	void SNES::update()
 	{
+		if (this->cartridge->getType() == Cartridge::Audio)
+			return;
+
 		unsigned cycleCount = this->cpu->update();
 		this->ppu->update(cycleCount);
 		this->apu->update(cycleCount);

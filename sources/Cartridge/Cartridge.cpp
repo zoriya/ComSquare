@@ -98,13 +98,15 @@ namespace ComSquare::Cartridge
 
 	uint32_t Cartridge::_getHeaderAddress()
 	{
-		const std::vector<uint32_t> address = {0x7FC0, 0xFFC0, 0x81C0, 0x101C0};
+		const std::vector<uint32_t> address = {0x7FC0, 0xFFC0};
+		unsigned int smc = this->_size % 1024;
 		int bestScore = -1;
 		uint32_t bestAddress = 0;
 
 		for (uint32_t addr : address) {
 			int score = 0;
 
+			addr += smc;
 			if (addr + 0x32u >= this->_size)
 				continue;
 
@@ -156,10 +158,30 @@ namespace ComSquare::Cartridge
 		return bestAddress;
 	}
 
+	bool Cartridge::_isSPCFile()
+	{
+		std::string str = std::string(reinterpret_cast<char *>(this->_data), 0x21);
+
+		if (str != "SNES-SPC700 Sound File Data v0.30")
+			return false;
+		if (this->_data[0x21] != 0x1A || this->_data[0x22] != 0x1A)
+			return false;
+		if (this->_data[0x23] != 0x1A && this->_data[0x23] != 0x1B)
+			return false;
+		if (this->_data[0x24] != 0x1E)
+			return false;
+		return true;
+	}
+
 	bool Cartridge::_loadHeader()
 	{
+		if (this->_isSPCFile()) {
+			this->_type = Audio;
+			return false;
+		}
 		uint32_t headerAddress = this->_getHeaderAddress();
 
+		this->_type = Game;
 		this->header = this->_mapHeader(headerAddress);
 		this->header.gameName = std::string(reinterpret_cast<char *>(&this->_data[headerAddress]), 21);
 		if ((headerAddress + 0x40u) & 0x200u) {
@@ -168,5 +190,10 @@ namespace ComSquare::Cartridge
 			return true;
 		}
 		return false;
+	}
+
+	CartridgeType Cartridge::getType()
+	{
+		return this->_type;
 	}
 }
