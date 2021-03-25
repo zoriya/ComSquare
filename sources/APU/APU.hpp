@@ -11,6 +11,7 @@
 #include "../Ram/Ram.hpp"
 #include "IPL/IPL.hpp"
 #include "../Renderer/IRenderer.hpp"
+#include "../Cartridge/Cartridge.hpp"
 
 namespace ComSquare::APU
 {
@@ -45,22 +46,22 @@ namespace ComSquare::APU
 		//! @brief Program Status Word register
 		union {
 			struct {
-				//! @brief Negative flag
-				bool n : 1;
-				//! @brief Overflow flag
-				bool v : 1;
-				//! @brief Direct page flag
-				bool p : 1;
-				//! @brief Break flag
-				bool b : 1;
-				//! @brief Half carry flag
-				bool h : 1;
-				//! @brief Interrupt enabled flag
-				bool i : 1;
-				//! @brief Zero flag
-				bool z : 1;
 				//! @brief Carry flag
 				bool c : 1;
+				//! @brief Zero flag
+				bool z : 1;
+				//! @brief Interrupt enabled flag
+				bool i : 1;
+				//! @brief Half carry flag
+				bool h : 1;
+				//! @brief Break flag
+				bool b : 1;
+				//! @brief Direct page flag
+				bool p : 1;
+				//! @brief Overflow flag
+				bool v : 1;
+				//! @brief Negative flag
+				bool n : 1;
 			};
 			uint8_t psw;
 		};
@@ -392,6 +393,9 @@ namespace ComSquare::APU
 		//! @brief Get the size of the data. This size can be lower than the mapped data.
 		//! @return The number of bytes inside this memory.
 		uint24_t getSize() const override;
+
+		//! @brief Parses rom data to uploads directly into RAM and corresponding registers
+		void loadFromSPC(const std::shared_ptr<Cartridge::Cartridge>& cartridge);
 
 		//! @brief This function execute the instructions received until the maximum number of cycles is reached.
 		//! @return The number of cycles that elapsed.

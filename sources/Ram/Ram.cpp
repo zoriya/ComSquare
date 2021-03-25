@@ -56,4 +56,9 @@ namespace ComSquare::Ram
 	{
 		return this->_ramType;
 	}
+
+	uint8_t *Ram::getData() const
+	{
+		return this->_data;
+	}
 }

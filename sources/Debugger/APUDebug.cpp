@@ -81,7 +81,7 @@ namespace ComSquare::Debugger
 		this->_ui.xIndexLineEdit->setText(Utility::to_hex(this->_internalRegisters.x).c_str());
 		this->_ui.yIndexLineEdit->setText(Utility::to_hex(this->_internalRegisters.y).c_str());
 		this->_ui.accumlatorLineEdit->setText(Utility::to_hex(this->_internalRegisters.a).c_str());
-		this->_ui.programCounterLineEdit->setText(Utility::to_hex(this->_internalRegisters.pc + 0x0001u).c_str());
+		this->_ui.programCounterLineEdit->setText(Utility::to_hex(this->_internalRegisters.pc).c_str());
 		this->_ui.programStatusWordLineEdit->setText(this->_getPSWString().c_str());
 
 		auto voices = this->_dsp.getVoices();
@@ -90,12 +90,13 @@ namespace ComSquare::Debugger
 		auto noise = this->_dsp.getNoise();
 		auto brr = this->_dsp.getBrr();
 		auto latch = this->_dsp.getLatch();
+		auto max = std::numeric_limits<int8_t>::max();
 
-		this->_ui.mvolLprogressBar->setValue(master.volume[0]);
-		this->_ui.mvolRprogressBar->setValue(master.volume[1]);
-		this->_ui.evolLprogressBar->setValue(echo.volume[0]);
-		this->_ui.evolRprogressBar->setValue(echo.volume[1]);
-		this->_ui.echoprogressBar->setValue(echo.feedback);
+		this->_ui.mvolLprogressBar->setValue(master.volume[0] * 100 / max);
+		this->_ui.mvolRprogressBar->setValue(master.volume[1] * 100 / max);
+		this->_ui.evolLprogressBar->setValue(echo.volume[0] * 100 / max);
+		this->_ui.evolRprogressBar->setValue(echo.volume[1] * 100 / max);
+		this->_ui.echoprogressBar->setValue(echo.feedback * 100 / max);
 
 		uint8_t flg = 0;
 		flg += master.reset << 7;
@@ -107,10 +108,10 @@ namespace ComSquare::Debugger
 		this->_ui.echoBufferOffsetLineEdit->setText(Utility::to_hex(echo.data).c_str());
 		this->_ui.echoDelayLineEdit->setText(Utility::to_hex(echo.delay).c_str());
 
-		this->_ui.VolumeLprogressBar->setValue(voices[0].volume[0]);
-		this->_ui.VolumeRprogressBar->setValue(voices[0].volume[1]);
-		this->_ui.WaveHeightprogressBar->setValue(latch.outx);
-		this->_ui.EchoFIRCoeffprogressBar->setValue(echo.FIR[0]);
+		this->_ui.VolumeLprogressBar->setValue(voices[0].volume[0] * 100 / max);
+		this->_ui.VolumeRprogressBar->setValue(voices[0].volume[1] * 100 / max);
+		this->_ui.WaveHeightprogressBar->setValue(latch.outx * 100 / max);
+		this->_ui.EchoFIRCoeffprogressBar->setValue(echo.FIR[0] * 100 / max);
 		this->_ui.PitchlineEdit->setText(Utility::to_hex(voices[0].pitch).c_str());
 		this->_ui.sourceNumberLineEdit->setText(Utility::to_hex(voices[0].srcn).c_str());
 		this->_ui.GainlineEdit->setText(Utility::to_hex(voices[0].gain).c_str());
@@ -123,10 +124,10 @@ namespace ComSquare::Debugger
 		this->_ui.SampleEndcheckBox->setChecked(voices[0].endx);
 		this->_ui.PitchModulationcheckBox->setChecked(voices[0].pmon);
 
-		this->_ui.VolumeLprogressBar_2->setValue(voices[1].volume[0]);
-		this->_ui.VolumeRprogressBar_2->setValue(voices[1].volume[1]);
-		this->_ui.WaveHeightprogressBar_2->setValue(latch.outx);
-		this->_ui.EchoFIRCoeffprogressBar_2->setValue(echo.FIR[1]);
+		this->_ui.VolumeLprogressBar_2->setValue(voices[1].volume[0] * 100 / max);
+		this->_ui.VolumeRprogressBar_2->setValue(voices[1].volume[1] * 100 / max);
+		this->_ui.WaveHeightprogressBar_2->setValue(latch.outx * 100 / max);
+		this->_ui.EchoFIRCoeffprogressBar_2->setValue(echo.FIR[1] * 100 / max);
 		this->_ui.PitchlineEdit_2->setText(Utility::to_hex(voices[1].pitch).c_str());
 		this->_ui.sourceNumberLineEdit_2->setText(Utility::to_hex(voices[1].srcn).c_str());
 		this->_ui.GainlineEdit_2->setText(Utility::to_hex(voices[1].gain).c_str());
@@ -139,10 +140,10 @@ namespace ComSquare::Debugger
 		this->_ui.SampleEndcheckBox_2->setChecked(voices[1].endx);
 		this->_ui.PitchModulationcheckBox_2->setChecked(voices[1].pmon);
 
-		this->_ui.VolumeLprogressBar_3->setValue(voices[2].volume[0]);
-		this->_ui.VolumeRprogressBar_3->setValue(voices[2].volume[1]);
-		this->_ui.WaveHeightprogressBar_3->setValue(latch.outx);
-		this->_ui.EchoFIRCoeffprogressBar_3->setValue(echo.FIR[2]);
+		this->_ui.VolumeLprogressBar_3->setValue(voices[2].volume[0] * 100 / max);
+		this->_ui.VolumeRprogressBar_3->setValue(voices[2].volume[1] * 100 / max);
+		this->_ui.WaveHeightprogressBar_3->setValue(latch.outx * 100 / max);
+		this->_ui.EchoFIRCoeffprogressBar_3->setValue(echo.FIR[2] * 100 / max);
 		this->_ui.PitchlineEdit_3->setText(Utility::to_hex(voices[2].pitch).c_str());
 		this->_ui.sourceNumberLineEdit_3->setText(Utility::to_hex(voices[2].srcn).c_str());
 		this->_ui.GainlineEdit_3->setText(Utility::to_hex(voices[2].gain).c_str());
@@ -155,10 +156,10 @@ namespace ComSquare::Debugger
 		this->_ui.SampleEndcheckBox_3->setChecked(voices[2].endx);
 		this->_ui.PitchModulationcheckBox_3->setChecked(voices[2].pmon);
 
-		this->_ui.VolumeLprogressBar_4->setValue(voices[3].volume[0]);
-		this->_ui.VolumeRprogressBar_4->setValue(voices[3].volume[1]);
-		this->_ui.WaveHeightprogressBar_4->setValue(latch.outx);
-		this->_ui.EchoFIRCoeffprogressBar_4->setValue(echo.FIR[3]);
+		this->_ui.VolumeLprogressBar_4->setValue(voices[3].volume[0] * 100 / max);
+		this->_ui.VolumeRprogressBar_4->setValue(voices[3].volume[1] * 100 / max);
+		this->_ui.WaveHeightprogressBar_4->setValue(latch.outx * 100 / max);
+		this->_ui.EchoFIRCoeffprogressBar_4->setValue(echo.FIR[3] * 100 / max);
 		this->_ui.PitchlineEdit_4->setText(Utility::to_hex(voices[3].pitch).c_str());
 		this->_ui.sourceNumberLineEdit_4->setText(Utility::to_hex(voices[3].srcn).c_str());
 		this->_ui.GainlineEdit_4->setText(Utility::to_hex(voices[3].gain).c_str());
@@ -171,10 +172,10 @@ namespace ComSquare::Debugger
 		this->_ui.SampleEndcheckBox_4->setChecked(voices[3].endx);
 		this->_ui.PitchModulationcheckBox_4->setChecked(voices[3].pmon);
 
-		this->_ui.VolumeLprogressBar_5->setValue(voices[4].volume[0]);
-		this->_ui.VolumeRprogressBar_5->setValue(voices[4].volume[1]);
-		this->_ui.WaveHeightprogressBar_5->setValue(latch.outx);
-		this->_ui.EchoFIRCoeffprogressBar_5->setValue(echo.FIR[4]);
+		this->_ui.VolumeLprogressBar_5->setValue(voices[4].volume[0] * 100 / max);
+		this->_ui.VolumeRprogressBar_5->setValue(voices[4].volume[1] * 100 / max);
+		this->_ui.WaveHeightprogressBar_5->setValue(latch.outx * 100 / max);
+		this->_ui.EchoFIRCoeffprogressBar_5->setValue(echo.FIR[4] * 100 / max);
 		this->_ui.PitchlineEdit_5->setText(Utility::to_hex(voices[4].pitch).c_str());
 		this->_ui.sourceNumberLineEdit_5->setText(Utility::to_hex(voices[4].srcn).c_str());
 		this->_ui.GainlineEdit_5->setText(Utility::to_hex(voices[4].gain).c_str());
@@ -187,10 +188,10 @@ namespace ComSquare::Debugger
 		this->_ui.SampleEndcheckBox_5->setChecked(voices[4].endx);
 		this->_ui.PitchModulationcheckBox_5->setChecked(voices[4].pmon);
 
-		this->_ui.VolumeLprogressBar_6->setValue(voices[5].volume[0]);
-		this->_ui.VolumeRprogressBar_6->setValue(voices[5].volume[1]);
-		this->_ui.WaveHeightprogressBar_6->setValue(latch.outx);
-		this->_ui.EchoFIRCoeffprogressBar_6->setValue(echo.FIR[5]);
+		this->_ui.VolumeLprogressBar_6->setValue(voices[5].volume[0] * 100 / max);
+		this->_ui.VolumeRprogressBar_6->setValue(voices[5].volume[1] * 100 / max);
+		this->_ui.WaveHeightprogressBar_6->setValue(latch.outx * 100 / max);
+		this->_ui.EchoFIRCoeffprogressBar_6->setValue(echo.FIR[5] * 100 / max);
 		this->_ui.PitchlineEdit_6->setText(Utility::to_hex(voices[5].pitch).c_str());
 		this->_ui.sourceNumberLineEdit_6->setText(Utility::to_hex(voices[5].srcn).c_str());
 		this->_ui.GainlineEdit_6->setText(Utility::to_hex(voices[5].gain).c_str());
@@ -203,10 +204,10 @@ namespace ComSquare::Debugger
 		this->_ui.SampleEndcheckBox_6->setChecked(voices[5].endx);
 		this->_ui.PitchModulationcheckBox_6->setChecked(voices[5].pmon);
 
-		this->_ui.VolumeLprogressBar_7->setValue(voices[6].volume[0]);
-		this->_ui.VolumeRprogressBar_7->setValue(voices[6].volume[1]);
-		this->_ui.WaveHeightprogressBar_7->setValue(latch.outx);
-		this->_ui.EchoFIRCoeffprogressBar_7->setValue(echo.FIR[6]);
+		this->_ui.VolumeLprogressBar_7->setValue(voices[6].volume[0] * 100 / max);
+		this->_ui.VolumeRprogressBar_7->setValue(voices[6].volume[1] * 100 / max);
+		this->_ui.WaveHeightprogressBar_7->setValue(latch.outx * 100 / max);
+		this->_ui.EchoFIRCoeffprogressBar_7->setValue(echo.FIR[6] * 100 / max);
 		this->_ui.PitchlineEdit_7->setText(Utility::to_hex(voices[6].pitch).c_str());
 		this->_ui.sourceNumberLineEdit_7->setText(Utility::to_hex(voices[6].srcn).c_str());
 		this->_ui.GainlineEdit_7->setText(Utility::to_hex(voices[6].gain).c_str());
@@ -219,10 +220,10 @@ namespace ComSquare::Debugger
 		this->_ui.SampleEndcheckBox_7->setChecked(voices[6].endx);
 		this->_ui.PitchModulationcheckBox_7->setChecked(voices[6].pmon);
 
-		this->_ui.VolumeLprogressBar_8->setValue(voices[7].volume[0]);
-		this->_ui.VolumeRprogressBar_8->setValue(voices[7].volume[1]);
-		this->_ui.WaveHeightprogressBar_8->setValue(latch.outx);
-		this->_ui.EchoFIRCoeffprogressBar_8->setValue(echo.FIR[7]);
+		this->_ui.VolumeLprogressBar_8->setValue(voices[7].volume[0] * 100 / max);
+		this->_ui.VolumeRprogressBar_8->setValue(voices[7].volume[1] * 100 / max);
+		this->_ui.WaveHeightprogressBar_8->setValue(latch.outx * 100 / max);
+		this->_ui.EchoFIRCoeffprogressBar_8->setValue(echo.FIR[7] * 100 / max);
 		this->_ui.PitchlineEdit_8->setText(Utility::to_hex(voices[7].pitch).c_str());
 		this->_ui.sourceNumberLineEdit_8->setText(Utility::to_hex(voices[7].srcn).c_str());
 		this->_ui.GainlineEdit_8->setText(Utility::to_hex(voices[7].gain).c_str());
