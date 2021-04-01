@@ -191,7 +191,7 @@ namespace ComSquare::APU
 
 	int APU::_executeInstruction()
 	{
-		uint8_t opcode = this->_internalRead(this->_internalRegisters.pc++);
+		uint8_t opcode = this->_getImmediateData();
 
 		switch (opcode) {
 		case 0x00:

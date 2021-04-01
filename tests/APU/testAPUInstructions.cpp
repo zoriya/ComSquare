@@ -736,6 +736,8 @@ Test(ProgramFlow, JMP)
 	cr_assert_eq(apu->_internalRegisters.pc, 61455);
 	apu->_internalRegisters.pc = 0x32;
 	apu->_internalRegisters.x = 0b000000001;
+	apu->_internalWrite(0b1111000000001111 + 1, 0b00010000);
+	apu->_internalWrite(0b1111000000001111 + 2, 0b11110001);
 	result = apu->JMP(apu->_getAbsoluteByXAddr(), true);
 	cr_assert_eq(result, 6);
 	cr_assert_eq(apu->_internalRegisters.pc, 61712);

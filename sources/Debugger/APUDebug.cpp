@@ -23,6 +23,11 @@ namespace ComSquare::Debugger
 		this->_ui.setupUi(this->_window);
 		QMainWindow::connect(this->_ui.resumeButton, &QPushButton::clicked, this, &APUDebug::pause);
 		QMainWindow::connect(this->_ui.stepButton, &QPushButton::clicked, this, &APUDebug::step);
+		this->_ui.logger->setRowCount(0x20);
+		this->_ui.logger->setColumnCount(3);
+		this->_ui.logger->horizontalHeader()->setHidden(true);
+		this->_ui.logger->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+		this->_ui.logger->setShowGrid(false);
 		this->_window->show();
 		this->_updatePanel();
 	}
@@ -82,7 +87,14 @@ namespace ComSquare::Debugger
 		this->_ui.yIndexLineEdit->setText(Utility::to_hex(this->_internalRegisters.y).c_str());
 		this->_ui.accumlatorLineEdit->setText(Utility::to_hex(this->_internalRegisters.a).c_str());
 		this->_ui.programCounterLineEdit->setText(Utility::to_hex(this->_internalRegisters.pc).c_str());
-		this->_ui.programStatusWordLineEdit->setText(this->_getPSWString().c_str());
+		this->_ui.bFlagCheckBox->setChecked(this->_internalRegisters.b);
+		this->_ui.nFlagCheckBox->setChecked(this->_internalRegisters.n);
+		this->_ui.pFlagCheckBox->setChecked(this->_internalRegisters.p);
+		this->_ui.hFlagCheckBox->setChecked(this->_internalRegisters.h);
+		this->_ui.vFlagCheckBox->setChecked(this->_internalRegisters.v);
+		this->_ui.iFlagCheckBox->setChecked(this->_internalRegisters.i);
+		this->_ui.zFlagCheckBox->setChecked(this->_internalRegisters.z);
+		this->_ui.cFlagCheckBox->setChecked(this->_internalRegisters.c);
 
 		auto voices = this->_dsp.getVoices();
 		auto master = this->_dsp.getMaster();
@@ -235,256 +247,94 @@ namespace ComSquare::Debugger
 		this->_ui.EchocheckBox_8->setChecked(voices[7].eon);
 		this->_ui.SampleEndcheckBox_8->setChecked(voices[7].endx);
 		this->_ui.PitchModulationcheckBox_8->setChecked(voices[7].pmon);
+
+		this->_updateLogger();
 	}
 
-	std::string APUDebug::_getPSWString()
+	void APUDebug::_updateLogger()
 	{
-		std::string str;
-		str += this->_internalRegisters.n ? 'n' : '-';
-		str += this->_internalRegisters.v ? 'v' : '-';
-		str += this->_internalRegisters.p ? 'p' : '-';
-		str += this->_internalRegisters.b ? 'b' : '-';
-		str += this->_internalRegisters.h ? 'h' : '-';
-		str += this->_internalRegisters.i ? 'i' : '-';
-		str += this->_internalRegisters.z ? 'z' : '-';
-		str += this->_internalRegisters.c ? 'c' : '-';
-		return str;
-	}
+		QStringList labels = QStringList();
+		uint16_t offset = 0;
 
-	std::string APUDebug::_getInstructionString()
-	{
-		uint8_t opcode = this->_internalRead(this->_internalRegisters.pc);
+		for (uint16_t i = 0; i < 0x20; i++)
+		{
+			auto pc = this->_internalRegisters.pc;
+			auto instruction = this->_getInstruction();
+			std::string operand;
 
-		switch (opcode) {
-		case 0x00:
-			return "NOP";
-		case 0x10:
-			return "BPL";
-		case 0x20:
-			return "CLRP";
-		case 0x30:
-			return "BMI";
-		case 0x40:
-			return "SETP";
-		case 0x50:
-			return "BVC";
-		case 0x60:
-			return "CLRC";
-		case 0x70:
-			return "BVS";
-		case 0x80:
-			return "SETC";
-		case 0x90:
-			return "BCC";
-		case 0xA0:
-			return "EI";
-		case 0xB0:
-			return "BCS";
-		case 0xC0:
-			return "DI";
-		case 0xD0:
-			return "BNE";
-		case 0xE0:
-			return "CLRV";
-		case 0xF0:
-			return "BEQ";
-		case 0x01:
-		case 0x11:
-		case 0x21:
-		case 0x31:
-		case 0x41:
-		case 0x51:
-		case 0x61:
-		case 0x71:
-		case 0x81:
-		case 0x91:
-		case 0xA1:
-		case 0xB1:
-		case 0xC1:
-		case 0xD1:
-		case 0xE1:
-		case 0xF1:
-			return "TCALL";
-		case 0x02:
-		case 0x22:
-		case 0x42:
-		case 0x62:
-		case 0x82:
-		case 0xA2:
-		case 0xC2:
-		case 0xE2:
-			return "SET1";
-		case 0x12:
-		case 0x32:
-		case 0x52:
-		case 0x72:
-		case 0x92:
-		case 0xB2:
-		case 0xD2:
-		case 0xF2:
-			return "CLR1";
-		case 0x03:
-		case 0x13:
-		case 0x23:
-		case 0x33:
-		case 0x43:
-		case 0x53:
-		case 0x63:
-		case 0x73:
-		case 0x83:
-		case 0x93:
-		case 0xA3:
-		case 0xB3:
-		case 0xC3:
-		case 0xD3:
-		case 0xE3:
-		case 0xF3:
-			return "BBC";
-		case 0x04 ... 0x09:
-		case 0x14 ... 0x19:
-			return "OR";
-		case 0x24 ... 0x29:
-		case 0x34 ... 0x39:
-			return "AND";
-		case 0x44 ... 0x49:
-		case 0x54 ... 0x59:
-			return "EOR";
-		case 0x64 ... 0x69:
-		case 0x74 ... 0x79:
-		case 0xC8:
-		case 0xAD:
-		case 0x1E:
-		case 0x3E:
-		case 0x5E:
-		case 0x7E:
-			return "CMP";
-		case 0x84 ... 0x89:
-		case 0x94 ... 0x99:
-			return "ADC";
-		case 0xA4 ... 0xA9:
-		case 0xB4 ... 0xB9:
-			return "SBC";
-		case 0xC4 ... 0xC7:
-		case 0xCB ... 0xCD:
-		case 0xD4 ... 0xD9:
-		case 0xE4 ... 0xE9:
-		case 0xEB ... 0xEC:
-		case 0xF4 ... 0xFB:
-		case 0xDB:
-		case 0xC9:
-		case 0x5D:
-		case 0x7D:
-		case 0x8D:
-		case 0x9D:
-		case 0xBD:
-		case 0xDD:
-		case 0xFD:
-		case 0x8F:
-		case 0xAF:
-		case 0xBF:
-			return "MOV";
-		case 0x0A:
-		case 0x2A:
-			return "OR1";
-		case 0x1A:
-			return "DECW";
-		case 0x3A:
-			return "INCW";
-		case 0x4A:
-		case 0x6A:
-			return "AND1";
-		case 0x5A:
-			return "CMPW";
-		case 0x7A:
-			return "ADDW";
-		case 0x8A:
-			return "EOR1";
-		case 0x9A:
-			return "SUBW";
-		case 0xAA:
-		case 0xCA:
-			return "MOV1";
-		case 0xBA:
-		case 0xDA:
-			return "MOVW";
-		case 0xEA:
-			return "NOT1";
-		case 0x0B ... 0x0C:
-		case 0x1B ... 0x1C:
-			return "ASL";
-		case 0x2B ... 0x2C:
-		case 0x3B ... 0x3C:
-			return "ROL";
-		case 0x4B ... 0x4C:
-		case 0x5B ... 0x5C:
-			return "LSR";
-		case 0x6B ... 0x6C:
-		case 0x7B ... 0x7C:
-			return "ROR";
-		case 0x8B ... 0x8C:
-		case 0x9B ... 0x9C:
-		case 0xDC:
-		case 0x1D:
-			return "DEC";
-		case 0xAB ... 0xAC:
-		case 0xBB ... 0xBC:
-		case 0xFC:
-		case 0x3D:
-			return "INC";
-		case 0x0D:
-		case 0x2D:
-		case 0x4D:
-		case 0x6D:
-			return "PUSH";
-		case 0xED:
-			return "NOTC";
-		case 0x0E:
-			return "TSET1";
-		case 0x2E:
-		case 0xDE:
-			return "CBNE";
-		case 0x4E:
-			return "TCLR1";
-		case 0x6E:
-		case 0xFE:
-			return "DBNZ";
-		case 0x8E:
-		case 0xAE:
-		case 0xCE:
-		case 0xEE:
-			return "POP";
-		case 0x9E:
-			return "DIV";
-		case 0xBE:
-			return "DAS";
-		case 0x0F:
-			return "BRK";
-		case 0x1F:
-		case 0x5F:
-			return "JMP";
-		case 0x2F:
-			return "BRA";
-		case 0x3F:
-			return "CALL";
-		case 0x4F:
-			return "PCALL";
-		case 0x6F:
-			return "RET";
-		case 0x7F:
-			return "RETI";
-		case 0x9F:
-			return "XCN";
-		case 0xCF:
-			return "MUL";
-		case 0xDF:
-			return "DAA";
-		case 0xEF:
-			return "SLEEP";
-		case 0xFF:
-			return "STOP";
-		default:
-			return "Unknown";
+			this->_ui.logger->setItem(i, 0, new QTableWidgetItem(instruction.name.c_str()));
+
+			operand = this->_getOperand(std::get<0>(instruction.operands));
+			this->_ui.logger->setItem(i, 1, new QTableWidgetItem(operand.c_str()));
+			if (operand.empty())
+				this->_ui.logger->item(i, 1)->setData(Qt::BackgroundRole, QColor(220, 220, 220));
+
+			operand = this->_getOperand(std::get<1>(instruction.operands));
+			this->_ui.logger->setItem(i, 2, new QTableWidgetItem(operand.c_str()));
+			if (operand.empty())
+				this->_ui.logger->item(i, 2)->setData(Qt::BackgroundRole, QColor(220, 220, 220));
+
+			labels.append(Utility::to_hex(pc).c_str());
+			offset += instruction.size;
 		}
+		this->_ui.logger->setVerticalHeaderLabels(labels);
+		for (int i = 0; i < 3; i++)
+			this->_ui.logger->item(0, i)->setData(Qt::BackgroundRole, QColor(200, 255, 148));
+		this->_internalRegisters.pc -= offset;
+	}
+
+	std::string APUDebug::_getOperand(Operand ope)
+	{
+		switch (ope) {
+			case None:
+				return "";
+			case A:
+				return Utility::to_hex(this->_internalRegisters.a);
+			case X:
+				return Utility::to_hex(this->_internalRegisters.x);
+			case Y:
+				return Utility::to_hex(this->_internalRegisters.y);
+			case SP:
+				return Utility::to_hex(this->_internalRegisters.sp);
+			case PSW:
+				return Utility::to_hex(this->_internalRegisters.psw);
+			case ImmediateData:
+				return Utility::to_hex(this->_getImmediateData());
+			case IndexXAddr:
+				return Utility::to_hex(this->_getIndexXAddr());
+			case IndexYAddr:
+				return Utility::to_hex(this->_getIndexYAddr());
+			case AbsoluteAddr:
+				return Utility::to_hex(this->_getAbsoluteAddr());
+			case AbsoluteBit: {
+				auto pair = this->_getAbsoluteBit();
+				return Utility::to_hex(std::get<0>(pair)) + Utility::to_hex(std::get<1>(pair));
+			}
+			case AbsoluteAddrByX:
+				return Utility::to_hex(this->_getAbsoluteAddrByX());
+			case AbsoluteAddrByY:
+				return Utility::to_hex(this->_getAbsoluteAddrByY());
+			case AbsoluteByXAddr:
+				return Utility::to_hex(this->_getAbsoluteByXAddr());
+			case AbsoluteDirectByXAddr:
+				return Utility::to_hex(this->_getAbsoluteDirectByXAddr());
+			case AbsoluteDirectAddrByY:
+				return Utility::to_hex(this->_getAbsoluteDirectAddrByY());
+			case DirectAddr:
+				return Utility::to_hex(this->_getDirectAddr());
+			case DirectAddrByX:
+				return Utility::to_hex(this->_getDirectAddrByX());
+			case DirectAddrByY:
+				return Utility::to_hex(this->_getDirectAddrByY());
+		}
+		return "UNKNOWN";
+	}
+
+	Instruction &APUDebug::_getInstruction()
+	{
+		uint8_t opcode = this->_getImmediateData();
+
+		return this->_instructions[opcode];
 	}
 
 	int APUDebug::_executeInstruction()
@@ -497,7 +347,6 @@ namespace ComSquare::Debugger
 			this->_isStepping = false;
 			this->_isPaused = true;
 		}
-		this->_ui.logger->append(APUDebug::_getInstructionString().c_str());
 		cycles = APU::_executeInstruction();
 		this->_updatePanel();
 		return cycles;
@@ -511,7 +360,7 @@ namespace ComSquare::Debugger
 			APU::update(cycles);
 		} catch (InvalidOpcode &e) {
 			this->pause();
-			this->_ui.logger->append(e.what());
+			//this->_ui.logger->append(e.what());
 		}
 	}
 

@@ -94,7 +94,8 @@ Test(apu_get, absolutebyx)
 	apu->_internalRegisters.x = 10;
 	apu->_internalWrite(0x32, 0b00001111);
 	apu->_internalWrite(0x33, 0b11110000);
-	cr_assert_eq(apu->_getAbsoluteByXAddr(), 64025);
+	apu->_internalWrite(0b1111000000001111 + 10, 255);
+	cr_assert_eq(apu->_getAbsoluteByXAddr(), 255);
 }
 
 Test(apu_get, absoluteaddrbyx)
