@@ -237,7 +237,9 @@ add_executable(ComSquare
         sources/APU/DSP/Timer.cpp
         sources/APU/DSP/BRR.cpp
         sources/PPU/PPUUtils.cpp
-        sources/Debugger/TileViewer.cpp sources/Debugger/TileViewer.hpp)
+        sources/Debugger/TileViewer.cpp
+        sources/Debugger/TileViewer.hpp
+        ui/tileView.ui)
 
 target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)
 

@@ -6,7 +6,7 @@
 
 #include <QtWidgets/QMainWindow>
 #include "../PPU/PPU.hpp"
-#include "../../ui/ui_cgramView.h"
+#include "../../ui/ui_tileView.h"
 #include <QtCore/QSortFilterProxyModel>
 #include <QEvent>
 #include <QMouseEvent>
@@ -52,7 +52,7 @@ namespace ComSquare::Debugger
 		//! @brief A reference to the snes (to disable the debugger).
 		SNES &_snes;
 		//! @brief A widget that contain the whole UI.
-		Ui::CgramView _ui;
+		Ui::TileViewer _ui;
 		//! @brief A reference to the ppu
 		ComSquare::PPU::PPU &_ppu;
 	public:
