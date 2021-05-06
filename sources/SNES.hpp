@@ -19,6 +19,7 @@
 	#include "Debugger/HeaderViewer.hpp"
 	#include "Debugger/CGramDebug.hpp"
 	#include "Debugger/RegisterViewer.hpp"
+	#include "Debugger/TileViewer.hpp"
 #endif
 
 namespace ComSquare
@@ -35,6 +36,8 @@ namespace ComSquare
 		std::unique_ptr<Debugger::CGramDebug> _cgramViewer;
 		//! @brief The window that allow the user to view registers.
 		std::unique_ptr<Debugger::RegisterViewer> _registerViewer;
+		//! @brief The window that allow the user to view the cgram as tiles.
+		std::unique_ptr<Debugger::TileViewer> _tileViewer;
 #endif
 	public:
 		//! @brief The memory bus that map addresses to components.
@@ -87,6 +90,10 @@ namespace ComSquare
 		void disableRegisterDebugging();
 		//! @brief Enable the Register's debugging window.
 		void enableRegisterDebugging();
+		//! @brief Disable the TileViewer's debugging window.
+		void disableTileViewerDebugging();
+		//! @brief Enable the TileViewer's debugging window.
+		void enableTileViewerDebugging();
 
 		//! @brief Create all the components using a common memory bus for all of them.
 		SNES(const std::string &ramPath, Renderer::IRenderer &renderer);

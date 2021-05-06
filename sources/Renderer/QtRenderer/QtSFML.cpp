@@ -77,6 +77,11 @@ namespace ComSquare::Renderer
 		QMainWindow::connect(registerDebugger, &QAction::triggered, this->_sfWidget.get(), &QtFullSFML::enableRegisterViewer);
 		debugger->addAction(registerDebugger);
 
+		QAction *tileDebugger = new QAction("Tile Viewer", &this->_window);
+		tileDebugger->setShortcut(Qt::Key_F8);
+		QMainWindow::connect(tileDebugger, &QAction::triggered, this->_sfWidget.get(), &QtFullSFML::enableTileViewer);
+		debugger->addAction(tileDebugger);
+
 		this->_window.show();
 	}
 
@@ -153,5 +158,10 @@ namespace ComSquare::Renderer
 	void QtFullSFML::enableRegisterViewer()
 	{
 		this->_snes.enableRegisterDebugging();
+	}
+
+	void QtFullSFML::enableTileViewer()
+	{
+		this->_snes.enableTileViewerDebugging();
 	}
 }

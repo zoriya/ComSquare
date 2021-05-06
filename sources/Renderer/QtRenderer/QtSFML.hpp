@@ -37,6 +37,8 @@ namespace ComSquare::Renderer
 		void enableCgramViewer();
 		//! @brief Action called when clicking on the enable DMA viewer button.
 		void enableRegisterViewer();
+		//! @brief Action called when clicking on the enable Tile viwer button
+		void enableTileViewer();
 
 		//! @brief Action called when clicking on the reset button.
 		void reset();
