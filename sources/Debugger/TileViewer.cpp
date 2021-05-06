@@ -30,7 +30,7 @@ namespace ComSquare::Debugger
 
 	void TileViewer::disableViewer()
 	{
-		return;
+		this->_snes.disableTileViewerDebugging();
 	}
 
 	void TileViewer::focus()
