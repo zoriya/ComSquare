@@ -24,9 +24,12 @@
       <property name="currentIndex">
        <number>0</number>
       </property>
+      <property name="tabsClosable">
+       <bool>false</bool>
+      </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
-        <string>Tab 1</string>
+        <string>my truc</string>
        </attribute>
       </widget>
       <widget class="QWidget" name="tab_2">
@@ -70,7 +73,7 @@
      <x>0</x>
      <y>0</y>
      <width>577</width>
-     <height>22</height>
+     <height>27</height>
     </rect>
    </property>
   </widget>

@@ -6,7 +6,6 @@
 #include <QtWidgets/QApplication>
 #include <getopt.h>
 #include "SNES.hpp"
-#include "Renderer/SFRenderer.hpp"
 #include "Renderer/QtRenderer/QtSFML.hpp"
 
 using namespace ComSquare;
@@ -81,7 +80,7 @@ int main(int argc, char **argv)
 	}
 	QApplication app(argc, argv);
 	QApplication::setAttribute(Qt::AA_DisableWindowContextHelpButton);
-	Renderer::QtSFML renderer(1100, 1100);
+	Renderer::QtSFMLWindow renderer(1100, 1100);
 	try {
 		SNES snes(argv[1], renderer);
 		renderer.createWindow(snes, 60);

@@ -4,14 +4,20 @@
 
 #pragma once
 
+namespace ComSquare::Renderer
+{
+	class QtSFML;
+}
+
 #include <QtWidgets/QMainWindow>
-#include "../PPU/PPU.hpp"
-#include "../../ui/ui_tileView.h"
 #include <QtCore/QSortFilterProxyModel>
 #include <QEvent>
 #include <QMouseEvent>
 #include <QTableView>
 #include "ClosableWindow.hpp"
+//#include "../Renderer/QtRenderer/QtSFML.hpp"
+#include "../PPU/PPU.hpp"
+#include "../../ui/ui_tileView.h"
 
 /*
 //! @brief The qt model that bind the logs to the view.
@@ -55,6 +61,8 @@ namespace ComSquare::Debugger
 		Ui::TileViewer _ui;
 		//! @brief A reference to the ppu
 		ComSquare::PPU::PPU &_ppu;
+		//! @brief the window
+		//Renderer::QtSFML _sfWidget;
 	public:
 		//! @brief Called when the window is closed. Turn off the debugger.
 		void disableViewer();
@@ -72,9 +80,5 @@ namespace ComSquare::Debugger
 		void focus();
 		//! @brief Return true if the Bus is overloaded with debugging features.
 		bool isDebugger();
-		//! @brief Update the text fields with corresponding tile info
-		void updateInfoTile(int row, int column);
-		//! @brief Update call updateInfoTile with the correct address
-		void tileClicked(const QModelIndex &index);
 	};
 }

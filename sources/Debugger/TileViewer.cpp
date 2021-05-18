@@ -2,6 +2,12 @@
 // Created by cbihan on 5/7/21.
 //
 
+namespace ComSquare::Renderer
+{
+	class QtFullSFML;
+}
+
+#include "../Renderer/QtRenderer/QtSFML.hpp"
 #include "TileViewer.hpp"
 #include "../SNES.hpp"
 #include <QColor>
@@ -21,9 +27,9 @@ namespace ComSquare::Debugger
 		this->_window->setContextMenuPolicy(Qt::NoContextMenu);
 		this->_window->setAttribute(Qt::WA_QuitOnClose, false);
 		this->_window->setAttribute(Qt::WA_DeleteOnClose);
+		//this->_sfWidget = std::make_unique<Renderer::QtFullSFML>(snes, this->_ui.tab, QPoint(0, 0), QSize(this->_ui.tab->width(), this->_ui.tab->height()), 30);
 
 		this->_ui.setupUi(this->_window);
-//		QMainWindow::connect(this->_ui.cgram_view, &QTableView::pressed, this, &TileViewer::tileClicked);
 		this->_window->show();
 		QEvent::registerEventType();
 	}
@@ -48,11 +54,4 @@ namespace ComSquare::Debugger
 		return this->_ppu.cgramRead(addr);
 	}
 
-	void TileViewer::tileClicked(const QModelIndex &index)
-	{
-		return;
-		if (!index.isValid())
-			return;
-		this->updateInfoTile(index.row(), index.column());
-	}
 }
