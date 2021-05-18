@@ -9,14 +9,11 @@ namespace ComSquare::Renderer
 	class QtSFML;
 }
 
-#include <QtWidgets/QMainWindow>
 #include <QtCore/QSortFilterProxyModel>
 #include <QEvent>
 #include <QMouseEvent>
-#include <QTableView>
 #include "ClosableWindow.hpp"
-//#include "../Renderer/QtRenderer/QtSFML.hpp"
-#include "../PPU/PPU.hpp"
+#include "../Renderer/QtRenderer/QtSFML.hpp"
 #include "../../ui/ui_tileView.h"
 
 namespace ComSquare::Debugger
@@ -33,7 +30,7 @@ namespace ComSquare::Debugger
 		//! @brief A reference to the ppu
 		ComSquare::PPU::PPU &_ppu;
 		//! @brief the window
-		//Renderer::QtSFML _sfWidget;
+		Renderer::QtSFML _sfWidget;
 	public:
 		//! @brief Called when the window is closed. Turn off the debugger.
 		void disableViewer();

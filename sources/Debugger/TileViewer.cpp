@@ -27,9 +27,9 @@ namespace ComSquare::Debugger
 		this->_window->setContextMenuPolicy(Qt::NoContextMenu);
 		this->_window->setAttribute(Qt::WA_QuitOnClose, false);
 		this->_window->setAttribute(Qt::WA_DeleteOnClose);
-		//this->_sfWidget = std::make_unique<Renderer::QtFullSFML>(snes, this->_ui.tab, QPoint(0, 0), QSize(this->_ui.tab->width(), this->_ui.tab->height()), 30);
 
 		this->_ui.setupUi(this->_window);
+		this->_sfWidget(this->_ui.tab);
 		this->_window->show();
 		QEvent::registerEventType();
 	}

@@ -46,7 +46,7 @@ namespace ComSquare::Renderer
 		QtFullSFML(SNES &snes, QWidget* parent, const QPoint& position, const QSize& size, int frameRate = 0);
 		QtFullSFML(const QtFullSFML &) = delete;
 		QtFullSFML &operator=(const QtFullSFML &) = delete;
-		~QtFullSFML() override = default;
+		~QtFullSFML() = default;
 	};
 
 	//! @brief A SFML renderer inside a QT widget.
