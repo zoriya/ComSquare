@@ -20,12 +20,11 @@ namespace ComSquare::Renderer
 	QtSFML::QtSFML(QWidget *parentWidget)
 		: _window(parentWidget), _sfWidget(nullptr)
 	{
-		this->_window->resize(parentWidget->width(), parentWidget->height());
 	}
 
 	void QtSFML::createWindow(SNES &snes, int maxFPS)
 	{
-		this->_sfWidget = std::make_unique<QtFullSFML>(snes, &_window, QPoint(0, 0), QSize(this->_window.width(), this->_window.height()), maxFPS);
+		this->_sfWidget = std::make_unique<QtFullSFML>(snes, this->_window, QPoint(0, 0), QSize(this->_window->width(), this->_window->height()), maxFPS);
 	}
 
 	void QtSFML::putPixel(unsigned y, unsigned x, uint32_t rgba)
@@ -42,7 +41,7 @@ namespace ComSquare::Renderer
 
 	void QtSFML::setWindowName(std::string &newWindowName)
 	{
-		this->_window.setWindowTitle((newWindowName + " - ComSquare").c_str());
+		this->_window->setWindowTitle((newWindowName + " - ComSquare").c_str());
 	}
 
 	QtFullSFML::QtFullSFML(SNES &snes, QWidget *parent, const QPoint &position, const QSize &size, int frameRate) :
@@ -109,7 +108,7 @@ namespace ComSquare::Renderer
 	}
 
 	QtSFMLWindow::QtSFMLWindow(unsigned int height, unsigned int width)
-		: QtSFML(this->_window)
+		: QtSFML(&this->_window)
 	{
 		this->_window.resize(width, height);
 		this->_window.setWindowIcon(QIcon(":/resources/Logo.png"));
@@ -127,7 +126,7 @@ namespace ComSquare::Renderer
 
 		QMenu *game = this->_window.menuBar()->addMenu("&Game");
 		QAction *reset = new QAction("Reset", &this->_window);
-		QMainWindow::connect(reset, &QAction::triggered, this->window.get(), &QtFullSFML::reset);
+		QMainWindow::connect(reset, &QAction::triggered, this->_sfWidget.get(), &QtFullSFML::reset);
 		game->addAction(reset);
 
 

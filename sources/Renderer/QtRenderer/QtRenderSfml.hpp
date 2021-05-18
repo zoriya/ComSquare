@@ -52,6 +52,4 @@ namespace ComSquare::Renderer
 		QtRenderSFML &operator=(const QtRenderSFML &) = delete;
 		~QtRenderSFML() override = default;
 	};
-	};
-
 }

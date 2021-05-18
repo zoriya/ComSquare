@@ -6,7 +6,7 @@
 #include <iostream>
 
 namespace ComSquare::Renderer
-{
+{/*
 	QtRenderSFML::QtRenderSFML(ComSquare::SNES &snes, QWidget *parent, const QPoint &position, const QSize &size, int frameRate)
 		: QtWidgetSFML(parent, position, size, frameRate),
 		  _snes(snes)
@@ -24,5 +24,5 @@ namespace ComSquare::Renderer
 			std::cerr << "An error occurred: " << e.what() << std::endl;
 			QApplication::quit();
 		}
-	}
+	}*/
 }

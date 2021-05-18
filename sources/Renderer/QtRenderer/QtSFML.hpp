@@ -53,8 +53,8 @@ namespace ComSquare::Renderer
 	class QtSFML : public IRenderer {
 	private:
 		//! @brief The main window that the app reside on.
-		//QMainWindow _window;
 		QWidget *_window;
+	protected:
 		//! @brief The SFML widget.
 		std::unique_ptr<QtFullSFML> _sfWidget = nullptr;
 	public:
