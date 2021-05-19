@@ -69,7 +69,7 @@ Test(DMA, VramWrite)
 	}
 	for(unsigned i = 0; i < 0x400; i++) {
 		uint16_t value = snes.ppu->vram->_data[0x2000 * 2 + i * 2] | (snes.ppu->vram->_data[0x2000 * 2 + i * 2 + 1] << 8);
-		cr_assert_eq(value, (uint16_t)i, "The memory at %x should be %x but it was %x", 0x2000 + i, (uint16_t)i, value);
+		cr_expect_eq(value, (uint16_t)i, "The memory at %x should be %x but it was %x", 0x2000 + i, (uint16_t)i, value);
 	}
 }
 
