@@ -7,6 +7,7 @@
 #include <QIcon>
 #include <QMenuBar>
 #include <iostream>
+#include "SNES.hpp"
 #include "../../Exceptions/DebuggableError.hpp"
 #include "QtSFML.hpp"
 

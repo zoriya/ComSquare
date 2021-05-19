@@ -241,7 +241,7 @@ add_executable(ComSquare
                sources/Debugger/TileViewer.hpp
                ui/tileView.ui sources/Renderer/QtRenderer/QtRenderSfml.cpp sources/Renderer/QtRenderer/QtRenderSfml.hpp)
 
-#include_directories(ComSquare sources)
+include_directories(ComSquare sources)
 
 target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)
 

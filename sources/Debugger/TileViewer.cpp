@@ -29,7 +29,7 @@ namespace ComSquare::Debugger
 		this->_window->setAttribute(Qt::WA_DeleteOnClose);
 
 		this->_ui.setupUi(this->_window);
-		this->_sfWidget(this->_ui.tab);
+		this->_sfWidget = std::make_unique<Renderer::QtSFML>(this->_ui.tab);
 		this->_window->show();
 		QEvent::registerEventType();
 	}

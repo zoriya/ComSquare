@@ -8,6 +8,7 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include "SNES.hpp"
 #include <iostream>
 
 namespace ComSquare::Renderer
