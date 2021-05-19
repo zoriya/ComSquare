@@ -24,6 +24,7 @@ namespace ComSquare::PPU
 		_tileMaps = ppu.getBackgroundSize(backGroundNumber);
 		_directColor = false;
 		_highRes = false;
+		this->buffer = {{{0}}};
 	}
 
 

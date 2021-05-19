@@ -29,6 +29,8 @@ namespace ComSquare::PPU
 			Background(*this, 4, true)
 		}
 	{
+		this->_mainScreen = {{{0}}};
+		this->_subScreen = {{{0}}};
 		this->_registers._isLowByte = true;
 		/*for (int i = 0; i < 512; i++) {
 			this->cgram->write(i, random() % 255);
