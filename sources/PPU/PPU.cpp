@@ -300,7 +300,7 @@ namespace ComSquare::PPU
 		case PpuRegisters::bg1hofs:
 			// TODO need of special var for prev value for Mode 7
 			this->_registers._m7ofs[addr - PpuRegisters::bg1hofs].raw = data;
-			__attribute__((fallthrough));
+			FALLTHROUGH
 		case PpuRegisters::bg2hofs:
 		case PpuRegisters::bg3hofs:
 		case PpuRegisters::bg4hofs:
@@ -311,7 +311,7 @@ namespace ComSquare::PPU
 		case PpuRegisters::bg1vofs:
 			// TODO need of special var for prev value for Mode 7
 			this->_registers._bgnba[addr - PpuRegisters::bg12nba].raw = data;
-			__attribute__((fallthrough));
+			FALLTHROUGH
 		case PpuRegisters::bg2vofs:
 		case PpuRegisters::bg3vofs:
 		case PpuRegisters::bg4vofs:
@@ -665,7 +665,7 @@ namespace ComSquare::PPU
 				return 8;
 			return 7;
 		default:
-			return -1;
+			throw std::runtime_error("Invalid Background number");
 		}
 	}
 

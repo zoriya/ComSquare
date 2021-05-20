@@ -14,10 +14,9 @@
 #include "Background.hpp"
 #include "PPUUtils.hpp"
 
-//#define max2BitTiles		4096
-//#define max4BitTiles		2048
-//#define max8BitTiles		1024
+#define FALLTHROUGH __attribute__((fallthrough));
 
+// TODO check if it usefull to have defines instead of constepxr
 #define VRAMSIZE 65536
 #define CGRAMSIZE 512
 #define OAMRAMSIZE 544

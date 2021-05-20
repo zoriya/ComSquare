@@ -138,7 +138,7 @@ namespace ComSquare::PPU
 			secondLowByte = this->_vram->read((tileAddress + 17) % VRAMSIZE);
 			result = ((secondHighByte & (1U << shift)) | ((secondLowByte & (1U << shift)) << 1U));
 			result = (shift - 2 >= 0) ? result >> (shift - 2) : result << ((shift - 2) * -1);
-			__attribute__((fallthrough));
+			FALLTHROUGH
 		case 2:
 			result += ((highByte & (1U << shift)) | ((lowByte & (1U << shift)) << 1U)) >> shift;
 		default:
