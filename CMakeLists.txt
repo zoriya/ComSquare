@@ -8,7 +8,7 @@ project(ComSquare)
 add_compile_options(-W -Wall -Wextra -Wshadow)
 
 # make unit tests
-add_executable(unit_tests
+add_executable(unit_tests EXCLUDE_FROM_ALL
         tests/CPU/testAddressingMode.cpp
         tests/CPU/testInterupts.cpp
         tests/testMemoryBus.cpp
@@ -240,6 +240,7 @@ add_executable(ComSquare
         )
 
 target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)
+include_directories(ComSquare sources)
 
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 

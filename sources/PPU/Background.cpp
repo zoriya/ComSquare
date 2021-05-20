@@ -6,44 +6,43 @@
 #include "PPU.hpp"
 #include "Background.hpp"
 #include <cmath>
-#include "../Models/Vector2.hpp"
+#include "Models/Vector2.hpp"
 
 namespace ComSquare::PPU
 {
 	Background::Background(ComSquare::PPU::PPU &ppu, int backGroundNumber, bool hasPriority):
+		_ppu(ppu),
+		_tileMapsConfig(ppu.getBackgroundSize(backGroundNumber)),
+		_characterNbPixels(ppu.getCharacterSize(backGroundNumber)),
+		_bpp(ppu.getBPP(backGroundNumber)),
+		_directColor(false),
+		_highRes(false),
+		_tileMapStartAddress(ppu.getTileMapStartAddress(backGroundNumber)),
+		_tilesetAddress(ppu.getTilesetAddress(backGroundNumber)),
 		_priority(hasPriority),
 		_bgNumber(backGroundNumber),
-		_ppu(ppu)
+		_vram(ppu.vram),
+		_cgram(ppu.cgram),
+		buffer({{{0}}})
 	{
-		_cgram = ppu.cgram;
-		_vram = ppu.vram;
-		_bpp = ppu.getBPP(backGroundNumber);
-		_characterSize = ppu.getCharacterSize(backGroundNumber);
-		_tileMapStartAddress = ppu.getTileMapStartAddress(backGroundNumber);
-		_tilesetAddress = ppu.getTilesetAddress(backGroundNumber);
-		_tileMaps = ppu.getBackgroundSize(backGroundNumber);
-		_directColor = false;
-		_highRes = false;
-		this->buffer = {{{0}}};
 	}
-
 
 	void Background::renderBackground()
 	{
 		uint16_t vramAddress = this->_tileMapStartAddress;
 		Vector2<int> offset = this->_ppu.getBgScroll(this->_bgNumber);
-		this->backgroundSize.x = this->_tileMaps.x * this->_characterSize.x * NB_CHARACTER_WIDTH;
-		this->backgroundSize.y = this->_tileMaps.y * this->_characterSize.y * NB_CHARACTER_HEIGHT;
+		this->backgroundSize.x = this->_tileMapsConfig.x * this->_characterNbPixels.x * NbCharacterWidth;
+		this->backgroundSize.y = this->_tileMapsConfig.y * this->_characterNbPixels.y * NbCharacterHeight;
 
 		for (int i = 0; i < 4; i++) {
-			if (!(i == 1 && this->_tileMaps.x == 1) && !(i > 1 && this->_tileMaps.y == 1)) {
+			if (!(i == 1 && this->_tileMapsConfig.x == 1) && !(i > 1 && this->_tileMapsConfig.y == 1)) {
 				drawBasicTileMap(vramAddress, offset);
 			}
-			vramAddress += 0x800;
-			offset.x += NB_CHARACTER_WIDTH * this->_characterSize.x;
+			vramAddress += TileMapByteSize;
+			offset.x += NbCharacterWidth * this->_characterNbPixels.x;
 			if (i == 2) {
 				offset.x = 0;
-				offset.y += NB_CHARACTER_HEIGHT * this->_characterSize.y;
+				offset.y += NbCharacterHeight * this->_characterNbPixels.y;
 			}
 		}
 	}
@@ -61,14 +60,14 @@ namespace ComSquare::PPU
 		palette = getPalette(tileData.palette);
 		// X horizontal
 		// Y vertical
-		graphicAddress = this->_tilesetAddress + (tileData.posY * NB_TILE_PER_ROW * this->_bpp * TILE_SIZE) + (tileData.posX * this->_bpp * TILE_SIZE);
-		for (int i = 0; i < this->_characterSize.y; i++) {
-			index = i * this->_characterSize.x;
+		graphicAddress = this->_tilesetAddress + (tileData.posY * NbTilePerRow * this->_bpp * TileBaseByteSize) + (tileData.posX * this->_bpp * TileBaseByteSize);
+		for (int i = 0; i < this->_characterNbPixels.y; i++) {
+			index = i * this->_characterNbPixels.x;
 			if (tileData.verticalFlip)
-				index = (this->_characterSize.y - 1 - i) * this->_characterSize.x;
+				index = (this->_characterNbPixels.y - 1 - i) * this->_characterNbPixels.x;
 			if (tileData.horizontalFlip)
-				index += this->_characterSize.x - 1;
-			for (int j = 0; j < this->_characterSize.x; j++) {
+				index += this->_characterNbPixels.x - 1;
+			for (int j = 0; j < this->_characterNbPixels.x; j++) {
 				reference = getPixelReferenceFromTile(graphicAddress, index);
 				color = getRealColor(palette[reference]);
 				if (tileData.tilePriority == this->_priority) // reference 0 is considered as transparency
@@ -76,7 +75,7 @@ namespace ComSquare::PPU
 				index += (tileData.horizontalFlip) ? -1 : 1;
 				pos.x++;
 			}
-			pos.x -= this->_characterSize.x;
+			pos.x -= this->_characterNbPixels.x;
 			pos.y++;
 		}
 	}
@@ -105,18 +104,18 @@ namespace ComSquare::PPU
 
 	uint8_t Background::getPixelReferenceFromTile(uint16_t tileAddress, uint8_t pixelIndex)
 	{
-		uint8_t row = pixelIndex / this->_characterSize.x;
-		uint8_t column = pixelIndex % this->_characterSize.y;
+		uint8_t row = pixelIndex / this->_characterNbPixels.x;
+		uint8_t column = pixelIndex % this->_characterNbPixels.y;
 
-		if (row >= TILE_PIXEL_HEIGHT) {
+		if (row >= TileNbPixelsHeight) {
 			tileAddress += 0x80 * this->_bpp;
-			row -= TILE_PIXEL_HEIGHT;
+			row -= TileNbPixelsHeight;
 		}
-		if (column >= TILE_PIXEL_WIDTH) {
+		if (column >= TileNbPixelsWidth) {
 			tileAddress += 0x8 * this->_bpp;
-			column -= TILE_PIXEL_WIDTH;
+			column -= TileNbPixelsWidth;
 		}
-		// might not work with 8 bpp must check
+		// TODO might not work with 8 bpp must check
 		tileAddress += 2 * row;
 
 		return this->getPixelReferenceFromTileRow(tileAddress, column);
@@ -129,7 +128,7 @@ namespace ComSquare::PPU
 		uint8_t secondHighByte;
 		uint8_t secondLowByte;
 		uint16_t result = 0;
-		uint8_t shift = (TILE_PIXEL_WIDTH - 1U - pixelIndex);
+		uint8_t shift = TileNbPixelsWidth - 1U - pixelIndex;
 
 		switch (this->_bpp) {
 		case 8:
@@ -151,14 +150,14 @@ namespace ComSquare::PPU
 	void Background::drawBasicTileMap(uint16_t baseAddress, Vector2<int> offset)
 	{
 		uint16_t tileMapValue = 0;
-		Vector2<int> pos(0,0);
+		Vector2<int> pos(0, 0);
 		uint16_t vramAddress = baseAddress;
 
-		while (vramAddress < baseAddress + 0x800) {
+		while (vramAddress < baseAddress + TileMapByteSize) {
 			// TODO function to read 2 bytes (LSB order or bits reversed)
 			tileMapValue = this->_vram->read(vramAddress);
 			tileMapValue += this->_vram->read(vramAddress + 1) << 8U;
-			drawBgTile(tileMapValue, {(pos.x * this->_characterSize.x) + offset.x, (pos.y * this->_characterSize.y) + offset.y});
+			drawBgTile(tileMapValue, {(pos.x * this->_characterNbPixels.x) + offset.x, (pos.y * this->_characterNbPixels.y) + offset.y});
 			vramAddress += 2;
 			if (pos.x % 31 == 0 && pos.x) {
 				pos.y++;
@@ -181,7 +180,7 @@ namespace ComSquare::PPU
 
 	void Background::setCharacterSize(Vector2<int> size)
 	{
-		this->_characterSize = size;
+		this->_characterNbPixels = size;
 	}
 
 	void Background::setBpp(int bpp)
@@ -194,7 +193,7 @@ namespace ComSquare::PPU
 
 	void Background::setTilemaps(Vector2<int> tileMaps)
 	{
-		this->_tileMaps = tileMaps;
+		this->_tileMapsConfig = tileMaps;
 	}
 
 	void Background::setBgNumber(int bgNumber)
