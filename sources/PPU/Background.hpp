@@ -19,6 +19,7 @@ namespace ComSquare::PPU
 {
 	class PPU;
 	class Background {
+	private:
 		//! @brief The number of character a TileMap has in width
 		static constexpr int NbCharacterWidth = 32;
 		//! @brief The number of character a TileMap has in height
@@ -36,7 +37,7 @@ namespace ComSquare::PPU
 		//! @brief The size of a TileMap in memory
 		static constexpr unsigned short TileMapByteSize = 0x800;
 
-	private:
+
 		//! @brief the ppu used to get registers values (ex: bg scroll)
 		ComSquare::PPU::PPU &_ppu;
 		//! @brief The tilemap configuration nb of tileMap vertically and horizontally
@@ -87,7 +88,7 @@ namespace ComSquare::PPU
 		Vector2<unsigned> backgroundSize;
 		//! @brief The output buffer (pixels are written on it)
 		std::array<std::array<uint32_t, 1024>, 1024> buffer;
-		Background(ComSquare::PPU::PPU &_ppu, int backGroundNumber, bool hasPriority);
+
 		//! @brief Render a background on his internal buffer
 		void renderBackground();
 		//! @brief Set the tileMap start address
@@ -116,6 +117,15 @@ namespace ComSquare::PPU
 		//! @brief Get the Background priority
 		//! @return the current Background priority
 		bool getPriority() const;
+
+		//! @brief ctor
+		Background(ComSquare::PPU::PPU &_ppu, int backGroundNumber, bool hasPriority);
+		//! @brief Default copy ctor
+		Background(const Background &) = default;
+		//! @brief Default destructor
+		~Background() = default;
+		//! @brief Delete assignment operator
+		Background &operator=(const Background &) = delete;
 	};
 }
 

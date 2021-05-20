@@ -27,10 +27,10 @@ namespace ComSquare::PPU
 			Background(*this, 3, true),
 			Background(*this, 4, false),
 			Background(*this, 4, true)
-		}
+		},
+		_mainScreen({{{0}}}),
+		_subScreen({{{0}}})
 	{
-		this->_mainScreen = {{{0}}};
-		this->_subScreen = {{{0}}};
 		this->_registers._isLowByte = true;
 
 		//colors for the cgram
@@ -796,10 +796,11 @@ namespace ComSquare::PPU
 			//sprites priority 1
 			//sprites priority 2
 			this->addToMainSubScreen(this->_backgrounds[BgName::bg1Priority]);
-			//sprites priority 3
-            break;
+			//sprites priority
+			break;
 		case 7:
 			// Not implemented
+			throw std::runtime_error("not implemented");
 		default:
 			break;
 		}

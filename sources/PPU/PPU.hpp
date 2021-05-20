@@ -25,6 +25,7 @@
 namespace ComSquare::PPU
 {
 	class Background;
+	//! @brief Enum to access more easily the ppu background array
 	enum BgName {
 		bg1NoPriority = 0,
 		bg1Priority,
@@ -573,8 +574,8 @@ namespace ComSquare::PPU
 
 		explicit PPU(Renderer::IRenderer &renderer);
 		PPU(const PPU &) = delete;
-		PPU &operator=(const PPU &) = delete;
 		~PPU() override = default;
+		PPU &operator=(const PPU &) = delete;
 
 		//! @brief Read data from the component.
 		//! @param addr The local address to read from (0x0 should refer to the first byte of this component).
@@ -632,10 +633,9 @@ namespace ComSquare::PPU
 		const Registers &getWriteRegisters() const;
 	};
 
+	//! @brief Transform SNES color code BGR to uint32_t RGB
+	uint32_t getRealColor(uint16_t color);
+	int *get_dump_vram();
+	int *get_dump_cgram();
 }
-
-//! @brief Transform SNES color code BGR to uint32_t RGB
-uint32_t getRealColor(uint16_t color);
-int *get_dump_vram();
-int *get_dump_cgram();
 #endif //COMSQUARE_PPU_HPP
