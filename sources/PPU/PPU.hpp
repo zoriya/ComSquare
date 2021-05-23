@@ -6,13 +6,14 @@
 #define COMSQUARE_PPU_HPP
 
 #include <cstdint>
-#include "../Memory/AMemory.hpp"
-#include "../Memory/MemoryBus.hpp"
-#include "../Renderer/IRenderer.hpp"
-#include "../Ram/Ram.hpp"
-#include "../Models/Vector2.hpp"
+#include "Memory/AMemory.hpp"
+#include "Memory/MemoryBus.hpp"
+#include "Renderer/IRenderer.hpp"
+#include "Ram/Ram.hpp"
+#include "Models/Vector2.hpp"
 #include "Background.hpp"
 #include "PPUUtils.hpp"
+#include "Debugger/TileViewer/TileViewer.hpp"
 
 #define FALLTHROUGH __attribute__((fallthrough));
 
@@ -631,6 +632,8 @@ namespace ComSquare::PPU
 		Vector2<int> getBgScroll(int bgNumber) const;
 		//! @brief Allow to look the value of each write register (used by Register debugger)
 		const Registers &getWriteRegisters() const;
+
+		Debugger::TileRenderer tileRenderer;
 	};
 
 	//! @brief Transform SNES color code BGR to uint32_t RGB

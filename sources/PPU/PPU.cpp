@@ -5,10 +5,10 @@
 #include <iostream>
 #include <bitset>
 #include "PPU.hpp"
-#include "../Exceptions/NotImplementedException.hpp"
-#include "../Exceptions/InvalidAddress.hpp"
-#include "../Ram/Ram.hpp"
-#include "../Models/Vector2.hpp"
+#include "Exceptions/NotImplementedException.hpp"
+#include "Exceptions/InvalidAddress.hpp"
+#include "Ram/Ram.hpp"
+#include "Models/Vector2.hpp"
 #include <random>
 
 namespace ComSquare::PPU
@@ -31,6 +31,8 @@ namespace ComSquare::PPU
 		_mainScreen({{{0}}}),
 		_subScreen({{{0}}})
 	{
+		this->tileRenderer.setRam(this->vram);
+		this->tileRenderer.setCgram(this->cgram);
 		this->_registers._isLowByte = true;
 
 		//colors for the cgram
@@ -465,7 +467,10 @@ namespace ComSquare::PPU
 	void PPU::update(unsigned cycles)
 	{
 		(void)cycles;
+		this->tileRenderer.render();
+		this->add_buffer(this->_screen, this->tileRenderer.buffer);
 
+		/*
 		this->renderMainAndSubScreen();
 		this->add_buffer(this->_screen, this->_subScreen);
 		this->add_buffer(this->_screen, this->_mainScreen);
@@ -475,7 +480,7 @@ namespace ComSquare::PPU
 			for (unsigned long j = 0; j < this->_screen[i].size(); j++) {
 				this->_renderer.putPixel(j, i, this->_screen[i][j]);
 			}
-		}
+		}*/
 		this->_renderer.drawScreen();
 	}
 

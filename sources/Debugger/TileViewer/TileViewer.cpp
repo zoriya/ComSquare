@@ -139,4 +139,9 @@ namespace ComSquare::Debugger
 		return palette;
 	}
 
+	void TileRenderer::setCgram(std::shared_ptr<Ram::Ram> ram)
+	{
+		this->_cgram = std::move(ram);
+	}
+
 }

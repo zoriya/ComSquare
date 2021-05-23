@@ -19,7 +19,7 @@
 	#include "Debugger/HeaderViewer.hpp"
 	#include "Debugger/CGramDebug.hpp"
 	#include "Debugger/RegisterViewer.hpp"
-	#include "Debugger/TileViewer.hpp"
+	#include "Debugger/TileViewer/TileViewer.hpp"
 #endif
 
 namespace ComSquare
