@@ -121,10 +121,10 @@ namespace ComSquare::PPU
 		return this->getPixelReferenceFromTileRow(tileAddress, column);
 	}
 
-	uint8_t Background::getPixelReferenceFromTileRow(uint16_t tileAddress, uint8_t pixelIndex)
+	uint8_t Background::getPixelReferenceFromTileRow(uint16_t tileRowAddress, uint8_t pixelIndex)
 	{
-		uint8_t highByte = this->_vram->read(tileAddress % VRAMSIZE);
-		uint8_t lowByte = this->_vram->read((tileAddress + 1) % VRAMSIZE);
+		uint8_t highByte = this->_vram->read(tileRowAddress % VRAMSIZE);
+		uint8_t lowByte = this->_vram->read((tileRowAddress + 1) % VRAMSIZE);
 		uint8_t secondHighByte;
 		uint8_t secondLowByte;
 		uint16_t result = 0;
@@ -134,8 +134,8 @@ namespace ComSquare::PPU
 		case 8:
 			return highByte;
 		case 4:
-			secondHighByte =  this->_vram->read((tileAddress + 16) % VRAMSIZE);
-			secondLowByte = this->_vram->read((tileAddress + 17) % VRAMSIZE);
+			secondHighByte =  this->_vram->read((tileRowAddress + 16) % VRAMSIZE);
+			secondLowByte = this->_vram->read((tileRowAddress + 17) % VRAMSIZE);
 			result = ((secondHighByte & (1U << shift)) | ((secondLowByte & (1U << shift)) << 1U));
 			result = (shift - 2 >= 0) ? result >> (shift - 2) : result << ((shift - 2) * -1);
 			FALLTHROUGH

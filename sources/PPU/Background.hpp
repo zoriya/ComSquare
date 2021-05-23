@@ -70,10 +70,10 @@ namespace ComSquare::PPU
 		//! @return The array of color of the palette
 		std::vector<uint16_t> getPalette(int nbPalette);
 		//! @brief Get the color reference of a pixel from the address of the row
-		//! @param tileAddress The address of the line of pixel
+		//! @param tileRowAddress The address of the line of pixel
 		//! @param pixelIndex The index of the pixel (0 - 7)
 		//! @return The color Reference
-		uint8_t getPixelReferenceFromTileRow(uint16_t tileAddress, uint8_t pixelIndex);
+		uint8_t getPixelReferenceFromTileRow(uint16_t tileRowAddress, uint8_t pixelIndex);
 		//! @brief Get the color pixel reference from the tile address
 		//! @param tileAddress The starting address of the tile
 		//! @param pixelIndex The index of the pixel (0 - 255)

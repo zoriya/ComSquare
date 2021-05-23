@@ -237,9 +237,12 @@ add_executable(ComSquare
                sources/APU/DSP/Timer.cpp
                sources/APU/DSP/BRR.cpp
                sources/PPU/PPUUtils.cpp
-               sources/Debugger/TileViewer.cpp
-               sources/Debugger/TileViewer.hpp
-               ui/tileView.ui sources/Renderer/QtRenderer/QtRenderSfml.cpp sources/Renderer/QtRenderer/QtRenderSfml.hpp)
+               ui/tileView.ui
+               sources/Renderer/QtRenderer/QtRenderSfml.cpp
+               sources/Renderer/QtRenderer/QtRenderSfml.hpp
+               sources/Debugger/TileViewer/TileViewer.cpp
+               sources/Debugger/TileViewer/TileViewer.hpp
+               )
 
 include_directories(ComSquare sources)
 

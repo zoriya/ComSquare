@@ -569,6 +569,7 @@ namespace ComSquare::PPU
 		uint16_t _vramReadBuffer = 0;
 		//! @brief Struct that contain all necessary vars for the use of the registers
 		struct PpuState _ppuState;
+
 	public:
 
 		explicit PPU(Renderer::IRenderer &renderer);
