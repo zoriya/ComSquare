@@ -13,11 +13,11 @@
 #include "Models/Vector2.hpp"
 #include "Background.hpp"
 #include "PPUUtils.hpp"
-#include "Debugger/TileViewer/TileViewer.hpp"
+#include "Debugger/TileViewer/TileRenderer.hpp"
 
 #define FALLTHROUGH __attribute__((fallthrough));
 
-// TODO check if it usefull to have defines instead of constepxr
+// TODO check if it useful to have defines instead of constexpr
 #define VRAMSIZE 65536
 #define CGRAMSIZE 512
 #define OAMRAMSIZE 544

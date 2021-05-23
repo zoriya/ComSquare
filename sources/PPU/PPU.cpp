@@ -9,6 +9,7 @@
 #include "Exceptions/InvalidAddress.hpp"
 #include "Ram/Ram.hpp"
 #include "Models/Vector2.hpp"
+#include "Debugger/TileViewer/TileRenderer.hpp"
 #include <random>
 
 namespace ComSquare::PPU
@@ -475,12 +476,12 @@ namespace ComSquare::PPU
 		this->add_buffer(this->_screen, this->_subScreen);
 		this->add_buffer(this->_screen, this->_mainScreen);
 		//this->_backgrounds[2].renderBackground();
-		//add_buffer(this->_screen, this->_backgrounds[2].buffer);
+		//add_buffer(this->_screen, this->_backgrounds[2].buffer);*/
 		for (unsigned long i = 0; i < this->_screen.size(); i++) {
 			for (unsigned long j = 0; j < this->_screen[i].size(); j++) {
 				this->_renderer.putPixel(j, i, this->_screen[i][j]);
 			}
-		}*/
+		}
 		this->_renderer.drawScreen();
 	}
 

@@ -10,6 +10,7 @@
 #include "Debugger/APUDebug.hpp"
 #include "Debugger/MemoryBusDebug.hpp"
 #include "Debugger/CGramDebug.hpp"
+#include "Debugger/TileViewer/TileViewer.hpp"
 #endif
 
 namespace ComSquare
