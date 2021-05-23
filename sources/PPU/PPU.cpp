@@ -27,15 +27,14 @@ namespace ComSquare::PPU
 			Background(*this, 3, true),
 			Background(*this, 4, false),
 			Background(*this, 4, true)
-		}
+		},
+		_mainScreen({{{0}}}),
+		_subScreen({{{0}}})
 	{
 		this->_registers._isLowByte = true;
-		/*for (int i = 0; i < 512; i++) {
-			this->cgram->write(i, random() % 255);
-		*/
 
 		//colors for the cgram
-	/*	this->cgram->write(2, 0xE0);
+		this->cgram->write(2, 0xE0);
 		this->cgram->write(3, 0x7F);
 		this->cgram->write(4, 0x1F); // 0x1F
 		this->cgram->write(6, 0xFF);
@@ -75,17 +74,17 @@ namespace ComSquare::PPU
 00,0x03,0x00,0x03,0x00,0x03,0x00,0x06,0x00,0x0c,0x00,0x18,0x00,0xf0,0x00,0xe0,
 00,0x00,0x00,0x00,0x80,0x00,0xc0,0x00,0xe0,0x00,0xf0,0x00,0xf8,0x00,0xfc,0x00,
 00,0x00,0x00,0x00,0x01,0x00,0x03,0x00,0x07,0x00,0x0f,00,0x1f,00,0x3f,00, -1
-		}; */
-		int *cgram_test = get_dump_cgram();
+		};
+		/*int *cgram_test = get_dump_cgram();
 		for (int i = 0; cgram_test[i] != -1; i++) {
 			this->cgram->write(i, cgram_test[i]);
-		}
+		}*/
 
-		int *vram_test = get_dump_vram();
+	//	int *vram_test = get_dump_vram();
 		for (int i = 0; vram_test[i] != -1; i++) {
 			this->vram->write(i, vram_test[i]);
 		}
-	/*	int vram_test_2[] = {8, 00, 02, 00, 0x0A, 00, 02, 00, 0x0A, 00, 00, 00, 00, 00, 00, -1};
+		int vram_test_2[] = {8, 00, 02, 00, 0x0A, 00, 02, 00, 0x0A, 00, 00, 00, 00, 00, 00, -1};
 		for (int i = 0; vram_test_2[i] != -1; i++) {
 			this->vram->write(i + 0x8000, vram_test_2[i]);
 		}
@@ -143,9 +142,10 @@ namespace ComSquare::PPU
 		//this->_registers._bgofs[2].raw = 0x03E0;
 		//this->_registers._bgofs[3].raw = 0x03DF;
 		this->_registers._t[0].enableWindowDisplayBg1 = true;
-		this->_registers._t[0].enableWindowDisplayBg2 = true;  */
+		this->_registers._t[0].enableWindowDisplayBg2 = true;
 
-		//registers
+		/*
+		//registers aladin
 
 		this->_registers._bgmode.bgMode = 1;
 		this->_backgrounds[0].setBpp(this->getBPP(1));
@@ -199,7 +199,7 @@ namespace ComSquare::PPU
 		this->_registers._t[0].enableWindowDisplayBg2 = true;
 		this->_registers._t[0].enableWindowDisplayBg3 = true;
 
-
+*/
 	}
 
 	uint8_t PPU::read(uint24_t addr)
@@ -300,7 +300,7 @@ namespace ComSquare::PPU
 		case PpuRegisters::bg1hofs:
 			// TODO need of special var for prev value for Mode 7
 			this->_registers._m7ofs[addr - PpuRegisters::bg1hofs].raw = data;
-			__attribute__((fallthrough));
+			FALLTHROUGH
 		case PpuRegisters::bg2hofs:
 		case PpuRegisters::bg3hofs:
 		case PpuRegisters::bg4hofs:
@@ -311,7 +311,7 @@ namespace ComSquare::PPU
 		case PpuRegisters::bg1vofs:
 			// TODO need of special var for prev value for Mode 7
 			this->_registers._bgnba[addr - PpuRegisters::bg12nba].raw = data;
-			__attribute__((fallthrough));
+			FALLTHROUGH
 		case PpuRegisters::bg2vofs:
 		case PpuRegisters::bg3vofs:
 		case PpuRegisters::bg4vofs:
@@ -665,7 +665,7 @@ namespace ComSquare::PPU
 				return 8;
 			return 7;
 		default:
-			return -1;
+			throw std::runtime_error("Invalid Background number");
 		}
 	}
 
@@ -796,10 +796,11 @@ namespace ComSquare::PPU
 			//sprites priority 1
 			//sprites priority 2
 			this->addToMainSubScreen(this->_backgrounds[BgName::bg1Priority]);
-			//sprites priority 3
-            break;
+			//sprites priority
+			break;
 		case 7:
 			// Not implemented
+			throw std::runtime_error("not implemented");
 		default:
 			break;
 		}

@@ -244,6 +244,7 @@ add_executable(ComSquare
 include_directories(ComSquare sources)
 
 target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)
+include_directories(ComSquare sources)
 
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
