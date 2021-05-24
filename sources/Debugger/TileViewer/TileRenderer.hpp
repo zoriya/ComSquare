@@ -18,7 +18,7 @@ namespace ComSquare::Debugger
 		//! @brief The bpp to use while rendering
 		int _bpp;
 		//! @brief The palette number to use while rendering
-		int _palette;
+		int _paletteIndex;
 		//! @brief The size to render in the ram
 		int _renderSize;
 		//! @brief The number of tile columns to display
@@ -30,12 +30,24 @@ namespace ComSquare::Debugger
 	public:
 		//! @brief internal buffer
 		std::array<std::array<uint32_t, 1024>, 1024> buffer;
-		void setPalette(int palette);
+		//! @brief Set the palette to use for render (index of palette)
+		void setPaletteIndex(int paletteIndex);
+		//! @brief Set the ram to look for color references
 		void setCgram(std::shared_ptr<Ram::Ram> ram);
+		//! @brief Set the bpp to render graphics
 		void setBpp(int bpp);
+		//! @brief Set the number of maximum columns
 		void setNbColumns(int nbColumns);
+		//! @brief Set the size of ram to render
 		void setRenderSize(int size);
+		//! @brief The ram to render
 		void setRam(std::shared_ptr<Ram::Ram> ram);
+		//! @brief Get the current bpp
+		int getBpp() const;
+		//! @brief Get the index of the current palette used
+		int getPaletteIndex() const;
+		//! @brief Get the numbr of maximum tile columns to render
+		int getNbColumns() const;
 		uint8_t getPixelReferenceFromTileRow(uint16_t tileRowAddress, uint8_t pixelIndex);
 		std::vector<uint16_t> getPalette(int nbPalette);
 		//! @brief render the selected ram

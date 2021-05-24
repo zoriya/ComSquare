@@ -14,7 +14,7 @@ namespace ComSquare::Debugger
 		: _ram(nullptr),
 		  _cgram(nullptr),
 		  _bpp(2),
-		  _palette(0),
+		  _paletteIndex(0),
 		  _renderSize(5000),
 		  _nbColumns(16),
 		  buffer({{{0}}})
@@ -30,7 +30,7 @@ namespace ComSquare::Debugger
 	{
 		uint8_t colorReference;
 		uint24_t color;
-		std::vector<uint16_t> palette = this->getPalette(this->_palette);
+		std::vector<uint16_t> palette = this->getPalette(this->_paletteIndex);
 		int bufX = this->_offsetX;
 		int bufY = this->_offsetY;
 		int nbTilesDrawn = 0;
@@ -46,8 +46,9 @@ namespace ComSquare::Debugger
 				bufY -= PPU::Tile::NbPixelsHeight;
 				nbTilesDrawn++;
 			}
-			if (nbTilesDrawn && nbTilesDrawn % 16 == 0) {
+			if (nbTilesDrawn && nbTilesDrawn % this->_nbColumns == 0) {
 				nbTilesDrawn = 0;
+				break;
 				resetX = this->_offsetX;
 				bufX = resetX;
 				bufY += PPU::Tile::NbPixelsHeight;
@@ -62,9 +63,9 @@ namespace ComSquare::Debugger
 		}
 	}
 
-	void TileRenderer::setPalette(int palette)
+	void TileRenderer::setPaletteIndex(int paletteIndex)
 	{
-		this->_palette = palette;
+		this->_paletteIndex = paletteIndex;
 	}
 
 	void TileRenderer::setBpp(int bpp)
@@ -126,5 +127,20 @@ namespace ComSquare::Debugger
 	void TileRenderer::setNbColumns(int nbColumns)
 	{
 		this->_nbColumns = nbColumns;
+	}
+
+	int TileRenderer::getBpp() const
+	{
+		return this->_bpp;
+	}
+
+	int TileRenderer::getPaletteIndex() const
+	{
+		return this->_paletteIndex;
+	}
+
+	int TileRenderer::getNbColumns() const
+	{
+		return this->_nbColumns;
 	}
 }
