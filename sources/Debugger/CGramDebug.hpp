@@ -14,53 +14,6 @@
 #include <QTableView>
 #include "ClosableWindow.hpp"
 
-
-/*namespace ComSquare
-{
-	class SNES;
-	namespace Debugger
-	{
-		//! @brief Window that show the header of the currently running game.
-		class cgramViewer {
-		private:
-			//! @brief The QT window for this debugger.
-			ClosableWindow<cgramViewer> *_window{};
-			//! @brief A reference to the snes (to disable the debugger).
-			SNES &_snes;
-			//! @brief The layout of the viewer.
-			Ui::CgramView _ui;
-			//! @brief The ppu containing the cgram.
-			ComSquare::PPU::PPU &_ppu;
-		public slots:
-			//! @brief Called when the window is closed. Turn off the debugger and revert to a basic CPU.
-			void disableDebugger();
-		public:
-			//! @brief Focus the debugger's window.
-			void focus();
-
-			explicit cgramViewer(SNES &snes, ComSquare::PPU::PPU &ppu);
-			cgramViewer(const cgramViewer &) = delete;
-			cgramViewer &operator=(const cgramViewer &) = delete;
-			~cgramViewer() = default;
-		};
-	}
-}*/
-
-/*namespace ComSquare::cgramDebugger
-{
-	//! @brief The struct used to represent memory bus logs.
-	struct BusLog {
-		BusLog(bool write, uint24_t addr, std::shared_ptr<Memory::AMemory> &accessor, uint8_t oldData, uint8_t newData);
-
-		bool write;
-		uint24_t addr;
-		std::shared_ptr<Memory::AMemory> accessor;
-		uint8_t oldData;
-		uint8_t newData;
-	};
-}*/
-
-
 //! @brief The qt model that bind the logs to the view.
 class CGramModel : public QAbstractTableModel
 {

@@ -375,7 +375,7 @@ namespace ComSquare::APU
 		//! @param addr The address to read from. The address 0x0000 should refer to the first byte of the register.
 		//! @throw InvalidAddress will be thrown if the address is more than $FFFF (the number of register).
 		//! @return Return the data.
-		uint8_t read(uint24_t addr) const override;
+		uint8_t read(uint24_t addr) override;
 
 		//! @brief Write data to the APU ram.
 		//! @param addr The address to write to. The address 0x0000 should refer to the first byte of register.

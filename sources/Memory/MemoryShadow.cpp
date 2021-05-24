@@ -14,7 +14,7 @@ namespace ComSquare::Memory
 		this->setMemoryRegion(start, end);
 	}
 
-	uint8_t MemoryShadow::read(uint24_t addr) const
+	uint8_t MemoryShadow::read(uint24_t addr)
 	{
 		return this->_initial->read(addr);
 	}

@@ -31,7 +31,7 @@ namespace ComSquare::CPU
 	}
 
 	//! @bref The CPU's internal registers starts at $4200	and finish at $421F.
-	uint8_t CPU::read(uint24_t addr) const
+	uint8_t CPU::read(uint24_t addr)
 	{
 		uint8_t tmp = 0;
 

@@ -8,7 +8,7 @@ project(ComSquare)
 add_compile_options(-W -Wall -Wextra -Wshadow)
 
 # make unit tests
-add_executable(unit_tests
+add_executable(unit_tests EXCLUDE_FROM_ALL
         tests/CPU/testAddressingMode.cpp
         tests/CPU/testInterupts.cpp
         tests/testMemoryBus.cpp
@@ -98,9 +98,11 @@ add_executable(unit_tests
         tests/CPU/Math/testOthersMath.cpp
         tests/testRectangleMemory.cpp
         tests/CPU/Math/testCMP.cpp
-        sources/PPU/Backgrounds.cpp
         sources/PPU/Background.cpp
         sources/PPU/Background.hpp
+        sources/PPU/PPUUtils.cpp
+        tests/PPU/testBackground.cpp
+        tests/PPU/testPpuRead.cpp
         sources/CPU/DMA/DMA.cpp
         sources/CPU/DMA/DMA.hpp
         tests/CPU/testDMA.cpp
@@ -220,7 +222,6 @@ add_executable(ComSquare
         sources/Debugger/CGramDebug.cpp
         sources/Debugger/CGramDebug.hpp
         sources/Models/Vector2.hpp
-        sources/PPU/Backgrounds.cpp
         sources/PPU/Background.cpp
         sources/PPU/Background.hpp
         sources/CPU/DMA/DMA.cpp
@@ -235,9 +236,11 @@ add_executable(ComSquare
         sources/APU/DSP/Envelope.cpp
         sources/APU/DSP/Timer.cpp
         sources/APU/DSP/BRR.cpp
+        sources/PPU/PPUUtils.cpp
         )
 
 target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)
+include_directories(ComSquare sources)
 
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 

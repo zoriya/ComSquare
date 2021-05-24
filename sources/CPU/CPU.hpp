@@ -741,7 +741,7 @@ namespace ComSquare::CPU
 		//! @param addr The address to read from. The address 0x0 should refer to the first byte of the register.
 		//! @throw InvalidAddress will be thrown if the address is more than $1F (the number of register).
 		//! @return Return the value of the register.
-		uint8_t read(uint24_t addr) const override;
+		uint8_t read(uint24_t addr) override;
 		//! @brief Write data to the internal CPU register.
 		//! @param addr The address to write to. The address 0x0 should refer to the first byte of register.
 		//! @param data The new value of the register.
