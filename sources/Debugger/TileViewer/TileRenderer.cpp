@@ -31,14 +31,26 @@ namespace ComSquare::Debugger
 		int bufY = 0;
 		int nbTilesDrawn = 0;
 		int resetX = 0;
+		int it = 0;
 
-		for (uint24_t i = 0; i < this->_ram->getSize(); i += this->_bpp) {
+		for (uint24_t i = 0; i < this->_ram->getSize(); i += this->_bpp, it++) {
 			if (bufX >= 1024 || bufY >= 1024)
 				break;
+			if (it && it % 8 == 0) {
+				resetX += 8;
+				bufX = resetX;
+				bufY -= 8;
+				nbTilesDrawn++;
+			}
+			if (nbTilesDrawn && nbTilesDrawn % 16 == 0) {
+				resetX = 0;
+				bufX = resetX;
+				bufY += 8;
+			}
 			for (int j = 0; j < 8; j++) {
 				colorReference = this->getPixelReferenceFromTileRow(i, j);
 				color = PPU::getRealColor(palette[colorReference]);
-				buffer[bufY][bufX++] = color;
+				buffer[bufX++][bufY] = color;
 			}
 			bufY++;
 			bufX = resetX;
