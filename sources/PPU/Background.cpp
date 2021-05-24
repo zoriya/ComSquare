@@ -6,6 +6,7 @@
 #include "PPU.hpp"
 #include "Background.hpp"
 #include <cmath>
+#include "Tile.hpp"
 #include "Models/Vector2.hpp"
 
 namespace ComSquare::PPU
@@ -107,13 +108,13 @@ namespace ComSquare::PPU
 		uint8_t row = pixelIndex / this->_characterNbPixels.x;
 		uint8_t column = pixelIndex % this->_characterNbPixels.y;
 
-		if (row >= TileNbPixelsHeight) {
+		if (row >= Tile::NbPixelsHeight) {
 			tileAddress += 0x80 * this->_bpp;
-			row -= TileNbPixelsHeight;
+			row -= Tile::NbPixelsHeight;
 		}
-		if (column >= TileNbPixelsWidth) {
+		if (column >= Tile::NbPixelsWidth) {
 			tileAddress += 0x8 * this->_bpp;
-			column -= TileNbPixelsWidth;
+			column -= Tile::NbPixelsWidth;
 		}
 		// TODO might not work with 8 bpp must check
 		tileAddress += 2 * row;
@@ -128,7 +129,7 @@ namespace ComSquare::PPU
 		uint8_t secondHighByte;
 		uint8_t secondLowByte;
 		uint16_t result = 0;
-		uint8_t shift = TileNbPixelsWidth - 1U - pixelIndex;
+		uint8_t shift = Tile::NbPixelsWidth - 1U - pixelIndex;
 
 		switch (this->_bpp) {
 		case 8:

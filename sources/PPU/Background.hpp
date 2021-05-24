@@ -24,10 +24,6 @@ namespace ComSquare::PPU
 		static constexpr int NbCharacterWidth = 32;
 		//! @brief The number of character a TileMap has in height
 		static constexpr int NbCharacterHeight = 32;
-		//! @brief The minimum number of pixel a tile can have in width
-		static constexpr int TileNbPixelsWidth = 8;
-		//! @brief The minimum number of pixel a tile can have in height
-		static constexpr int TileNbPixelsHeight = 8;
 		//! @brief The number of bytes used by a range of pixels (1 pixel per byte)
 		//! @note Used like: bpp * TileBaseByteSize to get the size of byte of 1 row of pixels
 		static constexpr unsigned TileBaseByteSize = 8;

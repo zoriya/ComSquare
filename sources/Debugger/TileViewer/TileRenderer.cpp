@@ -3,8 +3,10 @@
 //
 
 #include <complex>
+#include <cmath>
 #include "TileRenderer.hpp"
 #include "PPU/PPU.hpp"
+#include "PPU/Tile.hpp"
 
 namespace ComSquare::Debugger
 {
@@ -13,6 +15,8 @@ namespace ComSquare::Debugger
 		  _cgram(nullptr),
 		  _bpp(2),
 		  _palette(0),
+		  _renderSize(5000),
+		  _nbColumns(16),
 		  buffer({{{0}}})
 	{
 	}
@@ -27,25 +31,26 @@ namespace ComSquare::Debugger
 		uint8_t colorReference;
 		uint24_t color;
 		std::vector<uint16_t> palette = this->getPalette(this->_palette);
-		int bufX = 0;
-		int bufY = 0;
+		int bufX = this->_offsetX;
+		int bufY = this->_offsetY;
 		int nbTilesDrawn = 0;
-		int resetX = 0;
+		int resetX = bufX;
 		int it = 0;
 
-		for (uint24_t i = 0; i < this->_ram->getSize(); i += this->_bpp, it++) {
+		for (uint24_t i = 0; i < fmin(this->_ram->getSize(), this->_renderSize); i += this->_bpp, it++) {
 			if (bufX >= 1024 || bufY >= 1024)
 				break;
 			if (it && it % 8 == 0) {
-				resetX += 8;
+				resetX += PPU::Tile::NbPixelsWidth;
 				bufX = resetX;
-				bufY -= 8;
+				bufY -= PPU::Tile::NbPixelsHeight;
 				nbTilesDrawn++;
 			}
 			if (nbTilesDrawn && nbTilesDrawn % 16 == 0) {
-				resetX = 0;
+				nbTilesDrawn = 0;
+				resetX = this->_offsetX;
 				bufX = resetX;
-				bufY += 8;
+				bufY += PPU::Tile::NbPixelsHeight;
 			}
 			for (int j = 0; j < 8; j++) {
 				colorReference = this->getPixelReferenceFromTileRow(i, j);
@@ -111,5 +116,15 @@ namespace ComSquare::Debugger
 	void TileRenderer::setCgram(std::shared_ptr<Ram::Ram> ram)
 	{
 		this->_cgram = std::move(ram);
+	}
+
+	void TileRenderer::setRenderSize(int size)
+	{
+		this->_renderSize = size;
+	}
+
+	void TileRenderer::setNbColumns(int nbColumns)
+	{
+		this->_nbColumns = nbColumns;
 	}
 }
