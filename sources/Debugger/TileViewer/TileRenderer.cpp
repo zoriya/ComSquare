@@ -37,6 +37,8 @@ namespace ComSquare::Debugger
 		int nbTilesDrawn = 0;
 		int resetX = bufX;
 		int it = 0;
+		for (auto &i : buffer)
+			i.fill(0);
 
 		for (uint24_t i = 0; i < fmin(this->_ram->getSize(), this->_renderSize); i += 2, it++) {
 			if (bufX > 128 || bufY > 128)
@@ -50,7 +52,6 @@ namespace ComSquare::Debugger
 			}
 			if (nbTilesDrawn && nbTilesDrawn % this->_nbColumns == 0) {
 				nbTilesDrawn = 0;
-				//break;
 				resetX = this->_offsetX;
 				bufX = resetX;
 				bufY += PPU::Tile::NbPixelsHeight;

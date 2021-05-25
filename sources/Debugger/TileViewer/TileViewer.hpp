@@ -18,7 +18,7 @@ namespace ComSquare::PPU
 #include "Renderer/QtRenderer/QtSFML.hpp"
 #include "../../../ui/ui_tileView.h"
 #include "Ram/Ram.hpp"
-
+#include "TileRenderer.hpp"
 
 namespace ComSquare::Debugger
 {
@@ -35,7 +35,9 @@ namespace ComSquare::Debugger
 		//! @brief A reference to the ppu
 		ComSquare::PPU::PPU &_ppu;
 		//! @brief the window
-		std::unique_ptr<Renderer::QtSFML> _sfWidget;
+		//std::unique_ptr<Renderer::QtSFML> _sfWidget;
+
+		TileRenderer _tileRenderer;
 	public:
 		//! @brief Called when the window is closed. Turn off the debugger.
 		void disableViewer();

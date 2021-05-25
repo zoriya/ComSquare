@@ -23,14 +23,15 @@ namespace ComSquare::Debugger
 		: _window(new ClosableWindow<TileViewer>(*this, &TileViewer::disableViewer)),
 		  _snes(snes),
 		  _ui(),
-		  _ppu(ppu)
+		  _ppu(ppu),
+		  _tileRenderer()
 	{
 		this->_window->setContextMenuPolicy(Qt::NoContextMenu);
 		this->_window->setAttribute(Qt::WA_QuitOnClose, false);
 		this->_window->setAttribute(Qt::WA_DeleteOnClose);
 
 		this->_ui.setupUi(this->_window);
-		this->_sfWidget = std::make_unique<Renderer::QtSFML>(this->_ui.tab);
+		//this->_sfWidget = std::make_unique<Renderer::QtSFML>(this->_ui.tab);
 		this->_window->show();
 		QEvent::registerEventType();
 	}
