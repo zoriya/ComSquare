@@ -620,8 +620,10 @@ namespace ComSquare::PPU
 		//! @brief Render the Main and sub screen correctly
 		void renderMainAndSubScreen();
 		//! @brief Add a bg buffer to another buffer
-		template <std::size_t DEST_SIZE, std::size_t SRC_SIZE>
-		void add_buffer(std::array<std::array<uint32_t, DEST_SIZE>, DEST_SIZE> &bufferDest, std::array<std::array<uint32_t, SRC_SIZE>, SRC_SIZE> &bufferSrc);
+		template <std::size_t DEST_SIZE_X, std::size_t DEST_SIZE_Y, std::size_t SRC_SIZE_X, std::size_t SRC_SIZE_Y>
+		void add_buffer(std::array<std::array<uint32_t, DEST_SIZE_Y>, DEST_SIZE_X> &bufferDest,
+				  const std::array<std::array<uint32_t, SRC_SIZE_Y>, SRC_SIZE_X> &bufferSrc,
+				  const Vector2<int> &offset = {0, 0});
 		//! @brief Add a bg to the sub and/or main screen
 		void addToMainSubScreen(Background &bg);
 		//! @brief Get the current background Mode

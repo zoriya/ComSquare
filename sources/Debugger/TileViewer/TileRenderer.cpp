@@ -7,6 +7,7 @@
 #include "TileRenderer.hpp"
 #include "PPU/PPU.hpp"
 #include "PPU/Tile.hpp"
+#include <iostream>
 
 namespace ComSquare::Debugger
 {
@@ -37,18 +38,19 @@ namespace ComSquare::Debugger
 		int resetX = bufX;
 		int it = 0;
 
-		for (uint24_t i = 0; i < fmin(this->_ram->getSize(), this->_renderSize); i += this->_bpp, it++) {
-			if (bufX >= 1024 || bufY >= 1024)
+		for (uint24_t i = 0; i < fmin(this->_ram->getSize(), this->_renderSize); i += 2, it++) {
+			if (bufX > 128 || bufY > 128)
 				break;
 			if (it && it % 8 == 0) {
 				resetX += PPU::Tile::NbPixelsWidth;
 				bufX = resetX;
 				bufY -= PPU::Tile::NbPixelsHeight;
+				i += (this->_bpp - 2) * 0x8;
 				nbTilesDrawn++;
 			}
 			if (nbTilesDrawn && nbTilesDrawn % this->_nbColumns == 0) {
 				nbTilesDrawn = 0;
-				break;
+				//break;
 				resetX = this->_offsetX;
 				bufX = resetX;
 				bufY += PPU::Tile::NbPixelsHeight;
@@ -87,7 +89,7 @@ namespace ComSquare::Debugger
 		case 8:
 			return highByte;
 		case 4:
-			secondHighByte =  this->_ram->read((tileRowAddress + 16) % size);
+			secondHighByte = this->_ram->read((tileRowAddress + 16) % size);
 			secondLowByte = this->_ram->read((tileRowAddress + 17) % size);
 			result = ((secondHighByte & (1U << shift)) | ((secondLowByte & (1U << shift)) << 1U));
 			result = (shift - 2 >= 0) ? result >> (shift - 2) : result << ((shift - 2) * -1);

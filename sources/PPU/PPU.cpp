@@ -470,9 +470,11 @@ namespace ComSquare::PPU
 		(void)cycles;
 		this->tileRenderer.setBpp(4);
 		this->tileRenderer.setPaletteIndex(2);
-		this->tileRenderer.setNbColumns(1);
+		this->tileRenderer.setNbColumns(16);
 		this->tileRenderer.render();
-		this->add_buffer(this->_screen, this->tileRenderer.buffer);
+	//	for (auto &i : this->_screen)
+	//		i.fill(0xde571dff);
+		this->add_buffer(this->_screen, this->tileRenderer.buffer, {200, 200});
 
 		/*
 		this->renderMainAndSubScreen();
@@ -815,13 +817,15 @@ namespace ComSquare::PPU
 		}
 	}
 
-	template <std::size_t DEST_SIZE, std::size_t SRC_SIZE>
-	void PPU::add_buffer(std::array<std::array<uint32_t, DEST_SIZE>, DEST_SIZE> &bufferDest, std::array<std::array<uint32_t, SRC_SIZE>, SRC_SIZE> &bufferSrc)
+	template <std::size_t DEST_SIZE_X, std::size_t DEST_SIZE_Y, std::size_t SRC_SIZE_X, std::size_t SRC_SIZE_Y>
+	void PPU::add_buffer(std::array<std::array<uint32_t, DEST_SIZE_Y>, DEST_SIZE_X> &bufferDest,
+					  const std::array<std::array<uint32_t, SRC_SIZE_Y>, SRC_SIZE_X> &bufferSrc,
+					     const Vector2<int> &offset)
 	{
 		for (unsigned long i = 0; i < bufferSrc.size(); i++) {
 			for (unsigned long j = 0; j < bufferSrc[i].size(); j++) {
 				if (bufferSrc[i][j] > 0xFF) // 0xFF correspond to a black pixel with full brightness
-					bufferDest[i][j] = bufferSrc[i][j];
+					bufferDest[i + offset.x ][j + offset.y] = bufferSrc[i][j];
 			}
 		}
 	}

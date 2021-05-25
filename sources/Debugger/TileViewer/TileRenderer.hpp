@@ -24,12 +24,12 @@ namespace ComSquare::Debugger
 		//! @brief The number of tile columns to display
 		int _nbColumns;
 		//! @brief render offset in x
-		int _offsetX = 100;
+		int _offsetX = 0;
 		//! @brief render offset in y
-		int _offsetY = 120;
+		int _offsetY = 0;
 	public:
 		//! @brief internal buffer
-		std::array<std::array<uint32_t, 1024>, 1024> buffer;
+		std::array<std::array<uint32_t, 200>, 128> buffer;
 		//! @brief Set the palette to use for render (index of palette)
 		void setPaletteIndex(int paletteIndex);
 		//! @brief Set the ram to look for color references
