@@ -29,7 +29,7 @@ namespace ComSquare::Debugger
 		int _offsetY = 0;
 	public:
 		//! @brief internal buffer
-		std::array<std::array<uint32_t, 200>, 128> buffer;
+		std::array<std::array<uint32_t, 1024>, 1024> buffer;
 		//! @brief Set the palette to use for render (index of palette)
 		void setPaletteIndex(int paletteIndex);
 		//! @brief Set the ram to look for color references
@@ -50,6 +50,7 @@ namespace ComSquare::Debugger
 		int getNbColumns() const;
 		uint8_t getPixelReferenceFromTileRow(uint16_t tileRowAddress, uint8_t pixelIndex);
 		std::vector<uint16_t> getPalette(int nbPalette);
+		uint8_t read2BPPValue(uint16_t tileRowAddress, uint8_t pixelIndex);
 		//! @brief render the selected ram
 		void render();
 		TileRenderer();

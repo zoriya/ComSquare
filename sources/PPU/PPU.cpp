@@ -468,8 +468,8 @@ namespace ComSquare::PPU
 	void PPU::update(unsigned cycles)
 	{
 		(void)cycles;
-		this->tileRenderer.setBpp(4);
-		this->tileRenderer.setPaletteIndex(2);
+		this->tileRenderer.setBpp(8);
+		this->tileRenderer.setPaletteIndex(0);
 		this->tileRenderer.setNbColumns(16);
 		this->tileRenderer.render();
 	//	for (auto &i : this->_screen)

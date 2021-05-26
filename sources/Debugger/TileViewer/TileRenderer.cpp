@@ -16,7 +16,7 @@ namespace ComSquare::Debugger
 		  _cgram(nullptr),
 		  _bpp(2),
 		  _paletteIndex(0),
-		  _renderSize(5000),
+		  _renderSize(0x5000),
 		  _nbColumns(16),
 		  buffer({{{0}}})
 	{
@@ -41,7 +41,7 @@ namespace ComSquare::Debugger
 			i.fill(0);
 
 		for (uint24_t i = 0; i < fmin(this->_ram->getSize(), this->_renderSize); i += 2, it++) {
-			if (bufX > 128 || bufY > 128)
+			if (bufX > 1024 || bufY > 1024)
 				break;
 			if (it && it % 8 == 0) {
 				resetX += PPU::Tile::NbPixelsWidth;
@@ -76,27 +76,34 @@ namespace ComSquare::Debugger
 		this->_bpp = bpp;
 	}
 
-	uint8_t TileRenderer::getPixelReferenceFromTileRow(uint16_t tileRowAddress, uint8_t pixelIndex)
+	uint8_t TileRenderer::read2BPPValue(uint16_t tileRowAddress, uint8_t pixelIndex)
 	{
+		// TODO unit test this
 		size_t size = this->_ram->getSize();
 		uint8_t highByte = this->_ram->read(tileRowAddress % size);
 		uint8_t lowByte = this->_ram->read((tileRowAddress + 1) % size);
-		uint8_t secondHighByte;
-		uint8_t secondLowByte;
-		uint16_t result = 0;
 		uint8_t shift = 8 - 1U - pixelIndex;
+
+		return ((highByte & (1U << shift)) | ((lowByte & (1U << shift)) << 1U)) >> shift;
+	}
+
+	uint8_t TileRenderer::getPixelReferenceFromTileRow(uint16_t tileRowAddress, uint8_t pixelIndex)
+	{
+		// TODO unit test this
+		uint16_t result = 0;
+		// TODO do a constexpr
+		const int TileByteSizeRow = 16;
 
 		switch (this->_bpp) {
 		case 8:
-			return highByte;
+			result += this->read2BPPValue(tileRowAddress + TileByteSizeRow * 2, pixelIndex) << 4;
+			result += this->read2BPPValue(tileRowAddress + TileByteSizeRow * 3, pixelIndex) << 6;
+			FALLTHROUGH
 		case 4:
-			secondHighByte = this->_ram->read((tileRowAddress + 16) % size);
-			secondLowByte = this->_ram->read((tileRowAddress + 17) % size);
-			result = ((secondHighByte & (1U << shift)) | ((secondLowByte & (1U << shift)) << 1U));
-			result = (shift - 2 >= 0) ? result >> (shift - 2) : result << ((shift - 2) * -1);
+			result += this->read2BPPValue(tileRowAddress + TileByteSizeRow, pixelIndex) << 2;
 			FALLTHROUGH
 		case 2:
-			result += ((highByte & (1U << shift)) | ((lowByte & (1U << shift)) << 1U)) >> shift;
+			result += this->read2BPPValue(tileRowAddress, pixelIndex);
 		default:
 			break;
 		}
@@ -105,7 +112,7 @@ namespace ComSquare::Debugger
 
 	std::vector<uint16_t> TileRenderer::getPalette(int nbPalette)
 	{
-		uint8_t nbColors = std::pow(2, this->_bpp);
+		uint16_t nbColors = std::pow(2, this->_bpp);
 		uint16_t addr = nbPalette * this->_bpp * this->_bpp * 2; // 2 because it's 2 addr for 1 color
 		std::vector<uint16_t> palette(nbColors);
 
