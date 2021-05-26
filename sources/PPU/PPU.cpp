@@ -468,12 +468,11 @@ namespace ComSquare::PPU
 	void PPU::update(unsigned cycles)
 	{
 		(void)cycles;
-		this->tileRenderer.setBpp(8);
-		this->tileRenderer.setPaletteIndex(0);
+		this->tileRenderer.setBpp(4);
+		this->tileRenderer.setPaletteIndex(2);
 		this->tileRenderer.setNbColumns(16);
+		this->tileRenderer.setRenderSize(0x6000);
 		this->tileRenderer.render();
-	//	for (auto &i : this->_screen)
-	//		i.fill(0xde571dff);
 		this->add_buffer(this->_screen, this->tileRenderer.buffer, {200, 200});
 
 		/*
@@ -488,6 +487,12 @@ namespace ComSquare::PPU
 			}
 		}
 		this->_renderer.drawScreen();
+		for (auto &i : this->_mainScreen)
+			i.fill(0XFF);
+		for (auto &i : this->_subScreen)
+			i.fill(0XFF);
+		for (auto &i : this->_screen)
+			i.fill(0XFF);
 	}
 
 	std::string PPU::getName() const
