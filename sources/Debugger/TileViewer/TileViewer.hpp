@@ -38,6 +38,8 @@ namespace ComSquare::Debugger
 		//std::unique_ptr<Renderer::QtSFML> _sfWidget;
 		//! @brief The tile renderer
 		TileRenderer _tileRenderer;
+		//! @brief Change the bpp from the index given by the ui (QT combo box)
+		void _bppChangeUIHandler(int index);
 	public:
 		//! @brief Called when the window is closed. Turn off the debugger.
 		void disableViewer();

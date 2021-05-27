@@ -38,8 +38,13 @@ namespace ComSquare::Debugger
 		QMainWindow::connect(this->_ui.NbColumns, QOverload<int>::of(&QSpinBox::valueChanged), this, [this](int nb) -> void { this->setNbColumns(nb); });
 		QMainWindow::connect(this->_ui.ByteSize, QOverload<int>::of(&QSpinBox::valueChanged), this, [this](int nb) -> void { this->setRenderSize(nb); });
 		QMainWindow::connect(this->_ui.Address, QOverload<int>::of(&QSpinBox::valueChanged), this, [this](int nb) -> void { this->setRamOffset(nb); });
+		QMainWindow::connect(this->_ui.PaletteIndex, QOverload<int>::of(&QSpinBox::valueChanged), this, [this](int nb) -> void { this->setPaletteIndex(nb); });
+		QMainWindow::connect(this->_ui.BppFormat, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [this](int index) -> void { this->_bppChangeUIHandler(index); });
+
+		// used to setup ui restrictions
+		this->setBpp(this->getBpp());
 		this->_window->show();
-		QEvent::registerEventType();
+		this->internalUpdate();
 	}
 
 	void TileViewer::disableViewer()
@@ -65,11 +70,30 @@ namespace ComSquare::Debugger
 	void TileViewer::setPaletteIndex(int paletteIndex)
 	{
 		this->_tileRenderer.setPaletteIndex(paletteIndex);
+		this->internalUpdate();
 	}
 
 	void TileViewer::setBpp(int bpp)
 	{
+		this->_ui.PaletteIndex->setDisabled(bpp > 4);
+		switch (bpp) {
+		case 8:
+			this->_ui.PaletteIndex->setValue(0);
+			break;
+		case 4:
+			this->_ui.PaletteIndex->setMaximum(15);
+			if (this->_ui.PaletteIndex->value() > 15) {
+				this->_ui.PaletteIndex->setValue(15);
+			}
+			break;
+		case 2:
+		default:
+			bpp = 2;
+			this->_ui.PaletteIndex->setMaximum(63);
+			break;
+		}
 		this->_tileRenderer.setBpp(bpp);
+		this->internalUpdate();
 	}
 
 	void TileViewer::setNbColumns(int nbColumns)
@@ -108,5 +132,18 @@ namespace ComSquare::Debugger
 	void TileViewer::setRamOffset(int offset)
 	{
 		this->_tileRenderer.setRamOffset(offset);
+		this->internalUpdate();
+	}
+
+	void TileViewer::_bppChangeUIHandler(int index)
+	{
+		switch (index) {
+		case 0: return this->setBpp(2);
+		case 1: return this->setBpp(4);
+		case 2: return this->setBpp(8);
+		default:
+			break;
+		}
+		// TODO error handling
 	}
 }
