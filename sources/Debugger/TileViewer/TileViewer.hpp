@@ -36,7 +36,7 @@ namespace ComSquare::Debugger
 		ComSquare::PPU::PPU &_ppu;
 		//! @brief the window
 		//std::unique_ptr<Renderer::QtSFML> _sfWidget;
-
+		//! @brief The tile renderer
 		TileRenderer _tileRenderer;
 	public:
 		//! @brief Called when the window is closed. Turn off the debugger.
@@ -55,5 +55,24 @@ namespace ComSquare::Debugger
 		void focus();
 		//! @brief Return true if the Bus is overloaded with debugging features.
 		bool isDebugger();
+		//! @brief Set the palette to use for render (index of palette)
+		void setPaletteIndex(int paletteIndex);
+		//! @brief Set the bpp to render graphics
+		void setBpp(int bpp);
+		//! @brief Set the number of maximum columns
+		void setNbColumns(int nbColumns);
+		//! @brief Set the size of ram to render
+		void setRenderSize(int size);
+		//! @brief Set the ram offset
+		void setRamOffset(int offset);
+		//! @brief Get the current bpp
+		int getBpp() const;
+		//! @brief Get the index of the current palette used
+		int getPaletteIndex() const;
+		//! @brief Get the numbr of maximum tile columns to render
+		int getNbColumns() const;
+		//! @brief Update the tile renderer
+		void internalUpdate();
+
 	};
 }

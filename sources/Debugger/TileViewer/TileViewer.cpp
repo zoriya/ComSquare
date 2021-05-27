@@ -15,6 +15,7 @@ namespace ComSquare::Renderer
 #include <iostream>
 #include <QtWidgets/QTableWidget>
 #include "Utility/Utility.hpp"
+#include "TileRenderer.hpp"
 #include "PPU/PPU.hpp"
 
 namespace ComSquare::Debugger
@@ -26,12 +27,17 @@ namespace ComSquare::Debugger
 		  _ppu(ppu),
 		  _tileRenderer()
 	{
+		this->_tileRenderer.setRam(ppu.vram);
+		this->_tileRenderer.setCgram(ppu.cgram);
 		this->_window->setContextMenuPolicy(Qt::NoContextMenu);
 		this->_window->setAttribute(Qt::WA_QuitOnClose, false);
 		this->_window->setAttribute(Qt::WA_DeleteOnClose);
 
 		this->_ui.setupUi(this->_window);
 		//this->_sfWidget = std::make_unique<Renderer::QtSFML>(this->_ui.tab);
+		QMainWindow::connect(this->_ui.NbColumns, QOverload<int>::of(&QSpinBox::valueChanged), this, [this](int nb) -> void { this->setNbColumns(nb); });
+		QMainWindow::connect(this->_ui.ByteSize, QOverload<int>::of(&QSpinBox::valueChanged), this, [this](int nb) -> void { this->setRenderSize(nb); });
+		QMainWindow::connect(this->_ui.Address, QOverload<int>::of(&QSpinBox::valueChanged), this, [this](int nb) -> void { this->setRamOffset(nb); });
 		this->_window->show();
 		QEvent::registerEventType();
 	}
@@ -54,5 +60,53 @@ namespace ComSquare::Debugger
 	uint16_t TileViewer::read(uint8_t addr)
 	{
 		return this->_ppu.cgramRead(addr);
+	}
+
+	void TileViewer::setPaletteIndex(int paletteIndex)
+	{
+		this->_tileRenderer.setPaletteIndex(paletteIndex);
+	}
+
+	void TileViewer::setBpp(int bpp)
+	{
+		this->_tileRenderer.setBpp(bpp);
+	}
+
+	void TileViewer::setNbColumns(int nbColumns)
+	{
+		this->_tileRenderer.setNbColumns(nbColumns);
+		this->internalUpdate();
+	}
+
+	void TileViewer::setRenderSize(int size)
+	{
+		this->_tileRenderer.setRenderSize(size);
+		this->internalUpdate();
+	}
+
+	int TileViewer::getBpp() const
+	{
+		return this->_tileRenderer.getBpp();
+	}
+
+	int TileViewer::getPaletteIndex() const
+	{
+		return this->_tileRenderer.getPaletteIndex();
+	}
+
+	int TileViewer::getNbColumns() const
+	{
+		return this->_tileRenderer.getNbColumns();
+	}
+
+	void TileViewer::internalUpdate()
+	{
+		this->_tileRenderer.render();
+		this->_ppu.add_buffer(this->_tileRenderer.buffer, {200, 200});
+	}
+
+	void TileViewer::setRamOffset(int offset)
+	{
+		this->_tileRenderer.setRamOffset(offset);
 	}
 }

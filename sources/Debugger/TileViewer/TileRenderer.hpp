@@ -23,10 +23,8 @@ namespace ComSquare::Debugger
 		int _renderSize;
 		//! @brief The number of tile columns to display
 		int _nbColumns;
-		//! @brief render offset in x
-		int _offsetX = 0;
-		//! @brief render offset in y
-		int _offsetY = 0;
+		//! @brief Bytes to skip from the start of the ram
+		int _ramOffset;
 	public:
 		//! @brief internal buffer
 		std::array<std::array<uint32_t, 1024>, 1024> buffer;
@@ -42,6 +40,8 @@ namespace ComSquare::Debugger
 		void setRenderSize(int size);
 		//! @brief The ram to render
 		void setRam(std::shared_ptr<Ram::Ram> ram);
+		//! @brief Set the ram offset
+		void setRamOffset(int offset);
 		//! @brief Get the current bpp
 		int getBpp() const;
 		//! @brief Get the index of the current palette used

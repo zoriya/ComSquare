@@ -32,15 +32,15 @@ namespace ComSquare::Debugger
 		uint8_t colorReference;
 		uint24_t color;
 		std::vector<uint16_t> palette = this->getPalette(this->_paletteIndex);
-		int bufX = this->_offsetX;
-		int bufY = this->_offsetY;
+		int bufX = 0;
+		int bufY = 0;
 		int nbTilesDrawn = 0;
 		int resetX = bufX;
 		int it = 0;
 		for (auto &i : buffer)
 			i.fill(0);
 
-		for (uint24_t i = 0; i < fmin(this->_ram->getSize(), this->_renderSize); i += 2, it++) {
+		for (uint24_t i = this->_ramOffset; i + this->_ramOffset < fmin(this->_ram->getSize(), this->_renderSize); i += 2, it++) {
 			if (bufX > 1024 || bufY > 1024)
 				break;
 			if (it && it % 8 == 0) {
@@ -52,7 +52,7 @@ namespace ComSquare::Debugger
 			}
 			if (nbTilesDrawn && nbTilesDrawn % this->_nbColumns == 0) {
 				nbTilesDrawn = 0;
-				resetX = this->_offsetX;
+				resetX = 0;
 				bufX = resetX;
 				bufY += PPU::Tile::NbPixelsHeight;
 			}
@@ -152,5 +152,10 @@ namespace ComSquare::Debugger
 	int TileRenderer::getNbColumns() const
 	{
 		return this->_nbColumns;
+	}
+
+	void TileRenderer::setRamOffset(int offset)
+	{
+		this->_ramOffset = offset;
 	}
 }

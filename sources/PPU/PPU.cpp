@@ -32,8 +32,6 @@ namespace ComSquare::PPU
 		_mainScreen({{{0}}}),
 		_subScreen({{{0}}})
 	{
-		this->tileRenderer.setRam(this->vram);
-		this->tileRenderer.setCgram(this->cgram);
 		this->_registers._isLowByte = true;
 
 		//colors for the cgram
@@ -207,7 +205,7 @@ namespace ComSquare::PPU
 
 	uint8_t PPU::read(uint24_t addr)
 	{
-		//return 0;
+		return 0;
 		switch (addr) {
 		case PpuRegisters::mpyl:
 			return  this->_registers._mpy.mpyl;
@@ -252,7 +250,7 @@ namespace ComSquare::PPU
 
 	void PPU::write(uint24_t addr, uint8_t data)
 	{
-		//return;
+		return;
 		switch (addr) {
 		case PpuRegisters::inidisp:
 			this->_registers._inidisp.raw = data;
@@ -468,12 +466,6 @@ namespace ComSquare::PPU
 	void PPU::update(unsigned cycles)
 	{
 		(void)cycles;
-		this->tileRenderer.setBpp(4);
-		this->tileRenderer.setPaletteIndex(2);
-		this->tileRenderer.setNbColumns(16);
-		this->tileRenderer.setRenderSize(0x6000);
-		this->tileRenderer.render();
-		this->add_buffer(this->_screen, this->tileRenderer.buffer, {200, 200});
 
 		/*
 		this->renderMainAndSubScreen();
@@ -490,8 +482,6 @@ namespace ComSquare::PPU
 		for (auto &i : this->_mainScreen)
 			i.fill(0XFF);
 		for (auto &i : this->_subScreen)
-			i.fill(0XFF);
-		for (auto &i : this->_screen)
 			i.fill(0XFF);
 	}
 
