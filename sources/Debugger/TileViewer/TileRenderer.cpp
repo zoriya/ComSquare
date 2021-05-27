@@ -40,7 +40,7 @@ namespace ComSquare::Debugger
 		for (auto &i : buffer)
 			i.fill(0);
 
-		for (uint24_t i = this->_ramOffset; i + this->_ramOffset < fmin(this->_ram->getSize(), this->_renderSize); i += 2, it++) {
+		for (uint24_t i = this->_ramOffset; i < fmin(this->_ram->getSize(), this->_renderSize) + this->_ramOffset; i += 2, it++) {
 			if (bufX > 1024 || bufY > 1024)
 				break;
 			if (it && it % 8 == 0) {
