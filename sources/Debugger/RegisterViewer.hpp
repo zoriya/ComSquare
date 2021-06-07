@@ -87,7 +87,11 @@ namespace ComSquare
 			//! @brief A 16 bits hexadecimal value.
 			SixteenBits,
 			//! @brief A 24 bits hexadecimal value.
-			TwentyFourBits
+			TwentyFourBits,
+			//! @brief Just like printf(%d, myVar);
+			Integer,
+			//! @brief a simple string
+			String
 		};
 
 		//! @brief Struct containing information about a register.

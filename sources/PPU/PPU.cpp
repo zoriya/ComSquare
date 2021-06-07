@@ -7,39 +7,240 @@
 #include "PPU.hpp"
 #include "../Exceptions/NotImplementedException.hpp"
 #include "../Exceptions/InvalidAddress.hpp"
+#include "../Ram/Ram.hpp"
+#include "../Models/Vector2.hpp"
+#include <random>
 
 namespace ComSquare::PPU
 {
 	PPU::PPU(Renderer::IRenderer &renderer):
+		vram(new Ram::Ram(VRAMSIZE, ComSquare::VRam, "VRAM")),
+		oamram(new Ram::Ram(OAMRAMSIZE, ComSquare::OAMRam, "OAMRAM")),
+		cgram(new Ram::Ram(CGRAMSIZE, ComSquare::CGRam, "CGRAM")),
 		_renderer(renderer),
-		vram(new Ram::Ram(65536, ComSquare::VRam, "VRAM")),
-		oamram(new Ram::Ram(544, ComSquare::OAMRam, "OAMRAM")),
-		cgram(new Ram::Ram(512, ComSquare::CGRam, "CGRAM"))
+		_backgrounds{
+			Background(*this, 1, false),
+			Background(*this, 1, true),
+			Background(*this, 2, false),
+			Background(*this, 2, true),
+			Background(*this, 3, false),
+			Background(*this, 3, true),
+			Background(*this, 4, false),
+			Background(*this, 4, true)
+		},
+		_mainScreen({{{0}}}),
+		_subScreen({{{0}}})
 	{
 		this->_registers._isLowByte = true;
-		for (int i = 0; i < 512; i++) {
-			this->cgram->write(i, random() % 255);
+
+		//colors for the cgram
+		this->cgram->write(2, 0xE0);
+		this->cgram->write(3, 0x7F);
+		this->cgram->write(4, 0x1F); // 0x1F
+		this->cgram->write(6, 0xFF);
+		this->cgram->write(7, 0x03);
+		this->cgram->write(66, 0xE0);
+		this->cgram->write(67, 0x7F);
+
+		//tiles
+		int vram_test[] = {
+			00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,
+0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,
+00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xff,0xff,0xff,0xff,
+00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xff,0xff,0xff,0xff,
+03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0xff,0xff,0xff,0xff,
+0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xff,0xff,0xff,0xff,
+00,0xc0,0x00,0xe0,0x00,0x70,0x00,0x38,0x00,0x1c,0x00,0x0e,0x00,0x07,0x00,0x03,
+00,0x03,0x00,0x07,0x00,0x0e,0x00,0x1c,0x00,0x38,0x00,0x70,0x00,0xe0,0x00,0xc0,
+00,0x07,0x00,0x0f,0x00,0x18,0x00,0x30,0x00,0x60,0x00,0xc0,0x00,0xc0,0x00,0xc0,
+00,0xe0,0x00,0xf0,0x00,0x18,0x00,0x0c,0x00,0x06,0x00,0x03,0x00,0x03,0x00,0x03,
+0xfc,0x00,0xf8,0x00,0xf0,0x00,0xe0,0x00,0xc0,0x00,0x80,0x00,0x00,0x00,0x00,0x00,
+0x3f,0x00,0x1f,0x00,0x0f,0x00,0x07,0x00,0x03,0x00,0x01,0x00,0x00,0x00,0x00,0x00,
+00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,
+0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,
+0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+0xff,0xff,0xff,0xff,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,
+0xff,0xff,0xff,0xff,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,
+00,0x03,0x00,0x07,0x00,0x0e,0x00,0x1c,0x00,0x38,0x00,0x70,0x00,0xe0,0x00,0xc0,
+00,0xc0,0x00,0xe0,0x00,0x70,0x00,0x38,0x00,0x1c,0x00,0x0e,0x00,0x07,0x00,0x03,
+00,0xc0,0x00,0xc0,0x00,0xc0,0x00,0x60,0x00,0x30,0x00,0x18,0x00,0x0f,0x00,0x07,
+00,0x03,0x00,0x03,0x00,0x03,0x00,0x06,0x00,0x0c,0x00,0x18,0x00,0xf0,0x00,0xe0,
+00,0x00,0x00,0x00,0x80,0x00,0xc0,0x00,0xe0,0x00,0xf0,0x00,0xf8,0x00,0xfc,0x00,
+00,0x00,0x00,0x00,0x01,0x00,0x03,0x00,0x07,0x00,0x0f,00,0x1f,00,0x3f,00, -1
+		};
+		/*int *cgram_test = get_dump_cgram();
+		for (int i = 0; cgram_test[i] != -1; i++) {
+			this->cgram->write(i, cgram_test[i]);
+		}*/
+
+	//	int *vram_test = get_dump_vram();
+		for (int i = 0; vram_test[i] != -1; i++) {
+			this->vram->write(i, vram_test[i]);
 		}
+		int vram_test_2[] = {8, 00, 02, 00, 0x0A, 00, 02, 00, 0x0A, 00, 00, 00, 00, 00, 00, -1};
+		for (int i = 0; vram_test_2[i] != -1; i++) {
+			this->vram->write(i + 0x8000, vram_test_2[i]);
+		}
+		int vram_test_3[] = {8, 00, 02, 00, 0x8, 00, 02, 00, 0x8, 00, 00, 00, 00, 00, 00, -1};
+		for (int i = 0; vram_test_3[i] != -1; i++) {
+			this->vram->write(i + 0x8080, vram_test_3[i]);
+		}
+		int vram_test_4[] = {8, 00, 02, 00, 0x0A, 00, 02, 00, 0x0A, 00, 00, 00, 00, 00, 00, -1};
+		for (int i = 0; vram_test_4[i] != -1; i++) {
+			this->vram->write(i + 0x8100, vram_test_4[i]);
+		}
+		this->vram->write(0x8040, 04);
+		this->vram->write(0x8042, 06);
+		this->vram->write(0x8044, 04);
+		this->vram->write(0x8046, 06);
+		this->vram->write(0x8048, 04);
+
+		this->vram->write(0x80C0, 04);
+		this->vram->write(0x80C2, 06);
+		this->vram->write(0x80C4, 04);
+		this->vram->write(0x80C6, 06);
+		this->vram->write(0x80C8, 04);
+
+		this->vram->write(0xC000, 0x0C);
+
+		//registers tic tac toe
+		this->_registers._bgmode.bgMode = 0;
+		this->_backgrounds[0].setBpp(this->getBPP(1));
+		this->_backgrounds[1].setBpp(this->getBPP(1));
+		this->_backgrounds[2].setBpp(this->getBPP(2));
+		this->_backgrounds[3].setBpp(this->getBPP(2));
+		this->_backgrounds[4].setBpp(this->getBPP(3));
+		this->_backgrounds[5].setBpp(this->getBPP(3));
+		this->_backgrounds[6].setBpp(this->getBPP(4));
+		this->_backgrounds[7].setBpp(this->getBPP(4));
+
+		this->_registers._bgmode.characterSizeBg1 = true;
+		this->_registers._bgmode.characterSizeBg2 = true;
+		this->_backgrounds[0].setCharacterSize(this->getCharacterSize(1));
+		this->_backgrounds[1].setCharacterSize(this->getCharacterSize(1));
+		this->_backgrounds[2].setCharacterSize(this->getCharacterSize(2));
+		this->_backgrounds[3].setCharacterSize(this->getCharacterSize(2));
+		this->_backgrounds[4].setCharacterSize(this->getCharacterSize(3));
+		this->_backgrounds[5].setCharacterSize(this->getCharacterSize(3));
+		this->_backgrounds[6].setCharacterSize(this->getCharacterSize(4));
+		this->_backgrounds[7].setCharacterSize(this->getCharacterSize(4));
+
+		this->_registers._bgsc[0].tilemapAddress = 0x4000 >> 10U;
+		this->_registers._bgsc[1].tilemapAddress = 0x6000 >> 10U;
+		this->_backgrounds[0].setTileMapStartAddress(this->getTileMapStartAddress(1));
+		this->_backgrounds[1].setTileMapStartAddress(this->getTileMapStartAddress(1));
+		this->_backgrounds[2].setTileMapStartAddress(this->getTileMapStartAddress(2));
+		this->_backgrounds[3].setTileMapStartAddress(this->getTileMapStartAddress(2));
+
+		//this->_registers._bgofs[2].raw = 0x03E0;
+		//this->_registers._bgofs[3].raw = 0x03DF;
+		this->_registers._t[0].enableWindowDisplayBg1 = true;
+		this->_registers._t[0].enableWindowDisplayBg2 = true;
+
+		/*
+		//registers aladin
+
+		this->_registers._bgmode.bgMode = 1;
+		this->_backgrounds[0].setBpp(this->getBPP(1));
+		this->_backgrounds[1].setBpp(this->getBPP(1));
+		this->_backgrounds[2].setBpp(this->getBPP(2));
+		this->_backgrounds[3].setBpp(this->getBPP(2));
+		this->_backgrounds[4].setBpp(this->getBPP(3));
+		this->_backgrounds[5].setBpp(this->getBPP(3));
+		//this->_registers._bgmode.characterSizeBg1 = false;
+		//this->_registers._bgmode.characterSizeBg2 = false;
+		this->_registers._bgmode.mode1Bg3PriorityBit = true;
+		this->_backgrounds[0].setCharacterSize(this->getCharacterSize(1));
+		this->_backgrounds[1].setCharacterSize(this->getCharacterSize(1));
+		this->_backgrounds[2].setCharacterSize(this->getCharacterSize(2));
+		this->_backgrounds[3].setCharacterSize(this->getCharacterSize(2));
+
+		this->_registers._bgsc[0].tilemapAddress = 0x4800U >> 10U; // 0x4800
+		this->_registers._bgsc[0].tilemapHorizontalMirroring = 1;
+		this->_registers._bgsc[1].tilemapAddress = 0x4000U >> 10U; // 0x4000
+		this->_registers._bgsc[1].tilemapHorizontalMirroring = 1;
+		this->_registers._bgsc[2].tilemapAddress = 0x5C00U >> 10U;
+		this->_backgrounds[0].setTileMapStartAddress(this->getTileMapStartAddress(1));
+		this->_backgrounds[0].setTilemaps(this->getBackgroundSize(1));
+		this->_backgrounds[1].setTileMapStartAddress(this->getTileMapStartAddress(1));
+		this->_backgrounds[1].setTilemaps(this->getBackgroundSize(1));
+		this->_backgrounds[2].setTileMapStartAddress(this->getTileMapStartAddress(2));
+		this->_backgrounds[2].setTilemaps(this->getBackgroundSize(2));
+		this->_backgrounds[3].setTileMapStartAddress(this->getTileMapStartAddress(2));
+		this->_backgrounds[3].setTilemaps(this->getBackgroundSize(2));
+		this->_backgrounds[4].setTileMapStartAddress(this->getTileMapStartAddress(3));
+		this->_backgrounds[5].setTileMapStartAddress(this->getTileMapStartAddress(3));
+
+		//registres bgnba
+		//this->_registers._bgnba[0].baseAddressBg1a3 = 0x5;
+		//this->_registers._bgnba[0].baseAddressBg2a4 = 0x5;
+		this->_registers._bgnba[1].baseAddressBg1a3 = 0x5;
+
+		//this->_backgrounds[0].setTilesetAddress(this->getTilesetAddress(1));
+		//this->_backgrounds[1].setTilesetAddress(this->getTilesetAddress(1));
+		//this->_backgrounds[2].setTilesetAddress(this->getTilesetAddress(2));
+		//this->_backgrounds[3].setTilesetAddress(this->getTilesetAddress(2));
+		this->_backgrounds[4].setTilesetAddress(this->getTilesetAddress(3));
+		this->_backgrounds[5].setTilesetAddress(this->getTilesetAddress(3));
+
+		this->_registers._vmain.incrementMode = true;
+		this->_registers._vmain.incrementAmount = 1;
+
+		this->_registers._vmdata.vmdata = 0x1AF0;
+
+		this->_registers._t[0].enableWindowDisplayBg1 = true;
+		this->_registers._t[0].enableWindowDisplayBg2 = true;
+		this->_registers._t[0].enableWindowDisplayBg3 = true;
+
+*/
 	}
 
-	uint8_t PPU::read(uint24_t addr) const
+	uint8_t PPU::read(uint24_t addr)
 	{
+		//return 0;
 		switch (addr) {
-		case ppuRegisters::mpyl:
+		case PpuRegisters::mpyl:
 			return  this->_registers._mpy.mpyl;
-		case ppuRegisters::mpym:
+		case PpuRegisters::mpym:
 			return this->_registers._mpy.mpym;
-		case ppuRegisters::mpyh:
+		case PpuRegisters::mpyh:
 			return this->_registers._mpy.mpyh;
-		case ppuRegisters::slhv:
+		case PpuRegisters::slhv:
 			return this->_registers._slhv;
-		case ppuRegisters::oamdataread:
-		case ppuRegisters::vmdatalread:
-		case ppuRegisters::vmdatahread:
-		case ppuRegisters::ophct:
-		case ppuRegisters::opvct:
-		case ppuRegisters::stat77:
-		case ppuRegisters::stat78:
+		case PpuRegisters::oamdataread:
+			return 0;
+		case PpuRegisters::vmdatalread: {
+			auto returnValue = static_cast<uint8_t>(this->_vramReadBuffer);
+			if (!this->_registers._vmain.incrementMode) {
+				this->updateVramReadBuffer();
+				// & 0x7FFF;
+				this->_registers._vmadd.vmadd += this->_registers._incrementAmount;
+			}
+			return returnValue;
+		}
+		case PpuRegisters::vmdatahread: {
+			auto returnValue = static_cast<uint8_t>(this->_vramReadBuffer >> 8);
+			if (this->_registers._vmain.incrementMode) {
+				this->updateVramReadBuffer();
+				// & 0x7FFF;
+				this->_registers._vmadd.vmadd += this->_registers._incrementAmount;
+			}
+			return returnValue;
+		}
+		case PpuRegisters::cgdataread: {
+			return this->cgram->read(this->_registers._cgadd++);
+		}
+		case PpuRegisters::ophct:
+		case PpuRegisters::opvct:
+		case PpuRegisters::stat77:
+		case PpuRegisters::stat78:
 			return 0;
 		default:
 			throw InvalidAddress("PPU Internal Registers read ", addr + this->_start);
@@ -48,57 +249,76 @@ namespace ComSquare::PPU
 
 	void PPU::write(uint24_t addr, uint8_t data)
 	{
+		//return;
 		switch (addr) {
-		case ppuRegisters::inidisp:
+		case PpuRegisters::inidisp:
 			this->_registers._inidisp.raw = data;
 			break;
-		case ppuRegisters::obsel:
+		case PpuRegisters::obsel:
 			this->_registers._obsel.raw = data;
 			break;
-		case ppuRegisters::oamaddl:
+		case PpuRegisters::oamaddl:
 			this->_registers._oamadd.oamaddl = data;
 			break;
-		case ppuRegisters::oamaddh:
+		case PpuRegisters::oamaddh:
 			this->_registers._oamadd.oamaddh = data;
 			break;
-		case ppuRegisters::oamdata:
+		case PpuRegisters::oamdata:
 			this->_registers._oamdata = data;
 			//throw InvalidAddress("oamdata", addr);
-			std::cout << "oamdata" << std::endl;
+			//std::cout << "oamdata" << std::endl;
 			// the oamAddress have to be calculated if fblank or not (not implemented)
 			oamram->write(this->_registers._oamadd.oamAddress, this->_registers._oamdata);
 			this->_registers._oamadd.oamAddress++;
 			break;
-		case ppuRegisters::bgmode:
+		case PpuRegisters::bgmode:
 			this->_registers._bgmode.raw = data;
+			// update backgrounds
+			for (int i = 0; i < 8; i++) {
+				this->_backgrounds[i].setBpp(this->getBPP((i / 2) + 1));
+				this->_backgrounds[i].setCharacterSize(this->getCharacterSize((i / 2) + 1));
+			}
 			break;
-		case ppuRegisters::mosaic:
+		case PpuRegisters::mosaic:
 			this->_registers._mosaic.raw = data;
 			break;
-		case ppuRegisters::bg1sc:
-		case ppuRegisters::bg2sc:
-		case ppuRegisters::bg3sc:
-		case ppuRegisters::bg4sc:
+		case PpuRegisters::bg1sc:
+		case PpuRegisters::bg2sc:
+		case PpuRegisters::bg3sc:
+		case PpuRegisters::bg4sc:
 			this->_registers._bgsc[addr - 0x07].raw = data;
+			// update background tilemap address
+			this->_backgrounds[addr - 0x07].setTileMapStartAddress(this->getTileMapStartAddress(addr - 0x07 + 1));
+			this->_backgrounds[addr - 0x07 + 1].setTileMapStartAddress(this->getTileMapStartAddress(addr - 0x07 + 1));
+			this->_backgrounds[addr - 0x07].setTilemaps({this->_registers._bgsc[addr - 0x07].tilemapHorizontalMirroring, this->_registers._bgsc[addr - 0x07].tilemapVerticalMirroring});
+			this->_backgrounds[addr - 0x07 + 1].setTilemaps({this->_registers._bgsc[addr - 0x07].tilemapHorizontalMirroring, this->_registers._bgsc[addr - 0x07].tilemapVerticalMirroring});
 			break;
-		case ppuRegisters::bg12nba:
-		case ppuRegisters::bg34nba:
-			this->_registers._bgnba[addr - 0x0B].raw = data;
+		case PpuRegisters::bg12nba:
+		case PpuRegisters::bg34nba:
+			this->_registers._bgnba[addr - PpuRegisters::bg12nba].raw = data;
 			break;
-		case ppuRegisters::bg1hofs:
-		case ppuRegisters::bg1vofs:
-		case ppuRegisters::bg2hofs:
-		case ppuRegisters::bg2vofs:
-		case ppuRegisters::bg3hofs:
-		case ppuRegisters::bg3vofs:
-		case ppuRegisters::bg4hofs:
-		case ppuRegisters::bg4vofs:
-			// Work in progress !
-			if (addr == ppuRegisters::bg1hofs || addr == ppuRegisters::bg1vofs)
-				this->_registers._m7ofs[addr - ppuRegisters::bg1hofs].raw = data;
-			this->_registers._bgofs[addr - ppuRegisters::bg1hofs].raw = data;
+		case PpuRegisters::bg1hofs:
+			// TODO need of special var for prev value for Mode 7
+			this->_registers._m7ofs[addr - PpuRegisters::bg1hofs].raw = data;
+			FALLTHROUGH
+		case PpuRegisters::bg2hofs:
+		case PpuRegisters::bg3hofs:
+		case PpuRegisters::bg4hofs:
+			this->_registers._bgofs[addr - PpuRegisters::bg1hofs].raw = ((data << 8) | (this->_ppuState.hvSharedScrollPrevValue & ~7) | (this->_ppuState.hScrollPrevValue & 7)) & 0x3FF;
+			this->_ppuState.hScrollPrevValue = data;
+			this->_ppuState.hvSharedScrollPrevValue = data;
 			break;
-		case ppuRegisters::vmain:
+		case PpuRegisters::bg1vofs:
+			// TODO need of special var for prev value for Mode 7
+			this->_registers._bgnba[addr - PpuRegisters::bg12nba].raw = data;
+			FALLTHROUGH
+		case PpuRegisters::bg2vofs:
+		case PpuRegisters::bg3vofs:
+		case PpuRegisters::bg4vofs:
+			this->_registers._bgofs[addr - PpuRegisters::bg1hofs].raw = ((data << 8) | this->_ppuState.hvSharedScrollPrevValue) & 0x3FF;
+			this->_ppuState.hvSharedScrollPrevValue = data;
+			break;
+		case PpuRegisters::vmain:
 			this->_registers._vmain.raw = data;
 			switch (this->_registers._vmain.incrementAmount) {
 			case 0b00:
@@ -112,13 +332,15 @@ namespace ComSquare::PPU
 				this->_registers._incrementAmount = 128;
 			}
 			break;
-		case ppuRegisters::vmaddl:
+		case PpuRegisters::vmaddl:
 			this->_registers._vmadd.vmaddl = data;
+			this->updateVramReadBuffer();
 			break;
-		case ppuRegisters::vmaddh:
+		case PpuRegisters::vmaddh:
 			this->_registers._vmadd.vmaddh = data;
+			this->updateVramReadBuffer();
 			break;
-		case ppuRegisters::vmdatal:
+		case PpuRegisters::vmdatal:
 			//throw InvalidAddress("vmdata", addr);
 			//std::cout << "vmdatal" << std::endl;
 			if (!this->_registers._inidisp.fblank) {
@@ -128,7 +350,7 @@ namespace ComSquare::PPU
 			if (!this->_registers._vmain.incrementMode)
 				this->_registers._vmadd.vmadd += this->_registers._incrementAmount;
 			break;
-		case ppuRegisters::vmdatah:
+		case PpuRegisters::vmdatah:
 			//std::cout << "vmdatah" << std::endl;
 			if (!this->_registers._inidisp.fblank) {
 				this->_registers._vmdata.vmdatah = data;
@@ -137,24 +359,24 @@ namespace ComSquare::PPU
 			if (this->_registers._vmain.incrementMode)
 				this->_registers._vmadd.vmadd += this->_registers._incrementAmount;
 			break;
-		case ppuRegisters::m7sel:
+		case PpuRegisters::m7sel:
 			this->_registers._m7sel.raw = data;
 			break;
-		case ppuRegisters::m7a:
-		case ppuRegisters::m7b:
-		case ppuRegisters::m7c:
-		case ppuRegisters::m7d:
-			this->_registers._m7[addr - ppuRegisters::m7a].m7 = (this->_registers._m7[addr - ppuRegisters::m7a].m7 << 8) | data;
+		case PpuRegisters::m7a:
+		case PpuRegisters::m7b:
+		case PpuRegisters::m7c:
+		case PpuRegisters::m7d:
+			this->_registers._m7[addr - PpuRegisters::m7a].m7 = (this->_registers._m7[addr - PpuRegisters::m7a].m7 << 8U) | data;
 			break;
-		case ppuRegisters::m7x:
-		case ppuRegisters::m7y:
+		case PpuRegisters::m7x:
+		case PpuRegisters::m7y:
 			// TODO these registers
 			break;
-		case ppuRegisters::cgadd:
+		case PpuRegisters::cgadd:
 			this->_registers._cgadd = data;
 			this->_registers._isLowByte = true;
 			break;
-		case ppuRegisters::cgdata:
+		case PpuRegisters::cgdata:
 			if (this->_registers._isLowByte) {
 				this->_registers._cgdata.cgdatal = data;
 			}
@@ -167,51 +389,51 @@ namespace ComSquare::PPU
 			}
 			this->_registers._isLowByte = !this->_registers._isLowByte;
 			break;
-		case ppuRegisters::w12sel:
-		case ppuRegisters::w34sel:
-		case ppuRegisters::wobjsel:
-			this->_registers._wsel[addr - ppuRegisters::w12sel].raw = data;
+		case PpuRegisters::w12sel:
+		case PpuRegisters::w34sel:
+		case PpuRegisters::wobjsel:
+			this->_registers._wsel[addr - PpuRegisters::w12sel].raw = data;
 			break;
-		case ppuRegisters::wh0:
-			this->_registers._wh0 = data;
+		case PpuRegisters::wh0:
+			this->_registers._wh[0] = data;
 			break;
-		case ppuRegisters::wh1:
-			this->_registers._wh1 = data;
+		case PpuRegisters::wh1:
+			this->_registers._wh[1] = data;
 			break;
-		case ppuRegisters::wh2:
-			this->_registers._wh2 = data;
+		case PpuRegisters::wh2:
+			this->_registers._wh[2] = data;
 			break;
-		case ppuRegisters::wh3:
-			this->_registers._wh3 = data;
+		case PpuRegisters::wh3:
+			this->_registers._wh[3] = data;
 			break;
-		case ppuRegisters::wbjlog:
+		case PpuRegisters::wbjlog:
 			this->_registers._wbglog.raw = data;
 			break;
-		case ppuRegisters::wobjlog:
+		case PpuRegisters::wobjlog:
 			this->_registers._wobjlog.raw = data;
 			break;
-		case ppuRegisters::tm:
-		case ppuRegisters::ts:
-			this->_registers._t[addr - ppuRegisters::tm].raw = data;
+		case PpuRegisters::tm:
+		case PpuRegisters::ts:
+			this->_registers._t[addr - PpuRegisters::tm].raw = data;
 			break;
-		case ppuRegisters::tmw:
-		case ppuRegisters::tsw:
-			this->_registers._tw[addr - ppuRegisters::tmw].raw = data;
+		case PpuRegisters::tmw:
+		case PpuRegisters::tsw:
+			this->_registers._tw[addr - PpuRegisters::tmw].raw = data;
 			break;
-		case ppuRegisters::cgwsel:
+		case PpuRegisters::cgwsel:
 			this->_registers._cgwsel.raw = data;
 			break;
-		case ppuRegisters::cgadsub:
+		case PpuRegisters::cgadsub:
 			this->_registers._cgadsub.raw = data;
 			break;
-		case ppuRegisters::coldata:
+		case PpuRegisters::coldata:
 			this->_registers._coldata.raw = data;
 			break;
-		case ppuRegisters::setini:
+		case PpuRegisters::setini:
 			this->_registers._setini.raw = data;
 			break;
 		//TODO adding the rest of the registers. oaf !
-		case ppuRegisters::stat77: // some roms write here but it is useless
+		case PpuRegisters::stat77: // some roms write here but it is useless
 			break;
 		default:
 			throw InvalidAddress("PPU Internal Registers write", addr + this->_start);
@@ -223,7 +445,7 @@ namespace ComSquare::PPU
 		return 0x3F;
 	}
 
-	uint16_t PPU::getVramAddress()
+	uint16_t PPU::getVramAddress() const
 	{
 		uint16_t vanillaAddress = this->_registers._vmadd.vmadd * 2;
 
@@ -243,29 +465,17 @@ namespace ComSquare::PPU
 	void PPU::update(unsigned cycles)
 	{
 		(void)cycles;
-		uint16_t tmp;
-		uint8_t red;
-		uint8_t green;
-		uint8_t blue;
-		uint32_t pixelTmp;
-		if (!this->_registers._inidisp.fblank) {
-			for (int y = 0; y <= 255; y += 2) {
-				tmp = this->cgram->read(y);
-				tmp += this->cgram->read(y + 1) << 8;
-				blue = (tmp & 0x7D00U) >> 10U;
-				green = (tmp & 0x03E0U) >> 5U;
-				red = (tmp & 0x001FU);
 
-				pixelTmp = this->_registers._inidisp.brightness * 255U / 15U;
-				pixelTmp += (red * 255U / 31U) << 24U;
-				pixelTmp += (green * 255U / 31U) << 16U;
-				pixelTmp += (blue * 255U / 31U) << 8U;
-
-				for (int x = 0; x < 100; x++)
-					this->_renderer.putPixel(x, y, pixelTmp);
+		this->renderMainAndSubScreen();
+		this->add_buffer(this->_screen, this->_subScreen);
+		this->add_buffer(this->_screen, this->_mainScreen);
+		//this->_backgrounds[2].renderBackground();
+		//add_buffer(this->_screen, this->_backgrounds[2].buffer);
+		for (unsigned long i = 0; i < this->_screen.size(); i++) {
+			for (unsigned long j = 0; j < this->_screen[i].size(); j++) {
+				this->_renderer.putPixel(j, i, this->_screen[i][j]);
 			}
 		}
-		this->renderBackground(1, {8, 8}, 4, false);
 		this->_renderer.drawScreen();
 	}
 
@@ -277,133 +487,133 @@ namespace ComSquare::PPU
 	std::string PPU::getValueName(uint24_t addr) const
 	{
 		switch (addr) {
-		case ppuRegisters::inidisp:
+		case PpuRegisters::inidisp:
 			return "INIDISP";
-		case ppuRegisters::obsel:
+		case PpuRegisters::obsel:
 			return "OBSEL";
-		case ppuRegisters::oamaddl:
+		case PpuRegisters::oamaddl:
 			return "OAMADDL";
-		case ppuRegisters::oamaddh:
+		case PpuRegisters::oamaddh:
 			return "OAMDDH";
-		case ppuRegisters::oamdata:
+		case PpuRegisters::oamdata:
 			return "OAMDATA";
-		case ppuRegisters::bgmode:
+		case PpuRegisters::bgmode:
 			return "BGMODE";
-		case ppuRegisters::mosaic:
+		case PpuRegisters::mosaic:
 			return "MOSAIC";
-		case ppuRegisters::bg1sc:
+		case PpuRegisters::bg1sc:
 			return "BG1SC";
-		case ppuRegisters::bg2sc:
+		case PpuRegisters::bg2sc:
 			return "BG2SC";
-		case ppuRegisters::bg3sc:
+		case PpuRegisters::bg3sc:
 			return "BG3SC";
-		case ppuRegisters::bg4sc:
+		case PpuRegisters::bg4sc:
 			return "BG4SC";
-		case ppuRegisters::bg12nba:
+		case PpuRegisters::bg12nba:
 			return "BG12NBA";
-		case ppuRegisters::bg34nba:
+		case PpuRegisters::bg34nba:
 			return "BG34NBA";
-		case ppuRegisters::bg1hofs:
+		case PpuRegisters::bg1hofs:
 			return "BG1HOFS";
-		case ppuRegisters::bg1vofs:
+		case PpuRegisters::bg1vofs:
 			return "BG1VOFS";
-		case ppuRegisters::bg2hofs:
+		case PpuRegisters::bg2hofs:
 			return "BG2HOFS";
-		case ppuRegisters::bg2vofs:
+		case PpuRegisters::bg2vofs:
 			return "BG2VOFS";
-		case ppuRegisters::bg3hofs:
+		case PpuRegisters::bg3hofs:
 			return "BG3HOFS";
-		case ppuRegisters::bg3vofs:
+		case PpuRegisters::bg3vofs:
 			return "BG3VOFS";
-		case ppuRegisters::bg4hofs:
+		case PpuRegisters::bg4hofs:
 			return "BG4HOFS";
-		case ppuRegisters::bg4vofs:
+		case PpuRegisters::bg4vofs:
 			return "BG4VOFS";
-		case ppuRegisters::vmain:
+		case PpuRegisters::vmain:
 			return "VMAIN";
-		case ppuRegisters::vmaddl:
+		case PpuRegisters::vmaddl:
 			return "VMADDL";
-		case ppuRegisters::vmaddh:
+		case PpuRegisters::vmaddh:
 			return "VMADDH";
-		case ppuRegisters::vmdatal:
+		case PpuRegisters::vmdatal:
 			return "VMDATAL";
-		case ppuRegisters::vmdatah:
+		case PpuRegisters::vmdatah:
 			return "VMDATAH";
-		case ppuRegisters::m7sel:
+		case PpuRegisters::m7sel:
 			return "M7SEL";
-		case ppuRegisters ::m7a:
+		case PpuRegisters ::m7a:
 			return "M7A";
-		case ppuRegisters ::m7b:
+		case PpuRegisters ::m7b:
 			return "M7B";
-		case ppuRegisters ::m7c:
+		case PpuRegisters ::m7c:
 			return "M7C";
-		case ppuRegisters ::m7d:
+		case PpuRegisters ::m7d:
 			return "M7D";
-		case ppuRegisters ::m7x:
+		case PpuRegisters ::m7x:
 			return "M7X";
-		case ppuRegisters ::m7y:
+		case PpuRegisters ::m7y:
 			return "M7Y";
-		case ppuRegisters::cgadd:
+		case PpuRegisters::cgadd:
 			return "CGADD";
-		case ppuRegisters::cgdata:
+		case PpuRegisters::cgdata:
 			return "CGDATA";
-		case ppuRegisters::w12sel:
+		case PpuRegisters::w12sel:
 			return "W12SEL";
-		case ppuRegisters::w34sel:
+		case PpuRegisters::w34sel:
 			return "W34SEL";
-		case ppuRegisters::wobjsel:
+		case PpuRegisters::wobjsel:
 			return "WOBJSEL";
-		case ppuRegisters::wh0:
+		case PpuRegisters::wh0:
 			return "WH0";
-		case ppuRegisters::wh1:
+		case PpuRegisters::wh1:
 			return "WH1";
-		case ppuRegisters::wh2:
+		case PpuRegisters::wh2:
 			return "WH2";
-		case ppuRegisters::wh3:
+		case PpuRegisters::wh3:
 			return "WH3";
-		case ppuRegisters::wbjlog:
+		case PpuRegisters::wbjlog:
 			return "WBJLOG";
-		case ppuRegisters::wobjlog:
+		case PpuRegisters::wobjlog:
 			return "WOBJLOG";
-		case ppuRegisters::tm:
+		case PpuRegisters::tm:
 			return "TM";
-		case ppuRegisters::ts:
+		case PpuRegisters::ts:
 			return "TS";
-		case ppuRegisters::tmw:
+		case PpuRegisters::tmw:
 			return "TMW";
-		case ppuRegisters::tsw:
+		case PpuRegisters::tsw:
 			return "TSW";
-		case ppuRegisters::cgwsel:
+		case PpuRegisters::cgwsel:
 			return "CGWSEL";
-		case ppuRegisters::cgadsub:
+		case PpuRegisters::cgadsub:
 			return "CGADDSUB";
-		case ppuRegisters::coldata:
+		case PpuRegisters::coldata:
 			return "COLDATA";
-		case ppuRegisters::setini:
+		case PpuRegisters::setini:
 			return "SETINI";
-		case ppuRegisters::mpyl:
+		case PpuRegisters::mpyl:
 			return "MPYL";
-		case ppuRegisters::mpym:
+		case PpuRegisters::mpym:
 			return "MPYM";
-		case ppuRegisters::mpyh:
+		case PpuRegisters::mpyh:
 			return "MPYH";
-		case ppuRegisters::slhv:
+		case PpuRegisters::slhv:
 			return "SLHV";
-		case ppuRegisters::oamdataread:
+		case PpuRegisters::oamdataread:
 			return "OAMDATAREAD";
-		case ppuRegisters::vmdatalread:
+		case PpuRegisters::vmdatalread:
 			return "VMDATALREAD";
-		case ppuRegisters::vmdatahread:
+		case PpuRegisters::vmdatahread:
 			return "VMDATAHREAD";
-		case ppuRegisters::cgdataread:
+		case PpuRegisters::cgdataread:
 			return "CGDATAREAD";
-		case ppuRegisters::ophct:
+		case PpuRegisters::ophct:
 			return "OPHCT";
-		case ppuRegisters::opvct:
+		case PpuRegisters::opvct:
 			return "OPVCT";
-		case ppuRegisters::stat77:
+		case PpuRegisters::stat77:
 			return "STAT77";
-		case ppuRegisters::stat78:
+		case PpuRegisters::stat78:
 			return "STAT78";
 		default:
 			return "???";
@@ -423,5 +633,216 @@ namespace ComSquare::PPU
 	uint16_t PPU::cgramRead(uint16_t addr)
 	{
 		return this->cgram->read(addr);
+	}
+
+	int PPU::getBPP(int bgNumber) const
+	{
+		switch (this->_registers._bgmode.bgMode) {
+		case 0:
+			return 2;
+		case 1:
+			if (bgNumber < 3)
+				return 4;
+			return 2;
+		case 2:
+			return 4;
+		case 3:
+			if (bgNumber == 1)
+				return 8;
+			return 4;
+		case 4:
+			if (bgNumber == 1)
+				return 8;
+			return 2;
+		case 5:
+			if (bgNumber == 1)
+				return 4;
+			return 2;
+		case 6:
+			return 4;
+		case 7:
+			if (bgNumber == 1)
+				return 8;
+			return 7;
+		default:
+			throw std::runtime_error("Invalid Background number");
+		}
+	}
+
+	Vector2<int> PPU::getCharacterSize(int bgNumber) const
+	{
+		Vector2<int> characterSize(8, 8);
+
+		//TODO this wont work for modes 5 and 6 and will be reworked
+		if (this->_registers._bgmode.raw & (1U << (3 + bgNumber)))
+			characterSize = {16, 16};
+		return characterSize;
+	}
+
+	uint16_t PPU::getTileMapStartAddress(int bgNumber) const
+	{
+		return this->_registers._bgsc[bgNumber - 1].tilemapAddress << 11U;
+	}
+
+	uint16_t PPU::getTilesetAddress(int bgNumber) const
+	{
+		uint16_t baseAddress = this->_registers._bgnba[bgNumber > 2].raw;
+
+		baseAddress = (bgNumber % 2) ? baseAddress & 0xFU : (baseAddress & 0xFU) >> 4U;
+		baseAddress = baseAddress << 13U;
+		return baseAddress;
+	}
+
+	Vector2<int> PPU::getBackgroundSize(int bgNumber) const
+	{
+		Vector2<int> backgroundSize(0,0);
+
+		backgroundSize.y = (this->_registers._bgsc[bgNumber - 1].tilemapVerticalMirroring) ? 2 : 1;
+		backgroundSize.x = (this->_registers._bgsc[bgNumber - 1].tilemapHorizontalMirroring) ? 2 : 1;
+		return backgroundSize;
+	}
+
+	void PPU::renderMainAndSubScreen()
+	{
+		uint16_t colorPalette;
+		// should only render backgrounds needed (depending of th bgMode)
+		//int i = 0;
+		for (auto &_background : this->_backgrounds) {
+			//i++;
+			_background.renderBackground();
+		}
+		// TODO make a function getDefaultBgColor
+		colorPalette = this->cgram->read(0);
+		colorPalette += this->cgram->read(1) << 8U;
+
+		for (unsigned long i = 0; i < this->_subScreen.size(); i++)
+			for (unsigned long j = 0; j < this->_subScreen[i].size(); j++)
+				this->_subScreen[i][j] = getRealColor(colorPalette);
+		// the buffer is overwrite if necessary by a new bg so the background priority is from back to front
+		// the starting palette index isn't implemented
+		switch (this->_registers._bgmode.bgMode) {
+		case 0:
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg4NoPriority]);
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg3NoPriority]);
+			//sprites  priority 0
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg4Priority]);
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg3Priority]);
+			//sprites priority 1
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg2NoPriority]);
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg1NoPriority]);
+			//sprites priority 2
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg2Priority]);
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg1Priority]);
+			//sprites priority 3
+			break;
+		case 1:
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg3NoPriority]);
+			//sprites priority 0
+			if (!this->_registers._bgmode.mode1Bg3PriorityBit)
+				this->addToMainSubScreen(this->_backgrounds[BgName::bg3Priority]);
+			//sprites priority 1
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg2NoPriority]);
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg1NoPriority]);
+			//sprites priority 2
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg2Priority]);
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg1Priority]);
+			//sprites priority 3
+			if (this->_registers._bgmode.mode1Bg3PriorityBit)
+				this->addToMainSubScreen(this->_backgrounds[BgName::bg3Priority]);
+			break;
+		case 2:
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg2NoPriority]);
+			//sprites priority 0
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg1NoPriority]);
+			//sprites priority 1
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg2Priority]);
+			//sprites priority 2
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg1Priority]);
+			//sprites priority 3
+			break;
+		case 3:
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg2NoPriority]);
+			//sprites priority 0
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg1NoPriority]);
+			//sprites priority 1
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg2Priority]);
+			//sprites priority 2
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg1Priority]);
+			//sprites priority 3
+			break;
+		case 4:
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg2NoPriority]);
+			//sprites priority 0
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg1NoPriority]);
+			//sprites priority 1
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg2Priority]);
+			//sprites priority 2
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg1Priority]);
+			//sprites priority 3
+			break;
+		case 5:
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg2NoPriority]);
+			//sprites priority 0
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg1NoPriority]);
+			//sprites priority 1
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg2Priority]);
+			//sprites priority 2
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg1Priority]);
+			//sprites priority 3
+			break;
+		case 6:
+			//sprites priority 0
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg1NoPriority]);
+			//sprites priority 1
+			//sprites priority 2
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg1Priority]);
+			//sprites priority
+			break;
+		case 7:
+			// Not implemented
+			throw std::runtime_error("not implemented");
+		default:
+			break;
+		}
+	}
+
+	template <std::size_t DEST_SIZE, std::size_t SRC_SIZE>
+	void PPU::add_buffer(std::array<std::array<uint32_t, DEST_SIZE>, DEST_SIZE> &bufferDest, std::array<std::array<uint32_t, SRC_SIZE>, SRC_SIZE> &bufferSrc)
+	{
+		for (unsigned long i = 0; i < bufferSrc.size(); i++) {
+			for (unsigned long j = 0; j < bufferSrc[i].size(); j++) {
+				if (bufferSrc[i][j] > 0xFF) // 0xFF correspond to a black pixel with full brightness
+					bufferDest[i][j] = bufferSrc[i][j];
+			}
+		}
+	}
+
+	void PPU::addToMainSubScreen(Background &bg)
+	{
+		if (this->_registers._t[0].raw & (1U << (bg.getBgNumber() - 1U)))
+			this->add_buffer(this->_mainScreen, bg.buffer);
+		if (this->_registers._t[1].raw & (1U << (bg.getBgNumber() - 1U)))
+			this->add_buffer(this->_subScreen, bg.buffer);
+	}
+
+	int PPU::getBgMode() const
+	{
+		return this->_registers._bgmode.bgMode;
+	}
+
+	void PPU::updateVramReadBuffer()
+	{
+		this->_vramReadBuffer = this->vram->read(this->getVramAddress());
+		this->_vramReadBuffer += this->vram->read(this->getVramAddress() + 1) << 8;
+	}
+
+	Vector2<int> PPU::getBgScroll(int bgNumber) const
+	{
+		return Vector2<int>(this->_registers._bgofs[(bgNumber - 1) * 2].offsetBg, this->_registers._bgofs[(bgNumber - 1) * 2 + 1].offsetBg);
+	}
+
+	const Registers &PPU::getWriteRegisters() const
+	{
+		return this->_registers;
 	}
 }

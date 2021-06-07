@@ -24,7 +24,7 @@ namespace ComSquare::Memory
 		return base + this->_bankOffset * (1 + this->_endPage - this->_startPage);
 	}
 
-	uint8_t RectangleShadow::read(uint24_t addr) const
+	uint8_t RectangleShadow::read(uint24_t addr)
 	{
 		return this->_initial->read(addr);
 	}

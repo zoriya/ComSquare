@@ -134,7 +134,7 @@ namespace ComSquare::APU
 		}
 	}
 
-	uint8_t APU::read(uint24_t addr) const
+	uint8_t APU::read(uint24_t addr)
 	{
 		switch (addr) {
 		case 0x00:

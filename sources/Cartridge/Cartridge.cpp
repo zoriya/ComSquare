@@ -38,7 +38,7 @@ namespace ComSquare::Cartridge
 	}
 
 
-	uint8_t Cartridge::read(uint24_t addr) const
+	uint8_t Cartridge::read(uint24_t addr)
 	{
 		return Ram::read(addr + this->_romStart);
 	}

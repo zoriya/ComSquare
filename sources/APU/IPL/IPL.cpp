@@ -17,7 +17,7 @@ namespace ComSquare::APU::IPL
 	IPL::~IPL()
 	{ }
 
-	uint8_t IPL::read(uint24_t addr) const
+	uint8_t IPL::read(uint24_t addr)
 	{
 		if (addr >= this->_size)
 			throw InvalidAddress("IPL read", addr);

@@ -45,7 +45,7 @@ namespace ComSquare::APU::IPL
 		//! @param addr The global 24 bits address. This method is responsible of mapping to the component's read.
 		//! @throw InvalidAddress if the address is not mapped to the component.
 		//! @return Return the data at the address given as parameter.
-		uint8_t read(uint24_t addr) const override;
+		uint8_t read(uint24_t addr) override;
 
 		//! @brief Write data to this component using the same method as the basic IMemory.
 		//! @param addr The global 24 bits address. This method is responsible of mapping to the component's write.
