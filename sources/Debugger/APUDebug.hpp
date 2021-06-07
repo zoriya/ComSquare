@@ -94,7 +94,7 @@ namespace ComSquare::Debugger
           {"ROL", 2, {DirectAddr, None}},
           {"ROL", 3, {AbsoluteAddr, None}},
           {"PUSH", 1, {A, None}},
-          {"CBNE", 3, {ImmediateData, ImmediateData}},
+          {"CBNE", 3, {DirectAddrByX, ImmediateData}},
           {"BRA", 2, {ImmediateData, None}},
           {"BMI", 2, {ImmediateData, None}},
           {"TCALL", 1, {None, None}},
@@ -305,6 +305,12 @@ namespace ComSquare::Debugger
           {"DBNZ", 3, {ImmediateData, None}},
           {"STOP", 1, {None, None}}
 		}};
+
+		//! @brief Position of the last instruction executed
+		uint16_t _pc;
+
+		//! @brief Add instruction to disassembly
+		int _appendInstruction(int row);
 
 		//! @brief The QT window for this debugger.
 		ClosableWindow<APUDebug> *_window;

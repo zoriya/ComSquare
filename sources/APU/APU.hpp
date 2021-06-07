@@ -365,7 +365,7 @@ namespace ComSquare::APU
 		int MOV(uint8_t &regFrom, uint8_t &regTo, bool setFlags = true);
 		int MOV(uint8_t &regFrom, uint24_t memTo, int cycles, bool incrementX = false);
 		int MOV(uint24_t memFrom, uint8_t &regTo, int cycles, bool incrementX = false);
-		int MOV(uint24_t memTo, uint24_t memFrom);
+		int MOV(uint24_t memFrom, uint24_t memTo);
 	public:
 		explicit APU(Renderer::IRenderer &renderer);
 		APU(const APU &) = default;

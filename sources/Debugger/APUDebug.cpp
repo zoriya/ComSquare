@@ -256,31 +256,47 @@ namespace ComSquare::Debugger
 		QStringList labels = QStringList();
 		uint16_t offset = 0;
 
-		for (uint16_t i = 0; i < 0x20; i++)
+		if (this->_pc != 0)
 		{
 			auto pc = this->_internalRegisters.pc;
-			auto instruction = this->_getInstruction();
-			std::string operand;
 
-			this->_ui.logger->setItem(i, 0, new QTableWidgetItem(instruction.name.c_str()));
+			this->_internalRegisters.pc = this->_pc;
+			this->_appendInstruction(0);
+			labels.append(Utility::to_hex(this->_pc).c_str());
+			this->_internalRegisters.pc = pc;
+		}
+		else
+			labels.append("$0000");
+		for (uint16_t i = 1; i < 0x20; i++)
+		{
+			auto pc = this->_internalRegisters.pc;
 
-			operand = this->_getOperand(std::get<0>(instruction.operands));
-			this->_ui.logger->setItem(i, 1, new QTableWidgetItem(operand.c_str()));
-			if (operand.empty())
-				this->_ui.logger->item(i, 1)->setData(Qt::BackgroundRole, QColor(220, 220, 220));
-
-			operand = this->_getOperand(std::get<1>(instruction.operands));
-			this->_ui.logger->setItem(i, 2, new QTableWidgetItem(operand.c_str()));
-			if (operand.empty())
-				this->_ui.logger->item(i, 2)->setData(Qt::BackgroundRole, QColor(220, 220, 220));
-
+			offset += this->_appendInstruction(i);
 			labels.append(Utility::to_hex(pc).c_str());
-			offset += instruction.size;
 		}
 		this->_ui.logger->setVerticalHeaderLabels(labels);
 		for (int i = 0; i < 3; i++)
-			this->_ui.logger->item(0, i)->setData(Qt::BackgroundRole, QColor(200, 255, 148));
+			this->_ui.logger->item(1, i)->setData(Qt::BackgroundRole, QColor(200, 255, 148));
 		this->_internalRegisters.pc -= offset;
+	}
+
+	int APUDebug::_appendInstruction(int row)
+	{
+		auto instruction = this->_getInstruction();
+		std::string operand;
+
+		this->_ui.logger->setItem(row, 0, new QTableWidgetItem(instruction.name.c_str()));
+
+		operand = this->_getOperand(std::get<0>(instruction.operands));
+		this->_ui.logger->setItem(row, 1, new QTableWidgetItem(operand.c_str()));
+		if (operand.empty())
+			this->_ui.logger->item(row, 1)->setData(Qt::BackgroundRole, QColor(220, 220, 220));
+
+		operand = this->_getOperand(std::get<1>(instruction.operands));
+		this->_ui.logger->setItem(row, 2, new QTableWidgetItem(operand.c_str()));
+		if (operand.empty())
+			this->_ui.logger->item(row, 2)->setData(Qt::BackgroundRole, QColor(220, 220, 220));
+		return instruction.size;
 	}
 
 	std::string APUDebug::_getOperand(Operand ope)
@@ -354,6 +370,7 @@ namespace ComSquare::Debugger
 
 	void APUDebug::update(unsigned cycles)
 	{
+		this->_pc = this->_internalRegisters.pc;
 		try {
 			if (this->_isPaused)
 				return;
