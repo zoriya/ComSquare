@@ -7,6 +7,7 @@
 #include "Background.hpp"
 #include <cmath>
 #include "Tile.hpp"
+#include "PPUUtils.hpp"
 #include "Models/Vector2.hpp"
 
 namespace ComSquare::PPU
@@ -26,6 +27,8 @@ namespace ComSquare::PPU
 		_cgram(ppu.cgram),
 		buffer({{{0}}})
 	{
+		this->tileRenderer.setRam(this->_vram);
+		this->tileRenderer.setCgram(this->_cgram);
 	}
 
 	void Background::renderBackground()
@@ -58,11 +61,34 @@ namespace ComSquare::PPU
 		uint32_t color = 0;
 
 		tileData.raw = data;
-		palette = getPalette(tileData.palette);
+
+		if (tileData.tilePriority != this->_priority)
+			return;
 		// X horizontal
 		// Y vertical
+
+		this->tileRenderer.setPaletteIndex(tileData.palette);
 		graphicAddress = this->_tilesetAddress + (tileData.posY * NbTilePerRow * this->_bpp * TileBaseByteSize) + (tileData.posX * this->_bpp * TileBaseByteSize);
+		for (int i = 0; i < this->_characterNbPixels.y; i += 8) {
+			for (int j = 0; j < this->_characterNbPixels.x; j += 8) {
+				this->tileRenderer.render(graphicAddress);
+				merge2DArray(this->tileBuffer, this->tileRenderer.buffer, {i, j});
+			}
+		}
+
+		if (tileData.verticalFlip)
+			VFlipArray(this->tileBuffer);
+		if (tileData.horizontalFlip)
+			HFlipArray(this->tileBuffer);
 		for (int i = 0; i < this->_characterNbPixels.y; i++) {
+			for (int j = 0; j < this->_characterNbPixels.x; j++) {
+				this->buffer[pos.x][pos.y] = this->tileBuffer[i][j];
+				pos.x++;
+			}
+			pos.x -= this->_characterNbPixels.x;
+			pos.y++;
+		}
+		/*for (int i = 0; i < this->_characterNbPixels.y; i++) {
 			index = i * this->_characterNbPixels.x;
 			if (tileData.verticalFlip)
 				index = (this->_characterNbPixels.y - 1 - i) * this->_characterNbPixels.x;
@@ -78,7 +104,7 @@ namespace ComSquare::PPU
 			}
 			pos.x -= this->_characterNbPixels.x;
 			pos.y++;
-		}
+		}*/
 	}
 
 	std::vector<uint16_t> Background::getPalette(int nbPalette)
@@ -190,6 +216,7 @@ namespace ComSquare::PPU
 			this->_bpp = bpp;
 		else
 			this->_bpp = 2;
+		this->tileRenderer.setBpp(this->_bpp);
 	}
 
 	void Background::setTilemaps(Vector2<int> tileMaps)

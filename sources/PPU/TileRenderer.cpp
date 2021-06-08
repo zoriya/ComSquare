@@ -29,10 +29,12 @@ namespace ComSquare::PPU
 	{
 		std::vector<uint16_t> palette = this->getPalette(this->_paletteIndex);
 		int it = 0;
+		this->buffer = {{{0}}};
 
 		for (auto &row : this->buffer) {
 			for (auto &pixel : row) {
-				pixel = getRealColor(palette[this->getPixelReferenceFromTile(tileAddress, it++)]);
+				uint8_t pixelReference = this->getPixelReferenceFromTile(tileAddress, it++);
+				pixel = pixelReference ? getRealColor(palette[pixelReference]) : 0;
 			}
 		}
 	}
@@ -102,6 +104,7 @@ namespace ComSquare::PPU
 
 	std::vector<uint16_t> TileRenderer::getPalette(int nbPalette)
 	{
+		// todo if needed the tile renderer could cache the palette to avoid recompute this every render
 		uint16_t nbColors = std::pow(2, this->_bpp);
 		uint16_t addr = nbPalette * this->_bpp * this->_bpp * 2; // 2 because it's 2 addr for 1 color
 		std::vector<uint16_t> palette(nbColors);

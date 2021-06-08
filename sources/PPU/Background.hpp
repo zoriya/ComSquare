@@ -8,17 +8,18 @@
 #include <array>
 #include <vector>
 #include "../Models/Vector2.hpp"
+#include "TileRenderer.hpp"
 #include "../Ram/Ram.hpp"
 #include "PPU.hpp"
-
-//! @brief Transform SNES color code BGR to uint32_t RGB
-uint32_t getRealColor(uint16_t color);
 
 namespace ComSquare::PPU
 {
 	class PPU;
 	class Background {
 	private:
+		TileRenderer tileRenderer;
+		std::array<std::array<uint32_t, 16>, 16> tileBuffer = {{{0}}};
+
 		//! @brief The number of character a TileMap has in width
 		static constexpr int NbCharacterWidth = 32;
 		//! @brief The number of character a TileMap has in height
