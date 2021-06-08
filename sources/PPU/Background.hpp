@@ -2,8 +2,7 @@
 // Created by cbihan on 5/14/20.
 //
 
-#ifndef COMSQUARE_BACKGROUND_HPP
-#define COMSQUARE_BACKGROUND_HPP
+#pragma once
 
 #include <stdint-gcc.h>
 #include <array>
@@ -124,6 +123,3 @@ namespace ComSquare::PPU
 		Background &operator=(const Background &) = delete;
 	};
 }
-
-
-#endif //COMSQUARE_BACKGROUND_HPP
