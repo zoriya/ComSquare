@@ -4,19 +4,17 @@
 
 #pragma once
 
+#include <array>
 #include <QtWidgets/QWidget>
 #include "QtWidgetSFML.hpp"
+#include "Debugger/TileViewer/TileRenderer.hpp"
 
 namespace ComSquare::Renderer
 {
 	class QtSFMLTileRenderer : public QtWidgetSFML
 	{
-	private:
-		//! @brief internal buffer
-		//sf::Image _image;
-		//! @brief sprite
-		//sf::Sprite _sprite;
 	public:
+		std::array<std::array<uint32_t, 1024>, 1024> buffer;
 
 		//! @brief Function called to update this widget.
 		void _onUpdate() override;

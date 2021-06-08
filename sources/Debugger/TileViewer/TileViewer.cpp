@@ -126,6 +126,7 @@ namespace ComSquare::Debugger
 	void TileViewer::internalUpdate()
 	{
 		this->_tileRenderer.render();
+		this->_sfWidget->buffer = this->_tileRenderer.buffer;
 		this->_ppu.add_buffer(this->_tileRenderer.buffer, {200, 200});
 	}
 
