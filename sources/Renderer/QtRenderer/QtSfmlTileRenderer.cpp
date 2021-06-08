@@ -13,7 +13,6 @@ namespace ComSquare::Renderer
 		: QtWidgetSFML(parent, {0, 0}, {1025, 1025}, frameRate)
 	{
 		// todo the size of the sfml renderwindow should fill the parent
-		std::cout << "size: " << parent->width() << " " << parent->height()  << std::endl;
 	}
 
 	void QtSFMLTileRenderer::_onUpdate()
