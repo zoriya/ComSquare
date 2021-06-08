@@ -15,7 +15,7 @@ namespace ComSquare::PPU
 #include <array>
 #include "PPU/PPU.hpp"
 #include "Debugger/ClosableWindow.hpp"
-#include "Renderer/QtRenderer/QtSFML.hpp"
+#include "Renderer/QtRenderer/QtSfmlTileRenderer.hpp"
 #include "../../../ui/ui_tileView.h"
 #include "Ram/Ram.hpp"
 #include "TileRenderer.hpp"
@@ -35,7 +35,7 @@ namespace ComSquare::Debugger
 		//! @brief A reference to the ppu
 		ComSquare::PPU::PPU &_ppu;
 		//! @brief the window
-		//std::unique_ptr<Renderer::QtSFML> _sfWidget;
+		std::unique_ptr<Renderer::QtSFMLTileRenderer> _sfWidget;
 		//! @brief The tile renderer
 		TileRenderer _tileRenderer;
 		//! @brief Change the bpp from the index given by the ui (QT combo box)

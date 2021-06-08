@@ -34,7 +34,7 @@ namespace ComSquare::Debugger
 		this->_window->setAttribute(Qt::WA_DeleteOnClose);
 
 		this->_ui.setupUi(this->_window);
-		//this->_sfWidget = std::make_unique<Renderer::QtSFML>(this->_ui.label_5);
+		this->_sfWidget = std::make_unique<Renderer::QtSFMLTileRenderer>(this->_ui.widget_sfml);
 		QMainWindow::connect(this->_ui.NbColumns, QOverload<int>::of(&QSpinBox::valueChanged), this, [this](int nb) -> void { this->setNbColumns(nb); });
 		QMainWindow::connect(this->_ui.ByteSize, QOverload<int>::of(&QSpinBox::valueChanged), this, [this](int nb) -> void { this->setRenderSize(nb); });
 		QMainWindow::connect(this->_ui.Address, QOverload<int>::of(&QSpinBox::valueChanged), this, [this](int nb) -> void { this->setRamOffset(nb); });

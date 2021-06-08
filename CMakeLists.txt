@@ -242,7 +242,7 @@ add_executable(ComSquare
                sources/Renderer/QtRenderer/QtRenderSfml.hpp
                sources/Debugger/TileViewer/TileViewer.cpp
                sources/Debugger/TileViewer/TileViewer.hpp
-               sources/Debugger/TileViewer/TileRenderer.cpp sources/Debugger/TileViewer/TileRenderer.hpp sources/PPU/Tile.hpp)
+               sources/Debugger/TileViewer/TileRenderer.cpp sources/Debugger/TileViewer/TileRenderer.hpp sources/PPU/Tile.hpp sources/Renderer/QtRenderer/QtSfmlTileRenderer.cpp sources/Renderer/QtRenderer/QtSfmlTileRenderer.hpp)
 
 include_directories(ComSquare sources)
 
