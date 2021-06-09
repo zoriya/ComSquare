@@ -47,8 +47,8 @@ namespace ComSquare::PPU
 					  const std::array<std::array<uint32_t, SRC_SIZE_X>, SRC_SIZE_Y> &bufferSrc,
 					  const Vector2<int> &offset = {0, 0})
 	{
-		for (int i = offset.y; i < bufferSrc.size(); i++) {
-			for (int j = offset.x; j < bufferSrc[i].size(); j++) {
+		for (unsigned long i = offset.y; i < bufferSrc.size(); i++) {
+			for (unsigned long j = offset.x; j < bufferSrc[i].size(); j++) {
 				bufferDest[i][j] = bufferSrc[i][j];
 			}
 		}

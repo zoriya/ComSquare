@@ -42,7 +42,7 @@ namespace ComSquare::PPU
 		this->cgram->write(7, 0x03);
 		this->cgram->write(66, 0xE0);
 		this->cgram->write(67, 0x7F);
-/*
+
 		//tiles
 		int vram_test[] = {
 			00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
@@ -75,17 +75,17 @@ namespace ComSquare::PPU
 00,0x03,0x00,0x03,0x00,0x03,0x00,0x06,0x00,0x0c,0x00,0x18,0x00,0xf0,0x00,0xe0,
 00,0x00,0x00,0x00,0x80,0x00,0xc0,0x00,0xe0,0x00,0xf0,0x00,0xf8,0x00,0xfc,0x00,
 00,0x00,0x00,0x00,0x01,0x00,0x03,0x00,0x07,0x00,0x0f,00,0x1f,00,0x3f,00, -1
-		}; */
-		int *cgram_test = get_dump_cgram();
+		};
+		/*int *cgram_test = get_dump_cgram();
 		for (int i = 0; cgram_test[i] != -1; i++) {
 			this->cgram->write(i, cgram_test[i]);
 		}
 
-		int *vram_test = get_dump_vram();
+		int *vram_test = get_dump_vram(); */
 		for (int i = 0; vram_test[i] != -1; i++) {
 			this->vram->write(i, vram_test[i]);
 		}
-	/*	int vram_test_2[] = {8, 00, 02, 00, 0x0A, 00, 02, 00, 0x0A, 00, 00, 00, 00, 00, 00, -1};
+		int vram_test_2[] = {8, 00, 02, 00, 0x0A, 00, 02, 00, 0x0A, 00, 00, 00, 00, 00, 00, -1};
 		for (int i = 0; vram_test_2[i] != -1; i++) {
 			this->vram->write(i + 0x8000, vram_test_2[i]);
 		}
@@ -144,8 +144,8 @@ namespace ComSquare::PPU
 		//this->_registers._bgofs[3].raw = 0x03DF;
 		this->_registers._t[0].enableWindowDisplayBg1 = true;
 		this->_registers._t[0].enableWindowDisplayBg2 = true;
-			*/
 
+/*
 		//registers aladin
 
 		this->_registers._bgmode.bgMode = 1;
@@ -199,7 +199,7 @@ namespace ComSquare::PPU
 		this->_registers._t[0].enableWindowDisplayBg1 = true;
 		this->_registers._t[0].enableWindowDisplayBg2 = true;
 		this->_registers._t[0].enableWindowDisplayBg3 = true;
-
+		*/
 
 	}
 
