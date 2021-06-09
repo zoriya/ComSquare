@@ -55,10 +55,6 @@ namespace ComSquare::PPU
 	{
 		uint16_t graphicAddress;
 		union TileMapData tileData;
-		std::vector<uint16_t> palette;
-		int index = 0;
-		uint8_t reference = 0;
-		uint32_t color = 0;
 
 		tileData.raw = data;
 
@@ -76,10 +72,11 @@ namespace ComSquare::PPU
 			}
 		}
 
+		// todo check why i need to invert vertical and horizontal flips
 		if (tileData.verticalFlip)
-			VFlipArray(this->tileBuffer);
+			HFlipArray(this->tileBuffer, {this->_characterNbPixels.x, this->_characterNbPixels.y});
 		if (tileData.horizontalFlip)
-			HFlipArray(this->tileBuffer);
+			VFlipArray(this->tileBuffer, {this->_characterNbPixels.x, this->_characterNbPixels.y});
 		for (int i = 0; i < this->_characterNbPixels.y; i++) {
 			for (int j = 0; j < this->_characterNbPixels.x; j++) {
 				this->buffer[pos.x][pos.y] = this->tileBuffer[i][j];
@@ -88,23 +85,6 @@ namespace ComSquare::PPU
 			pos.x -= this->_characterNbPixels.x;
 			pos.y++;
 		}
-		/*for (int i = 0; i < this->_characterNbPixels.y; i++) {
-			index = i * this->_characterNbPixels.x;
-			if (tileData.verticalFlip)
-				index = (this->_characterNbPixels.y - 1 - i) * this->_characterNbPixels.x;
-			if (tileData.horizontalFlip)
-				index += this->_characterNbPixels.x - 1;
-			for (int j = 0; j < this->_characterNbPixels.x; j++) {
-				reference = getPixelReferenceFromTile(graphicAddress, index);
-				color = getRealColor(palette[reference]);
-				if (tileData.tilePriority == this->_priority) // reference 0 is considered as transparency
-					this->buffer[pos.x][pos.y] = (reference) ? color : 0;
-				index += (tileData.horizontalFlip) ? -1 : 1;
-				pos.x++;
-			}
-			pos.x -= this->_characterNbPixels.x;
-			pos.y++;
-		}*/
 	}
 
 	std::vector<uint16_t> Background::getPalette(int nbPalette)

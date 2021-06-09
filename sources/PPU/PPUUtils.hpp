@@ -55,17 +55,21 @@ namespace ComSquare::PPU
 	}
 
 	template <std::size_t SRC_SIZE_Y, std::size_t SRC_SIZE_X>
-	void VFlipArray(std::array<std::array<uint32_t, SRC_SIZE_X>, SRC_SIZE_Y> &array)
+	void VFlipArray(std::array<std::array<uint32_t, SRC_SIZE_X>, SRC_SIZE_Y> &array,
+					const Vector2<int> &size,
+					const Vector2<int> &offset = {0, 0})
 	{
-		for (auto &row : array) {
-			std::reverse(row.begin(), row.end());
+		for (int i = offset.y; i < offset.y + size.y; i++) {
+			std::reverse(array[i].begin() + offset.x, array[i].begin() + offset.x + size.x);
 		}
 	}
 
 	template <std::size_t SRC_SIZE_Y, std::size_t SRC_SIZE_X>
-	void HFlipArray(std::array<std::array<uint32_t, SRC_SIZE_X>, SRC_SIZE_Y> &array)
+	void HFlipArray(std::array<std::array<uint32_t, SRC_SIZE_X>, SRC_SIZE_Y> &array,
+					const Vector2<int> &size,
+					const Vector2<int> &offset = {0, 0})
 	{
-		std::reverse(array.begin(), array.end());
+		std::reverse(array.begin() + offset.x, array.begin() + offset.x + size.x);
 	}
 
 }
