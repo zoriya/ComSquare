@@ -71,6 +71,7 @@ namespace ComSquare::Debugger
 
 	void RAMTileRenderer::setBpp(int bpp)
 	{
+		this->_bpp = bpp;
 		this->_tileRenderer.setBpp(bpp);
 	}
 
