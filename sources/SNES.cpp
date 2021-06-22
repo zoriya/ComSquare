@@ -196,6 +196,6 @@ namespace ComSquare
 					this->_tileViewer->focus();
 				else
 					this->_tileViewer = std::make_unique<Debugger::TileViewer>(*this, *this->ppu);
-			}
 		#endif
+	}
 }

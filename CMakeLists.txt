@@ -113,6 +113,10 @@ add_executable(unit_tests EXCLUDE_FROM_ALL
         sources/APU/DSP/Envelope.cpp
         sources/APU/DSP/Timer.cpp
         sources/APU/DSP/BRR.cpp
+		sources/PPU/PPUUtils.cpp
+		sources/PPU/Tile.hpp
+		sources/PPU/TileRenderer.cpp
+		sources/PPU/TileRenderer.hpp
         )
 
 # include criterion & coverage
