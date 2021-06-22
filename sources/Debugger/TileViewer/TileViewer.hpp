@@ -18,7 +18,7 @@ namespace ComSquare::PPU
 #include "Renderer/QtRenderer/QtSfmlTileRenderer.hpp"
 #include "../../../ui/ui_tileView.h"
 #include "Ram/Ram.hpp"
-#include "TileRenderer.hpp"
+#include "RAMTileRenderer.hpp"
 
 namespace ComSquare::Debugger
 {
@@ -37,7 +37,7 @@ namespace ComSquare::Debugger
 		//! @brief the window
 		std::unique_ptr<Renderer::QtSFMLTileRenderer> _sfWidget;
 		//! @brief The tile renderer
-		TileRenderer _tileRenderer;
+		RAMTileRenderer _tileRenderer;
 		//! @brief Change the bpp from the index given by the ui (QT combo box)
 		void _bppChangeUIHandler(int index);
 	public:

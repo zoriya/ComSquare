@@ -23,12 +23,13 @@ namespace ComSquare::PPU
 		_tilesetAddress(ppu.getTilesetAddress(backGroundNumber)),
 		_priority(hasPriority),
 		_bgNumber(backGroundNumber),
+		_tileBuffer({{{0}}}),
 		_vram(ppu.vram),
 		_cgram(ppu.cgram),
 		buffer({{{0}}})
 	{
-		this->tileRenderer.setRam(this->_vram);
-		this->tileRenderer.setCgram(this->_cgram);
+		this->_tileRenderer.setRam(this->_vram);
+		this->_tileRenderer.setCgram(this->_cgram);
 	}
 
 	void Background::renderBackground()
@@ -53,7 +54,6 @@ namespace ComSquare::PPU
 
 	void Background::drawBgTile(uint16_t data, Vector2<int> pos)
 	{
-		uint16_t graphicAddress;
 		union TileMapData tileData;
 
 		tileData.raw = data;
@@ -61,18 +61,19 @@ namespace ComSquare::PPU
 		if (tileData.tilePriority != this->_priority)
 			return;
 
+		uint16_t graphicAddress;
 		Vector2i tileOffset = {0, 0};
 		// X horizontal
 		// Y vertical
 
-		this->tileRenderer.setPaletteIndex(tileData.palette);
+		this->_tileRenderer.setPaletteIndex(tileData.palette);
 		for (int i = 0; i < this->_characterNbPixels.y; i += 8) {
 			for (int j = 0; j < this->_characterNbPixels.x; j += 8) {
 				graphicAddress = this->_tilesetAddress +
-				                 ((tileData.posY + tileOffset.y) * NbTilePerRow * this->_bpp * TileBaseByteSize) +
-				                 ((tileData.posX + tileOffset.x) * this->_bpp * TileBaseByteSize);
-				this->tileRenderer.render(graphicAddress);
-				merge2DArray(this->tileBuffer, this->tileRenderer.buffer, {j, i});
+				                 ((tileData.posY + tileOffset.y) * NbTilePerRow * this->_bpp * Tile::BaseByteSize) +
+				                 ((tileData.posX + tileOffset.x) * this->_bpp * Tile::BaseByteSize);
+				this->_tileRenderer.render(graphicAddress);
+				merge2DArray(this->_tileBuffer, this->_tileRenderer.buffer, {j, i});
 				tileOffset.x += 1;
 			}
 			tileOffset.x = 0;
@@ -81,12 +82,12 @@ namespace ComSquare::PPU
 
 		// todo check why i need to invert vertical and horizontal flips
 		if (tileData.verticalFlip)
-			HFlipArray(this->tileBuffer, {this->_characterNbPixels.x, this->_characterNbPixels.y});
+			HFlipArray(this->_tileBuffer, {this->_characterNbPixels.x, this->_characterNbPixels.y});
 		if (tileData.horizontalFlip)
-			VFlipArray(this->tileBuffer, {this->_characterNbPixels.x, this->_characterNbPixels.y});
+			VFlipArray(this->_tileBuffer, {this->_characterNbPixels.x, this->_characterNbPixels.y});
 		for (int i = 0; i < this->_characterNbPixels.y; i++) {
 			for (int j = 0; j < this->_characterNbPixels.x; j++) {
-				this->buffer[pos.x][pos.y] = this->tileBuffer[i][j];
+				this->buffer[pos.x][pos.y] = this->_tileBuffer[i][j];
 				pos.x++;
 			}
 			pos.x -= this->_characterNbPixels.x;
@@ -203,7 +204,7 @@ namespace ComSquare::PPU
 			this->_bpp = bpp;
 		else
 			this->_bpp = 2;
-		this->tileRenderer.setBpp(this->_bpp);
+		this->_tileRenderer.setBpp(this->_bpp);
 	}
 
 	void Background::setTilemaps(Vector2<int> tileMaps)

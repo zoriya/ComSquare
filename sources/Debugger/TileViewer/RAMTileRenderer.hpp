@@ -5,26 +5,25 @@
 #pragma once
 
 #include <array>
+#include "PPU/TileRenderer.hpp"
 #include "Ram/Ram.hpp"
 
 namespace ComSquare::Debugger
 {
-	class TileRenderer {
+	class RAMTileRenderer {
 	private:
 		//! @brief ram to render
 		std::shared_ptr<Ram::Ram> _ram;
-		//! @brief cgram to access the colors
-		std::shared_ptr<Ram::Ram> _cgram;
-		//! @brief The bpp to use while rendering
-		int _bpp;
-		//! @brief The palette number to use while rendering
-		int _paletteIndex;
 		//! @brief The size to render in the ram
 		int _renderSize;
 		//! @brief The number of tile columns to display
 		int _nbColumns;
 		//! @brief Bytes to skip from the start of the ram
 		int _ramOffset;
+		//! @brief The actual bpp to render
+		int _bpp;
+		//! @brief The class tha actually render the tile
+		PPU::TileRenderer _tileRenderer;
 	public:
 		//! @brief internal buffer
 		std::array<std::array<uint32_t, 1024>, 1024> buffer;
@@ -48,15 +47,16 @@ namespace ComSquare::Debugger
 		int getPaletteIndex() const;
 		//! @brief Get the numbr of maximum tile columns to render
 		int getNbColumns() const;
-		uint8_t getPixelReferenceFromTileRow(uint16_t tileRowAddress, uint8_t pixelIndex);
-		std::vector<uint16_t> getPalette(int nbPalette);
-		uint8_t read2BPPValue(uint16_t tileRowAddress, uint8_t pixelIndex);
 		//! @brief render the selected ram
 		void render();
-		TileRenderer();
-		TileRenderer(const TileRenderer &) = default;
-		~TileRenderer() = default;
-		TileRenderer &operator=(const TileRenderer &) = default;
+		//! @brief ctor
+		RAMTileRenderer();
+		//! @brief copy ctor
+		RAMTileRenderer(const RAMTileRenderer &) = default;
+		//! @brief dtor
+		~RAMTileRenderer() = default;
+		//! @brief assignment operator
+		RAMTileRenderer &operator=(const RAMTileRenderer &) = default;
 	};
 }
 

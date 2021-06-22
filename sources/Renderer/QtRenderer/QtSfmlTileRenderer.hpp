@@ -7,7 +7,7 @@
 #include <array>
 #include <QtWidgets/QWidget>
 #include "QtWidgetSFML.hpp"
-#include "Debugger/TileViewer/TileRenderer.hpp"
+#include "Debugger/TileViewer/RAMTileRenderer.hpp"
 
 namespace ComSquare::Renderer
 {

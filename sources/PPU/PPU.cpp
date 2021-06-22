@@ -9,7 +9,7 @@
 #include "Exceptions/InvalidAddress.hpp"
 #include "Ram/Ram.hpp"
 #include "Models/Vector2.hpp"
-#include "Debugger/TileViewer/TileRenderer.hpp"
+#include "Debugger/TileViewer/RAMTileRenderer.hpp"
 #include <random>
 
 namespace ComSquare::PPU

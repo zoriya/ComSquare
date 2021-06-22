@@ -13,7 +13,7 @@
 #include "Models/Vector2.hpp"
 #include "Background.hpp"
 #include "PPUUtils.hpp"
-#include "Debugger/TileViewer/TileRenderer.hpp"
+#include "Debugger/TileViewer/RAMTileRenderer.hpp"
 
 #define FALLTHROUGH __attribute__((fallthrough));
 

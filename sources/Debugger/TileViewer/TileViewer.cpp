@@ -15,7 +15,7 @@ namespace ComSquare::Renderer
 #include <iostream>
 #include <QtWidgets/QTableWidget>
 #include "Utility/Utility.hpp"
-#include "TileRenderer.hpp"
+#include "RAMTileRenderer.hpp"
 #include "PPU/PPU.hpp"
 
 namespace ComSquare::Debugger

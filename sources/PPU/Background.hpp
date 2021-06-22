@@ -17,16 +17,10 @@ namespace ComSquare::PPU
 	class PPU;
 	class Background {
 	private:
-		TileRenderer tileRenderer;
-		std::array<std::array<uint32_t, 16>, 16> tileBuffer = {{{0}}};
-
 		//! @brief The number of character a TileMap has in width
 		static constexpr int NbCharacterWidth = 32;
 		//! @brief The number of character a TileMap has in height
 		static constexpr int NbCharacterHeight = 32;
-		//! @brief The number of bytes used by a range of pixels (1 pixel per byte)
-		//! @note Used like: bpp * TileBaseByteSize to get the size of byte of 1 row of pixels
-		static constexpr unsigned TileBaseByteSize = 8;
 		//! @brief The number of rows in one line of VRAM
 		//! @note If you're lost by this description, open a tile viewer in an emulator, and set the number of tiles in width to 16 graphics
 		static constexpr unsigned NbTilePerRow = 16;
@@ -55,6 +49,10 @@ namespace ComSquare::PPU
 		bool _priority;
 		//! @brief The bg number (used to get the corresponding scroll)
 		int _bgNumber;
+		//! @brief Class that actually render a tile
+		TileRenderer _tileRenderer;
+		//! @brief Buffer if we have tiles that are more than  8x8
+		std::array<std::array<uint32_t, 16>, 16> _tileBuffer;
 		//! @brief the access to vram
 		std::shared_ptr<Ram::Ram> _vram;
 		//! @brief The access to cgram
