@@ -25,10 +25,10 @@ namespace ComSquare::Debugger
 		  _snes(snes),
 		  _ui(),
 		  _ppu(ppu),
-		  _tileRenderer()
+		  _ramTileRenderer()
 	{
-		this->_tileRenderer.setRam(ppu.vram);
-		this->_tileRenderer.setCgram(ppu.cgram);
+		this->_ramTileRenderer.setRam(ppu.vram);
+		this->_ramTileRenderer.setCgram(ppu.cgram);
 		this->_window->setContextMenuPolicy(Qt::NoContextMenu);
 		this->_window->setAttribute(Qt::WA_QuitOnClose, false);
 		this->_window->setAttribute(Qt::WA_DeleteOnClose);
@@ -69,7 +69,7 @@ namespace ComSquare::Debugger
 
 	void TileViewer::setPaletteIndex(int paletteIndex)
 	{
-		this->_tileRenderer.setPaletteIndex(paletteIndex);
+		this->_ramTileRenderer.setPaletteIndex(paletteIndex);
 		this->internalUpdate();
 	}
 
@@ -92,46 +92,46 @@ namespace ComSquare::Debugger
 			this->_ui.PaletteIndex->setMaximum(63);
 			break;
 		}
-		this->_tileRenderer.setBpp(bpp);
+		this->_ramTileRenderer.setBpp(bpp);
 		this->internalUpdate();
 	}
 
 	void TileViewer::setNbColumns(int nbColumns)
 	{
-		this->_tileRenderer.setNbColumns(nbColumns);
+		this->_ramTileRenderer.setNbColumns(nbColumns);
 		this->internalUpdate();
 	}
 
 	void TileViewer::setRenderSize(int size)
 	{
-		this->_tileRenderer.setRenderSize(size);
+		this->_ramTileRenderer.setRenderSize(size);
 		this->internalUpdate();
 	}
 
 	int TileViewer::getBpp() const
 	{
-		return this->_tileRenderer.getBpp();
+		return this->_ramTileRenderer.getBpp();
 	}
 
 	int TileViewer::getPaletteIndex() const
 	{
-		return this->_tileRenderer.getPaletteIndex();
+		return this->_ramTileRenderer.getPaletteIndex();
 	}
 
 	int TileViewer::getNbColumns() const
 	{
-		return this->_tileRenderer.getNbColumns();
+		return this->_ramTileRenderer.getNbColumns();
 	}
 
 	void TileViewer::internalUpdate()
 	{
-		this->_tileRenderer.render();
-		this->_sfWidget->buffer = this->_tileRenderer.buffer;
+		this->_ramTileRenderer.render();
+		this->_sfWidget->buffer = this->_ramTileRenderer.buffer;
 	}
 
 	void TileViewer::setRamOffset(int offset)
 	{
-		this->_tileRenderer.setRamOffset(offset);
+		this->_ramTileRenderer.setRamOffset(offset);
 		this->internalUpdate();
 	}
 

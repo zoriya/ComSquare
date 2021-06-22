@@ -58,25 +58,11 @@ namespace ComSquare::PPU
 		//! @brief The access to cgram
 		std::shared_ptr<Ram::Ram> _cgram;
 		//! @brief Draw a tile on the screen at x y pos
-		void drawBgTile(uint16_t data, Vector2<int> pos);
-		//! @brief Get a palette from the number of the palette
-		//! @param nbPalette The palette number (0 - 7)
-		//! @return The array of color of the palette
-		std::vector<uint16_t> getPalette(int nbPalette);
-		//! @brief Get the color reference of a pixel from the address of the row
-		//! @param tileRowAddress The address of the line of pixel
-		//! @param pixelIndex The index of the pixel (0 - 7)
-		//! @return The color Reference
-		uint8_t getPixelReferenceFromTileRow(uint16_t tileRowAddress, uint8_t pixelIndex);
-		//! @brief Get the color pixel reference from the tile address
-		//! @param tileAddress The starting address of the tile
-		//! @param pixelIndex The index of the pixel (0 - 255)
-		//! @return The color reference
-		uint8_t getPixelReferenceFromTile(uint16_t tileAddress, uint8_t pixelIndex);
+		void _drawBgTile(uint16_t data, Vector2<int> pos);
 		//! @brief draw a tileMap 32x32 starting at baseAddress
 		//! @param baseAddress The starting address of the tileMap
 		//! @param offset The rendering offeset in pixels
-		void drawBasicTileMap(uint16_t baseAddress, Vector2<int> offset);
+		void _drawBasicTileMap(uint16_t baseAddress, Vector2<int> offset);
 	public:
 		//! @brief The size of the background (x, y)
 		Vector2<unsigned> backgroundSize;
@@ -99,9 +85,7 @@ namespace ComSquare::PPU
 		//! @brief setter for private variable _tileMaps
 		//! @param tileMaps The tileMaps to set
 		void setTilemaps(Vector2<int> tileMaps);
-		//! @brief set the Background number
-		//! @param bgNumber the new Background Number
-		void setBgNumber(int bgNumber);
+
 		//! @brief Get the BackGround Number
 		//! @return the current Background number
 		int getBgNumber() const;

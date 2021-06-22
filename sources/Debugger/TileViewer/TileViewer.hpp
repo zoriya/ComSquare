@@ -36,18 +36,21 @@ namespace ComSquare::Debugger
 		ComSquare::PPU::PPU &_ppu;
 		//! @brief the window
 		std::unique_ptr<Renderer::QtSFMLTileRenderer> _sfWidget;
-		//! @brief The tile renderer
-		RAMTileRenderer _tileRenderer;
+		//! @brief The ram tile renderer
+		RAMTileRenderer _ramTileRenderer;
 		//! @brief Change the bpp from the index given by the ui (QT combo box)
 		void _bppChangeUIHandler(int index);
 	public:
 		//! @brief Called when the window is closed. Turn off the debugger.
 		void disableViewer();
-	public:
+		//! @brief ctor
 		explicit TileViewer(SNES &snes, ComSquare::PPU::PPU &ppu);
+		//! @brief copy ctor
 		TileViewer(const TileViewer &) = delete;
+		//! @brief dtor
+		~TileViewer() override = default;
+		//! @brief assignment operator
 		TileViewer &operator=(const TileViewer &) = delete;
-		~TileViewer() = default;
 
 		//! @brief Read data at the CGRAM address send it to the debugger.
 		//! @param addr The address to read from.

@@ -41,7 +41,7 @@ namespace ComSquare::PPU
 
 		for (int i = 0; i < 4; i++) {
 			if (!(i == 1 && this->_tileMapsConfig.x == 1) && !(i > 1 && this->_tileMapsConfig.y == 1)) {
-				drawBasicTileMap(vramAddress, offset);
+				_drawBasicTileMap(vramAddress, offset);
 			}
 			vramAddress += TileMapByteSize;
 			offset.x += NbCharacterWidth * this->_characterNbPixels.x;
@@ -52,7 +52,7 @@ namespace ComSquare::PPU
 		}
 	}
 
-	void Background::drawBgTile(uint16_t data, Vector2<int> pos)
+	void Background::_drawBgTile(uint16_t data, Vector2<int> pos)
 	{
 		union TileMapData tileData;
 
@@ -67,8 +67,8 @@ namespace ComSquare::PPU
 		// Y vertical
 
 		this->_tileRenderer.setPaletteIndex(tileData.palette);
-		for (int i = 0; i < this->_characterNbPixels.y; i += 8) {
-			for (int j = 0; j < this->_characterNbPixels.x; j += 8) {
+		for (int i = 0; i < this->_characterNbPixels.y; i += Tile::NbPixelsHeight) {
+			for (int j = 0; j < this->_characterNbPixels.x; j += Tile::NbPixelsWidth) {
 				graphicAddress = this->_tilesetAddress +
 				                 ((tileData.posY + tileOffset.y) * NbTilePerRow * this->_bpp * Tile::BaseByteSize) +
 				                 ((tileData.posX + tileOffset.x) * this->_bpp * Tile::BaseByteSize);
@@ -95,74 +95,7 @@ namespace ComSquare::PPU
 		}
 	}
 
-	std::vector<uint16_t> Background::getPalette(int nbPalette)
-	{
-		uint8_t nbColors = std::pow(2, this->_bpp);
-		uint16_t addr = nbPalette * this->_bpp * this->_bpp * 2; // 2 because it's 2 addr for 1 color
-		std::vector<uint16_t> palette(nbColors);
-
-		switch (this->_ppu.getBgMode()) {
-		case 0:
-			addr += (this->_bgNumber - 1) * (4 * 8) * 2;
-			break;
-		default:
-			break;
-		}
-
-		for (int i = 0; i < nbColors; i++) {
-			palette[i] = this->_cgram->read(addr);
-			palette[i] += this->_cgram->read(addr + 1) << 8U;
-			addr += 2;
-		}
-		return palette;
-	}
-
-	uint8_t Background::getPixelReferenceFromTile(uint16_t tileAddress, uint8_t pixelIndex)
-	{
-		uint8_t row = pixelIndex / this->_characterNbPixels.x;
-		uint8_t column = pixelIndex % this->_characterNbPixels.y;
-
-		if (row >= Tile::NbPixelsHeight) {
-			tileAddress += 0x80 * this->_bpp;
-			row -= Tile::NbPixelsHeight;
-		}
-		if (column >= Tile::NbPixelsWidth) {
-			tileAddress += 0x8 * this->_bpp;
-			column -= Tile::NbPixelsWidth;
-		}
-		// TODO might not work with 8 bpp must check
-		tileAddress += 2 * row;
-
-		return this->getPixelReferenceFromTileRow(tileAddress, column);
-	}
-
-	uint8_t Background::getPixelReferenceFromTileRow(uint16_t tileRowAddress, uint8_t pixelIndex)
-	{
-		uint8_t highByte = this->_vram->read(tileRowAddress % VRAMSIZE);
-		uint8_t lowByte = this->_vram->read((tileRowAddress + 1) % VRAMSIZE);
-		uint8_t secondHighByte;
-		uint8_t secondLowByte;
-		uint16_t result = 0;
-		uint8_t shift = Tile::NbPixelsWidth - 1U - pixelIndex;
-
-		switch (this->_bpp) {
-		case 8:
-			return highByte;
-		case 4:
-			secondHighByte =  this->_vram->read((tileRowAddress + 16) % VRAMSIZE);
-			secondLowByte = this->_vram->read((tileRowAddress + 17) % VRAMSIZE);
-			result = ((secondHighByte & (1U << shift)) | ((secondLowByte & (1U << shift)) << 1U));
-			result = (shift - 2 >= 0) ? result >> (shift - 2) : result << ((shift - 2) * -1);
-			FALLTHROUGH
-		case 2:
-			result += ((highByte & (1U << shift)) | ((lowByte & (1U << shift)) << 1U)) >> shift;
-		default:
-			break;
-		}
-		return result;
-	}
-
-	void Background::drawBasicTileMap(uint16_t baseAddress, Vector2<int> offset)
+	void Background::_drawBasicTileMap(uint16_t baseAddress, Vector2<int> offset)
 	{
 		uint16_t tileMapValue = 0;
 		Vector2<int> pos(0, 0);
@@ -172,7 +105,8 @@ namespace ComSquare::PPU
 			// TODO function to read 2 bytes (LSB order or bits reversed)
 			tileMapValue = this->_vram->read(vramAddress);
 			tileMapValue += this->_vram->read(vramAddress + 1) << 8U;
-			drawBgTile(tileMapValue, {(pos.x * this->_characterNbPixels.x) + offset.x, (pos.y * this->_characterNbPixels.y) + offset.y});
+			_drawBgTile(tileMapValue, {(pos.x * this->_characterNbPixels.x) + offset.x,
+			                           (pos.y * this->_characterNbPixels.y) + offset.y});
 			vramAddress += 2;
 			if (pos.x % 31 == 0 && pos.x) {
 				pos.y++;
@@ -210,11 +144,6 @@ namespace ComSquare::PPU
 	void Background::setTilemaps(Vector2<int> tileMaps)
 	{
 		this->_tileMapsConfig = tileMaps;
-	}
-
-	void Background::setBgNumber(int bgNumber)
-	{
-		this->_bgNumber = bgNumber;
 	}
 
 	int Background::getBgNumber() const
