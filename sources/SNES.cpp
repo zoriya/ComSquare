@@ -10,6 +10,7 @@
 #include "Debugger/APUDebug.hpp"
 #include "Debugger/MemoryBusDebug.hpp"
 #include "Debugger/CGramDebug.hpp"
+#include "Debugger/TileViewer/TileViewer.hpp"
 #endif
 
 namespace ComSquare
@@ -124,7 +125,7 @@ namespace ComSquare
 
 	void SNES::enableMemoryBusDebugging()
 	{
-	#ifdef DEBUGGER_ENABLED
+		#ifdef DEBUGGER_ENABLED
 			if (this->bus->isDebugger())
 				std::static_pointer_cast<Debugger::MemoryBusDebug>(this->bus)->focus();
 			else
@@ -132,9 +133,9 @@ namespace ComSquare
 				this->bus = std::make_shared<Debugger::MemoryBusDebug>(*this, *this->bus);
 				this->cpu->setMemoryBus(this->bus);
 			}
-	#else
+		#else
 			std::cerr << "Debugging features are not enabled. You can't enable the debugger." << std::endl;
-	#endif
+		#endif
 	}
 
 	void SNES::disableMemoryBusDebugging()
@@ -160,7 +161,7 @@ namespace ComSquare
 	void SNES::disableCgramDebugging()
 	{
 		#ifdef DEBUGGER_ENABLED
-				this->_cgramViewer = nullptr;
+			this->_cgramViewer = nullptr;
 		#endif
 	}
 
@@ -180,4 +181,21 @@ namespace ComSquare
 				this->_registerViewer = std::make_unique<Debugger::RegisterViewer>(*this);
 		#endif
 	}
+
+	void SNES::disableTileViewerDebugging()
+	{
+		#ifdef DEBUGGER_ENABLED
+				this->_tileViewer = nullptr;
+		#endif
+	}
+
+	void SNES::enableTileViewerDebugging()
+	{
+		#ifdef DEBUGGER_ENABLED
+				if (this->_tileViewer)
+					this->_tileViewer->focus();
+				else
+					this->_tileViewer = std::make_unique<Debugger::TileViewer>(*this, *this->ppu);
+			}
+		#endif
 }

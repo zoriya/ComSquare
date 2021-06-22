@@ -5,10 +5,11 @@
 #include <iostream>
 #include <bitset>
 #include "PPU.hpp"
-#include "../Exceptions/NotImplementedException.hpp"
-#include "../Exceptions/InvalidAddress.hpp"
-#include "../Ram/Ram.hpp"
-#include "../Models/Vector2.hpp"
+#include "Exceptions/NotImplementedException.hpp"
+#include "Exceptions/InvalidAddress.hpp"
+#include "Ram/Ram.hpp"
+#include "Models/Vector2.hpp"
+#include "Debugger/TileViewer/RAMTileRenderer.hpp"
 #include <random>
 
 namespace ComSquare::PPU
@@ -43,7 +44,7 @@ namespace ComSquare::PPU
 		this->cgram->write(67, 0x7F);
 
 		//tiles
-		int vram_test[] = {
+/*		int vram_test[] = {
 			00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
 00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
 03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,
@@ -74,17 +75,17 @@ namespace ComSquare::PPU
 00,0x03,0x00,0x03,0x00,0x03,0x00,0x06,0x00,0x0c,0x00,0x18,0x00,0xf0,0x00,0xe0,
 00,0x00,0x00,0x00,0x80,0x00,0xc0,0x00,0xe0,0x00,0xf0,0x00,0xf8,0x00,0xfc,0x00,
 00,0x00,0x00,0x00,0x01,0x00,0x03,0x00,0x07,0x00,0x0f,00,0x1f,00,0x3f,00, -1
-		};
-		/*int *cgram_test = get_dump_cgram();
+		};*/
+		int *cgram_test = get_dump_cgram();
 		for (int i = 0; cgram_test[i] != -1; i++) {
 			this->cgram->write(i, cgram_test[i]);
-		}*/
+		}
 
-	//	int *vram_test = get_dump_vram();
+		int *vram_test = get_dump_vram();
 		for (int i = 0; vram_test[i] != -1; i++) {
 			this->vram->write(i, vram_test[i]);
 		}
-		int vram_test_2[] = {8, 00, 02, 00, 0x0A, 00, 02, 00, 0x0A, 00, 00, 00, 00, 00, 00, -1};
+	/*	int vram_test_2[] = {8, 00, 02, 00, 0x0A, 00, 02, 00, 0x0A, 00, 00, 00, 00, 00, 00, -1};
 		for (int i = 0; vram_test_2[i] != -1; i++) {
 			this->vram->write(i + 0x8000, vram_test_2[i]);
 		}
@@ -143,8 +144,8 @@ namespace ComSquare::PPU
 		//this->_registers._bgofs[3].raw = 0x03DF;
 		this->_registers._t[0].enableWindowDisplayBg1 = true;
 		this->_registers._t[0].enableWindowDisplayBg2 = true;
+*/
 
-		/*
 		//registers aladin
 
 		this->_registers._bgmode.bgMode = 1;
@@ -199,12 +200,12 @@ namespace ComSquare::PPU
 		this->_registers._t[0].enableWindowDisplayBg2 = true;
 		this->_registers._t[0].enableWindowDisplayBg3 = true;
 
-*/
+
 	}
 
 	uint8_t PPU::read(uint24_t addr)
 	{
-		//return 0;
+		return 0;
 		switch (addr) {
 		case PpuRegisters::mpyl:
 			return  this->_registers._mpy.mpyl;
@@ -249,7 +250,7 @@ namespace ComSquare::PPU
 
 	void PPU::write(uint24_t addr, uint8_t data)
 	{
-		//return;
+		return;
 		switch (addr) {
 		case PpuRegisters::inidisp:
 			this->_registers._inidisp.raw = data;
@@ -466,6 +467,7 @@ namespace ComSquare::PPU
 	{
 		(void)cycles;
 
+
 		this->renderMainAndSubScreen();
 		this->add_buffer(this->_screen, this->_subScreen);
 		this->add_buffer(this->_screen, this->_mainScreen);
@@ -477,6 +479,10 @@ namespace ComSquare::PPU
 			}
 		}
 		this->_renderer.drawScreen();
+		for (auto &i : this->_mainScreen)
+			i.fill(0XFF);
+		for (auto &i : this->_subScreen)
+			i.fill(0XFF);
 	}
 
 	std::string PPU::getName() const
@@ -806,13 +812,15 @@ namespace ComSquare::PPU
 		}
 	}
 
-	template <std::size_t DEST_SIZE, std::size_t SRC_SIZE>
-	void PPU::add_buffer(std::array<std::array<uint32_t, DEST_SIZE>, DEST_SIZE> &bufferDest, std::array<std::array<uint32_t, SRC_SIZE>, SRC_SIZE> &bufferSrc)
+	template <std::size_t DEST_SIZE_X, std::size_t DEST_SIZE_Y, std::size_t SRC_SIZE_X, std::size_t SRC_SIZE_Y>
+	void PPU::add_buffer(std::array<std::array<uint32_t, DEST_SIZE_Y>, DEST_SIZE_X> &bufferDest,
+					  const std::array<std::array<uint32_t, SRC_SIZE_Y>, SRC_SIZE_X> &bufferSrc,
+					     const Vector2<int> &offset)
 	{
 		for (unsigned long i = 0; i < bufferSrc.size(); i++) {
 			for (unsigned long j = 0; j < bufferSrc[i].size(); j++) {
 				if (bufferSrc[i][j] > 0xFF) // 0xFF correspond to a black pixel with full brightness
-					bufferDest[i][j] = bufferSrc[i][j];
+					bufferDest[i + offset.x ][j + offset.y] = bufferSrc[i][j];
 			}
 		}
 	}

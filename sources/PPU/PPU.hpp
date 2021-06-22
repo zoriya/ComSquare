@@ -6,17 +6,18 @@
 #define COMSQUARE_PPU_HPP
 
 #include <cstdint>
-#include "../Memory/AMemory.hpp"
-#include "../Memory/MemoryBus.hpp"
-#include "../Renderer/IRenderer.hpp"
-#include "../Ram/Ram.hpp"
-#include "../Models/Vector2.hpp"
+#include "Memory/AMemory.hpp"
+#include "Memory/MemoryBus.hpp"
+#include "Renderer/IRenderer.hpp"
+#include "Ram/Ram.hpp"
+#include "Models/Vector2.hpp"
 #include "Background.hpp"
 #include "PPUUtils.hpp"
+#include "Debugger/TileViewer/RAMTileRenderer.hpp"
 
 #define FALLTHROUGH __attribute__((fallthrough));
 
-// TODO check if it usefull to have defines instead of constepxr
+// TODO check if it useful to have defines instead of constexpr
 #define VRAMSIZE 65536
 #define CGRAMSIZE 512
 #define OAMRAMSIZE 544
@@ -569,6 +570,7 @@ namespace ComSquare::PPU
 		uint16_t _vramReadBuffer = 0;
 		//! @brief Struct that contain all necessary vars for the use of the registers
 		struct PpuState _ppuState;
+
 	public:
 
 		explicit PPU(Renderer::IRenderer &renderer);
@@ -618,8 +620,10 @@ namespace ComSquare::PPU
 		//! @brief Render the Main and sub screen correctly
 		void renderMainAndSubScreen();
 		//! @brief Add a bg buffer to another buffer
-		template <std::size_t DEST_SIZE, std::size_t SRC_SIZE>
-		void add_buffer(std::array<std::array<uint32_t, DEST_SIZE>, DEST_SIZE> &bufferDest, std::array<std::array<uint32_t, SRC_SIZE>, SRC_SIZE> &bufferSrc);
+		template <std::size_t DEST_SIZE_X, std::size_t DEST_SIZE_Y, std::size_t SRC_SIZE_X, std::size_t SRC_SIZE_Y>
+		void add_buffer(std::array<std::array<uint32_t, DEST_SIZE_Y>, DEST_SIZE_X> &bufferDest,
+				  const std::array<std::array<uint32_t, SRC_SIZE_Y>, SRC_SIZE_X> &bufferSrc,
+				  const Vector2<int> &offset = {0, 0});
 		//! @brief Add a bg to the sub and/or main screen
 		void addToMainSubScreen(Background &bg);
 		//! @brief Get the current background Mode
@@ -630,6 +634,20 @@ namespace ComSquare::PPU
 		Vector2<int> getBgScroll(int bgNumber) const;
 		//! @brief Allow to look the value of each write register (used by Register debugger)
 		const Registers &getWriteRegisters() const;
+
+		template <std::size_t SRC_SIZE_Y, std::size_t SRC_SIZE_X>
+		void add_buffer(const std::array<std::array<uint32_t, SRC_SIZE_Y>, SRC_SIZE_X> &buffer,
+		                const Vector2<int> &offset = {0, 0})
+		{
+			for (auto &i : this->_screen)
+					i.fill(0XFF);
+			for (unsigned long i = 0; i < buffer.size(); i++) {
+				for (unsigned long j = 0; j < buffer[i].size(); j++) {
+					if (buffer[i][j] > 0xFF) // 0xFF correspond to a black pixel with full brightness
+						this->_screen[i + offset.x][j + offset.y] = buffer[i][j];
+				}
+			}
+		}
 	};
 
 	//! @brief Transform SNES color code BGR to uint32_t RGB

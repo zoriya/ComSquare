@@ -37,6 +37,8 @@ namespace ComSquare::Renderer
 		void enableCgramViewer();
 		//! @brief Action called when clicking on the enable DMA viewer button.
 		void enableRegisterViewer();
+		//! @brief Action called when clicking on the enable Tile viewer button
+		void enableTileViewer();
 
 		//! @brief Action called when clicking on the reset button.
 		void reset();
@@ -44,20 +46,21 @@ namespace ComSquare::Renderer
 		QtFullSFML(SNES &snes, QWidget* parent, const QPoint& position, const QSize& size, int frameRate = 0);
 		QtFullSFML(const QtFullSFML &) = delete;
 		QtFullSFML &operator=(const QtFullSFML &) = delete;
-		~QtFullSFML() override = default;
+		~QtFullSFML() = default;
 	};
 
-	//! @brief A SFML renderer inside a QT window.
+	//! @brief A SFML renderer inside a QT widget.
 	class QtSFML : public IRenderer {
 	private:
 		//! @brief The main window that the app reside on.
-		QMainWindow _window;
+		QWidget *_window;
+	protected:
 		//! @brief The SFML widget.
 		std::unique_ptr<QtFullSFML> _sfWidget = nullptr;
 	public:
 		//! @brief Use this function to create the window.
 		//! @param maxFPS The number of FPS you aim to run on.
-		void createWindow(SNES &snes, int maxFPS) override;
+		virtual void createWindow(SNES &snes, int maxFPS) override;
 		//! @brief Add a pixel to the buffer to the coordinates x, y with the color rgba.
 		//! @param X horizontal index.
 		//! @param Y vertical index.
@@ -72,13 +75,28 @@ namespace ComSquare::Renderer
 		//! @brief Set a new name to the window, if there is already a name it will be overwrite.
 		//! @param newWindowName new title for the window.
 		void setWindowName(std::string &newWindowName) override;
-		//! @brief Constructor that return a SFML renderer inside a QT window.
-		//! @param height _height of the window.
-		//! @param width _width of the window.
-		QtSFML(unsigned int height, unsigned int width);
+		//! @brief Constructor that return a SFML renderer inside a QT widget.
+		QtSFML(QWidget *parentWidget);
 		QtSFML(const QtSFML &) = delete;
 		QtSFML &operator=(const QtSFML &) = delete;
 		~QtSFML() = default;
+	};
+
+	class QtSFMLWindow : public QtSFML {
+	private:
+		//! @brief The main window that the app reside on.
+		QMainWindow _window;
+	public:
+		//! @brief Use this function to create the window.
+		//! @param maxFPS The number of FPS you aim to run on.
+		void createWindow(SNES &snes, int maxFPS) override;
+		//! @brief Constructor that return a SFML renderer inside a QT window.
+		//! @param height _height of the window.
+		//! @param width _width of the window.
+		QtSFMLWindow(unsigned int height, unsigned int width);
+		QtSFMLWindow(const QtSFMLWindow &) = delete;
+		QtSFMLWindow &operator=(const QtSFMLWindow &) = delete;
+		~QtSFMLWindow() = default;
 	};
 }
 
