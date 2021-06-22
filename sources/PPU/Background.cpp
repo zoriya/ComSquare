@@ -60,16 +60,23 @@ namespace ComSquare::PPU
 
 		if (tileData.tilePriority != this->_priority)
 			return;
+
+		Vector2i tileOffset = {0, 0};
 		// X horizontal
 		// Y vertical
 
 		this->tileRenderer.setPaletteIndex(tileData.palette);
-		graphicAddress = this->_tilesetAddress + (tileData.posY * NbTilePerRow * this->_bpp * TileBaseByteSize) + (tileData.posX * this->_bpp * TileBaseByteSize);
 		for (int i = 0; i < this->_characterNbPixels.y; i += 8) {
 			for (int j = 0; j < this->_characterNbPixels.x; j += 8) {
+				graphicAddress = this->_tilesetAddress +
+				                 ((tileData.posY + tileOffset.y) * NbTilePerRow * this->_bpp * TileBaseByteSize) +
+				                 ((tileData.posX + tileOffset.x) * this->_bpp * TileBaseByteSize);
 				this->tileRenderer.render(graphicAddress);
-				merge2DArray(this->tileBuffer, this->tileRenderer.buffer, {i, j});
+				merge2DArray(this->tileBuffer, this->tileRenderer.buffer, {j, i});
+				tileOffset.x += 1;
 			}
+			tileOffset.x = 0;
+			tileOffset.y += 1;
 		}
 
 		// todo check why i need to invert vertical and horizontal flips
