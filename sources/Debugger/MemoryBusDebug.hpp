@@ -10,6 +10,7 @@
 #include "../Memory/MemoryBus.hpp"
 #include "../../ui/ui_busView.h"
 #include "ClosableWindow.hpp"
+#include <optional>
 
 namespace ComSquare::Debugger
 {
