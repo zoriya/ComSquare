@@ -91,6 +91,8 @@ namespace ComSquare::Cartridge
 		Header _mapHeader(uint32_t headerAddress);
 		//! @brief Current type of the cartridge
 		CartridgeType _type;
+		//! @brief Magic Header string of a SPC Rom
+		static constexpr std::string_view _magicSPC = "SNES-SPC700 Sound File Data v0.30";
 	public:
 		//! @brief Load a rom from it's path.
 		explicit Cartridge(const std::string &romPath);

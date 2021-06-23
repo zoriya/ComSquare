@@ -162,7 +162,7 @@ namespace ComSquare::Cartridge
 	{
 		std::string str = std::string(reinterpret_cast<char *>(this->_data), 0x21);
 
-		if (str != "SNES-SPC700 Sound File Data v0.30")
+		if (str != Cartridge::_magicSPC)
 			return false;
 		if (this->_data[0x21] != 0x1A || this->_data[0x22] != 0x1A)
 			return false;
