@@ -74,12 +74,12 @@ namespace ComSquare::PPU
 00,0x00,0x00,0x00,0x80,0x00,0xc0,0x00,0xe0,0x00,0xf0,0x00,0xf8,0x00,0xfc,0x00,
 00,0x00,0x00,0x00,0x01,0x00,0x03,0x00,0x07,0x00,0x0f,00,0x1f,00,0x3f,00, -1
 		};
-		/*int *cgram_test = get_dump_cgram();
+	/*	int *cgram_test = Utils::get_dump_cgram();
 		for (int i = 0; cgram_test[i] != -1; i++) {
 			this->cgram->write(i, cgram_test[i]);
-		}*/
+		} */
 
-		//int *vram_test = get_dump_vram();
+		//int *vram_test = Utils::get_dump_vram();
 		for (int i = 0; vram_test[i] != -1; i++) {
 			this->vram->write(i, vram_test[i]);
 		}
@@ -721,7 +721,7 @@ namespace ComSquare::PPU
 
 		uint32_t color = Utils::getRealColor(colorPalette);
 		for (auto &row : this->_subScreen)
-				row.fill(color);
+			row.fill(color);
 		// the buffer is overwrite if necessary by a new bg so the background priority is from back to front
 		// the starting palette index isn't implemented
 		switch (this->_registers._bgmode.bgMode) {

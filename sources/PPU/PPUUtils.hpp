@@ -72,5 +72,8 @@ namespace ComSquare::PPU::Utils
 		std::reverse(array.begin() + offset.x, array.begin() + offset.x + size.x);
 	}
 
+	int *get_dump_vram();
+	int *get_dump_cgram();
+
 }
 #endif //COMSQUARE_PPU_UTILS_HPP

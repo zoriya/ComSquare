@@ -658,8 +658,5 @@ namespace ComSquare::PPU
 			}
 		}
 	};
-
-	int *get_dump_vram();
-	int *get_dump_cgram();
 }
 #endif //COMSQUARE_PPU_HPP
