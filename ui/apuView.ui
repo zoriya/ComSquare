@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>740</width>
-    <height>868</height>
+    <width>483</width>
+    <height>673</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -31,7 +31,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="APU">
        <attribute name="title">
@@ -329,23 +329,70 @@
         <string>CPU</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_3">
-        <item row="3" column="0">
-         <widget class="QTextBrowser" name="logger"/>
-        </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="loggerLabel">
-          <property name="text">
-           <string>Instructions History</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
+        <item row="5" column="0">
+         <widget class="QTableWidget" name="logger"/>
         </item>
         <item row="1" column="0">
+         <layout class="QGridLayout" name="gridLayout_15">
+          <item row="0" column="7">
+           <widget class="QLineEdit" name="accumlatorLineEdit"/>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="stackPointerLabel">
+            <property name="text">
+             <string>SP</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="6">
+           <widget class="QLabel" name="accumlatorLabel">
+            <property name="text">
+             <string>A</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QLabel" name="xIndexLabel">
+            <property name="text">
+             <string>X</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="5">
+           <widget class="QLineEdit" name="yIndexLineEdit"/>
+          </item>
+          <item row="0" column="3">
+           <widget class="QLineEdit" name="xIndexLineEdit"/>
+          </item>
+          <item row="0" column="4">
+           <widget class="QLabel" name="yIndexLabel">
+            <property name="text">
+             <string>Y</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="stackPointerLineEdit"/>
+          </item>
+          <item row="0" column="9">
+           <widget class="QLineEdit" name="programCounterLineEdit"/>
+          </item>
+          <item row="0" column="8">
+           <widget class="QLabel" name="programCounterLabel">
+            <property name="text">
+             <string>PC</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="3" column="0">
          <layout class="QGridLayout" name="gridLayout">
           <item row="0" column="0">
            <widget class="QPushButton" name="resumeButton">
+            <property name="mouseTracking">
+             <bool>true</bool>
+            </property>
             <property name="text">
              <string>Resume</string>
             </property>
@@ -368,69 +415,105 @@
           </item>
          </layout>
         </item>
-        <item row="0" column="0">
-         <layout class="QGridLayout" name="gridLayout_15">
-          <item row="0" column="0">
-           <widget class="QLabel" name="stackPointerLabel">
+        <item row="2" column="0">
+         <layout class="QGridLayout" name="gridLayout_16">
+          <item row="1" column="3">
+           <widget class="QCheckBox" name="bFlagCheckBox">
+            <property name="layoutDirection">
+             <enum>Qt::RightToLeft</enum>
+            </property>
             <property name="text">
-             <string>Stack Pointer</string>
+             <string>B</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="1">
-           <widget class="QLineEdit" name="programStatusWordLineEdit"/>
-          </item>
-          <item row="2" column="1">
-           <widget class="QLineEdit" name="yIndexLineEdit"/>
-          </item>
-          <item row="4" column="1">
-           <widget class="QLineEdit" name="programCounterLineEdit"/>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="xIndexLabel">
+          <item row="1" column="2">
+           <widget class="QCheckBox" name="pFlagCheckBox">
+            <property name="layoutDirection">
+             <enum>Qt::RightToLeft</enum>
+            </property>
             <property name="text">
-             <string>X Index</string>
+             <string>P</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="accumlatorLabel">
+          <item row="1" column="6">
+           <widget class="QCheckBox" name="zFlagCheckBox">
+            <property name="layoutDirection">
+             <enum>Qt::RightToLeft</enum>
+            </property>
             <property name="text">
-             <string>Accumlator</string>
+             <string>Z</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="1">
-           <widget class="QLineEdit" name="stackPointerLineEdit"/>
-          </item>
-          <item row="3" column="1">
-           <widget class="QLineEdit" name="accumlatorLineEdit"/>
+          <item row="1" column="7">
+           <widget class="QCheckBox" name="cFlagCheckBox">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="mouseTracking">
+             <bool>false</bool>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::RightToLeft</enum>
+            </property>
+            <property name="text">
+             <string>C</string>
+            </property>
+           </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QLineEdit" name="xIndexLineEdit"/>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="yIndexLabel">
+           <widget class="QCheckBox" name="vFlagCheckBox">
+            <property name="layoutDirection">
+             <enum>Qt::RightToLeft</enum>
+            </property>
             <property name="text">
-             <string>Y Index</string>
+             <string>V</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="programCounterLabel">
+          <item row="1" column="4">
+           <widget class="QCheckBox" name="hFlagCheckBox">
+            <property name="layoutDirection">
+             <enum>Qt::RightToLeft</enum>
+            </property>
             <property name="text">
-             <string>Program Counter</string>
+             <string>H</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="0">
-           <widget class="QLabel" name="programStatusWordLabel">
+          <item row="1" column="5">
+           <widget class="QCheckBox" name="iFlagCheckBox">
+            <property name="layoutDirection">
+             <enum>Qt::RightToLeft</enum>
+            </property>
             <property name="text">
-             <string>Program Status Word</string>
+             <string>I</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="nFlagCheckBox">
+            <property name="layoutDirection">
+             <enum>Qt::RightToLeft</enum>
+            </property>
+            <property name="text">
+             <string>N</string>
             </property>
            </widget>
           </item>
          </layout>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="loggerLabel">
+          <property name="text">
+           <string>Instructions History</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
