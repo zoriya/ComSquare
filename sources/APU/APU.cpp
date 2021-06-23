@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <cstring>
 #include "APU.hpp"
 #include "../Exceptions/NotImplementedException.hpp"
 #include "../Exceptions/InvalidAddress.hpp"
@@ -190,7 +191,7 @@ namespace ComSquare::APU
 
 	int APU::_executeInstruction()
 	{
-		uint8_t opcode = this->_internalRead(this->_internalRegisters.pc++);
+		uint8_t opcode = this->_getImmediateData();
 
 		switch (opcode) {
 		case 0x00:
@@ -199,8 +200,11 @@ namespace ComSquare::APU
 			return this->TCALL(0);
 		case 0x02:
 			return this->SET1(this->_getDirectAddr(), 0);
-		case 0x03:
-			return this->BBS(this->_getDirectAddr(), this->_getImmediateData(), 0);
+		case 0x03: {
+			auto addr = this->_getDirectAddr();
+			auto offset = this->_getImmediateData();
+			return this->BBS(addr, offset, 0);
+		}
 		case 0x04:
 			return this->ORacc(this->_getDirectAddr(), 3);
 		case 0x05:
@@ -211,8 +215,11 @@ namespace ComSquare::APU
 			return this->ORacc(this->_getAbsoluteDirectByXAddr(), 6);
 		case 0x08:
 			return this->ORacc(this->_getImmediateData(), 2);
-		case 0x09:
-			return this->OR(this->_getDirectAddr(), this->_getDirectAddr(), 6);
+		case 0x09: {
+			auto ope1 = this->_getDirectAddr();
+			auto ope2 = this->_getDirectAddr();
+			return this->OR(ope1, ope2, 6);
+		}
 		case 0x0A:
 			return this->OR1(this->_getAbsoluteBit());
 		case 0x0B:
@@ -231,8 +238,11 @@ namespace ComSquare::APU
 			return this->TCALL(1);
 		case 0x12:
 			return this->CLR1(this->_getDirectAddr(), 0);
-		case 0x13:
-			return this->BBC(this->_getDirectAddr(), this->_getImmediateData(), 0);
+		case 0x13: {
+			auto ope1 = this->_getDirectAddr();
+			auto ope2 = this->_getImmediateData();
+			return this->BBC(ope1, ope2, 0);
+		}
 		case 0x14:
 			return this->ORacc(this->_getDirectAddrByX(), 4);
 		case 0x15:
@@ -241,8 +251,11 @@ namespace ComSquare::APU
 			return this->ORacc(this->_getAbsoluteAddrByY(), 5);
 		case 0x17:
 			return this->ORacc(this->_getAbsoluteDirectAddrByY(), 6);
-		case 0x18:
-			return this->OR(this->_getDirectAddr(), this->_getImmediateData(), 5);
+		case 0x18: {
+			auto ope1 = this->_getDirectAddr();
+			auto ope2 = this->_getImmediateData();
+			return this->OR(ope1, ope2, 5);
+		}
 		case 0x19:
 			return this->OR(this->_getIndexXAddr(), this->_getIndexYAddr(), 5);
 		case 0x1A:
@@ -263,8 +276,11 @@ namespace ComSquare::APU
 			return this->TCALL(2);
 		case 0x22:
 			return this->SET1(this->_getDirectAddr(), 1);
-		case 0x23:
-			return this->BBS(this->_getDirectAddr(), this->_getImmediateData(), 1);
+		case 0x23: {
+			auto ope1 = this->_getDirectAddr();
+			auto ope2 =  this->_getImmediateData();
+			return this->BBS(ope1, ope2, 1);
+		}
 		case 0x24:
 			return this->ANDacc(this->_getDirectAddr(), 3);
 		case 0x25:
@@ -275,8 +291,11 @@ namespace ComSquare::APU
 			return this->ANDacc(this->_getAbsoluteDirectByXAddr(), 6);
 		case 0x28:
 			return this->ANDacc(this->_getImmediateData(), 2);
-		case 0x29:
-			return this->AND(this->_getDirectAddr(), this->_getDirectAddr(), 6);
+		case 0x29: {
+			auto ope1 = this->_getDirectAddr();
+			auto ope2 = this->_getDirectAddr();
+			return this->AND(ope1, ope2, 6);
+		}
 		case 0x2A:
 			return this->OR1(this->_getAbsoluteBit(), true);
 		case 0x2B:
@@ -285,8 +304,11 @@ namespace ComSquare::APU
 			return this->ROL(this->_getAbsoluteAddr(), 5);
 		case 0x2D:
 			return this->PUSH(this->_internalRegisters.a);
-		case 0x2E:
-			return this->CBNE(this->_getImmediateData(), this->_getImmediateData());
+		case 0x2E: {
+			auto addr = this->_getDirectAddr();
+			auto offset = this->_getImmediateData();
+			return this->CBNE(addr, offset);
+		}
 		case 0x2F:
 			return this->BRA(this->_getImmediateData());
 		case 0x30:
@@ -295,8 +317,11 @@ namespace ComSquare::APU
 			return this->TCALL(3);
 		case 0x32:
 			return this->CLR1(this->_getDirectAddr(), 1);
-		case 0x33:
-			return this->BBC(this->_getDirectAddr(), this->_getImmediateData(), 1);
+		case 0x33: {
+			auto addr = this->_getDirectAddr();
+			auto offset = this->_getImmediateData();
+			return this->BBC(addr, offset, 1);
+		}
 		case 0x34:
 			return this->ANDacc(this->_getDirectAddrByX(), 4);
 		case 0x35:
@@ -305,8 +330,11 @@ namespace ComSquare::APU
 			return this->ANDacc(this->_getAbsoluteAddrByY(), 5);
 		case 0x37:
 			return this->ANDacc(this->_getAbsoluteDirectAddrByY(), 6);
-		case 0x38:
-			return this->AND(this->_getDirectAddr(), this->_getImmediateData(), 5);
+		case 0x38: {
+			auto ope1 = this->_getDirectAddr();
+			auto ope2 = this->_getImmediateData();
+			return this->AND(ope1, ope2, 5);
+		}
 		case 0x39:
 			return this->AND(this->_getIndexXAddr(), this->_getIndexYAddr(), 5);
 		case 0x3A:
@@ -327,8 +355,11 @@ namespace ComSquare::APU
 			return this->TCALL(4);
 		case 0x42:
 			return this->SET1(this->_getDirectAddr(), 2);
-		case 0x43:
-			return this->BBS(this->_getDirectAddr(), this->_getImmediateData(), 2);
+		case 0x43: {
+			auto addr = this->_getDirectAddr();
+			auto offset = this->_getImmediateData();
+			return this->BBS(addr, offset, 2);
+		}
 		case 0x44:
 			return this->EORacc(this->_getDirectAddr(), 3);
 		case 0x45:
@@ -339,8 +370,11 @@ namespace ComSquare::APU
 			return this->EORacc(this->_getAbsoluteDirectByXAddr(), 6);
 		case 0x48:
 			return this->EORacc(this->_getImmediateData(), 2);
-		case 0x49:
-			return this->EOR(this->_getDirectAddr(), this->_getDirectAddr(), 6);
+		case 0x49: {
+			auto ope1 = this->_getDirectAddr();
+			auto ope2 = this->_getDirectAddr();
+			return this->EOR(ope1, ope2, 6);
+		}
 		case 0x4A:
 			return this->AND1(this->_getAbsoluteBit());
 		case 0x4B:
@@ -359,8 +393,11 @@ namespace ComSquare::APU
 			return this->TCALL(5);
 		case 0x52:
 			return this->CLR1(this->_getDirectAddr(), 2);
-		case 0x53:
-			return this->BBC(this->_getDirectAddr(), this->_getImmediateData(), 2);
+		case 0x53: {
+			auto addr = this->_getDirectAddr();
+			auto offset = this->_getImmediateData();
+			return this->BBC(addr, offset, 2);
+		}
 		case 0x54:
 			return this->EORacc(this->_getDirectAddrByX(), 4);
 		case 0x55:
@@ -369,8 +406,11 @@ namespace ComSquare::APU
 			return this->EORacc(this->_getAbsoluteAddrByY(), 5);
 		case 0x57:
 			return this->EORacc(this->_getAbsoluteDirectAddrByY(), 6);
-		case 0x58:
-			return this->EOR(this->_getDirectAddr(), this->_getImmediateData(), 5);
+		case 0x58: {
+			auto ope1 = this->_getDirectAddr();
+			auto ope2 = this->_getImmediateData();
+			return this->EOR(ope1, ope2, 5);
+		}
 		case 0x59:
 			return this->EOR(this->_getIndexXAddr(), this->_getIndexYAddr(), 5);
 		case 0x5A:
@@ -391,8 +431,11 @@ namespace ComSquare::APU
 			return this->TCALL(6);
 		case 0x62:
 			return this->SET1(this->_getDirectAddr(), 3);
-		case 0x63:
-			return this->BBS(this->_getDirectAddr(), this->_getImmediateData(), 3);
+		case 0x63: {
+			auto addr = this->_getDirectAddr();
+			auto offset = this->_getImmediateData();
+			return this->BBS(addr, offset, 3);
+		}
 		case 0x64:
 			return this->CMPreg(this->_internalRegisters.a, this->_getDirectAddr(), 3);
 		case 0x65:
@@ -403,8 +446,11 @@ namespace ComSquare::APU
 			return this->CMPreg(this->_internalRegisters.a, this->_getAbsoluteDirectByXAddr(), 6);
 		case 0x68:
 			return this->CMPreg(this->_internalRegisters.a, this->_getImmediateData(), 2);
-		case 0x69:
-			return this->CMP(this->_getDirectAddr(), this->_getDirectAddr(), 6);
+		case 0x69: {
+			auto ope1 = this->_getDirectAddr();
+			auto ope2 = this->_getDirectAddr();
+			return this->CMP(ope1, ope2, 6);
+		}
 		case 0x6A:
 			return this->AND1(this->_getAbsoluteBit(), true);
 		case 0x6B:
@@ -423,8 +469,11 @@ namespace ComSquare::APU
 			return this->TCALL(7);
 		case 0x72:
 			return this->CLR1(this->_getDirectAddr(), 3);
-		case 0x73:
-			return this->BBC(this->_getDirectAddr(), this->_getImmediateData(), 3);
+		case 0x73: {
+			auto addr = this->_getDirectAddr();
+			auto offset = this->_getImmediateData();
+			return this->BBC(addr, offset, 3);
+		}
 		case 0x74:
 			return this->CMPreg(this->_internalRegisters.a, this->_getDirectAddrByX(), 4);
 		case 0x75:
@@ -433,8 +482,11 @@ namespace ComSquare::APU
 			return this->CMPreg(this->_internalRegisters.a, this->_getAbsoluteAddrByY(), 5);
 		case 0x77:
 			return this->CMPreg(this->_internalRegisters.a, this->_getAbsoluteDirectAddrByY(), 6);
-		case 0x78:
-			return this->CMP(this->_getDirectAddr(), this->_getImmediateData(), 5);
+		case 0x78: {
+			auto ope1 = this->_getDirectAddr();
+			auto ope2 = this->_getImmediateData();
+			return this->CMP(ope1, ope2, 5);
+		}
 		case 0x79:
 			return this->CMP(this->_getIndexXAddr(), this->_getIndexYAddr(), 5);
 		case 0x7A:
@@ -455,8 +507,11 @@ namespace ComSquare::APU
 			return this->TCALL(8);
 		case 0x82:
 			return this->SET1(this->_getDirectAddr(), 4);
-		case 0x83:
-			return this->BBS(this->_getDirectAddr(), this->_getImmediateData(), 4);
+		case 0x83: {
+			auto addr = this->_getDirectAddr();
+			auto offset = this->_getImmediateData();
+			return this->BBS(addr, offset, 4);
+		}
 		case 0x84:
 			return this->ADCacc(this->_getDirectAddr(), 3);
 		case 0x85:
@@ -467,8 +522,11 @@ namespace ComSquare::APU
 			return this->ADCacc(this->_getAbsoluteDirectByXAddr(), 6);
 		case 0x88:
 			return this->ADCacc(this->_getImmediateData(), 2);
-		case 0x89:
-			return this->ADC(this->_getDirectAddr(), this->_getDirectAddr(), 6);
+		case 0x89: {
+			auto ope1 = this->_getDirectAddr();
+			auto ope2 = this->_getDirectAddr();
+			return this->ADC(ope1, ope2, 6);
+		}
 		case 0x8A:
 			return this->EOR1(this->_getAbsoluteBit());
 		case 0x8B:
@@ -479,16 +537,22 @@ namespace ComSquare::APU
 			return this->MOV(this->_getImmediateData(), this->_internalRegisters.y, 2);
 		case 0x8E:
 			return this->POP(this->_internalRegisters.psw);
-		case 0x8F:
-			return this->MOV(this->_getDirectAddr(), this->_getImmediateData());
+		case 0x8F: {
+			auto to = this->_getDirectAddr();
+			auto from = this->_getImmediateData();
+			return this->MOV(to, from);
+		}
 		case 0x90:
 			return this->BCC(this->_getImmediateData());
 		case 0x91:
 			return this->TCALL(9);
 		case 0x92:
 			return this->CLR1(this->_getDirectAddr(), 4);
-		case 0x93:
-			return this->BBC(this->_getDirectAddr(), this->_getImmediateData(), 4);
+		case 0x93: {
+			auto addr = this->_getDirectAddr();
+			auto offset = this->_getImmediateData();
+			return this->BBC(addr, offset, 4);
+		}
 		case 0x94:
 			return this->ADCacc(this->_getDirectAddrByX(), 4);
 		case 0x95:
@@ -497,8 +561,11 @@ namespace ComSquare::APU
 			return this->ADCacc(this->_getAbsoluteAddrByY(), 5);
 		case 0x97:
 			return this->ADCacc(this->_getAbsoluteDirectAddrByY(), 6);
-		case 0x98:
-			return this->ADC(this->_getDirectAddr(), this->_getImmediateData(), 5);
+		case 0x98: {
+			auto ope1 = this->_getDirectAddr();
+			auto ope2 = this->_getImmediateData();
+			return this->ADC(ope1, ope2, 5);
+		}
 		case 0x99:
 			return this->ADC(this->_getIndexXAddr(), this->_getIndexYAddr(), 3);
 		case 0x9A:
@@ -519,8 +586,11 @@ namespace ComSquare::APU
 			return this->TCALL(10);
 		case 0xA2:
 			return this->SET1(this->_getDirectAddr(), 5);
-		case 0xA3:
-			return this->BBS(this->_getDirectAddr(), this->_getImmediateData(), 5);
+		case 0xA3: {
+			auto addr = this->_getDirectAddr();
+			auto offset = this->_getImmediateData();
+			return this->BBS(addr, offset, 5);
+		}
 		case 0xA4:
 			return this->SBCacc(this->_getDirectAddr(), 3);
 		case 0xA5:
@@ -531,8 +601,11 @@ namespace ComSquare::APU
 			return this->SBCacc(this->_getAbsoluteDirectByXAddr(), 6);
 		case 0xA8:
 			return this->SBCacc(this->_getImmediateData(), 2);
-		case 0xA9:
-			return this->SBC(this->_getDirectAddr(), this->_getDirectAddr(), 6);
+		case 0xA9: {
+			auto ope1 = this->_getDirectAddr();
+			auto ope2 = this->_getDirectAddr();
+			return this->SBC(ope1, ope2, 6);
+		}
 		case 0xAA:
 			return this->MOV1(this->_getAbsoluteBit(), true);
 		case 0xAB:
@@ -551,8 +624,11 @@ namespace ComSquare::APU
 			return this->TCALL(11);
 		case 0xB2:
 			return this->CLR1(this->_getDirectAddr(), 5);
-		case 0xB3:
-			return this->BBC(this->_getDirectAddr(), this->_getImmediateData(), 5);
+		case 0xB3: {
+			auto addr = this->_getDirectAddr();
+			auto offset = this->_getImmediateData();
+			return this->BBC(addr, offset, 5);
+		}
 		case 0xB4:
 			return this->SBCacc(this->_getDirectAddrByX(), 4);
 		case 0xB5:
@@ -561,8 +637,11 @@ namespace ComSquare::APU
 			return this->SBCacc(this->_getAbsoluteAddrByY(), 5);
 		case 0xB7:
 			return this->SBCacc(this->_getAbsoluteDirectAddrByY(), 6);
-		case 0xB8:
-			return this->SBC(this->_getDirectAddr(), this->_getImmediateData(), 5);
+		case 0xB8: {
+			auto ope1 = this->_getDirectAddr();
+			auto ope2 = this->_getImmediateData();
+			return this->SBC(ope1, ope2, 5);
+		}
 		case 0xB9:
 			return this->SBC(this->_getIndexXAddr(), this->_getIndexYAddr(), 5);
 		case 0xBA:
@@ -583,8 +662,11 @@ namespace ComSquare::APU
 			return this->TCALL(12);
 		case 0xC2:
 			return this->SET1(this->_getDirectAddr(), 6);
-		case 0xC3:
-			return this->BBS(this->_getDirectAddr(), this->_getImmediateData(), 6);
+		case 0xC3: {
+			auto addr = this->_getDirectAddr();
+			auto offset = this->_getImmediateData();
+			return this->BBS(addr, offset, 6);
+		}
 		case 0xC4:
 			return this->MOV(this->_internalRegisters.a, this->_getDirectAddr(), 4);
 		case 0xC5:
@@ -615,8 +697,11 @@ namespace ComSquare::APU
 			return this->TCALL(13);
 		case 0xD2:
 			return this->CLR1(this->_getDirectAddr(), 6);
-		case 0xD3:
-			return this->BBC(this->_getDirectAddr(), this->_getImmediateData(), 6);
+		case 0xD3: {
+			auto addr = this->_getDirectAddr();
+			auto offset = this->_getImmediateData();
+			return this->BBC(addr, offset, 6);
+		}
 		case 0xD4:
 			return this->MOV(this->_internalRegisters.a, this->_getDirectAddrByX(), 5);
 		case 0xD5:
@@ -637,8 +722,11 @@ namespace ComSquare::APU
 			return this->DECreg(this->_internalRegisters.y);
 		case 0xDD:
 			return this->MOV(this->_internalRegisters.y, this->_internalRegisters.a);
-		case 0xDE:
-			return this->CBNE(this->_getDirectAddrByX(), this->_getImmediateData(), true);
+		case 0xDE: {
+			auto addr = this->_getDirectAddrByX();
+			auto offset = this->_getImmediateData();
+			return this->CBNE(addr, offset, true);
+		}
 		case 0xDF:
 			return this->DAA();
 		case 0xE0:
@@ -647,26 +735,29 @@ namespace ComSquare::APU
 			return this->TCALL(14);
 		case 0xE2:
 			return this->SET1(this->_getDirectAddr(), 7);
-		case 0xE3:
-			return this->BBS(this->_getDirectAddr(), this->_getImmediateData(), 7);
+		case 0xE3: {
+			auto addr = this->_getDirectAddr();
+			auto offset = this->_getImmediateData();
+			return this->BBS(addr, offset, 7);
+		}
 		case 0xE4:
-			return this->MOV(this->_getDirectAddr(), this->_internalRegisters.a, 3);
+			return this->MOV(this->_internalRegisters.a, this->_internalRead(this->_getDirectAddr()), 3);
 		case 0xE5:
-			return this->MOV(this->_getAbsoluteAddrByX(), this->_internalRegisters.a, 5);
+			return this->MOV(this->_internalRegisters.a, this->_getAbsoluteAddrByX(), 5);
 		case 0xE6:
-			return this->MOV(this->_getIndexXAddr(), this->_internalRegisters.a, 3);
+			return this->MOV(this->_internalRegisters.a, this->_getIndexXAddr(), 3);
 		case 0xE7:
-			return this->MOV(this->_getAbsoluteDirectByXAddr(), this->_internalRegisters.a, 6);
+			return this->MOV(this->_internalRegisters.a, this->_getAbsoluteDirectByXAddr(), 6);
 		case 0xE8:
-			return this->MOV(this->_getImmediateData(), this->_internalRegisters.a, 2);
+			return this->MOV(this->_internalRegisters.a, this->_getImmediateData(), 2);
 		case 0xE9:
-			return this->MOV(this->_getAbsoluteAddr(), this->_internalRegisters.x, 4);
+			return this->MOV(this->_internalRegisters.x, this->_getAbsoluteAddr(),4);
 		case 0xEA:
 			return this->NOT1(this->_getAbsoluteBit());
 		case 0xEB:
-			return this->MOV(this->_internalRead(this->_getDirectAddr()), this->_internalRegisters.y, 3);
+			return this->MOV(this->_internalRegisters.y, this->_getDirectAddr(),3);
 		case 0xEC:
-			return this->MOV(this->_getAbsoluteAddr(), this->_internalRegisters.y, 4);
+			return this->MOV(this->_internalRegisters.y, this->_getAbsoluteAddr(), 4);
 		case 0xED:
 			return this->NOTC();
 		case 0xEE:
@@ -679,28 +770,31 @@ namespace ComSquare::APU
 			return this->TCALL(15);
 		case 0xF2:
 			return this->CLR1(this->_getDirectAddr(), 7);
-		case 0xF3:
-			return this->BBC(this->_getDirectAddr(), this->_getImmediateData(), 7);
+		case 0xF3: {
+			auto addr = this->_getDirectAddr();
+			auto offset = this->_getImmediateData();
+			return this->BBC(addr, offset, 7);
+		}
 		case 0xF4:
-			return this->MOV(this->_getDirectAddrByX(), this->_internalRegisters.a, 4);
+			return this->MOV(this->_internalRegisters.a, this->_internalRead(this->_getDirectAddrByX()), 4);
 		case 0xF5:
-			return this->MOV(this->_getAbsoluteAddrByX(), this->_internalRegisters.a, 5);
+			return this->MOV(this->_internalRegisters.a, this->_internalRead(this->_getAbsoluteAddrByX()), 5);
 		case 0xF6:
-			return this->MOV(this->_getAbsoluteAddrByY(), this->_internalRegisters.a, 5);
+			return this->MOV(this->_internalRegisters.a, this->_getAbsoluteAddrByY(), 5);
 		case 0xF7:
-			return this->MOV(this->_getAbsoluteDirectAddrByY(), this->_internalRegisters.a, 6);
+			return this->MOV(this->_internalRegisters.a, this->_getAbsoluteDirectAddrByY(), 6);
 		case 0xF8:
-			return this->MOV(this->_getDirectAddr(), this->_internalRegisters.x, 3);
+			return this->MOV(this->_internalRegisters.x, this->_getDirectAddr(), 3);
 		case 0xF9:
-			return this->MOV(this->_getDirectAddrByY(), this->_internalRegisters.x, 4);
+			return this->MOV(this->_internalRegisters.x, this->_getDirectAddrByY(), 4);
 		case 0xFA:
 			return this->MOV(this->_getDirectAddr(), this->_getDirectAddr());
 		case 0xFB:
-			return this->MOV(this->_getDirectAddrByX(), this->_internalRegisters.y, 4);
+			return this->MOV(this->_internalRegisters.y, this->_getDirectAddrByX(), 4);
 		case 0xFC:
 			return this->INCreg(this->_internalRegisters.y);
 		case 0xFD:
-			return this->MOV(this->_internalRegisters.a, this->_internalRegisters.y);
+			return this->MOV(this->_internalRegisters.y, this->_internalRegisters.a);
 		case 0xFE:
 			return this->DBNZ(this->_getImmediateData());
 		case 0xFF:
@@ -729,6 +823,77 @@ namespace ComSquare::APU
 		samples = this->_dsp.getSamplesCount();
 		if (samples > 0)
 			this->_renderer.playAudio(std::span{this->_soundBuffer}, samples / 2);
+	}
+
+	void APU::loadFromSPC(const std::shared_ptr<Cartridge::Cartridge>& cartridge)
+	{
+		const uint8_t *data = cartridge->getData();
+		uint24_t size = cartridge->getSize();
+		if (size < 0x101C0)
+			throw InvalidAddress("Cartridge is not the right size", size);
+
+		std::string song = std::string(reinterpret_cast<const char *>(data + 0x2E), 0x20);
+		std::string game = std::string(reinterpret_cast<const char *>(data + 0x4E), 0x20);
+		std::string dumper = std::string(reinterpret_cast<const char *>(data + 0x6E), 0x10);
+		std::string comment = std::string(reinterpret_cast<const char *>(data + 0x7E), 0x20);
+		std::string date = std::string(reinterpret_cast<const char *>(data + 0x9E), 0x0B);
+		std::string artist = std::string(reinterpret_cast<const char *>(data + 0xB1), 0x20);
+
+		this->_internalRegisters.pcl = cartridge->read(0x25);
+		this->_internalRegisters.pch = cartridge->read(0x26);
+		this->_internalRegisters.a = cartridge->read(0x27);
+		this->_internalRegisters.x = cartridge->read(0x28);
+		this->_internalRegisters.y = cartridge->read(0x29);
+		this->_internalRegisters.psw = cartridge->read(0x2A);
+		this->_internalRegisters.sp = cartridge->read(0x2B);
+
+		std::memcpy(this->_map->Page0.getData(), data + 0x100, this->_map->Page0.getSize());
+		std::memcpy(this->_map->Page1.getData(), data + 0x200, this->_map->Page1.getSize());
+		std::memcpy(this->_map->Memory.getData(), data + 0x300, this->_map->Memory.getSize());
+
+		this->_registers.unknown = cartridge->read(0x100 + 0xF0);
+		this->_registers.ctrlreg = cartridge->read(0x100 + 0xF1);
+		this->_registers.dspregAddr = cartridge->read(0x100 + 0xF2);
+		this->_dsp.write(this->_registers.dspregAddr, cartridge->read(0x100 + 0xF3));
+		this->_registers.port0 = cartridge->read(0x100 + 0xF4);
+		this->_registers.port1 = cartridge->read(0x100 + 0xF5);
+		this->_registers.port2 = cartridge->read(0x100 + 0xF6);
+		this->_registers.port3 = cartridge->read(0x100 + 0xF7);
+		this->_registers.regmem1 = cartridge->read(0x100 + 0xF8);
+		this->_registers.regmem2 = cartridge->read(0x100 + 0xF9);
+		this->_registers.timer0 = cartridge->read(0x100 + 0xFA);
+		this->_registers.timer1 = cartridge->read(0x100 + 0xFB);
+		this->_registers.timer2 = cartridge->read(0x100 + 0xFC);
+		this->_registers.counter0 = cartridge->read(0x100 + 0xFD);
+		this->_registers.counter1 = cartridge->read(0x100 + 0xFE);
+		this->_registers.counter2 = cartridge->read(0x100 + 0xFF);
+
+		for (int i = 0x00; i < 0x80; i += 0x10)
+			this->_dsp.write(i, cartridge->read(0x10100 + i));
+		for (int i = 0x01; i < 0x80; i += 0x10)
+			this->_dsp.write(i, cartridge->read(0x10100 + i));
+		for (int i = 0x02; i < 0x80; i += 0x10)
+			this->_dsp.write(i, cartridge->read(0x10100 + i));
+		for (int i = 0x03; i < 0x80; i += 0x10)
+			this->_dsp.write(i, cartridge->read(0x10100 + i));
+		for (int i = 0x04; i < 0x80; i += 0x10)
+			this->_dsp.write(i, cartridge->read(0x10100 + i));
+		for (int i = 0x05; i < 0x80; i += 0x10)
+			this->_dsp.write(i, cartridge->read(0x10100 + i));
+		for (int i = 0x06; i < 0x80; i += 0x10)
+			this->_dsp.write(i, cartridge->read(0x10100 + i));
+		for (int i = 0x07; i < 0x80; i += 0x10)
+			this->_dsp.write(i, cartridge->read(0x10100 + i));
+		for (int i = 0x08; i < 0x80; i += 0x10)
+			this->_dsp.write(i, cartridge->read(0x10100 + i));
+		for (int i = 0x09; i < 0x80; i += 0x10)
+			this->_dsp.write(i, cartridge->read(0x10100 + i));
+		for (int i = 0x0C; i < 0x80; i += 0x10)
+			this->_dsp.write(i, cartridge->read(0x10100 + i));
+		for (int i = 0x0D; i < 0x80; i += 0x10)
+			this->_dsp.write(i, cartridge->read(0x10100 + i));
+		for (int i = 0x0F; i < 0x80; i += 0x10)
+			this->_dsp.write(i, cartridge->read(0x10100 + i));
 	}
 
 	void APU::_setNZflags(uint8_t value)

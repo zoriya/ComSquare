@@ -25,10 +25,18 @@ namespace ComSquare
 		apu(new APU::APU(renderer))
 	{
 		this->bus->mapComponents(*this);
+		if (this->cartridge->getType() == Cartridge::Audio)
+			this->apu->loadFromSPC(this->cartridge);
 	}
 
 	void SNES::update()
 	{
+		if (this->cartridge->getType() == Cartridge::Audio)
+		{
+			this->apu->update(0x01);
+			return;
+		}
+
 		unsigned cycleCount = this->cpu->update();
 		this->ppu->update(cycleCount);
 		this->apu->update(cycleCount);

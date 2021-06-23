@@ -50,6 +50,9 @@ namespace ComSquare::Ram
 
 		//! @brief Get the size of the ram in bytes.
 		uint24_t getSize() const override;
+
+		//! @brief Get the raw data of the RAM
+		uint8_t *getData() const;
 	};
 }
 
