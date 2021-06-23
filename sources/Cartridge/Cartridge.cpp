@@ -160,6 +160,8 @@ namespace ComSquare::Cartridge
 
 	bool Cartridge::_isSPCFile()
 	{
+		if (this->_size < 0x25)
+			return false;
 		std::string str = std::string(reinterpret_cast<char *>(this->_data), 0x21);
 
 		if (str != Cartridge::_magicSPC)
