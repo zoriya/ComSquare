@@ -17,13 +17,13 @@
 
 #define FALLTHROUGH __attribute__((fallthrough));
 
-// TODO check if it useful to have defines instead of constexpr
-#define VRAMSIZE 65536
-#define CGRAMSIZE 512
-#define OAMRAMSIZE 544
-
 namespace ComSquare::PPU
 {
+	static constexpr uint32_t VramSize = 65536;
+	static constexpr uint32_t CGRamSize = 512;
+	static constexpr uint32_t OAMRamSize = 544;
+
+
 	class Background;
 	//! @brief Enum to access more easily the ppu background array
 	enum BgName {
@@ -569,7 +569,7 @@ namespace ComSquare::PPU
 		//! @brief Used for vram read registers (0x2139 - 0x213A)
 		uint16_t _vramReadBuffer = 0;
 		//! @brief Struct that contain all necessary vars for the use of the registers
-		struct PpuState _ppuState;
+		struct Utils::PpuState _ppuState;
 
 	public:
 
@@ -622,8 +622,17 @@ namespace ComSquare::PPU
 		//! @brief Add a bg buffer to another buffer
 		template <std::size_t DEST_SIZE_X, std::size_t DEST_SIZE_Y, std::size_t SRC_SIZE_X, std::size_t SRC_SIZE_Y>
 		void add_buffer(std::array<std::array<uint32_t, DEST_SIZE_Y>, DEST_SIZE_X> &bufferDest,
-				  const std::array<std::array<uint32_t, SRC_SIZE_Y>, SRC_SIZE_X> &bufferSrc,
-				  const Vector2<int> &offset = {0, 0});
+		                     const std::array<std::array<uint32_t, SRC_SIZE_Y>, SRC_SIZE_X> &bufferSrc,
+		                     const Vector2<int> &offset = {0, 0})
+		{
+			// TODO use std::ranges
+			for (unsigned long i = 0; i < bufferSrc.size(); i++) {
+				for (unsigned long j = 0; j < bufferSrc[i].size(); j++) {
+					if (bufferSrc[i][j] > 0xFF) // 0xFF correspond to a black pixel with full brightness
+						bufferDest[i + offset.x ][j + offset.y] = bufferSrc[i][j];
+				}
+			}
+		}
 		//! @brief Add a bg to the sub and/or main screen
 		void addToMainSubScreen(Background &bg);
 		//! @brief Get the current background Mode
@@ -650,8 +659,6 @@ namespace ComSquare::PPU
 		}
 	};
 
-	//! @brief Transform SNES color code BGR to uint32_t RGB
-	uint32_t getRealColor(uint16_t color);
 	int *get_dump_vram();
 	int *get_dump_cgram();
 }

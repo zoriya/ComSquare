@@ -4,7 +4,7 @@
 
 #include <cstdint>
 
-namespace ComSquare::PPU
+namespace ComSquare::PPU::Utils
 {
 
 	uint32_t getRealColor(uint16_t color)

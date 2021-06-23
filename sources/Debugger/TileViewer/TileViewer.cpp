@@ -142,8 +142,7 @@ namespace ComSquare::Debugger
 		case 1: return this->setBpp(4);
 		case 2: return this->setBpp(8);
 		default:
-			break;
+			throw std::runtime_error("Invalid Index");
 		}
-		// TODO error handling
 	}
 }

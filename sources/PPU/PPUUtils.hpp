@@ -8,9 +8,9 @@
 #include <stdint-gcc.h>
 #include <cstddef>
 #include <array>
-#include "Models//Vector2.hpp"
+#include "Models/Vector2.hpp"
 
-namespace ComSquare::PPU
+namespace ComSquare::PPU::Utils
 {
 
 	//! @brief Transform SNES color code BGR to uint32_t RGB

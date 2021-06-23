@@ -185,17 +185,17 @@ namespace ComSquare
 	void SNES::disableTileViewerDebugging()
 	{
 		#ifdef DEBUGGER_ENABLED
-				this->_tileViewer = nullptr;
+			this->_tileViewer = nullptr;
 		#endif
 	}
 
 	void SNES::enableTileViewerDebugging()
 	{
 		#ifdef DEBUGGER_ENABLED
-				if (this->_tileViewer)
-					this->_tileViewer->focus();
-				else
-					this->_tileViewer = std::make_unique<Debugger::TileViewer>(*this, *this->ppu);
+			if (this->_tileViewer)
+				this->_tileViewer->focus();
+			else
+				this->_tileViewer = std::make_unique<Debugger::TileViewer>(*this, *this->ppu);
 		#endif
 	}
 }

@@ -9,15 +9,13 @@
 #include "Exceptions/InvalidAddress.hpp"
 #include "Ram/Ram.hpp"
 #include "Models/Vector2.hpp"
-#include "Debugger/TileViewer/RAMTileRenderer.hpp"
-#include <random>
 
 namespace ComSquare::PPU
 {
 	PPU::PPU(Renderer::IRenderer &renderer):
-		vram(new Ram::Ram(VRAMSIZE, ComSquare::VRam, "VRAM")),
-		oamram(new Ram::Ram(OAMRAMSIZE, ComSquare::OAMRam, "OAMRAM")),
-		cgram(new Ram::Ram(CGRAMSIZE, ComSquare::CGRam, "CGRAM")),
+		vram(new Ram::Ram(VramSize, ComSquare::VRam, "VRAM")),
+		oamram(new Ram::Ram(OAMRamSize, ComSquare::OAMRam, "OAMRAM")),
+		cgram(new Ram::Ram(CGRamSize, ComSquare::CGRam, "CGRAM")),
 		_renderer(renderer),
 		_backgrounds{
 			Background(*this, 1, false),
@@ -721,9 +719,9 @@ namespace ComSquare::PPU
 		colorPalette = this->cgram->read(0);
 		colorPalette += this->cgram->read(1) << 8U;
 
-		for (unsigned long i = 0; i < this->_subScreen.size(); i++)
-			for (unsigned long j = 0; j < this->_subScreen[i].size(); j++)
-				this->_subScreen[i][j] = getRealColor(colorPalette);
+		uint32_t color = Utils::getRealColor(colorPalette);
+		for (auto &row : this->_subScreen)
+				row.fill(color);
 		// the buffer is overwrite if necessary by a new bg so the background priority is from back to front
 		// the starting palette index isn't implemented
 		switch (this->_registers._bgmode.bgMode) {
@@ -809,19 +807,6 @@ namespace ComSquare::PPU
 			throw std::runtime_error("not implemented");
 		default:
 			break;
-		}
-	}
-
-	template <std::size_t DEST_SIZE_X, std::size_t DEST_SIZE_Y, std::size_t SRC_SIZE_X, std::size_t SRC_SIZE_Y>
-	void PPU::add_buffer(std::array<std::array<uint32_t, DEST_SIZE_Y>, DEST_SIZE_X> &bufferDest,
-					  const std::array<std::array<uint32_t, SRC_SIZE_Y>, SRC_SIZE_X> &bufferSrc,
-					     const Vector2<int> &offset)
-	{
-		for (unsigned long i = 0; i < bufferSrc.size(); i++) {
-			for (unsigned long j = 0; j < bufferSrc[i].size(); j++) {
-				if (bufferSrc[i][j] > 0xFF) // 0xFF correspond to a black pixel with full brightness
-					bufferDest[i + offset.x ][j + offset.y] = bufferSrc[i][j];
-			}
 		}
 	}
 

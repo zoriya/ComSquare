@@ -54,7 +54,7 @@ namespace ComSquare::PPU
 
 	void Background::_drawBgTile(uint16_t data, Vector2<int> pos)
 	{
-		union TileMapData tileData;
+		union Utils::TileMapData tileData;
 
 		tileData.raw = data;
 
@@ -73,7 +73,7 @@ namespace ComSquare::PPU
 				                 ((tileData.posY + tileOffset.y) * NbTilePerRow * this->_bpp * Tile::BaseByteSize) +
 				                 ((tileData.posX + tileOffset.x) * this->_bpp * Tile::BaseByteSize);
 				this->_tileRenderer.render(graphicAddress);
-				merge2DArray(this->_tileBuffer, this->_tileRenderer.buffer, {j, i});
+				Utils::merge2DArray(this->_tileBuffer, this->_tileRenderer.buffer, {j, i});
 				tileOffset.x += 1;
 			}
 			tileOffset.x = 0;
@@ -82,9 +82,9 @@ namespace ComSquare::PPU
 
 		// todo check why i need to invert vertical and horizontal flips
 		if (tileData.verticalFlip)
-			HFlipArray(this->_tileBuffer, {this->_characterNbPixels.x, this->_characterNbPixels.y});
+			Utils::HFlipArray(this->_tileBuffer, {this->_characterNbPixels.x, this->_characterNbPixels.y});
 		if (tileData.horizontalFlip)
-			VFlipArray(this->_tileBuffer, {this->_characterNbPixels.x, this->_characterNbPixels.y});
+			Utils::VFlipArray(this->_tileBuffer, {this->_characterNbPixels.x, this->_characterNbPixels.y});
 		for (int i = 0; i < this->_characterNbPixels.y; i++) {
 			for (int j = 0; j < this->_characterNbPixels.x; j++) {
 				this->buffer[pos.x][pos.y] = this->_tileBuffer[i][j];

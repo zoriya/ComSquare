@@ -33,7 +33,7 @@ namespace ComSquare::Debugger
 		int bufY = 0;
 		int nbTilesDrawn = 0;
 		int resetX = bufX;
-		for (auto &i : buffer)
+		for (auto &i : this->buffer)
 			i.fill(0);
 		uint24_t limit = fmin(this->_ram->getSize(), this->_renderSize) + this->_ramOffset;
 
