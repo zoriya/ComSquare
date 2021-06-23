@@ -828,6 +828,9 @@ namespace ComSquare::APU
 	void APU::loadFromSPC(const std::shared_ptr<Cartridge::Cartridge>& cartridge)
 	{
 		const uint8_t *data = cartridge->getData();
+		uint24_t size = cartridge->getSize();
+		if (size < 0x101C0)
+			throw InvalidAddress("Cartridge is not the right size", size);
 
 		std::string song = std::string(reinterpret_cast<const char *>(data + 0x2E), 0x20);
 		std::string game = std::string(reinterpret_cast<const char *>(data + 0x4E), 0x20);
