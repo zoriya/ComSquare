@@ -6,9 +6,15 @@
 #define COMSQUARE_PPU_UTILS_HPP
 
 #include <stdint-gcc.h>
+#include <cstddef>
+#include <array>
+#include "Models/Vector2.hpp"
 
-namespace ComSquare::PPU
+namespace ComSquare::PPU::Utils
 {
+
+	//! @brief Transform SNES color code BGR to uint32_t RGB
+	uint32_t getRealColor(uint16_t color);
 	//! @brief Used to parse easily VRAM Tile information
 	union TileMapData {
 		struct {
@@ -35,6 +41,39 @@ namespace ComSquare::PPU
 		//! @brief Shared by the four BGnHOFS registers
 		uint8_t hScrollPrevValue;
 	};
+
+	template <std::size_t DEST_SIZE_Y, std::size_t DEST_SIZE_X, std::size_t SRC_SIZE_Y, std::size_t SRC_SIZE_X>
+	void merge2DArray(std::array<std::array<uint32_t, DEST_SIZE_X>, DEST_SIZE_Y> &bufferDest,
+					  const std::array<std::array<uint32_t, SRC_SIZE_X>, SRC_SIZE_Y> &bufferSrc,
+					  const Vector2<int> &offset = {0, 0})
+	{
+		for (unsigned long i = 0; i < bufferSrc.size(); i++) {
+			for (unsigned long j = 0; j < bufferSrc[i].size(); j++) {
+				bufferDest[i + offset.y][j + offset.x] = bufferSrc[i][j];
+			}
+		}
+	}
+
+	template <std::size_t SRC_SIZE_Y, std::size_t SRC_SIZE_X>
+	void VFlipArray(std::array<std::array<uint32_t, SRC_SIZE_X>, SRC_SIZE_Y> &array,
+					const Vector2<int> &size,
+					const Vector2<int> &offset = {0, 0})
+	{
+		for (int i = offset.y; i < offset.y + size.y; i++) {
+			std::reverse(array[i].begin() + offset.x, array[i].begin() + offset.x + size.x);
+		}
+	}
+
+	template <std::size_t SRC_SIZE_Y, std::size_t SRC_SIZE_X>
+	void HFlipArray(std::array<std::array<uint32_t, SRC_SIZE_X>, SRC_SIZE_Y> &array,
+					const Vector2<int> &size,
+					const Vector2<int> &offset = {0, 0})
+	{
+		std::reverse(array.begin() + offset.x, array.begin() + offset.x + size.x);
+	}
+
+	int *get_dump_vram();
+	int *get_dump_cgram();
 
 }
 #endif //COMSQUARE_PPU_UTILS_HPP

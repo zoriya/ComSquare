@@ -5,18 +5,17 @@
 #include <iostream>
 #include <bitset>
 #include "PPU.hpp"
-#include "../Exceptions/NotImplementedException.hpp"
-#include "../Exceptions/InvalidAddress.hpp"
-#include "../Ram/Ram.hpp"
-#include "../Models/Vector2.hpp"
-#include <random>
+#include "Exceptions/NotImplementedException.hpp"
+#include "Exceptions/InvalidAddress.hpp"
+#include "Ram/Ram.hpp"
+#include "Models/Vector2.hpp"
 
 namespace ComSquare::PPU
 {
 	PPU::PPU(Renderer::IRenderer &renderer):
-		vram(new Ram::Ram(VRAMSIZE, ComSquare::VRam, "VRAM")),
-		oamram(new Ram::Ram(OAMRAMSIZE, ComSquare::OAMRam, "OAMRAM")),
-		cgram(new Ram::Ram(CGRAMSIZE, ComSquare::CGRam, "CGRAM")),
+		vram(new Ram::Ram(VramSize, ComSquare::VRam, "VRAM")),
+		oamram(new Ram::Ram(OAMRamSize, ComSquare::OAMRam, "OAMRAM")),
+		cgram(new Ram::Ram(CGRamSize, ComSquare::CGRam, "CGRAM")),
 		_renderer(renderer),
 		_backgrounds{
 			Background(*this, 1, false),
@@ -75,12 +74,12 @@ namespace ComSquare::PPU
 00,0x00,0x00,0x00,0x80,0x00,0xc0,0x00,0xe0,0x00,0xf0,0x00,0xf8,0x00,0xfc,0x00,
 00,0x00,0x00,0x00,0x01,0x00,0x03,0x00,0x07,0x00,0x0f,00,0x1f,00,0x3f,00, -1
 		};
-		/*int *cgram_test = get_dump_cgram();
+	/*	int *cgram_test = Utils::get_dump_cgram();
 		for (int i = 0; cgram_test[i] != -1; i++) {
 			this->cgram->write(i, cgram_test[i]);
-		}*/
+		} */
 
-	//	int *vram_test = get_dump_vram();
+		//int *vram_test = Utils::get_dump_vram();
 		for (int i = 0; vram_test[i] != -1; i++) {
 			this->vram->write(i, vram_test[i]);
 		}
@@ -143,8 +142,8 @@ namespace ComSquare::PPU
 		//this->_registers._bgofs[3].raw = 0x03DF;
 		this->_registers._t[0].enableWindowDisplayBg1 = true;
 		this->_registers._t[0].enableWindowDisplayBg2 = true;
+/*
 
-		/*
 		//registers aladin
 
 		this->_registers._bgmode.bgMode = 1;
@@ -198,8 +197,8 @@ namespace ComSquare::PPU
 		this->_registers._t[0].enableWindowDisplayBg1 = true;
 		this->_registers._t[0].enableWindowDisplayBg2 = true;
 		this->_registers._t[0].enableWindowDisplayBg3 = true;
-
 */
+
 	}
 
 	uint8_t PPU::read(uint24_t addr)
@@ -466,6 +465,7 @@ namespace ComSquare::PPU
 	{
 		(void)cycles;
 
+
 		this->renderMainAndSubScreen();
 		this->add_buffer(this->_screen, this->_subScreen);
 		this->add_buffer(this->_screen, this->_mainScreen);
@@ -477,6 +477,10 @@ namespace ComSquare::PPU
 			}
 		}
 		this->_renderer.drawScreen();
+		for (auto &i : this->_mainScreen)
+			i.fill(0XFF);
+		for (auto &i : this->_subScreen)
+			i.fill(0XFF);
 	}
 
 	std::string PPU::getName() const
@@ -715,9 +719,9 @@ namespace ComSquare::PPU
 		colorPalette = this->cgram->read(0);
 		colorPalette += this->cgram->read(1) << 8U;
 
-		for (unsigned long i = 0; i < this->_subScreen.size(); i++)
-			for (unsigned long j = 0; j < this->_subScreen[i].size(); j++)
-				this->_subScreen[i][j] = getRealColor(colorPalette);
+		uint32_t color = Utils::getRealColor(colorPalette);
+		for (auto &row : this->_subScreen)
+			row.fill(color);
 		// the buffer is overwrite if necessary by a new bg so the background priority is from back to front
 		// the starting palette index isn't implemented
 		switch (this->_registers._bgmode.bgMode) {
@@ -803,17 +807,6 @@ namespace ComSquare::PPU
 			throw std::runtime_error("not implemented");
 		default:
 			break;
-		}
-	}
-
-	template <std::size_t DEST_SIZE, std::size_t SRC_SIZE>
-	void PPU::add_buffer(std::array<std::array<uint32_t, DEST_SIZE>, DEST_SIZE> &bufferDest, std::array<std::array<uint32_t, SRC_SIZE>, SRC_SIZE> &bufferSrc)
-	{
-		for (unsigned long i = 0; i < bufferSrc.size(); i++) {
-			for (unsigned long j = 0; j < bufferSrc[i].size(); j++) {
-				if (bufferSrc[i][j] > 0xFF) // 0xFF correspond to a black pixel with full brightness
-					bufferDest[i][j] = bufferSrc[i][j];
-			}
 		}
 	}
 
