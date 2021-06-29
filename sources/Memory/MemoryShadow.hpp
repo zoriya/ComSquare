@@ -24,7 +24,7 @@ namespace ComSquare::Memory
 		//! @param addr The address to read from. The address 0x0 should refer to the first byte of the initial AMemory.
 		//! @throw InvalidAddress will be thrown if the address is more than the size of the initial AMemory.
 		//! @return Return the data at the address.
-		uint8_t read(uint24_t addr) const override;
+		uint8_t read(uint24_t addr) override;
 		//! @brief Write data to the ram.
 		//! @param addr The address to write to. The address 0x0 should refer to the first byte of the initial AMemory.
 		//! @param data The data to write.

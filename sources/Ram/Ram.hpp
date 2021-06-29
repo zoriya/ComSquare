@@ -34,7 +34,7 @@ namespace ComSquare::Ram
 		//! @param addr The local address to read from (0x0 should refer to the first byte of this component).
 		//! @throw This function should thrown an InvalidAddress for address that are not mapped to the component.
 		//! @return Return the data at the address given as parameter.
-		uint8_t read(uint24_t addr) const override;
+		uint8_t read(uint24_t addr) override;
 		//! @brief Write data to this component.
 		//! @param addr The local address to write data (0x0 should refer to the first byte of this component).
 		//! @param data The new data to write.
@@ -50,6 +50,9 @@ namespace ComSquare::Ram
 
 		//! @brief Get the size of the ram in bytes.
 		uint24_t getSize() const override;
+
+		//! @brief Get the raw data of the RAM
+		uint8_t *getData() const;
 	};
 }
 

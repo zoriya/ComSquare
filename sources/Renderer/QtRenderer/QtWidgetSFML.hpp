@@ -28,7 +28,7 @@ namespace ComSquare::Renderer
 		//! @brief QT event that refresh the widget. (A draw screen)
 		void paintEvent(QPaintEvent*) override;
 
-		// @brief Internal timer used for update intervals.
+		//! @brief Internal timer used for update intervals.
 		QTimer _timer;
 		//! @brief Has the SF window been created yet.
 		bool _isInitialized = false;

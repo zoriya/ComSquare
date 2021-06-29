@@ -6,7 +6,6 @@
 #define COMSQUARE_SFRENDERER_HPP
 
 #include "IRenderer.hpp"
-#include "../SNES.hpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/System.hpp>

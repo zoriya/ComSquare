@@ -20,7 +20,7 @@ namespace ComSquare::Memory
 		//! @param addr The local address to read from (0x0 should refer to the first byte of this component).
 		//! @throw This function should thrown an InvalidAddress for address that are not mapped to the component.
 		//! @return Return the data at the address given as parameter.
-		virtual uint8_t read(uint24_t addr) const = 0;
+		virtual uint8_t read(uint24_t addr) = 0;
 		//! @brief Write data to this component.
 		//! @param addr The local address to write data (0x0 should refer to the first byte of this component).
 		//! @param data The new data to write.

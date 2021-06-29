@@ -14,6 +14,11 @@
 
 namespace ComSquare::Cartridge
 {
+	enum CartridgeType {
+		Game,
+		Audio
+	};
+
 	#define ADDMAPPINGMODE(x, flag) (x = static_cast<MappingMode>(x | (flag)))
 	enum MappingMode {
 		LoRom = 1u << 0u,
@@ -78,6 +83,8 @@ namespace ComSquare::Cartridge
 		//! @brief Set the public variable header by parsing the header in the ROM.
 		//! @return True if this cartridge has a SCM header, false otherwise.
 		bool _loadHeader();
+		//! @brief Check if the cartridge is not a game but a SPC audio dump
+		bool _isSPCFile();
 		//! @brief Get the address of the header.
 		//! @return The address of this cartridge header.
 		uint32_t _getHeaderAddress();
@@ -85,6 +92,10 @@ namespace ComSquare::Cartridge
 		//! @param headerAddress The address you want to parse.
 		//! @return A header struct representing the data at the memory address you passed.
 		Header _mapHeader(uint32_t headerAddress);
+		//! @brief Current type of the cartridge
+		CartridgeType _type;
+		//! @brief Magic Header string of a SPC Rom
+		static constexpr std::string_view _magicSPC = "SNES-SPC700 Sound File Data v0.30";
 	public:
 		//! @brief Load a rom from it's path.
 		explicit Cartridge(const std::string &romPath);
@@ -97,11 +108,13 @@ namespace ComSquare::Cartridge
 
 		//! @brief The header of the cartridge.
 		Header header;
+		//! @brief Return current type of the cartridge
+		CartridgeType getType();
 		//! @brief Read from the rom.
 		//! @param addr The address to read from. The address 0x0 should refer to the first byte of the rom's memory.
 		//! @throw InvalidAddress will be thrown if the address is more than the size of the rom's memory.
 		//! @return Return the data at the address.
-		uint8_t read(uint24_t addr) const override;
+		uint8_t read(uint24_t addr) override;
 		//! @brief Write data to the rom.
 		//! @param addr The address to write to. The address 0x0 should refer to the first byte of the rom's memory.
 		//! @param data The data to write.

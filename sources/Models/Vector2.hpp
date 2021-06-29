@@ -17,13 +17,13 @@ namespace ComSquare
 		T x;
 		T y;
 
-		Vector2<T>()
+		Vector2()
 			: x(0), y(0) {}
 
-		Vector2<T>(T _x, T _y)
+		Vector2(T _x, T _y)
 			: x(_x), y(_y) {}
 
-		Vector2<T>(sf::Vector2<T> v)
+		Vector2(sf::Vector2<T> v)
 			: x(v.x), y(v.y) {}
 
 		template<typename T2>

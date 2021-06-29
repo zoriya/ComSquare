@@ -200,7 +200,7 @@ namespace ComSquare::APU::DSP
 		//! @brief Size of buffer
 		uint32_t bufferSize;
 		//! @brief Current position in the buffer of samples
-		uint32_t bufferOffset;
+		uint32_t bufferOffset = 0;
 	};
 
 	struct Timer {

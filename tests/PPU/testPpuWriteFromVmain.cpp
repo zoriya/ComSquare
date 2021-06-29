@@ -55,6 +55,19 @@ Test(PPU_write_2, vmadd_full_data)
 	cr_assert_eq(snes.ppu->_registers._vmadd.vmadd, 0b1111111111111111);
 }
 
+Test(PPU_write_2, vmadd_full_data_check_ram)
+{
+	Init()
+	snes.bus->write(0x2115, 0b10000000);
+	snes.bus->write(0x2116, 2);
+	snes.bus->write(0x2117, 0);
+	snes.bus->write(0x2118, 0xFF);
+	snes.bus->write(0x2119, 0xFF);
+	cr_assert(snes.ppu->_registers._vmadd.vmadd == 3, "Got %d but expected 3", snes.ppu->_registers._vmadd.vmadd);
+	cr_assert(snes.ppu->vram->read(4) == 0xFF, "Got %X but expected 0xFF", snes.ppu->vram->read(4));
+	cr_assert(snes.ppu->vram->read(5) == 0xFF, "Got %X but expected 0xFF", snes.ppu->vram->read(5));
+}
+
 Test(PPU_write_2, vmadd_full_high_byte_null)
 {
 	Init()
@@ -125,8 +138,8 @@ Test(PPU_write_2, w12sel_data_full)
 {
 	Init()
 	snes.bus->write(0x2123, 0b11111111);
-	cr_assert_eq(snes.ppu->_registers._wsel[0].window1InversionForBg1Bg2Obj, true);
-	cr_assert_eq(snes.ppu->_registers._wsel[0].enableWindow1ForBg1Bg2Obj, true);
+	cr_assert_eq(snes.ppu->_registers._wsel[0].window1InversionForBg1Bg3Obj, true);
+	cr_assert_eq(snes.ppu->_registers._wsel[0].enableWindow1ForBg1Bg3Obj, true);
 	cr_assert_eq(snes.ppu->_registers._wsel[0].window2InversionForBg1Bg3Obj, true);
 	cr_assert_eq(snes.ppu->_registers._wsel[0].enableWindow2ForBg1Bg3Obj, true);
 	cr_assert_eq(snes.ppu->_registers._wsel[0].window1InversionForBg2Bg4Color, true);
@@ -139,8 +152,8 @@ Test(PPU_write_2, w34sel_data_full)
 {
 	Init()
 	snes.bus->write(0x2124, 0b10101010);
-	cr_assert_eq(snes.ppu->_registers._wsel[1].window1InversionForBg1Bg2Obj, true);
-	cr_assert_eq(snes.ppu->_registers._wsel[1].enableWindow1ForBg1Bg2Obj, false);
+	cr_assert_eq(snes.ppu->_registers._wsel[1].window1InversionForBg1Bg3Obj, true);
+	cr_assert_eq(snes.ppu->_registers._wsel[1].enableWindow1ForBg1Bg3Obj, false);
 	cr_assert_eq(snes.ppu->_registers._wsel[1].window2InversionForBg1Bg3Obj, true);
 	cr_assert_eq(snes.ppu->_registers._wsel[1].enableWindow2ForBg1Bg3Obj, false);
 	cr_assert_eq(snes.ppu->_registers._wsel[1].window1InversionForBg2Bg4Color, true);
@@ -153,8 +166,8 @@ Test(PPU_write_2, wobjsel_data_full)
 {
 	Init()
 	snes.bus->write(0x2125, 0b10110001);
-	cr_assert_eq(snes.ppu->_registers._wsel[2].window1InversionForBg1Bg2Obj, true);
-	cr_assert_eq(snes.ppu->_registers._wsel[2].enableWindow1ForBg1Bg2Obj, false);
+	cr_assert_eq(snes.ppu->_registers._wsel[2].window1InversionForBg1Bg3Obj, true);
+	cr_assert_eq(snes.ppu->_registers._wsel[2].enableWindow1ForBg1Bg3Obj, false);
 	cr_assert_eq(snes.ppu->_registers._wsel[2].window2InversionForBg1Bg3Obj, true);
 	cr_assert_eq(snes.ppu->_registers._wsel[2].enableWindow2ForBg1Bg3Obj, true);
 	cr_assert_eq(snes.ppu->_registers._wsel[2].window1InversionForBg2Bg4Color, false);

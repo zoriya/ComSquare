@@ -65,8 +65,12 @@ namespace ComSquare::APU
 
 	uint24_t APU::_getAbsoluteByXAddr()
 	{
-		uint24_t addr1 = this->_getImmediateData() + this->_internalRegisters.x;
-		uint24_t addr2 = this->_getImmediateData() + this->_internalRegisters.x++;
+		uint24_t addr1 = this->_getImmediateData();
+		uint24_t addr2 = this->_getImmediateData();
+		uint24_t full = (addr2 << 8) | addr1;
+
+		addr1 = this->_internalRead(full + this->_internalRegisters.x);
+		addr2 = this->_internalRead(full + this->_internalRegisters.x + 1);
 
 		return (addr2 << 8u) | addr1;
 	}

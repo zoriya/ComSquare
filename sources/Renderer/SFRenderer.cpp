@@ -8,6 +8,7 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include "SNES.hpp"
 #include <iostream>
 
 namespace ComSquare::Renderer
@@ -67,11 +68,7 @@ namespace ComSquare::Renderer
 		if (y >= this->_videoMode.height)
 			throw InvalidPixelPosition("Height", y, this->_videoMode.height);
 
-		sf::Color pixels;
-		pixels.r = rgba >> 24U;
-		pixels.g = rgba >> 16U;
-		pixels.b = rgba >> 8U;
-		pixels.a = rgba >> 0U;
+		sf::Color pixels(rgba);
 		this->_pixelBuffer[this->_videoMode.width * y + x] = pixels;
 	}
 
