@@ -21,7 +21,7 @@ namespace ComSquare::Renderer
 	private:
 		//! @brief The snes to update.
 		SNES &_snes;
-		void _onUpdate() override;
+		void onUpdate() override;
 	public:
 		//! @brief Action called when clicking on the enable CPU debugger button.
 		void enableDebugCPU();
@@ -56,7 +56,7 @@ namespace ComSquare::Renderer
 		QWidget *_window;
 	protected:
 		//! @brief The SFML widget.
-		std::unique_ptr<QtFullSFML> _sfWidget = nullptr;
+		QtFullSFML *_sfWidget = nullptr;
 	public:
 		//! @brief Use this function to create the window.
 		//! @param maxFPS The number of FPS you aim to run on.

@@ -2,8 +2,7 @@
 // Created by anonymus-raccoon on 2/16/20.
 //
 
-#ifndef COMSQUARE_QTWIDGETSFML_HPP
-#define COMSQUARE_QTWIDGETSFML_HPP
+#pragma once
 
 #include <QtWidgets/QWidget>
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -16,11 +15,13 @@ namespace ComSquare::Renderer
 {
 	//! @brief A widget that you can put inside a QT application that render using the SFML.
 	class QtWidgetSFML : public QWidget, public SFRenderer {
+		Q_OBJECT
+	public slots:
+		//! @brief Function called to update this widget.
+		virtual void onUpdate() = 0;
 	private:
 		//! @brief Function called when this widget is created.
 		virtual void _onInit();
-		//! @brief Function called to update this widget.
-		virtual void _onUpdate() = 0;
 		//! @brief Qt internal paint engine (always null since we use a custom one)
 		QPaintEngine* paintEngine() const override;
 		//! @brief Used to create the SF window and bind it to the window manager of the user.
@@ -39,5 +40,3 @@ namespace ComSquare::Renderer
 		~QtWidgetSFML() override = default;
 	};
 }
-
-#endif //COMSQUARE_QTWIDGETSFML_HPP

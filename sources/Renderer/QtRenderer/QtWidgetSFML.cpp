@@ -17,8 +17,7 @@ namespace ComSquare::Renderer
 
 		this->move(position);
 		this->resize(size);
-
-		this->_timer.setInterval(frameRate);
+		this->_timer.setInterval(1000 / frameRate);
 	}
 
 	void QtWidgetSFML::showEvent(QShowEvent *)
@@ -30,9 +29,11 @@ namespace ComSquare::Renderer
 				XFlush(QX11Info::display());
 			#endif
 			this->_window.create((sf::WindowHandle)this->winId());
+			this->_window.setFramerateLimit(60);
 			this->_onInit();
 
-			connect(&_timer, SIGNAL(timeout()), this, SLOT(repaint()));
+			this->_timer.setSingleShot(false);
+			connect(&_timer, SIGNAL(timeout()), this, SLOT(onUpdate()));
 			this->_timer.start();
 			this->_isInitialized = true;
 		}
@@ -45,7 +46,6 @@ namespace ComSquare::Renderer
 
 	void QtWidgetSFML::paintEvent(QPaintEvent *)
 	{
-		this->_onUpdate();
 		this->drawScreen();
 	}
 
