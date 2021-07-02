@@ -140,7 +140,6 @@
            <string>Columns</string>
           </property>
           <property name="buddy">
-           <cstring></cstring>
           </property>
          </widget>
         </item>
