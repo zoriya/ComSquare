@@ -3795,13 +3795,13 @@ namespace ComSquare::PPU::Utils::Debug
 		ppu._registers._bgsc[1].tilemapHorizontalMirroring = 1;
 		ppu._registers._bgsc[2].tilemapAddress = 0x5C00U >> 10U;
 		ppu._backgrounds[0].setTileMapStartAddress(ppu.getTileMapStartAddress(1));
-		ppu._backgrounds[0].setTilemaps(ppu.getBackgroundSize(1));
+		ppu._backgrounds[0].setTilemaps(ppu.getBackgroundMirroring(1));
 		ppu._backgrounds[1].setTileMapStartAddress(ppu.getTileMapStartAddress(1));
-		ppu._backgrounds[1].setTilemaps(ppu.getBackgroundSize(1));
+		ppu._backgrounds[1].setTilemaps(ppu.getBackgroundMirroring(1));
 		ppu._backgrounds[2].setTileMapStartAddress(ppu.getTileMapStartAddress(2));
-		ppu._backgrounds[2].setTilemaps(ppu.getBackgroundSize(2));
+		ppu._backgrounds[2].setTilemaps(ppu.getBackgroundMirroring(2));
 		ppu._backgrounds[3].setTileMapStartAddress(ppu.getTileMapStartAddress(2));
-		ppu._backgrounds[3].setTilemaps(ppu.getBackgroundSize(2));
+		ppu._backgrounds[3].setTilemaps(ppu.getBackgroundMirroring(2));
 		ppu._backgrounds[4].setTileMapStartAddress(ppu.getTileMapStartAddress(3));
 		ppu._backgrounds[5].setTileMapStartAddress(ppu.getTileMapStartAddress(3));
 

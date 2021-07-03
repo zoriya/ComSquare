@@ -619,8 +619,8 @@ namespace ComSquare::PPU
 		uint16_t getTileMapStartAddress(int bgNumber) const;
 		//! @brief Give the address to find the correct tileset for a given x and y
 		uint16_t getTilesetAddress(int bgNumber) const;
-		//! @brief Give the number of tilemaps to be rendered
-		Vector2<int> getBackgroundSize(int bgNumber) const;
+		//! @brief Tells if the tilemap is expanded for the x and y directions
+		Vector2<bool> getBackgroundMirroring(int bgNumber) const;
 		//! @brief Render the Main and sub screen correctly
 		void renderMainAndSubScreen();
 		//! @brief Add a bg buffer to another buffer
