@@ -316,12 +316,12 @@ namespace ComSquare::Debugger
 		std::string symbolPath = romPath.replace_extension(".sym");
 		std::ifstream sym(symbolPath);
 
-		if (sym) {
-			std::vector<Label> symLabels = WlaDx::parse(sym);
-			labels.insert(labels.end(),
-			              std::make_move_iterator(symLabels.begin()),
-			              std::make_move_iterator(symLabels.end()));
-		}
+//		if (sym) {
+//			std::vector<Label> symLabels = WlaDx::parse(sym);
+//			labels.insert(labels.end(),
+//			              std::make_move_iterator(symLabels.begin()),
+//			              std::make_move_iterator(symLabels.end()));
+//		}
 		return labels;
 	}
 }
