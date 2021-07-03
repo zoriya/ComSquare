@@ -9,6 +9,8 @@ add_compile_options(-W -Wall -Wextra -Wshadow)
 
 include_directories(sources)
 
+include_directories(sources)
+
 set(SOURCES
 	sources/SNES.cpp
 	sources/SNES.hpp
@@ -95,7 +97,8 @@ set(SOURCES
 	sources/PPU/Tile.hpp
 	sources/PPU/TileRenderer.cpp
 	sources/PPU/TileRenderer.hpp
-)
+	sources/PPU/Tile.hpp
+	)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -113,6 +116,10 @@ add_executable(ComSquare
 	sources/Renderer/QtRenderer/QtWidgetSFML.hpp
 	sources/Renderer/QtRenderer/QtSfmlTileRenderer.cpp
 	sources/Renderer/QtRenderer/QtSfmlTileRenderer.hpp
+	sources/Renderer/QtRenderer/QtSfmlTileRenderer.cpp
+	sources/Renderer/QtRenderer/QtSfmlTileRenderer.hpp
+	sources/PPU/PpuDebug.cpp
+	sources/PPU/PpuDebug.hpp
 	sources/Debugger/CPU/CPUDebug.cpp
 	sources/Debugger/CPU/CPUDebug.hpp
 	sources/Debugger/MemoryViewer.cpp
@@ -145,7 +152,7 @@ add_executable(ComSquare
 	ui/apuView.ui
 	ui/busView.ui
 	resources/appResources.qrc
-)
+	)
 target_include_directories(ComSquare PRIVATE ./)
 target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)
 
