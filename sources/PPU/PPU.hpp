@@ -647,20 +647,6 @@ namespace ComSquare::PPU
 		Vector2<int> getBgScroll(int bgNumber) const;
 		//! @brief Allow to look the value of each write register (used by Register debugger)
 		const Registers &getWriteRegisters() const;
-
-		template <std::size_t SRC_SIZE_Y, std::size_t SRC_SIZE_X>
-		void add_buffer(const std::array<std::array<uint32_t, SRC_SIZE_Y>, SRC_SIZE_X> &buffer,
-		                const Vector2<int> &offset = {0, 0})
-		{
-			for (auto &i : this->_screen)
-					i.fill(0XFF);
-			for (unsigned long i = 0; i < buffer.size(); i++) {
-				for (unsigned long j = 0; j < buffer[i].size(); j++) {
-					if (buffer[i][j] > 0xFF) // 0xFF correspond to a black pixel with full brightness
-						this->_screen[i + offset.x][j + offset.y] = buffer[i][j];
-				}
-			}
-		}
 	};
 }
 #endif //COMSQUARE_PPU_HPP
