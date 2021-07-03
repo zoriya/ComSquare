@@ -36,7 +36,7 @@ namespace ComSquare::PPU
 	{
 		this->_registers._isLowByte = true;
 
-		Utils::Debug::populateEnvironment(*this, 0);
+		//Utils::Debug::populateEnvironment(*this, 0);
 	}
 
 	uint8_t PPU::read(uint24_t addr)
@@ -123,12 +123,18 @@ namespace ComSquare::PPU
 		case PpuRegisters::bg2sc:
 		case PpuRegisters::bg3sc:
 		case PpuRegisters::bg4sc:
-			this->_registers._bgsc[addr - 0x07].raw = data;
+			this->_registers._bgsc[addr - PpuRegisters::bg1sc].raw = data;
 			// update background tilemap address
-			this->_backgrounds[addr - 0x07].setTileMapStartAddress(this->getTileMapStartAddress(addr - 0x07 + 1));
-			this->_backgrounds[addr - 0x07 + 1].setTileMapStartAddress(this->getTileMapStartAddress(addr - 0x07 + 1));
-			this->_backgrounds[addr - 0x07].setTilemaps({this->_registers._bgsc[addr - 0x07].tilemapHorizontalMirroring, this->_registers._bgsc[addr - 0x07].tilemapVerticalMirroring});
-			this->_backgrounds[addr - 0x07 + 1].setTilemaps({this->_registers._bgsc[addr - 0x07].tilemapHorizontalMirroring, this->_registers._bgsc[addr - 0x07].tilemapVerticalMirroring});
+			this->_backgrounds[addr - PpuRegisters::bg1sc].setTileMapStartAddress(
+				this->getTileMapStartAddress(addr - PpuRegisters::bg1sc + 1));
+			this->_backgrounds[addr - PpuRegisters::bg1sc + 1].setTileMapStartAddress(
+				this->getTileMapStartAddress(addr - PpuRegisters::bg1sc + 1));
+			this->_backgrounds[addr - PpuRegisters::bg1sc].setTilemaps(
+				{this->_registers._bgsc[addr - PpuRegisters::bg1sc].tilemapHorizontalMirroring,
+				 this->_registers._bgsc[addr - PpuRegisters::bg1sc].tilemapVerticalMirroring});
+			this->_backgrounds[addr - PpuRegisters::bg1sc + 1].setTilemaps(
+				{this->_registers._bgsc[addr - PpuRegisters::bg1sc].tilemapHorizontalMirroring,
+				 this->_registers._bgsc[addr - PpuRegisters::bg1sc].tilemapVerticalMirroring});
 			break;
 		case PpuRegisters::bg12nba:
 		case PpuRegisters::bg34nba:
@@ -302,7 +308,6 @@ namespace ComSquare::PPU
 	void PPU::update(unsigned cycles)
 	{
 		(void)cycles;
-
 
 		this->renderMainAndSubScreen();
 		this->add_buffer(this->_screen, this->_subScreen);
@@ -548,9 +553,9 @@ namespace ComSquare::PPU
 	{
 		uint16_t colorPalette;
 		// should only render backgrounds needed (depending of th bgMode)
-		//int i = 0;
+		int i = 0;
 		for (auto &_background : this->_backgrounds) {
-			//i++;
+			i++;
 			_background.renderBackground();
 		}
 		// TODO make a function getDefaultBgColor
