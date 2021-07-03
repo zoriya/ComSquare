@@ -2,14 +2,14 @@
 // Created by anonymus-raccoon on 2/28/20.
 //
 
-#include <criterion/criterion.h>
+#include <catch2/catch.hpp>
 #include <iostream>
 #include <bitset>
 #include "../tests.hpp"
 #include "../../sources/SNES.hpp"
 using namespace ComSquare;
 
-Test(TAX, 16bitsTo16Bits)
+TEST_CASE("16bitsTo16Bits TAX", "[TAX]")
 {
 	Init()
 	snes.cpu->_isEmulationMode = false;
@@ -18,12 +18,12 @@ Test(TAX, 16bitsTo16Bits)
 	snes.cpu->_registers.x = 0xABCD;
 	snes.cpu->_registers.a = 0xFEDC;
 	snes.cpu->TAX(0x0, ComSquare::CPU::AddressingMode::Implied);
-	cr_assert_eq(snes.cpu->_registers.x, 0xFEDC, "The flags should be 0xFEDC but it was %x", snes.cpu->_registers.x);
-	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flag should be set.");
-	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should not be set.");
+	REQUIRE(snes.cpu->_registers.x == 0xFEDC);
+	REQUIRE(snes.cpu->_registers.p.n == true);
+	REQUIRE(snes.cpu->_registers.p.z == false);
 }
 
-Test(TAX, 16bitsTo8Bits)
+TEST_CASE("16bitsTo8Bits TAX", "[TAX]")
 {
 	Init()
 	snes.cpu->_isEmulationMode = false;
@@ -32,12 +32,12 @@ Test(TAX, 16bitsTo8Bits)
 	snes.cpu->_registers.x = 0xFEDC;
 	snes.cpu->_registers.a = 0xAB00;
 	snes.cpu->TAX(0x0, ComSquare::CPU::AddressingMode::Implied);
-	cr_assert_eq(snes.cpu->_registers.x, 0xFE00, "The flags should be 0xFE00 but it was %x", snes.cpu->_registers.x);
-	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flag should not be set.");
-	cr_assert_eq(snes.cpu->_registers.p.z, true, "The zero flag should be set.");
+	REQUIRE(snes.cpu->_registers.x == 0xFE00);
+	REQUIRE(snes.cpu->_registers.p.n == false);
+	REQUIRE(snes.cpu->_registers.p.z == true);
 }
 
-Test(TAX, 8bitsTo16Bits)
+TEST_CASE("8bitsTo16Bits TAX", "[TAX]")
 {
 	Init()
 	snes.cpu->_isEmulationMode = false;
@@ -46,12 +46,12 @@ Test(TAX, 8bitsTo16Bits)
 	snes.cpu->_registers.x = 0xFEDC;
 	snes.cpu->_registers.a = 0xAB;
 	snes.cpu->TAX(0x0, ComSquare::CPU::AddressingMode::Implied);
-	cr_assert_eq(snes.cpu->_registers.x, 0x00AB, "The flags should be 0x00AB but it was %x", snes.cpu->_registers.x);
-	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flag should not be set.");
-	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should not be set.");
+	REQUIRE(snes.cpu->_registers.x == 0x00AB);
+	REQUIRE(snes.cpu->_registers.p.n == false);
+	REQUIRE(snes.cpu->_registers.p.z == false);
 }
 
-Test(TAX, 8bitsTo8Bits)
+TEST_CASE("8bitsTo8Bits TAX", "[TAX]")
 {
 	Init()
 	snes.cpu->_isEmulationMode = false;
@@ -60,13 +60,13 @@ Test(TAX, 8bitsTo8Bits)
 	snes.cpu->_registers.x = 0xFE;
 	snes.cpu->_registers.a = 0xAB;
 	snes.cpu->TAX(0x0, ComSquare::CPU::AddressingMode::Implied);
-	cr_assert_eq(snes.cpu->_registers.x, 0xAB, "The flags should be 0xAB but it was %x", snes.cpu->_registers.x);
-	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flag should be set.");
-	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should be not set.");
+	REQUIRE(snes.cpu->_registers.x == 0xAB);
+	REQUIRE(snes.cpu->_registers.p.n == true);
+	REQUIRE(snes.cpu->_registers.p.z == false);
 }
 
 
-Test(TAY, 16bitsTo16Bits)
+TEST_CASE("16bitsTo16Bits TAY", "[TAY]")
 {
 	Init()
 	snes.cpu->_isEmulationMode = false;
@@ -75,12 +75,12 @@ Test(TAY, 16bitsTo16Bits)
 	snes.cpu->_registers.y = 0xABCD;
 	snes.cpu->_registers.a = 0xFEDC;
 	snes.cpu->TAY(0x0, ComSquare::CPU::AddressingMode::Implied);
-	cr_assert_eq(snes.cpu->_registers.y, 0xFEDC, "The y register should be 0xFEDC but it was %x", snes.cpu->_registers.y);
-	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flag should be set.");
-	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should not be set.");
+	REQUIRE(snes.cpu->_registers.y == 0xFEDC);
+	REQUIRE(snes.cpu->_registers.p.n == true);
+	REQUIRE(snes.cpu->_registers.p.z == false);
 }
 
-Test(TAY, 16bitsTo8Bits)
+TEST_CASE("16bitsTo8Bits TAY", "[TAY]")
 {
 	Init()
 	snes.cpu->_isEmulationMode = false;
@@ -89,12 +89,12 @@ Test(TAY, 16bitsTo8Bits)
 	snes.cpu->_registers.y = 0xFEDC;
 	snes.cpu->_registers.a = 0xAB00;
 	snes.cpu->TAY(0x0, ComSquare::CPU::AddressingMode::Implied);
-	cr_assert_eq(snes.cpu->_registers.y, 0xFE00, "The y register should be 0xFE00 but it was %x", snes.cpu->_registers.y);
-	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flag should not be set.");
-	cr_assert_eq(snes.cpu->_registers.p.z, true, "The zero flag should be set.");
+	REQUIRE(snes.cpu->_registers.y == 0xFE00);
+	REQUIRE(snes.cpu->_registers.p.n == false);
+	REQUIRE(snes.cpu->_registers.p.z == true);
 }
 
-Test(TAY, 8bitsTo16Bits)
+TEST_CASE("8bitsTo16Bits TAY", "[TAY]")
 {
 	Init()
 	snes.cpu->_isEmulationMode = false;
@@ -103,12 +103,12 @@ Test(TAY, 8bitsTo16Bits)
 	snes.cpu->_registers.y = 0xFEDC;
 	snes.cpu->_registers.a = 0xAB;
 	snes.cpu->TAY(0x0, ComSquare::CPU::AddressingMode::Implied);
-	cr_assert_eq(snes.cpu->_registers.y, 0x00AB, "The y register should be 0x00AB but it was %x", snes.cpu->_registers.y);
-	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flag should not be set.");
-	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should not be set.");
+	REQUIRE(snes.cpu->_registers.y == 0x00AB);
+	REQUIRE(snes.cpu->_registers.p.n == false);
+	REQUIRE(snes.cpu->_registers.p.z == false);
 }
 
-Test(TAY, 8bitsTo8Bits)
+TEST_CASE("8bitsTo8Bits TAY", "[TAY]")
 {
 	Init()
 	snes.cpu->_isEmulationMode = false;
@@ -117,36 +117,36 @@ Test(TAY, 8bitsTo8Bits)
 	snes.cpu->_registers.y = 0xFE;
 	snes.cpu->_registers.a = 0xAB;
 	snes.cpu->TAY(0x0, ComSquare::CPU::AddressingMode::Implied);
-	cr_assert_eq(snes.cpu->_registers.y, 0xAB, "The y register should be 0xAB but it was %x", snes.cpu->_registers.y);
-	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flag should be set.");
-	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should be not set.");
+	REQUIRE(snes.cpu->_registers.y == 0xAB);
+	REQUIRE(snes.cpu->_registers.p.n == true);
+	REQUIRE(snes.cpu->_registers.p.z == false);
 }
 
-Test(TXS, 16bitsIndex)
+TEST_CASE("16bitsIndex TXS", "[TXS]")
 {
 	Init()
 	snes.cpu->_isEmulationMode = false;
 	snes.cpu->_registers.p.x_b = false;
 	snes.cpu->_registers.x = 0xABCD;
 	snes.cpu->TXS(0x0, ComSquare::CPU::AddressingMode::Implied);
-	cr_assert_eq(snes.cpu->_registers.s, 0xABCD, "The stack pointer should be 0xABCD but it was %x", snes.cpu->_registers.s);
-	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flag should be set.");
-	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should be not set.");
+	REQUIRE(snes.cpu->_registers.s == 0xABCD);
+	REQUIRE(snes.cpu->_registers.p.n == true);
+	REQUIRE(snes.cpu->_registers.p.z == false);
 }
 
-Test(TXS, 8bitsIndex)
+TEST_CASE("8bitsIndex TXS", "[TXS]")
 {
 	Init()
 	snes.cpu->_isEmulationMode = false;
 	snes.cpu->_registers.p.x_b = true;
 	snes.cpu->_registers.x = 0xABCD;
 	snes.cpu->TXS(0x0, ComSquare::CPU::AddressingMode::Implied);
-	cr_assert_eq(snes.cpu->_registers.s, 0x00CD, "The stack pointer should be 0x00CD but it was %x", snes.cpu->_registers.s);
-	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flag should be set.");
-	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should be not set.");
+	REQUIRE(snes.cpu->_registers.s == 0x00CD);
+	REQUIRE(snes.cpu->_registers.p.n == true);
+	REQUIRE(snes.cpu->_registers.p.z == false);
 }
 
-Test(TCD, emulationMode)
+TEST_CASE("emulationMode TCD", "[TCD]")
 {
 	Init()
 	snes.cpu->_isEmulationMode = true;
@@ -154,12 +154,12 @@ Test(TCD, emulationMode)
 	snes.cpu->_registers.d = 0x5656;
 	snes.cpu->_registers.a = 0xABCD;
 	snes.cpu->TCD(0x0, ComSquare::CPU::AddressingMode::Implied);
-	cr_assert_eq(snes.cpu->_registers.d, 0xABCD, "The direct page should be 0xABCD but it was %x", snes.cpu->_registers.d);
-	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flag should be set.");
-	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should be not set.");
+	REQUIRE(snes.cpu->_registers.d == 0xABCD);
+	REQUIRE(snes.cpu->_registers.p.n == true);
+	REQUIRE(snes.cpu->_registers.p.z == false);
 }
 
-Test(TCD, zero)
+TEST_CASE("zero TCD", "[TCD]")
 {
 	Init()
 	snes.cpu->_isEmulationMode = true;
@@ -167,12 +167,12 @@ Test(TCD, zero)
 	snes.cpu->_registers.d = 0x5656;
 	snes.cpu->_registers.a = 0x0;
 	snes.cpu->TCD(0x0, ComSquare::CPU::AddressingMode::Implied);
-	cr_assert_eq(snes.cpu->_registers.d, 0, "The direct page should be 0x0 but it was %x", snes.cpu->_registers.d);
-	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flag should not be set.");
-	cr_assert_eq(snes.cpu->_registers.p.z, true, "The zero flag should be set.");
+	REQUIRE(snes.cpu->_registers.d == 0);
+	REQUIRE(snes.cpu->_registers.p.n == false);
+	REQUIRE(snes.cpu->_registers.p.z == true);
 }
 
-Test(TCS, emulationMode)
+TEST_CASE("emulationMode TCS", "[TCS]")
 {
 	Init()
 	snes.cpu->_isEmulationMode = true;
@@ -180,10 +180,10 @@ Test(TCS, emulationMode)
 	snes.cpu->_registers.s = 0x0156;
 	snes.cpu->_registers.a = 0xABCD;
 	snes.cpu->TCS(0x0, ComSquare::CPU::AddressingMode::Implied);
-	cr_assert_eq(snes.cpu->_registers.s, 0x01CD, "The stack pointer should be 0x01CD but it was %x", snes.cpu->_registers.s);
+	REQUIRE(snes.cpu->_registers.s == 0x01CD);
 }
 
-Test(TCS, native)
+TEST_CASE("native TCS", "[TCS]")
 {
 	Init()
 	snes.cpu->_isEmulationMode = false;
@@ -191,10 +191,10 @@ Test(TCS, native)
 	snes.cpu->_registers.s = 0x0156;
 	snes.cpu->_registers.a = 0xABCD;
 	snes.cpu->TCS(0x0, ComSquare::CPU::AddressingMode::Implied);
-	cr_assert_eq(snes.cpu->_registers.s, 0xABCD, "The stack pointer should be 0xABCD but it was %x", snes.cpu->_registers.s);
+	REQUIRE(snes.cpu->_registers.s == 0xABCD);
 }
 
-Test(TDC, emulationMode)
+TEST_CASE("emulationMode TDC", "[TDC]")
 {
 	Init()
 	snes.cpu->_isEmulationMode = true;
@@ -202,12 +202,12 @@ Test(TDC, emulationMode)
 	snes.cpu->_registers.d = 0xABCD;
 	snes.cpu->_registers.a = 0x5656;
 	snes.cpu->TDC(0x0, ComSquare::CPU::AddressingMode::Implied);
-	cr_assert_eq(snes.cpu->_registers.a, 0xABCD, "The accumulator should be 0xABCD but it was %x", snes.cpu->_registers.a);
-	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flag should be set.");
-	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should be not set.");
+	REQUIRE(snes.cpu->_registers.a == 0xABCD);
+	REQUIRE(snes.cpu->_registers.p.n == true);
+	REQUIRE(snes.cpu->_registers.p.z == false);
 }
 
-Test(TDC, zero)
+TEST_CASE("zero TDC", "[TDC]")
 {
 	Init()
 	snes.cpu->_isEmulationMode = true;
@@ -215,12 +215,12 @@ Test(TDC, zero)
 	snes.cpu->_registers.d = 0x0;
 	snes.cpu->_registers.a = 0x5656;
 	snes.cpu->TDC(0x0, ComSquare::CPU::AddressingMode::Implied);
-	cr_assert_eq(snes.cpu->_registers.a, 0, "The accumulator should be 0x0 but it was %x", snes.cpu->_registers.a);
-	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flag should not be set.");
-	cr_assert_eq(snes.cpu->_registers.p.z, true, "The zero flag should be set.");
+	REQUIRE(snes.cpu->_registers.a == 0);
+	REQUIRE(snes.cpu->_registers.p.n == false);
+	REQUIRE(snes.cpu->_registers.p.z == true);
 }
 
-Test(TSC, emulationMode)
+TEST_CASE("emulationMode TSC", "[TSC]")
 {
 	Init()
 	snes.cpu->_isEmulationMode = true;
@@ -228,12 +228,12 @@ Test(TSC, emulationMode)
 	snes.cpu->_registers.s = 0xABCD;
 	snes.cpu->_registers.a = 0x5656;
 	snes.cpu->TSC(0x0, ComSquare::CPU::AddressingMode::Implied);
-	cr_assert_eq(snes.cpu->_registers.a, 0xABCD, "The accumulator should be 0xABCD but it was %x", snes.cpu->_registers.a);
-	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flag should be set.");
-	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should be not set.");
+	REQUIRE(snes.cpu->_registers.a == 0xABCD);
+	REQUIRE(snes.cpu->_registers.p.n == true);
+	REQUIRE(snes.cpu->_registers.p.z == false);
 }
 
-Test(TSC, zero)
+TEST_CASE("zero TSC", "[TSC]")
 {
 	Init()
 	snes.cpu->_isEmulationMode = true;
@@ -241,12 +241,12 @@ Test(TSC, zero)
 	snes.cpu->_registers.s = 0x0;
 	snes.cpu->_registers.a = 0x5656;
 	snes.cpu->TSC(0x0, ComSquare::CPU::AddressingMode::Implied);
-	cr_assert_eq(snes.cpu->_registers.a, 0, "The accumulator should be 0x0 but it was %x", snes.cpu->_registers.a);
-	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flag should not be set.");
-	cr_assert_eq(snes.cpu->_registers.p.z, true, "The zero flag should be set.");
+	REQUIRE(snes.cpu->_registers.a == 0);
+	REQUIRE(snes.cpu->_registers.p.n == false);
+	REQUIRE(snes.cpu->_registers.p.z == true);
 }
 
-Test(TSX, emulationMode)
+TEST_CASE("emulationMode TSX", "[TSX]")
 {
 	Init()
 	snes.cpu->_isEmulationMode = true;
@@ -254,12 +254,12 @@ Test(TSX, emulationMode)
 	snes.cpu->_registers.s = 0xABCD;
 	snes.cpu->_registers.x = 0x5656;
 	snes.cpu->TSX(0x0, ComSquare::CPU::AddressingMode::Implied);
-	cr_assert_eq(snes.cpu->_registers.x, 0x00CD, "The x index should be 0x00CD but it was %x", snes.cpu->_registers.x);
-	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flag should be set.");
-	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should be not set.");
+	REQUIRE(snes.cpu->_registers.x == 0x00CD);
+	REQUIRE(snes.cpu->_registers.p.n == true);
+	REQUIRE(snes.cpu->_registers.p.z == false);
 }
 
-Test(TSX, native)
+TEST_CASE("native TSX", "[TSX]")
 {
 	Init()
 	snes.cpu->_isEmulationMode = false;
@@ -267,12 +267,12 @@ Test(TSX, native)
 	snes.cpu->_registers.s = 0x8F00;
 	snes.cpu->_registers.x = 0x5656;
 	snes.cpu->TSX(0x0, ComSquare::CPU::AddressingMode::Implied);
-	cr_assert_eq(snes.cpu->_registers.x, 0x8F00, "The x index should be 0x8F00 but it was %x", snes.cpu->_registers.x);
-	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flag should be set.");
-	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should be not set.");
+	REQUIRE(snes.cpu->_registers.x == 0x8F00);
+	REQUIRE(snes.cpu->_registers.p.n == true);
+	REQUIRE(snes.cpu->_registers.p.z == false);
 }
 
-Test(TXA, double8bits)
+TEST_CASE("double8bits TXA", "[TXA]")
 {
 	Init()
 	snes.cpu->_isEmulationMode = true;
@@ -281,12 +281,12 @@ Test(TXA, double8bits)
 	snes.cpu->_registers.x = 0xABCD;
 	snes.cpu->_registers.a = 0x5656;
 	snes.cpu->TXA(0x0, ComSquare::CPU::AddressingMode::Implied);
-	cr_assert_eq(snes.cpu->_registers.a, 0x56CD, "The accumulator should be 0x56CD but it was %x", snes.cpu->_registers.a);
-	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flag should be set.");
-	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should be not set.");
+	REQUIRE(snes.cpu->_registers.a == 0x56CD);
+	REQUIRE(snes.cpu->_registers.p.n == true);
+	REQUIRE(snes.cpu->_registers.p.z == false);
 }
 
-Test(TXA, index8bits)
+TEST_CASE("index8bits TXA", "[TXA]")
 {
 	Init()
 	snes.cpu->_isEmulationMode = false;
@@ -295,12 +295,12 @@ Test(TXA, index8bits)
 	snes.cpu->_registers.x = 0x0BCD;
 	snes.cpu->_registers.a = 0x5656;
 	snes.cpu->TXA(0x0, ComSquare::CPU::AddressingMode::Implied);
-	cr_assert_eq(snes.cpu->_registers.a, 0x00CD, "The accumulator should be 0x00CD but it was %x", snes.cpu->_registers.a);
-	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flag should not be set.");
-	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should be not set.");
+	REQUIRE(snes.cpu->_registers.a == 0x00CD);
+	REQUIRE(snes.cpu->_registers.p.n == false);
+	REQUIRE(snes.cpu->_registers.p.z == false);
 }
 
-Test(TXA, accumulator8bits)
+TEST_CASE("accumulator8bits TXA", "[TXA]")
 {
 	Init()
 	snes.cpu->_isEmulationMode = false;
@@ -309,12 +309,12 @@ Test(TXA, accumulator8bits)
 	snes.cpu->_registers.x = 0x0BCD;
 	snes.cpu->_registers.a = 0x5656;
 	snes.cpu->TXA(0x0, ComSquare::CPU::AddressingMode::Implied);
-	cr_assert_eq(snes.cpu->_registers.a, 0x56CD, "The accumulator should be 0x56CD but it was %x", snes.cpu->_registers.a);
-	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flag should be set.");
-	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should be not set.");
+	REQUIRE(snes.cpu->_registers.a == 0x56CD);
+	REQUIRE(snes.cpu->_registers.p.n == true);
+	REQUIRE(snes.cpu->_registers.p.z == false);
 }
 
-Test(TXA, double16bits)
+TEST_CASE("double16bits TXA", "[TXA]")
 {
 	Init()
 	snes.cpu->_isEmulationMode = false;
@@ -323,13 +323,13 @@ Test(TXA, double16bits)
 	snes.cpu->_registers.x = 0xAB0D;
 	snes.cpu->_registers.a = 0x5656;
 	snes.cpu->TXA(0x0, ComSquare::CPU::AddressingMode::Implied);
-	cr_assert_eq(snes.cpu->_registers.a, 0xAB0D, "The accumulator should be 0xAB0D but it was %x", snes.cpu->_registers.a);
-	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flag should be set.");
-	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should be not set.");
+	REQUIRE(snes.cpu->_registers.a == 0xAB0D);
+	REQUIRE(snes.cpu->_registers.p.n == true);
+	REQUIRE(snes.cpu->_registers.p.z == false);
 }
 
 
-Test(TYA, double8bits)
+TEST_CASE("double8bits TYA", "[TYA]")
 {
 	Init()
 	snes.cpu->_isEmulationMode = true;
@@ -338,12 +338,12 @@ Test(TYA, double8bits)
 	snes.cpu->_registers.y = 0xABCD;
 	snes.cpu->_registers.a = 0x5656;
 	snes.cpu->TYA(0x0, ComSquare::CPU::AddressingMode::Implied);
-	cr_assert_eq(snes.cpu->_registers.a, 0x56CD, "The accumulator should be 0x56CD but it was %x", snes.cpu->_registers.a);
-	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flag should be set.");
-	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should be not set.");
+	REQUIRE(snes.cpu->_registers.a == 0x56CD);
+	REQUIRE(snes.cpu->_registers.p.n == true);
+	REQUIRE(snes.cpu->_registers.p.z == false);
 }
 
-Test(TYA, index8bits)
+TEST_CASE("index8bits TYA", "[TYA]")
 {
 	Init()
 	snes.cpu->_isEmulationMode = false;
@@ -352,12 +352,12 @@ Test(TYA, index8bits)
 	snes.cpu->_registers.y = 0x0BCD;
 	snes.cpu->_registers.a = 0x5656;
 	snes.cpu->TYA(0x0, ComSquare::CPU::AddressingMode::Implied);
-	cr_assert_eq(snes.cpu->_registers.a, 0x00CD, "The accumulator should be 0x00CD but it was %x", snes.cpu->_registers.a);
-	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flag should not be set.");
-	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should be not set.");
+	REQUIRE(snes.cpu->_registers.a == 0x00CD);
+	REQUIRE(snes.cpu->_registers.p.n == false);
+	REQUIRE(snes.cpu->_registers.p.z == false);
 }
 
-Test(TYA, accumulator8bits)
+TEST_CASE("accumulator8bits TYA", "[TYA]")
 {
 	Init()
 	snes.cpu->_isEmulationMode = false;
@@ -366,12 +366,12 @@ Test(TYA, accumulator8bits)
 	snes.cpu->_registers.y = 0x0BCD;
 	snes.cpu->_registers.a = 0x5656;
 	snes.cpu->TYA(0x0, ComSquare::CPU::AddressingMode::Implied);
-	cr_assert_eq(snes.cpu->_registers.a, 0x56CD, "The accumulator should be 0x56CD but it was %x", snes.cpu->_registers.a);
-	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flag should be set.");
-	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should be not set.");
+	REQUIRE(snes.cpu->_registers.a == 0x56CD);
+	REQUIRE(snes.cpu->_registers.p.n == true);
+	REQUIRE(snes.cpu->_registers.p.z == false);
 }
 
-Test(TYA, double16bits)
+TEST_CASE("double16bits TYA", "[TYA]")
 {
 	Init()
 	snes.cpu->_isEmulationMode = false;
@@ -380,12 +380,12 @@ Test(TYA, double16bits)
 	snes.cpu->_registers.y = 0xAB0D;
 	snes.cpu->_registers.a = 0x5656;
 	snes.cpu->TYA(0x0, ComSquare::CPU::AddressingMode::Implied);
-	cr_assert_eq(snes.cpu->_registers.a, 0xAB0D, "The accumulator should be 0xAB0D but it was %x", snes.cpu->_registers.a);
-	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flag should be set.");
-	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should be not set.");
+	REQUIRE(snes.cpu->_registers.a == 0xAB0D);
+	REQUIRE(snes.cpu->_registers.p.n == true);
+	REQUIRE(snes.cpu->_registers.p.z == false);
 }
 
-Test(TXY, emulationMode)
+TEST_CASE("emulationMode TXY", "[TXY]")
 {
 	Init()
 	snes.cpu->_isEmulationMode = true;
@@ -393,12 +393,12 @@ Test(TXY, emulationMode)
 	snes.cpu->_registers.x = 0x0BCD;
 	snes.cpu->_registers.y = 0x5656;
 	snes.cpu->TXY(0x0, ComSquare::CPU::AddressingMode::Implied);
-	cr_assert_eq(snes.cpu->_registers.y, 0x56CD, "The y index should be 0x56CD but it was %x", snes.cpu->_registers.y);
-	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flag should be set.");
-	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should be not set.");
+	REQUIRE(snes.cpu->_registers.y == 0x56CD);
+	REQUIRE(snes.cpu->_registers.p.n == true);
+	REQUIRE(snes.cpu->_registers.p.z == false);
 }
 
-Test(TXY, nativeMode)
+TEST_CASE("nativeMode TXY", "[TXY]")
 {
 	Init()
 	snes.cpu->_isEmulationMode = false;
@@ -406,12 +406,12 @@ Test(TXY, nativeMode)
 	snes.cpu->_registers.x = 0xAB0D;
 	snes.cpu->_registers.y = 0x5656;
 	snes.cpu->TXY(0x0, ComSquare::CPU::AddressingMode::Implied);
-	cr_assert_eq(snes.cpu->_registers.y, 0xAB0D, "The y index should be 0xAB0D but it was %x", snes.cpu->_registers.y);
-	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flag should be set.");
-	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should be not set.");
+	REQUIRE(snes.cpu->_registers.y == 0xAB0D);
+	REQUIRE(snes.cpu->_registers.p.n == true);
+	REQUIRE(snes.cpu->_registers.p.z == false);
 }
 
-Test(TYX, emulationMode)
+TEST_CASE("emulationMode TYX", "[TYX]")
 {
 	Init()
 	snes.cpu->_isEmulationMode = true;
@@ -419,12 +419,12 @@ Test(TYX, emulationMode)
 	snes.cpu->_registers.y = 0x0BCD;
 	snes.cpu->_registers.x = 0x5656;
 	snes.cpu->TYX(0x0, ComSquare::CPU::AddressingMode::Implied);
-	cr_assert_eq(snes.cpu->_registers.x, 0x56CD, "The x index should be 0x56CD but it was %x", snes.cpu->_registers.x);
-	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flag should be set.");
-	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should be not set.");
+	REQUIRE(snes.cpu->_registers.x == 0x56CD);
+	REQUIRE(snes.cpu->_registers.p.n == true);
+	REQUIRE(snes.cpu->_registers.p.z == false);
 }
 
-Test(TYX, nativeMode)
+TEST_CASE("nativeMode TYX", "[TYX]")
 {
 	Init()
 	snes.cpu->_isEmulationMode = false;
@@ -432,12 +432,12 @@ Test(TYX, nativeMode)
 	snes.cpu->_registers.y = 0xAB0D;
 	snes.cpu->_registers.x = 0x5656;
 	snes.cpu->TYX(0x0, ComSquare::CPU::AddressingMode::Implied);
-	cr_assert_eq(snes.cpu->_registers.x, 0xAB0D, "The x index should be 0xAB0D but it was %x", snes.cpu->_registers.x);
-	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flag should be set.");
-	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flag should be not set.");
+	REQUIRE(snes.cpu->_registers.x == 0xAB0D);
+	REQUIRE(snes.cpu->_registers.p.n == true);
+	REQUIRE(snes.cpu->_registers.p.z == false);
 }
 
-Test(MVN, hardCase)
+TEST_CASE("hardCase MVN", "[MVN]")
 {
 	Init()
 	snes.cpu->_registers.a = 0x10;
@@ -447,16 +447,16 @@ Test(MVN, hardCase)
 		snes.wram->_data[i] = i;
 
 	int cycles = snes.cpu->MVN(0x2010, ComSquare::CPU::AddressingMode::Implied);
-	cr_assert_eq(cycles, 0x77, "The MVN should take 0x77 cycles but it took %x.", cycles);
-	cr_assert_eq(snes.cpu->_registers.dbr, 0x20, "The data bank register should be 0x20 but it was %x", snes.cpu->_registers.dbr);
-	cr_assert_eq(snes.cpu->_registers.a, 0xFFFF, "The c accumulator should be 0xFFFF but it was %x", snes.cpu->_registers.a);
-	cr_assert_eq(snes.cpu->_registers.x, 0x0011, "The x index should be 0x0011 but it was %x", snes.cpu->_registers.x);
-	cr_assert_eq(snes.cpu->_registers.y, 0x1011, "The y index should be 0x1011 but it was %x", snes.cpu->_registers.y);
+	REQUIRE(cycles == 0x77);
+	REQUIRE(snes.cpu->_registers.dbr == 0x20);
+	REQUIRE(snes.cpu->_registers.a == 0xFFFF);
+	REQUIRE(snes.cpu->_registers.x == 0x0011);
+	REQUIRE(snes.cpu->_registers.y == 0x1011);
 	for (int i = 0; i < 0x11; i++)
-		cr_assert_eq(snes.wram->_data[i + 0x1000], i, "The data in ram should be %x but it was %x", i, snes.wram->_data[i + 0x1000]);
+		REQUIRE(snes.wram->_data[i + 0x1000] == i);
 }
 
-Test(MVP, hardCase)
+TEST_CASE("hardCase MVP", "[MVP]")
 {
 	Init()
 	snes.cpu->_registers.a = 0x10;
@@ -466,11 +466,11 @@ Test(MVP, hardCase)
 		snes.wram->_data[i] = i;
 
 	int cycles = snes.cpu->MVP(0x2010, ComSquare::CPU::AddressingMode::Implied);
-	cr_assert_eq(cycles, 0x77, "The MVN should take 0x77 cycles but it took %x.", cycles);
-	cr_assert_eq(snes.cpu->_registers.dbr, 0x20, "The data bank register should be 0x20 but it was %x", snes.cpu->_registers.dbr);
-	cr_assert_eq(snes.cpu->_registers.a, 0xFFFF, "The c accumulator should be 0xFFFF but it was %x", snes.cpu->_registers.a);
-	cr_assert_eq(snes.cpu->_registers.x, 0xFFFF, "The x index should be 0xFFFF but it was %x", snes.cpu->_registers.x);
-	cr_assert_eq(snes.cpu->_registers.y, 0x0FFF, "The y index should be 0x0FFF but it was %x", snes.cpu->_registers.y);
+	REQUIRE(cycles == 0x77);
+	REQUIRE(snes.cpu->_registers.dbr == 0x20);
+	REQUIRE(snes.cpu->_registers.a == 0xFFFF);
+	REQUIRE(snes.cpu->_registers.x == 0xFFFF);
+	REQUIRE(snes.cpu->_registers.y == 0x0FFF);
 	for (int i = 0; i < 0x11; i++)
-		cr_assert_eq(snes.wram->_data[i + 0x1000], i, "The data in ram should be %x but it was %x", i, snes.wram->_data[i + 0x1000]);
+		REQUIRE(snes.wram->_data[i + 0x1000] == i);
 }

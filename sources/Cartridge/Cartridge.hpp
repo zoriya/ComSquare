@@ -6,11 +6,11 @@
 
 #include <string>
 #include <filesystem>
-#include "../Memory/AMemory.hpp"
-#include "../Models/Int24.hpp"
-#include "../Memory/ARectangleMemory.hpp"
+#include "Memory/AMemory.hpp"
+#include "Models/Int24.hpp"
+#include "Memory/ARectangleMemory.hpp"
 #include "InterruptVectors.hpp"
-#include "../Ram/Ram.hpp"
+#include "Ram/Ram.hpp"
 
 namespace ComSquare::Cartridge
 {

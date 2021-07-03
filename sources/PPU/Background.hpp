@@ -67,7 +67,7 @@ namespace ComSquare::PPU
 		//! @brief The size of the background (x, y)
 		Vector2<unsigned> backgroundSize;
 		//! @brief The output buffer (pixels are written on it)
-		std::array<std::array<uint32_t, 1024>, 1024> buffer;
+		uint32_t buffer[1024][1024];
 
 		//! @brief Render a background on his internal buffer
 		void renderBackground();

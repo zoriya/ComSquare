@@ -3,6 +3,7 @@
 //
 
 #include <ios>
+#include <iostream>
 #include "SNES.hpp"
 #ifdef DEBUGGER_ENABLED
 #include "Debugger/CPU/CPUDebug.hpp"
@@ -16,12 +17,12 @@ namespace ComSquare
 {
 	SNES::SNES(const std::string &romPath, Renderer::IRenderer &renderer) :
 		bus(std::make_shared<Memory::MemoryBus>()),
-		cartridge(new Cartridge::Cartridge(romPath)),
-		wram(new Ram::Ram(16384, WRam, "WRam")),
-		sram(new Ram::Ram(this->cartridge->header.sramSize, SRam, "SRam")),
-		cpu(new CPU::CPU(this->bus, cartridge->header)),
-		ppu(new PPU::PPU(renderer)),
-		apu(new APU::APU(renderer))
+		cartridge(std::make_shared<Cartridge::Cartridge>(romPath)),
+		wram(std::make_shared<Ram::Ram>(16384, WRam, "WRam")),
+		sram(std::make_shared<Ram::Ram>(this->cartridge->header.sramSize, SRam, "SRam")),
+		cpu(std::make_shared<CPU::CPU>(this->bus, cartridge->header)),
+		ppu(std::make_shared<PPU::PPU>(renderer)),
+		apu(std::make_shared<APU::APU>(renderer))
 	{
 		this->bus->mapComponents(*this);
 		if (this->cartridge->getType() == Cartridge::Audio)

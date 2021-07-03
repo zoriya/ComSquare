@@ -6,6 +6,7 @@
 #include "PPU.hpp"
 #include "Background.hpp"
 #include <cmath>
+#include <cstring>
 #include "Tile.hpp"
 #include "PPUUtils.hpp"
 #include "Models/Vector2.hpp"
@@ -25,9 +26,9 @@ namespace ComSquare::PPU
 		_bgNumber(backGroundNumber),
 		_tileBuffer({{{0}}}),
 		_vram(ppu.vram),
-		_cgram(ppu.cgram),
-		buffer({{{0}}})
+		_cgram(ppu.cgram)
 	{
+		memset(this->buffer, 0, sizeof(this->buffer));
 		this->_tileRenderer.setRam(this->_vram);
 		this->_tileRenderer.setCgram(this->_cgram);
 	}

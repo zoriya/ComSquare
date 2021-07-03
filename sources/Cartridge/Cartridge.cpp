@@ -11,6 +11,8 @@
 
 namespace ComSquare::Cartridge
 {
+	constexpr unsigned HeaderSize = 0x40u;
+
 	Cartridge::Cartridge(const std::string &romPath)
 		: Ram::Ram(0, Rom, "Cartridge"),
 		_romPath(romPath)
@@ -187,9 +189,12 @@ namespace ComSquare::Cartridge
 			this->_type = Audio;
 			return false;
 		}
-		uint32_t headerAddress = this->_getHeaderAddress();
-
 		this->_type = Game;
+
+		uint32_t headerAddress = this->_getHeaderAddress();
+		if (headerAddress + HeaderSize > this->_size)
+			return false;
+
 		this->header = this->_mapHeader(headerAddress);
 		this->header.gameName = std::string(reinterpret_cast<char *>(&this->_data[headerAddress]), 21);
 		if ((headerAddress + 0x40u) & 0x200u) {

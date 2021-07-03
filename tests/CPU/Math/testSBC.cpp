@@ -2,13 +2,13 @@
 // Created by anonymus-raccoon on 27/02/20.
 //
 
-#include <criterion/criterion.h>
+#include <catch2/catch.hpp>
 #include <bitset>
 #include "../../tests.hpp"
 #include "../../../sources/SNES.hpp"
 using namespace ComSquare;
 
-Test(SBC, removingOne)
+TEST_CASE("removingOne SBC", "[SBC]")
 {
 	Init()
 	snes.cpu->_isEmulationMode = false;
@@ -16,14 +16,14 @@ Test(SBC, removingOne)
 	snes.cpu->_registers.a = 0x1;
 	snes.wram->_data[0] = 0x1;
 	snes.cpu->SBC(0x0, ComSquare::CPU::AddressingMode::Implied);
-	cr_assert_eq(snes.cpu->_registers.a, 0, "The accumulator's value should be 0x0 but it was 0x%x.", snes.cpu->_registers.a);
-	cr_assert_eq(snes.cpu->_registers.p.c, true, "The carry flags should be set.");
-	cr_assert_eq(snes.cpu->_registers.p.v, false, "The overflow flags should not be set.");
-	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flags should not be set.");
-	cr_assert_eq(snes.cpu->_registers.p.z, true, "The zero flags should be set.");
+	REQUIRE(snes.cpu->_registers.a == 0);
+	REQUIRE(snes.cpu->_registers.p.c == true);
+	REQUIRE(snes.cpu->_registers.p.v == false);
+	REQUIRE(snes.cpu->_registers.p.n == false);
+	REQUIRE(snes.cpu->_registers.p.z == true);
 }
 
-Test(SBC, legitOverflowWithCarry)
+TEST_CASE("legitOverflowWithCarry SBC", "[SBC]")
 {
 	Init()
 	snes.cpu->_isEmulationMode = false;
@@ -33,14 +33,14 @@ Test(SBC, legitOverflowWithCarry)
 	snes.wram->_data[0] = 0x03;
 	snes.wram->_data[1] = 0x20;
 	snes.cpu->SBC(0x0, ComSquare::CPU::AddressingMode::Implied);
-	cr_assert_eq(snes.cpu->_registers.a, 0xDFFE, "The accumulator's value should be 0xDFFE but it was 0x%x.", snes.cpu->_registers.a);
-	cr_assert_eq(snes.cpu->_registers.p.c, false, "The carry flags should not be set.");
-	cr_assert_eq(snes.cpu->_registers.p.v, false, "The overflow flags should not be set.");
-	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flags should be set.");
-	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flags should not be set.");
+	REQUIRE(snes.cpu->_registers.a == 0xDFFE);
+	REQUIRE(snes.cpu->_registers.p.c == false);
+	REQUIRE(snes.cpu->_registers.p.v == false);
+	REQUIRE(snes.cpu->_registers.p.n == true);
+	REQUIRE(snes.cpu->_registers.p.z == false);
 }
 
-Test(SBC, overflowWithCarry)
+TEST_CASE("overflowWithCarry SBC", "[SBC]")
 {
 	Init()
 	snes.cpu->_isEmulationMode = false;
@@ -50,14 +50,14 @@ Test(SBC, overflowWithCarry)
 	snes.wram->_data[0] = 0x03;
 	snes.wram->_data[1] = 0x20;
 	snes.cpu->SBC(0x0, ComSquare::CPU::AddressingMode::Implied);
-	cr_assert_eq(snes.cpu->_registers.a, 0xDFFE, "The accumulator's value should be 0xDFFE but it was 0x%x.", snes.cpu->_registers.a);
-	cr_assert_eq(snes.cpu->_registers.p.c, false, "The carry flags should not be set.");
-	cr_assert_eq(snes.cpu->_registers.p.v, false, "The overflow flags should be not set.");
-	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flags should be set.");
-	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flags should not be set.");
+	REQUIRE(snes.cpu->_registers.a == 0xDFFE);
+	REQUIRE(snes.cpu->_registers.p.c == false);
+	REQUIRE(snes.cpu->_registers.p.v == false);
+	REQUIRE(snes.cpu->_registers.p.n == true);
+	REQUIRE(snes.cpu->_registers.p.z == false);
 }
 
-Test(SBC, overflowEmulation)
+TEST_CASE("overflowEmulation SBC", "[SBC]")
 {
 	Init()
 	snes.cpu->_isEmulationMode = true;
@@ -66,15 +66,15 @@ Test(SBC, overflowEmulation)
 	snes.cpu->_registers.p.c = false;
 	snes.wram->_data[0] = 0x02;
 	snes.cpu->SBC(0x0, ComSquare::CPU::AddressingMode::Implied);
-	cr_assert_eq(snes.cpu->_registers.a, 0xFE, "The accumulator's value should be 0xFE but it was 0x%x.", snes.cpu->_registers.a);
-	cr_assert_eq(snes.cpu->_registers.p.c, false, "The carry flags should not be set.");
-	cr_assert_eq(snes.cpu->_registers.p.v, false, "The overflow flags should not be set.");
-	cr_assert_eq(snes.cpu->_registers.p.n, true, "The negative flags should be set.");
-	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flags should be not set.");
+	REQUIRE(snes.cpu->_registers.a == 0xFE);
+	REQUIRE(snes.cpu->_registers.p.c == false);
+	REQUIRE(snes.cpu->_registers.p.v == false);
+	REQUIRE(snes.cpu->_registers.p.n == true);
+	REQUIRE(snes.cpu->_registers.p.z == false);
 }
 
 
-//Test(SBC, decimal)
+//TEST_CASE("decimal SBC", "[SBC]")
 //{
 //	Init()
 //	snes.cpu->_isEmulationMode = true;
@@ -84,9 +84,9 @@ Test(SBC, overflowEmulation)
 //	snes.wram->_data[0] = 0x03;
 //	snes.wram->_data[1] = 0x20;
 //	snes.cpu->SBC(0x0, ComSquare::CPU::AddressingMode::Implied);
-//	cr_assert_eq(snes.cpu->_registers.a, 0x7998, "The accumulator's value should be 0x7998 but it was 0x%x.", snes.cpu->_registers.a);
-//	cr_assert_eq(snes.cpu->_registers.p.c, false, "The carry flags should not be set.");
-//	cr_assert_eq(snes.cpu->_registers.p.v, false, "The overflow flags should not be set.");
-//	cr_assert_eq(snes.cpu->_registers.p.n, false, "The negative flags should not be set.");
-//	cr_assert_eq(snes.cpu->_registers.p.z, false, "The zero flags should be not set.");
+//	REQUIRE(snes.cpu->_registers.a == 0x7998);
+//	REQUIRE(snes.cpu->_registers.p.c == false);
+//	REQUIRE(snes.cpu->_registers.p.v == false);
+//	REQUIRE(snes.cpu->_registers.p.n == false);
+//	REQUIRE(snes.cpu->_registers.p.z == false);
 //}

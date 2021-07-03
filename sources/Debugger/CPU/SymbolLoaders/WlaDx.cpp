@@ -16,6 +16,7 @@ namespace ComSquare::Debugger
 		std::smatch match;
 		std::regex re(R"(\[(\S+)\])");
 
+		return ret;
 		while (symbolFile) {
 			if (line.empty()) {
 				std::getline(symbolFile, line);

@@ -5,11 +5,11 @@
 #ifndef COMSQUARE_CPU_HPP
 #define COMSQUARE_CPU_HPP
 
-#include "../Memory/AMemory.hpp"
-#include "../Memory/MemoryBus.hpp"
-#include "../Models/Int24.hpp"
-#include "../Cartridge/Cartridge.hpp"
-#include "../Memory/AMemory.hpp"
+#include "Memory/AMemory.hpp"
+#include "Memory/MemoryBus.hpp"
+#include "Models/Int24.hpp"
+#include "Cartridge/Cartridge.hpp"
+#include "Memory/AMemory.hpp"
 #include "Instruction.hpp"
 #include "DMA/DMA.hpp"
 

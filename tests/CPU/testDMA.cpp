@@ -2,12 +2,12 @@
 // Created by anonymus-raccoon on 2/1/21.
 //
 
-#include <criterion/criterion.h>
+#include <catch2/catch.hpp>
 #include <bitset>
 #include "../tests.hpp"
 using namespace ComSquare;
 
-Test(DMA, RomToVRAM)
+TEST_CASE("RomToVRAM DMA", "[DMA]")
 {
 	Init()
 	snes.cartridge->_size = 4000000;
@@ -25,39 +25,39 @@ Test(DMA, RomToVRAM)
 	snes.bus->write(0x2116, 0);
 
 	snes.bus->write(0x4301, 0x18);
-	cr_assert_eq(snes.cpu->_dmaChannels[0]._port, 0x18,  "The dma's b port was $%x but it should have been $18.", snes.cpu->_dmaChannels[0]._port);
+	REQUIRE(snes.cpu->_dmaChannels[0]._port == 0x18);
 	snes.bus->write(0x4304, 0x13);
 	snes.bus->write(0x4303, 0xBE);
 	snes.bus->write(0x4302, 0x00);
-	cr_assert_eq(snes.cpu->_dmaChannels[0]._aAddress.raw, 0x13BE00,  "The dma's a address was $%x but it should have been $13BE00.", snes.cpu->_dmaChannels[0]._aAddress.raw);
+	REQUIRE(snes.cpu->_dmaChannels[0]._aAddress.raw == 0x13BE00);
 	snes.bus->write(0x4306, 0x08);
 	snes.bus->write(0x4305, 0);
-	cr_assert_eq(snes.cpu->_dmaChannels[0]._count.raw, 0x0800,  "The dma's count was $%x but it should have been $0800.", snes.cpu->_dmaChannels[0]._count.raw);
+	REQUIRE(snes.cpu->_dmaChannels[0]._count.raw == 0x0800);
 	snes.bus->write(0x4300, 1);
-	cr_assert_eq(snes.cpu->_dmaChannels[0]._controlRegister.direction, CPU::DMA::AtoB, "Direction should have been 0 (A to B) but it was %x.", snes.cpu->_dmaChannels[0]._controlRegister.direction);
-	cr_assert_eq(snes.cpu->_dmaChannels[0]._controlRegister._, 0, "The unused byte should be 0.");
-	cr_assert_eq(snes.cpu->_dmaChannels[0]._controlRegister.increment, 0, "The increment byte should be set to 0.");
-	cr_assert_eq(snes.cpu->_dmaChannels[0]._controlRegister.fixed, 0, "The increment byte should be set to 0.");
-	cr_assert_eq(snes.cpu->_dmaChannels[0]._controlRegister.mode, CPU::DMA::TwoToTwo, "The DMA mode should have been TwoToTwo (%%001) but it was) $%x", snes.cpu->_dmaChannels[0]._controlRegister.mode);
-	cr_assert_eq(snes.cpu->_dmaChannels[0].enabled, false, "The DMA channel should be disabled.");
+	REQUIRE(snes.cpu->_dmaChannels[0]._controlRegister.direction == CPU::DMA::AtoB);
+	REQUIRE(snes.cpu->_dmaChannels[0]._controlRegister._ == 0);
+	REQUIRE(snes.cpu->_dmaChannels[0]._controlRegister.increment == 0);
+	REQUIRE(snes.cpu->_dmaChannels[0]._controlRegister.fixed == 0);
+	REQUIRE(snes.cpu->_dmaChannels[0]._controlRegister.mode == CPU::DMA::TwoToTwo);
+	REQUIRE(snes.cpu->_dmaChannels[0].enabled == false);
 	// Enabling DMA's channel 0
 	snes.bus->write(0x420B, 1);
-	cr_assert_eq(snes.cpu->_dmaChannels[0].enabled, true, "The DMA channel should be enabled.");
+	REQUIRE(snes.cpu->_dmaChannels[0].enabled == true);
 	// TODO There is an overhead of 12-24 cycles for the whole transfer. How should I know how many cycles there is?
 	auto cycles = snes.cpu->_dmaChannels[0].run(1000000);
-	cr_assert_eq(cycles, 8 + 8 * 0x800, "The dma should take $4008 cycles but it took $%x.", cycles);
-	cr_assert_eq(snes.cpu->_dmaChannels[0]._count.raw, 0, "The dma count should be 0 but it was $%x.", snes.cpu->_dmaChannels[0]._count.raw);
-	cr_assert_eq(snes.cpu->_dmaChannels[0]._aAddress.raw, 0x13C600, "The dma count should be $13C600 but it was $%x.", snes.cpu->_dmaChannels[0]._aAddress.raw);
-	cr_assert_eq(snes.cpu->_dmaChannels[0]._port, 0x18, "The dma count should be $18 but it was $%x.", snes.cpu->_dmaChannels[0]._port);
-	cr_assert_eq(snes.ppu->_registers._vmadd.vmadd, 0x2400, "The vram address should be $2400 but it was %x.", snes.ppu->_registers._vmadd.vmadd);
+	REQUIRE(cycles == 8 + 8 * 0x800);
+	REQUIRE(snes.cpu->_dmaChannels[0]._count.raw == 0);
+	REQUIRE(snes.cpu->_dmaChannels[0]._aAddress.raw == 0x13C600);
+	REQUIRE(snes.cpu->_dmaChannels[0]._port == 0x18);
+	REQUIRE(snes.ppu->_registers._vmadd.vmadd == 0x2400);
 	for(unsigned i = 0; i < 0x400; i++) {
 		uint16_t value = snes.ppu->vram->_data[0x2000 * 2 + i * 2] | (snes.ppu->vram->_data[0x2000 * 2 + i * 2 + 1] << 8);
-		cr_assert_eq(value, i, "The memory at %x should be %x but it was %x", 0x2000 + i, i, snes.ppu->vram->_data[i]);
+		REQUIRE(value == i);
 	}
-	cr_assert_eq(snes.cpu->_dmaChannels[0].enabled, false, "The DMA channel should be disabled.");
+	REQUIRE(snes.cpu->_dmaChannels[0].enabled == false);
 }
 
-Test(DMA, VramWrite)
+TEST_CASE("VramWrite DMA", "[DMA]")
 {
 	Init()
 	snes.bus->write(0x2117, 0x20);
@@ -65,15 +65,15 @@ Test(DMA, VramWrite)
 	for (unsigned i = 0; i < 0x400; i++) {
 		snes.bus->write(0x2119, i >> 8);
 		snes.bus->write(0x2118, i);
-		cr_assert_eq(snes.ppu->_registers._vmadd.vmadd, 0x2001 + i, "The vram address was %x but it should have been %x", snes.ppu->_registers._vmadd.vmadd, 0x2001 + i);
+		REQUIRE(snes.ppu->_registers._vmadd.vmadd == 0x2001 + i);
 	}
 	for(unsigned i = 0; i < 0x400; i++) {
 		uint16_t value = snes.ppu->vram->_data[0x2000 * 2 + i * 2] | (snes.ppu->vram->_data[0x2000 * 2 + i * 2 + 1] << 8);
-		cr_assert_eq(value, (uint16_t)i, "The memory at %x should be %x but it was %x", 0x2000 + i, (uint16_t)i, value);
+		REQUIRE(value == (uint16_t)i);
 	}
 }
 
-Test(DMA, VramWriteInvertedOrder)
+TEST_CASE("VramWriteInvertedOrder DMA", "[DMA]")
 {
 	Init()
 	snes.bus->write(0x2115, 0b10000000);
@@ -82,15 +82,15 @@ Test(DMA, VramWriteInvertedOrder)
 	for (unsigned i = 0; i < 0x400; i++) {
 		snes.bus->write(0x2118, i);
 		snes.bus->write(0x2119, i >> 8);
-		cr_assert_eq(snes.ppu->_registers._vmadd.vmadd, 0x2001 + i, "The vram address was %x but it should have been %x", snes.ppu->_registers._vmadd.vmadd, 0x2001 + i);
+		REQUIRE(snes.ppu->_registers._vmadd.vmadd == 0x2001 + i);
 	}
 	for(unsigned i = 0; i < 0x400; i++) {
 		uint16_t value = snes.ppu->vram->_data[0x2000 * 2 + i * 2] | (snes.ppu->vram->_data[0x2000 * 2 + i * 2 + 1] << 8);
-		cr_assert_eq(value, (uint16_t)i, "The memory at %x should be %x but it was %x", 0x2000 + i, (uint16_t)i, value);
+		REQUIRE(value == (uint16_t)i);
 	}
 }
 
-Test(DMA, WRamToVRAM)
+TEST_CASE("WRamToVRAM DMA", "[DMA]")
 {
 	Init()
 	for (unsigned i = 0; i < 0x400; i++) {
@@ -106,34 +106,34 @@ Test(DMA, WRamToVRAM)
 	snes.bus->write(0x2116, 0);
 
 	snes.bus->write(0x4301, 0x18);
-	cr_assert_eq(snes.cpu->_dmaChannels[0]._port, 0x18,  "The dma's b port was $%x but it should have been $18.", snes.cpu->_dmaChannels[0]._port);
+	REQUIRE(snes.cpu->_dmaChannels[0]._port == 0x18);
 	snes.bus->write(0x4304, 0x7E);
 	snes.bus->write(0x4303, 0x00);
 	snes.bus->write(0x4302, 0x00);
-	cr_assert_eq(snes.cpu->_dmaChannels[0]._aAddress.raw, 0x7E0000,  "The dma's a address was $%x but it should have been $7E0000.", snes.cpu->_dmaChannels[0]._aAddress.raw);
+	REQUIRE(snes.cpu->_dmaChannels[0]._aAddress.raw == 0x7E0000);
 	snes.bus->write(0x4306, 0x08);
 	snes.bus->write(0x4305, 0);
-	cr_assert_eq(snes.cpu->_dmaChannels[0]._count.raw, 0x0800,  "The dma's count was $%x but it should have been $0800.", snes.cpu->_dmaChannels[0]._count.raw);
+	REQUIRE(snes.cpu->_dmaChannels[0]._count.raw == 0x0800);
 	snes.bus->write(0x4300, 1);
-	cr_assert_eq(snes.cpu->_dmaChannels[0]._controlRegister.direction, CPU::DMA::AtoB, "Direction should have been 0 (A to B) but it was %x.", snes.cpu->_dmaChannels[0]._controlRegister.direction);
-	cr_assert_eq(snes.cpu->_dmaChannels[0]._controlRegister._, 0, "The unused byte should be 0.");
-	cr_assert_eq(snes.cpu->_dmaChannels[0]._controlRegister.increment, 0, "The increment byte should be set to 0.");
-	cr_assert_eq(snes.cpu->_dmaChannels[0]._controlRegister.fixed, 0, "The increment byte should be set to 0.");
-	cr_assert_eq(snes.cpu->_dmaChannels[0]._controlRegister.mode, CPU::DMA::TwoToTwo, "The DMA mode should have been TwoToTwo (%%001) but it was) $%x", snes.cpu->_dmaChannels[0]._controlRegister.mode);
-	cr_assert_eq(snes.cpu->_dmaChannels[0].enabled, false, "The DMA channel should be disabled.");
+	REQUIRE(snes.cpu->_dmaChannels[0]._controlRegister.direction == CPU::DMA::AtoB);
+	REQUIRE(snes.cpu->_dmaChannels[0]._controlRegister._ == 0);
+	REQUIRE(snes.cpu->_dmaChannels[0]._controlRegister.increment == 0);
+	REQUIRE(snes.cpu->_dmaChannels[0]._controlRegister.fixed == 0);
+	REQUIRE(snes.cpu->_dmaChannels[0]._controlRegister.mode == CPU::DMA::TwoToTwo);
+	REQUIRE(snes.cpu->_dmaChannels[0].enabled == false);
 	// Enabling DMA's channel 0
 	snes.bus->write(0x420B, 1);
-	cr_assert_eq(snes.cpu->_dmaChannels[0].enabled, true, "The DMA channel should be enabled.");
+	REQUIRE(snes.cpu->_dmaChannels[0].enabled == true);
 	// TODO There is an overhead of 12-24 cycles for the whole transfer. How should I know how many cycles there is?
 	auto cycles = snes.cpu->_dmaChannels[0].run(1000000);
-	cr_assert_eq(cycles, 8 + 8 * 0x800, "The dma should take $4008 cycles but it took $%x.", cycles);
-	cr_assert_eq(snes.cpu->_dmaChannels[0]._count.raw, 0, "The dma count should be 0 but it was $%x.", snes.cpu->_dmaChannels[0]._count.raw);
-	cr_assert_eq(snes.cpu->_dmaChannels[0]._aAddress.raw, 0x7E0800, "The dma count should be $7E0800 but it was $%x.", snes.cpu->_dmaChannels[0]._aAddress.raw);
-	cr_assert_eq(snes.cpu->_dmaChannels[0]._port, 0x18, "The dma count should be $18 but it was $%x.", snes.cpu->_dmaChannels[0]._port);
-	cr_assert_eq(snes.ppu->_registers._vmadd.vmadd, 0x0400, "The vram address should be $400 but it was %x.", snes.ppu->_registers._vmadd.vmadd);
+	REQUIRE(cycles == 8 + 8 * 0x800);
+	REQUIRE(snes.cpu->_dmaChannels[0]._count.raw == 0);
+	REQUIRE(snes.cpu->_dmaChannels[0]._aAddress.raw == 0x7E0800);
+	REQUIRE(snes.cpu->_dmaChannels[0]._port == 0x18);
+	REQUIRE(snes.ppu->_registers._vmadd.vmadd == 0x0400);
 	for(unsigned i = 0; i < 0x400; i++) {
 		uint16_t value = snes.ppu->vram->_data[i * 2] | (snes.ppu->vram->_data[i * 2 + 1] << 8);
-		cr_assert_eq(value, i, "The memory at %x should be %x but it was %x", i, i, snes.ppu->vram->_data[i]);
+		REQUIRE(value == i);
 	}
-	cr_assert_eq(snes.cpu->_dmaChannels[0].enabled, false, "The DMA channel should be disabled.");
+	REQUIRE(snes.cpu->_dmaChannels[0].enabled == false);
 }

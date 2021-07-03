@@ -561,11 +561,11 @@ namespace ComSquare::PPU
 		//! @brief Backgrounds buffers
 		Background _backgrounds[8];
 		//! @brief Main Screen buffer
-		std::array<std::array<uint32_t, 1024>, 1024> _mainScreen;
+		uint32_t _mainScreen[1024][1024];
 		//! @brief Sub Screen buffer
-		std::array<std::array<uint32_t, 1024>, 1024> _subScreen;
+		uint32_t _subScreen[1024][1024];
 		//! @brief Final Screen buffer
-		std::array<std::array<uint32_t, 1024>, 1024> _screen;
+		uint32_t _screen[1024][1024];
 		//! @brief Used for vram read registers (0x2139 - 0x213A)
 		uint16_t _vramReadBuffer = 0;
 		//! @brief Struct that contain all necessary vars for the use of the registers
@@ -621,13 +621,13 @@ namespace ComSquare::PPU
 		void renderMainAndSubScreen();
 		//! @brief Add a bg buffer to another buffer
 		template <std::size_t DEST_SIZE_X, std::size_t DEST_SIZE_Y, std::size_t SRC_SIZE_X, std::size_t SRC_SIZE_Y>
-		void add_buffer(std::array<std::array<uint32_t, DEST_SIZE_Y>, DEST_SIZE_X> &bufferDest,
-		                     const std::array<std::array<uint32_t, SRC_SIZE_Y>, SRC_SIZE_X> &bufferSrc,
+		void add_buffer(uint32_t (&bufferDest)[DEST_SIZE_Y][DEST_SIZE_X],
+		                     const uint32_t (&bufferSrc)[SRC_SIZE_Y][SRC_SIZE_X],
 		                     const Vector2<int> &offset = {0, 0})
 		{
 			// TODO use std::ranges
-			for (unsigned long i = 0; i < bufferSrc.size(); i++) {
-				for (unsigned long j = 0; j < bufferSrc[i].size(); j++) {
+			for (unsigned long i = 0; i < 1024; i++) {
+				for (unsigned long j = 0; j < 1024; j++) {
 					if (bufferSrc[i][j] > 0xFF) // 0xFF correspond to a black pixel with full brightness
 						bufferDest[i + offset.x ][j + offset.y] = bufferSrc[i][j];
 				}
@@ -645,11 +645,10 @@ namespace ComSquare::PPU
 		const Registers &getWriteRegisters() const;
 
 		template <std::size_t SRC_SIZE_Y, std::size_t SRC_SIZE_X>
-		void add_buffer(const std::array<std::array<uint32_t, SRC_SIZE_Y>, SRC_SIZE_X> &buffer,
+		void add_buffer(const uint32_t (&buffer)[SRC_SIZE_Y][SRC_SIZE_X],
 		                const Vector2<int> &offset = {0, 0})
 		{
-			for (auto &i : this->_screen)
-					i.fill(0XFF);
+//			memset(this->_screen, 0xFF, sizeof(this->_screen));
 			for (unsigned long i = 0; i < buffer.size(); i++) {
 				for (unsigned long j = 0; j < buffer[i].size(); j++) {
 					if (buffer[i][j] > 0xFF) // 0xFF correspond to a black pixel with full brightness
