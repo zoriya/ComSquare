@@ -17,6 +17,10 @@
 
 #define FALLTHROUGH __attribute__((fallthrough));
 
+namespace ComSquare::PPU::Utils {
+	struct PpuState;
+};
+
 namespace ComSquare::PPU
 {
 	static constexpr uint32_t VramSize = 65536;
@@ -554,7 +558,7 @@ namespace ComSquare::PPU
 		std::shared_ptr<Ram::Ram> vram;
 		std::shared_ptr<Ram::Ram> oamram;
 		std::shared_ptr<Ram::Ram> cgram;
-	private:
+	//private:
 		//! @brief Init ppuRegisters
 		Registers _registers{};
 		Renderer::IRenderer &_renderer;

@@ -251,7 +251,7 @@ add_executable(ComSquare
 	sources/Renderer/QtRenderer/QtSfmlTileRenderer.hpp
 	sources/PPU/TileRenderer.cpp
 	sources/PPU/TileRenderer.hpp
-	)
+	sources/PPU/PpuDebug.cpp sources/PPU/PpuDebug.hpp)
 
 include_directories(ComSquare sources)
 
