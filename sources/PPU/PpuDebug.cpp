@@ -74,6 +74,12 @@ namespace ComSquare::PPU::Utils::Debug
 		vram->write(0x8046, 06);
 		vram->write(0x8048, 04);
 
+		vram->write(0x80C0, 04);
+		vram->write(0x80C2, 06);
+		vram->write(0x80C4, 04);
+		vram->write(0x80C6, 06);
+		vram->write(0x80C8, 04);
+
 		vram->write(0xC000, 0x0C);
 
 	}
