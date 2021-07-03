@@ -123,12 +123,18 @@ namespace ComSquare::PPU
 		case PpuRegisters::bg2sc:
 		case PpuRegisters::bg3sc:
 		case PpuRegisters::bg4sc:
-			this->_registers._bgsc[addr - 0x07].raw = data;
+			this->_registers._bgsc[addr - PpuRegisters::bg1sc].raw = data;
 			// update background tilemap address
-			this->_backgrounds[addr - 0x07].setTileMapStartAddress(this->getTileMapStartAddress(addr - 0x07 + 1));
-			this->_backgrounds[addr - 0x07 + 1].setTileMapStartAddress(this->getTileMapStartAddress(addr - 0x07 + 1));
-			this->_backgrounds[addr - 0x07].setTilemaps({this->_registers._bgsc[addr - 0x07].tilemapHorizontalMirroring, this->_registers._bgsc[addr - 0x07].tilemapVerticalMirroring});
-			this->_backgrounds[addr - 0x07 + 1].setTilemaps({this->_registers._bgsc[addr - 0x07].tilemapHorizontalMirroring, this->_registers._bgsc[addr - 0x07].tilemapVerticalMirroring});
+			this->_backgrounds[addr - PpuRegisters::bg1sc].setTileMapStartAddress(
+				this->getTileMapStartAddress(addr - PpuRegisters::bg1sc + 1));
+			this->_backgrounds[addr - PpuRegisters::bg1sc + 1].setTileMapStartAddress(
+				this->getTileMapStartAddress(addr - PpuRegisters::bg1sc + 1));
+			this->_backgrounds[addr - PpuRegisters::bg1sc].setTilemaps(
+				{static_cast<bool>(this->_registers._bgsc[addr - PpuRegisters::bg1sc].tilemapHorizontalMirroring),
+				 static_cast<bool>(this->_registers._bgsc[addr - PpuRegisters::bg1sc].tilemapVerticalMirroring)});
+			this->_backgrounds[addr - PpuRegisters::bg1sc + 1].setTilemaps(
+				{static_cast<bool>(this->_registers._bgsc[addr - PpuRegisters::bg1sc].tilemapHorizontalMirroring),
+				 static_cast<bool>(this->_registers._bgsc[addr - PpuRegisters::bg1sc].tilemapVerticalMirroring)});
 			break;
 		case PpuRegisters::bg12nba:
 		case PpuRegisters::bg34nba:
@@ -302,7 +308,6 @@ namespace ComSquare::PPU
 	void PPU::update(unsigned cycles)
 	{
 		(void)cycles;
-
 
 		this->renderMainAndSubScreen();
 		this->add_buffer(this->_screen, this->_subScreen);
@@ -535,12 +540,12 @@ namespace ComSquare::PPU
 		return baseAddress;
 	}
 
-	Vector2<int> PPU::getBackgroundSize(int bgNumber) const
+	Vector2<bool> PPU::getBackgroundMirroring(int bgNumber) const
 	{
-		Vector2<int> backgroundSize(0,0);
+		Vector2<bool> backgroundSize(false, false);
 
-		backgroundSize.y = (this->_registers._bgsc[bgNumber - 1].tilemapVerticalMirroring) ? 2 : 1;
-		backgroundSize.x = (this->_registers._bgsc[bgNumber - 1].tilemapHorizontalMirroring) ? 2 : 1;
+		backgroundSize.y = this->_registers._bgsc[bgNumber - 1].tilemapVerticalMirroring;
+		backgroundSize.x = this->_registers._bgsc[bgNumber - 1].tilemapHorizontalMirroring;
 		return backgroundSize;
 	}
 
@@ -548,9 +553,9 @@ namespace ComSquare::PPU
 	{
 		uint16_t colorPalette;
 		// should only render backgrounds needed (depending of th bgMode)
-		//int i = 0;
+		int i = 0;
 		for (auto &_background : this->_backgrounds) {
-			//i++;
+			i++;
 			_background.renderBackground();
 		}
 		// TODO make a function getDefaultBgColor
