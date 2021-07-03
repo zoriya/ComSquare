@@ -40,8 +40,8 @@ namespace ComSquare::PPU
 		this->backgroundSize.y = this->_tileMapsConfig.y * this->_characterNbPixels.y * NbCharacterHeight;
 
 		for (int i = 0; i < 4; i++) {
-			// TODO fix detection ()it's broken and do call with a wring offset that cause the drawbg to draw on another background (set bgNumber 1 to 0)
-			if (!(i == 1 && this->_tileMapsConfig.x == 1) && !(i > 1 && this->_tileMapsConfig.y == 1)) {
+			if (((i == 0 || i == 1) && this->_tileMapsConfig.x == 1)
+			    || ((i == 2 || i == 3) && this->_tileMapsConfig.y == 1)) {
 				_drawBasicTileMap(vramAddress, offset);
 			}
 			vramAddress += TileMapByteSize;
