@@ -11,6 +11,7 @@
 #include "Renderer/IRenderer.hpp"
 #include "Ram/Ram.hpp"
 #include "Models/Vector2.hpp"
+#include <algorithm>
 #include "Background.hpp"
 #include "PPUUtils.hpp"
 #include "Debugger/TileViewer/RAMTileRenderer.hpp"
@@ -625,11 +626,9 @@ namespace ComSquare::PPU
 		void renderMainAndSubScreen();
 		//! @brief Add a bg buffer to another buffer
 		template <std::size_t DEST_SIZE_X, std::size_t DEST_SIZE_Y, std::size_t SRC_SIZE_X, std::size_t SRC_SIZE_Y>
-		void add_buffer(std::array<std::array<uint32_t, DEST_SIZE_Y>, DEST_SIZE_X> &bufferDest,
-		                     const std::array<std::array<uint32_t, SRC_SIZE_Y>, SRC_SIZE_X> &bufferSrc,
-		                     const Vector2<int> &offset = {0, 0})
+		void addBuffer(std::array<std::array<uint32_t, DEST_SIZE_Y>, DEST_SIZE_X> &bufferDest,
+		               const std::array<std::array<uint32_t, SRC_SIZE_Y>, SRC_SIZE_X> &bufferSrc)
 		{
-			// TODO use std::ranges
 			for (unsigned long i = 0; i < bufferSrc.size(); i++) {
 				for (unsigned long j = 0; j < bufferSrc[i].size(); j++) {
 					if (bufferSrc[i][j] > 0xFF) // 0xFF correspond to a black pixel with full brightness

@@ -36,7 +36,7 @@ namespace ComSquare::PPU
 	{
 		this->_registers._isLowByte = true;
 
-		//Utils::Debug::populateEnvironment(*this, 0);
+		Utils::Debug::populateEnvironment(*this, 0);
 	}
 
 	uint8_t PPU::read(uint24_t addr)
@@ -310,8 +310,8 @@ namespace ComSquare::PPU
 		(void)cycles;
 
 		this->renderMainAndSubScreen();
-		this->add_buffer(this->_screen, this->_subScreen);
-		this->add_buffer(this->_screen, this->_mainScreen);
+		this->addBuffer(this->_screen, this->_subScreen);
+		this->addBuffer(this->_screen, this->_mainScreen);
 		//this->_backgrounds[2].renderBackground();
 		//add_buffer(this->_screen, this->_backgrounds[2].buffer);
 		for (unsigned long i = 0; i < this->_screen.size(); i++) {
@@ -656,9 +656,9 @@ namespace ComSquare::PPU
 	void PPU::addToMainSubScreen(Background &bg)
 	{
 		if (this->_registers._t[0].raw & (1U << (bg.getBgNumber() - 1U)))
-			this->add_buffer(this->_mainScreen, bg.buffer);
+			this->addBuffer(this->_mainScreen, bg.buffer);
 		if (this->_registers._t[1].raw & (1U << (bg.getBgNumber() - 1U)))
-			this->add_buffer(this->_subScreen, bg.buffer);
+			this->addBuffer(this->_subScreen, bg.buffer);
 	}
 
 	int PPU::getBgMode() const

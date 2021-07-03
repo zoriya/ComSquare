@@ -92,6 +92,7 @@ namespace ComSquare::PPU
 			Utils::VFlipArray(this->_tileBuffer, {this->_characterNbPixels.x, this->_characterNbPixels.y});
 		for (int i = 0; i < this->_characterNbPixels.y; i++) {
 			for (int j = 0; j < this->_characterNbPixels.x; j++) {
+				//std::copy(this->_tileBuffer.begin(), this->_tileBuffer.begin() + this->_characterNbPixels.x, this->buffer[pos.x].begin() )
 				this->buffer[pos.x][pos.y] = this->_tileBuffer[i][j];
 				pos.x++;
 			}
