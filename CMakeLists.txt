@@ -38,6 +38,8 @@ set(SOURCES
 	sources/APU/DSP/DSP.cpp
 	sources/APU/DSP/DSP.hpp
 	sources/Renderer/IRenderer.hpp
+	sources/Renderer/NoRenderer.cpp
+	sources/Renderer/NoRenderer.hpp
 	sources/Exceptions/InvalidAction.hpp
 	sources/Cartridge/InterruptVectors.hpp
 	sources/Memory/RectangleShadow.cpp
@@ -159,68 +161,27 @@ target_link_libraries(ComSquare
 
 add_executable(unit_tests EXCLUDE_FROM_ALL
 	${SOURCES}
-	tests/CPU/testAddressingMode.cpp
-	tests/CPU/testInterupts.cpp
-	tests/testMemoryBus.cpp
-	tests/tests.hpp
-	tests/APU/testAPUInstructions.cpp
-	tests/APU/testAPU.cpp
-	tests/CPU/testAddressingMode.cpp
 	tests/PPU/testPpuWrite.cpp
-	tests/PPU/testPpuWriteFromVmain.cpp
-	tests/CPU/Math/testADC.cpp
-	tests/CPU/testStore.cpp
-	tests/CPU/testInternal.cpp
-	tests/CPU/testBits.cpp
-	tests/APU/testOperand.cpp
-	tests/CPU/Math/testSBC.cpp
-	tests/CPU/testTransfers.cpp
-	tests/CPU/Math/testOthersMath.cpp
-	tests/testRectangleMemory.cpp
-	tests/CPU/Math/testCMP.cpp
-	tests/CPU/testDMA.cpp
-	tests/CPU/testAddressingMode.cpp
-	tests/CPU/testInterupts.cpp
-	tests/testMemoryBus.cpp
-	tests/tests.hpp
-	tests/APU/testAPUInstructions.cpp
-	tests/APU/testAPU.cpp
-	tests/CPU/testAddressingMode.cpp
-	tests/PPU/testPpuWrite.cpp
-	tests/PPU/testPpuWriteFromVmain.cpp
-	tests/CPU/Math/testADC.cpp
-	tests/CPU/testStore.cpp
-	tests/CPU/testInternal.cpp
-	tests/CPU/testBits.cpp
-	tests/APU/testOperand.cpp
-	tests/CPU/Math/testSBC.cpp
-	tests/CPU/testTransfers.cpp
-	tests/CPU/Math/testOthersMath.cpp
-	tests/testRectangleMemory.cpp
-	tests/CPU/Math/testCMP.cpp
-	tests/PPU/testBackground.cpp
 	tests/PPU/testPpuRead.cpp
-	tests/CPU/testDMA.cpp
-	tests/CPU/testAddressingMode.cpp
-	tests/CPU/testInterupts.cpp
-	tests/testMemoryBus.cpp
-	tests/tests.hpp
+	tests/PPU/testBackground.cpp
+	tests/PPU/testPpuWriteFromVmain.cpp
+	tests/testRectangleMemory.cpp
 	tests/APU/testAPUInstructions.cpp
 	tests/APU/testAPU.cpp
-	tests/CPU/testAddressingMode.cpp
-	tests/PPU/testPpuWrite.cpp
-	tests/PPU/testPpuWriteFromVmain.cpp
+	tests/APU/testOperand.cpp
+	tests/tests.hpp
+	tests/testMemoryBus.cpp
+	tests/CPU/Math/testSBC.cpp
 	tests/CPU/Math/testADC.cpp
-	tests/CPU/testStore.cpp
+	tests/CPU/Math/testCMP.cpp
+	tests/CPU/Math/testOthersMath.cpp
+	tests/CPU/testDMA.cpp
+	tests/CPU/testTransfers.cpp
+	tests/CPU/testInterupts.cpp
+	tests/CPU/testAddressingMode.cpp
 	tests/CPU/testInternal.cpp
 	tests/CPU/testBits.cpp
-	tests/APU/testOperand.cpp
-	tests/CPU/Math/testSBC.cpp
-	tests/CPU/testTransfers.cpp
-	tests/CPU/Math/testOthersMath.cpp
-	tests/testRectangleMemory.cpp
-	tests/CPU/Math/testCMP.cpp
-	tests/CPU/testDMA.cpp
+	tests/CPU/testStore.cpp
 )
 target_link_libraries(unit_tests criterion -lgcov)
 target_compile_options(unit_tests PUBLIC -fprofile-arcs -ftest-coverage)
