@@ -53,8 +53,6 @@ set(SOURCES
 	sources/CPU/Instructions/MathematicalOperations.cpp
 	sources/CPU/Instructions/MemoryInstructions.cpp
 	sources/CPU/Instructions/InternalInstruction.cpp
-	sources/Ram/ExtendedRam.cpp
-	sources/Ram/ExtendedRam.hpp
 	sources/Utility/Utility.hpp
 	sources/Utility/Utility.cpp
 	sources/CPU/Instructions/BitsInstructions.cpp
@@ -133,14 +131,14 @@ add_executable(comsquare
 #	sources/Debugger/APUDebug.cpp
 #	sources/Debugger/MemoryBusDebug.cpp
 #	sources/Debugger/MemoryBusDebug.hpp
-#	sources/Debugger/CGramDebug.cpp
-#	sources/Debugger/CGramDebug.hpp
+	sources/Debugger/CGramDebug.cpp
+	sources/Debugger/CGramDebug.hpp
 	sources/Debugger/RegisterViewer.cpp
 	sources/Debugger/RegisterViewer.hpp
-#	sources/Debugger/TileViewer/TileViewer.cpp
-#	sources/Debugger/TileViewer/TileViewer.hpp
-#	sources/Debugger/TileViewer/RAMTileRenderer.cpp
-#	sources/Debugger/TileViewer/RAMTileRenderer.hpp
+	sources/Debugger/TileViewer/TileViewer.cpp
+	sources/Debugger/TileViewer/TileViewer.hpp
+	sources/Debugger/TileViewer/RAMTileRenderer.cpp
+	sources/Debugger/TileViewer/RAMTileRenderer.hpp
 	ui/tileView.ui
 	ui/registersView.ui
 	ui/cpuView.ui

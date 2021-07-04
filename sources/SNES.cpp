@@ -132,19 +132,19 @@ namespace ComSquare
 //		this->bus = std::make_shared<Memory::MemoryBus>(*this->bus);
 //		this->cpu->setMemoryBus(this->bus);
 //	}
-//
-//	void SNES::enableCgramDebugging()
-//	{
-//		if (this->_cgramViewer)
-//			this->_cgramViewer->focus();
-//		else
-//			this->_cgramViewer.emplace(*this, *this->ppu);
-//	}
-//
-//	void SNES::disableCgramDebugging()
-//	{
-//		this->_cgramViewer = std::nullopt;
-//	}
+
+	void SNES::enableCgramViewer()
+	{
+		if (this->_cgramViewer)
+			this->_cgramViewer->focus();
+		else
+			this->_cgramViewer.emplace(*this, this->ppu);
+	}
+
+	void SNES::disableCgramViewer()
+	{
+		this->_cgramViewer = std::nullopt;
+	}
 
 	void SNES::disableRegisterViewer()
 	{
@@ -159,18 +159,18 @@ namespace ComSquare
 			this->_registerViewer.emplace(*this);
 	}
 
-//	void SNES::disableTileViewerDebugging()
-//	{
-//		this->_tileViewer = std::nullopt;
-//	}
-//
-//	void SNES::enableTileViewerDebugging()
-//	{
-//		if (this->_tileViewer)
-//			this->_tileViewer->focus();
-//		else
-//			this->_tileViewer.emplace(*this, *this->ppu);
-//	}
+	void SNES::disableTileViewer()
+	{
+		this->_tileViewer = std::nullopt;
+	}
+
+	void SNES::enableTileViewer()
+	{
+		if (this->_tileViewer)
+			this->_tileViewer->focus();
+		else
+			this->_tileViewer.emplace(*this, this->ppu);
+	}
 
 #endif
 }// namespace ComSquare

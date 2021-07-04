@@ -78,7 +78,7 @@ void parseArguments(int argc, char **argv, SNES &snes)
 //			snes.enableMemoryBusDebugging();
 //			break;
 //		case 'g':
-//			snes.enableCgramDebugging();
+//			snes.enableCgramViewer();
 //			break;
 		case 'r':
 			snes.enableRegisterViewer();

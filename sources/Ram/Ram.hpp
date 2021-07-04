@@ -2,15 +2,15 @@
 // Created by anonymus-raccoon on 1/28/20.
 //
 
-#ifndef COMSQUARE_RAM_HPP
-#define COMSQUARE_RAM_HPP
+#pragma once
 
-#include "../Memory/ARectangleMemory.hpp"
+#include "Memory/ARectangleMemory.hpp"
 #include <string>
 
 namespace ComSquare::Ram
 {
-	class Ram : public Memory::ARectangleMemory {
+	class Ram : public Memory::ARectangleMemory
+	{
 	protected:
 		//! @brief The ram. (Can be used for WRam, SRam, VRam etc)
 		uint8_t *_data;
@@ -41,19 +41,26 @@ namespace ComSquare::Ram
 		//! @throw This function should thrown an InvalidAddress for address that are not mapped to the component.
 		void write(uint24_t addr, uint8_t data) override;
 
+		//! @brief Retrieve the data at the address given. This can be used instead of read or write.
+		//! @param addr The address of the data to retrieve.
+		//! @return The data at the address given as parameter.
+		uint8_t &operator[](uint24_t addr);
+		//! @brief Retrieve the data at the address given. This can be used instead of read or write.
+		//! @param addr The address of the data to retrieve.
+		//! @return The data at the address given as parameter.
+		const uint8_t &operator[](uint24_t addr) const;
 
 		//! @brief Get the name of this accessor (used for debug purpose)
-		std::string getName() const override;
+		[[nodiscard]] std::string getName() const override;
 
 		//! @brief Get the component of this accessor (used for debug purpose)
-		Component getComponent() const override;
+		[[nodiscard]] Component getComponent() const override;
 
 		//! @brief Get the size of the ram in bytes.
-		uint24_t getSize() const override;
+		[[nodiscard]] uint24_t getSize() const override;
 
 		//! @brief Get the raw data of the RAM
-		uint8_t *getData() const;
+		//! @return A raw pointer to the data.
+		[[nodiscard]] uint8_t *getData() const;
 	};
 }
-
-#endif //COMSQUARE_RAM_HPP

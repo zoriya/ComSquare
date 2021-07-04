@@ -100,7 +100,7 @@ namespace ComSquare::Renderer
 
 	void QtFullSFML::enableCgramViewer()
 	{
-//		this->_snes.enableCgramDebugging();
+		this->_snes.enableCgramViewer();
 	}
 
 	void QtFullSFML::enableRegisterViewer()
@@ -110,7 +110,7 @@ namespace ComSquare::Renderer
 
 	void QtFullSFML::enableTileViewer()
 	{
-//		this->_snes.enableTileViewerDebugging();
+		this->_snes.enableTileViewer();
 	}
 #endif
 

@@ -27,6 +27,16 @@ namespace ComSquare::Ram
 		delete[] this->_data;
 	}
 
+	uint8_t &Ram::operator[](uint24_t addr)
+	{
+		return this->_data[addr];
+	}
+
+	const uint8_t &Ram::operator[](uint24_t addr) const
+	{
+		return this->_data[addr];
+	}
+
 	uint8_t Ram::read(uint24_t addr)
 	{
 		// TODO read/write after the size of the rom should noop or behave like a mirror. I don't really know.

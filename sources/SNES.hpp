@@ -18,9 +18,10 @@
 //#include <Debugger/CPU/CPUDebug.hpp>
 #include "Debugger/MemoryViewer.hpp"
 #include "Debugger/HeaderViewer.hpp"
-//#include "Debugger/CGramDebug.hpp"
+//#include "Debugger/MemoryBusDebug.hpp"
+#include "Debugger/CGramDebug.hpp"
 #include "Debugger/RegisterViewer.hpp"
-//#include "Debugger/TileViewer/TileViewer.hpp"
+#include "Debugger/TileViewer/TileViewer.hpp"
 #endif
 
 namespace ComSquare
@@ -38,11 +39,11 @@ namespace ComSquare
 		//! @brief The window that allow the user to view the cartridge's header.
 		std::optional<Debugger::HeaderViewer> _headerViewer;
 		//! @brief The window that allow the user to view the CGRAM.
-//		std::optional<Debugger::CGramDebug> _cgramViewer;
+		std::optional<Debugger::CGramDebug> _cgramViewer;
 		//! @brief The window that allow the user to view registers.
 		std::optional<Debugger::RegisterViewer> _registerViewer;
 		//! @brief The window that allow the user to view the CGRAM as tiles.
-//		std::optional<Debugger::TileViewer> _tileViewer;
+		std::optional<Debugger::TileViewer> _tileViewer;
 #endif
 	public:
 		//! @brief The memory bus that map addresses to components.
@@ -107,18 +108,18 @@ namespace ComSquare
 //		void disableMemoryBusDebugging();
 //		//! @brief Enable the Memory Bus's debugging window.
 //		void enableMemoryBusDebugging();
-//		//! @brief Disable the CGRAM's debugging window.
-//		void disableCgramDebugging();
-//		//! @brief Enable the CGRAM's debugging window.
-//		void enableCgramDebugging();
+		//! @brief Disable the CGRAM's debugging window.
+		void disableCgramViewer();
+		//! @brief Enable the CGRAM's debugging window.
+		void enableCgramViewer();
 		//! @brief Disable the Register's debugging window.
 		void disableRegisterViewer();
 		//! @brief Enable the Register's debugging window.
 		void enableRegisterViewer();
-//		//! @brief Disable the TileViewer's debugging window.
-//		void disableTileViewerDebugging();
-//		//! @brief Enable the TileViewer's debugging window.
-//		void enableTileViewerDebugging();
+		//! @brief Disable the TileViewer's debugging window.
+		void disableTileViewer();
+		//! @brief Enable the TileViewer's debugging window.
+		void enableTileViewer();
 #endif
 	};
 }// namespace ComSquare
