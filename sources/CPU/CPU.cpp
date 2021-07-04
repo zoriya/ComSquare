@@ -10,7 +10,7 @@
 
 namespace ComSquare::CPU
 {
-	CPU::CPU(Memory::MemoryBus &bus, Cartridge::Header &cartridgeHeader)
+	CPU::CPU(Memory::IMemoryBus &bus, Cartridge::Header &cartridgeHeader)
 	    : _bus(bus),
 	      _cartridgeHeader(cartridgeHeader),
 	      _dmaChannels({DMA(bus), DMA(bus), DMA(bus), DMA(bus), DMA(bus), DMA(bus), DMA(bus), DMA(bus)})
@@ -18,6 +18,12 @@ namespace ComSquare::CPU
 		this->RESB();
 	}
 
+	void CPU::setBus(Memory::IMemoryBus &bus)
+	{
+		this->_bus = bus;
+		for (auto &dma : this->_dmaChannels)
+			dma.setBus(bus);
+	}
 
 	//! @bref The CPU's internal registers starts at $4200	and finish at $421F.
 	uint8_t CPU::read(uint24_t addr)
@@ -203,7 +209,7 @@ namespace ComSquare::CPU
 
 	uint8_t CPU::readPC()
 	{
-		uint8_t ret = this->_bus.read(this->_registers.pac);
+		uint8_t ret = this->getBus().read(this->_registers.pac);
 		this->_registers.pc++;
 		return ret;
 	}
@@ -322,24 +328,24 @@ namespace ComSquare::CPU
 
 	void CPU::_push(uint8_t data)
 	{
-		this->_bus.write(this->_registers.s--, data);
+		this->getBus().write(this->_registers.s--, data);
 	}
 
 	void CPU::_push(uint16_t data)
 	{
-		this->_bus.write(this->_registers.s--, data >> 8u);
-		this->_bus.write(this->_registers.s--, data);
+		this->getBus().write(this->_registers.s--, data >> 8u);
+		this->getBus().write(this->_registers.s--, data);
 	}
 
 	uint8_t CPU::_pop()
 	{
-		return this->_bus.read(++this->_registers.s);
+		return this->getBus().read(++this->_registers.s);
 	}
 
 	uint16_t CPU::_pop16()
 	{
-		uint16_t value = this->_bus.read(++this->_registers.s);
-		value += this->_bus.read(++this->_registers.s) << 8u;
+		uint16_t value = this->getBus().read(++this->_registers.s);
+		value += this->getBus().read(++this->_registers.s) << 8u;
 		return value;
 	}
 

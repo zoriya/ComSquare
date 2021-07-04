@@ -36,7 +36,8 @@ namespace ComSquare::CPU
 		bool _isWaitingForInterrupt = false;
 
 		//! @brief The memory bus to use for read/write.
-		Memory::MemoryBus &_bus;
+		std::reference_wrapper<Memory::IMemoryBus> _bus;
+	private:
 		//! @brief The cartridge header (stored for interrupt vectors..)
 		Cartridge::Header &_cartridgeHeader;
 
@@ -117,7 +118,6 @@ namespace ComSquare::CPU
 		//! @return The address of the data to read on the instruction.
 		uint24_t _getValueAddr(Instruction &instruction);
 
-	public:
 		//! @brief Break instruction - Causes a software break. The PC is loaded from a vector table.
 		int BRK(uint24_t, AddressingMode);
 		//! @brief Co-Processor Enable instruction - Causes a software break. The PC is loaded from a vector table.
@@ -308,6 +308,16 @@ namespace ComSquare::CPU
 		//! @param Y_register Destination address (last byte)
 		//! @param C_register (16 bits accumulator) Length -1
 		int MVP(uint24_t, AddressingMode);
+
+	public:
+		//! @brief Get the memory bus used by this CPU.
+		[[nodiscard]] inline Memory::IMemoryBus &getBus()
+		{
+			return this->_bus;
+		}
+		//! @brief Set the memory bus used by this CPU
+		//! @param bus The bus to use.
+		void setBus(Memory::IMemoryBus &bus);
 
 		//! @brief All the instructions of the CPU.
 		//! @info Instructions are indexed by their opcode
@@ -573,7 +583,7 @@ namespace ComSquare::CPU
 		//! @brief Construct a new generic CPU.
 		//! @param bus The memory bus to use to transfer data.
 		//! @param cartridgeHeader The header used to know interrupts, main entry point etc...
-		CPU(Memory::MemoryBus &bus, Cartridge::Header &cartridgeHeader);
+		CPU(Memory::IMemoryBus &bus, Cartridge::Header &cartridgeHeader);
 		//! @brief A default copy constructor
 		CPU(const CPU &) = default;
 		//! @brief A CPU is not assignable

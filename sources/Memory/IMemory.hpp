@@ -8,13 +8,14 @@
 #include <vector>
 #include <memory>
 #include <string>
-#include "../Models/Int24.hpp"
-#include "../Models/Components.hpp"
+#include "Models/Int24.hpp"
+#include "Models/Components.hpp"
 
 namespace ComSquare::Memory
 {
 	//! @brief Common interface implemented by all components mapping memory.
-	class IMemory {
+	class IMemory
+	{
 	public:
 		//! @brief Read data from the component.
 		//! @param addr The local address to read from (0x0 should refer to the first byte of this component).

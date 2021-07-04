@@ -93,9 +93,18 @@ namespace ComSquare::CPU
 		} _count {};
 
 		//! @brief The memory bus to use for read/write.
-		Memory::MemoryBus &_bus;
+		Memory::IMemoryBus &_bus;
 
 	public:
+		//! @brief Get the memory bus used by this CPU.
+		[[nodiscard]] inline Memory::IMemoryBus &getBus()
+		{
+			return this->_bus;
+		}
+		//! @brief Set the memory bus used by this CPU
+		//! @param bus The bus to use.
+		void setBus(Memory::IMemoryBus &bus);
+
 		//! @brief Is this channel set to run?
 		bool enabled;
 
@@ -116,7 +125,7 @@ namespace ComSquare::CPU
 
 		//! @brief Create a DMA channel with a given bus
 		//! @param bus The memory bus to use.
-		explicit DMA(Memory::MemoryBus &bus);
+		explicit DMA(Memory::IMemoryBus &bus);
 		//! @brief A DMA is copy constructable.
 		DMA(const DMA &) = default;
 		//! @brief A DMA is not assignable

@@ -95,7 +95,7 @@ namespace ComSquare::Renderer
 
 	void QtFullSFML::enableDebugBus()
 	{
-//		this->_snes.enableMemoryBusDebugging();
+		this->_snes.enableMemoryBusDebugging();
 	}
 
 	void QtFullSFML::enableCgramViewer()

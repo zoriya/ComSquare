@@ -10,13 +10,13 @@ namespace ComSquare::CPU
 {
 	int CPU::TSB(uint24_t valueAddr, AddressingMode mode)
 	{
-		uint16_t value = this->_bus.read(valueAddr);
+		uint16_t value = this->getBus().read(valueAddr);
 		if (!this->_registers.p.m)
-			value += this->_bus.read(valueAddr + 1) << 8u;
+			value += this->getBus().read(valueAddr + 1) << 8u;
 		value |= this->_registers.a;
-		this->_bus.write(valueAddr, value);
+		this->getBus().write(valueAddr, value);
 		if (!this->_registers.p.m)
-			this->_bus.write(valueAddr + 1, value >> 8u);
+			this->getBus().write(valueAddr + 1, value >> 8u);
 
 		this->_registers.p.z = value == 0;
 
@@ -30,14 +30,14 @@ namespace ComSquare::CPU
 
 	int CPU::TRB(uint24_t valueAddr, AddressingMode mode)
 	{
-		uint16_t value = this->_bus.read(valueAddr);
+		uint16_t value = this->getBus().read(valueAddr);
 		if (!this->_registers.p.m)
-			value += this->_bus.read(valueAddr + 1) << 8u;
+			value += this->getBus().read(valueAddr + 1) << 8u;
 
 		uint16_t newValue = value & ~this->_registers.a;
-		this->_bus.write(valueAddr, newValue);
+		this->getBus().write(valueAddr, newValue);
 		if (!this->_registers.p.m)
-			this->_bus.write(valueAddr + 1, newValue >> 8u);
+			this->getBus().write(valueAddr + 1, newValue >> 8u);
 
 		this->_registers.p.z = (value & this->_registers.a) == 0;
 
@@ -52,9 +52,9 @@ namespace ComSquare::CPU
 	int CPU::BIT(uint24_t valueAddr, AddressingMode mode)
 	{
 		unsigned negativeMask = this->_registers.p.m ? 0x80u : 0x8000u;
-		unsigned value = this->_bus.read(valueAddr);
+		unsigned value = this->getBus().read(valueAddr);
 		if (!this->_registers.p.m)
-			value += this->_bus.read(valueAddr + 1) << 8u;
+			value += this->getBus().read(valueAddr + 1) << 8u;
 
 		if (mode != ImmediateForA) {
 			this->_registers.p.n = value & negativeMask;
@@ -89,18 +89,18 @@ namespace ComSquare::CPU
 			return 0;
 		}
 
-		uint16_t value = this->_bus.read(valueAddr);
+		uint16_t value = this->getBus().read(valueAddr);
 		if (!this->_registers.p.m)
-			value += this->_bus.read(valueAddr + 1) << 8u;
+			value += this->getBus().read(valueAddr + 1) << 8u;
 
 		this->_registers.p.c = value & highByte;
 		value <<= 1u;
 		this->_registers.p.n = value & highByte;
 		this->_registers.p.z = value == 0;
 
-		this->_bus.write(valueAddr, value);
+		this->getBus().write(valueAddr, value);
 		if (!this->_registers.p.m)
-			this->_bus.write(valueAddr + 1, value >> 8u);
+			this->getBus().write(valueAddr + 1, value >> 8u);
 
 		int cycles = 2 * !this->_registers.p.m;
 		switch (mode) {
@@ -128,17 +128,17 @@ namespace ComSquare::CPU
 			return 0;
 		}
 
-		uint16_t value = this->_bus.read(valueAddr);
+		uint16_t value = this->getBus().read(valueAddr);
 		if (!this->_registers.p.m)
-			value += this->_bus.read(valueAddr + 1) << 8u;
+			value += this->getBus().read(valueAddr + 1) << 8u;
 
 		this->_registers.p.c = value & 1u;
 		value >>= 1u;
 		this->_registers.p.z = value == 0;
 
-		this->_bus.write(valueAddr, value);
+		this->getBus().write(valueAddr, value);
 		if (!this->_registers.p.m)
-			this->_bus.write(valueAddr + 1, value >> 8u);
+			this->getBus().write(valueAddr + 1, value >> 8u);
 
 		int cycles = 2 * !this->_registers.p.m;
 		switch (mode) {
@@ -169,9 +169,9 @@ namespace ComSquare::CPU
 			return 0;
 		}
 
-		uint16_t value = this->_bus.read(valueAddr);
+		uint16_t value = this->getBus().read(valueAddr);
 		if (!this->_registers.p.m)
-			value += this->_bus.read(valueAddr + 1) << 8u;
+			value += this->getBus().read(valueAddr + 1) << 8u;
 
 		this->_registers.p.c = value & highByte;
 		value <<= 1u;
@@ -179,9 +179,9 @@ namespace ComSquare::CPU
 		this->_registers.p.n = value & highByte;
 		this->_registers.p.z = value == 0;
 
-		this->_bus.write(valueAddr, value);
+		this->getBus().write(valueAddr, value);
 		if (!this->_registers.p.m)
-			this->_bus.write(valueAddr + 1, value >> 8u);
+			this->getBus().write(valueAddr + 1, value >> 8u);
 
 		int cycles = 2 * !this->_registers.p.m;
 		switch (mode) {
@@ -212,18 +212,18 @@ namespace ComSquare::CPU
 			return 0;
 		}
 
-		uint16_t value = this->_bus.read(valueAddr);
+		uint16_t value = this->getBus().read(valueAddr);
 		if (!this->_registers.p.m)
-			value += this->_bus.read(valueAddr + 1) << 8u;
+			value += this->getBus().read(valueAddr + 1) << 8u;
 
 		this->_registers.p.c = value & 1u;
 		value >>= 1u;
 		value |= oldCarry << highByteIndex;
 		this->_registers.p.z = value == 0;
 
-		this->_bus.write(valueAddr, value);
+		this->getBus().write(valueAddr, value);
 		if (!this->_registers.p.m)
-			this->_bus.write(valueAddr + 1, value >> 8u);
+			this->getBus().write(valueAddr + 1, value >> 8u);
 
 		int cycles = 2 * !this->_registers.p.m;
 		switch (mode) {

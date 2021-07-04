@@ -18,7 +18,7 @@
 //#include <Debugger/CPU/CPUDebug.hpp>
 #include "Debugger/MemoryViewer.hpp"
 #include "Debugger/HeaderViewer.hpp"
-//#include "Debugger/MemoryBusDebug.hpp"
+#include "Debugger/MemoryBusDebug.hpp"
 #include "Debugger/CGramDebug.hpp"
 #include "Debugger/RegisterViewer.hpp"
 #include "Debugger/TileViewer/TileViewer.hpp"
@@ -33,6 +33,8 @@ namespace ComSquare
 #ifdef DEBUGGER_ENABLED
 		//! @brief The CPU's debugger with disassembly, pause, step by step...
 //		std::optional<Debugger::CPUDebug> _cpuDebugger;
+		//! @brief A debugger that shows every read and write made over the bus.
+		std::optional<Debugger::MemoryBusDebug> _busDebugger;
 
 		//! @brief The window that allow the user to view a memory.
 		std::optional<Debugger::MemoryViewer> _ramViewer;
@@ -104,10 +106,10 @@ namespace ComSquare
 //		void disableAPUDebugging();
 //		//! @brief Enable the APU's debugging window.
 //		void enableAPUDebugging();
-//		//! @brief Disable the Memory Bus's debugging window.
-//		void disableMemoryBusDebugging();
-//		//! @brief Enable the Memory Bus's debugging window.
-//		void enableMemoryBusDebugging();
+		//! @brief Disable the Memory Bus's debugging window.
+		void disableMemoryBusDebugging();
+		//! @brief Enable the Memory Bus's debugging window.
+		void enableMemoryBusDebugging();
 		//! @brief Disable the CGRAM's debugging window.
 		void disableCgramViewer();
 		//! @brief Enable the CGRAM's debugging window.

@@ -95,7 +95,7 @@ set(SOURCES
 	sources/PPU/TileRenderer.hpp
 	sources/PPU/Tile.hpp
 	sources/CPU/Registers.hpp
-	)
+	sources/Memory/IMemoryBus.hpp)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -129,8 +129,8 @@ add_executable(comsquare
 	sources/Debugger/HeaderViewer.hpp
 #	sources/Debugger/APUDebug.hpp
 #	sources/Debugger/APUDebug.cpp
-#	sources/Debugger/MemoryBusDebug.cpp
-#	sources/Debugger/MemoryBusDebug.hpp
+	sources/Debugger/MemoryBusDebug.cpp
+	sources/Debugger/MemoryBusDebug.hpp
 	sources/Debugger/CGramDebug.cpp
 	sources/Debugger/CGramDebug.hpp
 	sources/Debugger/RegisterViewer.cpp
@@ -148,7 +148,7 @@ add_executable(comsquare
 	ui/busView.ui
 	resources/appResources.qrc
 	)
-target_include_directories(comsquare PRIVATE ./)
+target_include_directories(comsquare PUBLIC ${PROJECT_BINARY_DIR})
 target_compile_definitions(comsquare PUBLIC DEBUGGER_ENABLED)
 
 find_package(Qt5 COMPONENTS Widgets REQUIRED)

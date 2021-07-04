@@ -2,7 +2,6 @@
 // Created by anonymus-raccoon on 1/23/20.
 //
 
-#include <algorithm>
 #include <iostream>
 #include "SNES.hpp"
 #include "Memory/MemoryBus.hpp"
@@ -36,7 +35,7 @@ namespace ComSquare::Memory
 		return data;
 	}
 
-	uint8_t MemoryBus::peek(uint24_t addr)
+	std::optional<uint8_t> MemoryBus::peek(uint24_t addr)
 	{
 		IMemory *handler = this->getAccessor(addr);
 
@@ -45,7 +44,7 @@ namespace ComSquare::Memory
 		try {
 			return handler->read(handler->getRelativeAddress(addr));
 		} catch (const InvalidAddress &) {
-			return 0;
+			return std::nullopt;
 		}
 	}
 

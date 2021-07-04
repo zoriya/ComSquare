@@ -116,22 +116,21 @@ namespace ComSquare
 //		this->apu = std::make_shared<APU::APU>(*this->apu);
 //		this->bus.mapComponents(*this);
 //	}
-//
-//	void SNES::enableMemoryBusDebugging()
-//	{
-//		if (this->bus.isDebugger())
-//			std::static_pointer_cast<Debugger::MemoryBusDebug>(this->bus)->focus();
-//		else {
-//			this->bus = std::make_shared<Debugger::MemoryBusDebug>(*this, *this->bus);
-//			this->cpu->setMemoryBus(this->bus);
-//		}
-//	}
-//
-//	void SNES::disableMemoryBusDebugging()
-//	{
-//		this->bus = std::make_shared<Memory::MemoryBus>(*this->bus);
-//		this->cpu->setMemoryBus(this->bus);
-//	}
+
+	void SNES::enableMemoryBusDebugging()
+	{
+		if (this->_busDebugger)
+			this->_busDebugger->focus();
+		else
+			this->_busDebugger.emplace(*this, this->bus);
+		this->cpu.setBus(this->_busDebugger.value());
+	}
+
+	void SNES::disableMemoryBusDebugging()
+	{
+		this->_busDebugger = std::nullopt;
+		this->cpu.setBus(this->bus);
+	}
 
 	void SNES::enableCgramViewer()
 	{

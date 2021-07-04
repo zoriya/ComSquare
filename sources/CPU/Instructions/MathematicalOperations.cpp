@@ -9,9 +9,9 @@ namespace ComSquare::CPU
 {
 	int CPU::ADC(uint24_t valueAddr, AddressingMode mode)
 	{
-		unsigned value = this->_bus.read(valueAddr) + this->_registers.p.c;
+		unsigned value = this->getBus().read(valueAddr) + this->_registers.p.c;
 		if (!this->_registers.p.m)
-			value += this->_bus.read(valueAddr + 1) << 8u;
+			value += this->getBus().read(valueAddr + 1) << 8u;
 		unsigned negativeMask = this->_registers.p.m ? 0x80u : 0x8000u;
 		unsigned maxValue = this->_registers.p.m ? UINT8_MAX : UINT16_MAX;
 
@@ -52,9 +52,9 @@ namespace ComSquare::CPU
 	int CPU::SBC(uint24_t valueAddr, AddressingMode mode)
 	{
 		unsigned negativeMask = this->_registers.p.m ? 0x80u : 0x8000u;
-		unsigned value = this->_bus.read(valueAddr);
+		unsigned value = this->getBus().read(valueAddr);
 		if (!this->_registers.p.m)
-			value += this->_bus.read(valueAddr + 1) << 8u;
+			value += this->getBus().read(valueAddr + 1) << 8u;
 		bool oldCarry = this->_registers.p.c;
 
 		this->_registers.p.c = this->_registers.a >= value;
@@ -94,9 +94,9 @@ namespace ComSquare::CPU
 	int CPU::ORA(uint24_t valueAddr, AddressingMode mode)
 	{
 		unsigned negativeMask = this->_registers.p.m ? 0x80u : 0x8000u;
-		unsigned value = this->_bus.read(valueAddr);
+		unsigned value = this->getBus().read(valueAddr);
 		if (!this->_registers.p.m)
-			value += this->_bus.read(valueAddr + 1) << 8u;
+			value += this->getBus().read(valueAddr + 1) << 8u;
 		this->_registers.a |= value;
 		this->_registers.p.z = this->_registers.a == 0;
 		this->_registers.p.n = this->_registers.a & negativeMask;
@@ -151,9 +151,9 @@ namespace ComSquare::CPU
 	int CPU::CMP(uint24_t valueAddr, AddressingMode mode)
 	{
 		unsigned negativeMask = this->_registers.p.m ? 0x80u : 0x8000u;
-		unsigned value = this->_bus.read(valueAddr);
+		unsigned value = this->getBus().read(valueAddr);
 		if (!this->_registers.p.m)
-			value += this->_bus.read(valueAddr + 1) << 8u;
+			value += this->getBus().read(valueAddr + 1) << 8u;
 		unsigned result = this->_registers.a - value;
 		if (this->_registers.p.m)
 			result %= 0x100;
@@ -214,7 +214,7 @@ namespace ComSquare::CPU
 
 	int CPU::CPX(uint24_t valueAddr, AddressingMode mode)
 	{
-		unsigned value = this->_bus.read(valueAddr++);
+		unsigned value = this->getBus().read(valueAddr++);
 
 		if (this->_registers.p.x_b) {
 			uint8_t x = this->_registers.x;
@@ -222,7 +222,7 @@ namespace ComSquare::CPU
 			this->_registers.p.z = x == 0;
 			this->_registers.p.n = x & 0x80u;
 		} else {
-			value += this->_bus.read(valueAddr) << 8u;
+			value += this->getBus().read(valueAddr) << 8u;
 			uint16_t x = this->_registers.x;
 			x -= value;
 			this->_registers.p.z = x == 0;
@@ -234,7 +234,7 @@ namespace ComSquare::CPU
 
 	int CPU::CPY(uint24_t valueAddr, AddressingMode mode)
 	{
-		unsigned value = this->_bus.read(valueAddr++);
+		unsigned value = this->getBus().read(valueAddr++);
 
 		this->_registers.p.c = this->_registers.y >= value;
 		if (this->_registers.p.x_b) {
@@ -243,7 +243,7 @@ namespace ComSquare::CPU
 			this->_registers.p.z = y == 0;
 			this->_registers.p.n = y & 0x80u;
 		} else {
-			value += this->_bus.read(valueAddr) << 8u;
+			value += this->getBus().read(valueAddr) << 8u;
 			uint16_t y = this->_registers.y;
 			y -= value;
 			this->_registers.p.z = y == 0;
@@ -255,9 +255,9 @@ namespace ComSquare::CPU
 	int CPU::AND(uint24_t valueAddr, AddressingMode mode)
 	{
 		unsigned negativeMask = this->_registers.p.m ? 0x80u : 0x8000u;
-		unsigned value = this->_bus.read(valueAddr);
+		unsigned value = this->getBus().read(valueAddr);
 		if (!this->_registers.p.m)
-			value += this->_bus.read(valueAddr + 1) << 8u;
+			value += this->getBus().read(valueAddr + 1) << 8u;
 
 		this->_registers.a &= value;
 		this->_registers.p.n = this->_registers.a & negativeMask;
@@ -297,15 +297,15 @@ namespace ComSquare::CPU
 				this->_registers.ah = 0;
 			result = this->_registers.a;
 		} else if (!this->_registers.p.m) {
-			result = this->_bus.read(valueAddr);
-			result += this->_bus.read(valueAddr + 1) << 8u;
+			result = this->getBus().read(valueAddr);
+			result += this->getBus().read(valueAddr + 1) << 8u;
 			result = (uint16_t)(result + 1);
-			this->_bus.write(valueAddr, result);
-			this->_bus.write(valueAddr + 1, result << 8u);
+			this->getBus().write(valueAddr, result);
+			this->getBus().write(valueAddr + 1, result << 8u);
 		} else {
-			result = this->_bus.read(valueAddr);
+			result = this->getBus().read(valueAddr);
 			result = (uint8_t)(result + 1);
-			this->_bus.write(valueAddr, result);
+			this->getBus().write(valueAddr, result);
 		}
 
 		this->_registers.p.z = result == 0;
@@ -337,15 +337,15 @@ namespace ComSquare::CPU
 				this->_registers.ah = 0;
 			result = this->_registers.a;
 		} else if (!this->_registers.p.m) {
-			result = this->_bus.read(valueAddr);
-			result += this->_bus.read(valueAddr + 1) << 8u;
+			result = this->getBus().read(valueAddr);
+			result += this->getBus().read(valueAddr + 1) << 8u;
 			result = (uint16_t)(result - 1);
-			this->_bus.write(valueAddr, result);
-			this->_bus.write(valueAddr + 1, result << 8u);
+			this->getBus().write(valueAddr, result);
+			this->getBus().write(valueAddr + 1, result << 8u);
 		} else {
-			result = this->_bus.read(valueAddr);
+			result = this->getBus().read(valueAddr);
 			result = (uint8_t)(result - 1);
-			this->_bus.write(valueAddr, result);
+			this->getBus().write(valueAddr, result);
 		}
 
 		this->_registers.p.z = result == 0;
@@ -369,9 +369,9 @@ namespace ComSquare::CPU
 	int CPU::EOR(uint24_t valueAddr, AddressingMode mode)
 	{
 		unsigned negativeMask = this->_registers.p.m ? 0x80u : 0x8000u;
-		unsigned value = this->_bus.read(valueAddr);
+		unsigned value = this->getBus().read(valueAddr);
 		if (!this->_registers.p.m)
-			value += this->_bus.read(valueAddr + 1) << 8u;
+			value += this->getBus().read(valueAddr + 1) << 8u;
 		this->_registers.a ^= value;
 		this->_registers.p.z = this->_registers.a == 0;
 		this->_registers.p.n = this->_registers.a & negativeMask;

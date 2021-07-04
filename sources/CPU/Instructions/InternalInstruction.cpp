@@ -50,13 +50,13 @@ namespace ComSquare::CPU
 
 	int CPU::SEP(uint24_t valueAddr, AddressingMode)
 	{
-		this->_registers.p.flags |= this->_bus.read(valueAddr);
+		this->_registers.p.flags |= this->getBus().read(valueAddr);
 		return 0;
 	}
 
 	int CPU::REP(uint24_t valueAddr, AddressingMode)
 	{
-		this->_registers.p.flags &= ~this->_bus.read(valueAddr);
+		this->_registers.p.flags &= ~this->getBus().read(valueAddr);
 		if (this->_isEmulationMode) {
 			this->_registers.p.x_b = true;
 			this->_registers.p.m = true;
@@ -189,8 +189,8 @@ namespace ComSquare::CPU
 
 	int CPU::PER(uint24_t valueAddr, AddressingMode)
 	{
-		uint16_t value = this->_bus.read(valueAddr);
-		value += this->_bus.read(valueAddr + 1) << 8u;
+		uint16_t value = this->getBus().read(valueAddr);
+		value += this->getBus().read(valueAddr + 1) << 8u;
 		value += this->_registers.pc;
 		this->_push(value);
 		return 0;
@@ -226,55 +226,55 @@ namespace ComSquare::CPU
 	int CPU::BCC(uint24_t valueAddr, AddressingMode)
 	{
 		if (!this->_registers.p.c)
-			this->_registers.pc += static_cast<int8_t>(this->_bus.read(valueAddr));
+			this->_registers.pc += static_cast<int8_t>(this->getBus().read(valueAddr));
 		return !this->_registers.p.c + this->_isEmulationMode;
 	}
 
 	int CPU::BCS(uint24_t valueAddr, AddressingMode)
 	{
 		if (this->_registers.p.c)
-			this->_registers.pc += static_cast<int8_t>(this->_bus.read(valueAddr));
+			this->_registers.pc += static_cast<int8_t>(this->getBus().read(valueAddr));
 		return this->_registers.p.c + this->_isEmulationMode;
 	}
 
 	int CPU::BEQ(uint24_t valueAddr, AddressingMode)
 	{
 		if (this->_registers.p.z)
-			this->_registers.pc += static_cast<int8_t>(this->_bus.read(valueAddr));
+			this->_registers.pc += static_cast<int8_t>(this->getBus().read(valueAddr));
 		return this->_registers.p.z + this->_isEmulationMode;
 	}
 
 	int CPU::BNE(uint24_t valueAddr, AddressingMode)
 	{
 		if (!this->_registers.p.z)
-			this->_registers.pc += static_cast<int8_t>(this->_bus.read(valueAddr));
+			this->_registers.pc += static_cast<int8_t>(this->getBus().read(valueAddr));
 		return !this->_registers.p.z + this->_isEmulationMode;
 	}
 
 	int CPU::BMI(uint24_t valueAddr, AddressingMode)
 	{
 		if (this->_registers.p.n)
-			this->_registers.pc += static_cast<int8_t>(this->_bus.read(valueAddr));
+			this->_registers.pc += static_cast<int8_t>(this->getBus().read(valueAddr));
 		return this->_registers.p.n + this->_isEmulationMode;
 	}
 
 	int CPU::BPL(uint24_t valueAddr, AddressingMode)
 	{
 		if (!this->_registers.p.n)
-			this->_registers.pc += static_cast<int8_t>(this->_bus.read(valueAddr));
+			this->_registers.pc += static_cast<int8_t>(this->getBus().read(valueAddr));
 		return !this->_registers.p.n + this->_isEmulationMode;
 	}
 
 	int CPU::BRA(uint24_t valueAddr, AddressingMode)
 	{
-		this->_registers.pc += static_cast<int8_t>(this->_bus.read(valueAddr));
+		this->_registers.pc += static_cast<int8_t>(this->getBus().read(valueAddr));
 		return this->_isEmulationMode;
 	}
 
 	int CPU::BRL(uint24_t valueAddr, AddressingMode)
 	{
-		unsigned value = this->_bus.read(valueAddr);
-		value += this->_bus.read(valueAddr + 1) << 8u;
+		unsigned value = this->getBus().read(valueAddr);
+		value += this->getBus().read(valueAddr + 1) << 8u;
 
 		this->_registers.pc += static_cast<int16_t>(value);
 		return 0;
@@ -283,14 +283,14 @@ namespace ComSquare::CPU
 	int CPU::BVC(uint24_t valueAddr, AddressingMode)
 	{
 		if (!this->_registers.p.v)
-			this->_registers.pc += static_cast<int8_t>(this->_bus.read(valueAddr));
+			this->_registers.pc += static_cast<int8_t>(this->getBus().read(valueAddr));
 		return !this->_registers.p.v + this->_isEmulationMode;
 	}
 
 	int CPU::BVS(uint24_t valueAddr, AddressingMode)
 	{
 		if (this->_registers.p.v)
-			this->_registers.pc += static_cast<int8_t>(this->_bus.read(valueAddr));
+			this->_registers.pc += static_cast<int8_t>(this->getBus().read(valueAddr));
 		return this->_registers.p.v + this->_isEmulationMode;
 	}
 
