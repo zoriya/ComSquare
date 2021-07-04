@@ -93,11 +93,11 @@ namespace ComSquare::PPU
 		for (int i = 0; i < this->_characterNbPixels.y; i++) {
 			for (int j = 0; j < this->_characterNbPixels.x; j++) {
 				//std::copy(this->_tileBuffer.begin(), this->_tileBuffer.begin() + this->_characterNbPixels.x, this->buffer[pos.x].begin() )
-				this->buffer[pos.x][pos.y] = this->_tileBuffer[i][j];
-				pos.x++;
+				this->buffer[pos.y + i][pos.x + j] = this->_tileBuffer[i][j];
+				//pos.x++;
 			}
-			pos.x -= this->_characterNbPixels.x;
-			pos.y++;
+			//pos.x -= this->_characterNbPixels.x;
+			//pos.y++;
 		}
 	}
 

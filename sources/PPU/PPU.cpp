@@ -36,7 +36,7 @@ namespace ComSquare::PPU
 	{
 		this->_registers._isLowByte = true;
 
-		//Utils::Debug::populateEnvironment(*this, 0);
+		Utils::Debug::populateEnvironment(*this, 1);
 	}
 
 	uint8_t PPU::read(uint24_t addr)
@@ -316,7 +316,7 @@ namespace ComSquare::PPU
 		//add_buffer(this->_screen, this->_backgrounds[2].buffer);
 		for (unsigned long i = 0; i < this->_screen.size(); i++) {
 			for (unsigned long j = 0; j < this->_screen[i].size(); j++) {
-				this->_renderer.putPixel(j, i, this->_screen[i][j]);
+				this->_renderer.putPixel(i, j, this->_screen[i][j]);
 			}
 		}
 		this->_renderer.drawScreen();
@@ -542,11 +542,10 @@ namespace ComSquare::PPU
 
 	Vector2<bool> PPU::getBackgroundMirroring(int bgNumber) const
 	{
-		Vector2<bool> backgroundSize(false, false);
-
-		backgroundSize.y = this->_registers._bgsc[bgNumber - 1].tilemapVerticalMirroring;
-		backgroundSize.x = this->_registers._bgsc[bgNumber - 1].tilemapHorizontalMirroring;
-		return backgroundSize;
+		return {
+			static_cast<bool>(this->_registers._bgsc[bgNumber - 1].tilemapVerticalMirroring),
+			static_cast<bool>(this->_registers._bgsc[bgNumber - 1].tilemapHorizontalMirroring)
+		};
 	}
 
 	void PPU::renderMainAndSubScreen()
