@@ -146,8 +146,9 @@ namespace ComSquare::PPU
 			FALLTHROUGH
 		case PpuRegisters::bg2hofs:
 		case PpuRegisters::bg3hofs:
-		case PpuRegisters::bg4hofs:
-			this->_registers._bgofs[addr - PpuRegisters::bg1hofs].raw = ((data << 8) | (this->_ppuState.hvSharedScrollPrevValue & ~7) | (this->_ppuState.hScrollPrevValue & 7)) & 0x3FF;
+		case PpuRegisters::bg4hofs: this->_registers._bgofs[addr - PpuRegisters::bg1hofs].raw =
+			                            ((data << 8) | (this->_ppuState.hvSharedScrollPrevValue & ~7) |
+			                             (this->_ppuState.hScrollPrevValue & 7)) & 0x3FF;
 			this->_ppuState.hScrollPrevValue = data;
 			this->_ppuState.hvSharedScrollPrevValue = data;
 			break;
@@ -158,7 +159,7 @@ namespace ComSquare::PPU
 		case PpuRegisters::bg2vofs:
 		case PpuRegisters::bg3vofs:
 		case PpuRegisters::bg4vofs:
-			this->_registers._bgofs[addr - PpuRegisters::bg1hofs].raw = ((data << 8) | this->_ppuState.hvSharedScrollPrevValue) & 0x3FF;
+			this->_registers._bgofs[addr - PpuRegisters::bg1vofs].raw = ((data << 8) | this->_ppuState.hvSharedScrollPrevValue) & 0x3FF;
 			this->_ppuState.hvSharedScrollPrevValue = data;
 			break;
 		case PpuRegisters::vmain:
