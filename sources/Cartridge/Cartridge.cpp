@@ -2,28 +2,36 @@
 // Created by anonymus-raccoon on 1/27/20.
 //
 
-#include <sys/stat.h>
-#include <cstring>
 #include "Cartridge.hpp"
-#include "../Exceptions/InvalidAddress.hpp"
-#include "../Exceptions/InvalidRom.hpp"
-#include "../Exceptions/InvalidAction.hpp"
+#include "Exceptions/InvalidAction.hpp"
+#include "Exceptions/InvalidAddress.hpp"
+#include "Exceptions/InvalidRom.hpp"
+#include <cstring>
+#include <fstream>
+#include <sys/stat.h>
 
 namespace ComSquare::Cartridge
 {
 	constexpr unsigned HeaderSize = 0x40u;
 
+	Cartridge::Cartridge()
+	    : Ram::Ram(0, Rom, "Cartridge")
+	{}
+
 	Cartridge::Cartridge(const std::string &romPath)
-		: Ram::Ram(0, Rom, "Cartridge"),
-		_romPath(romPath)
+	    : Ram::Ram(0, Rom, "Cartridge"),
+	      _romPath(romPath)
 	{
-		if (romPath.empty())
-			throw InvalidRomException("Path is empty.");
-		size_t size = Cartridge::getRomSize(romPath);
-		FILE *rom = fopen(romPath.c_str(), "rb");
+		this->loadRom(romPath);
+	}
+
+	void Cartridge::loadRom(const std::string &path)
+	{
+		size_t size = Cartridge::getRomSize(path);
+		FILE *rom = fopen(path.c_str(), "rb");
 
 		if (!rom)
-			throw InvalidRomException("Could not open the rom file at " + romPath + ". " + strerror(errno));
+			throw InvalidRomException("Could not open the rom file at " + path + ". " + strerror(errno));
 		this->_size = size;
 		this->_data = new uint8_t[size];
 		std::memset(this->_data, 0, size);
@@ -62,7 +70,7 @@ namespace ComSquare::Cartridge
 		headerAddress -= 0xC0u;
 
 		ADDMAPPINGMODE(head.mappingMode, this->_data[headerAddress + 0xD5u] & 0x10u ? FastRom : SlowRom);
-		ADDMAPPINGMODE(head.mappingMode, this->_data[headerAddress + 0xD5u] & 0x1u  ? HiRom : LoRom);
+		ADDMAPPINGMODE(head.mappingMode, this->_data[headerAddress + 0xD5u] & 0x1u ? HiRom : LoRom);
 		if (this->_data[headerAddress + 0xD5u] & 0x2u || this->_data[headerAddress + 0xD5u] & 0x4u)
 			ADDMAPPINGMODE(head.mappingMode, ExRom);
 		head.romType = this->_data[headerAddress + 0xD6u];
@@ -133,25 +141,25 @@ namespace ComSquare::Cartridge
 				continue;
 			uint8_t resetOpCode = this->_data[info.emulationInterrupts.reset - 0x8000u];
 			switch (resetOpCode) {
-			case 0x18: //CLI
-			case 0x78: //SEI
-			case 0x4C: //JMP
-			case 0x5C: //JMP
-			case 0x20: //JSR
-			case 0x22: //JSL
-			case 0x9C: //STZ
-				score+= 8;
+			case 0x18://CLI
+			case 0x78://SEI
+			case 0x4C://JMP
+			case 0x5C://JMP
+			case 0x20://JSR
+			case 0x22://JSL
+			case 0x9C://STZ
+				score += 8;
 				break;
-			case 0xC2: //REP
-			case 0xE2: //SEP
-			case 0xA9: //LDA
-			case 0xA2: //LDX
-			case 0xA0: //LDY
+			case 0xC2://REP
+			case 0xE2://SEP
+			case 0xA9://LDA
+			case 0xA2://LDX
+			case 0xA0://LDY
 				score += 4;
 				break;
-			case 0x00: //BRK
-			case 0xFF: //SBC
-			case 0xCC: //CPY
+			case 0x00://BRK
+			case 0xFF://SBC
+			case 0xCC://CPY
 				score -= 8;
 				break;
 			default:
@@ -209,4 +217,4 @@ namespace ComSquare::Cartridge
 	{
 		return this->_type;
 	}
-}
+}// namespace ComSquare::Cartridge

@@ -2,10 +2,9 @@
 // Created by Melefo on 27/02/2020.
 //
 
-#ifndef COMSQUARE_IPL_HPP
-#define COMSQUARE_IPL_HPP
+#pragma once
 
-#include "../../Memory/AMemory.hpp"
+#include "Memory/AMemory.hpp"
 
 namespace ComSquare::APU::IPL
 {
@@ -31,15 +30,12 @@ namespace ComSquare::APU::IPL
 	public:
 		//! @brief Create the rom with its value.
 		explicit IPL(Component, std::string iplName);
-
 		//! @brief The rom can't be copied.
 		IPL(const IPL &) = delete;
-
 		//! @brief The rom can't be assigned.
 		IPL &operator=(IPL &) = delete;
-
-		//! @brief Destructor that free the rom.
-		~IPL();
+		//! @brief A default destructor
+		~IPL() override = default;
 
 		//! @brief Read data from the component using the same method as the basic IMemory.
 		//! @param addr The global 24 bits address. This method is responsible of mapping to the component's read.
@@ -55,14 +51,16 @@ namespace ComSquare::APU::IPL
 
 		//! @brief Get the size of the data. This size can be lower than the mapped data.
 		//! @return The number of bytes inside this memory.
-		uint24_t getSize() const override;
+		[[nodiscard]] uint24_t getSize() const override;
 
 		//! @brief Get the name of this accessor (used for debug purpose)
-		std::string getName() const override;
+		[[nodiscard]] std::string getName() const override;
 
 		//! @brief Get the component of this accessor (used for debug purpose)
-		Component getComponent() const override;
+		[[nodiscard]] Component getComponent() const override;
+
+		//! @brief Get the name of the data at the address
+		//! @param addr The address (in local space)
+		[[nodiscard]] std::string getValueName(uint24_t addr) const override;
 	};
 }
-
-#endif //COMSQUARE_IPL_HPP

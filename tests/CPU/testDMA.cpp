@@ -20,20 +20,20 @@ TEST_CASE("RomToVRAM DMA", "[DMA]")
 	// Transferring $800 bytes from ROM ($13BE00) to VRam ($2000) via DMA channel 0
 
 	// Setting VRam address (since this is an indirect write)
-	snes.bus->write(0x2115, 0b10000000);
-	snes.bus->write(0x2117, 0x20);
-	snes.bus->write(0x2116, 0);
+	snes.bus.write(0x2115, 0b10000000);
+	snes.bus.write(0x2117, 0x20);
+	snes.bus.write(0x2116, 0);
 
-	snes.bus->write(0x4301, 0x18);
+	snes.bus.write(0x4301, 0x18);
 	REQUIRE(snes.cpu->_dmaChannels[0]._port == 0x18);
-	snes.bus->write(0x4304, 0x13);
-	snes.bus->write(0x4303, 0xBE);
-	snes.bus->write(0x4302, 0x00);
+	snes.bus.write(0x4304, 0x13);
+	snes.bus.write(0x4303, 0xBE);
+	snes.bus.write(0x4302, 0x00);
 	REQUIRE(snes.cpu->_dmaChannels[0]._aAddress.raw == 0x13BE00);
-	snes.bus->write(0x4306, 0x08);
-	snes.bus->write(0x4305, 0);
+	snes.bus.write(0x4306, 0x08);
+	snes.bus.write(0x4305, 0);
 	REQUIRE(snes.cpu->_dmaChannels[0]._count.raw == 0x0800);
-	snes.bus->write(0x4300, 1);
+	snes.bus.write(0x4300, 1);
 	REQUIRE(snes.cpu->_dmaChannels[0]._controlRegister.direction == CPU::DMA::AtoB);
 	REQUIRE(snes.cpu->_dmaChannels[0]._controlRegister._ == 0);
 	REQUIRE(snes.cpu->_dmaChannels[0]._controlRegister.increment == 0);
@@ -41,7 +41,7 @@ TEST_CASE("RomToVRAM DMA", "[DMA]")
 	REQUIRE(snes.cpu->_dmaChannels[0]._controlRegister.mode == CPU::DMA::TwoToTwo);
 	REQUIRE(snes.cpu->_dmaChannels[0].enabled == false);
 	// Enabling DMA's channel 0
-	snes.bus->write(0x420B, 1);
+	snes.bus.write(0x420B, 1);
 	REQUIRE(snes.cpu->_dmaChannels[0].enabled == true);
 	// TODO There is an overhead of 12-24 cycles for the whole transfer. How should I know how many cycles there is?
 	auto cycles = snes.cpu->_dmaChannels[0].run(1000000);
@@ -60,11 +60,11 @@ TEST_CASE("RomToVRAM DMA", "[DMA]")
 TEST_CASE("VramWrite DMA", "[DMA]")
 {
 	Init()
-	snes.bus->write(0x2117, 0x20);
-	snes.bus->write(0x2116, 0x0);
+	snes.bus.write(0x2117, 0x20);
+	snes.bus.write(0x2116, 0x0);
 	for (unsigned i = 0; i < 0x400; i++) {
-		snes.bus->write(0x2119, i >> 8);
-		snes.bus->write(0x2118, i);
+		snes.bus.write(0x2119, i >> 8);
+		snes.bus.write(0x2118, i);
 		REQUIRE(snes.ppu->_registers._vmadd.vmadd == 0x2001 + i);
 	}
 	for(unsigned i = 0; i < 0x400; i++) {
@@ -76,12 +76,12 @@ TEST_CASE("VramWrite DMA", "[DMA]")
 TEST_CASE("VramWriteInvertedOrder DMA", "[DMA]")
 {
 	Init()
-	snes.bus->write(0x2115, 0b10000000);
-	snes.bus->write(0x2117, 0x20);
-	snes.bus->write(0x2116, 0x0);
+	snes.bus.write(0x2115, 0b10000000);
+	snes.bus.write(0x2117, 0x20);
+	snes.bus.write(0x2116, 0x0);
 	for (unsigned i = 0; i < 0x400; i++) {
-		snes.bus->write(0x2118, i);
-		snes.bus->write(0x2119, i >> 8);
+		snes.bus.write(0x2118, i);
+		snes.bus.write(0x2119, i >> 8);
 		REQUIRE(snes.ppu->_registers._vmadd.vmadd == 0x2001 + i);
 	}
 	for(unsigned i = 0; i < 0x400; i++) {
@@ -101,20 +101,20 @@ TEST_CASE("WRamToVRAM DMA", "[DMA]")
 	// Transferring $800 bytes from WRAM ($00) to VRam ($2000) via DMA channel 0
 
 	// Setting VRam address (since this is an indirect write)
-	snes.bus->write(0x2115, 0b10000000);
-	snes.bus->write(0x2117, 0);
-	snes.bus->write(0x2116, 0);
+	snes.bus.write(0x2115, 0b10000000);
+	snes.bus.write(0x2117, 0);
+	snes.bus.write(0x2116, 0);
 
-	snes.bus->write(0x4301, 0x18);
+	snes.bus.write(0x4301, 0x18);
 	REQUIRE(snes.cpu->_dmaChannels[0]._port == 0x18);
-	snes.bus->write(0x4304, 0x7E);
-	snes.bus->write(0x4303, 0x00);
-	snes.bus->write(0x4302, 0x00);
+	snes.bus.write(0x4304, 0x7E);
+	snes.bus.write(0x4303, 0x00);
+	snes.bus.write(0x4302, 0x00);
 	REQUIRE(snes.cpu->_dmaChannels[0]._aAddress.raw == 0x7E0000);
-	snes.bus->write(0x4306, 0x08);
-	snes.bus->write(0x4305, 0);
+	snes.bus.write(0x4306, 0x08);
+	snes.bus.write(0x4305, 0);
 	REQUIRE(snes.cpu->_dmaChannels[0]._count.raw == 0x0800);
-	snes.bus->write(0x4300, 1);
+	snes.bus.write(0x4300, 1);
 	REQUIRE(snes.cpu->_dmaChannels[0]._controlRegister.direction == CPU::DMA::AtoB);
 	REQUIRE(snes.cpu->_dmaChannels[0]._controlRegister._ == 0);
 	REQUIRE(snes.cpu->_dmaChannels[0]._controlRegister.increment == 0);
@@ -122,7 +122,7 @@ TEST_CASE("WRamToVRAM DMA", "[DMA]")
 	REQUIRE(snes.cpu->_dmaChannels[0]._controlRegister.mode == CPU::DMA::TwoToTwo);
 	REQUIRE(snes.cpu->_dmaChannels[0].enabled == false);
 	// Enabling DMA's channel 0
-	snes.bus->write(0x420B, 1);
+	snes.bus.write(0x420B, 1);
 	REQUIRE(snes.cpu->_dmaChannels[0].enabled == true);
 	// TODO There is an overhead of 12-24 cycles for the whole transfer. How should I know how many cycles there is?
 	auto cycles = snes.cpu->_dmaChannels[0].run(1000000);

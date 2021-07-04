@@ -21,19 +21,4 @@ namespace ComSquare::Memory
 	{
 		return this->_start <= addr && addr <= this->_end;
 	}
-
-	bool AMemory::isMirror() const
-	{
-		return false;
-	}
-
-	std::shared_ptr<IMemory> AMemory::getMirrored() const
-	{
-		return nullptr;
-	}
-
-	std::string AMemory::getValueName(uint24_t) const
-	{
-		return "???";
-	}
 }

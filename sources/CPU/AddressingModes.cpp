@@ -64,8 +64,8 @@ namespace ComSquare::CPU
 	uint24_t CPU::_getDirectIndirectIndexedYAddr()
 	{
 		uint16_t dp = this->readPC() + this->_registers.d;
-		uint24_t base = this->_bus->read(dp);
-		base += this->_bus->read(dp + 1) << 8u;
+		uint24_t base = this->_bus.read(dp);
+		base += this->_bus.read(dp + 1) << 8u;
 		base += this->_registers.dbr << 16u;
 		if ((base & 0x80000000u) == (((base + this->_registers.y) & 0x80000000u)))
 			this->_hasIndexCrossedPageBoundary = true;
@@ -75,9 +75,9 @@ namespace ComSquare::CPU
 	uint24_t CPU::_getDirectIndirectIndexedYLongAddr()
 	{
 		uint16_t dp = this->readPC() + this->_registers.d;
-		uint24_t base = this->_bus->read(dp);
-		base += this->_bus->read(dp + 1) << 8u;
-		base += this->_bus->read(dp + 2) << 16u;
+		uint24_t base = this->_bus.read(dp);
+		base += this->_bus.read(dp + 1) << 8u;
+		base += this->_bus.read(dp + 2) << 16u;
 		return base;
 	}
 
@@ -85,8 +85,8 @@ namespace ComSquare::CPU
 	{
 		uint16_t dp = this->readPC() + this->_registers.d;
 		dp += this->_registers.x;
-		uint24_t base = this->_bus->read(dp);
-		base += this->_bus->read(dp + 1) << 8u;
+		uint24_t base = this->_bus.read(dp);
+		base += this->_bus.read(dp + 1) << 8u;
 		base += this->_registers.dbr << 16u;
 		return base;
 	}
@@ -137,8 +137,8 @@ namespace ComSquare::CPU
 	{
 		uint16_t abs = this->readPC();
 		abs += this->readPC() << 8u;
-		uint24_t effective = this->_bus->read(abs);
-		effective += this->_bus->read(abs + 1) << 8u;
+		uint24_t effective = this->_bus.read(abs);
+		effective += this->_bus.read(abs + 1) << 8u;
 		return effective;
 	}
 
@@ -146,9 +146,9 @@ namespace ComSquare::CPU
 	{
 		uint16_t abs = this->readPC();
 		abs += this->readPC() << 8u;
-		uint24_t effective = this->_bus->read(abs);
-		effective += this->_bus->read(abs + 1) << 8u;
-		effective += this->_bus->read(abs + 2) << 16u;
+		uint24_t effective = this->_bus.read(abs);
+		effective += this->_bus.read(abs + 1) << 8u;
+		effective += this->_bus.read(abs + 2) << 16u;
 		return effective;
 	}
 
@@ -157,16 +157,16 @@ namespace ComSquare::CPU
 		uint24_t abs = this->readPC();
 		abs += this->readPC() << 8u;
 		abs += this->_registers.x;
-		uint24_t effective = this->_bus->read(abs);
-		effective += this->_bus->read(abs + 1) << 8u;
+		uint24_t effective = this->_bus.read(abs);
+		effective += this->_bus.read(abs + 1) << 8u;
 		return effective;
 	}
 
 	uint24_t CPU::_getDirectIndirectAddr()
 	{
 		uint16_t dp = this->readPC() + this->_registers.d;
-		uint24_t effective = this->_bus->read(dp);
-		effective += this->_bus->read(dp + 1) << 8u;
+		uint24_t effective = this->_bus.read(dp);
+		effective += this->_bus.read(dp + 1) << 8u;
 		effective += this->_registers.dbr << 16u;
 		return effective;
 	}
@@ -174,9 +174,9 @@ namespace ComSquare::CPU
 	uint24_t CPU::_getDirectIndirectLongAddr()
 	{
 		uint16_t dp = this->readPC() + this->_registers.d;
-		uint24_t effective = this->_bus->read(dp);
-		effective += this->_bus->read(++dp) << 8u;
-		effective += this->_bus->read(++dp) << 16u;
+		uint24_t effective = this->_bus.read(dp);
+		effective += this->_bus.read(++dp) << 8u;
+		effective += this->_bus.read(++dp) << 16u;
 		return effective;
 	}
 

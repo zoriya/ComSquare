@@ -4,19 +4,22 @@
 
 #include <iostream>
 #include <bitset>
-#include <cstring>
 #include "PPU.hpp"
 #include "Exceptions/NotImplementedException.hpp"
 #include "Exceptions/InvalidAddress.hpp"
 #include "Ram/Ram.hpp"
 #include "Models/Vector2.hpp"
 
+namespace ComSquare::PPU::Utils::Debug {
+	void populateEnvironment(PPU &ppu, int dumpNumber);
+}
+
 namespace ComSquare::PPU
 {
 	PPU::PPU(Renderer::IRenderer &renderer):
-		vram(std::make_shared<Ram::Ram>(VramSize, ComSquare::VRam, "VRAM")),
-		oamram(std::make_shared<Ram::Ram>(OAMRamSize, ComSquare::OAMRam, "OAMRAM")),
-		cgram(std::make_shared<Ram::Ram>(CGRamSize, ComSquare::CGRam, "CGRAM")),
+		vram(new Ram::Ram(VramSize, ComSquare::VRam, "VRAM")),
+		oamram(new Ram::Ram(OAMRamSize, ComSquare::OAMRam, "OAMRAM")),
+		cgram(new Ram::Ram(CGRamSize, ComSquare::CGRam, "CGRAM")),
 		_renderer(renderer),
 		_backgrounds{
 			Background(*this, 1, false),
@@ -27,11 +30,13 @@ namespace ComSquare::PPU
 			Background(*this, 3, true),
 			Background(*this, 4, false),
 			Background(*this, 4, true)
-		}
+		},
+		_mainScreen({{{0}}}),
+		_subScreen({{{0}}})
 	{
-		memset(this->_mainScreen, 0, sizeof(this->_mainScreen));
-		memset(this->_subScreen, 0, sizeof(this->_subScreen));
 		this->_registers._isLowByte = true;
+
+		//Utils::Debug::populateEnvironment(*this, 0);
 	}
 
 	uint8_t PPU::read(uint24_t addr)
@@ -118,12 +123,18 @@ namespace ComSquare::PPU
 		case PpuRegisters::bg2sc:
 		case PpuRegisters::bg3sc:
 		case PpuRegisters::bg4sc:
-			this->_registers._bgsc[addr - 0x07].raw = data;
+			this->_registers._bgsc[addr - PpuRegisters::bg1sc].raw = data;
 			// update background tilemap address
-			this->_backgrounds[addr - 0x07].setTileMapStartAddress(this->getTileMapStartAddress(addr - 0x07 + 1));
-			this->_backgrounds[addr - 0x07 + 1].setTileMapStartAddress(this->getTileMapStartAddress(addr - 0x07 + 1));
-			this->_backgrounds[addr - 0x07].setTilemaps({this->_registers._bgsc[addr - 0x07].tilemapHorizontalMirroring, this->_registers._bgsc[addr - 0x07].tilemapVerticalMirroring});
-			this->_backgrounds[addr - 0x07 + 1].setTilemaps({this->_registers._bgsc[addr - 0x07].tilemapHorizontalMirroring, this->_registers._bgsc[addr - 0x07].tilemapVerticalMirroring});
+			this->_backgrounds[addr - PpuRegisters::bg1sc].setTileMapStartAddress(
+				this->getTileMapStartAddress(addr - PpuRegisters::bg1sc + 1));
+			this->_backgrounds[addr - PpuRegisters::bg1sc + 1].setTileMapStartAddress(
+				this->getTileMapStartAddress(addr - PpuRegisters::bg1sc + 1));
+			this->_backgrounds[addr - PpuRegisters::bg1sc].setTilemaps(
+				{static_cast<bool>(this->_registers._bgsc[addr - PpuRegisters::bg1sc].tilemapHorizontalMirroring),
+				 static_cast<bool>(this->_registers._bgsc[addr - PpuRegisters::bg1sc].tilemapVerticalMirroring)});
+			this->_backgrounds[addr - PpuRegisters::bg1sc + 1].setTilemaps(
+				{static_cast<bool>(this->_registers._bgsc[addr - PpuRegisters::bg1sc].tilemapHorizontalMirroring),
+				 static_cast<bool>(this->_registers._bgsc[addr - PpuRegisters::bg1sc].tilemapVerticalMirroring)});
 			break;
 		case PpuRegisters::bg12nba:
 		case PpuRegisters::bg34nba:
@@ -298,20 +309,21 @@ namespace ComSquare::PPU
 	{
 		(void)cycles;
 
-
 		this->renderMainAndSubScreen();
 		this->add_buffer(this->_screen, this->_subScreen);
 		this->add_buffer(this->_screen, this->_mainScreen);
 		//this->_backgrounds[2].renderBackground();
 		//add_buffer(this->_screen, this->_backgrounds[2].buffer);
-		for (unsigned long i = 0; i < 1024; i++) {
-			for (unsigned long j = 0; j < 1024; j++) {
+		for (unsigned long i = 0; i < this->_screen.size(); i++) {
+			for (unsigned long j = 0; j < this->_screen[i].size(); j++) {
 				this->_renderer.putPixel(j, i, this->_screen[i][j]);
 			}
 		}
 		this->_renderer.drawScreen();
-		memset(this->_mainScreen, 0xFF, sizeof(this->_mainScreen));
-		memset(this->_subScreen, 0xFF, sizeof(this->_subScreen));
+		for (auto &i : this->_mainScreen)
+			i.fill(0XFF);
+		for (auto &i : this->_subScreen)
+			i.fill(0XFF);
 	}
 
 	std::string PPU::getName() const
@@ -528,12 +540,12 @@ namespace ComSquare::PPU
 		return baseAddress;
 	}
 
-	Vector2<int> PPU::getBackgroundSize(int bgNumber) const
+	Vector2<bool> PPU::getBackgroundMirroring(int bgNumber) const
 	{
-		Vector2<int> backgroundSize(0,0);
+		Vector2<bool> backgroundSize(false, false);
 
-		backgroundSize.y = (this->_registers._bgsc[bgNumber - 1].tilemapVerticalMirroring) ? 2 : 1;
-		backgroundSize.x = (this->_registers._bgsc[bgNumber - 1].tilemapHorizontalMirroring) ? 2 : 1;
+		backgroundSize.y = this->_registers._bgsc[bgNumber - 1].tilemapVerticalMirroring;
+		backgroundSize.x = this->_registers._bgsc[bgNumber - 1].tilemapHorizontalMirroring;
 		return backgroundSize;
 	}
 
@@ -541,9 +553,9 @@ namespace ComSquare::PPU
 	{
 		uint16_t colorPalette;
 		// should only render backgrounds needed (depending of th bgMode)
-		//int i = 0;
+		int i = 0;
 		for (auto &_background : this->_backgrounds) {
-			//i++;
+			i++;
 			_background.renderBackground();
 		}
 		// TODO make a function getDefaultBgColor
@@ -551,9 +563,8 @@ namespace ComSquare::PPU
 		colorPalette += this->cgram->read(1) << 8U;
 
 		uint32_t color = Utils::getRealColor(colorPalette);
-		for (auto &array : this->_subScreen)
-			for (auto &c : array)
-				c = color;
+		for (auto &row : this->_subScreen)
+			row.fill(color);
 		// the buffer is overwrite if necessary by a new bg so the background priority is from back to front
 		// the starting palette index isn't implemented
 		switch (this->_registers._bgmode.bgMode) {

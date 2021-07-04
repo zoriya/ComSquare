@@ -18,7 +18,7 @@
 
 #define Init() \
 	Renderer::NoRenderer norenderer(0, 0, 0);                   \
-	SNES snes("../tests/my_cartridge", norenderer);             \
+	SNES snes(norenderer);             \
 	snes.cartridge->_size = 100;                                \
     delete[] snes.cartridge->_data;                             \
 	snes.cartridge->_data = new uint8_t[snes.cartridge->_size]; \

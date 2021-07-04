@@ -390,12 +390,16 @@ namespace ComSquare::APU
 		//! @brief Get the component of this accessor (used for debug purpose)
 		Component getComponent() const override;
 
+		//! @brief Get the name of the data at the address
+		//! @param addr The address (in local space)
+		[[nodiscard]] std::string getValueName(uint24_t addr) const override;
+
 		//! @brief Get the size of the data. This size can be lower than the mapped data.
 		//! @return The number of bytes inside this memory.
 		uint24_t getSize() const override;
 
 		//! @brief Parses rom data to uploads directly into RAM and corresponding registers
-		void loadFromSPC(const std::shared_ptr<Cartridge::Cartridge>& cartridge);
+		void loadFromSPC(Cartridge::Cartridge &cartridge);
 
 		//! @brief This function execute the instructions received until the maximum number of cycles is reached.
 		//! @return The number of cycles that elapsed.

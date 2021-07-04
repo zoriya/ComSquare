@@ -17,6 +17,10 @@
 
 #define FALLTHROUGH __attribute__((fallthrough));
 
+namespace ComSquare::PPU::Utils {
+	struct PpuState;
+};
+
 namespace ComSquare::PPU
 {
 	static constexpr uint32_t VramSize = 65536;
@@ -554,18 +558,18 @@ namespace ComSquare::PPU
 		std::shared_ptr<Ram::Ram> vram;
 		std::shared_ptr<Ram::Ram> oamram;
 		std::shared_ptr<Ram::Ram> cgram;
-	private:
+	//private:
 		//! @brief Init ppuRegisters
 		Registers _registers{};
 		Renderer::IRenderer &_renderer;
 		//! @brief Backgrounds buffers
 		Background _backgrounds[8];
 		//! @brief Main Screen buffer
-		uint32_t _mainScreen[1024][1024];
+		std::array<std::array<uint32_t, 1024>, 1024> _mainScreen;
 		//! @brief Sub Screen buffer
-		uint32_t _subScreen[1024][1024];
+		std::array<std::array<uint32_t, 1024>, 1024> _subScreen;
 		//! @brief Final Screen buffer
-		uint32_t _screen[1024][1024];
+		std::array<std::array<uint32_t, 1024>, 1024> _screen;
 		//! @brief Used for vram read registers (0x2139 - 0x213A)
 		uint16_t _vramReadBuffer = 0;
 		//! @brief Struct that contain all necessary vars for the use of the registers
@@ -615,19 +619,19 @@ namespace ComSquare::PPU
 		uint16_t getTileMapStartAddress(int bgNumber) const;
 		//! @brief Give the address to find the correct tileset for a given x and y
 		uint16_t getTilesetAddress(int bgNumber) const;
-		//! @brief Give the number of tilemaps to be rendered
-		Vector2<int> getBackgroundSize(int bgNumber) const;
+		//! @brief Tells if the tilemap is expanded for the x and y directions
+		Vector2<bool> getBackgroundMirroring(int bgNumber) const;
 		//! @brief Render the Main and sub screen correctly
 		void renderMainAndSubScreen();
 		//! @brief Add a bg buffer to another buffer
 		template <std::size_t DEST_SIZE_X, std::size_t DEST_SIZE_Y, std::size_t SRC_SIZE_X, std::size_t SRC_SIZE_Y>
-		void add_buffer(uint32_t (&bufferDest)[DEST_SIZE_Y][DEST_SIZE_X],
-		                     const uint32_t (&bufferSrc)[SRC_SIZE_Y][SRC_SIZE_X],
+		void add_buffer(std::array<std::array<uint32_t, DEST_SIZE_Y>, DEST_SIZE_X> &bufferDest,
+		                     const std::array<std::array<uint32_t, SRC_SIZE_Y>, SRC_SIZE_X> &bufferSrc,
 		                     const Vector2<int> &offset = {0, 0})
 		{
 			// TODO use std::ranges
-			for (unsigned long i = 0; i < 1024; i++) {
-				for (unsigned long j = 0; j < 1024; j++) {
+			for (unsigned long i = 0; i < bufferSrc.size(); i++) {
+				for (unsigned long j = 0; j < bufferSrc[i].size(); j++) {
 					if (bufferSrc[i][j] > 0xFF) // 0xFF correspond to a black pixel with full brightness
 						bufferDest[i + offset.x ][j + offset.y] = bufferSrc[i][j];
 				}
@@ -645,10 +649,11 @@ namespace ComSquare::PPU
 		const Registers &getWriteRegisters() const;
 
 		template <std::size_t SRC_SIZE_Y, std::size_t SRC_SIZE_X>
-		void add_buffer(const uint32_t (&buffer)[SRC_SIZE_Y][SRC_SIZE_X],
+		void add_buffer(const std::array<std::array<uint32_t, SRC_SIZE_Y>, SRC_SIZE_X> &buffer,
 		                const Vector2<int> &offset = {0, 0})
 		{
-//			memset(this->_screen, 0xFF, sizeof(this->_screen));
+			for (auto &i : this->_screen)
+					i.fill(0XFF);
 			for (unsigned long i = 0; i < buffer.size(); i++) {
 				for (unsigned long j = 0; j < buffer[i].size(); j++) {
 					if (buffer[i][j] > 0xFF) // 0xFF correspond to a black pixel with full brightness

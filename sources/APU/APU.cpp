@@ -2,20 +2,19 @@
 // Created by Melefo on 27/01/2020.
 //
 
-#include <iostream>
-#include <cstring>
 #include "APU.hpp"
-#include "../Exceptions/NotImplementedException.hpp"
 #include "../Exceptions/InvalidAddress.hpp"
 #include "../Exceptions/InvalidOpcode.hpp"
+#include "../Exceptions/NotImplementedException.hpp"
+#include <cstring>
+#include <iostream>
 
 namespace ComSquare::APU
 {
-	APU::APU(Renderer::IRenderer &renderer) :
-		_renderer(renderer),
-		_map(new MemoryMap()),
-		_soundBuffer(),
-		_dsp(this->_soundBuffer, this->_soundBuffer.size() / 2, _map)
+	APU::APU(Renderer::IRenderer &renderer) : _renderer(renderer),
+	                                          _map(new MemoryMap()),
+	                                          _soundBuffer(),
+	                                          _dsp(this->_soundBuffer, this->_soundBuffer.size() / 2, _map)
 	{
 		this->reset();
 	}
@@ -278,7 +277,7 @@ namespace ComSquare::APU
 			return this->SET1(this->_getDirectAddr(), 1);
 		case 0x23: {
 			auto ope1 = this->_getDirectAddr();
-			auto ope2 =  this->_getImmediateData();
+			auto ope2 = this->_getImmediateData();
 			return this->BBS(ope1, ope2, 1);
 		}
 		case 0x24:
@@ -751,11 +750,11 @@ namespace ComSquare::APU
 		case 0xE8:
 			return this->MOV(this->_internalRegisters.a, this->_getImmediateData(), 2);
 		case 0xE9:
-			return this->MOV(this->_internalRegisters.x, this->_getAbsoluteAddr(),4);
+			return this->MOV(this->_internalRegisters.x, this->_getAbsoluteAddr(), 4);
 		case 0xEA:
 			return this->NOT1(this->_getAbsoluteBit());
 		case 0xEB:
-			return this->MOV(this->_internalRegisters.y, this->_getDirectAddr(),3);
+			return this->MOV(this->_internalRegisters.y, this->_getDirectAddr(), 3);
 		case 0xEC:
 			return this->MOV(this->_internalRegisters.y, this->_getAbsoluteAddr(), 4);
 		case 0xED:
@@ -822,13 +821,13 @@ namespace ComSquare::APU
 		this->_dsp.update();
 		samples = this->_dsp.getSamplesCount();
 		if (samples > 0)
-			this->_renderer.playAudio(std::span{this->_soundBuffer}, samples / 2);
+			this->_renderer.playAudio(std::span {this->_soundBuffer}, samples / 2);
 	}
 
-	void APU::loadFromSPC(const std::shared_ptr<Cartridge::Cartridge>& cartridge)
+	void APU::loadFromSPC(Cartridge::Cartridge &cartridge)
 	{
-		const uint8_t *data = cartridge->getData();
-		uint24_t size = cartridge->getSize();
+		const uint8_t *data = cartridge.getData();
+		uint24_t size = cartridge.getSize();
 		if (size < 0x101C0)
 			throw InvalidAddress("Cartridge is not the right size", size);
 
@@ -839,61 +838,61 @@ namespace ComSquare::APU
 		std::string date = std::string(reinterpret_cast<const char *>(data + 0x9E), 0x0B);
 		std::string artist = std::string(reinterpret_cast<const char *>(data + 0xB1), 0x20);
 
-		this->_internalRegisters.pcl = cartridge->read(0x25);
-		this->_internalRegisters.pch = cartridge->read(0x26);
-		this->_internalRegisters.a = cartridge->read(0x27);
-		this->_internalRegisters.x = cartridge->read(0x28);
-		this->_internalRegisters.y = cartridge->read(0x29);
-		this->_internalRegisters.psw = cartridge->read(0x2A);
-		this->_internalRegisters.sp = cartridge->read(0x2B);
+		this->_internalRegisters.pcl = cartridge.read(0x25);
+		this->_internalRegisters.pch = cartridge.read(0x26);
+		this->_internalRegisters.a = cartridge.read(0x27);
+		this->_internalRegisters.x = cartridge.read(0x28);
+		this->_internalRegisters.y = cartridge.read(0x29);
+		this->_internalRegisters.psw = cartridge.read(0x2A);
+		this->_internalRegisters.sp = cartridge.read(0x2B);
 
 		std::memcpy(this->_map->Page0.getData(), data + 0x100, this->_map->Page0.getSize());
 		std::memcpy(this->_map->Page1.getData(), data + 0x200, this->_map->Page1.getSize());
 		std::memcpy(this->_map->Memory.getData(), data + 0x300, this->_map->Memory.getSize());
 
-		this->_registers.unknown = cartridge->read(0x100 + 0xF0);
-		this->_registers.ctrlreg = cartridge->read(0x100 + 0xF1);
-		this->_registers.dspregAddr = cartridge->read(0x100 + 0xF2);
-		this->_dsp.write(this->_registers.dspregAddr, cartridge->read(0x100 + 0xF3));
-		this->_registers.port0 = cartridge->read(0x100 + 0xF4);
-		this->_registers.port1 = cartridge->read(0x100 + 0xF5);
-		this->_registers.port2 = cartridge->read(0x100 + 0xF6);
-		this->_registers.port3 = cartridge->read(0x100 + 0xF7);
-		this->_registers.regmem1 = cartridge->read(0x100 + 0xF8);
-		this->_registers.regmem2 = cartridge->read(0x100 + 0xF9);
-		this->_registers.timer0 = cartridge->read(0x100 + 0xFA);
-		this->_registers.timer1 = cartridge->read(0x100 + 0xFB);
-		this->_registers.timer2 = cartridge->read(0x100 + 0xFC);
-		this->_registers.counter0 = cartridge->read(0x100 + 0xFD);
-		this->_registers.counter1 = cartridge->read(0x100 + 0xFE);
-		this->_registers.counter2 = cartridge->read(0x100 + 0xFF);
+		this->_registers.unknown = cartridge.read(0x100 + 0xF0);
+		this->_registers.ctrlreg = cartridge.read(0x100 + 0xF1);
+		this->_registers.dspregAddr = cartridge.read(0x100 + 0xF2);
+		this->_dsp.write(this->_registers.dspregAddr, cartridge.read(0x100 + 0xF3));
+		this->_registers.port0 = cartridge.read(0x100 + 0xF4);
+		this->_registers.port1 = cartridge.read(0x100 + 0xF5);
+		this->_registers.port2 = cartridge.read(0x100 + 0xF6);
+		this->_registers.port3 = cartridge.read(0x100 + 0xF7);
+		this->_registers.regmem1 = cartridge.read(0x100 + 0xF8);
+		this->_registers.regmem2 = cartridge.read(0x100 + 0xF9);
+		this->_registers.timer0 = cartridge.read(0x100 + 0xFA);
+		this->_registers.timer1 = cartridge.read(0x100 + 0xFB);
+		this->_registers.timer2 = cartridge.read(0x100 + 0xFC);
+		this->_registers.counter0 = cartridge.read(0x100 + 0xFD);
+		this->_registers.counter1 = cartridge.read(0x100 + 0xFE);
+		this->_registers.counter2 = cartridge.read(0x100 + 0xFF);
 
 		for (int i = 0x00; i < 0x80; i += 0x10)
-			this->_dsp.write(i, cartridge->read(0x10100 + i));
+			this->_dsp.write(i, cartridge.read(0x10100 + i));
 		for (int i = 0x01; i < 0x80; i += 0x10)
-			this->_dsp.write(i, cartridge->read(0x10100 + i));
+			this->_dsp.write(i, cartridge.read(0x10100 + i));
 		for (int i = 0x02; i < 0x80; i += 0x10)
-			this->_dsp.write(i, cartridge->read(0x10100 + i));
+			this->_dsp.write(i, cartridge.read(0x10100 + i));
 		for (int i = 0x03; i < 0x80; i += 0x10)
-			this->_dsp.write(i, cartridge->read(0x10100 + i));
+			this->_dsp.write(i, cartridge.read(0x10100 + i));
 		for (int i = 0x04; i < 0x80; i += 0x10)
-			this->_dsp.write(i, cartridge->read(0x10100 + i));
+			this->_dsp.write(i, cartridge.read(0x10100 + i));
 		for (int i = 0x05; i < 0x80; i += 0x10)
-			this->_dsp.write(i, cartridge->read(0x10100 + i));
+			this->_dsp.write(i, cartridge.read(0x10100 + i));
 		for (int i = 0x06; i < 0x80; i += 0x10)
-			this->_dsp.write(i, cartridge->read(0x10100 + i));
+			this->_dsp.write(i, cartridge.read(0x10100 + i));
 		for (int i = 0x07; i < 0x80; i += 0x10)
-			this->_dsp.write(i, cartridge->read(0x10100 + i));
+			this->_dsp.write(i, cartridge.read(0x10100 + i));
 		for (int i = 0x08; i < 0x80; i += 0x10)
-			this->_dsp.write(i, cartridge->read(0x10100 + i));
+			this->_dsp.write(i, cartridge.read(0x10100 + i));
 		for (int i = 0x09; i < 0x80; i += 0x10)
-			this->_dsp.write(i, cartridge->read(0x10100 + i));
+			this->_dsp.write(i, cartridge.read(0x10100 + i));
 		for (int i = 0x0C; i < 0x80; i += 0x10)
-			this->_dsp.write(i, cartridge->read(0x10100 + i));
+			this->_dsp.write(i, cartridge.read(0x10100 + i));
 		for (int i = 0x0D; i < 0x80; i += 0x10)
-			this->_dsp.write(i, cartridge->read(0x10100 + i));
+			this->_dsp.write(i, cartridge.read(0x10100 + i));
 		for (int i = 0x0F; i < 0x80; i += 0x10)
-			this->_dsp.write(i, cartridge->read(0x10100 + i));
+			this->_dsp.write(i, cartridge.read(0x10100 + i));
 	}
 
 	void APU::_setNZflags(uint8_t value)
@@ -902,10 +901,9 @@ namespace ComSquare::APU
 		this->_internalRegisters.z = !value;
 	}
 
-	MemoryMap::MemoryMap() :
-		Page0(0x00F0, Apu, "APU's Page 0"),
-		Page1(0x0100, Apu, "APU's Page 1"),
-		Memory(0xFDC0, Apu, "APU's Ram"),
-		IPL(Apu, "IPL Rom")
-	{ }
-}
+	MemoryMap::MemoryMap() : Page0(0x00F0, Apu, "APU's Page 0"),
+	                         Page1(0x0100, Apu, "APU's Page 1"),
+	                         Memory(0xFDC0, Apu, "APU's Ram"),
+	                         IPL(Apu, "IPL Rom")
+	{}
+}// namespace ComSquare::APU

@@ -42,13 +42,13 @@ namespace ComSquare::Debugger
 					ctx.mFlag = true;
 					ctx.xFlag = true;
 				} else {
-					uint8_t m = this->_bus->read(pc - 1, true);
+					uint8_t m = this->_bus.read(pc - 1, true);
 					ctx.mFlag &= ~m & 0b00100000u;
 					ctx.xFlag &= ~m & 0b00010000u;
 				}
 			}
 			if (instruction.opcode == 0xE2) { // SEP
-				uint8_t m = this->_bus->read(pc - 1, true);
+				uint8_t m = this->_bus.read(pc - 1, true);
 				ctx.mFlag |= m & 0b00100000u;
 				ctx.xFlag |= m & 0b00010000u;
 			}
@@ -69,7 +69,7 @@ namespace ComSquare::Debugger
 
 	DisassembledInstruction CPUDebug::_parseInstruction(uint24_t pc, DisassemblyContext &ctx)
 	{
-		uint24_t opcode = this->_bus->read(pc, true);
+		uint24_t opcode = this->_bus.read(pc, true);
 		Instruction instruction = this->_instructions[opcode];
 		std::string argument = this->_getInstructionParameter(instruction, pc + 1, ctx);
 		return DisassembledInstruction(instruction, pc, argument, opcode);
@@ -134,10 +134,10 @@ namespace ComSquare::Debugger
 
 	std::string CPUDebug::_getImmediateValue(uint24_t pc, bool dual)
 	{
-		unsigned value = this->_bus->read(pc, true);
+		unsigned value = this->_bus.read(pc, true);
 
 		if (dual)
-			value += this->_bus->read(pc + 1, true) << 8u;
+			value += this->_bus.read(pc + 1, true) << 8u;
 		std::stringstream ss;
 		ss << "#$" << std::hex << value;
 		return ss.str();
@@ -145,27 +145,27 @@ namespace ComSquare::Debugger
 
 	std::string CPUDebug::_getDirectValue(uint24_t pc)
 	{
-		return Utility::to_hex(this->_bus->read(pc, true), Utility::HexString::AsmPrefix);
+		return Utility::to_hex(this->_bus.read(pc, true), Utility::HexString::AsmPrefix);
 	}
 
 	std::string CPUDebug::_getAbsoluteValue(uint24_t pc)
 	{
-		uint24_t value = this->_bus->read(pc, true) + (this->_bus->read(pc + 1, true) << 8u);
+		uint24_t value = this->_bus.read(pc, true) + (this->_bus.read(pc + 1, true) << 8u);
 		return Utility::to_hex(value, Utility::HexString::AsmPrefix);
 	}
 
 	std::string CPUDebug::_getAbsoluteLongValue(uint24_t pc)
 	{
-		unsigned value = this->_bus->read(pc++, true);
-		value += this->_bus->read(pc++, true) << 8u;
-		value += this->_bus->read(pc, true) << 16u;
+		unsigned value = this->_bus.read(pc++, true);
+		value += this->_bus.read(pc++, true) << 8u;
+		value += this->_bus.read(pc, true) << 16u;
 
 		return Utility::to_hex(value, Utility::HexString::AsmPrefix);
 	}
 
 	std::string CPUDebug::_getDirectIndexedByXValue(uint24_t pc)
 	{
-		unsigned value = this->_bus->read(pc, true);
+		unsigned value = this->_bus.read(pc, true);
 
 		std::stringstream ss;
 		ss << "$" << std::hex << value << ", x";
@@ -174,7 +174,7 @@ namespace ComSquare::Debugger
 
 	std::string CPUDebug::_getDirectIndexedByYValue(uint24_t pc)
 	{
-		unsigned value = this->_bus->read(pc, true);
+		unsigned value = this->_bus.read(pc, true);
 
 		std::stringstream ss;
 		ss << "$" << std::hex << value << ", y";
@@ -183,38 +183,38 @@ namespace ComSquare::Debugger
 
 	std::string CPUDebug::_getDirectIndirectValue(uint24_t pc)
 	{
-		return "(" + Utility::to_hex(this->_bus->read(pc, true), Utility::AsmPrefix) + ")";
+		return "(" + Utility::to_hex(this->_bus.read(pc, true), Utility::AsmPrefix) + ")";
 	}
 
 	std::string CPUDebug::_getDirectIndirectLongValue(uint24_t pc)
 	{
-		return "[" + Utility::to_hex(this->_bus->read(pc, true), Utility::AsmPrefix) + "]";
+		return "[" + Utility::to_hex(this->_bus.read(pc, true), Utility::AsmPrefix) + "]";
 	}
 
 	std::string CPUDebug::_getAbsoluteIndexByXValue(uint24_t pc)
 	{
-		uint24_t value = this->_bus->read(pc, true) + (this->_bus->read(pc + 1, true) << 8u);
+		uint24_t value = this->_bus.read(pc, true) + (this->_bus.read(pc + 1, true) << 8u);
 		return Utility::to_hex(value, Utility::HexString::AsmPrefix) + ", x";
 	}
 
 	std::string CPUDebug::_getAbsoluteIndexByYValue(uint24_t pc)
 	{
-		uint24_t value = this->_bus->read(pc, true) + (this->_bus->read(pc + 1, true) << 8u);
+		uint24_t value = this->_bus.read(pc, true) + (this->_bus.read(pc + 1, true) << 8u);
 		return Utility::to_hex(value, Utility::HexString::AsmPrefix) + ", y";
 	}
 
 	std::string CPUDebug::_getAbsoluteIndexByXLongValue(uint24_t pc)
 	{
-		unsigned value = this->_bus->read(pc++, true);
-		value += this->_bus->read(pc++, true) << 8u;
-		value += this->_bus->read(pc, true) << 16u;
+		unsigned value = this->_bus.read(pc++, true);
+		value += this->_bus.read(pc++, true) << 8u;
+		value += this->_bus.read(pc, true) << 16u;
 
 		return Utility::to_hex(value, Utility::HexString::AsmPrefix) + ", x";
 	}
 
 	std::string CPUDebug::_getDirectIndexedByXIndirectValue(uint24_t pc)
 	{
-		unsigned value = this->_bus->read(pc, true);
+		unsigned value = this->_bus.read(pc, true);
 
 		std::stringstream ss;
 		ss << "($" << std::hex << value << ", x)";
@@ -223,7 +223,7 @@ namespace ComSquare::Debugger
 
 	std::string CPUDebug::_getDirectIndirectIndexedByYValue(uint24_t pc)
 	{
-		unsigned value = this->_bus->read(pc, true);
+		unsigned value = this->_bus.read(pc, true);
 
 		std::stringstream ss;
 		ss << "($" << std::hex << value << "), y";
@@ -232,7 +232,7 @@ namespace ComSquare::Debugger
 
 	std::string CPUDebug::_getDirectIndirectIndexedByYLongValue(uint24_t pc)
 	{
-		unsigned value = this->_bus->read(pc, true);
+		unsigned value = this->_bus.read(pc, true);
 
 		std::stringstream ss;
 		ss << "[$" << std::hex << value << "], y";
@@ -241,32 +241,32 @@ namespace ComSquare::Debugger
 
 	std::string CPUDebug::_getStackRelativeValue(uint24_t pc)
 	{
-		return Utility::to_hex(this->_bus->read(pc, true), Utility::AsmPrefix) + ", s";
+		return Utility::to_hex(this->_bus.read(pc, true), Utility::AsmPrefix) + ", s";
 	}
 
 	std::string CPUDebug::_getStackRelativeIndirectIndexedByYValue(uint24_t pc)
 	{
-		return "(" + Utility::to_hex(this->_bus->read(pc, true), Utility::AsmPrefix) + ", s), y";
+		return "(" + Utility::to_hex(this->_bus.read(pc, true), Utility::AsmPrefix) + ", s), y";
 	}
 
 	std::string CPUDebug::_getAbsoluteIndirectValue(uint24_t pc)
 	{
-		uint24_t value = this->_bus->read(pc, true) + (this->_bus->read(pc + 1, true) << 8u);
+		uint24_t value = this->_bus.read(pc, true) + (this->_bus.read(pc + 1, true) << 8u);
 		return "(" + Utility::to_hex(value, Utility::HexString::AsmPrefix) + ")";
 	}
 
 	std::string CPUDebug::_getAbsoluteIndirectLongValue(uint24_t pc)
 	{
-		unsigned value = this->_bus->read(pc++, true);
-		value += this->_bus->read(pc++, true) << 8u;
-		value += this->_bus->read(pc, true) << 16u;
+		unsigned value = this->_bus.read(pc++, true);
+		value += this->_bus.read(pc++, true) << 8u;
+		value += this->_bus.read(pc, true) << 16u;
 
 		return "(" + Utility::to_hex(value, Utility::HexString::AsmPrefix) + ")";
 	}
 
 	std::string CPUDebug::_getAbsoluteIndirectIndexedByXValue(uint24_t pc)
 	{
-		uint24_t value = this->_bus->read(pc, true) + (this->_bus->read(pc + 1, true) << 8u);
+		uint24_t value = this->_bus.read(pc, true) + (this->_bus.read(pc + 1, true) << 8u);
 		return "(" + Utility::to_hex(value, Utility::HexString::AsmPrefix) + ", x)";
 	}
 }

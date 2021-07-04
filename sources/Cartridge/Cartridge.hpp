@@ -4,23 +4,25 @@
 
 #pragma once
 
-#include <string>
-#include <filesystem>
-#include "Memory/AMemory.hpp"
-#include "Models/Int24.hpp"
-#include "Memory/ARectangleMemory.hpp"
 #include "InterruptVectors.hpp"
+#include "Memory/AMemory.hpp"
+#include "Memory/ARectangleMemory.hpp"
+#include "Models/Int24.hpp"
 #include "Ram/Ram.hpp"
+#include <filesystem>
+#include <string>
 
 namespace ComSquare::Cartridge
 {
-	enum CartridgeType {
+	enum CartridgeType
+	{
 		Game,
 		Audio
 	};
 
-	#define ADDMAPPINGMODE(x, flag) (x = static_cast<MappingMode>(x | (flag)))
-	enum MappingMode {
+#define ADDMAPPINGMODE(x, flag) (x = static_cast<MappingMode>(x | (flag)))
+	enum MappingMode
+	{
 		LoRom = 1u << 0u,
 		HiRom = 1u << 1u,
 		SlowRom = 1u << 2u,
@@ -33,7 +35,7 @@ namespace ComSquare::Cartridge
 		//! @brief The name of the game
 		std::string gameName;
 		//! @brief The memory mapping of the ROM.
-		MappingMode mappingMode{};
+		MappingMode mappingMode {};
 		//! @brief The rom type (special information about the rom, still don't know what).
 		uint8_t romType = 0;
 		//! @brief The size (in bytes) of the ram
@@ -41,26 +43,29 @@ namespace ComSquare::Cartridge
 		//! @brief The size of the SRom inside the cartridge.
 		unsigned sramSize = 0;
 		//! @brief Creator license ID code.
-		union {
+		union
+		{
 			uint8_t creatorIDs[2];
 			uint16_t creatorID = 0;
 		};
 		//! @brief The version of the game
 		uint8_t version = 0;
 		//! @brief Checksum complement
-		union {
+		union
+		{
 			uint8_t checksumComplements[2];
 			uint16_t checksumComplement = 0;
 		};
 		//! @brief Checksum
-		union {
+		union
+		{
 			uint8_t checksums[2];
 			uint16_t checksum = 0;
 		};
 		//! @brief The interrupt vectors used to halt the CPU in native mode
-		InterruptVectors nativeInterrupts{};
+		InterruptVectors nativeInterrupts {};
 		//! @brief The interrupt vectors used to halt the CPU in emulation mode
-		InterruptVectors emulationInterrupts{};
+		InterruptVectors emulationInterrupts {};
 
 		Header() = default;
 		Header(const Header &) = default;
@@ -69,7 +74,8 @@ namespace ComSquare::Cartridge
 	};
 
 	//! @brief Contains the rom's memory/instructions.
-	class Cartridge : public Ram::Ram {
+	class Cartridge : public Ram::Ram
+	{
 	private:
 		//! @brief The path of the currently loaded rom.
 		std::string _romPath;
@@ -93,10 +99,13 @@ namespace ComSquare::Cartridge
 		//! @return A header struct representing the data at the memory address you passed.
 		Header _mapHeader(uint32_t headerAddress);
 		//! @brief Current type of the cartridge
-		CartridgeType _type;
+		CartridgeType _type = Game;
 		//! @brief Magic Header string of a SPC Rom
 		static constexpr std::string_view _magicSPC = "SNES-SPC700 Sound File Data v0.30";
+
 	public:
+		//! @brief A default constructor that doesn't load anything.
+		Cartridge();
 		//! @brief Load a rom from it's path.
 		explicit Cartridge(const std::string &romPath);
 		//! @brief The cartridge can't be copied.
@@ -108,13 +117,16 @@ namespace ComSquare::Cartridge
 
 		//! @brief The header of the cartridge.
 		Header header;
+
 		//! @brief Return current type of the cartridge
 		CartridgeType getType();
+
 		//! @brief Read from the rom.
 		//! @param addr The address to read from. The address 0x0 should refer to the first byte of the rom's memory.
 		//! @throw InvalidAddress will be thrown if the address is more than the size of the rom's memory.
 		//! @return Return the data at the address.
 		uint8_t read(uint24_t addr) override;
+
 		//! @brief Write data to the rom.
 		//! @param addr The address to write to. The address 0x0 should refer to the first byte of the rom's memory.
 		//! @param data The data to write.
@@ -123,6 +135,11 @@ namespace ComSquare::Cartridge
 
 		//! @brief The path of the rom file
 		//! @return The path of the currently loaded rom file.
-		std::filesystem::path getRomPath() const;
+		[[nodiscard]] std::filesystem::path getRomPath() const;
+
+		//! @brief Load the rom at the given path
+		//! @param rom The path of the rom.
+		//! @throws InvalidRomException If the rom is invalid, this exception is thrown.
+		void loadRom(const std::string& path);
 	};
-}
+}// namespace ComSquare::Cartridge

@@ -3,32 +3,21 @@
 //
 
 #include "CPU.hpp"
-
-#include <utility>
+#include "Exceptions/InvalidAddress.hpp"
+#include "Exceptions/InvalidOpcode.hpp"
+#include "Utility/Utility.hpp"
 #include <iostream>
-#include "../Exceptions/InvalidAddress.hpp"
-#include "../Exceptions/InvalidOpcode.hpp"
 
 namespace ComSquare::CPU
 {
-	CPU::CPU(std::shared_ptr<Memory::MemoryBus> bus, Cartridge::Header &cartridgeHeader)
-		: _bus(std::move(bus)),
-		_cartridgeHeader(cartridgeHeader)
+	CPU::CPU(Memory::MemoryBus &bus, Cartridge::Header &cartridgeHeader)
+	    : _bus(bus),
+	      _cartridgeHeader(cartridgeHeader),
+	      _dmaChannels({DMA(bus), DMA(bus), DMA(bus), DMA(bus), DMA(bus), DMA(bus), DMA(bus), DMA(bus)})
 	{
 		this->RESB();
-		for (DMA &channel : this->_dmaChannels)
-			channel.setBus(_bus);
 	}
 
-	bool CPU::isDebugger() const
-	{
-		return false;
-	}
-
-	void CPU::setMemoryBus(std::shared_ptr<Memory::MemoryBus> bus)
-	{
-		this->_bus = std::move(bus);
-	}
 
 	//! @bref The CPU's internal registers starts at $4200	and finish at $421F.
 	uint8_t CPU::read(uint24_t addr)
@@ -214,7 +203,7 @@ namespace ComSquare::CPU
 
 	uint8_t CPU::readPC()
 	{
-		uint8_t ret = this->_bus->read(this->_registers.pac);
+		uint8_t ret = this->_bus.read(this->_registers.pac);
 		this->_registers.pc++;
 		return ret;
 	}
@@ -251,14 +240,14 @@ namespace ComSquare::CPU
 
 		if (this->IsNMIRequested) {
 			this->_runInterrupt(
-				this->_cartridgeHeader.nativeInterrupts.nmi,
-				this->_cartridgeHeader.emulationInterrupts.nmi);
+			    this->_cartridgeHeader.nativeInterrupts.nmi,
+			    this->_cartridgeHeader.emulationInterrupts.nmi);
 			return;
 		}
 		if (this->IsIRQRequested && !this->_registers.p.i) {
 			this->_runInterrupt(
-				this->_cartridgeHeader.nativeInterrupts.irq,
-				this->_cartridgeHeader.emulationInterrupts.irq);
+			    this->_cartridgeHeader.nativeInterrupts.irq,
+			    this->_cartridgeHeader.emulationInterrupts.irq);
 			return;
 		}
 	}
@@ -333,24 +322,24 @@ namespace ComSquare::CPU
 
 	void CPU::_push(uint8_t data)
 	{
-		this->_bus->write(this->_registers.s--, data);
+		this->_bus.write(this->_registers.s--, data);
 	}
 
 	void CPU::_push(uint16_t data)
 	{
-		this->_bus->write(this->_registers.s--, data >> 8u);
-		this->_bus->write(this->_registers.s--, data);
+		this->_bus.write(this->_registers.s--, data >> 8u);
+		this->_bus.write(this->_registers.s--, data);
 	}
 
 	uint8_t CPU::_pop()
 	{
-		return this->_bus->read(++this->_registers.s);
+		return this->_bus.read(++this->_registers.s);
 	}
 
 	uint16_t CPU::_pop16()
 	{
-		uint16_t value = this->_bus->read(++this->_registers.s);
-		value +=this->_bus->read(++this->_registers.s) << 8u;
+		uint16_t value = this->_bus.read(++this->_registers.s);
+		value += this->_bus.read(++this->_registers.s) << 8u;
 		return value;
 	}
 
@@ -363,4 +352,4 @@ namespace ComSquare::CPU
 	{
 		return Cpu;
 	}
-}
+}// namespace ComSquare::CPU

@@ -25,7 +25,7 @@ namespace ComSquare::Debugger
 		_painter(*this),
 		_stackModel(this->_bus, *this),
 		_snes(snes),
-		_labels(this->_loadLabels(snes.cartridge->getRomPath()))
+		_labels(this->_loadLabels(snes.cartridge.getRomPath()))
 	{
 		this->_window->setContextMenuPolicy(Qt::NoContextMenu);
 		this->_window->setAttribute(Qt::WA_QuitOnClose, false);
@@ -84,9 +84,10 @@ namespace ComSquare::Debugger
 		try {
 			unsigned cycles = 0;
 
-			for (auto &channel : this->_dmaChannels)
+			for (auto &channel : this->_dmaChannels) {
 				if (channel.enabled)
 					cycles += channel.run(INT_MAX);
+			}
 
 			if (this->_isPaused)
 				return 0xFF;
@@ -300,11 +301,11 @@ namespace ComSquare::Debugger
 	std::string CPUDebug::getProceededParameters()
 	{
 		uint24_t pac = this->_registers.pac;
-		this->_bus->forceSilence = true;
+		this->_bus.forceSilence = true;
 		Instruction instruction = this->_instructions[this->readPC()];
 		uint24_t valueAddr = this->_getValueAddr(instruction);
 		this->_registers.pac = pac;
-		this->_bus->forceSilence = false;
+		this->_bus.forceSilence = false;
 		if (instruction.size == 1)
 			return "";
 		return "[" + Utility::to_hex(valueAddr, Utility::AsmPrefix) + "]";
@@ -316,12 +317,12 @@ namespace ComSquare::Debugger
 		std::string symbolPath = romPath.replace_extension(".sym");
 		std::ifstream sym(symbolPath);
 
-		if (sym) {
-			std::vector<Label> symLabels = WlaDx::parse(sym);
-			labels.insert(labels.end(),
-			              std::make_move_iterator(symLabels.begin()),
-			              std::make_move_iterator(symLabels.end()));
-		}
+//		if (sym) {
+//			std::vector<Label> symLabels = WlaDx::parse(sym);
+//			labels.insert(labels.end(),
+//			              std::make_move_iterator(symLabels.begin()),
+//			              std::make_move_iterator(symLabels.end()));
+//		}
 		return labels;
 	}
 }
@@ -451,7 +452,7 @@ QVariant StackModel::data(const QModelIndex &index, int role) const
 		return QVariant();
 	uint16_t addr = index.row() * 2 + index.column();
 	try {
-		uint8_t value = this->_bus->read(addr, true);
+		uint8_t value = this->_bus.read(addr, true);
 		return (ComSquare::Utility::to_hex(value, ComSquare::Utility::NoPrefix).c_str());
 	} catch (std::exception &) {
 		return "??";

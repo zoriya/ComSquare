@@ -31,7 +31,8 @@ namespace ComSquare::PPU
 		//! @brief the ppu used to get registers values (ex: bg scroll)
 		ComSquare::PPU::PPU &_ppu;
 		//! @brief The tilemap configuration nb of tileMap vertically and horizontally
-		Vector2<int> _tileMapsConfig;
+		//! @note members are set to true if the tilemap is expended in their direction
+		Vector2<bool> _tileMapsConfig;
 		//! @brief The number of pixels of a character (x: width, y:height)
 		Vector2<int> _characterNbPixels;
 		//! @brief The number of bits per pixels to currently look for each pixel
@@ -67,7 +68,7 @@ namespace ComSquare::PPU
 		//! @brief The size of the background (x, y)
 		Vector2<unsigned> backgroundSize;
 		//! @brief The output buffer (pixels are written on it)
-		uint32_t buffer[1024][1024];
+		std::array<std::array<uint32_t, 1024>, 1024> buffer;
 
 		//! @brief Render a background on his internal buffer
 		void renderBackground();
@@ -84,7 +85,7 @@ namespace ComSquare::PPU
 		void setBpp(int bpp);
 		//! @brief setter for private variable _tileMaps
 		//! @param tileMaps The tileMaps to set
-		void setTilemaps(Vector2<int> tileMaps);
+		void setTilemaps(Vector2<bool> tileMaps);
 
 		//! @brief Get the BackGround Number
 		//! @return the current Background number
