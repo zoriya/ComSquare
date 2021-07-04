@@ -543,8 +543,8 @@ namespace ComSquare::PPU
 	Vector2<bool> PPU::getBackgroundMirroring(int bgNumber) const
 	{
 		return {
-			static_cast<bool>(this->_registers._bgsc[bgNumber - 1].tilemapVerticalMirroring),
-			static_cast<bool>(this->_registers._bgsc[bgNumber - 1].tilemapHorizontalMirroring)
+			static_cast<bool>(this->_registers._bgsc[bgNumber - 1].tilemapHorizontalMirroring),
+			static_cast<bool>(this->_registers._bgsc[bgNumber - 1].tilemapVerticalMirroring)
 		};
 	}
 

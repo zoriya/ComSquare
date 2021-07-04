@@ -37,9 +37,9 @@ namespace ComSquare::PPU
 		uint16_t vramAddress = this->_tileMapStartAddress;
 		Vector2<int> offset = this->_ppu.getBgScroll(this->_bgNumber);
 		this->backgroundSize.x =
-			static_cast<int>(this->_tileMapsConfig.x) * this->_characterNbPixels.x * NbCharacterWidth;
+			(static_cast<int>(this->_tileMapsConfig.x) + 1) * this->_characterNbPixels.x * NbCharacterWidth;
 		this->backgroundSize.y =
-			static_cast<int>(this->_tileMapsConfig.y) * this->_characterNbPixels.y * NbCharacterHeight;
+			(static_cast<int>(this->_tileMapsConfig.y) + 1) * this->_characterNbPixels.y * NbCharacterHeight;
 
 		this->_drawBasicTileMap(vramAddress, offset);
 		for (int i = 1; i < 4; i++) {
