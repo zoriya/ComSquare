@@ -16,6 +16,6 @@ TEST_CASE("basicTest backgroundGetTilePixelReference", "[backgroundGetTilePixelR
 {
 	Init()
 	snes.bus.write(0x2100, 0b11111111);
-	REQUIRE(snes.ppu->_registers._inidisp.fblank == true);
-	REQUIRE(snes.ppu->_registers._inidisp.brightness == 0xF);
+	REQUIRE(snes.ppu._registers._inidisp.fblank == true);
+	REQUIRE(snes.ppu._registers._inidisp.brightness == 0xF);
 }
