@@ -632,7 +632,7 @@ namespace ComSquare::PPU
 			for (unsigned long i = 0; i < bufferSrc.size(); i++) {
 				for (unsigned long j = 0; j < bufferSrc[i].size(); j++) {
 					if (bufferSrc[i][j] > 0xFF) // 0xFF correspond to a black pixel with full brightness
-						bufferDest[i + offset.x ][j + offset.y] = bufferSrc[i][j];
+						bufferDest[i][j] = bufferSrc[i][j];
 				}
 			}
 		}
