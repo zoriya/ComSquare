@@ -90,9 +90,11 @@ namespace ComSquare::PPU
 			Utils::HFlipArray(this->_tileBuffer, {this->_characterNbPixels.x, this->_characterNbPixels.y});
 		if (tileData.horizontalFlip)
 			Utils::VFlipArray(this->_tileBuffer, {this->_characterNbPixels.x, this->_characterNbPixels.y});
-		std::for_each(this->_tileBuffer.begin(), this->_tileBuffer.begin() + this->_characterNbPixels.y, [this, &pos](const auto &row) {
-			std::move(row.begin(), row.begin() + this->_characterNbPixels.x, this->buffer[pos.y++].begin() + pos.x);
-		});
+		std::for_each(this->_tileBuffer.begin(), this->_tileBuffer.begin() + this->_characterNbPixels.y,
+		              [this, &pos](const auto &row) {
+			              std::move(row.begin(), row.begin() + this->_characterNbPixels.x,
+			                        this->buffer[pos.y++].begin() + pos.x);
+		              });
 	}
 
 	void Background::_drawBasicTileMap(uint16_t baseAddress, Vector2<int> offset)
