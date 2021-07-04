@@ -82,7 +82,7 @@ namespace ComSquare::PPU
 				tileOffset.x += 1;
 			}
 			tileOffset.x = 0;
-			tileOffset.y += 1;
+			tileOffset.y++;
 		}
 
 		// todo check why i need to invert vertical and horizontal flips
@@ -90,15 +90,9 @@ namespace ComSquare::PPU
 			Utils::HFlipArray(this->_tileBuffer, {this->_characterNbPixels.x, this->_characterNbPixels.y});
 		if (tileData.horizontalFlip)
 			Utils::VFlipArray(this->_tileBuffer, {this->_characterNbPixels.x, this->_characterNbPixels.y});
-		for (int i = 0; i < this->_characterNbPixels.y; i++) {
-			for (int j = 0; j < this->_characterNbPixels.x; j++) {
-				//std::copy(this->_tileBuffer.begin(), this->_tileBuffer.begin() + this->_characterNbPixels.x, this->buffer[pos.x].begin() )
-				this->buffer[pos.y + i][pos.x + j] = this->_tileBuffer[i][j];
-				//pos.x++;
-			}
-			//pos.x -= this->_characterNbPixels.x;
-			//pos.y++;
-		}
+		std::for_each(this->_tileBuffer.begin(), this->_tileBuffer.begin() + this->_characterNbPixels.y, [this, &pos](const auto &row) {
+			std::move(row.begin(), row.begin() + this->_characterNbPixels.x, this->buffer[pos.y++].begin() + pos.x);
+		});
 	}
 
 	void Background::_drawBasicTileMap(uint16_t baseAddress, Vector2<int> offset)

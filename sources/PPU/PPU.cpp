@@ -36,7 +36,7 @@ namespace ComSquare::PPU
 	{
 		this->_registers._isLowByte = true;
 
-		Utils::Debug::populateEnvironment(*this, 1);
+		//Utils::Debug::populateEnvironment(*this, 0);
 	}
 
 	uint8_t PPU::read(uint24_t addr)
