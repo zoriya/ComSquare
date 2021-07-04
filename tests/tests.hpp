@@ -5,6 +5,7 @@
 #pragma once
 
 #include <cstring>
+#include <memory>
 // The include here is to prevent successive includes of this file to come after the define.
 #include <filesystem>
 
@@ -18,7 +19,7 @@
 
 #define Init() \
 	Renderer::NoRenderer norenderer(0, 0, 0);                  \
-	auto *snesPtr = new SNES(norenderer);                      \
+	auto snesPtr = std::make_unique<SNES>(norenderer);         \
     SNES &snes = *snesPtr;                                     \
 	snes.cartridge._size = 100;                                \
     delete[] snes.cartridge._data;                             \
