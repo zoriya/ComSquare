@@ -11,6 +11,9 @@ namespace ComSquare::PPU
 {
 	class TileRenderer {
 	private:
+		//! @brief The byte size offset for 1 row in VRAM
+		static constexpr int TileByteSizeRow = 16;
+
 		//! @brief ram to render
 		std::shared_ptr<Ram::Ram> _ram;
 		//! @brief cgram to access the colors

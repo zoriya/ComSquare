@@ -83,13 +83,11 @@ namespace ComSquare::PPU
 	{
 		// TODO unit test this
 		uint16_t result = 0;
-		// TODO do a constexpr
-		const int TileByteSizeRow = 16;
 
 		switch (this->_bpp) {
 		case 8:
-			result += this->read2BPPValue(tileRowAddress + TileByteSizeRow * 2, pixelIndex) << 4;
 			result += this->read2BPPValue(tileRowAddress + TileByteSizeRow * 3, pixelIndex) << 6;
+			result += this->read2BPPValue(tileRowAddress + TileByteSizeRow * 2, pixelIndex) << 4;
 			FALLTHROUGH
 		case 4:
 			result += this->read2BPPValue(tileRowAddress + TileByteSizeRow, pixelIndex) << 2;
