@@ -3,21 +3,18 @@
 //
 
 #include "RegisterViewer.hpp"
-#include "../SNES.hpp"
-#include "../Utility/Utility.hpp"
+#include "SNES.hpp"
+#include "Utility/Utility.hpp"
 #include <sstream>
+#include <utility>
 
 namespace ComSquare::Debugger
 {
 	RegisterViewer::RegisterViewer(SNES &snes)
-		: _window(new ClosableWindow<RegisterViewer>(*this, &RegisterViewer::disableDebugger)),
-		_ui(),
-		_snes(snes)
+		: _window(new ClosableWindow([&snes] { snes.disableRegisterViewer(); })),
+		  _ui(),
+		  _snes(snes)
 	{
-		this->_window->setContextMenuPolicy(Qt::NoContextMenu);
-		this->_window->setAttribute(Qt::WA_QuitOnClose, false);
-		this->_window->setAttribute(Qt::WA_DeleteOnClose);
-
 		this->_ui.setupUi(this->_window);
 		this->_setupUi();
 		this->_window->show();
@@ -26,7 +23,6 @@ namespace ComSquare::Debugger
 	void RegisterViewer::_setupUi()
 	{
 		this->_models.clear();
-
 		std::array<QTableView *, 8> channels = {
 			this->_ui.dmaChannel1,
 			this->_ui.dmaChannel2,
@@ -41,28 +37,28 @@ namespace ComSquare::Debugger
 		for (int i = 0; i < 8; i++) {
 			model = new RegistersViewerModel(this->_snes);
 			model->addRegister(Register(0x420B, std::string(":") + std::to_string(i), "Enabled", [i](SNES &snes) {
-				return snes.cpu->_dmaChannels[i].enabled;
+				return snes.cpu._dmaChannels[i].enabled;
 			}, nullptr, Boolean));
 			model->addRegister(Register(0x4302 + (i << 4u), "-4", "A address", [i](SNES &snes) {
-				return snes.cpu->_dmaChannels[i]._aAddress.raw;
+				return snes.cpu._dmaChannels[i]._aAddress.raw;
 			}, nullptr, TwentyFourBits));
 			model->addRegister(Register(0x4301 + (i << 4u), "", "B address", [i](SNES &snes) {
-				return 0x2100 | snes.cpu->_dmaChannels[i]._port;
+				return 0x2100 | snes.cpu._dmaChannels[i]._port;
 			}, nullptr, SixteenBits));
 			model->addRegister(Register(0x4305 + (i << 4u), "-6", "Count", [i](SNES &snes) {
-				return snes.cpu->_dmaChannels[i]._count.raw;
+				return snes.cpu._dmaChannels[i]._count.raw;
 			}, nullptr, SixteenBits));
 			model->addRegister(Register(0x4300 + (i << 4u), ":7", "B To A", [i](SNES &snes) {
-				return snes.cpu->_dmaChannels[i]._controlRegister.direction;
+				return snes.cpu._dmaChannels[i]._controlRegister.direction;
 			}, nullptr, Boolean));
 			model->addRegister(Register(0x4300 + (i << 4u), ":3", "Fixed", [i](SNES &snes) {
-				return snes.cpu->_dmaChannels[i]._controlRegister.fixed;
+				return snes.cpu._dmaChannels[i]._controlRegister.fixed;
 			}, nullptr, Boolean));
 			model->addRegister(Register(0x4300 + (i << 4u), ":4", "Decrement", [i](SNES &snes) {
-				return snes.cpu->_dmaChannels[i]._controlRegister.increment;
+				return snes.cpu._dmaChannels[i]._controlRegister.increment;
 			}, nullptr, Boolean));
 			model->addRegister(Register(0x4300 + (i << 4u), ":0-2", "Mode", [i](SNES &snes) {
-				return snes.cpu->_dmaChannels[i]._controlRegister.increment;
+				return snes.cpu._dmaChannels[i]._controlRegister.increment;
 			}, nullptr, EightBits));
 			channels[i]->setModel(model);
 			this->_models.push_back(model);
@@ -70,7 +66,7 @@ namespace ComSquare::Debugger
 
 		// ppuRegisters
 		model = new RegistersViewerModel(this->_snes);
-		const PPU::Registers &ppuRegisters = this->_snes.ppu->getWriteRegisters();
+		const PPU::Registers &ppuRegisters = this->_snes.ppu.getWriteRegisters();
 
 		//INIDISP 0X2100
 		model->addRegister(Register(0x2100, "", "INIDISP", [ppuRegisters](SNES &) {
@@ -127,9 +123,11 @@ namespace ComSquare::Debugger
 			return ppuRegisters._bgmode.mode1Bg3PriorityBit;
 		}, nullptr, Boolean));
 		for (int i = 0; i < 4; i++) {
-			model->addRegister(Register(0x2105, ":" + std::to_string(i + 4), "BG"+ std::to_string(i + 1) + " 16x16 Tiles", [ppuRegisters, i](SNES &) {
-				return (ppuRegisters._bgmode.raw >> (i + 4)) & 1;
-			}, nullptr, Boolean));
+			model->addRegister(
+				Register(0x2105, ":" + std::to_string(i + 4), "BG" + std::to_string(i + 1) + " 16x16 Tiles",
+				         [ppuRegisters, i](SNES &) {
+					         return (ppuRegisters._bgmode.raw >> (i + 4)) & 1;
+				         }, nullptr, Boolean));
 		}
 
 		//MOSAIC 0x2106
@@ -137,56 +135,65 @@ namespace ComSquare::Debugger
 			return ppuRegisters._mosaic.raw;
 		}, nullptr, EightBits));
 		for (int i = 0; i < 4; i++) {
-			model->addRegister(Register(0x2106, ":" + std::to_string(i), "BG"+ std::to_string(i + 1) + " Mosaic", [ppuRegisters, i](SNES &) {
-				return (ppuRegisters._mosaic.raw >> i) & 1;
-			}, nullptr, Boolean));
+			model->addRegister(Register(0x2106, ":" + std::to_string(i), "BG" + std::to_string(i + 1) + " Mosaic",
+			                            [ppuRegisters, i](SNES &) {
+				                            return (ppuRegisters._mosaic.raw >> i) & 1;
+			                            }, nullptr, Boolean));
 		}
 		model->addRegister(Register(0x2106, ":4-7", "Size", [ppuRegisters](SNES &) {
 			return ppuRegisters._mosaic.pixelSize;
 		}, nullptr, Integer));
-	/*	model->addRegister(Register(0x2106, ":4-7", "Value", [](SNES &) {
-			return "A lot";
-		}, nullptr, String)); */
+		/*	model->addRegister(Register(0x2106, ":4-7", "Value", [](SNES &) {
+				return "A lot";
+			}, nullptr, String)); */
 
 		// BGNSC 0x2107 è 0x210A
 		for (int i = 0; i < 4; i++) {
 			model->addRegister(Register(0x2107 + i, "", "BG" + std::to_string(i + 1) + "SC", [ppuRegisters, i](SNES &) {
 				return ppuRegisters._bgsc[i].raw;
 			}, nullptr, EightBits));
-			model->addRegister(Register(0x2107 + i, ":0", "BG" + std::to_string(i + 1) + " Tilemap H mirroring", [ppuRegisters, i](SNES &) {
-				return ppuRegisters._bgsc[i].tilemapHorizontalMirroring;
-			}, nullptr, Boolean));
-			model->addRegister(Register(0x2107 + i, ":1", "BG" + std::to_string(i + 1) + " Tilemap V mirroring", [ppuRegisters, i](SNES &) {
-				return ppuRegisters._bgsc[i].tilemapVerticalMirroring;
-			}, nullptr, Boolean));
-			model->addRegister(Register(0x2107 + i, ":2-7", "BG" + std::to_string(i + 1) + " Tilemap addr", [ppuRegisters, i](SNES &) {
-				return ppuRegisters._bgsc[i].tilemapAddress;
-			}, nullptr, EightBits));
+			model->addRegister(Register(0x2107 + i, ":0", "BG" + std::to_string(i + 1) + " Tilemap H mirroring",
+			                            [ppuRegisters, i](SNES &) {
+				                            return ppuRegisters._bgsc[i].tilemapHorizontalMirroring;
+			                            }, nullptr, Boolean));
+			model->addRegister(Register(0x2107 + i, ":1", "BG" + std::to_string(i + 1) + " Tilemap V mirroring",
+			                            [ppuRegisters, i](SNES &) {
+				                            return ppuRegisters._bgsc[i].tilemapVerticalMirroring;
+			                            }, nullptr, Boolean));
+			model->addRegister(
+				Register(0x2107 + i, ":2-7", "BG" + std::to_string(i + 1) + " Tilemap addr", [ppuRegisters, i](SNES &) {
+					return ppuRegisters._bgsc[i].tilemapAddress;
+				}, nullptr, EightBits));
 		}
 
 		// BGnxNBA 0x210B 0x210C
 		for (int i = 0; i < 2; i++) {
-			model->addRegister(Register(0x210B + i, "", "BG" + std::string(i ? "34" : "12") + "NBA", [ppuRegisters, i](SNES &) {
-				return ppuRegisters._bgnba[i].raw;
-			}, nullptr, EightBits));
-			model->addRegister(Register(0x210B + i, ":0-3", "BG" + std::string((i ? "3" : "1")) + " Base addr", [ppuRegisters, i](SNES &) {
-				return ppuRegisters._bgnba[i].baseAddressBg1a3;
-			}, nullptr, EightBits));
-			model->addRegister(Register(0x210B + i, ":4-7", "BG" + std::string((i ? "4" : "2")) + " Base addr", [ppuRegisters, i](SNES &) {
-				return ppuRegisters._bgnba[i].baseAddressBg2a4;
-			}, nullptr, EightBits));
+			model->addRegister(
+				Register(0x210B + i, "", "BG" + std::string(i ? "34" : "12") + "NBA", [ppuRegisters, i](SNES &) {
+					return ppuRegisters._bgnba[i].raw;
+				}, nullptr, EightBits));
+			model->addRegister(Register(0x210B + i, ":0-3", "BG" + std::string((i ? "3" : "1")) + " Base addr",
+			                            [ppuRegisters, i](SNES &) {
+				                            return ppuRegisters._bgnba[i].baseAddressBg1a3;
+			                            }, nullptr, EightBits));
+			model->addRegister(Register(0x210B + i, ":4-7", "BG" + std::string((i ? "4" : "2")) + " Base addr",
+			                            [ppuRegisters, i](SNES &) {
+				                            return ppuRegisters._bgnba[i].baseAddressBg2a4;
+			                            }, nullptr, EightBits));
 		}
 
 		// BGnxOFS M7nOFS 0x210D - 0x2114
 		for (int i = 0; i < 4; i++) {
 			int tmp = i * 2;
-			model->addRegister(Register(0x210D + tmp, "", "BG" + std::to_string(i + 1) + "HOFS", [ppuRegisters, tmp](SNES &) {
-				return ppuRegisters._bgofs[tmp].offsetBg;
-			}, nullptr, SixteenBits));
+			model->addRegister(
+				Register(0x210D + tmp, "", "BG" + std::to_string(i + 1) + "HOFS", [ppuRegisters, tmp](SNES &) {
+					return ppuRegisters._bgofs[tmp].offsetBg;
+				}, nullptr, SixteenBits));
 			tmp++;
-			model->addRegister(Register(0x210D + tmp, "", "BG" + std::to_string(i + 1) + "VOFS", [ppuRegisters, tmp](SNES &) {
-				return ppuRegisters._bgofs[tmp].offsetBg;
-			}, nullptr, SixteenBits));
+			model->addRegister(
+				Register(0x210D + tmp, "", "BG" + std::to_string(i + 1) + "VOFS", [ppuRegisters, tmp](SNES &) {
+					return ppuRegisters._bgofs[tmp].offsetBg;
+				}, nullptr, SixteenBits));
 		}
 
 		// VMAIN 0x2115
@@ -240,22 +247,22 @@ namespace ComSquare::Debugger
 		}
 
 		// M7X 0x211F
-		model->addRegister(Register(0x211F, "","M7X", [ppuRegisters](SNES &) {
+		model->addRegister(Register(0x211F, "", "M7X", [ppuRegisters](SNES &) {
 			return ppuRegisters._m7x.value;
 		}, nullptr, SixteenBits));
 
 		// M7Y 0x2120
-		model->addRegister(Register(0x2120, "","M7Y", [ppuRegisters](SNES &) {
+		model->addRegister(Register(0x2120, "", "M7Y", [ppuRegisters](SNES &) {
 			return ppuRegisters._m7y.value;
 		}, nullptr, SixteenBits));
 
 		// CGADD 0x2121
-		model->addRegister(Register(0x2121, "","CGADD", [ppuRegisters](SNES &) {
+		model->addRegister(Register(0x2121, "", "CGADD", [ppuRegisters](SNES &) {
 			return ppuRegisters._cgadd;
 		}, nullptr, EightBits));
 
 		// CGDATA 0x2122
-		model->addRegister(Register(0x2122, "","CGDATA", [ppuRegisters](SNES &) {
+		model->addRegister(Register(0x2122, "", "CGDATA", [ppuRegisters](SNES &) {
 			return ppuRegisters._cgdata.raw;
 		}, nullptr, SixteenBits));
 
@@ -281,32 +288,31 @@ namespace ComSquare::Debugger
 				arr[2] = "Color";
 				break;
 			}
-			model->addRegister(Register(0x2123 + i, "",arr[0], [ppuRegisters, i](SNES &) {
+			model->addRegister(Register(0x2123 + i, "", arr[0], [ppuRegisters, i](SNES &) {
 				return ppuRegisters._wsel[i].raw;
 			}, nullptr, EightBits));
-			model->addRegister(Register(0x2123 + i, ":0",arr[1] + " Window 1 inverted", [ppuRegisters, i](SNES &) {
+			model->addRegister(Register(0x2123 + i, ":0", arr[1] + " Window 1 inverted", [ppuRegisters, i](SNES &) {
 				return ppuRegisters._wsel[i].window1InversionForBg1Bg3Obj;
 			}, nullptr, Boolean));
-			model->addRegister(Register(0x2123 + i, ":1",arr[1] + " Window 1 enabled", [ppuRegisters, i](SNES &) {
+			model->addRegister(Register(0x2123 + i, ":1", arr[1] + " Window 1 enabled", [ppuRegisters, i](SNES &) {
 				return ppuRegisters._wsel[i].enableWindow1ForBg1Bg3Obj;
 			}, nullptr, Boolean));
-			model->addRegister(Register(0x2123 + i, ":2",arr[1] + " Window 2 inverted", [ppuRegisters, i](SNES &) {
+			model->addRegister(Register(0x2123 + i, ":2", arr[1] + " Window 2 inverted", [ppuRegisters, i](SNES &) {
 				return ppuRegisters._wsel[i].window2InversionForBg1Bg3Obj;
 			}, nullptr, Boolean));
-			model->addRegister(Register(0x2123 + i, ":3",arr[1] + " Window 2 enabled", [ppuRegisters, i](SNES &) {
+			model->addRegister(Register(0x2123 + i, ":3", arr[1] + " Window 2 enabled", [ppuRegisters, i](SNES &) {
 				return ppuRegisters._wsel[i].enableWindow2ForBg1Bg3Obj;
 			}, nullptr, Boolean));
-
-			model->addRegister(Register(0x2123 + i, ":4",arr[2] + " Window 1 inverted", [ppuRegisters, i](SNES &) {
+			model->addRegister(Register(0x2123 + i, ":4", arr[2] + " Window 1 inverted", [ppuRegisters, i](SNES &) {
 				return ppuRegisters._wsel[i].window1InversionForBg2Bg4Color;
 			}, nullptr, Boolean));
-			model->addRegister(Register(0x2123 + i, ":5",arr[2] + " Window 1 enabled", [ppuRegisters, i](SNES &) {
+			model->addRegister(Register(0x2123 + i, ":5", arr[2] + " Window 1 enabled", [ppuRegisters, i](SNES &) {
 				return ppuRegisters._wsel[i].enableWindow1ForBg2Bg4Color;
 			}, nullptr, Boolean));
-			model->addRegister(Register(0x2123 + i, ":6",arr[2] + " Window 2 inverted", [ppuRegisters, i](SNES &) {
+			model->addRegister(Register(0x2123 + i, ":6", arr[2] + " Window 2 inverted", [ppuRegisters, i](SNES &) {
 				return ppuRegisters._wsel[i].window2InversionForBg2Bg4Color;
 			}, nullptr, Boolean));
-			model->addRegister(Register(0x2123 + i, ":7",arr[2] + " Window 2 enabled", [ppuRegisters, i](SNES &) {
+			model->addRegister(Register(0x2123 + i, ":7", arr[2] + " Window 2 enabled", [ppuRegisters, i](SNES &) {
 				return ppuRegisters._wsel[i].enableWindow1ForBg2Bg4Color;
 			}, nullptr, Boolean));
 		}
@@ -314,12 +320,14 @@ namespace ComSquare::Debugger
 		// WHx 0x2126 - 0x2129
 		for (int tmp = 0; tmp < 2; tmp++) {
 			int i = tmp * 2;
-			model->addRegister(Register(0x2126 + i, "", "Window " + std::to_string(tmp + 1) + " Left", [ppuRegisters, i](SNES &) {
-				return ppuRegisters._wh[i];
-			}, nullptr, EightBits));
-			model->addRegister(Register(0x2126 + i + 1, "", "Window " + std::to_string(tmp + 1) + " Right", [ppuRegisters, i](SNES &) {
-				return ppuRegisters._wh[i + 1];
-			}, nullptr, EightBits));
+			model->addRegister(
+				Register(0x2126 + i, "", "Window " + std::to_string(tmp + 1) + " Left", [ppuRegisters, i](SNES &) {
+					return ppuRegisters._wh[i];
+				}, nullptr, EightBits));
+			model->addRegister(
+				Register(0x2126 + i + 1, "", "Window " + std::to_string(tmp + 1) + " Right", [ppuRegisters, i](SNES &) {
+					return ppuRegisters._wh[i + 1];
+				}, nullptr, EightBits));
 		}
 
 		// WBGLOG 0x212A
@@ -369,11 +377,12 @@ namespace ComSquare::Debugger
 			model->addRegister(Register(0x212e + j, "", std::string((j ? "TSW" : "TMW")), [ppuRegisters, j](SNES &) {
 				return ppuRegisters._tw[j].raw;
 			}, nullptr, EightBits));
-			for (int i = 0; i < 4; i ++) {
-				model->addRegister(Register(0x212e + j, ":" + std::to_string(i), "BG" + std::to_string(i + 1) + " Window Mask Enabled",
-											[ppuRegisters, i, j](SNES &) {
-												return (ppuRegisters._tw[j].raw >> i) & 1;
-											}, nullptr, Boolean));
+			for (int i = 0; i < 4; i++) {
+				model->addRegister(
+					Register(0x212e + j, ":" + std::to_string(i), "BG" + std::to_string(i + 1) + " Window Mask Enabled",
+					         [ppuRegisters, i, j](SNES &) {
+						         return (ppuRegisters._tw[j].raw >> i) & 1;
+					         }, nullptr, Boolean));
 			}
 			model->addRegister(Register(0x212e + j, ":4", "OBJ Window Mask Enabled", [ppuRegisters, j](SNES &) {
 				return ppuRegisters._tw[j].enableWindowMaskingObj;
@@ -401,7 +410,6 @@ namespace ComSquare::Debugger
 		model->addRegister(Register(0x2131, "", "CGADSUB", [ppuRegisters](SNES &) {
 			return ppuRegisters._cgadsub.raw;
 		}, nullptr, EightBits));
-
 		std::array<std::string, 8> tmp = {
 			"BG1 Enabled",
 			"BG2 Enabled",
@@ -457,18 +465,12 @@ namespace ComSquare::Debugger
 		model->addRegister(Register(0x2133, ":7", "External Sync", [ppuRegisters](SNES &) {
 			return ppuRegisters._setini.externalSync;
 		}, nullptr, Boolean));
-
 		this->_ui.ppuRegisters->setModel(model);
 	}
 
 	void RegisterViewer::focus()
 	{
 		this->_window->activateWindow();
-	}
-
-	void RegisterViewer::disableDebugger()
-	{
-		this->_snes.disableRegisterDebugging();
 	}
 
 	RegisterViewer::~RegisterViewer()
@@ -478,90 +480,86 @@ namespace ComSquare::Debugger
 	}
 
 	Register::Register(uint24_t addr,
-		const std::string &usedBits,
-		const std::string &regName,
-		const std::function<unsigned int(SNES &)> &getValue,
-		const std::function<void(SNES &, unsigned int)> &setValue,
-		RegisterType regType)
-			: address(addr),
-			bits(usedBits),
-			name(regName),
-			get(getValue),
-			set(setValue),
-			type(regType) {}
-}
+	                   std::string usedBits,
+	                   std::string regName,
+	                   std::function<unsigned int(SNES &)> getValue,
+	                   std::function<void(SNES &, unsigned int)> setValue,
+	                   RegisterType regType)
+		: address(addr),
+		  bits(std::move(usedBits)),
+		  name(std::move(regName)),
+		  get(std::move(getValue)),
+		  set(std::move(setValue)),
+		  type(regType)
+	{}
 
-using namespace ComSquare;
-using namespace ComSquare::Debugger;
+	RegistersViewerModel::RegistersViewerModel(SNES &snes, QObject *parent)
+		: QAbstractTableModel(parent), _snes(snes)
+	{}
 
-RegistersViewerModel::RegistersViewerModel(SNES &snes, QObject *parent) : QAbstractTableModel(parent), _snes(snes) { }
+	void RegistersViewerModel::addRegister(const Register &reg)
+	{
+		int row = static_cast<int>(this->_registers.size());
+		this->beginInsertRows(QModelIndex(), row, row);
+		this->_registers.push_back(reg);
+		this->insertRow(row);
+		this->endInsertRows();
+	}
 
+	int RegistersViewerModel::rowCount(const QModelIndex &) const
+	{
+		return static_cast<int>(this->_registers.size());
+	}
 
-void RegistersViewerModel::addRegister(Register reg)
-{
-	int row = this->_registers.size();
-	this->beginInsertRows(QModelIndex(), row, row);
-	this->_registers.push_back(reg);
-	this->insertRow(row);
-	this->endInsertRows();
-}
+	int RegistersViewerModel::columnCount(const QModelIndex &) const
+	{
+		return 3;
+	}
 
-int RegistersViewerModel::rowCount(const QModelIndex &) const
-{
-	return this->_registers.size();
-}
-
-int RegistersViewerModel::columnCount(const QModelIndex &) const
-{
-	return 3;
-}
-
-QVariant RegistersViewerModel::data(const QModelIndex &index, int role) const
-{
-	Register reg = this->_registers[index.row()];
-
-	if (role == Qt::CheckStateRole && reg.type == Boolean && index.column() == 2)
-		return reg.get(this->_snes) ? Qt::Checked : Qt::Unchecked;
-
-	if (role != Qt::DisplayRole)
+	QVariant RegistersViewerModel::data(const QModelIndex &index, int role) const
+	{
+		Register reg = this->_registers[index.row()];
+		if (role == Qt::CheckStateRole && reg.type == Boolean && index.column() == 2)
+			return reg.get(this->_snes) ? Qt::Checked : Qt::Unchecked;
+		if (role != Qt::DisplayRole)
+			return QVariant();
+		switch (index.column()) {
+		case 0:
+			return QString((Utility::to_hex(reg.address) + reg.bits).c_str());
+		case 1:
+			return QString(reg.name.c_str());
+		case 2:
+			switch (reg.type) {
+			case Boolean:
+				return QString(reg.get(this->_snes) ? "True" : "False");
+			case String:
+				return QString(reg.get(this->_snes));
+			case Integer:
+				return QString::number(reg.get(this->_snes));
+			case EightBits:
+				return QString(Utility::to_hex(static_cast<uint8_t>(reg.get(this->_snes))).c_str());
+			case SixteenBits:
+				return QString(Utility::to_hex(static_cast<uint16_t>(reg.get(this->_snes))).c_str());
+			case TwentyFourBits:
+				return QString(Utility::to_hex(static_cast<uint24_t>(reg.get(this->_snes))).c_str());
+			}
+		}
 		return QVariant();
+	}
 
-	switch (index.column()) {
-	case 0:
-		return QString((Utility::to_hex(reg.address) + reg.bits).c_str());
-	case 1:
-		return QString(reg.name.c_str());
-	case 2:
-		switch (reg.type) {
-		case Boolean:
-			return QString(reg.get(this->_snes) ? "True" : "False");
-		case String:
-			return QString(reg.get(this->_snes));
-		case Integer:
-			return QString::number(reg.get(this->_snes));
-		case EightBits:
-			return QString(Utility::to_hex(static_cast<uint8_t>(reg.get(this->_snes))).c_str());
-		case SixteenBits:
-			return QString(Utility::to_hex(static_cast<uint16_t>(reg.get(this->_snes))).c_str());
-		case TwentyFourBits:
-			return QString(Utility::to_hex(static_cast<uint24_t>(reg.get(this->_snes))).c_str());
+	QVariant RegistersViewerModel::headerData(int section, Qt::Orientation orientation, int role) const
+	{
+		if (orientation == Qt::Vertical || role != Qt::DisplayRole)
+			return QVariant();
+		switch (section) {
+		case 0:
+			return QString("Address");
+		case 1:
+			return QString("Name");
+		case 2:
+			return QString("Value");
+		default:
+			return QVariant();
 		}
 	}
-	return QVariant();
-}
-
-QVariant RegistersViewerModel::headerData(int section, Qt::Orientation orientation, int role) const
-{
-	if (orientation == Qt::Vertical || role != Qt::DisplayRole)
-		return QVariant();
-	switch (section) {
-	case 0:
-		return QString("Address");
-	case 1:
-		return QString("Name");
-	case 2:
-		return QString("Value");
-	default:
-		return QVariant();
-	}
-}
+}// namespace ComSquare::Debugger

@@ -9,7 +9,7 @@
 #include <QtCore/QTimer>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
-#include "../SFRenderer.hpp"
+#include "Renderer/SFRenderer.hpp"
 
 namespace ComSquare::Renderer
 {

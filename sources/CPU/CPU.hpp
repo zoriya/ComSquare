@@ -13,6 +13,7 @@
 #include "DMA/DMA.hpp"
 #include "CPU/Registers.hpp"
 #ifdef DEBUGGER_ENABLED
+//#include "Debugger/CPU/CPUDebug.hpp"
 #include "Debugger/RegisterViewer.hpp"
 #endif
 
@@ -21,7 +22,7 @@ namespace ComSquare::CPU
 	//! @brief The main CPU
 	class CPU : public Memory::AMemory
 	{
-	protected:
+	private:
 		//! @brief All the registers of the CPU
 		Registers _registers {};
 		//! @brief Internal registers of the CPU (accessible from the bus via addr $4200 to $421F).
@@ -116,6 +117,7 @@ namespace ComSquare::CPU
 		//! @return The address of the data to read on the instruction.
 		uint24_t _getValueAddr(Instruction &instruction);
 
+	public:
 		//! @brief Break instruction - Causes a software break. The PC is loaded from a vector table.
 		int BRK(uint24_t, AddressingMode);
 		//! @brief Co-Processor Enable instruction - Causes a software break. The PC is loaded from a vector table.
@@ -309,7 +311,7 @@ namespace ComSquare::CPU
 
 		//! @brief All the instructions of the CPU.
 		//! @info Instructions are indexed by their opcode
-		const Instruction _instructions[0x100] = {
+		const Instruction instructions[0x100] = {
 			{&CPU::BRK, 7, "brk", AddressingMode::Immediate8bits,                   2}, // 00
 			{&CPU::ORA, 6, "ora", AddressingMode::DirectPageIndirectIndexedByX,     2}, // 01
 			{&CPU::COP, 7, "cop", AddressingMode::Immediate8bits,                   2}, // 02
@@ -567,7 +569,7 @@ namespace ComSquare::CPU
 			{&CPU::INC, 7, "inc", AddressingMode::AbsoluteIndexedByX,               3}, // FE
 			{&CPU::SBC, 5, "sbc", AddressingMode::AbsoluteIndexedByXLong,           4}, // FF
 		};
-	public:
+
 		//! @brief Construct a new generic CPU.
 		//! @param bus The memory bus to use to transfer data.
 		//! @param cartridgeHeader The header used to know interrupts, main entry point etc...
@@ -618,6 +620,7 @@ namespace ComSquare::CPU
 		bool IsAbortRequested = false;
 
 #ifdef DEBUGGER_ENABLED
+//		friend Debugger::CPUDebug;
 		friend Debugger::RegisterViewer;
 #endif
 	};

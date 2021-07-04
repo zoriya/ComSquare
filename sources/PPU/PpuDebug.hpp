@@ -5,6 +5,8 @@
 #pragma once
 
 #include "Ram/Ram.hpp"
+
+#define private public
 #include "PPU.hpp"
 
 

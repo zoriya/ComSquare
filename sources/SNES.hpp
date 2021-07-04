@@ -15,11 +15,12 @@
 #include <optional>
 
 #ifdef DEBUGGER_ENABLED
+//#include <Debugger/CPU/CPUDebug.hpp>
 #include "Debugger/MemoryViewer.hpp"
 #include "Debugger/HeaderViewer.hpp"
-#include "Debugger/CGramDebug.hpp"
+//#include "Debugger/CGramDebug.hpp"
 #include "Debugger/RegisterViewer.hpp"
-#include "Debugger/TileViewer/TileViewer.hpp"
+//#include "Debugger/TileViewer/TileViewer.hpp"
 #endif
 
 namespace ComSquare
@@ -29,16 +30,19 @@ namespace ComSquare
 	{
 	private:
 #ifdef DEBUGGER_ENABLED
+		//! @brief The CPU's debugger with disassembly, pause, step by step...
+//		std::optional<Debugger::CPUDebug> _cpuDebugger;
+
 		//! @brief The window that allow the user to view a memory.
 		std::optional<Debugger::MemoryViewer> _ramViewer;
 		//! @brief The window that allow the user to view the cartridge's header.
 		std::optional<Debugger::HeaderViewer> _headerViewer;
 		//! @brief The window that allow the user to view the CGRAM.
-		std::optional<Debugger::CGramDebug> _cgramViewer;
+//		std::optional<Debugger::CGramDebug> _cgramViewer;
 		//! @brief The window that allow the user to view registers.
 		std::optional<Debugger::RegisterViewer> _registerViewer;
 		//! @brief The window that allow the user to view the CGRAM as tiles.
-		std::optional<Debugger::TileViewer> _tileViewer;
+//		std::optional<Debugger::TileViewer> _tileViewer;
 #endif
 	public:
 		//! @brief The memory bus that map addresses to components.
@@ -95,26 +99,26 @@ namespace ComSquare
 		void disableHeaderViewer();
 		//! @brief Enable the Header's debugging window.
 		void enableHeaderViewer();
-		//! @brief Disable the APU's debugging window.
-		void disableAPUDebugging();
-		//! @brief Enable the APU's debugging window.
-		void enableAPUDebugging();
-		//! @brief Disable the Memory Bus's debugging window.
-		void disableMemoryBusDebugging();
-		//! @brief Enable the Memory Bus's debugging window.
-		void enableMemoryBusDebugging();
-		//! @brief Disable the CGRAM's debugging window.
-		void disableCgramDebugging();
-		//! @brief Enable the CGRAM's debugging window.
-		void enableCgramDebugging();
+//		//! @brief Disable the APU's debugging window.
+//		void disableAPUDebugging();
+//		//! @brief Enable the APU's debugging window.
+//		void enableAPUDebugging();
+//		//! @brief Disable the Memory Bus's debugging window.
+//		void disableMemoryBusDebugging();
+//		//! @brief Enable the Memory Bus's debugging window.
+//		void enableMemoryBusDebugging();
+//		//! @brief Disable the CGRAM's debugging window.
+//		void disableCgramDebugging();
+//		//! @brief Enable the CGRAM's debugging window.
+//		void enableCgramDebugging();
 		//! @brief Disable the Register's debugging window.
-		void disableRegisterDebugging();
+		void disableRegisterViewer();
 		//! @brief Enable the Register's debugging window.
-		void enableRegisterDebugging();
-		//! @brief Disable the TileViewer's debugging window.
-		void disableTileViewerDebugging();
-		//! @brief Enable the TileViewer's debugging window.
-		void enableTileViewerDebugging();
+		void enableRegisterViewer();
+//		//! @brief Disable the TileViewer's debugging window.
+//		void disableTileViewerDebugging();
+//		//! @brief Enable the TileViewer's debugging window.
+//		void enableTileViewerDebugging();
 #endif
 	};
 }// namespace ComSquare

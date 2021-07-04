@@ -7,19 +7,19 @@
 namespace ComSquare::PPU::Utils::Debug
 {
 
-	void populateCgramTicTacToe(const std::shared_ptr<Ram::Ram> &cgram)
+	void populateCgramTicTacToe(Ram::Ram &cgram)
 	{
 		//colors for the cgram
-		cgram->write(2, 0xE0);
-		cgram->write(3, 0x7F);
-		cgram->write(4, 0x1F); // 0x1F
-		cgram->write(6, 0xFF);
-		cgram->write(7, 0x03);
-		cgram->write(66, 0xE0);
-		cgram->write(67, 0x7F);
+		cgram.write(2, 0xE0);
+		cgram.write(3, 0x7F);
+		cgram.write(4, 0x1F); // 0x1F
+		cgram.write(6, 0xFF);
+		cgram.write(7, 0x03);
+		cgram.write(66, 0xE0);
+		cgram.write(67, 0x7F);
 	}
 
-	void populateVramTicTacToe(const std::shared_ptr<Ram::Ram> &vram)
+	void populateVramTicTacToe(Ram::Ram &vram)
 	{
 		int vram_test[] = {
 			00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
@@ -54,37 +54,37 @@ namespace ComSquare::PPU::Utils::Debug
 			00,0x00,0x00,0x00,0x01,0x00,0x03,0x00,0x07,0x00,0x0f,00,0x1f,00,0x3f,00, -1
 		};
 		for (int i = 0; vram_test[i] != -1; i++) {
-			vram->write(i, vram_test[i]);
+			vram.write(i, vram_test[i]);
 		}
 		int vram_test_2[] = {8, 00, 02, 00, 0x0A, 00, 02, 00, 0x0A, 00, 00, 00, 00, 00, 00, -1};
 		for (int i = 0; vram_test_2[i] != -1; i++) {
-			vram->write(i + 0x8000, vram_test_2[i]);
+			vram.write(i + 0x8000, vram_test_2[i]);
 		}
 		int vram_test_3[] = {8, 00, 02, 00, 0x8, 00, 02, 00, 0x8, 00, 00, 00, 00, 00, 00, -1};
 		for (int i = 0; vram_test_3[i] != -1; i++) {
-			vram->write(i + 0x8080, vram_test_3[i]);
+			vram.write(i + 0x8080, vram_test_3[i]);
 		}
 		int vram_test_4[] = {8, 00, 02, 00, 0x0A, 00, 02, 00, 0x0A, 00, 00, 00, 00, 00, 00, -1};
 		for (int i = 0; vram_test_4[i] != -1; i++) {
-			vram->write(i + 0x8100, vram_test_4[i]);
+			vram.write(i + 0x8100, vram_test_4[i]);
 		}
-		vram->write(0x8040, 04);
-		vram->write(0x8042, 06);
-		vram->write(0x8044, 04);
-		vram->write(0x8046, 06);
-		vram->write(0x8048, 04);
+		vram.write(0x8040, 04);
+		vram.write(0x8042, 06);
+		vram.write(0x8044, 04);
+		vram.write(0x8046, 06);
+		vram.write(0x8048, 04);
 
-		vram->write(0x80C0, 04);
-		vram->write(0x80C2, 06);
-		vram->write(0x80C4, 04);
-		vram->write(0x80C6, 06);
-		vram->write(0x80C8, 04);
+		vram.write(0x80C0, 04);
+		vram.write(0x80C2, 06);
+		vram.write(0x80C4, 04);
+		vram.write(0x80C6, 06);
+		vram.write(0x80C8, 04);
 
-		vram->write(0xC000, 0x0C);
+		vram.write(0xC000, 0x0C);
 
 	}
 
-	void populateCgramAladin(const std::shared_ptr<Ram::Ram> &cgram)
+	void populateCgramAladin(Ram::Ram &cgram)
 	{
 		int cgram_dump[] = {
 			0xCE, 0x69, 0xDF, 0x63, 0xDE, 0x16, 0x8B, 0x00, 0x00, 0x00, 0xBF, 0x67, 0x98, 0x42, 0x0E, 0x15, 0x00, 0x00,
@@ -118,11 +118,11 @@ namespace ComSquare::PPU::Utils::Debug
 			0xC9, 0x0C, 0xD2, 0x25, 0xA5, 0x14, 0x00, 0x00, -1
 		};
 		for (int i = 0; cgram_dump[i] != -1; i++) {
-			cgram->write(i, cgram_dump[i]);
+			cgram.write(i, cgram_dump[i]);
 		}
 	}
 
-	void populateVramAladin(const std::shared_ptr<Ram::Ram> &vram)
+	void populateVramAladin(Ram::Ram &vram)
 	{
 		static int vram_dump[] = {
 			0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -3768,7 +3768,7 @@ namespace ComSquare::PPU::Utils::Debug
 			0x24, 0x7D, 0x1A, 0x79, 0x16, 0x31, 0x18, 0x39, 0x17, 0x17, 0x0D, 0x0D, 0x07, 0x07, 0x01, 0x01, -1
 		};
 		for (int i = 0; vram_dump[i] != -1; i++) {
-			vram->write(i, vram_dump[i]);
+			vram.write(i, vram_dump[i]);
 		}
 	}
 
@@ -3864,7 +3864,8 @@ namespace ComSquare::PPU::Utils::Debug
 		ppu._registers._t[0].enableWindowDisplayBg2 = true;
 	}
 
-	void populateVram(std::shared_ptr<Ram::Ram> vram, int dumpNumber) {
+	void populateVram(Ram::Ram &vram, int dumpNumber)
+	{
 		switch (dumpNumber)
 		{
 		case 0: return populateVramTicTacToe(vram);
@@ -3874,7 +3875,7 @@ namespace ComSquare::PPU::Utils::Debug
 		}
 	}
 
-	void populateCgram(std::shared_ptr<Ram::Ram> cgram, int dumpNumber)
+	void populateCgram(Ram::Ram &cgram, int dumpNumber)
 	{
 		switch (dumpNumber)
 		{

@@ -555,10 +555,10 @@ namespace ComSquare::PPU
 	class PPU : public Memory::AMemory {
 	public:
 		//! @brief Rams
-		std::shared_ptr<Ram::Ram> vram;
-		std::shared_ptr<Ram::Ram> oamram;
-		std::shared_ptr<Ram::Ram> cgram;
-	//private:
+		Ram::Ram vram;
+		Ram::Ram oamram;
+		Ram::Ram cgram;
+	private:
 		//! @brief Init ppuRegisters
 		Registers _registers{};
 		Renderer::IRenderer &_renderer;

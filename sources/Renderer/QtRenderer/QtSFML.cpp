@@ -90,27 +90,27 @@ namespace ComSquare::Renderer
 
 	void QtFullSFML::enableDebugAPU()
 	{
-		this->_snes.enableAPUDebugging();
+//		this->_snes.enableAPUDebugging();
 	}
 
 	void QtFullSFML::enableDebugBus()
 	{
-		this->_snes.enableMemoryBusDebugging();
+//		this->_snes.enableMemoryBusDebugging();
 	}
 
 	void QtFullSFML::enableCgramViewer()
 	{
-		this->_snes.enableCgramDebugging();
+//		this->_snes.enableCgramDebugging();
 	}
 
 	void QtFullSFML::enableRegisterViewer()
 	{
-		this->_snes.enableRegisterDebugging();
+		this->_snes.enableRegisterViewer();
 	}
 
 	void QtFullSFML::enableTileViewer()
 	{
-		this->_snes.enableTileViewerDebugging();
+//		this->_snes.enableTileViewerDebugging();
 	}
 #endif
 

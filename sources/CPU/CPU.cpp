@@ -313,7 +313,7 @@ namespace ComSquare::CPU
 
 	unsigned CPU::_executeInstruction(uint8_t opcode)
 	{
-		Instruction instruction = this->_instructions[opcode];
+		Instruction instruction = this->instructions[opcode];
 		this->_hasIndexCrossedPageBoundary = false;
 		uint24_t valueAddr = this->_getValueAddr(instruction);
 

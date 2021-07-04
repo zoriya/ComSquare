@@ -96,7 +96,8 @@ set(SOURCES
 	sources/PPU/TileRenderer.cpp
 	sources/PPU/TileRenderer.hpp
 	sources/PPU/Tile.hpp
-	sources/CPU/Registers.hpp)
+	sources/CPU/Registers.hpp
+	)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -116,32 +117,30 @@ add_executable(comsquare
 	sources/Renderer/QtRenderer/QtSfmlTileRenderer.hpp
 	sources/Renderer/QtRenderer/QtSfmlTileRenderer.cpp
 	sources/Renderer/QtRenderer/QtSfmlTileRenderer.hpp
-	#	sources/PPU/PpuDebug.cpp
-	#	sources/PPU/PpuDebug.hpp
-	#	sources/Debugger/CPU/CPUDebug.cpp
-	#	sources/Debugger/CPU/CPUDebug.hpp
-	#	sources/Debugger/MemoryViewer.cpp
-	#	sources/Debugger/MemoryViewer.hpp
-	#	sources/Debugger/HeaderViewer.cpp
-	#	sources/Debugger/HeaderViewer.hpp
-	#	sources/Debugger/HeaderViewer.cpp
-	#	sources/Debugger/HeaderViewer.hpp
-	#	sources/Debugger/APUDebug.hpp
-	#	sources/Debugger/APUDebug.cpp
-	#	sources/Debugger/MemoryBusDebug.cpp
-	#	sources/Debugger/MemoryBusDebug.hpp
-	#	sources/Debugger/ClosableWindow.hpp
-	#	sources/Debugger/CPU/Disassembly.cpp
-	#	sources/Debugger/CGramDebug.cpp
-	#	sources/Debugger/CGramDebug.hpp
-	#	sources/Debugger/RegisterViewer.cpp
-	#	sources/Debugger/RegisterViewer.hpp
-	#	sources/Debugger/CPU/SymbolLoaders/WlaDx.cpp
-	#	sources/Debugger/CPU/SymbolLoaders/WlaDx.hpp
-	#	sources/Debugger/TileViewer/TileViewer.cpp
-	#	sources/Debugger/TileViewer/TileViewer.hpp
-	#	sources/Debugger/TileViewer/RAMTileRenderer.cpp
-	#	sources/Debugger/TileViewer/RAMTileRenderer.hpp
+	sources/PPU/PpuDebug.cpp
+	sources/PPU/PpuDebug.hpp
+	sources/Debugger/ClosableWindow.hpp
+#	sources/Debugger/CPU/CPUDebug.cpp
+#	sources/Debugger/CPU/CPUDebug.hpp
+#	sources/Debugger/CPU/Disassembly.cpp
+#	sources/Debugger/CPU/SymbolLoaders/WlaDx.cpp
+#	sources/Debugger/CPU/SymbolLoaders/WlaDx.hpp
+	sources/Debugger/MemoryViewer.cpp
+	sources/Debugger/MemoryViewer.hpp
+	sources/Debugger/HeaderViewer.cpp
+	sources/Debugger/HeaderViewer.hpp
+#	sources/Debugger/APUDebug.hpp
+#	sources/Debugger/APUDebug.cpp
+#	sources/Debugger/MemoryBusDebug.cpp
+#	sources/Debugger/MemoryBusDebug.hpp
+#	sources/Debugger/CGramDebug.cpp
+#	sources/Debugger/CGramDebug.hpp
+	sources/Debugger/RegisterViewer.cpp
+	sources/Debugger/RegisterViewer.hpp
+#	sources/Debugger/TileViewer/TileViewer.cpp
+#	sources/Debugger/TileViewer/TileViewer.hpp
+#	sources/Debugger/TileViewer/RAMTileRenderer.cpp
+#	sources/Debugger/TileViewer/RAMTileRenderer.hpp
 	ui/tileView.ui
 	ui/registersView.ui
 	ui/cpuView.ui
@@ -152,7 +151,7 @@ add_executable(comsquare
 	resources/appResources.qrc
 	)
 target_include_directories(comsquare PRIVATE ./)
-#target_compile_definitions(comsquare PUBLIC DEBUGGER_ENABLED)
+target_compile_definitions(comsquare PUBLIC DEBUGGER_ENABLED)
 
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 target_link_libraries(comsquare

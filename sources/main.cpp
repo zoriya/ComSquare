@@ -65,23 +65,23 @@ void parseArguments(int argc, char **argv, SNES &snes)
 		case 'c':
 			snes.enableCPUDebugging();
 			break;
-		case 'a':
-			snes.enableAPUDebugging();
-			break;
+//		case 'a':
+//			snes.enableAPUDebugging();
+//			break;
 		case 'm':
 			snes.enableRamViewer();
 			break;
-		case 'h':
+		case 'H':
 			snes.enableHeaderViewer();
 			break;
-		case 'b':
-			snes.enableMemoryBusDebugging();
-			break;
-		case 'g':
-			snes.enableCgramDebugging();
-			break;
+//		case 'b':
+//			snes.enableMemoryBusDebugging();
+//			break;
+//		case 'g':
+//			snes.enableCgramDebugging();
+//			break;
 		case 'r':
-			snes.enableRegisterDebugging();
+			snes.enableRegisterViewer();
 			break;
 #endif
 		default:
@@ -106,13 +106,10 @@ int main(int argc, char **argv)
 	QApplication::setAttribute(Qt::AA_DisableWindowContextHelpButton);
 	Renderer::QtSFMLWindow renderer(1100, 1100);
 	try {
-		// TODO remove the new once arrays are newed.
-		auto *snes = new SNES(renderer);
+		auto snes = std::make_unique<SNES>(renderer);
 		parseArguments(argc, argv, *snes);
 		renderer.createWindow(*snes, 60);
-		int ret = QApplication::exec();
-		delete snes;
-		return ret;
+		return QApplication::exec();
 	}
 	catch(std::exception &ex) {
 		std::cerr << ex.what() << std::endl;

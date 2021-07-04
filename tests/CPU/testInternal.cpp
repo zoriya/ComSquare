@@ -32,8 +32,7 @@ TEST_CASE("resetall REP", "[REP]")
 	snes.cpu._isEmulationMode = false;
 	snes.wram._data[0] = 0xFF;
 	snes.cpu.REP(0x00, ComSquare::CPU::AddressingMode::Implied);
-	auto data = snes.cpu._registers.p.flags;
-	REQUIRE(data == 0x00);
+	REQUIRE(snes.cpu._registers.p.flags == 0x00);
 }
 
 TEST_CASE("resetsome REP", "[REP]")
@@ -43,8 +42,7 @@ TEST_CASE("resetsome REP", "[REP]")
 	snes.cpu._registers.p.flags = 0b01000000;
 	snes.wram._data[0] = 0b01000000;
 	snes.cpu.REP(0x0, ComSquare::CPU::AddressingMode::Implied);
-	auto data = snes.cpu._registers.p.flags;
-	REQUIRE(data == 0x0);
+	REQUIRE(snes.cpu._registers.p.flags == 0x0);
 }
 
 TEST_CASE("resetallEmulation REP", "[REP]")
@@ -53,8 +51,7 @@ TEST_CASE("resetallEmulation REP", "[REP]")
 	snes.cpu._isEmulationMode = true;
 	snes.wram._data[0] = 0xFF;
 	snes.cpu.REP(0x00, ComSquare::CPU::AddressingMode::Implied);
-	auto data = snes.cpu._registers.p.flags;
-	REQUIRE(data == 0b00110000);
+	REQUIRE(snes.cpu._registers.p.flags == 0b00110000);
 }
 
 TEST_CASE("resetsomeEmulation REP", "[REP]")
@@ -64,8 +61,7 @@ TEST_CASE("resetsomeEmulation REP", "[REP]")
 	snes.cpu._registers.p.flags = 0b01000101;
 	snes.wram._data[0] = 0b01000001;
 	snes.cpu.REP(0x0, ComSquare::CPU::AddressingMode::Implied);
-	auto data = snes.cpu._registers.p.flags;
-	REQUIRE(data == 0b00110100);
+	REQUIRE(snes.cpu._registers.p.flags == 0b00110100);
 }
 
 TEST_CASE("jump JSR", "[JSR]")

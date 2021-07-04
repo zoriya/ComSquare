@@ -4,18 +4,19 @@
 
 #pragma once
 
-#include <stdint-gcc.h>
 #include <array>
 #include <vector>
-#include "../Models/Vector2.hpp"
+#include "Models/Vector2.hpp"
 #include "TileRenderer.hpp"
-#include "../Ram/Ram.hpp"
+#include "Ram/Ram.hpp"
 #include "PPU.hpp"
 
 namespace ComSquare::PPU
 {
 	class PPU;
-	class Background {
+
+	class Background
+	{
 	private:
 		//! @brief The number of character a TileMap has in width
 		static constexpr int NbCharacterWidth = 32;
@@ -27,9 +28,8 @@ namespace ComSquare::PPU
 		//! @brief The size of a TileMap in memory
 		static constexpr unsigned short TileMapByteSize = 0x800;
 
-
 		//! @brief the ppu used to get registers values (ex: bg scroll)
-		ComSquare::PPU::PPU &_ppu;
+		PPU &_ppu;
 		//! @brief The tilemap configuration nb of tileMap vertically and horizontally
 		//! @note members are set to true if the tilemap is expended in their direction
 		Vector2<bool> _tileMapsConfig;
@@ -50,14 +50,14 @@ namespace ComSquare::PPU
 		bool _priority;
 		//! @brief The bg number (used to get the corresponding scroll)
 		int _bgNumber;
-		//! @brief Class that actually render a tile
-		TileRenderer _tileRenderer;
 		//! @brief Buffer if we have tiles that are more than  8x8
 		std::array<std::array<uint32_t, 16>, 16> _tileBuffer;
 		//! @brief the access to vram
-		std::shared_ptr<Ram::Ram> _vram;
+		Ram::Ram &_vram;
 		//! @brief The access to cgram
-		std::shared_ptr<Ram::Ram> _cgram;
+		Ram::Ram &_cgram;
+		//! @brief Class that actually render a tile
+		TileRenderer _tileRenderer;
 		//! @brief Draw a tile on the screen at x y pos
 		void _drawBgTile(uint16_t data, Vector2<int> pos);
 		//! @brief draw a tileMap 32x32 starting at baseAddress
@@ -98,7 +98,7 @@ namespace ComSquare::PPU
 		bool getPriority() const;
 
 		//! @brief ctor
-		Background(ComSquare::PPU::PPU &_ppu, int backGroundNumber, bool hasPriority);
+		Background(PPU &_ppu, int backGroundNumber, bool hasPriority);
 		//! @brief Default copy ctor
 		Background(const Background &) = default;
 		//! @brief Default destructor
