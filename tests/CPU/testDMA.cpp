@@ -52,7 +52,7 @@ TEST_CASE("RomToVRAM DMA", "[DMA]")
 	REQUIRE(snes.cpu._dmaChannels[0]._port == 0x18);
 	REQUIRE(snes.ppu._registers._vmadd.vmadd == 0x2400);
 	for(unsigned i = 0; i < 0x400; i++) {
-		uint16_t value = snes.ppu.vram->_data[0x2000 * 2 + i * 2] | (snes.ppu.vram->_data[0x2000 * 2 + i * 2 + 1] << 8);
+		uint16_t value = snes.ppu.vram._data[0x2000 * 2 + i * 2] | (snes.ppu.vram._data[0x2000 * 2 + i * 2 + 1] << 8);
 		REQUIRE(value == i);
 	}
 	REQUIRE(snes.cpu._dmaChannels[0].enabled == false);
@@ -69,7 +69,7 @@ TEST_CASE("VramWrite DMA", "[DMA]")
 		REQUIRE(snes.ppu._registers._vmadd.vmadd == 0x2001 + i);
 	}
 	for(unsigned i = 0; i < 0x400; i++) {
-		uint16_t value = snes.ppu.vram->_data[0x2000 * 2 + i * 2] | (snes.ppu.vram->_data[0x2000 * 2 + i * 2 + 1] << 8);
+		uint16_t value = snes.ppu.vram._data[0x2000 * 2 + i * 2] | (snes.ppu.vram._data[0x2000 * 2 + i * 2 + 1] << 8);
 		REQUIRE(value == (uint16_t)i);
 	}
 }
@@ -86,7 +86,7 @@ TEST_CASE("VramWriteInvertedOrder DMA", "[DMA]")
 		REQUIRE(snes.ppu._registers._vmadd.vmadd == 0x2001 + i);
 	}
 	for(unsigned i = 0; i < 0x400; i++) {
-		uint16_t value = snes.ppu.vram->_data[0x2000 * 2 + i * 2] | (snes.ppu.vram->_data[0x2000 * 2 + i * 2 + 1] << 8);
+		uint16_t value = snes.ppu.vram._data[0x2000 * 2 + i * 2] | (snes.ppu.vram._data[0x2000 * 2 + i * 2 + 1] << 8);
 		REQUIRE(value == (uint16_t)i);
 	}
 }
@@ -133,7 +133,7 @@ TEST_CASE("WRamToVRAM DMA", "[DMA]")
 	REQUIRE(snes.cpu._dmaChannels[0]._port == 0x18);
 	REQUIRE(snes.ppu._registers._vmadd.vmadd == 0x0400);
 	for(unsigned i = 0; i < 0x400; i++) {
-		uint16_t value = snes.ppu.vram->_data[i * 2] | (snes.ppu.vram->_data[i * 2 + 1] << 8);
+		uint16_t value = snes.ppu.vram._data[i * 2] | (snes.ppu.vram._data[i * 2 + 1] << 8);
 		REQUIRE(value == i);
 	}
 	REQUIRE(snes.cpu._dmaChannels[0].enabled == false);

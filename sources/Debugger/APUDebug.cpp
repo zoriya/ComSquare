@@ -10,16 +10,12 @@ using namespace ComSquare::APU;
 
 namespace ComSquare::Debugger
 {
-	APUDebug::APUDebug(APU &apu, SNES &snes) :
-			APU(apu),
-			_window(new ClosableWindow<APUDebug>(*this, &APUDebug::disableDebugger)),
-			_ui(),
-			_snes(snes)
+	APUDebug::APUDebug(APU &apu, SNES &snes)
+		: APU(apu),
+		  _window(new ClosableWindow([&snes] { snes.disableAPUDebugging(); })),
+		  _ui(),
+		  _snes(snes)
 	{
-		this->_window->setContextMenuPolicy(Qt::NoContextMenu);
-		this->_window->setAttribute(Qt::WA_QuitOnClose, false);
-		this->_window->setAttribute(Qt::WA_DeleteOnClose);
-
 		this->_ui.setupUi(this->_window);
 		QMainWindow::connect(this->_ui.resumeButton, &QPushButton::clicked, this, &APUDebug::pause);
 		QMainWindow::connect(this->_ui.stepButton, &QPushButton::clicked, this, &APUDebug::step);
@@ -302,46 +298,46 @@ namespace ComSquare::Debugger
 	std::string APUDebug::_getOperand(Operand ope)
 	{
 		switch (ope) {
-			case None:
-				return "";
-			case A:
-				return Utility::to_hex(this->_internalRegisters.a);
-			case X:
-				return Utility::to_hex(this->_internalRegisters.x);
-			case Y:
-				return Utility::to_hex(this->_internalRegisters.y);
-			case SP:
-				return Utility::to_hex(this->_internalRegisters.sp);
-			case PSW:
-				return Utility::to_hex(this->_internalRegisters.psw);
-			case ImmediateData:
-				return Utility::to_hex(this->_getImmediateData());
-			case IndexXAddr:
-				return Utility::to_hex(this->_getIndexXAddr());
-			case IndexYAddr:
-				return Utility::to_hex(this->_getIndexYAddr());
-			case AbsoluteAddr:
-				return Utility::to_hex(this->_getAbsoluteAddr());
-			case AbsoluteBit: {
-				auto pair = this->_getAbsoluteBit();
-				return Utility::to_hex(std::get<0>(pair)) + Utility::to_hex(std::get<1>(pair));
-			}
-			case AbsoluteAddrByX:
-				return Utility::to_hex(this->_getAbsoluteAddrByX());
-			case AbsoluteAddrByY:
-				return Utility::to_hex(this->_getAbsoluteAddrByY());
-			case AbsoluteByXAddr:
-				return Utility::to_hex(this->_getAbsoluteByXAddr());
-			case AbsoluteDirectByXAddr:
-				return Utility::to_hex(this->_getAbsoluteDirectByXAddr());
-			case AbsoluteDirectAddrByY:
-				return Utility::to_hex(this->_getAbsoluteDirectAddrByY());
-			case DirectAddr:
-				return Utility::to_hex(this->_getDirectAddr());
-			case DirectAddrByX:
-				return Utility::to_hex(this->_getDirectAddrByX());
-			case DirectAddrByY:
-				return Utility::to_hex(this->_getDirectAddrByY());
+		case None:
+			return "";
+		case A:
+			return Utility::to_hex(this->_internalRegisters.a);
+		case X:
+			return Utility::to_hex(this->_internalRegisters.x);
+		case Y:
+			return Utility::to_hex(this->_internalRegisters.y);
+		case SP:
+			return Utility::to_hex(this->_internalRegisters.sp);
+		case PSW:
+			return Utility::to_hex(this->_internalRegisters.psw);
+		case ImmediateData:
+			return Utility::to_hex(this->_getImmediateData());
+		case IndexXAddr:
+			return Utility::to_hex(this->_getIndexXAddr());
+		case IndexYAddr:
+			return Utility::to_hex(this->_getIndexYAddr());
+		case AbsoluteAddr:
+			return Utility::to_hex(this->_getAbsoluteAddr());
+		case AbsoluteBit: {
+			auto pair = this->_getAbsoluteBit();
+			return Utility::to_hex(std::get<0>(pair)) + Utility::to_hex(std::get<1>(pair));
+		}
+		case AbsoluteAddrByX:
+			return Utility::to_hex(this->_getAbsoluteAddrByX());
+		case AbsoluteAddrByY:
+			return Utility::to_hex(this->_getAbsoluteAddrByY());
+		case AbsoluteByXAddr:
+			return Utility::to_hex(this->_getAbsoluteByXAddr());
+		case AbsoluteDirectByXAddr:
+			return Utility::to_hex(this->_getAbsoluteDirectByXAddr());
+		case AbsoluteDirectAddrByY:
+			return Utility::to_hex(this->_getAbsoluteDirectAddrByY());
+		case DirectAddr:
+			return Utility::to_hex(this->_getDirectAddr());
+		case DirectAddrByX:
+			return Utility::to_hex(this->_getDirectAddrByX());
+		case DirectAddrByY:
+			return Utility::to_hex(this->_getDirectAddrByY());
 		}
 		return "UNKNOWN";
 	}
@@ -394,17 +390,6 @@ namespace ComSquare::Debugger
 			this->_ui.resumeButton->setText("Resume");
 		else
 			this->_ui.resumeButton->setText("Pause");
-	}
-
-
-	void APUDebug::disableDebugger()
-	{
-		this->_snes.disableAPUDebugging();
-	}
-
-	bool APUDebug::isDebugger() const
-	{
-		return true;
 	}
 
 	void APUDebug::focus()

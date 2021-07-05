@@ -90,7 +90,7 @@ namespace ComSquare::Renderer
 
 	void QtFullSFML::enableDebugAPU()
 	{
-//		this->_snes.enableAPUDebugging();
+		this->_snes.enableAPUDebugging();
 	}
 
 	void QtFullSFML::enableDebugBus()

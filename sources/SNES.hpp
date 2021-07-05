@@ -102,10 +102,10 @@ namespace ComSquare
 		void disableHeaderViewer();
 		//! @brief Enable the Header's debugging window.
 		void enableHeaderViewer();
-//		//! @brief Disable the APU's debugging window.
-//		void disableAPUDebugging();
-//		//! @brief Enable the APU's debugging window.
-//		void enableAPUDebugging();
+		//! @brief Disable the APU's debugging window.
+		void disableAPUDebugging();
+		//! @brief Enable the APU's debugging window.
+		void enableAPUDebugging();
 		//! @brief Disable the Memory Bus's debugging window.
 		void disableMemoryBusDebugging();
 		//! @brief Enable the Memory Bus's debugging window.

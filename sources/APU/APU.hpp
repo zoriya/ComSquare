@@ -2,16 +2,15 @@
 // Created by Melefo on 24/01/2020.
 //
 
-#ifndef COMSQUARE_APU_HPP
-#define COMSQUARE_APU_HPP
+#pragma once
 
 #include <memory>
 #include "DSP/DSP.hpp"
-#include "../Memory/AMemory.hpp"
-#include "../Ram/Ram.hpp"
+#include "Memory/AMemory.hpp"
+#include "Ram/Ram.hpp"
 #include "IPL/IPL.hpp"
-#include "../Renderer/IRenderer.hpp"
-#include "../Cartridge/Cartridge.hpp"
+#include "Renderer/IRenderer.hpp"
+#include "Cartridge/Cartridge.hpp"
 
 namespace ComSquare::APU
 {
@@ -154,7 +153,7 @@ namespace ComSquare::APU
 		//! @param addr The address to read from. The address 0x0000 should refer to the first byte of the register.
 		//! @throw InvalidAddress will be thrown if the address is more than $FFFF (the number of register).
 		//! @return Return the data.
-		uint8_t _internalRead(uint24_t addr) const;
+		[[nodiscard]] uint8_t _internalRead(uint24_t addr) const;
 
 		//! @brief Write data to the APU ram.
 		//! @param addr The address to write to. The address 0x0000 should refer to the first byte of register.
@@ -369,7 +368,7 @@ namespace ComSquare::APU
 	public:
 		explicit APU(Renderer::IRenderer &renderer);
 		APU(const APU &) = default;
-		APU &operator=(const APU &) = default;
+		APU &operator=(const APU &) = delete;
 		~APU() override = default;
 
 		//! @brief Read from the APU ram.
@@ -385,10 +384,10 @@ namespace ComSquare::APU
 		void write(uint24_t addr, uint8_t data) override;
 
 		//! @brief Get the name of this accessor (used for debug purpose)
-		std::string getName() const override;
+		[[nodiscard]] std::string getName() const override;
 
 		//! @brief Get the component of this accessor (used for debug purpose)
-		Component getComponent() const override;
+		[[nodiscard]] Component getComponent() const override;
 
 		//! @brief Get the name of the data at the address
 		//! @param addr The address (in local space)
@@ -396,7 +395,7 @@ namespace ComSquare::APU
 
 		//! @brief Get the size of the data. This size can be lower than the mapped data.
 		//! @return The number of bytes inside this memory.
-		uint24_t getSize() const override;
+		[[nodiscard]] uint24_t getSize() const override;
 
 		//! @brief Parses rom data to uploads directly into RAM and corresponding registers
 		void loadFromSPC(Cartridge::Cartridge &cartridge);
@@ -407,10 +406,5 @@ namespace ComSquare::APU
 
 		//! @brief This function is executed when the SNES is powered on or the reset button is pushed.
 		void reset();
-
-		//! @brief Return true if the CPU is overloaded with debugging features.
-		virtual bool isDebugger() const;
 	};
 }
-
-#endif //COMSQUARE_APU_HPP

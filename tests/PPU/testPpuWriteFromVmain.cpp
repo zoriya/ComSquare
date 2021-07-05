@@ -64,8 +64,8 @@ TEST_CASE("vmadd_full_data_check_ram PPU_write_2", "[PPU_write_2]")
 	snes.bus.write(0x2118, 0xFF);
 	snes.bus.write(0x2119, 0xFF);
 	REQUIRE(snes.ppu._registers._vmadd.vmadd == 3);
-	REQUIRE(snes.ppu.vram->read(4) == 0xFF);
-	REQUIRE(snes.ppu.vram->read(5) == 0xF);
+	REQUIRE(snes.ppu.vram.read(4) == 0xFF);
+	REQUIRE(snes.ppu.vram.read(5) == 0xF);
 }
 
 TEST_CASE("vmadd_full_high_byte_null PPU_write_2", "[PPU_write_2]")

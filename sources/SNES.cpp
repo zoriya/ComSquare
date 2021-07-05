@@ -101,21 +101,21 @@ namespace ComSquare
 		this->_headerViewer = std::nullopt;
 	}
 
-//	void SNES::enableAPUDebugging()
-//	{
+	void SNES::enableAPUDebugging()
+	{
 //		if (this->apu->isDebugger())
 //			std::static_pointer_cast<Debugger::APUDebug>(this->apu)->focus();
 //		else {
 //			this->apu = std::make_shared<Debugger::APUDebug>(*this->apu, *this);
 //			this->bus.mapComponents(*this);
 //		}
-//	}
-//
-//	void SNES::disableAPUDebugging()
-//	{
+	}
+
+	void SNES::disableAPUDebugging()
+	{
 //		this->apu = std::make_shared<APU::APU>(*this->apu);
 //		this->bus.mapComponents(*this);
-//	}
+	}
 
 	void SNES::enableMemoryBusDebugging()
 	{

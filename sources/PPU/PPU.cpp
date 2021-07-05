@@ -470,11 +470,6 @@ namespace ComSquare::PPU
 		return Ppu;
 	}
 
-	bool PPU::isDebugger() const
-	{
-		return false;
-	}
-
 	uint16_t PPU::cgramRead(uint16_t addr)
 	{
 		return this->cgram.read(addr);

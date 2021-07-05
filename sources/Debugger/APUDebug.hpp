@@ -2,12 +2,11 @@
 // Created by Melefo on 19/02/2020.
 //
 
-#ifndef COMSQUARE_APUDEBUG_HPP
-#define COMSQUARE_APUDEBUG_HPP
+#pragma once
 
-#include "../APU/APU.hpp"
-#include "../SNES.hpp"
-#include "../../ui/ui_apuView.h"
+#include "APU/APU.hpp"
+#include "SNES.hpp"
+#include "ui/ui_apuView.h"
 
 namespace ComSquare::Debugger
 {
@@ -43,11 +42,11 @@ namespace ComSquare::Debugger
 		std::tuple<Operand, Operand> operands;
 	};
 
-	class APUDebug : public APU::APU, public QObject
+	class APUDebug : public QObject
 	{
 	private:
 		//! @brief List of instructions and their information
-		std::array<Instruction, 0x100> _instructions {{
+		const std::array<Instruction, 0x100> _instructions {{
 			{"NOP", 1, {None, None}},
 			{"TCALL", 1, {None, None}},
 			{"SET1", 2, {DirectAddr, None}},
@@ -313,7 +312,7 @@ namespace ComSquare::Debugger
 		int _appendInstruction(int row);
 
 		//! @brief The QT window for this debugger.
-		ClosableWindow<APUDebug> *_window;
+		ClosableWindow *_window;
 
 		//! @brief A widget that contain the whole UI.
 		Ui::APUView _ui;
@@ -358,12 +357,7 @@ namespace ComSquare::Debugger
 		//! @brief Override the apu's update to disable debugging.
 		void update(unsigned cycles) override;
 
-		//! @brief Return true if the CPU is overloaded with debugging features.
-		bool isDebugger() const override;
-
 		//! @brief Focus the debugger's window.
 		void focus();
 	};
 }
-
-#endif //COMSQUARE_APUDEBUG_HPP

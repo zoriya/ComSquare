@@ -19,11 +19,6 @@ namespace ComSquare::APU
 		this->reset();
 	}
 
-	bool APU::isDebugger() const
-	{
-		return false;
-	}
-
 	std::string APU::getName() const
 	{
 		return "APU";

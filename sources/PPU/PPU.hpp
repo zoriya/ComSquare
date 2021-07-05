@@ -607,8 +607,6 @@ namespace ComSquare::PPU
 		uint16_t getVramAddress() const;
 		//! @brief Give the name of the Address register (used for debug)
 		std::string getValueName(uint24_t addr) const;
-		//! @brief Return true if the CPU is overloaded with debugging features.
-		virtual bool isDebugger() const;
 		//! @brief Allow others components to read the CGRAM
 		uint16_t cgramRead(uint16_t addr);
 		//! @brief get the bpp depending of the bgNumber and the Bgmode
