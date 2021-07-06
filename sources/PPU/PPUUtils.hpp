@@ -22,7 +22,7 @@ namespace ComSquare::PPU::Utils
 	//! @brief Transform SNES color code BGR to uint32_t RGB
 	uint32_t getRealColor(uint16_t color);
 	//! @brief Used to parse easily VRAM Tile information
-	union TileMapData {
+	union TileData {
 		struct {
 			//! @brief Tile X offset
 			uint16_t posX: 4;

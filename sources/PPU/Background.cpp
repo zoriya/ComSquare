@@ -57,15 +57,8 @@ namespace ComSquare::PPU
 		}
 	}
 
-	void Background::_drawBgTile(uint16_t data, Vector2<int> pos)
+	void Background::_drawTileFromMemoryToTileBuffer(const Utils::TileData &tileData)
 	{
-		union Utils::TileMapData tileData;
-
-		tileData.raw = data;
-
-		if (tileData.tilePriority != this->_priority)
-			return;
-
 		uint16_t graphicAddress;
 		Vector2i tileOffset = {0, 0};
 		// X horizontal
@@ -84,6 +77,17 @@ namespace ComSquare::PPU
 			tileOffset.x = 0;
 			tileOffset.y++;
 		}
+	}
+
+	void Background::_drawTile(uint16_t data, Vector2<int> pos)
+	{
+		union Utils::TileData tileData;
+
+		tileData.raw = data;
+
+		//if (tileData.tilePriority != this->_priority)
+		//	return;
+		this->_drawTileFromMemoryToTileBuffer(tileData);
 
 		// todo check why i need to invert vertical and horizontal flips
 		if (tileData.verticalFlip)
@@ -107,8 +111,8 @@ namespace ComSquare::PPU
 			// TODO function to read 2 bytes (LSB order or bits reversed)
 			tileMapValue = this->_vram->read(vramAddress);
 			tileMapValue += this->_vram->read(vramAddress + 1) << 8U;
-			_drawBgTile(tileMapValue, {(pos.x * this->_characterNbPixels.x) + offset.x,
-			                           (pos.y * this->_characterNbPixels.y) + offset.y});
+			this->_drawTile(tileMapValue, {(pos.x * this->_characterNbPixels.x) + offset.x,
+			                               (pos.y * this->_characterNbPixels.y) + offset.y});
 			vramAddress += 2;
 			if (pos.x % 31 == 0 && pos.x) {
 				pos.y++;
@@ -161,5 +165,10 @@ namespace ComSquare::PPU
 	bool Background::getPriority() const
 	{
 		return this->_priority;
+	}
+
+	bool Background::isPriorityPixel(int y, int x) const
+	{
+		return this->tilesPriority[y / this->_characterNbPixels.y][x / this->_characterNbPixels.x];
 	}
 }

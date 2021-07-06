@@ -11,6 +11,7 @@
 #include "TileRenderer.hpp"
 #include "../Ram/Ram.hpp"
 #include "PPU.hpp"
+#include "PPUUtils.hpp"
 
 namespace ComSquare::PPU
 {
@@ -33,7 +34,7 @@ namespace ComSquare::PPU
 		//! @brief The tilemap configuration nb of tileMap vertically and horizontally
 		//! @note members are set to true if the tilemap is expended in their direction
 		Vector2<bool> _tileMapMirroring;
-		//! @brief The number of pixels of a character (x: width, y:height)
+		//! @brief The number of pixels of a character (x: height, y:width)
 		Vector2<int> _characterNbPixels;
 		//! @brief The number of bits per pixels to currently look for each pixel
 		int _bpp;
@@ -59,7 +60,9 @@ namespace ComSquare::PPU
 		//! @brief The access to cgram
 		std::shared_ptr<Ram::Ram> _cgram;
 		//! @brief Draw a tile on the screen at x y pos
-		void _drawBgTile(uint16_t data, Vector2<int> pos);
+		void _drawTile(uint16_t data, Vector2<int> pos);
+		//! @brief Draw the tile to the tile Buffer
+		void _drawTileFromMemoryToTileBuffer(const union Utils::TileData &tileData);
 		//! @brief draw a tileMap 32x32 starting at baseAddress
 		//! @param baseAddress The starting address of the tileMap
 		//! @param offset The rendering offeset in pixels
@@ -69,6 +72,10 @@ namespace ComSquare::PPU
 		Vector2<unsigned> backgroundSize;
 		//! @brief The output buffer (pixels are written on it)
 		std::array<std::array<uint32_t, 1024>, 1024> buffer;
+
+		std::array<std::array<bool, 64>, 64> tilesPriority;
+
+		bool isPriorityPixel(int x, int y) const;
 
 		//! @brief Render a background on his internal buffer
 		void renderBackground();
