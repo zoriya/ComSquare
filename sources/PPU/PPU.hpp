@@ -2,8 +2,7 @@
 // Created by cbihan on 1/27/20.
 //
 
-#ifndef COMSQUARE_PPU_HPP
-#define COMSQUARE_PPU_HPP
+#pragma once
 
 #include <cstdint>
 #include "Memory/AMemory.hpp"
@@ -13,13 +12,17 @@
 #include "Models/Vector2.hpp"
 #include "Background.hpp"
 #include "PPUUtils.hpp"
+
+#ifdef DEBUGGER_ENABLED
 #include "Debugger/TileViewer/RAMTileRenderer.hpp"
+#endif
 
 #define FALLTHROUGH __attribute__((fallthrough));
 
-namespace ComSquare::PPU::Utils {
+namespace ComSquare::PPU::Utils
+{
 	struct PpuState;
-};
+}
 
 namespace ComSquare::PPU
 {
@@ -593,32 +596,32 @@ namespace ComSquare::PPU
 		//! @throw This function should thrown an InvalidAddress for address that are not mapped to the component.
 		void write(uint24_t addr, uint8_t data) override;
 		//! @brief Get the name of this accessor (used for debug purpose)
-		std::string getName() const override;
+		[[nodiscard]] std::string getName() const override;
 		//! @brief Get the component of this accessor (used for debug purpose)
-		Component getComponent() const override;
+		[[nodiscard]] Component getComponent() const override;
 		//! @brief Get the size of the data. This size can be lower than the mapped data.
 		//! @return The number of bytes inside this memory.
-		uint24_t getSize() const override;
+		[[nodiscard]] uint24_t getSize() const override;
 
 		//! @brief Update the PPU of n cycles.
 		//! @param The number of cycles to update.
 		virtual void update(unsigned cycles);
 		//! @brief Give the Vram Address with the right Address remapping
-		uint16_t getVramAddress() const;
+		[[nodiscard]] uint16_t getVramAddress() const;
 		//! @brief Give the name of the Address register (used for debug)
-		std::string getValueName(uint24_t addr) const;
+		[[nodiscard]] std::string getValueName(uint24_t addr) const override;
 		//! @brief Allow others components to read the CGRAM
 		uint16_t cgramRead(uint16_t addr);
 		//! @brief get the bpp depending of the bgNumber and the Bgmode
-		int getBPP(int bgNumber) const;
+		[[nodiscard]] int getBPP(int bgNumber) const;
 		//! @brief Give the correct character size depending of the bgMode
-		Vector2<int> getCharacterSize(int bgNumber) const;
+		[[nodiscard]] Vector2<int> getCharacterSize(int bgNumber) const;
 		//! @brief Give the address where the tilemap starts
-		uint16_t getTileMapStartAddress(int bgNumber) const;
+		[[nodiscard]] uint16_t getTileMapStartAddress(int bgNumber) const;
 		//! @brief Give the address to find the correct tileset for a given x and y
-		uint16_t getTilesetAddress(int bgNumber) const;
+		[[nodiscard]] uint16_t getTilesetAddress(int bgNumber) const;
 		//! @brief Tells if the tilemap is expanded for the x and y directions
-		Vector2<bool> getBackgroundMirroring(int bgNumber) const;
+		[[nodiscard]] Vector2<bool> getBackgroundMirroring(int bgNumber) const;
 		//! @brief Render the Main and sub screen correctly
 		void renderMainAndSubScreen();
 		//! @brief Add a bg buffer to another buffer
@@ -638,13 +641,13 @@ namespace ComSquare::PPU
 		//! @brief Add a bg to the sub and/or main screen
 		void addToMainSubScreen(Background &bg);
 		//! @brief Get the current background Mode
-		int getBgMode() const;
+		[[nodiscard]] int getBgMode() const;
 		//! @brief update the Vram buffer
 		void updateVramReadBuffer();
 		//! @brief update the Vram buffer
-		Vector2<int> getBgScroll(int bgNumber) const;
+		[[nodiscard]] Vector2<int> getBgScroll(int bgNumber) const;
 		//! @brief Allow to look the value of each write register (used by Register debugger)
-		const Registers &getWriteRegisters() const;
+		[[nodiscard]] const Registers &getWriteRegisters() const;
 
 		template <std::size_t SRC_SIZE_Y, std::size_t SRC_SIZE_X>
 		void add_buffer(const std::array<std::array<uint32_t, SRC_SIZE_Y>, SRC_SIZE_X> &buffer,
@@ -661,4 +664,3 @@ namespace ComSquare::PPU
 		}
 	};
 }
-#endif //COMSQUARE_PPU_HPP

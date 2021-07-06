@@ -33,9 +33,9 @@ namespace ComSquare::Renderer
 		this->_sfWidget->putPixel(y, x, rgba);
 	}
 
-	void QtSFML::playAudio(std::span<int16_t> samples, uint64_t sampleCount)
+	void QtSFML::playAudio(std::span<int16_t> samples)
 	{
-		this->_sfWidget->playAudio(samples, sampleCount);
+		this->_sfWidget->playAudio(samples);
 	}
 
 	void QtSFML::drawScreen() { }

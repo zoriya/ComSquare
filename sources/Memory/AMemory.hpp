@@ -8,8 +8,8 @@
 #include <vector>
 #include <memory>
 #include <string>
-#include "../Models/Int24.hpp"
-#include "../Models/Components.hpp"
+#include "Models/Int24.hpp"
+#include "Models/Components.hpp"
 #include "IMemory.hpp"
 
 namespace ComSquare::Memory

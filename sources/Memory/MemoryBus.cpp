@@ -48,6 +48,14 @@ namespace ComSquare::Memory
 		}
 	}
 
+	uint8_t MemoryBus::peek_v(uint24_t addr)
+	{
+		auto value = this->peek(addr);
+		if (value.has_value())
+			return value.value();
+		return 0;
+	}
+
 	void MemoryBus::write(uint24_t addr, uint8_t data)
 	{
 		IMemory *handler = this->getAccessor(addr);

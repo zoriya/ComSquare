@@ -4,16 +4,19 @@
 
 #pragma once
 
+
 #include "Memory/AMemory.hpp"
 #include "Memory/MemoryBus.hpp"
 #include "Models/Int24.hpp"
+#include "Models/Callback.hpp"
 #include "Cartridge/Cartridge.hpp"
 #include "Memory/AMemory.hpp"
 #include "Instruction.hpp"
 #include "DMA/DMA.hpp"
 #include "CPU/Registers.hpp"
+
 #ifdef DEBUGGER_ENABLED
-//#include "Debugger/CPU/CPUDebug.hpp"
+#include "Debugger/CPU/CPUDebug.hpp"
 #include "Debugger/RegisterViewer.hpp"
 #endif
 
@@ -37,7 +40,6 @@ namespace ComSquare::CPU
 
 		//! @brief The memory bus to use for read/write.
 		std::reference_wrapper<Memory::IMemoryBus> _bus;
-	private:
 		//! @brief The cartridge header (stored for interrupt vectors..)
 		Cartridge::Header &_cartridgeHeader;
 
@@ -102,21 +104,22 @@ namespace ComSquare::CPU
 		uint16_t _pop16();
 
 		//! @brief Return the data at the program bank concatenated with the program counter. It also increment the program counter (the program bank is not incremented on overflows).
-		uint8_t readPC();
+		inline uint8_t _readPC()
+		{
+			uint8_t ret = this->getBus().read(this->_registers.pac);
+			this->_registers.pc++;
+			return ret;
+		}
 
 		//! @brief Check if an interrupt is requested and handle it.
 		void _checkInterrupts();
 		//! @brief Run an interrupt (save state of the processor and jump to the interrupt handler)
 		void _runInterrupt(uint24_t nativeHandler, uint24_t emulationHandler);
 
-		//! @brief Execute a single instruction.
-		//! @return The number of CPU cycles that the instruction took.
-		virtual unsigned _executeInstruction(uint8_t opcode);
-
 		//! @brief Get the parameter address of an instruction from it's addressing mode.
 		//! @info The current program counter should point to the instruction's opcode + 1.
 		//! @return The address of the data to read on the instruction.
-		uint24_t _getValueAddr(Instruction &instruction);
+		uint24_t _getValueAddr(const Instruction &instruction);
 
 		//! @brief Break instruction - Causes a software break. The PC is loaded from a vector table.
 		int BRK(uint24_t, AddressingMode);
@@ -592,8 +595,19 @@ namespace ComSquare::CPU
 		~CPU() override = default;
 
 		//! @brief This function continue to execute the Cartridge code.
+		//! @param maxCycle The maximum number of cycle to run.
 		//! @return The number of CPU cycles that elapsed
-		unsigned update();
+		unsigned update(unsigned maxCycle);
+
+		//! @brief Execute a single instruction.
+		//! @return The number of CPU cycles that the instruction took.
+		unsigned executeInstruction();
+
+		//! @brief Run DMA's pending transfers.
+		//! @param maxCycles The maximum of cycle to run
+		//! @return The number of CPU cycles that elapsed
+		unsigned runDMA(unsigned maxCycles);
+
 		//! @brief Read from the internal CPU register.
 		//! @param addr The address to read from. The address 0x0 should refer to the first byte of the register.
 		//! @throw InvalidAddress will be thrown if the address is more than $1F (the number of register).
@@ -619,8 +633,12 @@ namespace ComSquare::CPU
 		//! @brief Get the component of this accessor (used for debug purpose)
 		[[nodiscard]] Component getComponent() const override;
 
-		//! @copydoc
+		//! @brief Reset interrupt - Called on boot and when the reset button is pressed.
+		//! @note This also triggers the callback onReset;
 		int RESB();
+
+		//! @brief The callback triggered on reset.
+		Callback<> onReset;
 
 		//! @brief Is an NMI (non-maskable interrupt) requested.
 		bool IsNMIRequested = false;
@@ -630,7 +648,7 @@ namespace ComSquare::CPU
 		bool IsAbortRequested = false;
 
 #ifdef DEBUGGER_ENABLED
-//		friend Debugger::CPUDebug;
+		friend Debugger::CPUDebug;
 		friend Debugger::RegisterViewer;
 #endif
 	};

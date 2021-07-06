@@ -6,36 +6,21 @@
 
 namespace ComSquare::Renderer
 {
-	void NoRenderer::setWindowName(std::string &newWindowName)
-	{
-		(void)newWindowName;
-	}
+	void NoRenderer::setWindowName(std::string &)
+	{}
 
-	void NoRenderer::drawScreen() { }
+	void NoRenderer::drawScreen()
+	{}
 
-	void NoRenderer::putPixel(unsigned y, unsigned x, uint32_t rgba)
-	{
-		(void)x;
-		(void)y;
-		(void)rgba;
-	}
+	void NoRenderer::putPixel(unsigned, unsigned, uint32_t)
+	{}
 
-	void NoRenderer::playAudio(std::span<int16_t>, uint64_t)
-	{
-	}
+	void NoRenderer::playAudio(std::span<int16_t>)
+	{}
 
-	void NoRenderer::getEvents() { }
+	NoRenderer::NoRenderer(unsigned int, unsigned int, int)
+	{}
 
-	NoRenderer::NoRenderer(unsigned int height, unsigned int width, int maxFPS)
-	{
-		(void)height;
-		(void)width;
-		(void)maxFPS;
-	}
-
-	void NoRenderer::createWindow(SNES &snes, int maxFPS)
-	{
-		(void)snes;
-		(void)maxFPS;
-	}
+	void NoRenderer::createWindow(SNES &, int)
+	{}
 }

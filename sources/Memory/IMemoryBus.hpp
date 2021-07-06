@@ -33,6 +33,12 @@ namespace ComSquare
 			//! @return The value that the component returned for this address. If the address was mapped to ram, it simply returned the value. If the address was mapped to a register the component returned the register.
 			virtual std::optional<uint8_t> peek(uint24_t addr) = 0;
 
+			//! @brief This as the same purpose as a read but it does not change the open bus and won't throw an exception.
+			//! @param addr The address to read from.
+			//! @return The value that the component returned for this address. If the address was mapped to ram, it simply returned the value. If the address was mapped to a register the component returned the register.
+			//! @note If the value address is not mapped, 0 is returned instead of nullopt.
+			virtual uint8_t peek_v(uint24_t addr) = 0;
+
 			//! @brief Write a data to a global address.
 			//! @param addr The address to write to.
 			//! @param data The data to write.

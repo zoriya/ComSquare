@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../CPUDebug.hpp"
+#include "Debugger/CPU/CPUDebug.hpp"
 #include <fstream>
 
 namespace ComSquare::Debugger

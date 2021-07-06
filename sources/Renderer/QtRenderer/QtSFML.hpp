@@ -71,8 +71,7 @@ namespace ComSquare::Renderer
 		void drawScreen() override;
 		//! @brief Playing all samples from buffer
 		//! @param samples Buffer containing samples
-		//! @param sampleCount number of samples inside buffer
-		void playAudio(std::span<int16_t> samples, uint64_t sampleCount) override;
+		void playAudio(std::span<int16_t> samples) override;
 		//! @brief Set a new name to the window, if there is already a name it will be overwrite.
 		//! @param newWindowName new title for the window.
 		void setWindowName(std::string &newWindowName) override;

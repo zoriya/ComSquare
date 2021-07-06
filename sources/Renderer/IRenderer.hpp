@@ -2,8 +2,7 @@
 // Created by cbihan on 1/30/20.
 //
 
-#ifndef COMSQUARE_IRENDERER_HPP
-#define COMSQUARE_IRENDERER_HPP
+#pragma once
 
 #include <string>
 #include <span>
@@ -34,10 +33,7 @@ namespace ComSquare
 
 			//! @brief Playing all samples from buffer
 			//! @param samples Buffer containing samples
-			//! @param sampleCount number of samples inside buffer
-			virtual void playAudio(std::span<int16_t> samples, uint64_t sampleCount) = 0;
+			virtual void playAudio(std::span<int16_t> samples) = 0;
 		};
 	}
 }
-
-#endif //COMSQUARE_IRENDERER_HPP

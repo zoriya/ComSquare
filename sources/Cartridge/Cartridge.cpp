@@ -4,10 +4,8 @@
 
 #include "Cartridge.hpp"
 #include "Exceptions/InvalidAction.hpp"
-#include "Exceptions/InvalidAddress.hpp"
 #include "Exceptions/InvalidRom.hpp"
 #include <cstring>
-#include <fstream>
 #include <sys/stat.h>
 
 namespace ComSquare::Cartridge
@@ -69,10 +67,10 @@ namespace ComSquare::Cartridge
 		Header head;
 		headerAddress -= 0xC0u;
 
-		ADDMAPPINGMODE(head.mappingMode, this->_data[headerAddress + 0xD5u] & 0x10u ? FastRom : SlowRom);
-		ADDMAPPINGMODE(head.mappingMode, this->_data[headerAddress + 0xD5u] & 0x1u ? HiRom : LoRom);
+		head.mappingMode |= this->_data[headerAddress + 0xD5u] & 0x10u ? FastRom : SlowRom;
+		head.mappingMode |= this->_data[headerAddress + 0xD5u] & 0x1u ? HiRom : LoRom;
 		if (this->_data[headerAddress + 0xD5u] & 0x2u || this->_data[headerAddress + 0xD5u] & 0x4u)
-			ADDMAPPINGMODE(head.mappingMode, ExRom);
+			head.mappingMode |= ExRom;
 		head.romType = this->_data[headerAddress + 0xD6u];
 		head.romSize = 0x400u << this->_data[headerAddress + 0xD7u];
 		head.sramSize = 0x400u << this->_data[headerAddress + 0xD8u];
@@ -216,5 +214,17 @@ namespace ComSquare::Cartridge
 	CartridgeType Cartridge::getType()
 	{
 		return this->_type;
+	}
+
+	MappingMode operator|(const MappingMode &self, const MappingMode &other)
+	{
+		return static_cast<MappingMode>(static_cast<int>(self) | static_cast<int>(other));
+	}
+
+	MappingMode &operator|=(MappingMode &self, const MappingMode &other)
+	{
+		int &selfInt = reinterpret_cast<int &>(self);
+		selfInt |= static_cast<int>(other);
+		return self;
 	}
 }// namespace ComSquare::Cartridge

@@ -53,9 +53,9 @@ namespace ComSquare::Renderer
 		this->_window.display();
 	}
 
-	void SFRenderer::playAudio(std::span<int16_t> samples, uint64_t sampleCount)
+	void SFRenderer::playAudio(std::span<int16_t> samples)
 	{
-		this->_soundBuffer.loadFromSamples(samples.data(), sampleCount, 2, 32040);
+		this->_soundBuffer.loadFromSamples(samples.data(), samples.size(), 2, 32040);
 		this->_sound.play();
 	}
 

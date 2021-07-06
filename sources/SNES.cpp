@@ -38,7 +38,7 @@ namespace ComSquare
 			return;
 		}
 
-		unsigned cycleCount = this->cpu.update();
+		unsigned cycleCount = this->cpu.update(0x0C);
 		this->ppu.update(cycleCount);
 		this->apu.update(cycleCount);
 	}
@@ -55,24 +55,24 @@ namespace ComSquare
 
 	void SNES::enableCPUDebuggingWithError(const DebuggableError &exception)
 	{
-//		this->enableCPUDebugging(true);
-//		this->_cpuDebugger->showError(exception);
+		this->enableCPUDebugging(true);
+		this->_cpuDebugger->showError(exception);
 	}
 
 	void SNES::enableCPUDebugging(bool pause)
 	{
-//		if (!this->_cpuDebugger.has_value())
-//			this->_cpuDebugger.emplace(this->cpu, *this);
-//		else {
-//			this->_cpuDebugger->focus();
-//			if (pause)
-//				this->_cpuDebugger->pause(true);
-//		}
+		if (!this->_cpuDebugger.has_value())
+			this->_cpuDebugger.emplace(this->cpu, *this);
+		else {
+			this->_cpuDebugger->focus();
+			if (pause)
+				this->_cpuDebugger->pause(true);
+		}
 	}
 
 	void SNES::disableCPUDebugging()
 	{
-//		this->_cpuDebugger = std::nullopt;
+		this->_cpuDebugger = std::nullopt;
 	}
 
 	void SNES::enableRamViewer()

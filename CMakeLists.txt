@@ -95,7 +95,7 @@ set(SOURCES
 	sources/PPU/TileRenderer.hpp
 	sources/PPU/Tile.hpp
 	sources/CPU/Registers.hpp
-	sources/Memory/IMemoryBus.hpp)
+	sources/Memory/IMemoryBus.hpp sources/Models/Callback.hpp)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -118,11 +118,11 @@ add_executable(comsquare
 	sources/PPU/PpuDebug.cpp
 	sources/PPU/PpuDebug.hpp
 	sources/Debugger/ClosableWindow.hpp
-#	sources/Debugger/CPU/CPUDebug.cpp
-#	sources/Debugger/CPU/CPUDebug.hpp
-#	sources/Debugger/CPU/Disassembly.cpp
-#	sources/Debugger/CPU/SymbolLoaders/WlaDx.cpp
-#	sources/Debugger/CPU/SymbolLoaders/WlaDx.hpp
+	sources/Debugger/CPU/CPUDebug.cpp
+	sources/Debugger/CPU/CPUDebug.hpp
+	sources/Debugger/CPU/Disassembly.cpp
+	sources/Debugger/CPU/SymbolLoaders/WlaDx.cpp
+	sources/Debugger/CPU/SymbolLoaders/WlaDx.hpp
 	sources/Debugger/MemoryViewer.cpp
 	sources/Debugger/MemoryViewer.hpp
 	sources/Debugger/HeaderViewer.cpp

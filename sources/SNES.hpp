@@ -15,7 +15,7 @@
 #include <optional>
 
 #ifdef DEBUGGER_ENABLED
-//#include <Debugger/CPU/CPUDebug.hpp>
+#include "Debugger/CPU/CPUDebug.hpp"
 #include "Debugger/MemoryViewer.hpp"
 #include "Debugger/HeaderViewer.hpp"
 #include "Debugger/MemoryBusDebug.hpp"
@@ -23,6 +23,7 @@
 #include "Debugger/RegisterViewer.hpp"
 #include "Debugger/TileViewer/TileViewer.hpp"
 #endif
+
 
 namespace ComSquare
 {
@@ -32,7 +33,7 @@ namespace ComSquare
 	private:
 #ifdef DEBUGGER_ENABLED
 		//! @brief The CPU's debugger with disassembly, pause, step by step...
-//		std::optional<Debugger::CPUDebug> _cpuDebugger;
+		std::optional<Debugger::CPUDebug> _cpuDebugger;
 		//! @brief A debugger that shows every read and write made over the bus.
 		std::optional<Debugger::MemoryBusDebug> _busDebugger;
 

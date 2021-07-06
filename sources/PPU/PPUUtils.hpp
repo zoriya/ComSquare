@@ -2,8 +2,7 @@
 // Created by cbihan on 1/27/20.
 //
 
-#ifndef COMSQUARE_PPU_UTILS_HPP
-#define COMSQUARE_PPU_UTILS_HPP
+#pragma once
 
 #include <stdint-gcc.h>
 #include <cstddef>
@@ -79,4 +78,3 @@ namespace ComSquare::PPU::Utils
 	}
 
 }
-#endif //COMSQUARE_PPU_UTILS_HPP

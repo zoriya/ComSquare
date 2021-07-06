@@ -207,24 +207,11 @@ namespace ComSquare::CPU
 		return 0x180;
 	}
 
-	uint8_t CPU::readPC()
+	unsigned CPU::update(unsigned maxCycles)
 	{
-		uint8_t ret = this->getBus().read(this->_registers.pac);
-		this->_registers.pc++;
-		return ret;
-	}
+		unsigned cycles = this->runDMA(maxCycles);
 
-	unsigned CPU::update()
-	{
-		unsigned cycles = 0;
-		const unsigned maxCycles = 0x0C;
-
-		for (DMA &channel : this->_dmaChannels) {
-			if (!channel.enabled)
-				continue;
-			cycles += channel.run(maxCycles - cycles);
-		}
-		for (unsigned i = 0; i < maxCycles; i++) {
+		while (cycles < maxCycles) {
 			if (this->_isStopped) {
 				cycles += 1;
 				continue;
@@ -233,7 +220,7 @@ namespace ComSquare::CPU
 			this->_checkInterrupts();
 
 			if (!this->_isWaitingForInterrupt)
-				cycles += this->_executeInstruction(this->readPC());
+				cycles += this->executeInstruction();
 		}
 		return cycles;
 	}
@@ -258,7 +245,19 @@ namespace ComSquare::CPU
 		}
 	}
 
-	uint24_t CPU::_getValueAddr(Instruction &instruction)
+	unsigned CPU::runDMA(unsigned maxCycles)
+	{
+		unsigned cycles = 0;
+
+		for (DMA &channel : this->_dmaChannels) {
+			if (!channel.enabled)
+				continue;
+			cycles += channel.run(maxCycles - cycles);
+		}
+		return cycles;
+	}
+
+	uint24_t CPU::_getValueAddr(const Instruction &instruction)
 	{
 		switch (instruction.addressingMode) {
 		case Implied:
@@ -317,9 +316,9 @@ namespace ComSquare::CPU
 		throw InvalidOpcode("Unknown addressing mode for.");
 	}
 
-	unsigned CPU::_executeInstruction(uint8_t opcode)
+	unsigned CPU::executeInstruction()
 	{
-		Instruction instruction = this->instructions[opcode];
+		const Instruction &instruction = this->instructions[this->_readPC()];
 		this->_hasIndexCrossedPageBoundary = false;
 		uint24_t valueAddr = this->_getValueAddr(instruction);
 

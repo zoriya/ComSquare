@@ -20,15 +20,16 @@ namespace ComSquare::Cartridge
 		Audio
 	};
 
-#define ADDMAPPINGMODE(x, flag) (x = static_cast<MappingMode>(x | (flag)))
 	enum MappingMode
 	{
 		LoRom = 1u << 0u,
 		HiRom = 1u << 1u,
 		SlowRom = 1u << 2u,
 		FastRom = 1u << 3u,
-		ExRom = 1u << 4u,
+		ExRom = 1u << 4u
 	};
+	MappingMode operator|(const MappingMode &self, const MappingMode &other);
+	MappingMode &operator|=(MappingMode &self, const MappingMode &other);
 
 	struct Header
 	{

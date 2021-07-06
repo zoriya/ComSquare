@@ -3,15 +3,14 @@
 //
 
 #include "CPUDebug.hpp"
+#include "SNES.hpp"
 #include "Exceptions/InvalidOpcode.hpp"
-#include "SymbolLoaders/WlaDx.hpp"
 #include "Utility/Utility.hpp"
 #include <QMessageBox>
 #include <QPainter>
 #include <QtEvents>
 #include <fstream>
 #include <iostream>
-#include <utility>
 
 using namespace ComSquare::CPU;
 
@@ -25,8 +24,10 @@ namespace ComSquare::Debugger
 	      _painter(*this),
 	      _stackModel(snes.bus, *this),
 	      _snes(snes),
-	      _labels(this->_loadLabels(snes.cartridge.getRomPath()))
+	      _labels(),
+	      initialStackPointer(this->_cpu._registers.s)
 	{
+		this->_loadLabels(snes.cartridge.getRomPath());
 		this->_ui.setupUi(this->_window);
 
 		//Parse the first page of the ROM (the code can't reach the second page without a jump).
@@ -60,66 +61,67 @@ namespace ComSquare::Debugger
 		this->_window->show();
 		this->_updateRegistersPanel();
 		this->_updateDisassembly(this->_cpu._registers.pac, 0);
+
+		this->_cpu._isStopped = true;
+		this->_callback = this->_cpu.onReset.addCallback([this] {
+			this->disassembled.clear();
+			this->_updateDisassembly(0xFFFF - this->_cpu._cartridgeHeader.emulationInterrupts.reset);
+			this->_updateRegistersPanel();
+		});
+
+		this->_timer.setInterval(1000 / 60);
+		this->_timer.setSingleShot(false);
+		connect(&_timer, SIGNAL(timeout()), this, SLOT(update()));
+		this->_timer.start();
+	}
+
+	CPUDebug::~CPUDebug()
+	{
+		this->_cpu.onReset.removeCallback(this->_callback);
+		this->_cpu._isStopped = false;
 	}
 
 	unsigned CPUDebug::update()
 	{
 		try {
-			unsigned cycles = 0;
-
-			for (auto &channel : this->_dmaChannels) {
-				if (channel.enabled)
-					cycles += channel.run(INT_MAX);
-			}
+			unsigned cycles = this->_cpu.runDMA(INT_MAX);
 
 			if (this->_isPaused)
 				return 0xFF;
-			if (this->_isStepping) {
-				cycles = this->_executeInstruction(this->readPC());
-				this->_updateDisassembly(this->_cpu._registers.pac);
-				return cycles;
-			}
 
 			for (int i = 0; i < 0xFF; i++) {
-				auto breakpoint = std::find_if(this->breakpoints.begin(), this->breakpoints.end(), [this](Breakpoint &brk) {
+				auto breakpoint = std::find_if(this->breakpoints.begin(), this->breakpoints.end(), [this](auto &brk) {
 					return brk.address == this->_cpu._registers.pac;
 				});
 				if (i != 0 && breakpoint != this->breakpoints.end()) {
 					if (breakpoint->oneTime)
 						this->breakpoints.erase(breakpoint);
-					this->_isPaused = false;
-					this->pause();
+					this->pause(true);
 					return cycles;
 				}
-				cycles += this->_executeInstruction(this->readPC());
+				this->_logInstruction();
+				cycles += this->_cpu.executeInstruction();
+				this->_updateRegistersPanel();
+				if (this->_isStepping) {
+					this->_isStepping = false;
+					this->pause(true);
+					return cycles;
+				}
 			}
 			return cycles;
-		} catch (InvalidOpcode &e) {
-			if (!this->_isPaused)
-				this->pause();
-			std::cout << "Invalid Opcode: " << e.what() << std::endl;
+		} catch (const DebuggableError &e) {
+			this->pause(true);
+			CPUDebug::showError(e);
 			return 0xFF;
 		}
 	}
 
-	unsigned CPUDebug::_executeInstruction(uint8_t opcode)
+	void CPUDebug::_logInstruction()
 	{
-		if (this->_isPaused)
-			return 0;
-		if (this->_isStepping) {
-			this->_isStepping = false;
-			this->_isPaused = true;
-		}
-		uint24_t pc = (this->_cpu._registers.pbr << 16u) | (this->_cpu._registers.pc - 1u);
 		DisassemblyContext ctx = this->_getDisassemblyContext();
-		DisassembledInstruction instruction = this->_parseInstruction(pc, ctx);
-		this->_cpu._registers.pc--;
-		this->_historyModel.log({opcode, instruction.name, instruction.argument, this->getProceededParameters()});
+		DisassembledInstruction instruction = this->_parseInstruction(this->_cpu._registers.pac, ctx);
+		this->_historyModel.log({instruction.opcode, instruction.name, instruction.argument, this->getProceededParameters()});
 		this->_ui.history->scrollToBottom();
-		this->_cpu._registers.pc++;
-		unsigned ret = CPU::_executeInstruction(opcode);
-		this->_updateRegistersPanel();
-		return ret;
 	}
 
 	void CPUDebug::showError(const DebuggableError &error)
@@ -152,7 +154,7 @@ namespace ComSquare::Debugger
 	void CPUDebug::next()
 	{
 		auto next = std::find_if(this->disassembled.begin(), this->disassembled.end(), [this](auto &i) {
-			return i.address > this->_cpu._cpu._registers.pac;
+			return i.address > this->_cpu._registers.pac;
 		});
 		this->breakpoints.push_back({next->address, true});
 		this->_isPaused = false;
@@ -189,7 +191,7 @@ namespace ComSquare::Debugger
 			this->_ui.xIndexLineEdit->setText(Utility::to_hex(this->_cpu._registers.xl).c_str());
 			this->_ui.yIndexLineEdit->setText(Utility::to_hex(this->_cpu._registers.yl).c_str());
 		}
-		this->_ui.emulationModeCheckBox->setCheckState(this->_isEmulationMode ? Qt::CheckState::Checked : Qt::CheckState::Unchecked);
+		this->_ui.emulationModeCheckBox->setCheckState(this->_cpu._isEmulationMode ? Qt::CheckState::Checked : Qt::CheckState::Unchecked);
 
 		this->_ui.mCheckbox->setCheckState(this->_cpu._registers.p.m ? Qt::CheckState::Checked : Qt::CheckState::Unchecked);
 		this->_ui.xCheckbox->setCheckState(this->_cpu._registers.p.x_b ? Qt::CheckState::Checked : Qt::CheckState::Unchecked);
@@ -237,16 +239,7 @@ namespace ComSquare::Debugger
 
 	DisassemblyContext CPUDebug::_getDisassemblyContext()
 	{
-		return {this->_cpu._registers.p.m, this->_cpu._registers.p.x_b, this->_isEmulationMode};
-	}
-
-	int CPUDebug::RESB()
-	{
-		CPU::RESB();
-		this->disassembled.clear();
-		this->_updateDisassembly(0xFFFF - this->_cartridgeHeader.emulationInterrupts.reset);
-		this->_updateRegistersPanel();
-		return (0);
+		return {this->_cpu._registers.p.m, this->_cpu._registers.p.x_b, this->_cpu._isEmulationMode};
 	}
 
 	void CPUDebug::focus()
@@ -254,42 +247,39 @@ namespace ComSquare::Debugger
 		this->_window->activateWindow();
 	}
 
-	uint24_t CPUDebug::getPC()
+	uint24_t CPUDebug::getPC() const
 	{
 		return this->_cpu._registers.pac;
 	}
 
-	uint16_t CPUDebug::getStackPointer()
+	uint16_t CPUDebug::getStackPointer() const
 	{
 		return this->_cpu._registers.s;
 	}
 
-	std::string CPUDebug::getProceededParameters()
+	std::string CPUDebug::getProceededParameters() const
 	{
 		uint24_t pac = this->_cpu._registers.pac;
-		this->_bus.forceSilence = true;
-		Instruction instruction = this->_instructions[this->readPC()];
-		uint24_t valueAddr = this->_getValueAddr(instruction);
+		Instruction instruction = this->_cpu.instructions[this->_cpu._readPC()];
+		uint24_t valueAddr = this->_cpu._getValueAddr(instruction);
 		this->_cpu._registers.pac = pac;
-		this->_bus.forceSilence = false;
 		if (instruction.size == 1)
 			return "";
 		return "[" + Utility::to_hex(valueAddr, Utility::AsmPrefix) + "]";
 	}
 
-	std::vector<Label> CPUDebug::_loadLabels(std::filesystem::path romPath) const
+	void CPUDebug::_loadLabels(std::filesystem::path romPath)
 	{
-		std::vector<Label> labels;
 		std::string symbolPath = romPath.replace_extension(".sym");
 		std::ifstream sym(symbolPath);
 
+		this->_labels.clear();
 		//if (sym) {
 		//	std::vector<Label> symLabels = WlaDx::parse(sym);
-		//	labels.insert(labels.end(),
+		//	this->_labels.insert(labels.end(),
 		//	              std::make_move_iterator(symLabels.begin()),
 		//	              std::make_move_iterator(symLabels.end()));
 		//}
-		return labels;
 	}
 
 	DisassemblyModel::DisassemblyModel(ComSquare::Debugger::CPUDebug &cpu)
@@ -388,7 +378,7 @@ namespace ComSquare::Debugger
 		return QSize();
 	}
 
-	StackModel::StackModel(Memory::MemoryBus &bus, CPUDebug &cpu)
+	StackModel::StackModel(Memory::IMemoryBus &bus, CPUDebug &cpu)
 	    : _bus(bus),
 	      _cpu(cpu)
 	{}
@@ -417,7 +407,7 @@ namespace ComSquare::Debugger
 			return QVariant();
 		uint16_t addr = index.row() * 2 + index.column();
 		try {
-			uint8_t value = this->_bus.peek(addr);
+			uint8_t value = this->_bus.peek_v(addr);
 			return (Utility::to_hex(value, Utility::NoPrefix).c_str());
 		} catch (const std::exception &) {
 			return "??";

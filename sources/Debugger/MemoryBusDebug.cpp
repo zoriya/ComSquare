@@ -144,6 +144,11 @@ namespace ComSquare::Debugger
 		return this->_bus.peek(addr);
 	}
 
+	uint8_t MemoryBusDebug::peek_v(uint24_t addr)
+	{
+		return this->_bus.peek_v(addr);
+	}
+
 	void MemoryBusDebug::write(uint24_t addr, uint8_t data)
 	{
 		std::optional<uint8_t> value = this->peek(addr);

@@ -2,11 +2,10 @@
 // Created by anonymus-raccoon on 3/25/20.
 //
 
-#ifndef COMSQUARE_INSTRUCTION_HPP
-#define COMSQUARE_INSTRUCTION_HPP
+#pragma once
 
 #include <string>
-#include "../Models/Int24.hpp"
+#include "Models/Int24.hpp"
 
 namespace ComSquare::CPU
 {
@@ -52,9 +51,8 @@ namespace ComSquare::CPU
 	struct Instruction {
 		int (CPU::*call)(uint24_t valueAddr, AddressingMode mode) = nullptr;
 		int cycleCount = 0;
-		std::string name = "";
+		std::string name;
 		AddressingMode addressingMode = Implied;
 		int size = 0;
 	};
 }
-#endif //COMSQUARE_INSTRUCTION_HPP
