@@ -51,12 +51,11 @@ namespace ComSquare::PPU::Utils
 	template <std::size_t DEST_SIZE_Y, std::size_t DEST_SIZE_X, std::size_t SRC_SIZE_Y, std::size_t SRC_SIZE_X>
 	void merge2DArray(std::array<std::array<uint32_t, DEST_SIZE_X>, DEST_SIZE_Y> &bufferDest,
 					  const std::array<std::array<uint32_t, SRC_SIZE_X>, SRC_SIZE_Y> &bufferSrc,
-					  const Vector2<int> &offset = {0, 0})
+					  const Vector2<int> &offset)
 	{
-		for (unsigned long i = 0; i < bufferSrc.size(); i++) {
-			for (unsigned long j = 0; j < bufferSrc[i].size(); j++) {
-				bufferDest[i + offset.y][j + offset.x] = bufferSrc[i][j];
-			}
+		int offsetY = offset.y;
+		for (auto &row : bufferSrc) {
+			std::copy(row.begin(), row.end(), bufferDest[offsetY++].begin() + offset.x);
 		}
 	}
 
