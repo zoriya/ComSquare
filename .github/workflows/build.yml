@@ -10,7 +10,7 @@ on:
 
 jobs:
   Building:
-    runs-on: [ubuntu-18.04]
+    runs-on: ubuntu-18.04
 
     steps:
       - uses: actions/checkout@v1
@@ -31,9 +31,9 @@ jobs:
       - name: Build Makefile with CMake
         run: mkdir -p build && cd build && cmake ..
       - name: Build with Makefile
-        run: make -C build ComSquare
+        run: make -C build comsquare
       - name: Archive production artifact
         uses: actions/upload-artifact@v1
         with:
-          name: ComSquare
-          path: build/ComSquare
+          name: comsquare
+          path: build/comsquare
