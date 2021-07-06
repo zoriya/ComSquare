@@ -32,7 +32,7 @@ namespace ComSquare::PPU
 		ComSquare::PPU::PPU &_ppu;
 		//! @brief The tilemap configuration nb of tileMap vertically and horizontally
 		//! @note members are set to true if the tilemap is expended in their direction
-		Vector2<bool> _tileMapsConfig;
+		Vector2<bool> _tileMapMirroring;
 		//! @brief The number of pixels of a character (x: width, y:height)
 		Vector2<int> _characterNbPixels;
 		//! @brief The number of bits per pixels to currently look for each pixel

@@ -14,7 +14,7 @@ namespace ComSquare::PPU
 {
 	Background::Background(ComSquare::PPU::PPU &ppu, int backGroundNumber, bool hasPriority):
 		_ppu(ppu),
-		_tileMapsConfig(ppu.getBackgroundMirroring(backGroundNumber)),
+		_tileMapMirroring(ppu.getBackgroundMirroring(backGroundNumber)),
 		_characterNbPixels(ppu.getCharacterSize(backGroundNumber)),
 		_bpp(ppu.getBPP(backGroundNumber)),
 		_directColor(false),
@@ -37,9 +37,9 @@ namespace ComSquare::PPU
 		uint16_t vramAddress = this->_tileMapStartAddress;
 		Vector2<int> offset = this->_ppu.getBgScroll(this->_bgNumber);
 		this->backgroundSize.x =
-			(static_cast<int>(this->_tileMapsConfig.x) + 1) * this->_characterNbPixels.x * NbCharacterWidth;
+			(static_cast<int>(this->_tileMapMirroring.x) + 1) * this->_characterNbPixels.x * NbCharacterWidth;
 		this->backgroundSize.y =
-			(static_cast<int>(this->_tileMapsConfig.y) + 1) * this->_characterNbPixels.y * NbCharacterHeight;
+			(static_cast<int>(this->_tileMapMirroring.y) + 1) * this->_characterNbPixels.y * NbCharacterHeight;
 
 		this->_drawBasicTileMap(vramAddress, offset);
 		for (int i = 1; i < 4; i++) {
@@ -49,9 +49,9 @@ namespace ComSquare::PPU
 				offset.x = 0;
 				offset.y += NbCharacterHeight * this->_characterNbPixels.y;
 			}
-			if (i > 1 && !this->_tileMapsConfig.y)
+			if (i > 1 && !this->_tileMapMirroring.y)
 				break;
-			if ((i == 1 || i == 3) && !this->_tileMapsConfig.x)
+			if ((i == 1 || i == 3) && !this->_tileMapMirroring.x)
 				continue;
 			this->_drawBasicTileMap(vramAddress, offset);
 		}
@@ -145,7 +145,7 @@ namespace ComSquare::PPU
 
 	void Background::setTilemaps(Vector2<bool> tileMaps)
 	{
-		this->_tileMapsConfig = tileMaps;
+		this->_tileMapMirroring = tileMaps;
 	}
 
 	int Background::getBgNumber() const
