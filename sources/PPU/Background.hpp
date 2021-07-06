@@ -107,6 +107,37 @@ namespace ComSquare::PPU
 		//! @return the current Background priority
 		bool getPriority() const;
 
+
+		//! @brief Add a bg buffer to another buffer
+		template <std::size_t DEST_SIZE_X, std::size_t DEST_SIZE_Y>
+		static void mergeBackgroundBuffer(std::array<std::array<uint32_t, DEST_SIZE_Y>, DEST_SIZE_X> &bufferDest,
+		                                  std::array<std::array<unsigned char, DEST_SIZE_Y>, DEST_SIZE_X> &pixelDestinationLevelMap,
+		                                  const Background &backgroundSrc,
+		                                  int levelLow,
+		                                  int levelHigh)
+		{
+			int i = 0;
+			int j = 0;
+			int pixelLevel;
+			std::for_each(backgroundSrc.buffer.begin(), backgroundSrc.buffer.end(), [&](auto &sourceRow) {
+				std::for_each(sourceRow.begin(), sourceRow.end(), [&](auto &pixel) {
+					if (pixel <= 0xFF) {
+						j++;
+						return;
+					}
+					pixelLevel = backgroundSrc.isPriorityPixel(i, j) ? levelHigh : levelLow;
+
+					if (pixelLevel > pixelDestinationLevelMap[i][j]) {
+						bufferDest[i][j] = pixel;
+						pixelDestinationLevelMap[i][j] = pixelLevel;
+					}
+					j++;
+				});
+				j = 0;
+				i++;
+			});
+		}
+
 		//! @brief ctor
 		Background(ComSquare::PPU::PPU &_ppu, int backGroundNumber, bool hasPriority);
 		//! @brief Default copy ctor

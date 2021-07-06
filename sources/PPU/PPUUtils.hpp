@@ -94,6 +94,5 @@ namespace ComSquare::PPU::Utils
 			i++;
 		});
 	}
-
 }
 #endif //COMSQUARE_PPU_UTILS_HPP

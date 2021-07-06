@@ -567,7 +567,9 @@ namespace ComSquare::PPU
 		Background _backgrounds[4];
 		//! @brief Main Screen buffer
 		std::array<std::array<uint32_t, 1024>, 1024> _mainScreen;
+		std::array<std::array<unsigned char, 1024>, 1024> _mainScreenLevelMap;
 		//! @brief Sub Screen buffer
+		std::array<std::array<unsigned char, 1024>, 1024> _subScreenLevelMap;
 		std::array<std::array<uint32_t, 1024>, 1024> _subScreen;
 		//! @brief Final Screen buffer
 		std::array<std::array<uint32_t, 1024>, 1024> _screen;
@@ -625,7 +627,7 @@ namespace ComSquare::PPU
 		//! @brief Render the Main and sub screen correctly
 		void renderMainAndSubScreen();
 		//! @brief Add a bg to the sub and/or main screen
-		void addToMainSubScreen(Background &bg);
+		void addToMainSubScreen(Background &bg, const Vector2<int> &level);
 		//! @brief Get the current background Mode
 		int getBgMode() const;
 		//! @brief update the Vram buffer

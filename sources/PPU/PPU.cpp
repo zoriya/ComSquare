@@ -317,8 +317,10 @@ namespace ComSquare::PPU
 		//add_buffer(this->_screen, this->_backgrounds[2].buffer);
 		for (unsigned long i = 0; i < this->_screen.size(); i++) {
 			for (unsigned long j = 0; j < this->_screen[i].size(); j++) {
-				this->_renderer.putPixel(i, j, this->_screen[i][j]);
+				this->_renderer.putPixel(i + 200, j, this->_screen[i][j]);
 			}
+			if (i > 500)
+				break;
 		}
 		this->_renderer.drawScreen();
 		for (auto &i : this->_mainScreen)
@@ -563,31 +565,35 @@ namespace ComSquare::PPU
 		uint32_t color = Utils::getRealColor(colorPalette);
 		for (auto &row : this->_subScreen)
 			row.fill(color);
+		for (auto &row : this->_mainScreenLevelMap)
+			row.fill(0);
+		for (auto &row : this->_subScreenLevelMap)
+			row.fill(0);
 		// the buffer is overwrite if necessary by a new bg so the background priority is from back to front
 		// the starting palette index isn't implemented
 		switch (this->_registers._bgmode.bgMode) {
 		case 0:
-			this->addToMainSubScreen(this->_backgrounds[BgName::bg4NoPriority]);
-			this->addToMainSubScreen(this->_backgrounds[BgName::bg3NoPriority]);
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg4NoPriority], {0, 15});
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg3NoPriority], {10, 16});
 			//sprites  priority 0
 		//	this->addToMainSubScreen(this->_backgrounds[BgName::bg4Priority]);
 		//	this->addToMainSubScreen(this->_backgrounds[BgName::bg3Priority]);
 			//sprites priority 1
-			this->addToMainSubScreen(this->_backgrounds[BgName::bg2NoPriority]);
-			this->addToMainSubScreen(this->_backgrounds[BgName::bg1NoPriority]);
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg2NoPriority], {20, 35});
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg1NoPriority], {30, 36});
 			//sprites priority 2
 		//	this->addToMainSubScreen(this->_backgrounds[BgName::bg2Priority]);
 		//	this->addToMainSubScreen(this->_backgrounds[BgName::bg1Priority]);
 			//sprites priority 3
 			break;
 		case 1:
-			this->addToMainSubScreen(this->_backgrounds[BgName::bg3NoPriority]);
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg3NoPriority], {0, this->_registers._bgmode.mode1Bg3PriorityBit ? 30 : 5});
 			//sprites priority 0
 		//	if (!this->_registers._bgmode.mode1Bg3PriorityBit)
 		//		this->addToMainSubScreen(this->_backgrounds[BgName::bg3Priority]);
 			//sprites priority 1
-			this->addToMainSubScreen(this->_backgrounds[BgName::bg2NoPriority]);
-			this->addToMainSubScreen(this->_backgrounds[BgName::bg1NoPriority]);
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg2NoPriority], {10, 25});
+			this->addToMainSubScreen(this->_backgrounds[BgName::bg1NoPriority], {20, 26});
 			//sprites priority 2
 		//	this->addToMainSubScreen(this->_backgrounds[BgName::bg2Priority]);
 		//	this->addToMainSubScreen(this->_backgrounds[BgName::bg1Priority]);
@@ -595,7 +601,7 @@ namespace ComSquare::PPU
 		//	if (this->_registers._bgmode.mode1Bg3PriorityBit)
 		//		this->addToMainSubScreen(this->_backgrounds[BgName::bg3Priority]);
 			break;
-		case 2:
+	/*	case 2:
 			this->addToMainSubScreen(this->_backgrounds[BgName::bg2NoPriority]);
 			//sprites priority 0
 			this->addToMainSubScreen(this->_backgrounds[BgName::bg1NoPriority]);
@@ -642,7 +648,7 @@ namespace ComSquare::PPU
 			//sprites priority 2
 			this->addToMainSubScreen(this->_backgrounds[BgName::bg1Priority]);
 			//sprites priority
-			break;
+			break;*/
 		case 7:
 			// Not implemented
 			throw std::runtime_error("not implemented");
@@ -651,12 +657,16 @@ namespace ComSquare::PPU
 		}
 	}
 
-	void PPU::addToMainSubScreen(Background &bg)
+	void PPU::addToMainSubScreen(Background &bg, const Vector2<int> &level)
 	{
-		if (this->_registers._t[0].raw & (1U << (bg.getBgNumber() - 1U)))
-			Utils::addBuffer(this->_mainScreen, bg.buffer);
-		if (this->_registers._t[1].raw & (1U << (bg.getBgNumber() - 1U)))
-			Utils::addBuffer(this->_subScreen, bg.buffer);
+		if (this->_registers._t[0].raw & (1U << (bg.getBgNumber() - 1U))) {
+			Background::mergeBackgroundBuffer(this->_mainScreen, this->_mainScreenLevelMap, bg, level.x, level.y);
+		}
+		//	Utils::addBuffer(this->_mainScreen, bg.buffer);
+		if (this->_registers._t[1].raw & (1U << (bg.getBgNumber() - 1U))) {
+			//Utils::addBuffer(this->_subScreen, bg.buffer);
+			Background::mergeBackgroundBuffer(this->_subScreen, this->_subScreenLevelMap, bg, level.x, level.y);
+		}
 	}
 
 	int PPU::getBgMode() const
