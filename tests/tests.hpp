@@ -19,13 +19,7 @@
 	Renderer::NoRenderer norenderer(0, 0, 0);                  \
 	auto snesPtr = std::make_unique<SNES>(norenderer);         \
 	SNES &snes = *snesPtr;                                     \
-	snes.cartridge._size = 100;                                \
-	delete[] snes.cartridge._data;                             \
-	snes.cartridge._data = new uint8_t[snes.cartridge._size];  \
-	memset(snes.cartridge._data, 0, snes.cartridge._size);     \
+	snes.cartridge._data.resize(100);                          \
 	snes.cartridge.header.mappingMode = Cartridge::LoRom;      \
-	snes.sram._size = 100;                                     \
-	delete[] snes.sram._data;                                  \
-	snes.sram._data = new uint8_t[snes.sram._size];            \
-	memset(snes.sram._data, 0, snes.cartridge._size);          \
+	snes.sram._data.resize(100);                               \
 	snes.bus.mapComponents(snes);

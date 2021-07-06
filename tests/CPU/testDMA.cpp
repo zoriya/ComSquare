@@ -10,9 +10,7 @@ using namespace ComSquare;
 TEST_CASE("RomToVRAM DMA", "[DMA]")
 {
 	Init()
-	snes.cartridge._size = 4000000;
-	delete[] snes.cartridge._data;
-	snes.cartridge._data = new uint8_t[snes.cartridge._size];
+	snes.cartridge._data.resize(4000000);
 	for (unsigned i = 0; i < 0x400; i++) {
 		snes.cartridge._data[0x9be00 + i * 2] = i;
 		snes.cartridge._data[0x9be00 + i * 2 + 1] = i >> 8;

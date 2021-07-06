@@ -138,6 +138,9 @@ namespace ComSquare::Cartridge
 		//! @return The path of the currently loaded rom file.
 		[[nodiscard]] std::filesystem::path getRomPath() const;
 
+		//! @brief Get the size of the rom in bytes (without the smc header).
+		uint24_t getSize() const override;
+
 		//! @brief Load the rom at the given path
 		//! @param rom The path of the rom.
 		//! @throws InvalidRomException If the rom is invalid, this exception is thrown.

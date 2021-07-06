@@ -30,9 +30,10 @@ namespace ComSquare::Debugger::CPU
 		this->_loadLabels(snes.cartridge.getRomPath());
 		this->_ui.setupUi(this->_window);
 
+
 		//Parse the first page of the ROM (the code can't reach the second page without a jump).
-		uint16_t reset = snes.cartridge.header.emulationInterrupts.reset;
-		this->_updateDisassembly(reset, 0xFFFF - reset);
+		uint16_t resetInter = snes.cartridge.header.emulationInterrupts.reset;
+		this->_updateDisassembly(resetInter, 0xFFFF - resetInter);
 
 		this->_ui.disassembly->setModel(&this->_model);
 		this->_ui.disassembly->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
@@ -65,7 +66,9 @@ namespace ComSquare::Debugger::CPU
 		this->_cpu.isDisabled = true;
 		this->_callback = this->_cpu.onReset.addCallback([this] {
 			this->disassembled.clear();
-			this->_updateDisassembly(0xFFFF - this->_cpu._cartridgeHeader.emulationInterrupts.reset);
+			//Parse the first page of the ROM (the code can't reach the second page without a jump).
+			uint16_t reset = this->_snes.cartridge.header.emulationInterrupts.reset;
+			this->_updateDisassembly(reset, 0xFFFF - reset);
 			this->_updateRegistersPanel();
 		});
 
@@ -220,16 +223,16 @@ namespace ComSquare::Debugger::CPU
 		auto end = std::find_if(this->disassembled.begin(), this->disassembled.end(), [start, refreshSize](DisassembledInstruction &i) {
 			return i.address >= start + refreshSize;
 		});
-		this->disassembled.erase(first, end);
+		auto next = this->disassembled.erase(first, end);
 
-		auto next = std::find_if(this->disassembled.begin(), this->disassembled.end(), [start](DisassembledInstruction &i) {
-			return i.address >= start;
-		});
 		DisassemblyContext ctx = this->_getDisassemblyContext();
 		std::vector<DisassembledInstruction> nextInstructions = this->_disassemble(start, refreshSize, ctx);
-		this->disassembled.insert(next, nextInstructions.begin(), nextInstructions.end());
+		auto inserted = this->disassembled.insert(next, nextInstructions.begin(), nextInstructions.end());
 
-		int row = static_cast<int>(next - this->disassembled.begin());
+		if (this->disassembled.empty())
+			return;
+
+		int row = static_cast<int>(inserted - this->disassembled.begin());
 		if (this->_ui.disassembly->rowAt(0) > row || this->_ui.disassembly->rowAt(this->_ui.disassembly->height()) < row) {
 			auto index = this->_model.index(row, 0);
 			this->_ui.disassembly->scrollTo(index, QAbstractItemView::PositionAtCenter);
@@ -260,9 +263,12 @@ namespace ComSquare::Debugger::CPU
 	std::string CPUDebug::getProceededParameters() const
 	{
 		uint24_t pac = this->_cpu._registers.pac;
+		auto &bus = this->_cpu.getBus();
+		this->_cpu.setBus(this->_snes.bus);
 		const Instruction &instruction = this->_cpu.instructions[this->_cpu._readPC()];
 		uint24_t valueAddr = this->_cpu._getValueAddr(instruction);
 		this->_cpu._registers.pac = pac;
+		this->_cpu.setBus(bus);
 		if (instruction.size == 1)
 			return "";
 		return "[" + Utility::to_hex(valueAddr, Utility::AsmPrefix) + "]";

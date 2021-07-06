@@ -6,6 +6,8 @@
 
 #include "Memory/ARectangleMemory.hpp"
 #include <string>
+#include <span>
+#include <vector>
 
 namespace ComSquare::Ram
 {
@@ -13,9 +15,7 @@ namespace ComSquare::Ram
 	{
 	protected:
 		//! @brief The ram. (Can be used for WRam, SRam, VRam etc)
-		uint8_t *_data;
-		//! @brief The size of the ram (in bytes).
-		uint24_t _size;
+		std::vector<uint8_t> _data;
 		//! @brief An id identifying the type of memory this is (for the debugger)
 		Component _ramType;
 		//! @brief The name of this ram.
@@ -28,7 +28,7 @@ namespace ComSquare::Ram
 		//! @brief The ram can't be assigned.
 		Ram &operator=(Ram &) = delete;
 		//! @brief Destructor that free the ram.
-		~Ram() override;
+		~Ram() override = default;
 
 		//! @brief Read data from the component.
 		//! @param addr The local address to read from (0x0 should refer to the first byte of this component).
@@ -59,8 +59,16 @@ namespace ComSquare::Ram
 		//! @brief Get the size of the ram in bytes.
 		[[nodiscard]] uint24_t getSize() const override;
 
+		//! @brief Change the size of this ram.
+		//! @brief size The new size of this ram.
+		void setSize(uint24_t size);
+
 		//! @brief Get the raw data of the RAM
-		//! @return A raw pointer to the data.
-		[[nodiscard]] uint8_t *getData() const;
+		//! @return A raw accessor to the data.
+		[[nodiscard]] std::span<uint8_t> getData();
+
+		//! @brief Get the raw data of the RAM
+		//! @return A raw accessor to the data.
+		[[nodiscard]] std::span<const uint8_t> getData() const;
 	};
 }

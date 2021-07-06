@@ -7,6 +7,7 @@
 #include "Exceptions/InvalidOpcode.hpp"
 #include <cstring>
 #include <iostream>
+#include <algorithm>
 
 namespace ComSquare::APU
 {
@@ -814,17 +815,17 @@ namespace ComSquare::APU
 
 	void APU::loadFromSPC(Cartridge::Cartridge &cartridge)
 	{
-		const uint8_t *data = cartridge.getData();
+		std::span<const uint8_t> data = cartridge.getData();
 		uint24_t size = cartridge.getSize();
 		if (size < 0x101C0)
 			throw InvalidAddress("Cartridge is not the right size", size);
 
-		std::string song = std::string(reinterpret_cast<const char *>(data + 0x2E), 0x20);
-		std::string game = std::string(reinterpret_cast<const char *>(data + 0x4E), 0x20);
-		std::string dumper = std::string(reinterpret_cast<const char *>(data + 0x6E), 0x10);
-		std::string comment = std::string(reinterpret_cast<const char *>(data + 0x7E), 0x20);
-		std::string date = std::string(reinterpret_cast<const char *>(data + 0x9E), 0x0B);
-		std::string artist = std::string(reinterpret_cast<const char *>(data + 0xB1), 0x20);
+		std::string song = std::string(reinterpret_cast<const char *>(data.data() + 0x2E), 0x20);
+		std::string game = std::string(reinterpret_cast<const char *>(data.data() + 0x4E), 0x20);
+		std::string dumper = std::string(reinterpret_cast<const char *>(data.data() + 0x6E), 0x10);
+		std::string comment = std::string(reinterpret_cast<const char *>(data.data() + 0x7E), 0x20);
+		std::string date = std::string(reinterpret_cast<const char *>(data.data() + 0x9E), 0x0B);
+		std::string artist = std::string(reinterpret_cast<const char *>(data.data() + 0xB1), 0x20);
 
 		this->_internalRegisters.pcl = cartridge.read(0x25);
 		this->_internalRegisters.pch = cartridge.read(0x26);
@@ -834,9 +835,9 @@ namespace ComSquare::APU
 		this->_internalRegisters.psw = cartridge.read(0x2A);
 		this->_internalRegisters.sp = cartridge.read(0x2B);
 
-		std::memcpy(this->_map.Page0.getData(), data + 0x100, this->_map.Page0.getSize());
-		std::memcpy(this->_map.Page1.getData(), data + 0x200, this->_map.Page1.getSize());
-		std::memcpy(this->_map.Memory.getData(), data + 0x300, this->_map.Memory.getSize());
+		std::copy_n(data.begin() + 0x100, this->_map.Page0.getSize(), this->_map.Page0.getData().begin());
+		std::copy_n(data.begin() + 0x200, this->_map.Page1.getSize(), this->_map.Page1.getData().begin());
+		std::copy_n(data.begin() + 0x300, this->_map.Memory.getSize(), this->_map.Memory.getData().begin());
 
 		this->_registers.unknown = cartridge.read(0x100 + 0xF0);
 		this->_registers.ctrlreg = cartridge.read(0x100 + 0xF1);

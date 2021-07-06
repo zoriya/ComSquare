@@ -7,18 +7,19 @@
 #include "Exceptions/InvalidRom.hpp"
 #include <cstring>
 #include <sys/stat.h>
+#include <fstream>
 
 namespace ComSquare::Cartridge
 {
 	constexpr unsigned HeaderSize = 0x40u;
 
 	Cartridge::Cartridge()
-	    : Ram::Ram(0, Rom, "Cartridge")
+		: Ram::Ram(0, Rom, "Cartridge")
 	{}
 
 	Cartridge::Cartridge(const std::string &romPath)
-	    : Ram::Ram(0, Rom, "Cartridge"),
-	      _romPath(romPath)
+		: Ram::Ram(0, Rom, "Cartridge"),
+		  _romPath(romPath)
 	{
 		this->loadRom(romPath);
 	}
@@ -26,14 +27,12 @@ namespace ComSquare::Cartridge
 	void Cartridge::loadRom(const std::string &path)
 	{
 		size_t size = Cartridge::getRomSize(path);
-		FILE *rom = fopen(path.c_str(), "rb");
+		std::ifstream rom(path, std::ios::binary);
 
 		if (!rom)
 			throw InvalidRomException("Could not open the rom file at " + path + ". " + strerror(errno));
-		this->_size = size;
-		this->_data = new uint8_t[size];
-		std::memset(this->_data, 0, size);
-		fread(this->_data, 1, size, rom);
+		this->_data.resize(size);
+		rom.read(reinterpret_cast<char *>(this->_data.data()), size);
 		this->_loadHeader();
 	}
 
@@ -45,7 +44,6 @@ namespace ComSquare::Cartridge
 			throw InvalidRomException("Could not stat the rom file at " + romPath + ". " + strerror(errno));
 		return info.st_size;
 	}
-
 
 	uint8_t Cartridge::read(uint24_t addr)
 	{
@@ -113,7 +111,7 @@ namespace ComSquare::Cartridge
 	uint32_t Cartridge::_getHeaderAddress()
 	{
 		const std::vector<uint32_t> address = {0x7FC0, 0xFFC0};
-		unsigned int smc = this->_size % 1024;
+		unsigned int smc = this->getSize() % 1024;
 		int bestScore = -1;
 		uint32_t bestAddress = 0;
 
@@ -121,7 +119,7 @@ namespace ComSquare::Cartridge
 			int score = 0;
 
 			addr += smc;
-			if (addr + 0x32u >= this->_size)
+			if (addr + 0x32u >= this->getSize())
 				continue;
 
 			Header info = this->_mapHeader(addr);
@@ -174,9 +172,9 @@ namespace ComSquare::Cartridge
 
 	bool Cartridge::_isSPCFile()
 	{
-		if (this->_size < 0x25)
+		if (this->getSize() < 0x25)
 			return false;
-		std::string str = std::string(reinterpret_cast<char *>(this->_data), 0x21);
+		std::string str = std::string(reinterpret_cast<char *>(this->getData().data()), 0x21);
 
 		if (str != Cartridge::_magicSPC)
 			return false;
@@ -198,14 +196,13 @@ namespace ComSquare::Cartridge
 		this->_type = Game;
 
 		uint32_t headerAddress = this->_getHeaderAddress();
-		if (headerAddress + HeaderSize > this->_size)
+		if (headerAddress + HeaderSize > this->getSize())
 			return false;
 
 		this->header = this->_mapHeader(headerAddress);
 		this->header.gameName = std::string(reinterpret_cast<char *>(&this->_data[headerAddress]), 21);
 		if ((headerAddress + 0x40u) & 0x200u) {
 			this->_romStart = 0x200u;
-			this->_size -= 0x200u;
 			return true;
 		}
 		return false;
@@ -214,6 +211,11 @@ namespace ComSquare::Cartridge
 	CartridgeType Cartridge::getType()
 	{
 		return this->_type;
+	}
+
+	uint24_t Cartridge::getSize() const
+	{
+		return Ram::getSize() - this->_romStart;
 	}
 
 	MappingMode operator|(const MappingMode &self, const MappingMode &other)

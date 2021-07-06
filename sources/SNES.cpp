@@ -11,7 +11,7 @@ namespace ComSquare
 	    : bus(),
 	      cartridge(),
 	      wram(16384, WRam, "WRam"),
-	      sram(this->cartridge.header.sramSize, SRam, "SRam"),
+	      sram(0, SRam, "SRam"),
 	      cpu(this->bus, cartridge.header),
 	      ppu(renderer),
 	      apu(renderer)
@@ -46,6 +46,7 @@ namespace ComSquare
 	void SNES::loadRom(const std::string &path)
 	{
 		this->cartridge.loadRom(path);
+		this->sram.setSize(this->cartridge.header.sramSize);
 		this->bus.mapComponents(*this);
 		this->cpu.RESB();
 		this->apu.reset();
