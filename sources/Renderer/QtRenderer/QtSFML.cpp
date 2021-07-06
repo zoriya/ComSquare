@@ -7,6 +7,8 @@
 #include <QIcon>
 #include <QMenuBar>
 #include <iostream>
+#include <QDir>
+#include <QFileDialog>
 #include "Models/Logger.hpp"
 #include "SNES.hpp"
 #include "QtSFML.hpp"
@@ -66,6 +68,14 @@ namespace ComSquare::Renderer
 			std::cerr << "An error occurred: " << e.what() << std::endl;
 			QApplication::quit();
 		}
+	}
+
+	void QtFullSFML::openRom()
+	{
+		auto rom = QFileDialog::getOpenFileName(nullptr, tr("Open a ROM"), QDir::homePath(),
+												tr("Rom files (*.sfc, *.smc);;Audio rom files (*.spc);;All files (*)"));
+		if (!rom.isEmpty())
+			this->_snes.loadRom(rom.toStdString());
 	}
 
 	void QtFullSFML::reset()
@@ -129,8 +139,9 @@ namespace ComSquare::Renderer
 		this->_window.setCentralWidget(this->_sfWidget);
 
 		QMenu *file = this->_window.menuBar()->addMenu("&File");
-		//TODO implement rom opening from this menu.
-		(void)file;
+		auto *open = new QAction("Open", &this->_window);
+		QMainWindow::connect(open, &QAction::triggered, this->_sfWidget, &QtFullSFML::openRom);
+		file->addAction(open);
 
 		QMenu *game = this->_window.menuBar()->addMenu("&Game");
 		auto *reset = new QAction("Reset", &this->_window);

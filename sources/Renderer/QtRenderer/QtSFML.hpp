@@ -22,6 +22,9 @@ namespace ComSquare::Renderer
 		SNES &_snes;
 		void onUpdate() override;
 	public:
+		//! @brief Open the select rom dialog and load a new one if the option is selected.
+		void openRom();
+
 #ifdef DEBUGGER_ENABLED
 		//! @brief Action called when clicking on the enable CPU debugger button.
 		void enableDebugCPU();

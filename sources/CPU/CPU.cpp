@@ -209,6 +209,8 @@ namespace ComSquare::CPU
 
 	unsigned CPU::update(unsigned maxCycles)
 	{
+		if (this->isDisabled)
+			return 0xFF;
 		unsigned cycles = this->runDMA(maxCycles);
 
 		while (cycles < maxCycles) {
@@ -221,6 +223,8 @@ namespace ComSquare::CPU
 
 			if (!this->_isWaitingForInterrupt)
 				cycles += this->executeInstruction();
+			else
+				return 0xFF;
 		}
 		return cycles;
 	}

@@ -65,21 +65,21 @@ void parseArguments(int argc, char **argv, SNES &snes)
 		case 'c':
 			snes.enableCPUDebugging();
 			break;
-//		case 'a':
-//			snes.enableAPUDebugging();
-//			break;
+		case 'a':
+			snes.enableAPUDebugging();
+			break;
 		case 'm':
 			snes.enableRamViewer();
 			break;
 		case 'H':
 			snes.enableHeaderViewer();
 			break;
-//		case 'b':
-//			snes.enableMemoryBusDebugging();
-//			break;
-//		case 'g':
-//			snes.enableCgramViewer();
-//			break;
+		case 'b':
+			snes.enableMemoryBusDebugging();
+			break;
+		case 'g':
+			snes.enableCgramViewer();
+			break;
 		case 'r':
 			snes.enableRegisterViewer();
 			break;

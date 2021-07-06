@@ -47,6 +47,8 @@ namespace ComSquare
 	{
 		this->cartridge.loadRom(path);
 		this->bus.mapComponents(*this);
+		this->cpu.RESB();
+		this->apu.reset();
 		if (this->cartridge.getType() == Cartridge::Audio)
 			this->apu.loadFromSPC(this->cartridge);
 	}

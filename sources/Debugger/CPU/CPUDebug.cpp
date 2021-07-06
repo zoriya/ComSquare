@@ -62,7 +62,7 @@ namespace ComSquare::Debugger::CPU
 		this->_updateRegistersPanel();
 		this->_updateDisassembly(this->_cpu._registers.pac, 0);
 
-		this->_cpu._isStopped = true;
+		this->_cpu.isDisabled = true;
 		this->_callback = this->_cpu.onReset.addCallback([this] {
 			this->disassembled.clear();
 			this->_updateDisassembly(0xFFFF - this->_cpu._cartridgeHeader.emulationInterrupts.reset);
@@ -78,7 +78,7 @@ namespace ComSquare::Debugger::CPU
 	CPUDebug::~CPUDebug()
 	{
 		this->_cpu.onReset.removeCallback(this->_callback);
-		this->_cpu._isStopped = false;
+		this->_cpu.isDisabled = false;
 	}
 
 	unsigned CPUDebug::update()

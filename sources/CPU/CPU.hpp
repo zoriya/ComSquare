@@ -647,6 +647,9 @@ namespace ComSquare::CPU
 		//! @brief Is an abort requested
 		bool IsAbortRequested = false;
 
+		//! @brief True if you want to disable updates of this CPU.
+		bool isDisabled = false;
+
 #ifdef DEBUGGER_ENABLED
 		friend Debugger::CPU::CPUDebug;
 		friend Debugger::RegisterViewer;
