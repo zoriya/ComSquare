@@ -116,6 +116,9 @@ namespace ComSquare::Debugger::CPU
 			this->pause(true);
 			CPUDebug::showError(e);
 			return 0xFF;
+		} catch (const std::exception &e) {
+			std::cerr << "An error occurred: " << e.what() << std::endl;
+			QApplication::quit();
 		}
 	}
 

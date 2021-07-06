@@ -6,6 +6,7 @@
 
 #include "ClosableWindow.hpp"
 #include "ui/ui_apuView.h"
+#include <QTimer>
 
 namespace ComSquare
 {
@@ -319,6 +320,8 @@ namespace ComSquare
 
 			//! @brief The QT window for this debugger.
 			ClosableWindow *_window;
+			//! @brief Internal timer used for update intervals.
+			QTimer _timer;
 
 			//! @brief A widget that contain the whole UI.
 			Ui::APUView _ui;
@@ -348,14 +351,14 @@ namespace ComSquare
 			void pause();
 			//! @brief Step - Execute a single instruction.
 			void step();
-			//! @brief Override the apu's update to disable debugging.
-			void update(unsigned cycles);
+			//! @brief Update the debugger and the underlying APU.
+			void update();
 		public:
 			//! @brief Convert a basic APU to a debugging APU.
 			explicit APUDebug(ComSquare::APU::APU &apu, SNES &snes);
 			APUDebug(const APUDebug &) = delete;
 			APUDebug &operator=(const APUDebug &) = delete;
-			~APUDebug() override = default;
+			~APUDebug() override;
 
 			//! @brief Focus the debugger's window.
 			void focus();

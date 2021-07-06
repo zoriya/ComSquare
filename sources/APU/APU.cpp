@@ -798,6 +798,9 @@ namespace ComSquare::APU
 
 	void APU::update(unsigned cycles)
 	{
+		if (this->isDisabled)
+			return;
+
 		unsigned total = 0;
 
 		if (this->_paddingCycles > cycles) {

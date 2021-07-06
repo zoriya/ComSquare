@@ -370,6 +370,9 @@ namespace ComSquare::APU
 		APU &operator=(const APU &) = delete;
 		~APU() override = default;
 
+		//! @brief Is this APU disabled?
+		bool isDisabled = false;
+
 		//! @brief Read from the APU ram.
 		//! @param addr The address to read from. The address 0x0000 should refer to the first byte of the register.
 		//! @throw InvalidAddress will be thrown if the address is more than $FFFF (the number of register).

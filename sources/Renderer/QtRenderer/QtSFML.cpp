@@ -64,7 +64,7 @@ namespace ComSquare::Renderer
 			this->_snes.enableCPUDebuggingWithError(e);
 		}
 #endif
-		catch (std::exception &e) {
+		catch (const std::exception &e) {
 			std::cerr << "An error occurred: " << e.what() << std::endl;
 			QApplication::quit();
 		}

@@ -12,6 +12,7 @@ namespace ComSquare::Debugger::APU
 {
 	APUDebug::APUDebug(ComSquare::APU::APU &apu, SNES &snes)
 		: _window(new ClosableWindow([&snes] { snes.disableAPUDebugging(); })),
+		  _timer(),
 		  _ui(),
 		  _apu(apu)
 	{
@@ -25,6 +26,17 @@ namespace ComSquare::Debugger::APU
 		this->_ui.logger->setShowGrid(false);
 		this->_window->show();
 		this->_updatePanel();
+
+		this->_timer.setInterval(1000 / 60);
+		this->_timer.setSingleShot(false);
+		connect(&_timer, SIGNAL(timeout()), this, SLOT(update()));
+		this->_timer.start();
+		this->_apu.isDisabled = true;
+	}
+
+	APUDebug::~APUDebug()
+	{
+		this->_apu.isDisabled = false;
 	}
 
 	void APUDebug::_updatePanel()
@@ -369,17 +381,15 @@ namespace ComSquare::Debugger::APU
 		return this->_instructions[opcode];
 	}
 
-	void APUDebug::update(unsigned maxCycles)
+	void APUDebug::update()
 	{
-		unsigned cycles = 0;
-
 		try {
 			if (this->_isPaused) {
 				this->_apu._dsp.update();
 				return;
 			}
-			while (cycles < maxCycles) {
-				cycles += this->_apu._executeInstruction();
+			for (int i = 0; i < 0xFF; i++) {
+				this->_apu._executeInstruction();
 				this->_updatePanel();
 				this->_updateLogger();
 				if (this->_isStepping) {
@@ -391,6 +401,9 @@ namespace ComSquare::Debugger::APU
 			this->_apu._dsp.update();
 		} catch (const InvalidOpcode &e) {
 			this->pause();
+		} catch (const std::exception &e) {
+			std::cerr << "An error occurred: " << e.what() << std::endl;
+			QApplication::quit();
 		}
 	}
 
