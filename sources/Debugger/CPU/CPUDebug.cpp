@@ -14,9 +14,9 @@
 
 using namespace ComSquare::CPU;
 
-namespace ComSquare::Debugger
+namespace ComSquare::Debugger::CPU
 {
-	CPUDebug::CPUDebug(CPU::CPU &basicCPU, SNES &snes)
+	CPUDebug::CPUDebug(ComSquare::CPU::CPU &basicCPU, SNES &snes)
 	    : _cpu(basicCPU),
 	      _window(new ClosableWindow([&snes] { snes.disableCPUDebugging(); })),
 	      _ui(),
@@ -260,7 +260,7 @@ namespace ComSquare::Debugger
 	std::string CPUDebug::getProceededParameters() const
 	{
 		uint24_t pac = this->_cpu._registers.pac;
-		Instruction instruction = this->_cpu.instructions[this->_cpu._readPC()];
+		const Instruction &instruction = this->_cpu.instructions[this->_cpu._readPC()];
 		uint24_t valueAddr = this->_cpu._getValueAddr(instruction);
 		this->_cpu._registers.pac = pac;
 		if (instruction.size == 1)
@@ -282,7 +282,7 @@ namespace ComSquare::Debugger
 		//}
 	}
 
-	DisassemblyModel::DisassemblyModel(ComSquare::Debugger::CPUDebug &cpu)
+	DisassemblyModel::DisassemblyModel(CPUDebug &cpu)
 	    : QAbstractTableModel(), _cpu(cpu)
 	{}
 
@@ -298,13 +298,13 @@ namespace ComSquare::Debugger
 
 	QVariant DisassemblyModel::data(const QModelIndex &index, int role) const
 	{
-		ComSquare::Debugger::DisassembledInstruction instruction = this->_cpu.disassembled[index.row()];
+		DisassembledInstruction instruction = this->_cpu.disassembled[index.row()];
 
 		switch (role) {
 		case Qt::DecorationRole:
-			if (index.column() == 2 && instruction.level == ComSquare::Debugger::TrustLevel::Unsafe)
+			if (index.column() == 2 && instruction.level == TrustLevel::Unsafe)
 				return QColor(Qt::yellow);
-			if (index.column() == 2 && instruction.level == ComSquare::Debugger::TrustLevel::Compromised)
+			if (index.column() == 2 && instruction.level == TrustLevel::Compromised)
 				return QColor(Qt::red);
 			return QVariant();
 		case Qt::DisplayRole:
@@ -347,7 +347,7 @@ namespace ComSquare::Debugger
 		return QString(Utility::to_hex(instruction.address, Utility::HexString::NoPrefix).c_str());
 	}
 
-	RowPainter::RowPainter(ComSquare::Debugger::CPUDebug &cpu, QObject *parent)
+	RowPainter::RowPainter(CPUDebug &cpu, QObject *parent)
 	    : QStyledItemDelegate(parent), _cpu(cpu)
 	{}
 

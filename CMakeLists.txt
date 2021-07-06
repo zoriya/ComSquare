@@ -127,8 +127,8 @@ add_executable(comsquare
 	sources/Debugger/MemoryViewer.hpp
 	sources/Debugger/HeaderViewer.cpp
 	sources/Debugger/HeaderViewer.hpp
-#	sources/Debugger/APUDebug.hpp
-#	sources/Debugger/APUDebug.cpp
+	sources/Debugger/APUDebug.hpp
+	sources/Debugger/APUDebug.cpp
 	sources/Debugger/MemoryBusDebug.cpp
 	sources/Debugger/MemoryBusDebug.hpp
 	sources/Debugger/CGramDebug.cpp

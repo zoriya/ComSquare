@@ -103,18 +103,16 @@ namespace ComSquare
 
 	void SNES::enableAPUDebugging()
 	{
-//		if (this->apu->isDebugger())
-//			std::static_pointer_cast<Debugger::APUDebug>(this->apu)->focus();
-//		else {
-//			this->apu = std::make_shared<Debugger::APUDebug>(*this->apu, *this);
-//			this->bus.mapComponents(*this);
-//		}
+		if (!this->_apuDebugger.has_value())
+			this->_apuDebugger.emplace(this->apu, *this);
+		else {
+			this->_apuDebugger->focus();
+		}
 	}
 
 	void SNES::disableAPUDebugging()
 	{
-//		this->apu = std::make_shared<APU::APU>(*this->apu);
-//		this->bus.mapComponents(*this);
+		this->_apuDebugger = std::nullopt;
 	}
 
 	void SNES::enableMemoryBusDebugging()

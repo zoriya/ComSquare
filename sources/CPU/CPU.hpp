@@ -648,7 +648,7 @@ namespace ComSquare::CPU
 		bool IsAbortRequested = false;
 
 #ifdef DEBUGGER_ENABLED
-		friend Debugger::CPUDebug;
+		friend Debugger::CPU::CPUDebug;
 		friend Debugger::RegisterViewer;
 #endif
 	};

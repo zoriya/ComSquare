@@ -7,7 +7,7 @@
 #include "Debugger/CPU/CPUDebug.hpp"
 #include <fstream>
 
-namespace ComSquare::Debugger
+namespace ComSquare::Debugger::CPU
 {
 	//! @brief Class to parse WLA-DX symbol files.
 	class WlaDx {

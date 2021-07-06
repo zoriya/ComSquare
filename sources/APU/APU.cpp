@@ -3,18 +3,15 @@
 //
 
 #include "APU.hpp"
-#include "../Exceptions/InvalidAddress.hpp"
-#include "../Exceptions/InvalidOpcode.hpp"
-#include "../Exceptions/NotImplementedException.hpp"
+#include "Exceptions/InvalidAddress.hpp"
+#include "Exceptions/InvalidOpcode.hpp"
 #include <cstring>
 #include <iostream>
 
 namespace ComSquare::APU
 {
-	APU::APU(Renderer::IRenderer &renderer) : _renderer(renderer),
-	                                          _map(new MemoryMap()),
-	                                          _soundBuffer(),
-	                                          _dsp(this->_soundBuffer, this->_soundBuffer.size() / 2, _map)
+	APU::APU(Renderer::IRenderer &renderer)
+		: _dsp(renderer, this->_map)
 	{
 		this->reset();
 	}
@@ -33,7 +30,7 @@ namespace ComSquare::APU
 	{
 		switch (addr) {
 		case 0x0000 ... 0x00EF:
-			return this->_map->Page0.read(addr);
+			return this->_map.Page0[addr];
 		case 0xF0:
 			return this->_registers.unknown;
 		case 0xF2:
@@ -59,11 +56,11 @@ namespace ComSquare::APU
 		case 0xFF:
 			return this->_registers.counter2;
 		case 0x0100 ... 0x01FF:
-			return this->_map->Page1.read(addr - 0x0100);
+			return this->_map.Page1[addr - 0x0100];
 		case 0x0200 ... 0xFFBF:
-			return this->_map->Memory.read(addr - 0x200);
+			return this->_map.Memory[addr - 0x200];
 		case 0xFFC0 ... 0xFFFF:
-			return this->_map->IPL.read(addr - 0xFFC0);
+			return this->_map.IPL[addr - 0xFFC0];
 		default:
 			throw InvalidAddress("APU Registers read", addr);
 		}
@@ -73,7 +70,7 @@ namespace ComSquare::APU
 	{
 		switch (addr) {
 		case 0x0000 ... 0x00EF:
-			this->_map->Page0.write(addr, data);
+			this->_map.Page0.write(addr, data);
 			break;
 		case 0xF0:
 			this->_registers.unknown = data;
@@ -115,13 +112,13 @@ namespace ComSquare::APU
 			this->_registers.timer2 = data;
 			break;
 		case 0x0100 ... 0x01FF:
-			this->_map->Page1.write(addr - 0x0100, data);
+			this->_map.Page1.write(addr - 0x0100, data);
 			break;
 		case 0x0200 ... 0xFFBF:
-			this->_map->Memory.write(addr - 0x200, data);
+			this->_map.Memory.write(addr - 0x200, data);
 			break;
 		case 0xFFC0 ... 0xFFFF:
-			this->_map->IPL.write(addr - 0xFFC0, data);
+			this->_map.IPL.write(addr - 0xFFC0, data);
 			break;
 		default:
 			throw InvalidAddress("APU Registers write", addr);
@@ -801,7 +798,6 @@ namespace ComSquare::APU
 	void APU::update(unsigned cycles)
 	{
 		unsigned total = 0;
-		int32_t samples = 0;
 
 		if (this->_paddingCycles > cycles) {
 			this->_paddingCycles -= cycles;
@@ -814,9 +810,6 @@ namespace ComSquare::APU
 			this->_paddingCycles = total - cycles;
 
 		this->_dsp.update();
-		samples = this->_dsp.getSamplesCount();
-		if (samples > 0)
-			this->_renderer.playAudio(std::span(this->_soundBuffer.begin(), samples / 2));
 	}
 
 	void APU::loadFromSPC(Cartridge::Cartridge &cartridge)
@@ -841,9 +834,9 @@ namespace ComSquare::APU
 		this->_internalRegisters.psw = cartridge.read(0x2A);
 		this->_internalRegisters.sp = cartridge.read(0x2B);
 
-		std::memcpy(this->_map->Page0.getData(), data + 0x100, this->_map->Page0.getSize());
-		std::memcpy(this->_map->Page1.getData(), data + 0x200, this->_map->Page1.getSize());
-		std::memcpy(this->_map->Memory.getData(), data + 0x300, this->_map->Memory.getSize());
+		std::memcpy(this->_map.Page0.getData(), data + 0x100, this->_map.Page0.getSize());
+		std::memcpy(this->_map.Page1.getData(), data + 0x200, this->_map.Page1.getSize());
+		std::memcpy(this->_map.Memory.getData(), data + 0x300, this->_map.Memory.getSize());
 
 		this->_registers.unknown = cartridge.read(0x100 + 0xF0);
 		this->_registers.ctrlreg = cartridge.read(0x100 + 0xF1);
@@ -896,9 +889,10 @@ namespace ComSquare::APU
 		this->_internalRegisters.z = !value;
 	}
 
-	MemoryMap::MemoryMap() : Page0(0x00F0, Apu, "APU's Page 0"),
-	                         Page1(0x0100, Apu, "APU's Page 1"),
-	                         Memory(0xFDC0, Apu, "APU's Ram"),
-	                         IPL(Apu, "IPL Rom")
+	MemoryMap::MemoryMap()
+		: Page0(0x00F0, Apu, "APU's Page 0"),
+		  Page1(0x0100, Apu, "APU's Page 1"),
+		  Memory(0xFDC0, Apu, "APU's Ram"),
+		  IPL(Apu, "IPL Rom")
 	{}
 }// namespace ComSquare::APU

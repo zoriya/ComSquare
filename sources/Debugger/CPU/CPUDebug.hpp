@@ -24,7 +24,7 @@ namespace ComSquare
 		class CPU;
 	}
 
-	namespace Debugger
+	namespace Debugger::CPU
 	{
 		class CPUDebug;
 
@@ -157,7 +157,7 @@ namespace ComSquare
 		};
 
 		//! @brief Struct representing an instruction in an human readable way (created by disassembling the rom).
-		struct DisassembledInstruction : public CPU::Instruction
+		struct DisassembledInstruction : public ComSquare::CPU::Instruction
 		{
 			//! @brief The address of the instruction
 			uint24_t address;
@@ -168,7 +168,9 @@ namespace ComSquare
 			//! @brief Are we sure that this instruction has been correctly disassembled?
 			TrustLevel level;
 
-			DisassembledInstruction(const CPU::Instruction &instruction, uint24_t address, std::string argument,
+			DisassembledInstruction(const ComSquare::CPU::Instruction &instruction,
+									uint24_t address,
+									std::string argument,
 			                        uint8_t opcode);
 			DisassembledInstruction(const DisassembledInstruction &) = default;
 			DisassembledInstruction &operator=(const DisassembledInstruction &) = default;
@@ -201,7 +203,7 @@ namespace ComSquare
 		Q_OBJECT
 		private:
 			//! @brief The basic CPU to debug.
-			CPU::CPU &_cpu;
+			ComSquare::CPU::CPU &_cpu;
 			//! @brief The QT window for this debugger.
 			ClosableWindow *_window;
 			//! @brief Internal timer used for update intervals.
@@ -242,7 +244,8 @@ namespace ComSquare
 			//! @brief Parse the instruction at the program counter given to have human readable information.
 			DisassembledInstruction _parseInstruction(uint24_t pc, DisassemblyContext &ctx) const;
 			//! @brief Get the parameter of the instruction as an hexadecimal string.
-			std::string _getInstructionParameter(ComSquare::CPU::Instruction &instruction, uint24_t pc,
+			std::string _getInstructionParameter(const ComSquare::CPU::Instruction &instruction,
+												 uint24_t pc,
 			                                     DisassemblyContext &ctx) const;
 			//! @brief Update the register's panel (accumulator, stack pointer...)
 			void _updateRegistersPanel();

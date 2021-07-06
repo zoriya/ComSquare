@@ -6,7 +6,7 @@
 #include "Utility/Utility.hpp"
 #include "WlaDx.hpp"
 
-namespace ComSquare::Debugger
+namespace ComSquare::Debugger::CPU
 {
 	std::vector<Label> WlaDx::parse(std::ifstream &symbolFile)
 	{

@@ -19,6 +19,7 @@
 #include "Debugger/MemoryViewer.hpp"
 #include "Debugger/HeaderViewer.hpp"
 #include "Debugger/MemoryBusDebug.hpp"
+#include "Debugger/APUDebug.hpp"
 #include "Debugger/CGramDebug.hpp"
 #include "Debugger/RegisterViewer.hpp"
 #include "Debugger/TileViewer/TileViewer.hpp"
@@ -33,9 +34,11 @@ namespace ComSquare
 	private:
 #ifdef DEBUGGER_ENABLED
 		//! @brief The CPU's debugger with disassembly, pause, step by step...
-		std::optional<Debugger::CPUDebug> _cpuDebugger;
+		std::optional<Debugger::CPU::CPUDebug> _cpuDebugger;
 		//! @brief A debugger that shows every read and write made over the bus.
 		std::optional<Debugger::MemoryBusDebug> _busDebugger;
+		//! @brief The APU's debugger with disassembly, pause, step by step...
+		std::optional<Debugger::APU::APUDebug> _apuDebugger;
 
 		//! @brief The window that allow the user to view a memory.
 		std::optional<Debugger::MemoryViewer> _ramViewer;

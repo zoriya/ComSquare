@@ -9,13 +9,13 @@
 
 using namespace ComSquare::CPU;
 
-namespace ComSquare::Debugger
+namespace ComSquare::Debugger::CPU
 {
-	DisassembledInstruction::DisassembledInstruction(const CPU::Instruction &instruction,
+	DisassembledInstruction::DisassembledInstruction(const ComSquare::CPU::Instruction &instruction,
 	                                                 uint24_t addr,
 	                                                 std::string arg,
 	                                                 uint8_t op)
-	    : CPU::Instruction(instruction),
+	    : ComSquare::CPU::Instruction(instruction),
 	      address(addr),
 	      argument(std::move(arg)),
 	      opcode(op),
@@ -76,12 +76,12 @@ namespace ComSquare::Debugger
 	DisassembledInstruction CPUDebug::_parseInstruction(uint24_t pc, DisassemblyContext &ctx) const
 	{
 		uint24_t opcode = this->_snes.bus.peek_v(pc);
-		Instruction instruction = this->_cpu.instructions[opcode];
+		const Instruction &instruction = this->_cpu.instructions[opcode];
 		std::string argument = this->_getInstructionParameter(instruction, pc + 1, ctx);
 		return DisassembledInstruction(instruction, pc, argument, opcode);
 	}
 
-	std::string CPUDebug::_getInstructionParameter(Instruction &instruction, uint24_t pc, DisassemblyContext &ctx) const
+	std::string CPUDebug::_getInstructionParameter(const Instruction &instruction, uint24_t pc, DisassemblyContext &ctx) const
 	{
 		switch (instruction.addressingMode) {
 		case Implied:

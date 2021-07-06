@@ -3,18 +3,17 @@
 //
 
 #include "APUDebug.hpp"
-#include "../Utility/Utility.hpp"
-#include "../Exceptions/InvalidOpcode.hpp"
+#include "SNES.hpp"
+#include "APU/APU.hpp"
+#include "Utility/Utility.hpp"
+#include "Exceptions/InvalidOpcode.hpp"
 
-using namespace ComSquare::APU;
-
-namespace ComSquare::Debugger
+namespace ComSquare::Debugger::APU
 {
-	APUDebug::APUDebug(APU &apu, SNES &snes)
-		: APU(apu),
-		  _window(new ClosableWindow([&snes] { snes.disableAPUDebugging(); })),
+	APUDebug::APUDebug(ComSquare::APU::APU &apu, SNES &snes)
+		: _window(new ClosableWindow([&snes] { snes.disableAPUDebugging(); })),
 		  _ui(),
-		  _snes(snes)
+		  _apu(apu)
 	{
 		this->_ui.setupUi(this->_window);
 		QMainWindow::connect(this->_ui.resumeButton, &QPushButton::clicked, this, &APUDebug::pause);
@@ -30,74 +29,74 @@ namespace ComSquare::Debugger
 
 	void APUDebug::_updatePanel()
 	{
-		this->_ui.port0hexaLineEdit->setText(Utility::to_hex(this->_registers.port0).c_str());
-		this->_ui.port0LineEdit->setText(Utility::to_binary(this->_registers.port0).c_str());
+		this->_ui.port0hexaLineEdit->setText(Utility::to_hex(this->_apu._registers.port0).c_str());
+		this->_ui.port0LineEdit->setText(Utility::to_binary(this->_apu._registers.port0).c_str());
 
-		this->_ui.port1hexaLineEdit->setText(Utility::to_hex(this->_registers.port1).c_str());
-		this->_ui.port1LineEdit->setText(Utility::to_binary(this->_registers.port1).c_str());
+		this->_ui.port1hexaLineEdit->setText(Utility::to_hex(this->_apu._registers.port1).c_str());
+		this->_ui.port1LineEdit->setText(Utility::to_binary(this->_apu._registers.port1).c_str());
 
-		this->_ui.port2hexaLineEdit->setText(Utility::to_hex(this->_registers.port2).c_str());
-		this->_ui.port2LineEdit->setText(Utility::to_binary(this->_registers.port2).c_str());
+		this->_ui.port2hexaLineEdit->setText(Utility::to_hex(this->_apu._registers.port2).c_str());
+		this->_ui.port2LineEdit->setText(Utility::to_binary(this->_apu._registers.port2).c_str());
 
-		this->_ui.port3hexaLineEdit->setText(Utility::to_hex(this->_registers.port3).c_str());
-		this->_ui.port3LineEdit->setText(Utility::to_binary(this->_registers.port3).c_str());
+		this->_ui.port3hexaLineEdit->setText(Utility::to_hex(this->_apu._registers.port3).c_str());
+		this->_ui.port3LineEdit->setText(Utility::to_binary(this->_apu._registers.port3).c_str());
 
-		this->_ui.controlhexaLineEdit->setText(Utility::to_hex(this->_registers.ctrlreg).c_str());
-		this->_ui.controlLineEdit->setText(Utility::to_binary(this->_registers.ctrlreg).c_str());
+		this->_ui.controlhexaLineEdit->setText(Utility::to_hex(this->_apu._registers.ctrlreg).c_str());
+		this->_ui.controlLineEdit->setText(Utility::to_binary(this->_apu._registers.ctrlreg).c_str());
 
-		this->_ui.dSPRegAddresshexaLineEdit->setText(Utility::to_hex(this->_registers.dspregAddr).c_str());
-		this->_ui.dSPRegAddressLineEdit->setText(Utility::to_binary(this->_registers.dspregAddr).c_str());
+		this->_ui.dSPRegAddresshexaLineEdit->setText(Utility::to_hex(this->_apu._registers.dspregAddr).c_str());
+		this->_ui.dSPRegAddressLineEdit->setText(Utility::to_binary(this->_apu._registers.dspregAddr).c_str());
 
-		this->_ui.dSPRegDatahexaLineEdit->setText(Utility::to_hex(this->_dsp.read(this->_registers.dspregAddr)).c_str());
-		this->_ui.dSPRegDataLineEdit->setText(Utility::to_binary(this->_dsp.read(this->_registers.dspregAddr)).c_str());
+		this->_ui.dSPRegDatahexaLineEdit->setText(Utility::to_hex(this->_apu._dsp.read(this->_apu._registers.dspregAddr)).c_str());
+		this->_ui.dSPRegDataLineEdit->setText(Utility::to_binary(this->_apu._dsp.read(this->_apu._registers.dspregAddr)).c_str());
 
-		this->_ui.timer0hexaLineEdit->setText(Utility::to_hex(this->_registers.timer0).c_str());
-		this->_ui.timer0LineEdit->setText(Utility::to_binary(this->_registers.timer0).c_str());
+		this->_ui.timer0hexaLineEdit->setText(Utility::to_hex(this->_apu._registers.timer0).c_str());
+		this->_ui.timer0LineEdit->setText(Utility::to_binary(this->_apu._registers.timer0).c_str());
 
-		this->_ui.timer1hexaLineEdit->setText(Utility::to_hex(this->_registers.timer1).c_str());
-		this->_ui.timer1LineEdit->setText(Utility::to_binary(this->_registers.timer1).c_str());
+		this->_ui.timer1hexaLineEdit->setText(Utility::to_hex(this->_apu._registers.timer1).c_str());
+		this->_ui.timer1LineEdit->setText(Utility::to_binary(this->_apu._registers.timer1).c_str());
 
-		this->_ui.timer2hexaLineEdit->setText(Utility::to_hex(this->_registers.timer2).c_str());
-		this->_ui.timer2LineEdit->setText(Utility::to_binary(this->_registers.timer2).c_str());
+		this->_ui.timer2hexaLineEdit->setText(Utility::to_hex(this->_apu._registers.timer2).c_str());
+		this->_ui.timer2LineEdit->setText(Utility::to_binary(this->_apu._registers.timer2).c_str());
 
-		this->_ui.counter0hexaLineEdit->setText(Utility::to_hex(this->_registers.counter0).c_str());
-		this->_ui.counter0LineEdit->setText(Utility::to_binary(this->_registers.counter0).c_str());
+		this->_ui.counter0hexaLineEdit->setText(Utility::to_hex(this->_apu._registers.counter0).c_str());
+		this->_ui.counter0LineEdit->setText(Utility::to_binary(this->_apu._registers.counter0).c_str());
 
-		this->_ui.counter1hexaLineEdit->setText(Utility::to_hex(this->_registers.counter1).c_str());
-		this->_ui.counter1LineEdit->setText(Utility::to_binary(this->_registers.counter1).c_str());
+		this->_ui.counter1hexaLineEdit->setText(Utility::to_hex(this->_apu._registers.counter1).c_str());
+		this->_ui.counter1LineEdit->setText(Utility::to_binary(this->_apu._registers.counter1).c_str());
 
-		this->_ui.counter2hexaLineEdit->setText(Utility::to_hex(this->_registers.counter2).c_str());
-		this->_ui.counter2LineEdit->setText(Utility::to_binary(this->_registers.counter2).c_str());
+		this->_ui.counter2hexaLineEdit->setText(Utility::to_hex(this->_apu._registers.counter2).c_str());
+		this->_ui.counter2LineEdit->setText(Utility::to_binary(this->_apu._registers.counter2).c_str());
 
-		this->_ui.regMemhexaLineEdit->setText(Utility::to_hex(this->_registers.regmem1).c_str());
-		this->_ui.regMemLineEdit->setText(Utility::to_binary(this->_registers.regmem1).c_str());
+		this->_ui.regMemhexaLineEdit->setText(Utility::to_hex(this->_apu._registers.regmem1).c_str());
+		this->_ui.regMemLineEdit->setText(Utility::to_binary(this->_apu._registers.regmem1).c_str());
 
-		this->_ui.regMemhexaLineEdit_2->setText(Utility::to_hex(this->_registers.regmem2).c_str());
-		this->_ui.regMemLineEdit_2->setText(Utility::to_binary(this->_registers.regmem2).c_str());
+		this->_ui.regMemhexaLineEdit_2->setText(Utility::to_hex(this->_apu._registers.regmem2).c_str());
+		this->_ui.regMemLineEdit_2->setText(Utility::to_binary(this->_apu._registers.regmem2).c_str());
 
-		this->_ui.unknownhexaLineEdit->setText(Utility::to_hex(this->_registers.unknown).c_str());
-		this->_ui.unknownLineEdit->setText(Utility::to_binary(this->_registers.unknown).c_str());
+		this->_ui.unknownhexaLineEdit->setText(Utility::to_hex(this->_apu._registers.unknown).c_str());
+		this->_ui.unknownLineEdit->setText(Utility::to_binary(this->_apu._registers.unknown).c_str());
 
-		this->_ui.stackPointerLineEdit->setText(Utility::to_hex(this->_internalRegisters.sp).c_str());
-		this->_ui.xIndexLineEdit->setText(Utility::to_hex(this->_internalRegisters.x).c_str());
-		this->_ui.yIndexLineEdit->setText(Utility::to_hex(this->_internalRegisters.y).c_str());
-		this->_ui.accumlatorLineEdit->setText(Utility::to_hex(this->_internalRegisters.a).c_str());
-		this->_ui.programCounterLineEdit->setText(Utility::to_hex(this->_internalRegisters.pc).c_str());
-		this->_ui.bFlagCheckBox->setChecked(this->_internalRegisters.b);
-		this->_ui.nFlagCheckBox->setChecked(this->_internalRegisters.n);
-		this->_ui.pFlagCheckBox->setChecked(this->_internalRegisters.p);
-		this->_ui.hFlagCheckBox->setChecked(this->_internalRegisters.h);
-		this->_ui.vFlagCheckBox->setChecked(this->_internalRegisters.v);
-		this->_ui.iFlagCheckBox->setChecked(this->_internalRegisters.i);
-		this->_ui.zFlagCheckBox->setChecked(this->_internalRegisters.z);
-		this->_ui.cFlagCheckBox->setChecked(this->_internalRegisters.c);
+		this->_ui.stackPointerLineEdit->setText(Utility::to_hex(this->_apu._internalRegisters.sp).c_str());
+		this->_ui.xIndexLineEdit->setText(Utility::to_hex(this->_apu._internalRegisters.x).c_str());
+		this->_ui.yIndexLineEdit->setText(Utility::to_hex(this->_apu._internalRegisters.y).c_str());
+		this->_ui.accumlatorLineEdit->setText(Utility::to_hex(this->_apu._internalRegisters.a).c_str());
+		this->_ui.programCounterLineEdit->setText(Utility::to_hex(this->_apu._internalRegisters.pc).c_str());
+		this->_ui.bFlagCheckBox->setChecked(this->_apu._internalRegisters.b);
+		this->_ui.nFlagCheckBox->setChecked(this->_apu._internalRegisters.n);
+		this->_ui.pFlagCheckBox->setChecked(this->_apu._internalRegisters.p);
+		this->_ui.hFlagCheckBox->setChecked(this->_apu._internalRegisters.h);
+		this->_ui.vFlagCheckBox->setChecked(this->_apu._internalRegisters.v);
+		this->_ui.iFlagCheckBox->setChecked(this->_apu._internalRegisters.i);
+		this->_ui.zFlagCheckBox->setChecked(this->_apu._internalRegisters.z);
+		this->_ui.cFlagCheckBox->setChecked(this->_apu._internalRegisters.c);
 
-		auto voices = this->_dsp.getVoices();
-		auto master = this->_dsp.getMaster();
-		auto echo = this->_dsp.getEcho();
-		auto noise = this->_dsp.getNoise();
-		auto brr = this->_dsp.getBrr();
-		auto latch = this->_dsp.getLatch();
+		auto voices = this->_apu._dsp.getVoices();
+		auto master = this->_apu._dsp.getMaster();
+		auto echo = this->_apu._dsp.getEcho();
+		auto noise = this->_apu._dsp.getNoise();
+		auto brr = this->_apu._dsp.getBrr();
+		auto latch = this->_apu._dsp.getLatch();
 		auto max = std::numeric_limits<int8_t>::max();
 
 		this->_ui.mvolLprogressBar->setValue(master.volume[0] * 100 / max);
@@ -252,20 +251,19 @@ namespace ComSquare::Debugger
 		QStringList labels = QStringList();
 		uint16_t offset = 0;
 
-		if (this->_pc != 0)
+		if (this->_apu._internalRegisters.pc != 0)
 		{
-			auto pc = this->_internalRegisters.pc;
+			auto pc = this->_apu._internalRegisters.pc;
 
-			this->_internalRegisters.pc = this->_pc;
 			this->_appendInstruction(0);
-			labels.append(Utility::to_hex(this->_pc).c_str());
-			this->_internalRegisters.pc = pc;
+			labels.append(Utility::to_hex(pc).c_str());
+			this->_apu._internalRegisters.pc = pc;
 		}
 		else
 			labels.append("$0000");
 		for (uint16_t i = 1; i < 0x20; i++)
 		{
-			auto pc = this->_internalRegisters.pc;
+			auto pc = this->_apu._internalRegisters.pc;
 
 			offset += this->_appendInstruction(i);
 			labels.append(Utility::to_hex(pc).c_str());
@@ -273,7 +271,7 @@ namespace ComSquare::Debugger
 		this->_ui.logger->setVerticalHeaderLabels(labels);
 		for (int i = 0; i < 3; i++)
 			this->_ui.logger->item(1, i)->setData(Qt::BackgroundRole, QColor(200, 255, 148));
-		this->_internalRegisters.pc -= offset;
+		this->_apu._internalRegisters.pc -= offset;
 	}
 
 	int APUDebug::_appendInstruction(int row)
@@ -295,85 +293,104 @@ namespace ComSquare::Debugger
 		return instruction.size;
 	}
 
-	std::string APUDebug::_getOperand(Operand ope)
+	std::string APUDebug::_getOperand(Operand ope) const
 	{
+		uint16_t pc = this->_apu._internalRegisters.pc;
+		std::string ret = "UNKNOWN";
+
 		switch (ope) {
 		case None:
 			return "";
 		case A:
-			return Utility::to_hex(this->_internalRegisters.a);
+			ret = Utility::to_hex(this->_apu._internalRegisters.a);
+			break;
 		case X:
-			return Utility::to_hex(this->_internalRegisters.x);
+			ret = Utility::to_hex(this->_apu._internalRegisters.x);
+			break;
 		case Y:
-			return Utility::to_hex(this->_internalRegisters.y);
+			ret = Utility::to_hex(this->_apu._internalRegisters.y);
+			break;
 		case SP:
-			return Utility::to_hex(this->_internalRegisters.sp);
+			ret = Utility::to_hex(this->_apu._internalRegisters.sp);
+			break;
 		case PSW:
-			return Utility::to_hex(this->_internalRegisters.psw);
+			ret = Utility::to_hex(this->_apu._internalRegisters.psw);
+			break;
 		case ImmediateData:
-			return Utility::to_hex(this->_getImmediateData());
+			ret = Utility::to_hex(this->_apu._getImmediateData());
+			break;
 		case IndexXAddr:
-			return Utility::to_hex(this->_getIndexXAddr());
+			ret = Utility::to_hex(this->_apu._getIndexXAddr());
+			break;
 		case IndexYAddr:
-			return Utility::to_hex(this->_getIndexYAddr());
+			ret = Utility::to_hex(this->_apu._getIndexYAddr());
+			break;
 		case AbsoluteAddr:
-			return Utility::to_hex(this->_getAbsoluteAddr());
+			ret = Utility::to_hex(this->_apu._getAbsoluteAddr());
+			break;
 		case AbsoluteBit: {
-			auto pair = this->_getAbsoluteBit();
-			return Utility::to_hex(std::get<0>(pair)) + Utility::to_hex(std::get<1>(pair));
+			auto pair = this->_apu._getAbsoluteBit();
+			ret = Utility::to_hex(std::get<0>(pair)) + Utility::to_hex(std::get<1>(pair));
+			break;
 		}
 		case AbsoluteAddrByX:
-			return Utility::to_hex(this->_getAbsoluteAddrByX());
+			ret = Utility::to_hex(this->_apu._getAbsoluteAddrByX());
+			break;
 		case AbsoluteAddrByY:
-			return Utility::to_hex(this->_getAbsoluteAddrByY());
+			ret = Utility::to_hex(this->_apu._getAbsoluteAddrByY());
+			break;
 		case AbsoluteByXAddr:
-			return Utility::to_hex(this->_getAbsoluteByXAddr());
+			ret = Utility::to_hex(this->_apu._getAbsoluteByXAddr());
+			break;
 		case AbsoluteDirectByXAddr:
-			return Utility::to_hex(this->_getAbsoluteDirectByXAddr());
+			ret = Utility::to_hex(this->_apu._getAbsoluteDirectByXAddr());
+			break;
 		case AbsoluteDirectAddrByY:
-			return Utility::to_hex(this->_getAbsoluteDirectAddrByY());
+			ret = Utility::to_hex(this->_apu._getAbsoluteDirectAddrByY());
+			break;
 		case DirectAddr:
-			return Utility::to_hex(this->_getDirectAddr());
+			ret = Utility::to_hex(this->_apu._getDirectAddr());
+			break;
 		case DirectAddrByX:
-			return Utility::to_hex(this->_getDirectAddrByX());
+			ret = Utility::to_hex(this->_apu._getDirectAddrByX());
+			break;
 		case DirectAddrByY:
-			return Utility::to_hex(this->_getDirectAddrByY());
+			ret = Utility::to_hex(this->_apu._getDirectAddrByY());
+			break;
 		}
-		return "UNKNOWN";
+		this->_apu._internalRegisters.pc = pc;
+		return ret;
 	}
 
-	Instruction &APUDebug::_getInstruction()
+	const Instruction &APUDebug::_getInstruction() const
 	{
-		uint8_t opcode = this->_getImmediateData();
+		uint8_t opcode = this->_apu._internalRead(this->_apu._internalRegisters.pc);
 
 		return this->_instructions[opcode];
 	}
 
-	int APUDebug::_executeInstruction()
+	void APUDebug::update(unsigned maxCycles)
 	{
-		int cycles = 0;
+		unsigned cycles = 0;
 
-		if (this->_isPaused)
-			return 0xFF;
-		if (this->_isStepping) {
-			this->_isStepping = false;
-			this->_isPaused = true;
-		}
-		cycles = APU::_executeInstruction();
-		this->_updatePanel();
-		return cycles;
-	}
-
-	void APUDebug::update(unsigned cycles)
-	{
-		this->_pc = this->_internalRegisters.pc;
 		try {
-			if (this->_isPaused)
+			if (this->_isPaused) {
+				this->_apu._dsp.update();
 				return;
-			APU::update(cycles);
-		} catch (InvalidOpcode &e) {
+			}
+			while (cycles < maxCycles) {
+				cycles += this->_apu._executeInstruction();
+				this->_updatePanel();
+				this->_updateLogger();
+				if (this->_isStepping) {
+					this->_isStepping = false;
+					this->pause();
+					return;
+				}
+			}
+			this->_apu._dsp.update();
+		} catch (const InvalidOpcode &e) {
 			this->pause();
-			//this->_ui.logger->append(e.what());
 		}
 	}
 

@@ -12,6 +12,10 @@
 #include "Renderer/IRenderer.hpp"
 #include "Cartridge/Cartridge.hpp"
 
+#ifdef DEBUGGER_ENABLED
+#include "Debugger/APUDebug.hpp"
+#endif
+
 namespace ComSquare::APU
 {
 	struct InternalRegisters {
@@ -132,19 +136,14 @@ namespace ComSquare::APU
 	};
 
 	class APU : public Memory::AMemory {
-	protected:
+	private:
 		//! @brief All the registers of the APU CPU
 		Registers _registers{};
 		//! @brief Internal registers of the CPU (accessible from the bus via addr $4200 to $421F).
 		InternalRegisters _internalRegisters{};
-		//! @brief Renderer used to play sounds
-		Renderer::IRenderer &_renderer;
 
 		//! @brief Internal APU memory separated according to their utility
-		std::shared_ptr<MemoryMap> _map;
-
-		//! @brief Buffer containing samples to be played
-		std::array<int16_t, 0x10000> _soundBuffer;
+		MemoryMap _map;
 
 		//! @brief The DSP component used to produce sound
 		DSP::DSP _dsp;
@@ -199,7 +198,7 @@ namespace ComSquare::APU
 
 		//! @brief Execute a single instruction.
 		//! @return The number of cycles that the instruction took.
-		virtual int _executeInstruction();
+		int _executeInstruction();
 
 		//! @brief No Operation instruction, do nothing than delay
 		int NOP();
@@ -402,9 +401,13 @@ namespace ComSquare::APU
 
 		//! @brief This function execute the instructions received until the maximum number of cycles is reached.
 		//! @return The number of cycles that elapsed.
-		virtual void update(unsigned cycles);
+		void update(unsigned cycles);
 
 		//! @brief This function is executed when the SNES is powered on or the reset button is pushed.
 		void reset();
+
+#ifdef DEBUGGER_ENABLED
+		friend Debugger::APU::APUDebug;
+#endif
 	};
 }

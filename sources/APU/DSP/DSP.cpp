@@ -8,12 +8,12 @@
 
 namespace ComSquare::APU::DSP
 {
-	DSP::DSP(std::array<int16_t, 0x10000> &buffer, uint32_t size, std::weak_ptr<MemoryMap> map) :
-	_state(buffer), _map(map)
-	{
-		this->_state.buffer = buffer;
-		this->_state.bufferSize = size;
-	}
+	DSP::DSP(Renderer::IRenderer &renderer,
+			 MemoryMap &map)
+		: _state(this->_soundBuffer, this->_soundBuffer.size() / 2),
+		  _map(map),
+		  _renderer(renderer)
+	{ }
 
 	uint8_t DSP::read(uint24_t addr) const
 	{
@@ -570,17 +570,15 @@ namespace ComSquare::APU::DSP
 	}
 	uint8_t DSP::_readRAM(uint24_t addr)
 	{
-		if (!this->_map.lock())
-			throw std::runtime_error("DSP read : MemoryMap inaccessible");
 		switch (addr) {
 			case 0x0000 ... 0x00EF:
-				return this->_map.lock()->Page0.read(addr);
+				return this->_map.Page0.read(addr);
 			case 0x0100 ... 0x01FF:
-				return this->_map.lock()->Page1.read(addr - 0x0100);
+				return this->_map.Page1.read(addr - 0x0100);
 			case 0x0200 ... 0xFFBF:
-				return this->_map.lock()->Memory.read(addr - 0x200);
+				return this->_map.Memory.read(addr - 0x200);
 			case 0xFFC0 ... 0xFFFF:
-				return this->_map.lock()->IPL.read(addr - 0xFFC0);
+				return this->_map.IPL.read(addr - 0xFFC0);
 			default:
 				throw InvalidAddress("DSP read", addr);
 		}
@@ -588,20 +586,18 @@ namespace ComSquare::APU::DSP
 
 	void DSP::_writeRAM(uint24_t addr, uint8_t data)
 	{
-		if (!this->_map.lock())
-			throw std::runtime_error("DSP write : MemoryMap inaccessible");
 		switch (addr) {
 			case 0x0000 ... 0x00EF:
-				this->_map.lock()->Page0.write(addr, data);
+				this->_map.Page0.write(addr, data);
 				break;
 			case 0x0100 ... 0x01FF:
-				this->_map.lock()->Page1.write(addr - 0x0100, data);
+				this->_map.Page1.write(addr - 0x0100, data);
 				break;
 			case 0x0200 ... 0xFFBF:
-				this->_map.lock()->Memory.write(addr - 0x200, data);
+				this->_map.Memory.write(addr - 0x200, data);
 				break;
 			case 0xFFC0 ... 0xFFFF:
-				this->_map.lock()->IPL.write(addr - 0xFFC0, data);
+				this->_map.IPL.write(addr - 0xFFC0, data);
 				break;
 			default:
 				throw InvalidAddress("DSP write", addr);
@@ -764,7 +760,11 @@ namespace ComSquare::APU::DSP
 				break;
 		}
 		this->_state.voice = (this->_state.voice + 1) % 32;
+		int32_t samples = this->getSamplesCount();
+		if (samples > 0)
+			this->_renderer.playAudio(std::span(this->_soundBuffer.begin(), samples / 2));
 	}
+
 	uint24_t DSP::getSize() const
 	{
 		return 0x7F;

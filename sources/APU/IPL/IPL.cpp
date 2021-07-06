@@ -48,4 +48,14 @@ namespace ComSquare::APU::IPL
 		// TODO implement this
 		return "???";
 	}
+
+	uint8_t &IPL::operator[](uint24_t addr)
+	{
+		return this->_data[addr];
+	}
+
+	const uint8_t &IPL::operator[](uint24_t addr) const
+	{
+		return this->_data[addr];
+	}
 }// namespace ComSquare::APU::IPL

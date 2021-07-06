@@ -49,6 +49,15 @@ namespace ComSquare::APU::IPL
 		//! @throw InvalidAddress if the address is not mapped to the component.
 		void write(uint24_t addr, uint8_t data) override;
 
+		//! @brief Retrieve the data at the address given. This can be used instead of read or write.
+		//! @param addr The address of the data to retrieve.
+		//! @return The data at the address given as parameter.
+		uint8_t &operator[](uint24_t addr);
+		//! @brief Retrieve the data at the address given. This can be used instead of read or write.
+		//! @param addr The address of the data to retrieve.
+		//! @return The data at the address given as parameter.
+		const uint8_t &operator[](uint24_t addr) const;
+
 		//! @brief Get the size of the data. This size can be lower than the mapped data.
 		//! @return The number of bytes inside this memory.
 		[[nodiscard]] uint24_t getSize() const override;
