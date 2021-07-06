@@ -311,8 +311,8 @@ namespace ComSquare::PPU
 		(void)cycles;
 
 		this->renderMainAndSubScreen();
-		this->addBuffer(this->_screen, this->_subScreen);
-		this->addBuffer(this->_screen, this->_mainScreen);
+		Utils::addBuffer(this->_screen, this->_subScreen);
+		Utils::addBuffer(this->_screen, this->_mainScreen);
 		//this->_backgrounds[2].renderBackground();
 		//add_buffer(this->_screen, this->_backgrounds[2].buffer);
 		for (unsigned long i = 0; i < this->_screen.size(); i++) {
@@ -656,9 +656,9 @@ namespace ComSquare::PPU
 	void PPU::addToMainSubScreen(Background &bg)
 	{
 		if (this->_registers._t[0].raw & (1U << (bg.getBgNumber() - 1U)))
-			this->addBuffer(this->_mainScreen, bg.buffer);
+			Utils::addBuffer(this->_mainScreen, bg.buffer);
 		if (this->_registers._t[1].raw & (1U << (bg.getBgNumber() - 1U)))
-			this->addBuffer(this->_subScreen, bg.buffer);
+			Utils::addBuffer(this->_subScreen, bg.buffer);
 	}
 
 	int PPU::getBgMode() const
