@@ -3,7 +3,7 @@
 //
 
 #include <iostream>
-#include "../../Models/Int24.hpp"
+#include "../../Models/Ints.hpp"
 #include "../CPU.hpp"
 
 namespace ComSquare::CPU

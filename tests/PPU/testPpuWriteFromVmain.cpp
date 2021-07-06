@@ -2,13 +2,13 @@
 // Created by cbihan on 2/11/20.
 //
 
-#include <catch2/catch.hpp>
-#include <iostream>
+#include "Models/Ints.hpp"
 #include <bitset>
-#include "../tests.hpp"
-#include "../../sources/SNES.hpp"
-#include "../../sources/Memory/MemoryBus.hpp"
-#include "../../sources/PPU/PPU.hpp"
+#include "tests.hpp"
+#include <catch2/catch.hpp>
+#include "SNES.hpp"
+#include "Memory/MemoryBus.hpp"
+#include "PPU/PPU.hpp"
 using namespace ComSquare;
 
 TEST_CASE("vmain_data_full PPU_write_2", "[PPU_write_2]")

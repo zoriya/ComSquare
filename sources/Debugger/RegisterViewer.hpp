@@ -6,7 +6,7 @@
 
 #include "ClosableWindow.hpp"
 #include "Memory/MemoryBus.hpp"
-#include "Models/Int24.hpp"
+#include "Models/Ints.hpp"
 #include "ui/ui_registersView.h"
 #include <QAbstractTableModel>
 #include <QtCore/QObject>

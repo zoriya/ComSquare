@@ -27,7 +27,7 @@ namespace ComSquare::Memory
 		IMemory *handler = this->getAccessor(addr);
 
 		if (!handler) {
-			log(LogLevel::WARNING, "Unknown memory accessor for address $" << std::hex << addr << ". Using open bus.");
+			logMsg(LogLevel::WARNING, "Unknown memory accessor for address $" << std::hex << addr << ". Using open bus.");
 			return this->_openBus;
 		}
 
@@ -62,7 +62,7 @@ namespace ComSquare::Memory
 		IMemory *handler = this->getAccessor(addr);
 
 		if (!handler) {
-			log(LogLevel::ERROR, "Unknown memory accessor for address " << std::hex << addr << ". Warning, it was a write.");
+			logMsg(LogLevel::ERROR, "Unknown memory accessor for address " << std::hex << addr << ". Warning, it was a write.");
 			return;
 		}
 		handler->write(handler->getRelativeAddress(addr), data);

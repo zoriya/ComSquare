@@ -7,7 +7,7 @@
 #include "Debugger/ClosableWindow.hpp"
 #include "Exceptions/DebuggableError.hpp"
 #include "ui/ui_cpuView.h"
-#include "Models/Int24.hpp"
+#include "Models/Ints.hpp"
 #include "Memory/MemoryBus.hpp"
 #include "CPU/Instruction.hpp"
 #include <QtWidgets/QStyledItemDelegate>

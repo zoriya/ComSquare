@@ -58,7 +58,7 @@ namespace ComSquare::Renderer
 		}
 #ifdef DEBUGGER_ENABLED
 		catch (const DebuggableError &e) {
-			log(LogLevel::ERROR, "Invalid rom's instruction: " << e.what());
+			logMsg(LogLevel::ERROR, "Invalid rom's instruction: " << e.what());
 			this->_snes.enableCPUDebuggingWithError(e);
 		}
 #endif

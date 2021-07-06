@@ -5,7 +5,7 @@
 #pragma once
 
 #include "Memory/MemoryBus.hpp"
-#include "Models/Int24.hpp"
+#include "Models/Ints.hpp"
 #include <cstdint>
 #include <memory>
 

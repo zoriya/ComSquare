@@ -11,7 +11,6 @@
 
 #define private public
 #define protected public
-#define class struct
 
 #include "Renderer/NoRenderer.hpp"
 #include "SNES.hpp"

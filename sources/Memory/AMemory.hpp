@@ -8,7 +8,7 @@
 #include <vector>
 #include <memory>
 #include <string>
-#include "Models/Int24.hpp"
+#include "Models/Ints.hpp"
 #include "Models/Components.hpp"
 #include "IMemory.hpp"
 

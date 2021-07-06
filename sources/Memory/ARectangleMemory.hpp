@@ -5,6 +5,7 @@
 #pragma once
 
 #include "IMemory.hpp"
+#include "Models/Ints.hpp"
 
 namespace ComSquare::Memory
 {

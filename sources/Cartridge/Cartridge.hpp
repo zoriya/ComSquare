@@ -7,7 +7,7 @@
 #include "InterruptVectors.hpp"
 #include "Memory/AMemory.hpp"
 #include "Memory/ARectangleMemory.hpp"
-#include "Models/Int24.hpp"
+#include "Models/Ints.hpp"
 #include "Ram/Ram.hpp"
 #include <filesystem>
 #include <string>

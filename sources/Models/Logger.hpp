@@ -23,10 +23,10 @@ namespace ComSquare
 	constexpr LogLevel GlobalLevel = INFO;
 
 #ifndef TESTS
-#define log(level, message) \
+#define logMsg(level, message) \
 	if constexpr((level) >= GlobalLevel) \
 		std::cout << message << std::endl // NOLINT(bugprone-macro-parentheses)
 #else
-#define log(_, msg) INFO(msg)
+#define logMsg(_, msg) INFO(msg)
 #endif
 }

@@ -7,7 +7,7 @@
 
 #include "Memory/AMemory.hpp"
 #include "Memory/MemoryBus.hpp"
-#include "Models/Int24.hpp"
+#include "Models/Ints.hpp"
 #include "Models/Callback.hpp"
 #include "Cartridge/Cartridge.hpp"
 #include "Memory/AMemory.hpp"

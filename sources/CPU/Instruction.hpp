@@ -5,7 +5,7 @@
 #pragma once
 
 #include <string>
-#include "Models/Int24.hpp"
+#include "Models/Ints.hpp"
 
 namespace ComSquare::CPU
 {

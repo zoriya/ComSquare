@@ -5,6 +5,7 @@
 #pragma once
 
 #include "DebuggableError.hpp"
+#include "Models/Ints.hpp"
 #include <exception>
 #include <ios>
 #include <sstream>
@@ -22,7 +23,7 @@ namespace ComSquare
 		InvalidAddress(std::string where, uint24_t addr)
 		{
 			std::stringstream stream;
-			stream << "Could not read/write data at address: 0x" << std::hex << addr << " from " << where;
+			stream << "Could not read/write data at address: " << addr << " from " << where;
 			this->_msg = stream.str();
 		}
 		const char *what() const noexcept override { return this->_msg.c_str(); }

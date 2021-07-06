@@ -27,8 +27,8 @@ set(SOURCES
 	sources/APU/APU.cpp
 	sources/Exceptions/InvalidAddress.hpp
 	sources/Exceptions/InvalidRom.hpp
-	sources/Models/Int24.hpp
-	sources/Models/Int24.hpp
+	sources/Models/Ints.hpp
+	sources/Models/Ints.hpp
 	sources/Ram/Ram.cpp
 	sources/Ram/Ram.hpp
 	sources/Memory/MemoryShadow.cpp
@@ -186,16 +186,11 @@ add_executable(unit_tests EXCLUDE_FROM_ALL
 	)
 target_include_directories(unit_tests PUBLIC tests)
 target_compile_definitions(unit_tests PUBLIC TESTS)
-
+set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/libs)
+find_package(Catch2 REQUIRED)
+target_link_libraries(unit_tests PRIVATE Catch2::Catch2WithMain)
 
 if (CMAKE_COMPILER_IS_GNUCXX)
 	#	target_link_libraries(unit_tests PRIVATE -lgcov)
 	#	target_compile_options(unit_tests PUBLIC -fprofile-arcs -ftest-coverage)
 endif ()
-
-find_package(Catch2 QUIET)
-if (NOT Catch2_FOUND)
-	set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/libs)
-	find_package(Catch2 REQUIRED)
-endif ()
-target_link_libraries(unit_tests PRIVATE Catch2::Catch2)
