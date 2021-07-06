@@ -163,7 +163,6 @@ target_link_libraries(comsquare
 
 add_executable(unit_tests EXCLUDE_FROM_ALL
 	${SOURCES}
-	tests/MainTest.cpp
 	tests/tests.hpp
 	tests/CPU/testInterupts.cpp
 	tests/APU/testAPUInstructions.cpp

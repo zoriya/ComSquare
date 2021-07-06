@@ -4,7 +4,7 @@
 
 #include <bitset>
 #include "tests.hpp"
-#include <catch2/catch.hpp>
+#include <catch2/catch_test_macros.hpp>
 #include "SNES.hpp"
 #include "Memory/MemoryBus.hpp"
 #include "PPU/PPU.hpp"

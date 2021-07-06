@@ -8,7 +8,7 @@
 #include <iostream>
 
 #ifdef TESTS
-#include <catch2/catch.hpp>
+#include <catch2/catch_message.hpp>
 #endif
 
 namespace ComSquare

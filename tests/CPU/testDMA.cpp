@@ -2,7 +2,7 @@
 // Created by anonymus-raccoon on 2/1/21.
 //
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_test_macros.hpp>
 #include <bitset>
 #include "../tests.hpp"
 using namespace ComSquare;

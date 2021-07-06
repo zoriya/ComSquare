@@ -2,7 +2,7 @@
 // Created by Melefo on 05/02/2020.
 //
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_test_macros.hpp>
 #include <iostream>
 #include "tests.hpp"
 #include "Memory/MemoryShadow.hpp"

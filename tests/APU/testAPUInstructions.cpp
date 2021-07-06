@@ -2,7 +2,7 @@
 // Created by Melefo on 11/02/2020.
 //
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_test_macros.hpp>
 #include <iostream>
 #include <bitset>
 #include "../tests.hpp"

@@ -2,7 +2,7 @@
 // Created by anonymus-raccoon on 2/10/20.
 //
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_test_macros.hpp>
 #include "../tests.hpp"
 #include "SNES.hpp"
 using namespace ComSquare;
