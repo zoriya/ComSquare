@@ -98,6 +98,8 @@ set(SOURCES
 	sources/PPU/TileRenderer.cpp
 	sources/PPU/TileRenderer.hpp
 	sources/PPU/Tile.hpp
+	sources/PPU/PpuDebug.cpp
+	sources/PPU/PpuDebug.hpp
 	)
 
 set(CMAKE_AUTOMOC ON)
@@ -118,8 +120,6 @@ add_executable(ComSquare
 	sources/Renderer/QtRenderer/QtSfmlTileRenderer.hpp
 	sources/Renderer/QtRenderer/QtSfmlTileRenderer.cpp
 	sources/Renderer/QtRenderer/QtSfmlTileRenderer.hpp
-	sources/PPU/PpuDebug.cpp
-	sources/PPU/PpuDebug.hpp
 	sources/Debugger/CPU/CPUDebug.cpp
 	sources/Debugger/CPU/CPUDebug.hpp
 	sources/Debugger/MemoryViewer.cpp
