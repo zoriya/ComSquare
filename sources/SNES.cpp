@@ -15,9 +15,7 @@ namespace ComSquare
 	      cpu(this->bus, cartridge.header),
 	      ppu(renderer),
 	      apu(renderer)
-	{
-		this->bus.mapComponents(*this);
-	}
+	{}
 
 	SNES::SNES(const std::string &romPath, Renderer::IRenderer &renderer)
 	    : bus(),

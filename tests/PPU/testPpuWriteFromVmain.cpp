@@ -2,7 +2,6 @@
 // Created by cbihan on 2/11/20.
 //
 
-#include "Models/Ints.hpp"
 #include <bitset>
 #include "tests.hpp"
 #include <catch2/catch.hpp>

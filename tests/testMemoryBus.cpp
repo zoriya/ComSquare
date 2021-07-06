@@ -201,7 +201,10 @@ TEST_CASE("GetRomMirror2 BusAccessor", "[BusAccessor]")
 TEST_CASE("GetRomMirror3 BusAccessor", "[BusAccessor]")
 {
 	Init()
-	auto *accessor = dynamic_cast<Memory::RectangleShadow *>(snes.bus.getAccessor(0xDE1248));
+	snes.cartridge.header.mappingMode = Cartridge::LoRom;
+	auto *rawAccessor = snes.bus.getAccessor(0xDE1248);
+	REQUIRE(rawAccessor);
+	auto *accessor = dynamic_cast<Memory::RectangleShadow *>(rawAccessor);
 	REQUIRE(accessor);
 	REQUIRE(&accessor->_initial == &snes.cartridge);
 }

@@ -191,6 +191,6 @@ find_package(Catch2 REQUIRED)
 target_link_libraries(unit_tests PRIVATE Catch2::Catch2WithMain)
 
 if (CMAKE_COMPILER_IS_GNUCXX)
-	#	target_link_libraries(unit_tests PRIVATE -lgcov)
-	#	target_compile_options(unit_tests PUBLIC -fprofile-arcs -ftest-coverage)
+	target_link_libraries(unit_tests PRIVATE -lgcov)
+	target_compile_options(unit_tests PUBLIC -fprofile-arcs -ftest-coverage)
 endif ()
