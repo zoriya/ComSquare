@@ -60,12 +60,15 @@ namespace ComSquare::PPU
 		//! @brief The access to cgram
 		std::shared_ptr<Ram::Ram> _cgram;
 		//! @brief Draw a tile on the screen at x y pos
-		void _drawTile(uint16_t data, Vector2<int> pos);
+		//! @param data The VRAM value to be interpreted as a Utils::TileData
+		//! @param indexOffset The index offset of the Tile (ranging from 0 to 63)
+		void _drawTile(uint16_t data, Vector2<int> indexOffset);
 		//! @brief Draw the tile to the tile Buffer
+		//! @param tileData The tile data to use to render the tile
 		void _drawTileFromMemoryToTileBuffer(const union Utils::TileData &tileData);
 		//! @brief draw a tileMap 32x32 starting at baseAddress
 		//! @param baseAddress The starting address of the tileMap
-		//! @param offset The rendering offeset in pixels
+		//! @param offset The offset of the tile map (ranging from 0 to 1)
 		void _drawBasicTileMap(uint16_t baseAddress, Vector2<int> offset);
 	public:
 		//! @brief The size of the background (x, y)
@@ -92,7 +95,7 @@ namespace ComSquare::PPU
 		void setBpp(int bpp);
 		//! @brief setter for private variable _tileMaps
 		//! @param tileMaps The tileMaps to set
-		void setTilemaps(Vector2<bool> tileMaps);
+		void setTileMapMirroring(Vector2<bool> tileMaps);
 
 		//! @brief Get the BackGround Number
 		//! @return the current Background number

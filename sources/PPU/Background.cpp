@@ -35,7 +35,8 @@ namespace ComSquare::PPU
 	void Background::renderBackground()
 	{
 		uint16_t vramAddress = this->_tileMapStartAddress;
-		Vector2<int> offset = this->_ppu.getBgScroll(this->_bgNumber);
+		//Vector2<int> offset = this->_ppu.getBgScroll(this->_bgNumber);
+		Vector2i offset = {0, 0};
 		this->backgroundSize.x =
 			(static_cast<int>(this->_tileMapMirroring.x) + 1) * this->_characterNbPixels.x * NbCharacterWidth;
 		this->backgroundSize.y =
@@ -44,10 +45,10 @@ namespace ComSquare::PPU
 		this->_drawBasicTileMap(vramAddress, offset);
 		for (int i = 1; i < 4; i++) {
 			vramAddress += TileMapByteSize;
-			offset.x += NbCharacterWidth * this->_characterNbPixels.x;
+			offset.x++;
 			if (i == 2) {
 				offset.x = 0;
-				offset.y += NbCharacterHeight * this->_characterNbPixels.y;
+				offset.y++;
 			}
 			if (i > 1 && !this->_tileMapMirroring.y)
 				break;
@@ -79,7 +80,7 @@ namespace ComSquare::PPU
 		}
 	}
 
-	void Background::_drawTile(uint16_t data, Vector2<int> pos)
+	void Background::_drawTile(uint16_t data, Vector2<int> indexOffset)
 	{
 		union Utils::TileData tileData;
 
@@ -87,6 +88,7 @@ namespace ComSquare::PPU
 
 		//if (tileData.tilePriority != this->_priority)
 		//	return;
+		this->tilesPriority[indexOffset.x][indexOffset.y] = tileData.tilePriority;
 		this->_drawTileFromMemoryToTileBuffer(tileData);
 
 		// todo check why i need to invert vertical and horizontal flips
@@ -94,10 +96,12 @@ namespace ComSquare::PPU
 			Utils::HFlipArray(this->_tileBuffer, {this->_characterNbPixels.x, this->_characterNbPixels.y});
 		if (tileData.horizontalFlip)
 			Utils::VFlipArray(this->_tileBuffer, {this->_characterNbPixels.x, this->_characterNbPixels.y});
+
+		Vector2<int> pixelPosition{indexOffset.x * this->_characterNbPixels.x, indexOffset.y * this->_characterNbPixels.y};
 		std::for_each(this->_tileBuffer.begin(), this->_tileBuffer.begin() + this->_characterNbPixels.y,
-		              [this, &pos](const auto &row) {
+		              [this, &pixelPosition](const auto &row) {
 			              std::move(row.begin(), row.begin() + this->_characterNbPixels.x,
-			                        this->buffer[pos.y++].begin() + pos.x);
+			                        this->buffer[pixelPosition.y++].begin() + pixelPosition.x);
 		              });
 	}
 
@@ -111,15 +115,16 @@ namespace ComSquare::PPU
 			// TODO function to read 2 bytes (LSB order or bits reversed)
 			tileMapValue = this->_vram->read(vramAddress);
 			tileMapValue += this->_vram->read(vramAddress + 1) << 8U;
-			this->_drawTile(tileMapValue, {(pos.x * this->_characterNbPixels.x) + offset.x,
-			                               (pos.y * this->_characterNbPixels.y) + offset.y});
+			this->_drawTile(tileMapValue, {(offset.x * NbCharacterWidth) + pos.x,
+			                               (offset.y * NbCharacterHeight) + pos.y});
 			vramAddress += 2;
 			if (pos.x % 31 == 0 && pos.x) {
 				pos.y++;
 				pos.x = 0;
 			}
-			else
+			else {
 				pos.x++;
+			}
 		}
 	}
 
@@ -147,7 +152,7 @@ namespace ComSquare::PPU
 		this->_tileRenderer.setBpp(this->_bpp);
 	}
 
-	void Background::setTilemaps(Vector2<bool> tileMaps)
+	void Background::setTileMapMirroring(Vector2<bool> tileMaps)
 	{
 		this->_tileMapMirroring = tileMaps;
 	}

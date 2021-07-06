@@ -23,13 +23,13 @@ namespace ComSquare::PPU
 		_renderer(renderer),
 		_backgrounds{
 			Background(*this, 1, false),
-			Background(*this, 1, true),
+			//Background(*this, 1, true),
 			Background(*this, 2, false),
-			Background(*this, 2, true),
+			//Background(*this, 2, true),
 			Background(*this, 3, false),
-			Background(*this, 3, true),
+			//Background(*this, 3, true),
 			Background(*this, 4, false),
-			Background(*this, 4, true)
+			//Background(*this, 4, true)
 		},
 		_mainScreen({{{0}}}),
 		_subScreen({{{0}}})
@@ -129,10 +129,10 @@ namespace ComSquare::PPU
 				this->getTileMapStartAddress(addr - PpuRegisters::bg1sc + 1));
 			this->_backgrounds[addr - PpuRegisters::bg1sc + 1].setTileMapStartAddress(
 				this->getTileMapStartAddress(addr - PpuRegisters::bg1sc + 1));
-			this->_backgrounds[addr - PpuRegisters::bg1sc].setTilemaps(
+			this->_backgrounds[addr - PpuRegisters::bg1sc].setTileMapMirroring(
 				{static_cast<bool>(this->_registers._bgsc[addr - PpuRegisters::bg1sc].tilemapHorizontalMirroring),
 				 static_cast<bool>(this->_registers._bgsc[addr - PpuRegisters::bg1sc].tilemapVerticalMirroring)});
-			this->_backgrounds[addr - PpuRegisters::bg1sc + 1].setTilemaps(
+			this->_backgrounds[addr - PpuRegisters::bg1sc + 1].setTileMapMirroring(
 				{static_cast<bool>(this->_registers._bgsc[addr - PpuRegisters::bg1sc].tilemapHorizontalMirroring),
 				 static_cast<bool>(this->_registers._bgsc[addr - PpuRegisters::bg1sc].tilemapVerticalMirroring)});
 			break;
@@ -553,9 +553,7 @@ namespace ComSquare::PPU
 	{
 		uint16_t colorPalette;
 		// should only render backgrounds needed (depending of th bgMode)
-		int i = 0;
 		for (auto &_background : this->_backgrounds) {
-			i++;
 			_background.renderBackground();
 		}
 		// TODO make a function getDefaultBgColor
@@ -572,30 +570,30 @@ namespace ComSquare::PPU
 			this->addToMainSubScreen(this->_backgrounds[BgName::bg4NoPriority]);
 			this->addToMainSubScreen(this->_backgrounds[BgName::bg3NoPriority]);
 			//sprites  priority 0
-			this->addToMainSubScreen(this->_backgrounds[BgName::bg4Priority]);
-			this->addToMainSubScreen(this->_backgrounds[BgName::bg3Priority]);
+		//	this->addToMainSubScreen(this->_backgrounds[BgName::bg4Priority]);
+		//	this->addToMainSubScreen(this->_backgrounds[BgName::bg3Priority]);
 			//sprites priority 1
 			this->addToMainSubScreen(this->_backgrounds[BgName::bg2NoPriority]);
 			this->addToMainSubScreen(this->_backgrounds[BgName::bg1NoPriority]);
 			//sprites priority 2
-			this->addToMainSubScreen(this->_backgrounds[BgName::bg2Priority]);
-			this->addToMainSubScreen(this->_backgrounds[BgName::bg1Priority]);
+		//	this->addToMainSubScreen(this->_backgrounds[BgName::bg2Priority]);
+		//	this->addToMainSubScreen(this->_backgrounds[BgName::bg1Priority]);
 			//sprites priority 3
 			break;
 		case 1:
 			this->addToMainSubScreen(this->_backgrounds[BgName::bg3NoPriority]);
 			//sprites priority 0
-			if (!this->_registers._bgmode.mode1Bg3PriorityBit)
-				this->addToMainSubScreen(this->_backgrounds[BgName::bg3Priority]);
+		//	if (!this->_registers._bgmode.mode1Bg3PriorityBit)
+		//		this->addToMainSubScreen(this->_backgrounds[BgName::bg3Priority]);
 			//sprites priority 1
 			this->addToMainSubScreen(this->_backgrounds[BgName::bg2NoPriority]);
 			this->addToMainSubScreen(this->_backgrounds[BgName::bg1NoPriority]);
 			//sprites priority 2
-			this->addToMainSubScreen(this->_backgrounds[BgName::bg2Priority]);
-			this->addToMainSubScreen(this->_backgrounds[BgName::bg1Priority]);
+		//	this->addToMainSubScreen(this->_backgrounds[BgName::bg2Priority]);
+		//	this->addToMainSubScreen(this->_backgrounds[BgName::bg1Priority]);
 			//sprites priority 3
-			if (this->_registers._bgmode.mode1Bg3PriorityBit)
-				this->addToMainSubScreen(this->_backgrounds[BgName::bg3Priority]);
+		//	if (this->_registers._bgmode.mode1Bg3PriorityBit)
+		//		this->addToMainSubScreen(this->_backgrounds[BgName::bg3Priority]);
 			break;
 		case 2:
 			this->addToMainSubScreen(this->_backgrounds[BgName::bg2NoPriority]);

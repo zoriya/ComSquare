@@ -34,11 +34,11 @@ namespace ComSquare::PPU
 	enum BgName {
 		bg1NoPriority = 0,
 		bg1Priority,
-		bg2NoPriority,
+		bg2NoPriority = 1,
 		bg2Priority,
-		bg3NoPriority,
+		bg3NoPriority = 2,
 		bg3Priority,
-		bg4NoPriority,
+		bg4NoPriority = 3,
 		bg4Priority
 	};
 
@@ -564,7 +564,7 @@ namespace ComSquare::PPU
 		Registers _registers{};
 		Renderer::IRenderer &_renderer;
 		//! @brief Backgrounds buffers
-		Background _backgrounds[8];
+		Background _backgrounds[4];
 		//! @brief Main Screen buffer
 		std::array<std::array<uint32_t, 1024>, 1024> _mainScreen;
 		//! @brief Sub Screen buffer
