@@ -82,12 +82,23 @@ namespace ComSquare::PPU::Utils
 	static void addBuffer(std::array<std::array<uint32_t, DEST_SIZE_Y>, DEST_SIZE_X> &bufferDest,
 	               const std::array<std::array<uint32_t, SRC_SIZE_Y>, SRC_SIZE_X> &bufferSrc)
 	{
-		for (unsigned long i = 0; i < bufferSrc.size(); i++) {
+		int i = 0;
+		int j = 0;
+		std::for_each(bufferSrc.begin(), bufferSrc.end(), [&bufferDest, &i, &j](auto &sourceRow) {
+			i++;
+			std::for_each(sourceRow.begin(), sourceRow.end(), [&bufferDest, &i, &j](auto &pixel) {
+				if (pixel > 0xFF)
+					bufferDest[i][j] = pixel;
+				j++;
+			});
+			j = 0;
+		});
+	/*	for (unsigned long i = 0; i < bufferSrc.size(); i++) {
 			for (unsigned long j = 0; j < bufferSrc[i].size(); j++) {
 				if (bufferSrc[i][j] > 0xFF) // 0xFF correspond to a black pixel with full brightness
 					bufferDest[i][j] = bufferSrc[i][j];
 			}
-		}
+		}*/
 	}
 
 }
