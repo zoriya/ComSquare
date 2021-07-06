@@ -3,18 +3,16 @@
 //
 
 #include <catch2/catch.hpp>
-#include "../tests.hpp"
-#include "../../sources/SNES.hpp"
-#include "../../sources/APU/APU.hpp"
-#include "../../sources/Exceptions/InvalidAddress.hpp"
-#include "../../sources/Exceptions/InvalidOpcode.hpp"
+#include "tests.hpp"
+#include "SNES.hpp"
+#include "APU/APU.hpp"
+#include "Exceptions/InvalidAddress.hpp"
 
 using namespace ComSquare;
 
 TEST_CASE("immediate apu_get", "[apu_get]")
 {
 	Init()
-	auto apu = snes.apu;
 
 	snes.apu._internalRegisters.pc = 0x32;
 	snes.apu._internalWrite(0x32, 0x40);
@@ -24,7 +22,6 @@ TEST_CASE("immediate apu_get", "[apu_get]")
 TEST_CASE("direct apu_get", "[apu_get]")
 {
 	Init()
-	auto apu = snes.apu;
 
 	snes.apu._internalRegisters.pc = 0x32;
 	snes.apu._internalRegisters.p = true;
@@ -35,7 +32,6 @@ TEST_CASE("direct apu_get", "[apu_get]")
 TEST_CASE("X apu_get", "[apu_get]")
 {
 	Init()
-	auto apu = snes.apu;
 
 	snes.apu._internalRegisters.x = 0x32;
 	snes.apu._internalRegisters.p = true;
@@ -45,7 +41,6 @@ TEST_CASE("X apu_get", "[apu_get]")
 TEST_CASE("Y apu_get", "[apu_get]")
 {
 	Init()
-	auto apu = snes.apu;
 
 	snes.apu._internalRegisters.y = 0x32;
 	snes.apu._internalRegisters.p = true;
@@ -55,7 +50,6 @@ TEST_CASE("Y apu_get", "[apu_get]")
 TEST_CASE("directbyX apu_get", "[apu_get]")
 {
 	Init()
-	auto apu = snes.apu;
 
 	snes.apu._internalRegisters.pc = 0x32;
 	snes.apu._internalRegisters.x = 0x03;
@@ -66,7 +60,6 @@ TEST_CASE("directbyX apu_get", "[apu_get]")
 TEST_CASE("directbyY apu_get", "[apu_get]")
 {
 	Init()
-	auto apu = snes.apu;
 
 	snes.apu._internalRegisters.pc = 0x32;
 	snes.apu._internalRegisters.y = 0x05;
@@ -77,7 +70,6 @@ TEST_CASE("directbyY apu_get", "[apu_get]")
 TEST_CASE("absolute apu_get", "[apu_get]")
 {
 	Init()
-	auto apu = snes.apu;
 
 	snes.apu._internalRegisters.pc = 0x32;
 	snes.apu._internalWrite(0x32, 0b00001111);
@@ -88,7 +80,6 @@ TEST_CASE("absolute apu_get", "[apu_get]")
 TEST_CASE("absolutebyx apu_get", "[apu_get]")
 {
 	Init()
-	auto apu = snes.apu;
 
 	snes.apu._internalRegisters.pc = 0x32;
 	snes.apu._internalRegisters.x = 10;
@@ -101,7 +92,6 @@ TEST_CASE("absolutebyx apu_get", "[apu_get]")
 TEST_CASE("absoluteaddrbyx apu_get", "[apu_get]")
 {
 	Init()
-	auto apu = snes.apu;
 
 	snes.apu._internalRegisters.pc = 0x32;
 	snes.apu._internalRegisters.x = 10;
@@ -113,7 +103,6 @@ TEST_CASE("absoluteaddrbyx apu_get", "[apu_get]")
 TEST_CASE("absoluteaddrbyy apu_get", "[apu_get]")
 {
 	Init()
-	auto apu = snes.apu;
 
 	snes.apu._internalRegisters.pc = 0x32;
 	snes.apu._internalRegisters.y = 10;
@@ -138,7 +127,6 @@ TEST_CASE("absolutebit apu_get", "[apu_get]")
 TEST_CASE("absolutebyxdirect apu_get", "[apu_get]")
 {
 	Init()
-	auto apu = snes.apu;
 
 	snes.apu._internalRegisters.pc = 0x32;
 	snes.apu._internalRegisters.p = true;
@@ -152,7 +140,6 @@ TEST_CASE("absolutebyxdirect apu_get", "[apu_get]")
 TEST_CASE("absolutedirectbyy apu_get", "[apu_get]")
 {
 	Init()
-	auto apu = snes.apu;
 
 	snes.apu._internalRegisters.pc = 0x32;
 	snes.apu._internalRegisters.p = true;

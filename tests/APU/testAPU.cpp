@@ -3,11 +3,10 @@
 //
 
 #include <catch2/catch.hpp>
-#include "../tests.hpp"
+#include "tests.hpp"
 #include "SNES.hpp"
 #include "APU/APU.hpp"
 #include "Exceptions/InvalidAddress.hpp"
-#include "Exceptions/InvalidOpcode.hpp"
 
 using namespace ComSquare;
 
@@ -29,9 +28,9 @@ TEST_CASE("register internalRead", "[internalRead]")
 TEST_CASE("Page0 read Read", "[Read]")
 {
 	Init()
-	uint8_t result = 0;
+	uint8_t result;
 
-	snes.apu._map->Page0._data[0x0010] = 123;
+	snes.apu._map.Page0._data[0x0010] = 123;
 	result = snes.apu._internalRead(0x0010);
 	REQUIRE(result == 123);
 }
@@ -41,7 +40,7 @@ TEST_CASE("Page1 read Read", "[Read]")
 	Init()
 	uint8_t result = 0;
 
-	snes.apu._map->Page1._data[0x0042] = 123;
+	snes.apu._map.Page1._data[0x0042] = 123;
 	result = snes.apu._internalRead(0x0142);
 	REQUIRE(result == 123);
 }
@@ -51,7 +50,7 @@ TEST_CASE("Memory internalRead", "[internalRead]")
 	Init()
 	uint8_t result = 0;
 
-	snes.apu._map->Memory._data[0xFCDC] = 123;
+	snes.apu._map.Memory._data[0xFCDC] = 123;
 	result = snes.apu._internalRead(0xFEDC);
 	REQUIRE(result == 123);
 }
@@ -61,7 +60,7 @@ TEST_CASE("IPL internalRead", "[internalRead]")
 	Init()
 	uint8_t result = 0;
 
-	snes.apu._map->IPL._data[0x001F] = 123;
+	snes.apu._map.IPL._data[0x001F] = 123;
 	result = snes.apu._internalRead(0xFFDF);
 	REQUIRE(result == 123);
 }
@@ -69,7 +68,7 @@ TEST_CASE("IPL internalRead", "[internalRead]")
 TEST_CASE("Invalid internalRead", "[internalRead]")
 {
 	Init()
-	auto apu = snes.apu;
+
 
 	REQUIRE_THROWS_AS(snes.apu._internalRead(0x10000), InvalidAddress);
 }
@@ -83,16 +82,16 @@ TEST_CASE("Invalid internalRead", "[internalRead]")
 TEST_CASE("Page0 write Write", "[Write]")
 {
 	Init()
-	auto apu = snes.apu;
+
 
 	snes.apu._internalWrite(0x0001, 123);
-	REQUIRE(snes.apu._map->Page0._data[0x0001] == 123);
+	REQUIRE(snes.apu._map.Page0._data[0x0001] == 123);
 }
 
 TEST_CASE("register write Write", "[Write]")
 {
 	Init()
-	auto apu = snes.apu;
+
 
 	snes.apu._internalWrite(0x00F4, 123);
 	REQUIRE(snes.apu._registers.port0 == 123);
@@ -101,34 +100,34 @@ TEST_CASE("register write Write", "[Write]")
 TEST_CASE("Page1 internalWrite", "[internalWrite]")
 {
 	Init()
-	auto apu = snes.apu;
+
 
 	snes.apu._internalWrite(0x01FF, 123);
-	REQUIRE(snes.apu._map->Page1._data[0x00FF] == 123);
+	REQUIRE(snes.apu._map.Page1._data[0x00FF] == 123);
 }
 
 TEST_CASE("Memory write internalWrite", "[internalWrite]")
 {
 	Init()
-	auto apu = snes.apu;
+
 
 	snes.apu._internalWrite(0x0789, 123);
-	REQUIRE(snes.apu._map->Memory._data[0x0589] == 123);
+	REQUIRE(snes.apu._map.Memory._data[0x0589] == 123);
 }
 
 TEST_CASE("IPL internalWrite", "[internalWrite]")
 {
 	Init()
-	auto apu = snes.apu;
+
 
 	snes.apu._internalWrite(0xFFF0, 123);
-	REQUIRE(snes.apu._map->IPL._data[0x0030] == 123);
+	REQUIRE(snes.apu._map.IPL._data[0x0030] == 123);
 }
 
 TEST_CASE("Invalid internalWrite", "[internalWrite]")
 {
 	Init()
-	auto apu = snes.apu;
+
 
 	REQUIRE_THROWS_AS(snes.apu._internalWrite(0x10000, 123), InvalidAddress);
 }
@@ -152,7 +151,7 @@ TEST_CASE("Valid read", "[read]")
 TEST_CASE("Invalid read", "[read]")
 {
 	Init()
-	auto apu = snes.apu;
+
 
 	REQUIRE_THROWS_AS(snes.apu.read(0x10000), InvalidAddress);
 }
@@ -166,7 +165,7 @@ TEST_CASE("Invalid read", "[read]")
 TEST_CASE("Valid write", "[write]")
 {
 	Init()
-	auto apu = snes.apu;
+
 
 	snes.apu.write(0x03, 123);
 	REQUIRE(snes.apu._registers.port3 == 123);
@@ -175,7 +174,7 @@ TEST_CASE("Valid write", "[write]")
 TEST_CASE("Invalid write", "[write]")
 {
 	Init()
-	auto apu = snes.apu;
+
 
 	REQUIRE_THROWS_AS(snes.apu.write(0x04, 123), InvalidAddress);
 }
@@ -205,7 +204,7 @@ TEST_CASE("Valid executeInstruction", "[executeInstruction]")
 TEST_CASE("running update", "[update]")
 {
 	Init()
-	auto apu = snes.apu;
+
 
 	snes.apu._internalRegisters.pc = 0x00;
 	snes.apu.update(1);
@@ -215,7 +214,7 @@ TEST_CASE("running update", "[update]")
 TEST_CASE("stopped update", "[update]")
 {
 	Init()
-	auto apu = snes.apu;
+
 
 	snes.apu._state = APU::Stopped;
 	snes.apu.update(1);
@@ -231,7 +230,7 @@ TEST_CASE("stopped update", "[update]")
 TEST_CASE("direct get", "[get]")
 {
 	Init()
-	auto apu = snes.apu;
+
 
 	snes.apu._internalRegisters.pc = 0x32;
 	snes.apu._internalWrite(0x32, 123);
@@ -241,7 +240,7 @@ TEST_CASE("direct get", "[get]")
 TEST_CASE("absolute get", "[get]")
 {
 	Init()
-	auto apu = snes.apu;
+
 
 	snes.apu._internalRegisters.pc = 0x32;
 	snes.apu._internalWrite(0x32, 0b00001111);

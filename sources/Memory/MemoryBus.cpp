@@ -7,6 +7,7 @@
 #include "Memory/MemoryBus.hpp"
 #include "Memory/MemoryShadow.hpp"
 #include "Exceptions/InvalidAddress.hpp"
+#include "Models/Logger.hpp"
 
 namespace ComSquare::Memory
 {
@@ -26,7 +27,7 @@ namespace ComSquare::Memory
 		IMemory *handler = this->getAccessor(addr);
 
 		if (!handler) {
-			std::cout << "Unknown memory accessor for address $" << std::hex << addr << ". Using open bus." << std::endl;
+			log(LogLevel::WARNING, "Unknown memory accessor for address $" << std::hex << addr << ". Using open bus.");
 			return this->_openBus;
 		}
 
@@ -61,7 +62,7 @@ namespace ComSquare::Memory
 		IMemory *handler = this->getAccessor(addr);
 
 		if (!handler) {
-			std::cout << "Unknown memory accessor for address " << std::hex << addr << ". Warning, it was a write." << std::endl;
+			log(LogLevel::ERROR, "Unknown memory accessor for address " << std::hex << addr << ". Warning, it was a write.");
 			return;
 		}
 		handler->write(handler->getRelativeAddress(addr), data);

@@ -95,7 +95,7 @@ set(SOURCES
 	sources/PPU/TileRenderer.hpp
 	sources/PPU/Tile.hpp
 	sources/CPU/Registers.hpp
-	sources/Memory/IMemoryBus.hpp sources/Models/Callback.hpp)
+	sources/Memory/IMemoryBus.hpp sources/Models/Callback.hpp sources/Models/Logger.hpp)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -184,6 +184,9 @@ add_executable(unit_tests EXCLUDE_FROM_ALL
 	tests/CPU/testAddressingMode.cpp
 	tests/testMemoryBus.cpp
 	)
+target_include_directories(unit_tests PUBLIC tests)
+target_compile_definitions(unit_tests PUBLIC TESTS)
+
 
 if (CMAKE_COMPILER_IS_GNUCXX)
 	#	target_link_libraries(unit_tests PRIVATE -lgcov)
@@ -192,7 +195,7 @@ endif ()
 
 find_package(Catch2 QUIET)
 if (NOT Catch2_FOUND)
-	set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake-dependencies)
+	set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/libs)
 	find_package(Catch2 REQUIRED)
 endif ()
 target_link_libraries(unit_tests PRIVATE Catch2::Catch2)

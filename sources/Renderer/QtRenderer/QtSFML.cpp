@@ -7,12 +7,13 @@
 #include <QIcon>
 #include <QMenuBar>
 #include <iostream>
+#include "Models/Logger.hpp"
 #include "SNES.hpp"
 #include "QtSFML.hpp"
 
 #ifdef Q_WS_X11
-	#include <Qt/qx11info_x11.h>
-	#include <X11/Xlib.h>
+#include <Qt/qx11info_x11.h>
+#include <X11/Xlib.h>
 #endif
 
 namespace ComSquare::Renderer
@@ -57,7 +58,7 @@ namespace ComSquare::Renderer
 		}
 #ifdef DEBUGGER_ENABLED
 		catch (const DebuggableError &e) {
-			std::cout << "Invalid rom's instruction: " << e.what() << std::endl;
+			log(LogLevel::ERROR, "Invalid rom's instruction: " << e.what());
 			this->_snes.enableCPUDebuggingWithError(e);
 		}
 #endif
