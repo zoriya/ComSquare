@@ -73,7 +73,7 @@ namespace ComSquare::PPU
 				                 ((tileData.posX + tileOffset.x) * this->_bpp * Tile::BaseByteSize);
 				this->_tileRenderer.render(graphicAddress);
 				Utils::merge2DArray(this->_tileBuffer, this->_tileRenderer.buffer, {j, i});
-				tileOffset.x += 1;
+				tileOffset.x++;
 			}
 			tileOffset.x = 0;
 			tileOffset.y++;
@@ -88,7 +88,7 @@ namespace ComSquare::PPU
 
 		//if (tileData.tilePriority != this->_priority)
 		//	return;
-		this->tilesPriority[indexOffset.x][indexOffset.y] = tileData.tilePriority;
+		this->tilesPriority[indexOffset.y][indexOffset.x] = tileData.tilePriority;
 		this->_drawTileFromMemoryToTileBuffer(tileData);
 
 		// todo check why i need to invert vertical and horizontal flips
@@ -101,7 +101,7 @@ namespace ComSquare::PPU
 		std::for_each(this->_tileBuffer.begin(), this->_tileBuffer.begin() + this->_characterNbPixels.y,
 		              [this, &pixelPosition](const auto &row) {
 			              std::move(row.begin(), row.begin() + this->_characterNbPixels.x,
-			                        this->buffer[pixelPosition.x++].begin() + pixelPosition.y);
+			                        this->buffer[pixelPosition.y++].begin() + pixelPosition.x);
 		              });
 	}
 
@@ -118,12 +118,12 @@ namespace ComSquare::PPU
 			this->_drawTile(tileMapValue, {(offset.x * NbCharacterWidth) + pos.x,
 			                               (offset.y * NbCharacterHeight) + pos.y});
 			vramAddress += 2;
-			if (pos.y % 31 == 0 && pos.y) {
-				pos.x++;
-				pos.y = 0;
+			if (pos.x % 31 == 0 && pos.x) {
+				pos.y++;
+				pos.x = 0;
 			}
 			else {
-				pos.y++;
+				pos.x++;
 			}
 		}
 	}
