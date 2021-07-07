@@ -2,16 +2,19 @@
 // Created by Melefo on 24/01/2020.
 //
 
-#ifndef COMSQUARE_APU_HPP
-#define COMSQUARE_APU_HPP
+#pragma once
 
 #include <memory>
 #include "DSP/DSP.hpp"
-#include "../Memory/AMemory.hpp"
-#include "../Ram/Ram.hpp"
+#include "Memory/AMemory.hpp"
+#include "Ram/Ram.hpp"
 #include "IPL/IPL.hpp"
-#include "../Renderer/IRenderer.hpp"
-#include "../Cartridge/Cartridge.hpp"
+#include "Renderer/IRenderer.hpp"
+#include "Cartridge/Cartridge.hpp"
+
+#ifdef DEBUGGER_ENABLED
+#include "Debugger/APUDebug.hpp"
+#endif
 
 namespace ComSquare::APU
 {
@@ -133,19 +136,14 @@ namespace ComSquare::APU
 	};
 
 	class APU : public Memory::AMemory {
-	protected:
+	private:
 		//! @brief All the registers of the APU CPU
 		Registers _registers{};
 		//! @brief Internal registers of the CPU (accessible from the bus via addr $4200 to $421F).
 		InternalRegisters _internalRegisters{};
-		//! @brief Renderer used to play sounds
-		Renderer::IRenderer &_renderer;
 
 		//! @brief Internal APU memory separated according to their utility
-		std::shared_ptr<MemoryMap> _map;
-
-		//! @brief Buffer containing samples to be played
-		std::array<int16_t, 0x10000> _soundBuffer;
+		MemoryMap _map;
 
 		//! @brief The DSP component used to produce sound
 		DSP::DSP _dsp;
@@ -154,7 +152,7 @@ namespace ComSquare::APU
 		//! @param addr The address to read from. The address 0x0000 should refer to the first byte of the register.
 		//! @throw InvalidAddress will be thrown if the address is more than $FFFF (the number of register).
 		//! @return Return the data.
-		uint8_t _internalRead(uint24_t addr) const;
+		[[nodiscard]] uint8_t _internalRead(uint24_t addr) const;
 
 		//! @brief Write data to the APU ram.
 		//! @param addr The address to write to. The address 0x0000 should refer to the first byte of register.
@@ -200,7 +198,7 @@ namespace ComSquare::APU
 
 		//! @brief Execute a single instruction.
 		//! @return The number of cycles that the instruction took.
-		virtual int _executeInstruction();
+		int _executeInstruction();
 
 		//! @brief No Operation instruction, do nothing than delay
 		int NOP();
@@ -369,8 +367,11 @@ namespace ComSquare::APU
 	public:
 		explicit APU(Renderer::IRenderer &renderer);
 		APU(const APU &) = default;
-		APU &operator=(const APU &) = default;
+		APU &operator=(const APU &) = delete;
 		~APU() override = default;
+
+		//! @brief Is this APU disabled?
+		bool isDisabled = false;
 
 		//! @brief Read from the APU ram.
 		//! @param addr The address to read from. The address 0x0000 should refer to the first byte of the register.
@@ -385,28 +386,31 @@ namespace ComSquare::APU
 		void write(uint24_t addr, uint8_t data) override;
 
 		//! @brief Get the name of this accessor (used for debug purpose)
-		std::string getName() const override;
+		[[nodiscard]] std::string getName() const override;
 
 		//! @brief Get the component of this accessor (used for debug purpose)
-		Component getComponent() const override;
+		[[nodiscard]] Component getComponent() const override;
+
+		//! @brief Get the name of the data at the address
+		//! @param addr The address (in local space)
+		[[nodiscard]] std::string getValueName(uint24_t addr) const override;
 
 		//! @brief Get the size of the data. This size can be lower than the mapped data.
 		//! @return The number of bytes inside this memory.
-		uint24_t getSize() const override;
+		[[nodiscard]] uint24_t getSize() const override;
 
 		//! @brief Parses rom data to uploads directly into RAM and corresponding registers
-		void loadFromSPC(const std::shared_ptr<Cartridge::Cartridge>& cartridge);
+		void loadFromSPC(Cartridge::Cartridge &cartridge);
 
 		//! @brief This function execute the instructions received until the maximum number of cycles is reached.
 		//! @return The number of cycles that elapsed.
-		virtual void update(unsigned cycles);
+		void update(unsigned cycles);
 
 		//! @brief This function is executed when the SNES is powered on or the reset button is pushed.
 		void reset();
 
-		//! @brief Return true if the CPU is overloaded with debugging features.
-		virtual bool isDebugger() const;
+#ifdef DEBUGGER_ENABLED
+		friend Debugger::APU::APUDebug;
+#endif
 	};
 }
-
-#endif //COMSQUARE_APU_HPP

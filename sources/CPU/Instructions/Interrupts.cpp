@@ -2,7 +2,7 @@
 // Created by anonymus-raccoon on 2/10/20.
 //
 
-#include "../CPU.hpp"
+#include "CPU/CPU.hpp"
 
 namespace ComSquare::CPU
 {
@@ -19,6 +19,7 @@ namespace ComSquare::CPU
 		this->_registers.sh = 0x01; // the low bit of the stack pointer is undefined on reset.
 		this->_registers.pc = this->_cartridgeHeader.emulationInterrupts.reset;
 		this->_isStopped = false;
+		this->onReset();
 		return 0;
 	}
 

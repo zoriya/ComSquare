@@ -15,9 +15,9 @@ namespace ComSquare::PPU
 		static constexpr int TileByteSizeRow = 16;
 
 		//! @brief ram to render
-		std::shared_ptr<Ram::Ram> _ram;
+		Ram::Ram &_ram;
 		//! @brief cgram to access the colors
-		std::shared_ptr<Ram::Ram> _cgram;
+		Ram::Ram &_cgram;
 		//! @brief The bpp to use while rendering
 		int _bpp;
 		//! @brief The palette number to use while rendering
@@ -28,12 +28,8 @@ namespace ComSquare::PPU
 		std::array<std::array<uint32_t, 8>, 8> buffer;
 		//! @brief Set the palette to use for render (index of palette)
 		void setPaletteIndex(int paletteIndex);
-		//! @brief Set the ram to look for color references
-		void setCgram(std::shared_ptr<Ram::Ram> ram);
 		//! @brief Set the bpp to render graphics
 		void setBpp(int bpp);
-		//! @brief The ram to render
-		void setRam(std::shared_ptr<Ram::Ram> ram);
 		//! @brief Get the current bpp
 		int getBpp() const;
 		//! @brief Get the index of the current palette used
@@ -58,9 +54,13 @@ namespace ComSquare::PPU
 		//! @brief render the tile (8x8) at the tileAddress
 		//! @param tileAddress The address of the tile to render
 		void render(uint16_t tileAddress);
-		TileRenderer();
+
+		TileRenderer(Ram::Ram &vram, Ram::Ram &cgram);
+		//! @brief A tile renderer is copy constructable.
 		TileRenderer(const TileRenderer &) = default;
+		//! @brief A default destructor
 		~TileRenderer() = default;
-		TileRenderer &operator=(const TileRenderer &) = default;
+		//! @brief A tile render is not assignable.
+		TileRenderer &operator=(const TileRenderer &) = delete;
 	};
 }

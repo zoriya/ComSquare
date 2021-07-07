@@ -5,9 +5,7 @@
 #include <iostream>
 #include <bitset>
 #include "PPU.hpp"
-#include "Exceptions/NotImplementedException.hpp"
 #include "Exceptions/InvalidAddress.hpp"
-#include "Ram/Ram.hpp"
 #include "Models/Vector2.hpp"
 
 namespace ComSquare::PPU::Utils::Debug {
@@ -17,9 +15,9 @@ namespace ComSquare::PPU::Utils::Debug {
 namespace ComSquare::PPU
 {
 	PPU::PPU(Renderer::IRenderer &renderer):
-		vram(new Ram::Ram(VramSize, ComSquare::VRam, "VRAM")),
-		oamram(new Ram::Ram(OAMRamSize, ComSquare::OAMRam, "OAMRAM")),
-		cgram(new Ram::Ram(CGRamSize, ComSquare::CGRam, "CGRAM")),
+		vram(VramSize, ComSquare::VRam, "VRAM"),
+		oamram(OAMRamSize, ComSquare::OAMRam, "OAMRAM"),
+		cgram(CGRamSize, ComSquare::CGRam, "CGRAM"),
 		_renderer(renderer),
 		_backgrounds{
 			Background(*this, 1, false),
@@ -32,7 +30,7 @@ namespace ComSquare::PPU
 	{
 		this->_registers._isLowByte = true;
 
-		//Utils::Debug::populateEnvironment(*this, 0);
+		Utils::Debug::populateEnvironment(*this, 1);
 	}
 
 	uint8_t PPU::read(uint24_t addr)
@@ -68,7 +66,7 @@ namespace ComSquare::PPU
 			return returnValue;
 		}
 		case PpuRegisters::cgdataread: {
-			return this->cgram->read(this->_registers._cgadd++);
+			return this->cgram.read(this->_registers._cgadd++);
 		}
 		case PpuRegisters::ophct:
 		case PpuRegisters::opvct:
@@ -101,7 +99,7 @@ namespace ComSquare::PPU
 			//throw InvalidAddress("oamdata", addr);
 			//std::cout << "oamdata" << std::endl;
 			// the oamAddress have to be calculated if fblank or not (not implemented)
-			oamram->write(this->_registers._oamadd.oamAddress, this->_registers._oamdata);
+			oamram.write(this->_registers._oamadd.oamAddress, this->_registers._oamdata);
 			this->_registers._oamadd.oamAddress++;
 			break;
 		case PpuRegisters::bgmode:
@@ -180,7 +178,7 @@ namespace ComSquare::PPU
 			//std::cout << "vmdatal" << std::endl;
 			if (!this->_registers._inidisp.fblank) {
 				this->_registers._vmdata.vmdatal = data;
-				this->vram->write(this->getVramAddress(), data);
+				this->vram.write(this->getVramAddress(), data);
 			}
 			if (!this->_registers._vmain.incrementMode)
 				this->_registers._vmadd.vmadd += this->_registers._incrementAmount;
@@ -189,7 +187,7 @@ namespace ComSquare::PPU
 			//std::cout << "vmdatah" << std::endl;
 			if (!this->_registers._inidisp.fblank) {
 				this->_registers._vmdata.vmdatah = data;
-				this->vram->write(this->getVramAddress() + 1, data);
+				this->vram.write(this->getVramAddress() + 1, data);
 			}
 			if (this->_registers._vmain.incrementMode)
 				this->_registers._vmadd.vmadd += this->_registers._incrementAmount;
@@ -217,9 +215,9 @@ namespace ComSquare::PPU
 			}
 			else {
 				this->_registers._cgdata.cgdatah = data;
-				this->cgram->write(this->_registers._cgadd, this->_registers._cgdata.cgdatal);
+				this->cgram.write(this->_registers._cgadd, this->_registers._cgdata.cgdatal);
 				this->_registers._cgadd++;
-				this->cgram->write(this->_registers._cgadd, this->_registers._cgdata.cgdatah);
+				this->cgram.write(this->_registers._cgadd, this->_registers._cgdata.cgdatah);
 				this->_registers._cgadd++;
 			}
 			this->_registers._isLowByte = !this->_registers._isLowByte;
@@ -479,14 +477,9 @@ namespace ComSquare::PPU
 		return Ppu;
 	}
 
-	bool PPU::isDebugger() const
-	{
-		return false;
-	}
-
 	uint16_t PPU::cgramRead(uint16_t addr)
 	{
-		return this->cgram->read(addr);
+		return this->cgram.read(addr);
 	}
 
 	int PPU::getBPP(int bgNumber) const
@@ -563,8 +556,8 @@ namespace ComSquare::PPU
 			_background.renderBackground();
 		}
 		// TODO make a function getDefaultBgColor
-		colorPalette = this->cgram->read(0);
-		colorPalette += this->cgram->read(1) << 8U;
+		colorPalette = this->cgram.read(0);
+		colorPalette += this->cgram.read(1) << 8U;
 
 		uint32_t color = Utils::getRealColor(colorPalette);
 		for (auto &row : this->_subScreen)
@@ -678,8 +671,8 @@ namespace ComSquare::PPU
 
 	void PPU::updateVramReadBuffer()
 	{
-		this->_vramReadBuffer = this->vram->read(this->getVramAddress());
-		this->_vramReadBuffer += this->vram->read(this->getVramAddress() + 1) << 8;
+		this->_vramReadBuffer = this->vram.read(this->getVramAddress());
+		this->_vramReadBuffer += this->vram.read(this->getVramAddress() + 1) << 8;
 	}
 
 	Vector2<int> PPU::getBgScroll(int bgNumber) const

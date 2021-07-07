@@ -4,7 +4,7 @@
 
 #include <iostream>
 #include "ARectangleMemory.hpp"
-#include "../Exceptions/InvalidAddress.hpp"
+#include "Exceptions/InvalidAddress.hpp"
 
 namespace ComSquare::Memory
 {
@@ -40,16 +40,6 @@ namespace ComSquare::Memory
 		this->_endBank = endBank;
 		this->_startPage = startPage;
 		this->_endPage = endPage;
-	}
-
-	bool ARectangleMemory::isMirror() const
-	{
-		return false;
-	}
-
-	std::shared_ptr<IMemory> ARectangleMemory::getMirrored() const
-	{
-		return nullptr;
 	}
 
 	std::string ARectangleMemory::getValueName(uint24_t) const

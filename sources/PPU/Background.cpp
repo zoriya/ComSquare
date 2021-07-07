@@ -5,32 +5,28 @@
 #include "PPUUtils.hpp"
 #include "PPU.hpp"
 #include "Background.hpp"
-#include <cmath>
 #include "Tile.hpp"
-#include "PPUUtils.hpp"
 #include "Models/Vector2.hpp"
 
 namespace ComSquare::PPU
 {
-	Background::Background(ComSquare::PPU::PPU &ppu, int backGroundNumber, bool hasPriority):
-		_ppu(ppu),
-		_tileMapMirroring(ppu.getBackgroundMirroring(backGroundNumber)),
-		_characterNbPixels(ppu.getCharacterSize(backGroundNumber)),
-		_bpp(ppu.getBPP(backGroundNumber)),
-		_directColor(false),
-		_highRes(false),
-		_tileMapStartAddress(ppu.getTileMapStartAddress(backGroundNumber)),
-		_tilesetAddress(ppu.getTilesetAddress(backGroundNumber)),
-		_priority(hasPriority),
-		_bgNumber(backGroundNumber),
-		_tileBuffer({{{0}}}),
-		_vram(ppu.vram),
-		_cgram(ppu.cgram),
-		buffer({{{0}}})
-	{
-		this->_tileRenderer.setRam(this->_vram);
-		this->_tileRenderer.setCgram(this->_cgram);
-	}
+	Background::Background(ComSquare::PPU::PPU &ppu, int backGroundNumber, bool hasPriority)
+		: _ppu(ppu),
+		  _tileMapMirroring(ppu.getBackgroundMirroring(backGroundNumber)),
+		  _characterNbPixels(ppu.getCharacterSize(backGroundNumber)),
+		  _bpp(ppu.getBPP(backGroundNumber)),
+		  _directColor(false),
+		  _highRes(false),
+		  _tileMapStartAddress(ppu.getTileMapStartAddress(backGroundNumber)),
+		  _tilesetAddress(ppu.getTilesetAddress(backGroundNumber)),
+		  _priority(hasPriority),
+		  _bgNumber(backGroundNumber),
+		  _tileBuffer({{{0}}}),
+		  _vram(ppu.vram),
+		  _cgram(ppu.cgram),
+		  _tileRenderer(this->_vram, this->_cgram),
+		  buffer({{{0}}})
+	{}
 
 	void Background::renderBackground()
 	{
@@ -105,14 +101,13 @@ namespace ComSquare::PPU
 
 	void Background::_drawBasicTileMap(uint16_t baseAddress, Vector2<int> offset)
 	{
-		uint16_t tileMapValue = 0;
 		Vector2<int> pos(0, 0);
 		uint16_t vramAddress = baseAddress;
 
 		while (vramAddress < baseAddress + TileMapByteSize) {
 			// TODO function to read 2 bytes (LSB order or bits reversed)
-			tileMapValue = this->_vram->read(vramAddress);
-			tileMapValue += this->_vram->read(vramAddress + 1) << 8U;
+			uint16_t tileMapValue = this->_vram.read(vramAddress);
+			tileMapValue += this->_vram.read(vramAddress + 1) << 8U;
 			this->_drawTile(tileMapValue, {(offset.x * NbCharacterWidth) + pos.x,
 			                               (offset.y * NbCharacterHeight) + pos.y});
 			vramAddress += 2;

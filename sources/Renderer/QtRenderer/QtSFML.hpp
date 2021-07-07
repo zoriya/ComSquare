@@ -2,16 +2,15 @@
 // Created by anonymus-raccoon on 2/15/20.
 //
 
-#ifndef COMSQUARE_QTSFML_HPP
-#define COMSQUARE_QTSFML_HPP
+#pragma once
 
 #include <QtWidgets/QWidget>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <QtCore/QTimer>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QGridLayout>
-#include "../IRenderer.hpp"
-#include "../SFRenderer.hpp"
+#include "Renderer/IRenderer.hpp"
+#include "Renderer/SFRenderer.hpp"
 #include "QtWidgetSFML.hpp"
 
 namespace ComSquare::Renderer
@@ -23,6 +22,10 @@ namespace ComSquare::Renderer
 		SNES &_snes;
 		void onUpdate() override;
 	public:
+		//! @brief Open the select rom dialog and load a new one if the option is selected.
+		void openRom();
+
+#ifdef DEBUGGER_ENABLED
 		//! @brief Action called when clicking on the enable CPU debugger button.
 		void enableDebugCPU();
 		//! @brief Action called when clicking on the enable Ram viewer button.
@@ -39,6 +42,7 @@ namespace ComSquare::Renderer
 		void enableRegisterViewer();
 		//! @brief Action called when clicking on the enable Tile viewer button
 		void enableTileViewer();
+#endif
 
 		//! @brief Action called when clicking on the reset button.
 		void reset();
@@ -46,7 +50,7 @@ namespace ComSquare::Renderer
 		QtFullSFML(SNES &snes, QWidget* parent, const QPoint& position, const QSize& size, int frameRate = 0);
 		QtFullSFML(const QtFullSFML &) = delete;
 		QtFullSFML &operator=(const QtFullSFML &) = delete;
-		~QtFullSFML() = default;
+		~QtFullSFML() override = default;
 	};
 
 	//! @brief A SFML renderer inside a QT widget.
@@ -60,7 +64,7 @@ namespace ComSquare::Renderer
 	public:
 		//! @brief Use this function to create the window.
 		//! @param maxFPS The number of FPS you aim to run on.
-		virtual void createWindow(SNES &snes, int maxFPS) override;
+		void createWindow(SNES &snes, int maxFPS) override;
 		//! @brief Add a pixel to the buffer to the coordinates x, y with the color rgba.
 		//! @param X horizontal index.
 		//! @param Y vertical index.
@@ -70,13 +74,12 @@ namespace ComSquare::Renderer
 		void drawScreen() override;
 		//! @brief Playing all samples from buffer
 		//! @param samples Buffer containing samples
-		//! @param sampleCount number of samples inside buffer
-		void playAudio(std::span<int16_t> samples, uint64_t sampleCount) override;
+		void playAudio(std::span<int16_t> samples) override;
 		//! @brief Set a new name to the window, if there is already a name it will be overwrite.
 		//! @param newWindowName new title for the window.
 		void setWindowName(std::string &newWindowName) override;
 		//! @brief Constructor that return a SFML renderer inside a QT widget.
-		QtSFML(QWidget *parentWidget);
+		explicit QtSFML(QWidget *parentWidget);
 		QtSFML(const QtSFML &) = delete;
 		QtSFML &operator=(const QtSFML &) = delete;
 		~QtSFML() = default;
@@ -93,11 +96,9 @@ namespace ComSquare::Renderer
 		//! @brief Constructor that return a SFML renderer inside a QT window.
 		//! @param height _height of the window.
 		//! @param width _width of the window.
-		QtSFMLWindow(unsigned int height, unsigned int width);
+		QtSFMLWindow(int height, int width);
 		QtSFMLWindow(const QtSFMLWindow &) = delete;
 		QtSFMLWindow &operator=(const QtSFMLWindow &) = delete;
 		~QtSFMLWindow() = default;
 	};
 }
-
-#endif //COMSQUARE_QTSFML_HPP

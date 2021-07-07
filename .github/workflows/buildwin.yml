@@ -29,11 +29,11 @@ jobs:
           cmake .. -G "MinGW Makefiles" -DCMAKE_SH="CMAKE_SH-NOTFOUND" -DGITBUILD=true
       - name: Build with Makefile
         run: |
-          mingw32-make -C build ComSquare
+          mingw32-make -C build comsquare
       - name: Clean up
         run: |
           Set-Location build
-          Remove-Item -Recurse -Path * -Exclude ComSquare.exe,bin,bin/*
+          Remove-Item -Recurse -Path * -Exclude comsquare.exe,bin,bin/*
       - name: Copy shared libs
         run: |
           Copy-Item -Path build\bin\*.dll -Destination build
@@ -41,5 +41,5 @@ jobs:
       - name: Archive production artifact
         uses: actions/upload-artifact@v1
         with:
-          name: ComSquare-Windows
+          name: comsquare-Windows
           path: build/

@@ -2,7 +2,7 @@
 // Created by Melefo on 11/02/2020.
 //
 
-#include <criterion/criterion.h>
+#include <catch2/catch_test_macros.hpp>
 #include <iostream>
 #include <bitset>
 #include "../tests.hpp"
@@ -18,36 +18,33 @@ using namespace ComSquare;
 //				  //
 ////////////////////
 
-Test(Standbys, NOP)
+TEST_CASE("NOP Standbys", "[Standbys]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	result = apu->NOP();
-	cr_assert_eq(result, 2);
+	result = snes.apu.NOP();
+	REQUIRE(result == 2);
 }
 
-Test(Standbys, SLEEP)
+TEST_CASE("SLEEP Standbys", "[Standbys]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	result = apu->SLEEP();
-	cr_assert_eq(result, 3);
-	cr_assert_eq(apu->_state, APU::Sleeping);
+	result = snes.apu.SLEEP();
+	REQUIRE(result == 3);
+	REQUIRE(snes.apu._state == APU::Sleeping);
 }
 
-Test(Standbys, STOP)
+TEST_CASE("STOP Standbys", "[Standbys]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	result = apu->STOP();
-	cr_assert_eq(result, 3);
-	cr_assert_eq(apu->_state, APU::Stopped);
+	result = snes.apu.STOP();
+	REQUIRE(result == 3);
+	REQUIRE(snes.apu._state == APU::Stopped);
 }
 
 ///////////////
@@ -56,94 +53,86 @@ Test(Standbys, STOP)
 //			 //
 ///////////////
 
-Test(PSW, CLRC)
+TEST_CASE("CLRC PSW", "[PSW]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	result = apu->CLRC();
-	cr_assert_eq(result, 2);
-	cr_assert_eq(apu->_internalRegisters.c, false);
+	result = snes.apu.CLRC();
+	REQUIRE(result == 2);
+	REQUIRE(snes.apu._internalRegisters.c == false);
 }
 
-Test(PSW, SETC)
+TEST_CASE("SETC PSW", "[PSW]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	result = apu->SETC();
-	cr_assert_eq(result, 2);
-	cr_assert_eq(apu->_internalRegisters.c, true);
+	result = snes.apu.SETC();
+	REQUIRE(result == 2);
+	REQUIRE(snes.apu._internalRegisters.c == true);
 }
 
-Test(PSW, NOTC)
+TEST_CASE("NOTC PSW", "[PSW]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.c = false;
-	result = apu->NOTC();
-	cr_assert_eq(result, 3);
-	cr_assert_eq(apu->_internalRegisters.c, true);
+	snes.apu._internalRegisters.c = false;
+	result = snes.apu.NOTC();
+	REQUIRE(result == 3);
+	REQUIRE(snes.apu._internalRegisters.c == true);
 }
 
-Test(PSW, CLRV)
+TEST_CASE("CLRV PSW", "[PSW]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	result = apu->CLRV();
-	cr_assert_eq(result, 2);
-	cr_assert_eq(apu->_internalRegisters.v, false);
-	cr_assert_eq(apu->_internalRegisters.h, false);
+	result = snes.apu.CLRV();
+	REQUIRE(result == 2);
+	REQUIRE(snes.apu._internalRegisters.v == false);
+	REQUIRE(snes.apu._internalRegisters.h == false);
 }
 
-Test(PSW, CLRP)
+TEST_CASE("CLRP PSW", "[PSW]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	result = apu->CLRP();
-	cr_assert_eq(result, 2);
-	cr_assert_eq(apu->_internalRegisters.p, false);
+	result = snes.apu.CLRP();
+	REQUIRE(result == 2);
+	REQUIRE(snes.apu._internalRegisters.p == false);
 }
 
-Test(PSW, SETP)
+TEST_CASE("SETP PSW", "[PSW]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	result = apu->SETP();
-	cr_assert_eq(result, 2);
-	cr_assert_eq(apu->_internalRegisters.p, true);
+	result = snes.apu.SETP();
+	REQUIRE(result == 2);
+	REQUIRE(snes.apu._internalRegisters.p == true);
 }
 
-Test(PSW, EI)
+TEST_CASE("EI PSW", "[PSW]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	result = apu->EI();
-	cr_assert_eq(result, 3);
-	cr_assert_eq(apu->_internalRegisters.i, true);
+	result = snes.apu.EI();
+	REQUIRE(result == 3);
+	REQUIRE(snes.apu._internalRegisters.i == true);
 }
 
-Test(PSW, DI)
+TEST_CASE("DI PSW", "[PSW]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	result = apu->DI();
-	cr_assert_eq(result, 3);
-	cr_assert_eq(apu->_internalRegisters.i, false);
+	result = snes.apu.DI();
+	REQUIRE(result == 3);
+	REQUIRE(snes.apu._internalRegisters.i == false);
 }
 
 ///////////////
@@ -152,214 +141,202 @@ Test(PSW, DI)
 //			 //
 ///////////////
 
-Test(Bit, SET1)
+TEST_CASE("SET1 Bit", "[Bit]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.pc = 0x32;
-	apu->_internalWrite(apu->_getDirectAddr(), 0b00000000);
-	apu->_internalRegisters.pc--;
-	result = apu->SET1(apu->_getDirectAddr(), 0);
-	apu->_internalRegisters.pc--;
-	cr_assert_eq(result, 4);
-	cr_assert_eq(apu->_internalRead(apu->_getDirectAddr()), 1);
+	snes.apu._internalRegisters.pc = 0x32;
+	snes.apu._internalWrite(snes.apu._getDirectAddr(), 0b00000000);
+	snes.apu._internalRegisters.pc--;
+	result = snes.apu.SET1(snes.apu._getDirectAddr(), 0);
+	snes.apu._internalRegisters.pc--;
+	REQUIRE(result == 4);
+	REQUIRE(snes.apu._internalRead(snes.apu._getDirectAddr()) == 1);
 }
 
-Test(Bit, CLR1)
+TEST_CASE("CLR1 Bit", "[Bit]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.pc = 0x32;
-	apu->_internalWrite(apu->_getDirectAddr(), 0b11111111);
-	apu->_internalRegisters.pc--;
-	result = apu->CLR1(apu->_getDirectAddr(), 0);
-	apu->_internalRegisters.pc--;
-	cr_assert_eq(result, 4);
-	cr_assert_eq(apu->_internalRead(apu->_getDirectAddr()), 0b11111110);
+	snes.apu._internalRegisters.pc = 0x32;
+	snes.apu._internalWrite(snes.apu._getDirectAddr(), 0b11111111);
+	snes.apu._internalRegisters.pc--;
+	result = snes.apu.CLR1(snes.apu._getDirectAddr(), 0);
+	snes.apu._internalRegisters.pc--;
+	REQUIRE(result == 4);
+	REQUIRE(snes.apu._internalRead(snes.apu._getDirectAddr()) == 0b11111110);
 }
 
-Test(Bit, TSET1)
+TEST_CASE("TSET1 Bit", "[Bit]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.a = 42;
-	apu->_internalRegisters.pc = 0x32;
-	apu->_internalWrite(0x32, 0b00001111);
-	apu->_internalWrite(0x33, 0b11110000);
-	apu->_internalWrite(apu->_getAbsoluteAddr(), 123);
-	apu->_internalRegisters.pc -= 2;
-	result = apu->TSET1(apu->_getAbsoluteAddr());
-	apu->_internalRegisters.pc -= 2;
-	cr_assert_eq(apu->_internalRead(apu->_getAbsoluteAddr()), 0x7B);
-	cr_assert_eq(result, 6);
+	snes.apu._internalRegisters.a = 42;
+	snes.apu._internalRegisters.pc = 0x32;
+	snes.apu._internalWrite(0x32, 0b00001111);
+	snes.apu._internalWrite(0x33, 0b11110000);
+	snes.apu._internalWrite(snes.apu._getAbsoluteAddr(), 123);
+	snes.apu._internalRegisters.pc -= 2;
+	result = snes.apu.TSET1(snes.apu._getAbsoluteAddr());
+	snes.apu._internalRegisters.pc -= 2;
+	REQUIRE(snes.apu._internalRead(snes.apu._getAbsoluteAddr()) == 0x7B);
+	REQUIRE(result == 6);
 }
 
-Test(Bit, TCLR1)
+TEST_CASE("TCLR1 Bit", "[Bit]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.a = 0x80;
-	apu->_internalRegisters.pc = 0x32;
-	apu->_internalWrite(0x32, 0b00001111);
-	apu->_internalWrite(0x33, 0b11110000);
-	apu->_internalWrite(apu->_getAbsoluteAddr(), 0x80);
-	apu->_internalRegisters.pc -= 2;
-	result = apu->TCLR1(apu->_getAbsoluteAddr());
-	apu->_internalRegisters.pc -= 2;
-	cr_assert_eq(apu->_internalRead(apu->_getAbsoluteAddr()), 0x00);
-	cr_assert_eq(result, 6);
+	snes.apu._internalRegisters.a = 0x80;
+	snes.apu._internalRegisters.pc = 0x32;
+	snes.apu._internalWrite(0x32, 0b00001111);
+	snes.apu._internalWrite(0x33, 0b11110000);
+	snes.apu._internalWrite(snes.apu._getAbsoluteAddr(), 0x80);
+	snes.apu._internalRegisters.pc -= 2;
+	result = snes.apu.TCLR1(snes.apu._getAbsoluteAddr());
+	snes.apu._internalRegisters.pc -= 2;
+	REQUIRE(snes.apu._internalRead(snes.apu._getAbsoluteAddr()) == 0x00);
+	REQUIRE(result == 6);
 }
 
-Test(Bit, AND1)
+TEST_CASE("AND1 Bit", "[Bit]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.a = 42;
-	apu->_internalRegisters.pc = 0x32;
-	apu->_internalWrite(0x32, 0b00001111);
-	apu->_internalWrite(0x33, 0b11110000);
-	apu->_internalWrite(apu->_getAbsoluteAddr() & 0x1FFFu, 123);
-	apu->_internalRegisters.pc -= 2;
-	result = apu->AND1(apu->_getAbsoluteBit());
-	apu->_internalRegisters.pc -= 2;
-	cr_assert_eq(apu->_internalRegisters.c, false);
-	cr_assert_eq(result, 4);
+	snes.apu._internalRegisters.a = 42;
+	snes.apu._internalRegisters.pc = 0x32;
+	snes.apu._internalWrite(0x32, 0b00001111);
+	snes.apu._internalWrite(0x33, 0b11110000);
+	snes.apu._internalWrite(snes.apu._getAbsoluteAddr() & 0x1FFFu, 123);
+	snes.apu._internalRegisters.pc -= 2;
+	result = snes.apu.AND1(snes.apu._getAbsoluteBit());
+	snes.apu._internalRegisters.pc -= 2;
+	REQUIRE(snes.apu._internalRegisters.c == false);
+	REQUIRE(result == 4);
 }
 
-Test(Bit, AND1_invert)
+TEST_CASE("AND1_invert Bit", "[Bit]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.a = 42;
-	apu->_internalRegisters.pc = 0x32;
-	apu->_internalWrite(0x32, 0b00001111);
-	apu->_internalWrite(0x33, 0b11110000);
-	apu->_internalWrite(apu->_getAbsoluteAddr() & 0x1FFFu, 123);
-	apu->_internalRegisters.pc -= 2;
-	result = apu->AND1(apu->_getAbsoluteBit(), true);
-	apu->_internalRegisters.pc -= 2;
-	cr_assert_eq(apu->_internalRegisters.c, false);
-	cr_assert_eq(result, 4);
+	snes.apu._internalRegisters.a = 42;
+	snes.apu._internalRegisters.pc = 0x32;
+	snes.apu._internalWrite(0x32, 0b00001111);
+	snes.apu._internalWrite(0x33, 0b11110000);
+	snes.apu._internalWrite(snes.apu._getAbsoluteAddr() & 0x1FFFu, 123);
+	snes.apu._internalRegisters.pc -= 2;
+	result = snes.apu.AND1(snes.apu._getAbsoluteBit(), true);
+	snes.apu._internalRegisters.pc -= 2;
+	REQUIRE(snes.apu._internalRegisters.c == false);
+	REQUIRE(result == 4);
 }
 
-Test(Bit, OR1)
+TEST_CASE("OR1 Bit", "[Bit]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.a = 42;
-	apu->_internalRegisters.pc = 0x32;
-	apu->_internalWrite(0x32, 0b00001111);
-	apu->_internalWrite(0x33, 0b11110000);
-	apu->_internalWrite(apu->_getAbsoluteAddr() & 0x1FFFu, 123);
-	apu->_internalRegisters.pc -= 2;
-	result = apu->OR1(apu->_getAbsoluteBit());
-	apu->_internalRegisters.pc -= 2;
-	cr_assert_eq(apu->_internalRegisters.c, false);
-	cr_assert_eq(result, 5);
+	snes.apu._internalRegisters.a = 42;
+	snes.apu._internalRegisters.pc = 0x32;
+	snes.apu._internalWrite(0x32, 0b00001111);
+	snes.apu._internalWrite(0x33, 0b11110000);
+	snes.apu._internalWrite(snes.apu._getAbsoluteAddr() & 0x1FFFu, 123);
+	snes.apu._internalRegisters.pc -= 2;
+	result = snes.apu.OR1(snes.apu._getAbsoluteBit());
+	snes.apu._internalRegisters.pc -= 2;
+	REQUIRE(snes.apu._internalRegisters.c == false);
+	REQUIRE(result == 5);
 }
 
-Test(Bit, OR1_invert)
+TEST_CASE("OR1_invert Bit", "[Bit]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.a = 42;
-	apu->_internalRegisters.pc = 0x32;
-	apu->_internalWrite(0x32, 0b00001111);
-	apu->_internalWrite(0x33, 0b11110000);
-	apu->_internalWrite(apu->_getAbsoluteAddr() & 0x1FFFu, 123);
-	apu->_internalRegisters.pc -= 2;
-	result = apu->OR1(apu->_getAbsoluteBit(), true);
-	apu->_internalRegisters.pc -= 2;
-	cr_assert_eq(apu->_internalRegisters.c, true);
-	cr_assert_eq(result, 5);
+	snes.apu._internalRegisters.a = 42;
+	snes.apu._internalRegisters.pc = 0x32;
+	snes.apu._internalWrite(0x32, 0b00001111);
+	snes.apu._internalWrite(0x33, 0b11110000);
+	snes.apu._internalWrite(snes.apu._getAbsoluteAddr() & 0x1FFFu, 123);
+	snes.apu._internalRegisters.pc -= 2;
+	result = snes.apu.OR1(snes.apu._getAbsoluteBit(), true);
+	snes.apu._internalRegisters.pc -= 2;
+	REQUIRE(snes.apu._internalRegisters.c == true);
+	REQUIRE(result == 5);
 }
 
-Test(Bit, EOR1)
+TEST_CASE("EOR1 Bit", "[Bit]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.a = 42;
-	apu->_internalRegisters.pc = 0x32;
-	apu->_internalWrite(0x32, 0b00001111);
-	apu->_internalWrite(0x33, 0b11110000);
-	apu->_internalWrite(apu->_getAbsoluteAddr() & 0x1FFFu, 123);
-	apu->_internalRegisters.pc -= 2;
-	result = apu->EOR1(apu->_getAbsoluteBit());
-	apu->_internalRegisters.pc -= 2;
-	cr_assert_eq(apu->_internalRegisters.c, false);
-	cr_assert_eq(result, 5);
+	snes.apu._internalRegisters.a = 42;
+	snes.apu._internalRegisters.pc = 0x32;
+	snes.apu._internalWrite(0x32, 0b00001111);
+	snes.apu._internalWrite(0x33, 0b11110000);
+	snes.apu._internalWrite(snes.apu._getAbsoluteAddr() & 0x1FFFu, 123);
+	snes.apu._internalRegisters.pc -= 2;
+	result = snes.apu.EOR1(snes.apu._getAbsoluteBit());
+	snes.apu._internalRegisters.pc -= 2;
+	REQUIRE(snes.apu._internalRegisters.c == false);
+	REQUIRE(result == 5);
 }
 
-Test(Bit, NOT1)
+TEST_CASE("NOT1 Bit", "[Bit]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.a = 42;
-	apu->_internalRegisters.pc = 0x32;
-	apu->_internalWrite(0x32, 0b00001111);
-	apu->_internalWrite(0x33, 0b11110000);
-	apu->_internalWrite(apu->_getAbsoluteAddr() & 0x1FFFu, 123);
-	apu->_internalRegisters.pc -= 2;
-	result = apu->NOT1(apu->_getAbsoluteBit());
-	apu->_internalRegisters.pc -= 2;
-	cr_assert_eq(apu->_internalRegisters.c, false);
-	cr_assert_eq(result, 5);
+	snes.apu._internalRegisters.a = 42;
+	snes.apu._internalRegisters.pc = 0x32;
+	snes.apu._internalWrite(0x32, 0b00001111);
+	snes.apu._internalWrite(0x33, 0b11110000);
+	snes.apu._internalWrite(snes.apu._getAbsoluteAddr() & 0x1FFFu, 123);
+	snes.apu._internalRegisters.pc -= 2;
+	result = snes.apu.NOT1(snes.apu._getAbsoluteBit());
+	snes.apu._internalRegisters.pc -= 2;
+	REQUIRE(snes.apu._internalRegisters.c == false);
+	REQUIRE(result == 5);
 }
 
-Test(Bit, MOV1)
+TEST_CASE("MOV1 Bit", "[Bit]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.a = 42;
-	apu->_internalRegisters.pc = 0x32;
-	apu->_internalWrite(0x32, 0b00001111);
-	apu->_internalWrite(0x33, 0b11110000);
-	apu->_internalWrite(apu->_getAbsoluteAddr() & 0x1FFFu, 123);
-	apu->_internalRegisters.pc -= 2;
-	result = apu->MOV1(apu->_getAbsoluteBit());
-	apu->_internalRegisters.pc -= 2;
-	cr_assert_eq(apu->_internalRead(apu->_getAbsoluteAddr() & 0x1FFFu), 123);
-	cr_assert_eq(result, 6);
+	snes.apu._internalRegisters.a = 42;
+	snes.apu._internalRegisters.pc = 0x32;
+	snes.apu._internalWrite(0x32, 0b00001111);
+	snes.apu._internalWrite(0x33, 0b11110000);
+	snes.apu._internalWrite(snes.apu._getAbsoluteAddr() & 0x1FFFu, 123);
+	snes.apu._internalRegisters.pc -= 2;
+	result = snes.apu.MOV1(snes.apu._getAbsoluteBit());
+	snes.apu._internalRegisters.pc -= 2;
+	REQUIRE(snes.apu._internalRead(snes.apu._getAbsoluteAddr() & 0x1FFFu) == 123);
+	REQUIRE(result == 6);
 }
 
-Test(Bit, MOV1_carry)
+TEST_CASE("MOV1_carry Bit", "[Bit]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.a = 42;
-	apu->_internalRegisters.pc = 0x32;
-	apu->_internalWrite(0x32, 0b00001111);
-	apu->_internalWrite(0x33, 0b11110000);
-	apu->_internalWrite(apu->_getAbsoluteAddr() & 0x1FFFu, 123);
-	apu->_internalRegisters.pc -= 2;
-	result = apu->MOV1(apu->_getAbsoluteBit(), true);
-	apu->_internalRegisters.pc -= 2;
-	cr_assert_eq(apu->_internalRegisters.c, false);
-	cr_assert_eq(result, 4);
+	snes.apu._internalRegisters.a = 42;
+	snes.apu._internalRegisters.pc = 0x32;
+	snes.apu._internalWrite(0x32, 0b00001111);
+	snes.apu._internalWrite(0x33, 0b11110000);
+	snes.apu._internalWrite(snes.apu._getAbsoluteAddr() & 0x1FFFu, 123);
+	snes.apu._internalRegisters.pc -= 2;
+	result = snes.apu.MOV1(snes.apu._getAbsoluteBit(), true);
+	snes.apu._internalRegisters.pc -= 2;
+	REQUIRE(snes.apu._internalRegisters.c == false);
+	REQUIRE(result == 4);
 }
 
 /////////////////
@@ -368,30 +345,28 @@ Test(Bit, MOV1_carry)
 //			   //
 /////////////////
 
-Test(Stack, PUSH)
+TEST_CASE("PUSH Stack", "[Stack]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.a = 56;
-	result = apu->PUSH(apu->_internalRegisters.a);
-	apu->_internalRegisters.sp++;
-	cr_assert_eq(result, 4);
-	cr_assert_eq(apu->_internalRead(apu->_internalRegisters.sp | 0x100u), 56);
+	snes.apu._internalRegisters.a = 56;
+	result = snes.apu.PUSH(snes.apu._internalRegisters.a);
+	snes.apu._internalRegisters.sp++;
+	REQUIRE(result == 4);
+	REQUIRE(snes.apu._internalRead(snes.apu._internalRegisters.sp | 0x100u) == 56);
 }
 
-Test(Stack, POP)
+TEST_CASE("POP Stack", "[Stack]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalWrite(++apu->_internalRegisters.sp | 0x100u, 82);
-	apu->_internalRegisters.sp--;
-	result = apu->POP(apu->_internalRegisters.y);
-	cr_assert_eq(result, 4);
-	cr_assert_eq(apu->_internalRegisters.y, 82);
+	snes.apu._internalWrite(++snes.apu._internalRegisters.sp | 0x100u, 82);
+	snes.apu._internalRegisters.sp--;
+	result = snes.apu.POP(snes.apu._internalRegisters.y);
+	REQUIRE(result == 4);
+	REQUIRE(snes.apu._internalRegisters.y == 82);
 }
 
 //////////////////////
@@ -400,98 +375,92 @@ Test(Stack, POP)
 //					//
 //////////////////////
 
-Test(Subroutine, CALL)
+TEST_CASE("CALL Subroutine", "[Subroutine]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.pc = 0;
-	apu->_internalWrite(apu->_getAbsoluteAddr(), 23);
-	apu->_internalRegisters.pc -= 2;
-	result = apu->CALL(apu->_getAbsoluteAddr());
-	cr_assert_eq(result, 8);
-	cr_assert_eq(apu->_internalRegisters.pc, 23);
-	cr_assert_eq(apu->_internalRead(++apu->_internalRegisters.sp + 0x0100u), 2);
-	cr_assert_eq(apu->_internalRead(++apu->_internalRegisters.sp + 0x0100u), 0);
+	snes.apu._internalRegisters.pc = 0;
+	snes.apu._internalWrite(snes.apu._getAbsoluteAddr(), 23);
+	snes.apu._internalRegisters.pc -= 2;
+	result = snes.apu.CALL(snes.apu._getAbsoluteAddr());
+	REQUIRE(result == 8);
+	REQUIRE(snes.apu._internalRegisters.pc == 23);
+	REQUIRE(snes.apu._internalRead(++snes.apu._internalRegisters.sp + 0x0100u) == 2);
+	REQUIRE(snes.apu._internalRead(++snes.apu._internalRegisters.sp + 0x0100u) == 0);
 }
 
-Test(Subroutine, PCALL)
+TEST_CASE("PCALL Subroutine", "[Subroutine]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalWrite(apu->_internalRegisters.pc, 123);
-	result = apu->PCALL();
-	cr_assert_eq(result, 6);
-	cr_assert_eq(apu->_internalRegisters.pc, 65403);
+	snes.apu._internalWrite(snes.apu._internalRegisters.pc, 123);
+	result = snes.apu.PCALL();
+	REQUIRE(result == 6);
+	REQUIRE(snes.apu._internalRegisters.pc == 65403);
 }
 
-Test(Subroutine, TCALL)
+TEST_CASE("TCALL Subroutine", "[Subroutine]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalWrite(0xFFD0, 45);
-	result = apu->TCALL(7);
-	cr_assert_eq(result, 8);
-	cr_assert_eq(apu->_internalRegisters.pc, 45);
+	snes.apu._internalWrite(0xFFD0, 45);
+	result = snes.apu.TCALL(7);
+	REQUIRE(result == 8);
+	REQUIRE(snes.apu._internalRegisters.pc == 45);
 }
 
-Test(Subroutine, BRK)
+TEST_CASE("BRK Subroutine", "[Subroutine]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.pch = 0xFF;
-	apu->_internalRegisters.pcl = 0xEE;
-	apu->_internalRegisters.psw = 0xDD;
-	apu->_internalWrite(0xFFDF, 0xAA);
-	apu->_internalWrite(0xFFDE, 0xBB);
-	result = apu->BRK();
-	apu->_internalRegisters.sp += 3;
-	cr_assert_eq(result, 8);
-	cr_assert_eq(apu->_internalRegisters.i, false);
-	cr_assert_eq(apu->_internalRegisters.b, true);
-	cr_assert_eq(apu->_internalRegisters.pc, 0xAABB);
-	cr_assert_eq(apu->_internalRead(apu->_internalRegisters.sp-- | 0x100u), 0xFF);
-	cr_assert_eq(apu->_internalRead(apu->_internalRegisters.sp-- | 0x100u), 0xEE);
-	cr_assert_eq(apu->_internalRead(apu->_internalRegisters.sp | 0x100u), 0xDD);
+	snes.apu._internalRegisters.pch = 0xFF;
+	snes.apu._internalRegisters.pcl = 0xEE;
+	snes.apu._internalRegisters.psw = 0xDD;
+	snes.apu._internalWrite(0xFFDF, 0xAA);
+	snes.apu._internalWrite(0xFFDE, 0xBB);
+	result = snes.apu.BRK();
+	snes.apu._internalRegisters.sp += 3;
+	REQUIRE(result == 8);
+	REQUIRE(snes.apu._internalRegisters.i == false);
+	REQUIRE(snes.apu._internalRegisters.b == true);
+	REQUIRE(snes.apu._internalRegisters.pc == 0xAABB);
+	REQUIRE(snes.apu._internalRead(snes.apu._internalRegisters.sp-- | 0x100u) == 0xFF);
+	REQUIRE(snes.apu._internalRead(snes.apu._internalRegisters.sp-- | 0x100u) == 0xEE);
+	REQUIRE(snes.apu._internalRead(snes.apu._internalRegisters.sp | 0x100u) == 0xDD);
 }
 
-Test(Subroutine, RET)
+TEST_CASE("RET Subroutine", "[Subroutine]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalWrite(++apu->_internalRegisters.sp | 0x100u, 0x12);
-	apu->_internalWrite(++apu->_internalRegisters.sp | 0x100u, 0x34);
-	apu->_internalRegisters.sp -= 2;
-	result = apu->RET();
-	cr_assert_eq(result, 5);
-	cr_assert_eq(apu->_internalRegisters.pch, 0x12);
-	cr_assert_eq(apu->_internalRegisters.pcl, 0x34);
+	snes.apu._internalWrite(++snes.apu._internalRegisters.sp | 0x100u, 0x12);
+	snes.apu._internalWrite(++snes.apu._internalRegisters.sp | 0x100u, 0x34);
+	snes.apu._internalRegisters.sp -= 2;
+	result = snes.apu.RET();
+	REQUIRE(result == 5);
+	REQUIRE(snes.apu._internalRegisters.pch == 0x12);
+	REQUIRE(snes.apu._internalRegisters.pcl == 0x34);
 }
 
-Test(Subroutine, RETI)
+TEST_CASE("RETI Subroutine", "[Subroutine]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalWrite(++apu->_internalRegisters.sp | 0x100u, 0x12);
-	apu->_internalWrite(++apu->_internalRegisters.sp | 0x100u, 0x34);
-	apu->_internalWrite(++apu->_internalRegisters.sp | 0x100u, 0x56);
-	apu->_internalRegisters.sp -= 3;
-	result = apu->RETI();
-	cr_assert_eq(result, 6);
-	cr_assert_eq(apu->_internalRegisters.psw, 0x12);
-	cr_assert_eq(apu->_internalRegisters.pch, 0x34);
-	cr_assert_eq(apu->_internalRegisters.pcl, 0x56);
+	snes.apu._internalWrite(++snes.apu._internalRegisters.sp | 0x100u, 0x12);
+	snes.apu._internalWrite(++snes.apu._internalRegisters.sp | 0x100u, 0x34);
+	snes.apu._internalWrite(++snes.apu._internalRegisters.sp | 0x100u, 0x56);
+	snes.apu._internalRegisters.sp -= 3;
+	result = snes.apu.RETI();
+	REQUIRE(result == 6);
+	REQUIRE(snes.apu._internalRegisters.psw == 0x12);
+	REQUIRE(snes.apu._internalRegisters.pch == 0x34);
+	REQUIRE(snes.apu._internalRegisters.pcl == 0x56);
 }
 
 ////////////////////////
@@ -500,247 +469,233 @@ Test(Subroutine, RETI)
 //					  //
 ////////////////////////
 
-Test(ProgramFlow, BRA)
+TEST_CASE("BRA ProgramFlow", "[ProgramFlow]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.pc = 0;
-	apu->_internalWrite(apu->_internalRegisters.pc, 23);
-	result = apu->BRA(apu->_getImmediateData());
-	cr_assert_eq(result, 4);
-	cr_assert_eq(apu->_internalRegisters.pc, 24);
+	snes.apu._internalRegisters.pc = 0;
+	snes.apu._internalWrite(snes.apu._internalRegisters.pc, 23);
+	result = snes.apu.BRA(snes.apu._getImmediateData());
+	REQUIRE(result == 4);
+	REQUIRE(snes.apu._internalRegisters.pc == 24);
 }
 
-Test(ProgramFlow, BEQ)
+TEST_CASE("BEQ ProgramFlow", "[ProgramFlow]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.pc = 0;
-	apu->_internalWrite(apu->_internalRegisters.pc + 1, 23);
-	result = apu->BEQ(apu->_getImmediateData());
-	cr_assert_eq(result, 2);
-	apu->_internalRegisters.z = true;
-	result = apu->BEQ(apu->_getImmediateData());
-	cr_assert_eq(result, 4);
-	cr_assert_eq(apu->_internalRegisters.pc, 25);
+	snes.apu._internalRegisters.pc = 0;
+	snes.apu._internalWrite(snes.apu._internalRegisters.pc + 1, 23);
+	result = snes.apu.BEQ(snes.apu._getImmediateData());
+	REQUIRE(result == 2);
+	snes.apu._internalRegisters.z = true;
+	result = snes.apu.BEQ(snes.apu._getImmediateData());
+	REQUIRE(result == 4);
+	REQUIRE(snes.apu._internalRegisters.pc == 25);
 }
 
-Test(ProgramFlow, BNE)
+TEST_CASE("BNE ProgramFlow", "[ProgramFlow]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.pc = 0;
-	apu->_internalWrite(apu->_internalRegisters.pc + 1, 23);
-	apu->_internalRegisters.z = true;
-	result = apu->BNE(apu->_getImmediateData());
-	cr_assert_eq(result, 2);
-	apu->_internalRegisters.z = false;
-	result = apu->BNE(apu->_getImmediateData());
-	cr_assert_eq(result, 4);
-	cr_assert_eq(apu->_internalRegisters.pc, 25);
+	snes.apu._internalRegisters.pc = 0;
+	snes.apu._internalWrite(snes.apu._internalRegisters.pc + 1, 23);
+	snes.apu._internalRegisters.z = true;
+	result = snes.apu.BNE(snes.apu._getImmediateData());
+	REQUIRE(result == 2);
+	snes.apu._internalRegisters.z = false;
+	result = snes.apu.BNE(snes.apu._getImmediateData());
+	REQUIRE(result == 4);
+	REQUIRE(snes.apu._internalRegisters.pc == 25);
 }
 
-Test(ProgramFlow, BCS)
+TEST_CASE("BCS ProgramFlow", "[ProgramFlow]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.pc = 0;
-	apu->_internalWrite(apu->_internalRegisters.pc + 1, 23);
-	result = apu->BCS(apu->_getImmediateData());
-	cr_assert_eq(result, 2);
-	apu->_internalRegisters.c = true;
-	result = apu->BCS(apu->_getImmediateData());
-	cr_assert_eq(result, 4);
-	cr_assert_eq(apu->_internalRegisters.pc, 25);
+	snes.apu._internalRegisters.pc = 0;
+	snes.apu._internalWrite(snes.apu._internalRegisters.pc + 1, 23);
+	result = snes.apu.BCS(snes.apu._getImmediateData());
+	REQUIRE(result == 2);
+	snes.apu._internalRegisters.c = true;
+	result = snes.apu.BCS(snes.apu._getImmediateData());
+	REQUIRE(result == 4);
+	REQUIRE(snes.apu._internalRegisters.pc == 25);
 }
 
-Test(ProgramFlow, BCC)
+TEST_CASE("BCC ProgramFlow", "[ProgramFlow]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.pc = 0;
-	apu->_internalWrite(apu->_internalRegisters.pc + 1, 23);
-	apu->_internalRegisters.c = true;
-	result = apu->BCC(apu->_getImmediateData());
-	cr_assert_eq(result, 2);
-	apu->_internalRegisters.c = false;
-	result = apu->BCC(apu->_getImmediateData());
-	cr_assert_eq(result, 4);
-	cr_assert_eq(apu->_internalRegisters.pc, 25);
+	snes.apu._internalRegisters.pc = 0;
+	snes.apu._internalWrite(snes.apu._internalRegisters.pc + 1, 23);
+	snes.apu._internalRegisters.c = true;
+	result = snes.apu.BCC(snes.apu._getImmediateData());
+	REQUIRE(result == 2);
+	snes.apu._internalRegisters.c = false;
+	result = snes.apu.BCC(snes.apu._getImmediateData());
+	REQUIRE(result == 4);
+	REQUIRE(snes.apu._internalRegisters.pc == 25);
 }
 
-Test(ProgramFlow, BVS)
+TEST_CASE("BVS ProgramFlow", "[ProgramFlow]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.pc = 0;
-	apu->_internalWrite(apu->_internalRegisters.pc + 1, 23);
-	result = apu->BVS(apu->_getImmediateData());
-	cr_assert_eq(result, 2);
-	apu->_internalRegisters.v = true;
-	result = apu->BVS(apu->_getImmediateData());
-	cr_assert_eq(result, 4);
-	cr_assert_eq(apu->_internalRegisters.pc, 25);
+	snes.apu._internalRegisters.pc = 0;
+	snes.apu._internalWrite(snes.apu._internalRegisters.pc + 1, 23);
+	result = snes.apu.BVS(snes.apu._getImmediateData());
+	REQUIRE(result == 2);
+	snes.apu._internalRegisters.v = true;
+	result = snes.apu.BVS(snes.apu._getImmediateData());
+	REQUIRE(result == 4);
+	REQUIRE(snes.apu._internalRegisters.pc == 25);
 }
 
-Test(ProgramFlow, BVC)
+TEST_CASE("BVC ProgramFlow", "[ProgramFlow]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.pc = 0;
-	apu->_internalWrite(apu->_internalRegisters.pc + 1, 23);
-	apu->_internalRegisters.v = true;
-	result = apu->BVC(apu->_getImmediateData());
-	cr_assert_eq(result, 2);
-	apu->_internalRegisters.v = false;
-	result = apu->BVC(apu->_getImmediateData());
-	cr_assert_eq(result, 4);
-	cr_assert_eq(apu->_internalRegisters.pc, 25);
+	snes.apu._internalRegisters.pc = 0;
+	snes.apu._internalWrite(snes.apu._internalRegisters.pc + 1, 23);
+	snes.apu._internalRegisters.v = true;
+	result = snes.apu.BVC(snes.apu._getImmediateData());
+	REQUIRE(result == 2);
+	snes.apu._internalRegisters.v = false;
+	result = snes.apu.BVC(snes.apu._getImmediateData());
+	REQUIRE(result == 4);
+	REQUIRE(snes.apu._internalRegisters.pc == 25);
 }
 
-Test(ProgramFlow, BMI)
+TEST_CASE("BMI ProgramFlow", "[ProgramFlow]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.pc = 0;
-	apu->_internalWrite(apu->_internalRegisters.pc + 1, 23);
-	result = apu->BMI(apu->_getImmediateData());
-	cr_assert_eq(result, 2);
-	apu->_internalRegisters.n = true;
-	result = apu->BMI(apu->_getImmediateData());
-	cr_assert_eq(result, 4);
-	cr_assert_eq(apu->_internalRegisters.pc, 25);
+	snes.apu._internalRegisters.pc = 0;
+	snes.apu._internalWrite(snes.apu._internalRegisters.pc + 1, 23);
+	result = snes.apu.BMI(snes.apu._getImmediateData());
+	REQUIRE(result == 2);
+	snes.apu._internalRegisters.n = true;
+	result = snes.apu.BMI(snes.apu._getImmediateData());
+	REQUIRE(result == 4);
+	REQUIRE(snes.apu._internalRegisters.pc == 25);
 }
 
-Test(ProgramFlow, BPL)
+TEST_CASE("BPL ProgramFlow", "[ProgramFlow]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.pc = 0;
-	apu->_internalWrite(apu->_internalRegisters.pc + 1, 23);
-	apu->_internalRegisters.n = true;
-	result = apu->BPL(apu->_getImmediateData());
-	cr_assert_eq(result, 2);
-	apu->_internalRegisters.n = false;
-	result = apu->BPL(apu->_getImmediateData());
-	cr_assert_eq(result, 4);
-	cr_assert_eq(apu->_internalRegisters.pc, 25);
+	snes.apu._internalRegisters.pc = 0;
+	snes.apu._internalWrite(snes.apu._internalRegisters.pc + 1, 23);
+	snes.apu._internalRegisters.n = true;
+	result = snes.apu.BPL(snes.apu._getImmediateData());
+	REQUIRE(result == 2);
+	snes.apu._internalRegisters.n = false;
+	result = snes.apu.BPL(snes.apu._getImmediateData());
+	REQUIRE(result == 4);
+	REQUIRE(snes.apu._internalRegisters.pc == 25);
 }
 
-Test(ProgramFlow, BBS)
+TEST_CASE("BBS ProgramFlow", "[ProgramFlow]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.pc = 0;
-	apu->_internalWrite(apu->_internalRegisters.pc + 1, 23);
-	apu->_internalWrite(23, 0);
-	result = apu->BBS(apu->_getDirectAddr(), apu->_getImmediateData(), 2);
-	cr_assert_eq(result, 5);
-	apu->_internalRegisters.pc = 0;
-	apu->_internalWrite(apu->_internalRegisters.pc, 10);
-	apu->_internalWrite(23, 100);
-	result = apu->BBS(apu->_getDirectAddr(), apu->_getImmediateData(), 2);
-	cr_assert_eq(result, 7);
-	cr_assert_eq(apu->_internalRegisters.pc, 12);
+	snes.apu._internalRegisters.pc = 0;
+	snes.apu._internalWrite(snes.apu._internalRegisters.pc + 1, 23);
+	snes.apu._internalWrite(23, 0);
+	result = snes.apu.BBS(snes.apu._getDirectAddr(), snes.apu._getImmediateData(), 2);
+	REQUIRE(result == 5);
+	snes.apu._internalRegisters.pc = 0;
+	snes.apu._internalWrite(snes.apu._internalRegisters.pc, 10);
+	snes.apu._internalWrite(23, 100);
+	result = snes.apu.BBS(snes.apu._getDirectAddr(), snes.apu._getImmediateData(), 2);
+	REQUIRE(result == 7);
+	REQUIRE(snes.apu._internalRegisters.pc == 12);
 }
 
-Test(ProgramFlow, BBC)
+TEST_CASE("BBC ProgramFlow", "[ProgramFlow]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.pc = 0;
-	apu->_internalWrite(apu->_internalRegisters.pc + 1, 10);
-	apu->_internalWrite(10, 255);
-	result = apu->BBC(apu->_getDirectAddr(), apu->_getImmediateData(), 2);
-	cr_assert_eq(result, 5);
-	apu->_internalRegisters.pc = 0;
-	apu->_internalWrite(apu->_internalRegisters.pc, 10);
-	apu->_internalWrite(apu->_internalRegisters.pc + 1, 0);
-	result = apu->BBC(apu->_getDirectAddr(), apu->_getImmediateData(), 2);
-	cr_assert_eq(result, 7);
-	cr_assert_eq(apu->_internalRegisters.pc, 12);
+	snes.apu._internalRegisters.pc = 0;
+	snes.apu._internalWrite(snes.apu._internalRegisters.pc + 1, 10);
+	snes.apu._internalWrite(10, 255);
+	result = snes.apu.BBC(snes.apu._getDirectAddr(), snes.apu._getImmediateData(), 2);
+	REQUIRE(result == 5);
+	snes.apu._internalRegisters.pc = 0;
+	snes.apu._internalWrite(snes.apu._internalRegisters.pc, 10);
+	snes.apu._internalWrite(snes.apu._internalRegisters.pc + 1, 0);
+	result = snes.apu.BBC(snes.apu._getDirectAddr(), snes.apu._getImmediateData(), 2);
+	REQUIRE(result == 7);
+	REQUIRE(snes.apu._internalRegisters.pc == 12);
 }
 
-Test(ProgramFlow, CBNE)
+TEST_CASE("CBNE ProgramFlow", "[ProgramFlow]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.pc = 0;
-	apu->_internalRegisters.a = 4;
-	apu->_internalWrite(apu->_internalRegisters.pc + 1, 10);
-	apu->_internalWrite(10, 4);
-	result = apu->CBNE(apu->_getDirectAddr(), apu->_getImmediateData());
-	cr_assert_eq(result, 5);
-	apu->_internalRegisters.pc = 0;
-	apu->_internalRegisters.a = 0;
-	apu->_internalWrite(apu->_internalRegisters.pc, 10);
-	result = apu->CBNE(apu->_getDirectAddrByX(), apu->_getImmediateData(), true);
-	cr_assert_eq(result, 8);
-	cr_assert_eq(apu->_internalRegisters.pc, 12);
+	snes.apu._internalRegisters.pc = 0;
+	snes.apu._internalRegisters.a = 4;
+	snes.apu._internalWrite(snes.apu._internalRegisters.pc + 1, 10);
+	snes.apu._internalWrite(10, 4);
+	result = snes.apu.CBNE(snes.apu._getDirectAddr(), snes.apu._getImmediateData());
+	REQUIRE(result == 5);
+	snes.apu._internalRegisters.pc = 0;
+	snes.apu._internalRegisters.a = 0;
+	snes.apu._internalWrite(snes.apu._internalRegisters.pc, 10);
+	result = snes.apu.CBNE(snes.apu._getDirectAddrByX(), snes.apu._getImmediateData(), true);
+	REQUIRE(result == 8);
+	REQUIRE(snes.apu._internalRegisters.pc == 12);
 }
 
-Test(ProgramFlow, DBNZ)
+TEST_CASE("DBNZ ProgramFlow", "[ProgramFlow]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.pc = 0;
-	apu->_internalRegisters.y = 1;
-	result = apu->DBNZ(apu->_getImmediateData());
-	cr_assert_eq(result, 4);
-	apu->_internalWrite(apu->_internalRegisters.pc, 10);
-	apu->_internalWrite(apu->_internalRegisters.pc + 1, 5);
-	apu->_internalWrite(5, 55);
-	result = apu->DBNZ(apu->_getImmediateData(), true);
-	cr_assert_eq(result, 7);
-	cr_assert_eq(	apu->_internalRead(5), 54);
-	cr_assert_eq(apu->_internalRegisters.pc, 13);
+	snes.apu._internalRegisters.pc = 0;
+	snes.apu._internalRegisters.y = 1;
+	result = snes.apu.DBNZ(snes.apu._getImmediateData());
+	REQUIRE(result == 4);
+	snes.apu._internalWrite(snes.apu._internalRegisters.pc, 10);
+	snes.apu._internalWrite(snes.apu._internalRegisters.pc + 1, 5);
+	snes.apu._internalWrite(5, 55);
+	result = snes.apu.DBNZ(snes.apu._getImmediateData(), true);
+	REQUIRE(result == 7);
+	REQUIRE(	snes.apu._internalRead(5) == 54);
+	REQUIRE(snes.apu._internalRegisters.pc == 13);
 }
 
-Test(ProgramFlow, JMP)
+TEST_CASE("JMP ProgramFlow", "[ProgramFlow]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.pc = 0x32;
-	apu->_internalWrite(0x32, 0b00001111);
-	apu->_internalWrite(0x33, 0b11110000);
-	result = apu->JMP(apu->_getAbsoluteAddr());
-	cr_assert_eq(result, 3);
-	cr_assert_eq(apu->_internalRegisters.pc, 61455);
-	apu->_internalRegisters.pc = 0x32;
-	apu->_internalRegisters.x = 0b000000001;
-	apu->_internalWrite(0b1111000000001111 + 1, 0b00010000);
-	apu->_internalWrite(0b1111000000001111 + 2, 0b11110001);
-	result = apu->JMP(apu->_getAbsoluteByXAddr(), true);
-	cr_assert_eq(result, 6);
-	cr_assert_eq(apu->_internalRegisters.pc, 61712);
+	snes.apu._internalRegisters.pc = 0x32;
+	snes.apu._internalWrite(0x32, 0b00001111);
+	snes.apu._internalWrite(0x33, 0b11110000);
+	result = snes.apu.JMP(snes.apu._getAbsoluteAddr());
+	REQUIRE(result == 3);
+	REQUIRE(snes.apu._internalRegisters.pc == 61455);
+	snes.apu._internalRegisters.pc = 0x32;
+	snes.apu._internalRegisters.x = 0b000000001;
+	snes.apu._internalWrite(0b1111000000001111 + 1, 0b00010000);
+	snes.apu._internalWrite(0b1111000000001111 + 2, 0b11110001);
+	result = snes.apu.JMP(snes.apu._getAbsoluteByXAddr(), true);
+	REQUIRE(result == 6);
+	REQUIRE(snes.apu._internalRegisters.pc == 61712);
 }
 
 ////////////////////////////////
@@ -749,32 +704,30 @@ Test(ProgramFlow, JMP)
 //							  //
 ////////////////////////////////
 
-Test(DecimalCompensation, DAA)
+TEST_CASE("DAA DecimalCompensation", "[DecimalCompensation]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.c = true;
-	apu->_internalRegisters.h = true;
-	apu->_internalRegisters.a = 0x1A;
-	result = apu->DAA();
-	cr_assert_eq(result, 3);
-	cr_assert_eq(apu->_internalRegisters.a, 0x80);
+	snes.apu._internalRegisters.c = true;
+	snes.apu._internalRegisters.h = true;
+	snes.apu._internalRegisters.a = 0x1A;
+	result = snes.apu.DAA();
+	REQUIRE(result == 3);
+	REQUIRE(snes.apu._internalRegisters.a == 0x80);
 }
 
-Test(DecimalCompensation, DAS)
+TEST_CASE("DAS DecimalCompensation", "[DecimalCompensation]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.c = false;
-	apu->_internalRegisters.h = false;
-	apu->_internalRegisters.a = 0xFF;
-	result = apu->DAS();
-	cr_assert_eq(result, 3);
-	cr_assert_eq(apu->_internalRegisters.a, 0x99);
+	snes.apu._internalRegisters.c = false;
+	snes.apu._internalRegisters.h = false;
+	snes.apu._internalRegisters.a = 0xFF;
+	result = snes.apu.DAS();
+	REQUIRE(result == 3);
+	REQUIRE(snes.apu._internalRegisters.a == 0x99);
 }
 
 ///////////////////////////////////
@@ -783,36 +736,34 @@ Test(DecimalCompensation, DAS)
 //								 //
 ///////////////////////////////////
 
-Test(MultiplicationDivision, MUL)
+TEST_CASE("MUL MultiplicationDivision", "[MultiplicationDivision]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.a = 10;
-	apu->_internalRegisters.y = 23;
-	result = apu->MUL();
-	cr_assert_eq(result, 9);
-	cr_assert_eq(apu->_internalRegisters.ya, 230);
+	snes.apu._internalRegisters.a = 10;
+	snes.apu._internalRegisters.y = 23;
+	result = snes.apu.MUL();
+	REQUIRE(result == 9);
+	REQUIRE(snes.apu._internalRegisters.ya == 230);
 }
 
-Test(MultiplicationDivision, DIV)
+TEST_CASE("DIV MultiplicationDivision", "[MultiplicationDivision]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.ya = 235;
-	apu->_internalRegisters.x = 10;
-	result = apu->DIV();
-	cr_assert_eq(result, 12);
-	cr_assert_eq(apu->_internalRegisters.y, 5);
-	cr_assert_eq(apu->_internalRegisters.a, 23);
-	apu->_internalRegisters.ya = 12345;
-	apu->_internalRegisters.x = 2;
-	result = apu->DIV();
-	cr_assert_eq(apu->_internalRegisters.y, 147);
-	cr_assert_eq(apu->_internalRegisters.a, 211);
+	snes.apu._internalRegisters.ya = 235;
+	snes.apu._internalRegisters.x = 10;
+	result = snes.apu.DIV();
+	REQUIRE(result == 12);
+	REQUIRE(snes.apu._internalRegisters.y == 5);
+	REQUIRE(snes.apu._internalRegisters.a == 23);
+	snes.apu._internalRegisters.ya = 12345;
+	snes.apu._internalRegisters.x = 2;
+	result = snes.apu.DIV();
+	REQUIRE(snes.apu._internalRegisters.y == 147);
+	REQUIRE(snes.apu._internalRegisters.a == 211);
 }
 
 //////////////////////////////////
@@ -821,85 +772,80 @@ Test(MultiplicationDivision, DIV)
 //								//
 //////////////////////////////////
 
-Test(XVIbitArithmetic, INCW)
+TEST_CASE("INCW XVIbitArithmetic", "[XVIbitArithmetic]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalWrite(apu->_internalRegisters.pc, 0x55);
-	apu->_internalWrite(0x55, 0xFF);
-	apu->_internalWrite(0x55 + 1, 0x22);
-	result = apu->INCW(apu->_getDirectAddr());
-	cr_assert_eq(result, 6);
-	cr_assert_eq(apu->_internalRead(0x55), 0x00);
-	cr_assert_eq(apu->_internalRead(0x55 + 1), 0x23);
+	snes.apu._internalWrite(snes.apu._internalRegisters.pc, 0x55);
+	snes.apu._internalWrite(0x55, 0xFF);
+	snes.apu._internalWrite(0x55 + 1, 0x22);
+	result = snes.apu.INCW(snes.apu._getDirectAddr());
+	REQUIRE(result == 6);
+	REQUIRE(snes.apu._internalRead(0x55) == 0x00);
+	REQUIRE(snes.apu._internalRead(0x55 + 1) == 0x23);
 }
 
-Test(XVIbitArithmetic, DECW)
+TEST_CASE("DECW XVIbitArithmetic", "[XVIbitArithmetic]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalWrite(apu->_internalRegisters.pc, 0x55);
-	apu->_internalWrite(0x55, 0x00);
-	apu->_internalWrite(0x55 + 1, 0x23);
-	result = apu->DECW(apu->_getDirectAddr());
-	cr_assert_eq(result, 6);
-	cr_assert_eq(apu->_internalRead(0x55), 0xFF);
-	cr_assert_eq(apu->_internalRead(0x55 + 1), 0x22);
+	snes.apu._internalWrite(snes.apu._internalRegisters.pc, 0x55);
+	snes.apu._internalWrite(0x55, 0x00);
+	snes.apu._internalWrite(0x55 + 1, 0x23);
+	result = snes.apu.DECW(snes.apu._getDirectAddr());
+	REQUIRE(result == 6);
+	REQUIRE(snes.apu._internalRead(0x55) == 0xFF);
+	REQUIRE(snes.apu._internalRead(0x55 + 1) == 0x22);
 }
 
-Test(XVIbitArithmetic, ADDW)
+TEST_CASE("ADDW XVIbitArithmetic", "[XVIbitArithmetic]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.ya = 0x4321;
-	apu->_internalWrite(apu->_internalRegisters.pc, 0x55);
-	apu->_internalWrite(0x55, 0x11);
-	apu->_internalWrite(0x55 + 1, 0x22);
-	result = apu->ADDW(apu->_getDirectAddr());
-	cr_assert_eq(result, 5);
-	cr_assert_eq(apu->_internalRegisters.ya, 0x6532);
-	cr_assert_eq(apu->_internalRegisters.v, false);
-	cr_assert_eq(apu->_internalRegisters.h, false);
-	cr_assert_eq(apu->_internalRegisters.c, false);
+	snes.apu._internalRegisters.ya = 0x4321;
+	snes.apu._internalWrite(snes.apu._internalRegisters.pc, 0x55);
+	snes.apu._internalWrite(0x55, 0x11);
+	snes.apu._internalWrite(0x55 + 1, 0x22);
+	result = snes.apu.ADDW(snes.apu._getDirectAddr());
+	REQUIRE(result == 5);
+	REQUIRE(snes.apu._internalRegisters.ya == 0x6532);
+	REQUIRE(snes.apu._internalRegisters.v == false);
+	REQUIRE(snes.apu._internalRegisters.h == false);
+	REQUIRE(snes.apu._internalRegisters.c == false);
 }
 
-Test(XVIbitArithmetic, SUBW)
+TEST_CASE("SUBW XVIbitArithmetic", "[XVIbitArithmetic]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.ya = 0x4321;
-	apu->_internalWrite(apu->_internalRegisters.pc, 0x55);
-	apu->_internalWrite(0x55, 0x11);
-	apu->_internalWrite(0x55 + 1, 0x22);
-	result = apu->SUBW(apu->_getDirectAddr());
-	cr_assert_eq(result, 5);
-	cr_assert_eq(apu->_internalRegisters.ya, 0x2110);
-	cr_assert_eq(apu->_internalRegisters.v, false);
-	cr_assert_eq(apu->_internalRegisters.h, true);
-	cr_assert_eq(apu->_internalRegisters.c, true);
+	snes.apu._internalRegisters.ya = 0x4321;
+	snes.apu._internalWrite(snes.apu._internalRegisters.pc, 0x55);
+	snes.apu._internalWrite(0x55, 0x11);
+	snes.apu._internalWrite(0x55 + 1, 0x22);
+	result = snes.apu.SUBW(snes.apu._getDirectAddr());
+	REQUIRE(result == 5);
+	REQUIRE(snes.apu._internalRegisters.ya == 0x2110);
+	REQUIRE(snes.apu._internalRegisters.v == false);
+	REQUIRE(snes.apu._internalRegisters.h == true);
+	REQUIRE(snes.apu._internalRegisters.c == true);
 }
 
-Test(XVIbitArithmetic, CMPW)
+TEST_CASE("CMPW XVIbitArithmetic", "[XVIbitArithmetic]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.ya = 0x2211;
-	apu->_internalWrite(apu->_internalRegisters.pc, 0x55);
-	apu->_internalWrite(0x55, 0x11);
-	apu->_internalWrite(0x55 + 1, 0x22);
-	result = apu->CMPW(apu->_getDirectAddr());
-	cr_assert_eq(result, 4);
-	cr_assert_eq(apu->_internalRegisters.c, true);
+	snes.apu._internalRegisters.ya = 0x2211;
+	snes.apu._internalWrite(snes.apu._internalRegisters.pc, 0x55);
+	snes.apu._internalWrite(0x55, 0x11);
+	snes.apu._internalWrite(0x55 + 1, 0x22);
+	result = snes.apu.CMPW(snes.apu._getDirectAddr());
+	REQUIRE(result == 4);
+	REQUIRE(snes.apu._internalRegisters.c == true);
 }
 
 /////////////////////////////////////////
@@ -908,25 +854,24 @@ Test(XVIbitArithmetic, CMPW)
 //									   //
 /////////////////////////////////////////
 
-Test(XVIbitDataTransmission, MOVW)
+TEST_CASE("MOVW XVIbitDataTransmission", "[XVIbitDataTransmission]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.pc = 0;
-	apu->_internalRegisters.ya = 0x2211;
-	apu->_internalWrite(apu->_internalRegisters.pc, 0x55);
-	result = apu->MOVW(apu->_getDirectAddr());
-	cr_assert_eq(result, 5);
-	cr_assert_eq(apu->_internalRead(0x55), 0x11);
-	cr_assert_eq(apu->_internalRead(0x56), 0x22);
-	apu->_internalRegisters.ya = 0x0000;
-	apu->_internalRegisters.pc = 0;
-	apu->_internalWrite(0x55, 0x33);
-	apu->_internalWrite(0x55 + 1, 0x44);
-	apu->MOVW(apu->_getDirectAddr(), true);
-	cr_assert_eq(apu->_internalRegisters.ya, 0x4433);
+	snes.apu._internalRegisters.pc = 0;
+	snes.apu._internalRegisters.ya = 0x2211;
+	snes.apu._internalWrite(snes.apu._internalRegisters.pc, 0x55);
+	result = snes.apu.MOVW(snes.apu._getDirectAddr());
+	REQUIRE(result == 5);
+	REQUIRE(snes.apu._internalRead(0x55) == 0x11);
+	REQUIRE(snes.apu._internalRead(0x56) == 0x22);
+	snes.apu._internalRegisters.ya = 0x0000;
+	snes.apu._internalRegisters.pc = 0;
+	snes.apu._internalWrite(0x55, 0x33);
+	snes.apu._internalWrite(0x55 + 1, 0x44);
+	snes.apu.MOVW(snes.apu._getDirectAddr(), true);
+	REQUIRE(snes.apu._internalRegisters.ya == 0x4433);
 }
 
 //////////////////////////////////////
@@ -935,92 +880,87 @@ Test(XVIbitDataTransmission, MOVW)
 //									//
 //////////////////////////////////////
 
-Test(VIIIbitShiftRotation, ASL)
+TEST_CASE("ASL VIIIbitShiftRotation", "[VIIIbitShiftRotation]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.a = 0x66;
-	result = apu->ASL(apu->_internalRegisters.a, 2, true);
-	cr_assert_eq(result, 2);
-	cr_assert_eq(apu->_internalRegisters.a, 0xCC);
-	cr_assert_eq(apu->_internalRegisters.c, false);
-	apu->_internalWrite(apu->_internalRegisters.pc, 0x55);
-	apu->_internalWrite(0x55, 0xDD);
-	result = apu->ASL(apu->_getDirectAddr(), 5);
-	cr_assert_eq(result, 5);
-	cr_assert_eq(apu->_internalRead(0x55), 0xBA);
-	cr_assert_eq(apu->_internalRegisters.c, true);
+	snes.apu._internalRegisters.a = 0x66;
+	result = snes.apu.ASL(snes.apu._internalRegisters.a, 2, true);
+	REQUIRE(result == 2);
+	REQUIRE(snes.apu._internalRegisters.a == 0xCC);
+	REQUIRE(snes.apu._internalRegisters.c == false);
+	snes.apu._internalWrite(snes.apu._internalRegisters.pc, 0x55);
+	snes.apu._internalWrite(0x55, 0xDD);
+	result = snes.apu.ASL(snes.apu._getDirectAddr(), 5);
+	REQUIRE(result == 5);
+	REQUIRE(snes.apu._internalRead(0x55) == 0xBA);
+	REQUIRE(snes.apu._internalRegisters.c == true);
 }
 
-Test(VIIIbitShiftRotation, LSR)
+TEST_CASE("LSR VIIIbitShiftRotation", "[VIIIbitShiftRotation]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.a = 0x66;
-	result = apu->LSR(apu->_internalRegisters.a, 2, true);
-	cr_assert_eq(result, 2);
-	cr_assert_eq(apu->_internalRegisters.a, 0x33);
-	cr_assert_eq(apu->_internalRegisters.c, false);
-	apu->_internalWrite(apu->_internalRegisters.pc, 0x55);
-	apu->_internalWrite(0x55, 0xDD);
-	result = apu->LSR(apu->_getDirectAddr(), 5);
-	cr_assert_eq(result , 5);
-	cr_assert_eq(apu->_internalRead(0x55), 0x6E);
-	cr_assert_eq(apu->_internalRegisters.c, true);
+	snes.apu._internalRegisters.a = 0x66;
+	result = snes.apu.LSR(snes.apu._internalRegisters.a, 2, true);
+	REQUIRE(result == 2);
+	REQUIRE(snes.apu._internalRegisters.a == 0x33);
+	REQUIRE(snes.apu._internalRegisters.c == false);
+	snes.apu._internalWrite(snes.apu._internalRegisters.pc, 0x55);
+	snes.apu._internalWrite(0x55, 0xDD);
+	result = snes.apu.LSR(snes.apu._getDirectAddr(), 5);
+	REQUIRE(result  == 5);
+	REQUIRE(snes.apu._internalRead(0x55) == 0x6E);
+	REQUIRE(snes.apu._internalRegisters.c == true);
 }
 
-Test(VIIIbitShiftRotation, ROL)
+TEST_CASE("ROL VIIIbitShiftRotation", "[VIIIbitShiftRotation]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.a = 0x66;
-	result = apu->ROL(apu->_internalRegisters.a, 2, true);
-	cr_assert_eq(result, 2);
-	cr_assert_eq(apu->_internalRegisters.a, 0xCC);
-	cr_assert_eq(apu->_internalRegisters.c, false);
-	apu->_internalWrite(apu->_internalRegisters.pc, 0x55);
-	apu->_internalWrite(0x55, 0xDD);
-	result = apu->ROL(apu->_getDirectAddr(), 5);
-	cr_assert_eq(result, 5);
-	cr_assert_eq(apu->_internalRead(0x55), 0xBA);
-	cr_assert_eq(apu->_internalRegisters.c, true);
+	snes.apu._internalRegisters.a = 0x66;
+	result = snes.apu.ROL(snes.apu._internalRegisters.a, 2, true);
+	REQUIRE(result == 2);
+	REQUIRE(snes.apu._internalRegisters.a == 0xCC);
+	REQUIRE(snes.apu._internalRegisters.c == false);
+	snes.apu._internalWrite(snes.apu._internalRegisters.pc, 0x55);
+	snes.apu._internalWrite(0x55, 0xDD);
+	result = snes.apu.ROL(snes.apu._getDirectAddr(), 5);
+	REQUIRE(result == 5);
+	REQUIRE(snes.apu._internalRead(0x55) == 0xBA);
+	REQUIRE(snes.apu._internalRegisters.c == true);
 }
 
-Test(VIIIbitShiftRotation, ROR)
+TEST_CASE("ROR VIIIbitShiftRotation", "[VIIIbitShiftRotation]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.a = 0x66;
-	result = apu->ROR(apu->_internalRegisters.a, 2, true);
-	cr_assert_eq(result, 2);
-	cr_assert_eq(apu->_internalRegisters.a, 0x33);
-	cr_assert_eq(apu->_internalRegisters.c, false);
-	apu->_internalWrite(apu->_internalRegisters.pc, 0x55);
-	apu->_internalWrite(0x55, 0xDD);
-	result = apu->ROR(apu->_getDirectAddr(), 5);
-	cr_assert_eq(result , 5);
-	cr_assert_eq(apu->_internalRead(0x55), 0x6E);
-	cr_assert_eq(apu->_internalRegisters.c, true);
+	snes.apu._internalRegisters.a = 0x66;
+	result = snes.apu.ROR(snes.apu._internalRegisters.a, 2, true);
+	REQUIRE(result == 2);
+	REQUIRE(snes.apu._internalRegisters.a == 0x33);
+	REQUIRE(snes.apu._internalRegisters.c == false);
+	snes.apu._internalWrite(snes.apu._internalRegisters.pc, 0x55);
+	snes.apu._internalWrite(0x55, 0xDD);
+	result = snes.apu.ROR(snes.apu._getDirectAddr(), 5);
+	REQUIRE(result  == 5);
+	REQUIRE(snes.apu._internalRead(0x55) == 0x6E);
+	REQUIRE(snes.apu._internalRegisters.c == true);
 }
 
-Test(VIIIShiftRotation, XCN)
+TEST_CASE("XCN VIIIShiftRotation", "[VIIIShiftRotation]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.a = 0b10101010;
-	result = apu->XCN();
-	cr_assert_eq(result, 5);
-	cr_assert_eq(apu->_internalRegisters.a, 0xAA);
+	snes.apu._internalRegisters.a = 0b10101010;
+	result = snes.apu.XCN();
+	REQUIRE(result == 5);
+	REQUIRE(snes.apu._internalRegisters.a == 0xAA);
 }
 
 ///////////////////////////////////////////
@@ -1029,54 +969,50 @@ Test(VIIIShiftRotation, XCN)
 //										 //
 ///////////////////////////////////////////
 
-Test(VIIIbitIncrementDecrement, INC)
+TEST_CASE("INC VIIIbitIncrementDecrement", "[VIIIbitIncrementDecrement]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalWrite(apu->_internalRegisters.pc, 0x55);
-	apu->_internalWrite(0x55, 0xDD);
-	result = apu->INC(apu->_getDirectAddr(), 4);
-	cr_assert_eq(result, 4);
-	cr_assert_eq(apu->_internalRead(0x55), 0xDE);
+	snes.apu._internalWrite(snes.apu._internalRegisters.pc, 0x55);
+	snes.apu._internalWrite(0x55, 0xDD);
+	result = snes.apu.INC(snes.apu._getDirectAddr(), 4);
+	REQUIRE(result == 4);
+	REQUIRE(snes.apu._internalRead(0x55) == 0xDE);
 }
 
-Test(VIIIbitIncrementDecrement, INCreg)
+TEST_CASE("INCreg VIIIbitIncrementDecrement", "[VIIIbitIncrementDecrement]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.a = 0x76;
-	result = apu->INCreg(apu->_internalRegisters.a);
-	cr_assert_eq(result, 2);
-	cr_assert_eq(apu->_internalRegisters.a, 0x77);
+	snes.apu._internalRegisters.a = 0x76;
+	result = snes.apu.INCreg(snes.apu._internalRegisters.a);
+	REQUIRE(result == 2);
+	REQUIRE(snes.apu._internalRegisters.a == 0x77);
 }
 
-Test(VIIIbitIncrementDecrement, DEC)
+TEST_CASE("DEC VIIIbitIncrementDecrement", "[VIIIbitIncrementDecrement]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalWrite(apu->_internalRegisters.pc, 0x55);
-	apu->_internalWrite(0x55, 0xDD);
-	result = apu->DEC(apu->_getDirectAddr(), 4);
-	cr_assert_eq(result, 4);
-	cr_assert_eq(apu->_internalRead(0x55), 0xDC);
+	snes.apu._internalWrite(snes.apu._internalRegisters.pc, 0x55);
+	snes.apu._internalWrite(0x55, 0xDD);
+	result = snes.apu.DEC(snes.apu._getDirectAddr(), 4);
+	REQUIRE(result == 4);
+	REQUIRE(snes.apu._internalRead(0x55) == 0xDC);
 }
 
-Test(VIIIbitIncrementDecrement, DECreg)
+TEST_CASE("DECreg VIIIbitIncrementDecrement", "[VIIIbitIncrementDecrement]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.a = 0x76;
-	result = apu->DECreg(apu->_internalRegisters.a);
-	cr_assert_eq(result, 2);
-	cr_assert_eq(apu->_internalRegisters.a, 0x75);
+	snes.apu._internalRegisters.a = 0x76;
+	result = snes.apu.DECreg(snes.apu._internalRegisters.a);
+	REQUIRE(result == 2);
+	REQUIRE(snes.apu._internalRegisters.a == 0x75);
 }
 
 ///////////////////////////////
@@ -1085,91 +1021,85 @@ Test(VIIIbitIncrementDecrement, DECreg)
 //							 //
 ///////////////////////////////
 
-Test(VIIILogical, ANDacc)
+TEST_CASE("ANDacc VIIILogical", "[VIIILogical]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.x = 4;
-	apu->_internalRegisters.a = 24;
-	apu->_internalWrite(4, 23);
-	result = apu->ANDacc(apu->_getIndexXAddr(), 3);
-	cr_assert_eq(result, 3);
-	cr_assert_eq(apu->_internalRegisters.a, 16);
+	snes.apu._internalRegisters.x = 4;
+	snes.apu._internalRegisters.a = 24;
+	snes.apu._internalWrite(4, 23);
+	result = snes.apu.ANDacc(snes.apu._getIndexXAddr(), 3);
+	REQUIRE(result == 3);
+	REQUIRE(snes.apu._internalRegisters.a == 16);
 }
 
-Test(VIIILogical, AND)
+TEST_CASE("AND VIIILogical", "[VIIILogical]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.x = 4;
-	apu->_internalRegisters.y = 7;
-	apu->_internalWrite(4, 12);
-	apu->_internalWrite(7, 44);
-	result = apu->AND(apu->_getIndexXAddr(), apu->_getIndexYAddr(), 5);
-	cr_assert_eq(result, 5);
-	cr_assert_eq(apu->_internalRead(4), 12);
+	snes.apu._internalRegisters.x = 4;
+	snes.apu._internalRegisters.y = 7;
+	snes.apu._internalWrite(4, 12);
+	snes.apu._internalWrite(7, 44);
+	result = snes.apu.AND(snes.apu._getIndexXAddr(), snes.apu._getIndexYAddr(), 5);
+	REQUIRE(result == 5);
+	REQUIRE(snes.apu._internalRead(4) == 12);
 }
 
-Test(VIIILogical, ORacc)
+TEST_CASE("ORacc VIIILogical", "[VIIILogical]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.x = 4;
-	apu->_internalRegisters.a = 24;
-	apu->_internalWrite(4, 23);
-	result = apu->ORacc(apu->_getIndexXAddr(), 3);
-	cr_assert_eq(result, 3);
-	cr_assert_eq(apu->_internalRegisters.a, 31);
+	snes.apu._internalRegisters.x = 4;
+	snes.apu._internalRegisters.a = 24;
+	snes.apu._internalWrite(4, 23);
+	result = snes.apu.ORacc(snes.apu._getIndexXAddr(), 3);
+	REQUIRE(result == 3);
+	REQUIRE(snes.apu._internalRegisters.a == 31);
 }
 
-Test(VIIILogical, OR)
+TEST_CASE("OR VIIILogical", "[VIIILogical]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.x = 4;
-	apu->_internalRegisters.y = 7;
-	apu->_internalWrite(4, 12);
-	apu->_internalWrite(7, 44);
-	result = apu->OR(apu->_getIndexXAddr(), apu->_getIndexYAddr(), 5);
-	cr_assert_eq(result, 5);
-	cr_assert_eq(apu->_internalRead(4), 44);
+	snes.apu._internalRegisters.x = 4;
+	snes.apu._internalRegisters.y = 7;
+	snes.apu._internalWrite(4, 12);
+	snes.apu._internalWrite(7, 44);
+	result = snes.apu.OR(snes.apu._getIndexXAddr(), snes.apu._getIndexYAddr(), 5);
+	REQUIRE(result == 5);
+	REQUIRE(snes.apu._internalRead(4) == 44);
 }
 
-Test(VIIILogical, EORacc)
+TEST_CASE("EORacc VIIILogical", "[VIIILogical]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.x = 4;
-	apu->_internalRegisters.a = 24;
-	apu->_internalWrite(4, 23);
-	result = apu->EORacc(apu->_getIndexXAddr(), 3);
-	cr_assert_eq(result, 3);
-	cr_assert_eq(apu->_internalRegisters.a, 15);
+	snes.apu._internalRegisters.x = 4;
+	snes.apu._internalRegisters.a = 24;
+	snes.apu._internalWrite(4, 23);
+	result = snes.apu.EORacc(snes.apu._getIndexXAddr(), 3);
+	REQUIRE(result == 3);
+	REQUIRE(snes.apu._internalRegisters.a == 15);
 }
 
-Test(VIIILogical, EOR)
+TEST_CASE("EOR VIIILogical", "[VIIILogical]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.x = 4;
-	apu->_internalRegisters.y = 7;
-	apu->_internalWrite(4, 12);
-	apu->_internalWrite(7, 44);
-	result = apu->EOR(apu->_getIndexXAddr(), apu->_getIndexYAddr(), 5);
-	cr_assert_eq(result, 5);
-	cr_assert_eq(apu->_internalRead(4), 32);
+	snes.apu._internalRegisters.x = 4;
+	snes.apu._internalRegisters.y = 7;
+	snes.apu._internalWrite(4, 12);
+	snes.apu._internalWrite(7, 44);
+	result = snes.apu.EOR(snes.apu._getIndexXAddr(), snes.apu._getIndexYAddr(), 5);
+	REQUIRE(result == 5);
+	REQUIRE(snes.apu._internalRead(4) == 32);
 }
 
 //////////////////////////////////
@@ -1178,107 +1108,101 @@ Test(VIIILogical, EOR)
 //								//
 //////////////////////////////////
 
-Test(VIIIArithmetic, ADC)
+TEST_CASE("ADC VIIIArithmetic", "[VIIIArithmetic]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.x = 4;
-	apu->_internalRegisters.y = 7;
-	apu->_internalRegisters.c = true;
-	apu->_internalWrite(4, 53);
-	apu->_internalWrite(7, 76);
-	result = apu->ADC(apu->_getIndexXAddr(), apu->_getIndexYAddr(), 5);
-	cr_assert_eq(result, 5);
-	cr_assert_eq(apu->_internalRead(4), 130);
-	cr_assert_eq(apu->_internalRegisters.c, false);
-	cr_assert_eq(apu->_internalRegisters.h, true);
-	cr_assert_eq(apu->_internalRegisters.v, true);
+	snes.apu._internalRegisters.x = 4;
+	snes.apu._internalRegisters.y = 7;
+	snes.apu._internalRegisters.c = true;
+	snes.apu._internalWrite(4, 53);
+	snes.apu._internalWrite(7, 76);
+	result = snes.apu.ADC(snes.apu._getIndexXAddr(), snes.apu._getIndexYAddr(), 5);
+	REQUIRE(result == 5);
+	REQUIRE(snes.apu._internalRead(4) == 130);
+	REQUIRE(snes.apu._internalRegisters.c == false);
+	REQUIRE(snes.apu._internalRegisters.h == true);
+	REQUIRE(snes.apu._internalRegisters.v == true);
 }
 
-Test(VIIIArithmetic, ADCacc)
+TEST_CASE("ADCacc VIIIArithmetic", "[VIIIArithmetic]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.x = 4;
-	apu->_internalRegisters.a = 53;
-	apu->_internalRegisters.c = true;
-	apu->_internalWrite(4, 76);
-	result = apu->ADCacc(apu->_getIndexXAddr(), 3);
-	cr_assert_eq(result, 3);
-	cr_assert_eq(apu->_internalRegisters.a, 130);
-	cr_assert_eq(apu->_internalRegisters.c, false);
-	cr_assert_eq(apu->_internalRegisters.h, true);
-	cr_assert_eq(apu->_internalRegisters.v, true);
+	snes.apu._internalRegisters.x = 4;
+	snes.apu._internalRegisters.a = 53;
+	snes.apu._internalRegisters.c = true;
+	snes.apu._internalWrite(4, 76);
+	result = snes.apu.ADCacc(snes.apu._getIndexXAddr(), 3);
+	REQUIRE(result == 3);
+	REQUIRE(snes.apu._internalRegisters.a == 130);
+	REQUIRE(snes.apu._internalRegisters.c == false);
+	REQUIRE(snes.apu._internalRegisters.h == true);
+	REQUIRE(snes.apu._internalRegisters.v == true);
 }
 
-Test(VIIIArithmetic, SBC)
+TEST_CASE("SBC VIIIArithmetic", "[VIIIArithmetic]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.x = 4;
-	apu->_internalRegisters.y = 7;
-	apu->_internalRegisters.c = true;
-	apu->_internalWrite(4, 67);
-	apu->_internalWrite(7, 45);
-	result = apu->SBC(apu->_getIndexXAddr(), apu->_getIndexYAddr(), 5);
-	cr_assert_eq(result, 5);
-	cr_assert_eq(apu->_internalRead(4), 22);
-	cr_assert_eq(apu->_internalRegisters.c, true);
-	cr_assert_eq(apu->_internalRegisters.h, false);
-	cr_assert_eq(apu->_internalRegisters.v, false);
+	snes.apu._internalRegisters.x = 4;
+	snes.apu._internalRegisters.y = 7;
+	snes.apu._internalRegisters.c = true;
+	snes.apu._internalWrite(4, 67);
+	snes.apu._internalWrite(7, 45);
+	result = snes.apu.SBC(snes.apu._getIndexXAddr(), snes.apu._getIndexYAddr(), 5);
+	REQUIRE(result == 5);
+	REQUIRE(snes.apu._internalRead(4) == 22);
+	REQUIRE(snes.apu._internalRegisters.c == true);
+	REQUIRE(snes.apu._internalRegisters.h == false);
+	REQUIRE(snes.apu._internalRegisters.v == false);
 }
 
-Test(VIIIArithmetic, SBCacc)
+TEST_CASE("SBCacc VIIIArithmetic", "[VIIIArithmetic]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.x = 4;
-	apu->_internalRegisters.a = 67;
-	apu->_internalRegisters.c = true;
-	apu->_internalWrite(4, 45);
-	result = apu->SBCacc(apu->_getIndexXAddr(), 3);
-	cr_assert_eq(result, 3);
-	cr_assert_eq(apu->_internalRegisters.a, 22);
-	cr_assert_eq(apu->_internalRegisters.c, true);
-	cr_assert_eq(apu->_internalRegisters.h, false);
-	cr_assert_eq(apu->_internalRegisters.v, false);
+	snes.apu._internalRegisters.x = 4;
+	snes.apu._internalRegisters.a = 67;
+	snes.apu._internalRegisters.c = true;
+	snes.apu._internalWrite(4, 45);
+	result = snes.apu.SBCacc(snes.apu._getIndexXAddr(), 3);
+	REQUIRE(result == 3);
+	REQUIRE(snes.apu._internalRegisters.a == 22);
+	REQUIRE(snes.apu._internalRegisters.c == true);
+	REQUIRE(snes.apu._internalRegisters.h == false);
+	REQUIRE(snes.apu._internalRegisters.v == false);
 }
 
-Test(VIIIArithmetic, CMP)
+TEST_CASE("CMP VIIIArithmetic", "[VIIIArithmetic]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.x = 4;
-	apu->_internalRegisters.y = 7;
-	apu->_internalWrite(4, 67);
-	apu->_internalWrite(7, 45);
-	result = apu->CMP(apu->_getIndexXAddr(), apu->_getIndexYAddr(), 5);
-	cr_assert_eq(result, 5);
-	cr_assert_eq(apu->_internalRegisters.c, true);
+	snes.apu._internalRegisters.x = 4;
+	snes.apu._internalRegisters.y = 7;
+	snes.apu._internalWrite(4, 67);
+	snes.apu._internalWrite(7, 45);
+	result = snes.apu.CMP(snes.apu._getIndexXAddr(), snes.apu._getIndexYAddr(), 5);
+	REQUIRE(result == 5);
+	REQUIRE(snes.apu._internalRegisters.c == true);
 }
 
-Test(VIIIArithmetic, CMPacc)
+TEST_CASE("CMPacc VIIIArithmetic", "[VIIIArithmetic]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.x = 4;
-	apu->_internalRegisters.a = 67;
-	apu->_internalWrite(4, 45);
-	result = apu->CMPreg(apu->_internalRegisters.a, apu->_getIndexXAddr(), 3);
-	cr_assert_eq(result, 3);
-	cr_assert_eq(apu->_internalRegisters.c, true);
+	snes.apu._internalRegisters.x = 4;
+	snes.apu._internalRegisters.a = 67;
+	snes.apu._internalWrite(4, 45);
+	result = snes.apu.CMPreg(snes.apu._internalRegisters.a, snes.apu._getIndexXAddr(), 3);
+	REQUIRE(result == 3);
+	REQUIRE(snes.apu._internalRegisters.c == true);
 }
 
 /////////////////////////////////////////
@@ -1287,60 +1211,56 @@ Test(VIIIArithmetic, CMPacc)
 //									   //
 /////////////////////////////////////////
 
-Test(VIIIDataTransmission, MovRegToReg)
+TEST_CASE("MovRegToReg VIIIDataTransmission", "[VIIIDataTransmission]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.a = 23;
-	apu->_internalRegisters.x = 45;
-	result = apu->MOV(apu->_internalRegisters.x, apu->_internalRegisters.a);
-	cr_assert_eq(result, 2);
-	cr_assert_eq(apu->_internalRegisters.a, 45);
+	snes.apu._internalRegisters.a = 23;
+	snes.apu._internalRegisters.x = 45;
+	result = snes.apu.MOV(snes.apu._internalRegisters.x, snes.apu._internalRegisters.a);
+	REQUIRE(result == 2);
+	REQUIRE(snes.apu._internalRegisters.a == 45);
 }
 
-Test(VIIIDataTransmission, MovMemToMem)
+TEST_CASE("MovMemToMem VIIIDataTransmission", "[VIIIDataTransmission]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.pc = 0x23;
-	apu->_internalWrite(0x23, 0x56);
-	apu->_internalWrite(0x24, 0x33);
-	apu->_internalWrite(0x56, 99);
-	apu->_internalWrite(0x33, 66);
-	result = apu->MOV(apu->_getDirectAddr(), apu->_getImmediateData());
-	cr_assert_eq(result, 5);
-	cr_assert_eq(apu->_internalRead(0x33), 0x56);
+	snes.apu._internalRegisters.pc = 0x23;
+	snes.apu._internalWrite(0x23, 0x56);
+	snes.apu._internalWrite(0x24, 0x33);
+	snes.apu._internalWrite(0x56, 99);
+	snes.apu._internalWrite(0x33, 66);
+	result = snes.apu.MOV(snes.apu._getDirectAddr(), snes.apu._getImmediateData());
+	REQUIRE(result == 5);
+	REQUIRE(snes.apu._internalRead(0x33) == 0x56);
 }
 
-Test(VIIIDataTransmission, MovRegToMem)
+TEST_CASE("MovRegToMem VIIIDataTransmission", "[VIIIDataTransmission]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.x = 0x23;
-	apu->_internalRegisters.a = 0x44;
-	apu->_internalWrite(0x23, 0x56);
-	result = apu->MOV(apu->_internalRegisters.a, apu->_getIndexXAddr(), 4, true);
-	cr_assert_eq(result, 4);
-	cr_assert_eq(apu->_internalRead(0x23), 0x44);
-	cr_assert_eq(apu->_internalRegisters.x, 0x24);
+	snes.apu._internalRegisters.x = 0x23;
+	snes.apu._internalRegisters.a = 0x44;
+	snes.apu._internalWrite(0x23, 0x56);
+	result = snes.apu.MOV(snes.apu._internalRegisters.a, snes.apu._getIndexXAddr(), 4, true);
+	REQUIRE(result == 4);
+	REQUIRE(snes.apu._internalRead(0x23) == 0x44);
+	REQUIRE(snes.apu._internalRegisters.x == 0x24);
 }
 
-Test(VIIIDataTransmission, MovMemToReg)
+TEST_CASE("MovMemToReg VIIIDataTransmission", "[VIIIDataTransmission]")
 {
 	Init()
-	auto apu = snes.apu;
 	int result = 0;
 
-	apu->_internalRegisters.x = 0x23;
-	apu->_internalRegisters.a = 0x44;
-	result = apu->MOV(apu->_getIndexXAddr(), apu->_internalRegisters.a, 4, true);
-	cr_assert_eq(result, 4);
-	cr_assert_eq(apu->_internalRegisters.x, 0x24);
-	cr_assert_eq(apu->_internalRegisters.a, 0x23);
+	snes.apu._internalRegisters.x = 0x23;
+	snes.apu._internalRegisters.a = 0x44;
+	result = snes.apu.MOV(snes.apu._getIndexXAddr(), snes.apu._internalRegisters.a, 4, true);
+	REQUIRE(result == 4);
+	REQUIRE(snes.apu._internalRegisters.x == 0x24);
+	REQUIRE(snes.apu._internalRegisters.a == 0x23);
 }

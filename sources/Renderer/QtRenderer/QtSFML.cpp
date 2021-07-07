@@ -7,12 +7,15 @@
 #include <QIcon>
 #include <QMenuBar>
 #include <iostream>
+#include <QDir>
+#include <QFileDialog>
+#include "Models/Logger.hpp"
 #include "SNES.hpp"
 #include "QtSFML.hpp"
 
 #ifdef Q_WS_X11
-	#include <Qt/qx11info_x11.h>
-	#include <X11/Xlib.h>
+#include <Qt/qx11info_x11.h>
+#include <X11/Xlib.h>
 #endif
 
 namespace ComSquare::Renderer
@@ -33,9 +36,9 @@ namespace ComSquare::Renderer
 		this->_sfWidget->putPixel(y, x, rgba);
 	}
 
-	void QtSFML::playAudio(std::span<int16_t> samples, uint64_t sampleCount)
+	void QtSFML::playAudio(std::span<int16_t> samples)
 	{
-		this->_sfWidget->playAudio(samples, sampleCount);
+		this->_sfWidget->playAudio(samples);
 	}
 
 	void QtSFML::drawScreen() { }
@@ -54,23 +57,36 @@ namespace ComSquare::Renderer
 	{
 		try {
 			this->_snes.update();
-		} catch (const DebuggableError &e) {
-			std::cout << "Invalid rom's instruction: " << e.what() << std::endl;
+		}
+#ifdef DEBUGGER_ENABLED
+		catch (const DebuggableError &e) {
+			logMsg(LogLevel::ERROR, "Invalid rom's instruction: " << e.what());
 			this->_snes.enableCPUDebuggingWithError(e);
-		} catch (std::exception &e) {
+		}
+#endif
+		catch (const std::exception &e) {
 			std::cerr << "An error occurred: " << e.what() << std::endl;
 			QApplication::quit();
 		}
 	}
 
-	void QtFullSFML::enableDebugCPU()
+	void QtFullSFML::openRom()
 	{
-		this->_snes.enableCPUDebugging();
+		auto rom = QFileDialog::getOpenFileName(nullptr, tr("Open a ROM"), QDir::homePath(),
+												tr("Rom files (*.sfc, *.smc);;Audio rom files (*.spc);;All files (*)"));
+		if (!rom.isEmpty())
+			this->_snes.loadRom(rom.toStdString());
 	}
 
 	void QtFullSFML::reset()
 	{
-		this->_snes.cpu->RESB();
+		this->_snes.cpu.RESB();
+	}
+
+#ifdef DEBUGGER_ENABLED
+	void QtFullSFML::enableDebugCPU()
+	{
+		this->_snes.enableCPUDebugging();
 	}
 
 	void QtFullSFML::enableRamViewer()
@@ -95,20 +111,21 @@ namespace ComSquare::Renderer
 
 	void QtFullSFML::enableCgramViewer()
 	{
-		this->_snes.enableCgramDebugging();
+		this->_snes.enableCgramViewer();
 	}
 
 	void QtFullSFML::enableRegisterViewer()
 	{
-		this->_snes.enableRegisterDebugging();
+		this->_snes.enableRegisterViewer();
 	}
 
 	void QtFullSFML::enableTileViewer()
 	{
-		this->_snes.enableTileViewerDebugging();
+		this->_snes.enableTileViewer();
 	}
+#endif
 
-	QtSFMLWindow::QtSFMLWindow(unsigned int height, unsigned int width)
+	QtSFMLWindow::QtSFMLWindow(int height, int width)
 		: QtSFML(&this->_window)
 	{
 		this->_window.resize(width, height);
@@ -118,60 +135,61 @@ namespace ComSquare::Renderer
 	void QtSFMLWindow::createWindow(SNES &snes, int maxFPS)
 	{
 		QtSFML::createWindow(snes, maxFPS);
-		this->setWindowName(snes.cartridge->header.gameName);
+		this->setWindowName(snes.cartridge.header.gameName);
 		this->_window.setCentralWidget(this->_sfWidget);
 
 		QMenu *file = this->_window.menuBar()->addMenu("&File");
-		//TODO implement rom opening from this menu.
-		(void)file;
+		auto *open = new QAction("Open", &this->_window);
+		QMainWindow::connect(open, &QAction::triggered, this->_sfWidget, &QtFullSFML::openRom);
+		file->addAction(open);
 
 		QMenu *game = this->_window.menuBar()->addMenu("&Game");
-		QAction *reset = new QAction("Reset", &this->_window);
+		auto *reset = new QAction("Reset", &this->_window);
 		QMainWindow::connect(reset, &QAction::triggered, this->_sfWidget, &QtFullSFML::reset);
 		game->addAction(reset);
 
-
-
+#ifdef DEBUGGER_ENABLED
 		QMenu *debugger = this->_window.menuBar()->addMenu("&Debugger");
-		QAction *cpuDebugger = new QAction("CPU's Debugger", &this->_window);
+		auto *cpuDebugger = new QAction("CPU's Debugger", &this->_window);
 		cpuDebugger->setShortcut(Qt::Key_F1);
 		QMainWindow::connect(cpuDebugger, &QAction::triggered, this->_sfWidget, &QtFullSFML::enableDebugCPU);
 		debugger->addAction(cpuDebugger);
 
-		QAction *ramViewer = new QAction("Memory viewer", &this->_window);
+		auto *ramViewer = new QAction("Memory viewer", &this->_window);
 		ramViewer->setShortcut(Qt::Key_F2);
 		QMainWindow::connect(ramViewer, &QAction::triggered, this->_sfWidget, &QtFullSFML::enableRamViewer);
 		debugger->addAction(ramViewer);
 
-		QAction *headerViewer = new QAction("Header viewer", &this->_window);
+		auto *headerViewer = new QAction("Header viewer", &this->_window);
 		headerViewer->setShortcut(Qt::Key_F3);
 		QMainWindow::connect(headerViewer, &QAction::triggered, this->_sfWidget, &QtFullSFML::enableHeaderViewer);
 		debugger->addAction(headerViewer);
 
-		QAction *apuDebugger = new QAction("APU's Debugger", &this->_window);
+		auto *apuDebugger = new QAction("APU's Debugger", &this->_window);
 		apuDebugger->setShortcut(Qt::Key_F4);
 		QMainWindow::connect(apuDebugger, &QAction::triggered, this->_sfWidget, &QtFullSFML::enableDebugAPU);
 		debugger->addAction(apuDebugger);
 
-		QAction *busDebugger = new QAction("Memory bus Viewer", &this->_window);
+		auto *busDebugger = new QAction("Memory bus Viewer", &this->_window);
 		busDebugger->setShortcut(Qt::Key_F5);
 		QMainWindow::connect(busDebugger, &QAction::triggered, this->_sfWidget, &QtFullSFML::enableDebugBus);
 		debugger->addAction(busDebugger);
 
-		QAction *cgramDebugger = new QAction("Palette Viewer", &this->_window);
+		auto *cgramDebugger = new QAction("Palette Viewer", &this->_window);
 		cgramDebugger->setShortcut(Qt::Key_F6);
 		QMainWindow::connect(cgramDebugger, &QAction::triggered, this->_sfWidget, &QtFullSFML::enableCgramViewer);
 		debugger->addAction(cgramDebugger);
 
-		QAction *registerDebugger = new QAction("Registers Viewer", &this->_window);
+		auto *registerDebugger = new QAction("Registers Viewer", &this->_window);
 		registerDebugger->setShortcut(Qt::Key_F7);
 		QMainWindow::connect(registerDebugger, &QAction::triggered, this->_sfWidget, &QtFullSFML::enableRegisterViewer);
 		debugger->addAction(registerDebugger);
 
-		QAction *tileDebugger = new QAction("Tile Viewer", &this->_window);
+		auto *tileDebugger = new QAction("Tile Viewer", &this->_window);
 		tileDebugger->setShortcut(Qt::Key_F8);
 		QMainWindow::connect(tileDebugger, &QAction::triggered, this->_sfWidget, &QtFullSFML::enableTileViewer);
 		debugger->addAction(tileDebugger);
+#endif
 
 		this->_window.show();
 	}

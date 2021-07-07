@@ -2,10 +2,6 @@
 // Created by cbihan on 5/7/21.
 //
 
-namespace ComSquare::Renderer
-{
-	class QtFullSFML;
-}
 
 #include "Renderer/QtRenderer/QtSFML.hpp"
 #include "TileViewer.hpp"
@@ -13,33 +9,30 @@ namespace ComSquare::Renderer
 #include <QColor>
 #include <string>
 #include <iostream>
-#include <QtWidgets/QTableWidget>
-#include "Utility/Utility.hpp"
 #include "RAMTileRenderer.hpp"
 #include "PPU/PPU.hpp"
 
 namespace ComSquare::Debugger
 {
 	TileViewer::TileViewer(SNES &snes, ComSquare::PPU::PPU &ppu)
-		: _window(new ClosableWindow<TileViewer>(*this, &TileViewer::disableViewer)),
+		: _window(new ClosableWindow([&snes] { snes.disableTileViewer(); })),
 		  _snes(snes),
 		  _ui(),
 		  _ppu(ppu),
-		  _ramTileRenderer()
+		  _ramTileRenderer(ppu.vram, ppu.cgram)
 	{
-		this->_ramTileRenderer.setRam(ppu.vram);
-		this->_ramTileRenderer.setCgram(ppu.cgram);
-		this->_window->setContextMenuPolicy(Qt::NoContextMenu);
-		this->_window->setAttribute(Qt::WA_QuitOnClose, false);
-		this->_window->setAttribute(Qt::WA_DeleteOnClose);
-
 		this->_ui.setupUi(this->_window);
 		this->_sfWidget = std::make_unique<Renderer::QtSFMLTileRenderer>(this->_ui.widget_sfml);
-		QMainWindow::connect(this->_ui.NbColumns, QOverload<int>::of(&QSpinBox::valueChanged), this, [this](int nb) -> void { this->setNbColumns(nb); });
-		QMainWindow::connect(this->_ui.ByteSize, QOverload<int>::of(&QSpinBox::valueChanged), this, [this](int nb) -> void { this->setRenderSize(nb); });
-		QMainWindow::connect(this->_ui.Address, QOverload<int>::of(&QSpinBox::valueChanged), this, [this](int nb) -> void { this->setRamOffset(nb); });
-		QMainWindow::connect(this->_ui.PaletteIndex, QOverload<int>::of(&QSpinBox::valueChanged), this, [this](int nb) -> void { this->setPaletteIndex(nb); });
-		QMainWindow::connect(this->_ui.BppFormat, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [this](int index) -> void { this->_bppChangeUIHandler(index); });
+		QMainWindow::connect(this->_ui.NbColumns, QOverload<int>::of(&QSpinBox::valueChanged), this,
+		                     [this](int nb) -> void { this->setNbColumns(nb); });
+		QMainWindow::connect(this->_ui.ByteSize, QOverload<int>::of(&QSpinBox::valueChanged), this,
+		                     [this](int nb) -> void { this->setRenderSize(nb); });
+		QMainWindow::connect(this->_ui.Address, QOverload<int>::of(&QSpinBox::valueChanged), this,
+		                     [this](int nb) -> void { this->setRamOffset(nb); });
+		QMainWindow::connect(this->_ui.PaletteIndex, QOverload<int>::of(&QSpinBox::valueChanged), this,
+		                     [this](int nb) -> void { this->setPaletteIndex(nb); });
+		QMainWindow::connect(this->_ui.BppFormat, QOverload<int>::of(&QComboBox::currentIndexChanged), this,
+		                     [this](int index) -> void { this->_bppChangeUIHandler(index); });
 
 		// used to setup ui restrictions
 		this->setBpp(this->getBpp());
@@ -47,19 +40,9 @@ namespace ComSquare::Debugger
 		this->internalUpdate();
 	}
 
-	void TileViewer::disableViewer()
-	{
-		this->_snes.disableTileViewerDebugging();
-	}
-
 	void TileViewer::focus()
 	{
 		this->_window->activateWindow();
-	}
-
-	bool TileViewer::isDebugger()
-	{
-		return true;
 	}
 
 	uint16_t TileViewer::read(uint8_t addr)
@@ -138,9 +121,12 @@ namespace ComSquare::Debugger
 	void TileViewer::_bppChangeUIHandler(int index)
 	{
 		switch (index) {
-		case 0: return this->setBpp(2);
-		case 1: return this->setBpp(4);
-		case 2: return this->setBpp(8);
+		case 0:
+			return this->setBpp(2);
+		case 1:
+			return this->setBpp(4);
+		case 2:
+			return this->setBpp(8);
 		default:
 			throw std::runtime_error("Invalid Index");
 		}

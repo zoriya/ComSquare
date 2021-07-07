@@ -2,12 +2,12 @@
 // Created by Melefo on 28/01/2020.
 //
 
-#ifndef COMSQUARE_DSP_HPP
-#define COMSQUARE_DSP_HPP
+#pragma once
 
 #include <cstdint>
 #include <array>
-#include "../../Memory/AMemory.hpp"
+#include "Renderer/IRenderer.hpp"
+#include "Memory/AMemory.hpp"
 
 namespace ComSquare::APU
 {
@@ -191,7 +191,9 @@ namespace ComSquare::APU::DSP
 	//! @brief Current state of the DSP
 	struct State
 	{
-		State(std::array<int16_t, 0x10000> &array) : buffer(array) {};
+		State(std::array<int16_t, 0x10000> &array, uint32_t size)
+			: buffer(array), bufferSize(size)
+		{};
 
 		//! @brief Current voice modification to do
 		uint8_t voice = 0;
@@ -324,31 +326,36 @@ namespace ComSquare::APU::DSP
 		void decodeBRR(Voice &voice);
 
 		//! @brief Whole APU RAM map
-		std::weak_ptr<MemoryMap> _map;
+		MemoryMap &_map;
+
+		//! @brief Renderer used to play sounds
+		Renderer::IRenderer &_renderer;
+		//! @brief Buffer containing samples to be played
+		std::array<int16_t, 0x10000> _soundBuffer = {};
 
 		//! @brief Read inside APU RAM
 		uint8_t _readRAM(uint24_t addr);
 		//! @brief Write into APU RAM
 		void _writeRAM(uint24_t addr, uint8_t data);
 	public:
-		DSP(std::array<int16_t, 0x10000> &buffer, uint32_t size, std::weak_ptr<MemoryMap> map);
+		DSP(Renderer::IRenderer &renderer, MemoryMap &map);
 		DSP(const DSP &) = default;
-		DSP &operator=(const DSP &) = default;
+		DSP &operator=(const DSP &) = delete;
 		~DSP() = default;
 
 		//! @brief Return all 8 voices from DSP
-		const std::array<Voice, 8> &getVoices() const;
-		const Master &getMaster() const;
-		const Echo &getEcho() const;
-		const Noise &getNoise() const;
-		const BRR &getBrr() const;
-		const Latch &getLatch() const;
+		[[nodiscard]] const std::array<Voice, 8> &getVoices() const;
+		[[nodiscard]] const Master &getMaster() const;
+		[[nodiscard]] const Echo &getEcho() const;
+		[[nodiscard]] const Noise &getNoise() const;
+		[[nodiscard]] const BRR &getBrr() const;
+		[[nodiscard]] const Latch &getLatch() const;
 
 		//! @brief Read from the internal DSP register.
 		//! @param addr The address to read from. The address 0x0 should refer to the first byte of the register.
 		//! @throw InvalidAddress will be thrown if the address is more than $7F (the number of register).
 		//! @return Return the value of the register.
-		uint8_t read(uint24_t addr) const;
+		[[nodiscard]] uint8_t read(uint24_t addr) const;
 		//! @brief Write data to the internal DSP register.
 		//! @param addr The address to write to. The address 0x0 should refer to the first byte of register.
 		//! @param data The new value of the register.
@@ -356,19 +363,17 @@ namespace ComSquare::APU::DSP
 		void write(uint24_t addr, uint8_t data);
 
 		//! @brief Get the name of this accessor (used for debug purpose)
-		std::string getName() const;
+		[[nodiscard]] std::string getName() const;
 		//! @brief Execute current voice transformation
 		void update();
 
 		//! @brief Get the component of this accessor (used for debug purpose)
-		Component getComponent() const;
+		[[nodiscard]] Component getComponent() const;
 
 		//! @brief Get the size of the data. This size can be lower than the mapped data.
 		//! @return The number of bytes inside this memory.
-		uint24_t getSize() const;
+		[[nodiscard]] uint24_t getSize() const;
 		//! @brief Return the number of samples written
-		int32_t getSamplesCount() const;
+		[[nodiscard]] int32_t getSamplesCount() const;
 	};
 }
-
-#endif //COMSQUARE_DSP_HPP

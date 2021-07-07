@@ -10,10 +10,11 @@
 
 namespace ComSquare::Debugger
 {
-	class RAMTileRenderer {
+	class RAMTileRenderer
+	{
 	private:
 		//! @brief ram to render
-		std::shared_ptr<Ram::Ram> _ram;
+		Ram::Ram &_ram;
 		//! @brief The size to render in the ram
 		int _renderSize;
 		//! @brief The number of tile columns to display
@@ -29,34 +30,31 @@ namespace ComSquare::Debugger
 		std::array<std::array<uint32_t, 1024>, 1024> buffer;
 		//! @brief Set the palette to use for render (index of palette)
 		void setPaletteIndex(int paletteIndex);
-		//! @brief Set the ram to look for color references
-		void setCgram(std::shared_ptr<Ram::Ram> ram);
 		//! @brief Set the bpp to render graphics
 		void setBpp(int bpp);
 		//! @brief Set the number of maximum columns
 		void setNbColumns(int nbColumns);
 		//! @brief Set the size of ram to render
 		void setRenderSize(int size);
-		//! @brief The ram to render
-		void setRam(std::shared_ptr<Ram::Ram> ram);
 		//! @brief Set the ram offset
 		void setRamOffset(int offset);
 		//! @brief Get the current bpp
-		int getBpp() const;
+		[[nodiscard]] int getBpp() const;
 		//! @brief Get the index of the current palette used
-		int getPaletteIndex() const;
+		[[nodiscard]] int getPaletteIndex() const;
 		//! @brief Get the numbr of maximum tile columns to render
-		int getNbColumns() const;
+		[[nodiscard]] int getNbColumns() const;
 		//! @brief render the selected ram
 		void render();
+
 		//! @brief ctor
-		RAMTileRenderer();
+		RAMTileRenderer(Ram::Ram &ram, Ram::Ram &cgram);
 		//! @brief copy ctor
 		RAMTileRenderer(const RAMTileRenderer &) = default;
 		//! @brief dtor
 		~RAMTileRenderer() = default;
-		//! @brief assignment operator
-		RAMTileRenderer &operator=(const RAMTileRenderer &) = default;
+		//! @brief A RAMTileRender is not assignable.
+		RAMTileRenderer &operator=(const RAMTileRenderer &) = delete;
 	};
 }
 

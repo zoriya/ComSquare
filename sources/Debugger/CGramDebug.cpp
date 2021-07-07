@@ -3,26 +3,21 @@
 //
 
 #include "CGramDebug.hpp"
-#include "../SNES.hpp"
+#include "SNES.hpp"
 #include <QColor>
 #include <string>
-#include <iostream>
 #include <QtWidgets/QTableWidget>
-#include "../Utility/Utility.hpp"
+#include "Utility/Utility.hpp"
 
 namespace ComSquare::Debugger
 {
 	CGramDebug::CGramDebug(SNES &snes, ComSquare::PPU::PPU &ppu)
-		: _window(new ClosableWindow<CGramDebug>(*this, &CGramDebug::disableViewer)),
+		: _window(new ClosableWindow([&snes] { snes.disableCgramViewer(); })),
 		  _snes(snes),
 		  _ui(),
 		  _model(ppu),
 		  _ppu(ppu)
 	{
-		this->_window->setContextMenuPolicy(Qt::NoContextMenu);
-		this->_window->setAttribute(Qt::WA_QuitOnClose, false);
-		this->_window->setAttribute(Qt::WA_DeleteOnClose);
-
 		this->_ui.setupUi(this->_window);
 		QMainWindow::connect(this->_ui.cgram_view, &QTableView::pressed, this, &CGramDebug::tileClicked);
 		this->_ui.cgram_view->setModel(&this->_model);
@@ -31,19 +26,9 @@ namespace ComSquare::Debugger
 		QEvent::registerEventType();
 	}
 
-	void CGramDebug::disableViewer()
-	{
-		this->_snes.disableCgramDebugging();
-	}
-
 	void CGramDebug::focus()
 	{
 		this->_window->activateWindow();
-	}
-
-	bool CGramDebug::isDebugger()
-	{
-		return true;
 	}
 
 	uint16_t CGramDebug::read(uint8_t addr)
@@ -79,42 +64,44 @@ namespace ComSquare::Debugger
 			return;
 		this->updateInfoTile(index.row(), index.column());
 	}
-}
 
-CGramModel::CGramModel(ComSquare::PPU::PPU &ppu) : _ppu(ppu) {}
+	CGramModel::CGramModel(ComSquare::PPU::PPU &ppu)
+		: _ppu(ppu)
+	{}
 
-int CGramModel::rowCount(const QModelIndex &) const
-{
-	return this->rows;
-}
+	int CGramModel::rowCount(const QModelIndex &) const
+	{
+		return this->rows;
+	}
 
-int CGramModel::columnCount(const QModelIndex &) const
-{
-	return this->column;
-}
+	int CGramModel::columnCount(const QModelIndex &) const
+	{
+		return this->column;
+	}
 
-QVariant CGramModel::data(const QModelIndex &index, int role) const
-{
-	u_int16_t addressValue;
-	uint8_t red;
-	uint8_t green;
-	uint8_t blue;
+	QVariant CGramModel::data(const QModelIndex &index, int role) const
+	{
+		u_int16_t addressValue;
+		uint8_t red;
+		uint8_t green;
+		uint8_t blue;
 
-	if (role == Qt::TextAlignmentRole)
-		return Qt::AlignCenter;
-	if (role != Qt::BackgroundRole)
-		return QVariant();
-	int idDisplayTile = index.row() * 16 + index.column();
-	uint16_t cgramAddress = idDisplayTile / 8 * 16 + (idDisplayTile % 8 * 2);
-	addressValue = this->_ppu.cgramRead(cgramAddress);
-	addressValue += this->_ppu.cgramRead(cgramAddress + 1) << 8U;
+		if (role == Qt::TextAlignmentRole)
+			return Qt::AlignCenter;
+		if (role != Qt::BackgroundRole)
+			return QVariant();
+		int idDisplayTile = index.row() * 16 + index.column();
+		uint16_t cgramAddress = idDisplayTile / 8 * 16 + (idDisplayTile % 8 * 2);
+		addressValue = this->_ppu.cgramRead(cgramAddress);
+		addressValue += this->_ppu.cgramRead(cgramAddress + 1) << 8U;
 
-	blue = (addressValue & 0x7D00U) >> 10U;
-	green = (addressValue & 0x03E0U) >> 5U;
-	red = (addressValue & 0x001FU);
+		blue = (addressValue & 0x7D00U) >> 10U;
+		green = (addressValue & 0x03E0U) >> 5U;
+		red = (addressValue & 0x001FU);
 
-	red = red * 255U / 31U;
-	green = green * 255U / 31U;
-	blue = blue * 255U / 31U;
-	return QColor(red, green, blue);
+		red = red * 255U / 31U;
+		green = green * 255U / 31U;
+		blue = blue * 255U / 31U;
+		return QColor(red, green, blue);
+	}
 }

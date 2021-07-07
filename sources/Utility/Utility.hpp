@@ -7,7 +7,7 @@
 #include <string>
 #include <ios>
 #include <sstream>
-#include "Models/Int24.hpp"
+#include "Models/Ints.hpp"
 
 namespace ComSquare::Utility
 {
@@ -25,5 +25,5 @@ namespace ComSquare::Utility
 	std::string to_binary(uint16_t i);
 	std::string to_binary(uint24_t i);
 
-	extern const std::string WHITESPACES;
+	constexpr std::string_view WHITESPACES = " \t\n\r\f\v";
 }

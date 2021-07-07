@@ -11,18 +11,13 @@
 
 namespace ComSquare::PPU
 {
-	TileRenderer::TileRenderer()
-		: _ram(nullptr),
-		  _cgram(nullptr),
+	TileRenderer::TileRenderer(Ram::Ram &vram, Ram::Ram &cgram)
+		: _ram(vram),
+		  _cgram(cgram),
 		  _bpp(2),
 		  _paletteIndex(0),
 		  buffer({{{0}}})
 	{
-	}
-
-	void TileRenderer::setRam(std::shared_ptr<Ram::Ram> ram)
-	{
-		this->_ram = std::move(ram);
 	}
 
 	void TileRenderer::render(uint16_t tileAddress)
@@ -71,9 +66,9 @@ namespace ComSquare::PPU
 	uint8_t TileRenderer::read2BPPValue(uint16_t tileRowAddress, uint8_t pixelIndex)
 	{
 		// TODO unit test this
-		size_t size = this->_ram->getSize();
-		uint8_t highByte = this->_ram->read(tileRowAddress % size);
-		uint8_t lowByte = this->_ram->read((tileRowAddress + 1) % size);
+		size_t size = this->_ram.getSize();
+		uint8_t highByte = this->_ram.read(tileRowAddress % size);
+		uint8_t lowByte = this->_ram.read((tileRowAddress + 1) % size);
 		uint8_t shift = 8 - 1U - pixelIndex;
 
 		return ((highByte & (1U << shift)) | ((lowByte & (1U << shift)) << 1U)) >> shift;
@@ -108,16 +103,11 @@ namespace ComSquare::PPU
 		std::vector<uint16_t> palette(nbColors);
 
 		for (int i = 0; i < nbColors; i++) {
-			palette[i] = this->_cgram->read(addr);
-			palette[i] += this->_cgram->read(addr + 1) << 8U;
+			palette[i] = this->_cgram.read(addr);
+			palette[i] += this->_cgram.read(addr + 1) << 8U;
 			addr += 2;
 		}
 		return palette;
-	}
-
-	void TileRenderer::setCgram(std::shared_ptr<Ram::Ram> ram)
-	{
-		this->_cgram = std::move(ram);
 	}
 
 	int TileRenderer::getBpp() const

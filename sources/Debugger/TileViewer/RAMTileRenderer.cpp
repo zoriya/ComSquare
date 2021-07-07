@@ -2,30 +2,21 @@
 // Created by cbihan on 24/05/2021.
 //
 
-#include <complex>
 #include <cmath>
 #include "RAMTileRenderer.hpp"
-#include "PPU/PPU.hpp"
 #include "PPU/Tile.hpp"
-#include <iostream>
 
 namespace ComSquare::Debugger
 {
-	RAMTileRenderer::RAMTileRenderer()
-		: _ram(nullptr),
+	RAMTileRenderer::RAMTileRenderer(Ram::Ram &ram, Ram::Ram &cgram)
+		: _ram(ram),
 		  _renderSize(0x5000),
 		  _nbColumns(16),
 		  _ramOffset(0),
 		  _bpp(2),
+		  _tileRenderer(ram, cgram),
 		  buffer({{{0}}})
-	{
-	}
-
-	void RAMTileRenderer::setRam(std::shared_ptr<Ram::Ram> ram)
-	{
-		this->_ram = ram;
-		this->_tileRenderer.setRam(ram);
-	}
+	{}
 
 	void RAMTileRenderer::render()
 	{
@@ -35,7 +26,7 @@ namespace ComSquare::Debugger
 		int resetX = bufX;
 		for (auto &i : this->buffer)
 			i.fill(0);
-		uint24_t limit = fmin(this->_ram->getSize(), this->_renderSize) + this->_ramOffset;
+		uint24_t limit = std::fmin(this->_ram.getSize(), this->_renderSize) + this->_ramOffset;
 
 		for (uint24_t i = this->_ramOffset; i < limit; i += PPU::Tile::BaseByteSize * this->_bpp, nbTilesDrawn++) {
 			if (bufX > 1024 || bufY > 1024)
@@ -73,11 +64,6 @@ namespace ComSquare::Debugger
 	{
 		this->_bpp = bpp;
 		this->_tileRenderer.setBpp(bpp);
-	}
-
-	void RAMTileRenderer::setCgram(std::shared_ptr<Ram::Ram> ram)
-	{
-		this->_tileRenderer.setCgram(ram);
 	}
 
 	void RAMTileRenderer::setRenderSize(int size)

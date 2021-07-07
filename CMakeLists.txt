@@ -1,13 +1,11 @@
 cmake_minimum_required(VERSION 3.12)
 set(CMAKE_CXX_STANDARD 20)
-
-# set the project name
 project(ComSquare)
 
-# show compilation warnings
-add_compile_options(-W -Wall -Wextra -Wshadow)
-
-include_directories(sources)
+if (CMAKE_COMPILER_IS_GNUCXX)
+	set(CMAKE_CXX_FLAGS_DEBUG "-Wall -Wextra -Wshadow -Wno-unused-parameter -W -g")
+endif ()
+set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
 include_directories(sources)
 
@@ -29,8 +27,8 @@ set(SOURCES
 	sources/APU/APU.cpp
 	sources/Exceptions/InvalidAddress.hpp
 	sources/Exceptions/InvalidRom.hpp
-	sources/Models/Int24.hpp
-	sources/Models/Int24.hpp
+	sources/Models/Ints.hpp
+	sources/Models/Ints.hpp
 	sources/Ram/Ram.cpp
 	sources/Ram/Ram.hpp
 	sources/Memory/MemoryShadow.cpp
@@ -55,8 +53,6 @@ set(SOURCES
 	sources/CPU/Instructions/MathematicalOperations.cpp
 	sources/CPU/Instructions/MemoryInstructions.cpp
 	sources/CPU/Instructions/InternalInstruction.cpp
-	sources/Ram/ExtendedRam.cpp
-	sources/Ram/ExtendedRam.hpp
 	sources/Utility/Utility.hpp
 	sources/Utility/Utility.cpp
 	sources/CPU/Instructions/BitsInstructions.cpp
@@ -98,6 +94,10 @@ set(SOURCES
 	sources/PPU/TileRenderer.cpp
 	sources/PPU/TileRenderer.hpp
 	sources/PPU/Tile.hpp
+	sources/CPU/Registers.hpp
+	sources/Memory/IMemoryBus.hpp
+	sources/Models/Callback.hpp
+	sources/Models/Logger.hpp
 	sources/PPU/PpuDebug.cpp
 	sources/PPU/PpuDebug.hpp
 	)
@@ -107,7 +107,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOUIC_SEARCH_PATHS ./)
 
-add_executable(ComSquare
+add_executable(comsquare
 	sources/main.cpp
 	${SOURCES}
 	sources/Renderer/SFRenderer.hpp
@@ -120,26 +120,24 @@ add_executable(ComSquare
 	sources/Renderer/QtRenderer/QtSfmlTileRenderer.hpp
 	sources/Renderer/QtRenderer/QtSfmlTileRenderer.cpp
 	sources/Renderer/QtRenderer/QtSfmlTileRenderer.hpp
+	sources/Debugger/ClosableWindow.hpp
 	sources/Debugger/CPU/CPUDebug.cpp
 	sources/Debugger/CPU/CPUDebug.hpp
+	sources/Debugger/CPU/Disassembly.cpp
+	sources/Debugger/CPU/SymbolLoaders/WlaDx.cpp
+	sources/Debugger/CPU/SymbolLoaders/WlaDx.hpp
 	sources/Debugger/MemoryViewer.cpp
 	sources/Debugger/MemoryViewer.hpp
-	sources/Debugger/HeaderViewer.cpp
-	sources/Debugger/HeaderViewer.hpp
 	sources/Debugger/HeaderViewer.cpp
 	sources/Debugger/HeaderViewer.hpp
 	sources/Debugger/APUDebug.hpp
 	sources/Debugger/APUDebug.cpp
 	sources/Debugger/MemoryBusDebug.cpp
 	sources/Debugger/MemoryBusDebug.hpp
-	sources/Debugger/ClosableWindow.hpp
-	sources/Debugger/CPU/Disassembly.cpp
 	sources/Debugger/CGramDebug.cpp
 	sources/Debugger/CGramDebug.hpp
 	sources/Debugger/RegisterViewer.cpp
 	sources/Debugger/RegisterViewer.hpp
-	sources/Debugger/CPU/SymbolLoaders/WlaDx.cpp
-	sources/Debugger/CPU/SymbolLoaders/WlaDx.hpp
 	sources/Debugger/TileViewer/TileViewer.cpp
 	sources/Debugger/TileViewer/TileViewer.hpp
 	sources/Debugger/TileViewer/RAMTileRenderer.cpp
@@ -153,42 +151,48 @@ add_executable(ComSquare
 	ui/busView.ui
 	resources/appResources.qrc
 	)
-target_include_directories(ComSquare PRIVATE ./)
-target_compile_definitions(ComSquare PUBLIC DEBUGGER_ENABLED)
+target_include_directories(comsquare PUBLIC ${PROJECT_BINARY_DIR})
+target_compile_definitions(comsquare PUBLIC DEBUGGER_ENABLED)
 
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
-target_link_libraries(ComSquare
+target_link_libraries(comsquare
 	sfml-graphics
 	sfml-window
 	sfml-system
 	sfml-audio
 	sfml-network
 	Qt5::Widgets
-)
+	)
 
 add_executable(unit_tests EXCLUDE_FROM_ALL
 	${SOURCES}
-	tests/PPU/testPpuWrite.cpp
-	tests/PPU/testPpuRead.cpp
-	tests/PPU/testBackground.cpp
-	tests/PPU/testPpuWriteFromVmain.cpp
-	tests/testRectangleMemory.cpp
+	tests/tests.hpp
+	tests/CPU/testInterupts.cpp
 	tests/APU/testAPUInstructions.cpp
 	tests/APU/testAPU.cpp
-	tests/APU/testOperand.cpp
-	tests/tests.hpp
-	tests/testMemoryBus.cpp
-	tests/CPU/Math/testSBC.cpp
+	tests/PPU/testPpuWrite.cpp
+	tests/PPU/testPpuWriteFromVmain.cpp
 	tests/CPU/Math/testADC.cpp
-	tests/CPU/Math/testCMP.cpp
-	tests/CPU/Math/testOthersMath.cpp
-	tests/CPU/testDMA.cpp
-	tests/CPU/testTransfers.cpp
-	tests/CPU/testInterupts.cpp
-	tests/CPU/testAddressingMode.cpp
+	tests/CPU/testStore.cpp
 	tests/CPU/testInternal.cpp
 	tests/CPU/testBits.cpp
-	tests/CPU/testStore.cpp
-)
-target_link_libraries(unit_tests criterion -lgcov)
-target_compile_options(unit_tests PUBLIC -fprofile-arcs -ftest-coverage)
+	tests/APU/testOperand.cpp
+	tests/CPU/Math/testSBC.cpp
+	tests/CPU/testTransfers.cpp
+	tests/CPU/Math/testOthersMath.cpp
+	tests/testRectangleMemory.cpp
+	tests/CPU/Math/testCMP.cpp
+	tests/CPU/testDMA.cpp
+	tests/CPU/testAddressingMode.cpp
+	tests/testMemoryBus.cpp
+	)
+target_include_directories(unit_tests PUBLIC tests)
+target_compile_definitions(unit_tests PUBLIC TESTS)
+set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/libs)
+find_package(Catch2 REQUIRED)
+target_link_libraries(unit_tests PRIVATE Catch2::Catch2WithMain)
+
+if (CMAKE_COMPILER_IS_GNUCXX)
+	target_link_libraries(unit_tests PRIVATE -lgcov)
+	target_compile_options(unit_tests PUBLIC -fprofile-arcs -ftest-coverage)
+endif ()

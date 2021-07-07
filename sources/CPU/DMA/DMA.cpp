@@ -2,17 +2,19 @@
 // Created by anonymus-raccoon on 5/26/20.
 //
 
-#include <iostream>
 #include "DMA.hpp"
-#include "../../Exceptions/InvalidAddress.hpp"
+#include "Exceptions/InvalidAddress.hpp"
 
 namespace ComSquare::CPU
 {
-	DMA::DMA(std::shared_ptr<Memory::MemoryBus> bus) : _bus(std::move(bus)) {}
+	DMA::DMA(Memory::IMemoryBus &bus)
+	    : _bus(bus),
+	      enabled(false)
+	{}
 
-	void DMA::setBus(std::shared_ptr<Memory::MemoryBus> bus)
+	void DMA::setBus(Memory::IMemoryBus &bus)
 	{
-		this->_bus = std::move(bus);
+		this->_bus = bus;
 	}
 
 	uint8_t DMA::read(uint8_t addr) const
@@ -68,24 +70,25 @@ namespace ComSquare::CPU
 
 	unsigned DMA::_writeOneByte(uint24_t aAddress, uint24_t bAddress)
 	{
-		// Address $2180 refers to the WRam data register. Write to/Read from this port when the a address is on the vram cause different behaviors.
+		// Address $2180 refers to the WRam data register.
+		// Write to/Read from this port when the a address is on the vram cause different behaviors.
 		if (this->_port == 0x80) {
-			auto accessor = this->_bus->getAccessor(aAddress);
+			auto accessor = this->getBus().getAccessor(aAddress);
 			if (accessor && accessor->getComponent() == WRam) {
 				// WRAM->$2180 The write is not performed but the time is consumed anyway.
 				if (this->_controlRegister.direction == AtoB)
 					return 8;
 				// $2180->WRAM No read is performed (so only 4 master cycles are needed) but the value written is invalid.
-				this->_bus->write(aAddress, 0xFF);
+				this->getBus().write(aAddress, 0xFF);
 				return 4;
 			}
 		}
 		if (this->_controlRegister.direction == AtoB) {
-			uint8_t data = this->_bus->read(aAddress);
-			this->_bus->write(bAddress, data);
+			uint8_t data = this->getBus().read(aAddress);
+			this->getBus().write(bAddress, data);
 		} else {
-			uint8_t data = this->_bus->read(bAddress);
-			this->_bus->write(aAddress, data);
+			uint8_t data = this->getBus().read(bAddress);
+			this->getBus().write(aAddress, data);
 		}
 		return 8;
 	}
@@ -106,7 +109,7 @@ namespace ComSquare::CPU
 		return cycles;
 	}
 
-	int DMA::_getModeOffset(int index)
+	int DMA::_getModeOffset(int index) const
 	{
 		switch (this->_controlRegister.mode) {
 		case OneToOne:
@@ -127,4 +130,4 @@ namespace ComSquare::CPU
 		}
 		return 0;
 	}
-}
+}// namespace ComSquare::CPU

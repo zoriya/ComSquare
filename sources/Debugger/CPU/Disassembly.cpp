@@ -2,21 +2,25 @@
 // Created by anonymus-raccoon on 4/3/20.
 //
 
-#include <sstream>
+#include "Utility/Utility.hpp"
 #include "CPUDebug.hpp"
-#include "../../Utility/Utility.hpp"
+#include "SNES.hpp"
+#include <sstream>
 
 using namespace ComSquare::CPU;
 
-namespace ComSquare::Debugger
+namespace ComSquare::Debugger::CPU
 {
-	DisassembledInstruction::DisassembledInstruction(const CPU::Instruction &instruction, uint24_t addr, std::string arg, uint8_t op)
-		: CPU::Instruction(instruction), address(addr), argument(std::move(arg)), opcode(op), level(Safe) {}
-
-	std::string DisassembledInstruction::toString()
-	{
-		return this->name + " " + this->argument;
-	}
+	DisassembledInstruction::DisassembledInstruction(const ComSquare::CPU::Instruction &instruction,
+	                                                 uint24_t addr,
+	                                                 std::string arg,
+	                                                 uint8_t op)
+	    : ComSquare::CPU::Instruction(instruction),
+	      address(addr),
+	      argument(std::move(arg)),
+	      opcode(op),
+	      level(Safe)
+	{}
 
 	std::vector<DisassembledInstruction> CPUDebug::_disassemble(uint24_t pc, uint24_t length, DisassemblyContext &ctx)
 	{
@@ -33,26 +37,26 @@ namespace ComSquare::Debugger
 			if (instruction.addressingMode == ImmediateForX && !ctx.xFlag)
 				pc++;
 
-			if (instruction.opcode == 0x40 && ctx.isEmulationMode) { // RTI
+			if (instruction.opcode == 0x40 && ctx.isEmulationMode) {// RTI
 				ctx.mFlag = true;
 				ctx.xFlag = true;
 			}
-			if (instruction.opcode == 0xC2) { // REP
+			if (instruction.opcode == 0xC2) {// REP
 				if (ctx.isEmulationMode) {
 					ctx.mFlag = true;
 					ctx.xFlag = true;
 				} else {
-					uint8_t m = this->_bus->read(pc - 1, true);
+					uint8_t m = this->_snes.bus.peek_v(pc - 1);
 					ctx.mFlag &= ~m & 0b00100000u;
 					ctx.xFlag &= ~m & 0b00010000u;
 				}
 			}
-			if (instruction.opcode == 0xE2) { // SEP
-				uint8_t m = this->_bus->read(pc - 1, true);
+			if (instruction.opcode == 0xE2) {// SEP
+				uint8_t m = this->_snes.bus.peek_v(pc - 1);
 				ctx.mFlag |= m & 0b00100000u;
 				ctx.xFlag |= m & 0b00010000u;
 			}
-			if (instruction.opcode == 0x28) { // PLP
+			if (instruction.opcode == 0x28) {// PLP
 				if (ctx.isEmulationMode) {
 					ctx.mFlag = true;
 					ctx.xFlag = true;
@@ -61,21 +65,23 @@ namespace ComSquare::Debugger
 			}
 			if (instruction.opcode == 0xFB) {// XCE
 				ctx.level = Unsafe;
-				ctx.isEmulationMode = false; // The most common use of the XCE is to enable native mode at the start of the ROM so we guess that it has done that.
+				// The most common use of the XCE is to enable native mode at the start of the ROM
+				// so we guess that it has done that.
+				ctx.isEmulationMode = false;
 			}
 		}
 		return map;
 	}
 
-	DisassembledInstruction CPUDebug::_parseInstruction(uint24_t pc, DisassemblyContext &ctx)
+	DisassembledInstruction CPUDebug::_parseInstruction(uint24_t pc, DisassemblyContext &ctx) const
 	{
-		uint24_t opcode = this->_bus->read(pc, true);
-		Instruction instruction = this->_instructions[opcode];
+		uint24_t opcode = this->_snes.bus.peek_v(pc);
+		const Instruction &instruction = this->_cpu.instructions[opcode];
 		std::string argument = this->_getInstructionParameter(instruction, pc + 1, ctx);
 		return DisassembledInstruction(instruction, pc, argument, opcode);
 	}
 
-	std::string CPUDebug::_getInstructionParameter(Instruction &instruction, uint24_t pc, DisassemblyContext &ctx)
+	std::string CPUDebug::_getInstructionParameter(const Instruction &instruction, uint24_t pc, DisassemblyContext &ctx) const
 	{
 		switch (instruction.addressingMode) {
 		case Implied:
@@ -132,141 +138,141 @@ namespace ComSquare::Debugger
 		}
 	}
 
-	std::string CPUDebug::_getImmediateValue(uint24_t pc, bool dual)
+	std::string CPUDebug::_getImmediateValue(uint24_t pc, bool dual) const
 	{
-		unsigned value = this->_bus->read(pc, true);
+		unsigned value = this->_snes.bus.peek_v(pc);
 
 		if (dual)
-			value += this->_bus->read(pc + 1, true) << 8u;
+			value += this->_snes.bus.peek_v(pc + 1) << 8u;
 		std::stringstream ss;
 		ss << "#$" << std::hex << value;
 		return ss.str();
 	}
 
-	std::string CPUDebug::_getDirectValue(uint24_t pc)
+	std::string CPUDebug::_getDirectValue(uint24_t pc) const
 	{
-		return Utility::to_hex(this->_bus->read(pc, true), Utility::HexString::AsmPrefix);
+		return Utility::to_hex(this->_snes.bus.peek_v(pc), Utility::HexString::AsmPrefix);
 	}
 
-	std::string CPUDebug::_getAbsoluteValue(uint24_t pc)
+	std::string CPUDebug::_getAbsoluteValue(uint24_t pc) const
 	{
-		uint24_t value = this->_bus->read(pc, true) + (this->_bus->read(pc + 1, true) << 8u);
+		uint24_t value = this->_snes.bus.peek_v(pc) + (this->_snes.bus.peek_v(pc + 1) << 8u);
 		return Utility::to_hex(value, Utility::HexString::AsmPrefix);
 	}
 
-	std::string CPUDebug::_getAbsoluteLongValue(uint24_t pc)
+	std::string CPUDebug::_getAbsoluteLongValue(uint24_t pc) const
 	{
-		unsigned value = this->_bus->read(pc++, true);
-		value += this->_bus->read(pc++, true) << 8u;
-		value += this->_bus->read(pc, true) << 16u;
+		unsigned value = this->_snes.bus.peek_v(pc++);
+		value += this->_snes.bus.peek_v(pc++) << 8u;
+		value += this->_snes.bus.peek_v(pc) << 16u;
 
 		return Utility::to_hex(value, Utility::HexString::AsmPrefix);
 	}
 
-	std::string CPUDebug::_getDirectIndexedByXValue(uint24_t pc)
+	std::string CPUDebug::_getDirectIndexedByXValue(uint24_t pc) const
 	{
-		unsigned value = this->_bus->read(pc, true);
+		unsigned value = this->_snes.bus.peek_v(pc);
 
 		std::stringstream ss;
 		ss << "$" << std::hex << value << ", x";
 		return ss.str();
 	}
 
-	std::string CPUDebug::_getDirectIndexedByYValue(uint24_t pc)
+	std::string CPUDebug::_getDirectIndexedByYValue(uint24_t pc) const
 	{
-		unsigned value = this->_bus->read(pc, true);
+		unsigned value = this->_snes.bus.peek_v(pc);
 
 		std::stringstream ss;
 		ss << "$" << std::hex << value << ", y";
 		return ss.str();
 	}
 
-	std::string CPUDebug::_getDirectIndirectValue(uint24_t pc)
+	std::string CPUDebug::_getDirectIndirectValue(uint24_t pc) const
 	{
-		return "(" + Utility::to_hex(this->_bus->read(pc, true), Utility::AsmPrefix) + ")";
+		return "(" + Utility::to_hex(this->_snes.bus.peek_v(pc), Utility::AsmPrefix) + ")";
 	}
 
-	std::string CPUDebug::_getDirectIndirectLongValue(uint24_t pc)
+	std::string CPUDebug::_getDirectIndirectLongValue(uint24_t pc) const
 	{
-		return "[" + Utility::to_hex(this->_bus->read(pc, true), Utility::AsmPrefix) + "]";
+		return "[" + Utility::to_hex(this->_snes.bus.peek_v(pc), Utility::AsmPrefix) + "]";
 	}
 
-	std::string CPUDebug::_getAbsoluteIndexByXValue(uint24_t pc)
+	std::string CPUDebug::_getAbsoluteIndexByXValue(uint24_t pc) const
 	{
-		uint24_t value = this->_bus->read(pc, true) + (this->_bus->read(pc + 1, true) << 8u);
+		uint24_t value = this->_snes.bus.peek_v(pc) + (this->_snes.bus.peek_v(pc + 1) << 8u);
 		return Utility::to_hex(value, Utility::HexString::AsmPrefix) + ", x";
 	}
 
-	std::string CPUDebug::_getAbsoluteIndexByYValue(uint24_t pc)
+	std::string CPUDebug::_getAbsoluteIndexByYValue(uint24_t pc) const
 	{
-		uint24_t value = this->_bus->read(pc, true) + (this->_bus->read(pc + 1, true) << 8u);
+		uint24_t value = this->_snes.bus.peek_v(pc) + (this->_snes.bus.peek_v(pc + 1) << 8u);
 		return Utility::to_hex(value, Utility::HexString::AsmPrefix) + ", y";
 	}
 
-	std::string CPUDebug::_getAbsoluteIndexByXLongValue(uint24_t pc)
+	std::string CPUDebug::_getAbsoluteIndexByXLongValue(uint24_t pc) const
 	{
-		unsigned value = this->_bus->read(pc++, true);
-		value += this->_bus->read(pc++, true) << 8u;
-		value += this->_bus->read(pc, true) << 16u;
+		unsigned value = this->_snes.bus.peek_v(pc++);
+		value += this->_snes.bus.peek_v(pc++) << 8u;
+		value += this->_snes.bus.peek_v(pc) << 16u;
 
 		return Utility::to_hex(value, Utility::HexString::AsmPrefix) + ", x";
 	}
 
-	std::string CPUDebug::_getDirectIndexedByXIndirectValue(uint24_t pc)
+	std::string CPUDebug::_getDirectIndexedByXIndirectValue(uint24_t pc) const
 	{
-		unsigned value = this->_bus->read(pc, true);
+		unsigned value = this->_snes.bus.peek_v(pc);
 
 		std::stringstream ss;
 		ss << "($" << std::hex << value << ", x)";
 		return ss.str();
 	}
 
-	std::string CPUDebug::_getDirectIndirectIndexedByYValue(uint24_t pc)
+	std::string CPUDebug::_getDirectIndirectIndexedByYValue(uint24_t pc) const
 	{
-		unsigned value = this->_bus->read(pc, true);
+		unsigned value = this->_snes.bus.peek_v(pc);
 
 		std::stringstream ss;
 		ss << "($" << std::hex << value << "), y";
 		return ss.str();
 	}
 
-	std::string CPUDebug::_getDirectIndirectIndexedByYLongValue(uint24_t pc)
+	std::string CPUDebug::_getDirectIndirectIndexedByYLongValue(uint24_t pc) const
 	{
-		unsigned value = this->_bus->read(pc, true);
+		unsigned value = this->_snes.bus.peek_v(pc);
 
 		std::stringstream ss;
 		ss << "[$" << std::hex << value << "], y";
 		return ss.str();
 	}
 
-	std::string CPUDebug::_getStackRelativeValue(uint24_t pc)
+	std::string CPUDebug::_getStackRelativeValue(uint24_t pc) const
 	{
-		return Utility::to_hex(this->_bus->read(pc, true), Utility::AsmPrefix) + ", s";
+		return Utility::to_hex(this->_snes.bus.peek_v(pc), Utility::AsmPrefix) + ", s";
 	}
 
-	std::string CPUDebug::_getStackRelativeIndirectIndexedByYValue(uint24_t pc)
+	std::string CPUDebug::_getStackRelativeIndirectIndexedByYValue(uint24_t pc) const
 	{
-		return "(" + Utility::to_hex(this->_bus->read(pc, true), Utility::AsmPrefix) + ", s), y";
+		return "(" + Utility::to_hex(this->_snes.bus.peek_v(pc), Utility::AsmPrefix) + ", s), y";
 	}
 
-	std::string CPUDebug::_getAbsoluteIndirectValue(uint24_t pc)
+	std::string CPUDebug::_getAbsoluteIndirectValue(uint24_t pc) const
 	{
-		uint24_t value = this->_bus->read(pc, true) + (this->_bus->read(pc + 1, true) << 8u);
+		uint24_t value = this->_snes.bus.peek_v(pc) + (this->_snes.bus.peek_v(pc + 1) << 8u);
 		return "(" + Utility::to_hex(value, Utility::HexString::AsmPrefix) + ")";
 	}
 
-	std::string CPUDebug::_getAbsoluteIndirectLongValue(uint24_t pc)
+	std::string CPUDebug::_getAbsoluteIndirectLongValue(uint24_t pc) const
 	{
-		unsigned value = this->_bus->read(pc++, true);
-		value += this->_bus->read(pc++, true) << 8u;
-		value += this->_bus->read(pc, true) << 16u;
+		unsigned value = this->_snes.bus.peek_v(pc++);
+		value += this->_snes.bus.peek_v(pc++) << 8u;
+		value += this->_snes.bus.peek_v(pc) << 16u;
 
 		return "(" + Utility::to_hex(value, Utility::HexString::AsmPrefix) + ")";
 	}
 
-	std::string CPUDebug::_getAbsoluteIndirectIndexedByXValue(uint24_t pc)
+	std::string CPUDebug::_getAbsoluteIndirectIndexedByXValue(uint24_t pc) const
 	{
-		uint24_t value = this->_bus->read(pc, true) + (this->_bus->read(pc + 1, true) << 8u);
+		uint24_t value = this->_snes.bus.peek_v(pc) + (this->_snes.bus.peek_v(pc + 1) << 8u);
 		return "(" + Utility::to_hex(value, Utility::HexString::AsmPrefix) + ", x)";
 	}
-}
+}// namespace ComSquare::Debugger

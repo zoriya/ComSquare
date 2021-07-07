@@ -6,7 +6,7 @@
 #include "Utility/Utility.hpp"
 #include "WlaDx.hpp"
 
-namespace ComSquare::Debugger
+namespace ComSquare::Debugger::CPU
 {
 	std::vector<Label> WlaDx::parse(std::ifstream &symbolFile)
 	{
@@ -16,6 +16,7 @@ namespace ComSquare::Debugger
 		std::smatch match;
 		std::regex re(R"(\[(\S+)\])");
 
+		return ret;
 		while (symbolFile) {
 			if (line.empty()) {
 				std::getline(symbolFile, line);
