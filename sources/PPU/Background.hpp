@@ -7,6 +7,7 @@
 #include <stdint-gcc.h>
 #include <array>
 #include <vector>
+#include <iostream>
 #include "../Models/Vector2.hpp"
 #include "TileRenderer.hpp"
 #include "../Ram/Ram.hpp"
@@ -127,7 +128,7 @@ namespace ComSquare::PPU
 					}
 					pixelLevel = backgroundSrc.isPriorityPixel(i, j) ? levelHigh : levelLow;
 
-					if (pixelLevel > pixelDestinationLevelMap[i][j]) {
+					if (pixelLevel >= pixelDestinationLevelMap[i][j]) {
 						bufferDest[i][j] = pixel;
 						pixelDestinationLevelMap[i][j] = pixelLevel;
 					}
@@ -136,6 +137,7 @@ namespace ComSquare::PPU
 				j = 0;
 				i++;
 			});
+
 		}
 
 		//! @brief ctor

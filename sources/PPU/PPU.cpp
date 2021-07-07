@@ -23,20 +23,16 @@ namespace ComSquare::PPU
 		_renderer(renderer),
 		_backgrounds{
 			Background(*this, 1, false),
-			//Background(*this, 1, true),
 			Background(*this, 2, false),
-			//Background(*this, 2, true),
 			Background(*this, 3, false),
-			//Background(*this, 3, true),
 			Background(*this, 4, false),
-			//Background(*this, 4, true)
 		},
 		_mainScreen({{{0}}}),
 		_subScreen({{{0}}})
 	{
 		this->_registers._isLowByte = true;
 
-//		Utils::Debug::populateEnvironment(*this, 1);
+		Utils::Debug::populateEnvironment(*this, 1);
 	}
 
 	uint8_t PPU::read(uint24_t addr)
@@ -111,9 +107,9 @@ namespace ComSquare::PPU
 		case PpuRegisters::bgmode:
 			this->_registers._bgmode.raw = data;
 			// update backgrounds
-			for (int i = 0; i < 8; i++) {
-				this->_backgrounds[i].setBpp(this->getBPP((i / 2) + 1));
-				this->_backgrounds[i].setCharacterSize(this->getCharacterSize((i / 2) + 1));
+			for (int i = 0; i < 4; i++) {
+				this->_backgrounds[i].setBpp(this->getBPP(i + 1));
+				this->_backgrounds[i].setCharacterSize(this->getCharacterSize(i + 1));
 			}
 			break;
 		case PpuRegisters::mosaic:
@@ -127,14 +123,14 @@ namespace ComSquare::PPU
 			// update background tilemap address
 			this->_backgrounds[addr - PpuRegisters::bg1sc].setTileMapStartAddress(
 				this->getTileMapStartAddress(addr - PpuRegisters::bg1sc + 1));
-			this->_backgrounds[addr - PpuRegisters::bg1sc + 1].setTileMapStartAddress(
-				this->getTileMapStartAddress(addr - PpuRegisters::bg1sc + 1));
+			//this->_backgrounds[addr - PpuRegisters::bg1sc + 1].setTileMapStartAddress(
+			//	this->getTileMapStartAddress(addr - PpuRegisters::bg1sc + 1));
 			this->_backgrounds[addr - PpuRegisters::bg1sc].setTileMapMirroring(
 				{static_cast<bool>(this->_registers._bgsc[addr - PpuRegisters::bg1sc].tilemapHorizontalMirroring),
 				 static_cast<bool>(this->_registers._bgsc[addr - PpuRegisters::bg1sc].tilemapVerticalMirroring)});
-			this->_backgrounds[addr - PpuRegisters::bg1sc + 1].setTileMapMirroring(
-				{static_cast<bool>(this->_registers._bgsc[addr - PpuRegisters::bg1sc].tilemapHorizontalMirroring),
-				 static_cast<bool>(this->_registers._bgsc[addr - PpuRegisters::bg1sc].tilemapVerticalMirroring)});
+			//this->_backgrounds[addr - PpuRegisters::bg1sc + 1].setTileMapMirroring(
+			//	{static_cast<bool>(this->_registers._bgsc[addr - PpuRegisters::bg1sc].tilemapHorizontalMirroring),
+			//	 static_cast<bool>(this->_registers._bgsc[addr - PpuRegisters::bg1sc].tilemapVerticalMirroring)});
 			break;
 		case PpuRegisters::bg12nba:
 		case PpuRegisters::bg34nba:

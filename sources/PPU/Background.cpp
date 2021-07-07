@@ -101,7 +101,7 @@ namespace ComSquare::PPU
 		std::for_each(this->_tileBuffer.begin(), this->_tileBuffer.begin() + this->_characterNbPixels.y,
 		              [this, &pixelPosition](const auto &row) {
 			              std::move(row.begin(), row.begin() + this->_characterNbPixels.x,
-			                        this->buffer[pixelPosition.y++].begin() + pixelPosition.x);
+			                        this->buffer[pixelPosition.x++].begin() + pixelPosition.y);
 		              });
 	}
 
@@ -118,12 +118,12 @@ namespace ComSquare::PPU
 			this->_drawTile(tileMapValue, {(offset.x * NbCharacterWidth) + pos.x,
 			                               (offset.y * NbCharacterHeight) + pos.y});
 			vramAddress += 2;
-			if (pos.x % 31 == 0 && pos.x) {
-				pos.y++;
-				pos.x = 0;
+			if (pos.y % 31 == 0 && pos.y) {
+				pos.x++;
+				pos.y = 0;
 			}
 			else {
-				pos.x++;
+				pos.y++;
 			}
 		}
 	}

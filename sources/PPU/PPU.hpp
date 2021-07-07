@@ -33,13 +33,9 @@ namespace ComSquare::PPU
 	//! @brief Enum to access more easily the ppu background array
 	enum BgName {
 		bg1NoPriority = 0,
-		bg1Priority,
 		bg2NoPriority = 1,
-		bg2Priority,
 		bg3NoPriority = 2,
-		bg3Priority,
-		bg4NoPriority = 3,
-		bg4Priority
+		bg4NoPriority = 3
 	};
 
 	enum PpuRegisters {
