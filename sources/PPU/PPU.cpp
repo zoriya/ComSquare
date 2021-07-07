@@ -32,7 +32,7 @@ namespace ComSquare::PPU
 	{
 		this->_registers._isLowByte = true;
 
-		Utils::Debug::populateEnvironment(*this, 1);
+		Utils::Debug::populateEnvironment(*this, 0);
 	}
 
 	uint8_t PPU::read(uint24_t addr)
@@ -309,20 +309,33 @@ namespace ComSquare::PPU
 		this->renderMainAndSubScreen();
 		Utils::addBuffer(this->_screen, this->_subScreen);
 		Utils::addBuffer(this->_screen, this->_mainScreen);
-		//this->_backgrounds[2].renderBackground();
-		//add_buffer(this->_screen, this->_backgrounds[2].buffer);
+
+		int i = 0;
+		int j = 0;
+		std::for_each(this->_screen.begin(), this->_screen.end(), [this, &i, &j](const auto &row) {
+			std::for_each(row.begin(), row.end(), [this, &i, &j](const auto &pixel) {
+				this->_renderer.putPixel(i, j++, pixel);
+			});
+			j = 0;
+			i++;
+		});
+
+
+		/*
+		 // loop used for debug
 		for (unsigned long i = 0; i < this->_screen.size(); i++) {
 			for (unsigned long j = 0; j < this->_screen[i].size(); j++) {
-				this->_renderer.putPixel(i + 200, j, this->_screen[i][j]);
+				this->_renderer.putPixel(i, j, this->_screen[i][j]);
 			}
-			if (i > 500)
-				break;
+			//if (i > 500)
+			//	break;
 		}
+		 */
 		this->_renderer.drawScreen();
-		for (auto &i : this->_mainScreen)
-			i.fill(0XFF);
-		for (auto &i : this->_subScreen)
-			i.fill(0XFF);
+		for (auto &row : this->_mainScreen)
+			row.fill(0XFF);
+		for (auto &row : this->_subScreen)
+			row.fill(0XFF);
 	}
 
 	std::string PPU::getName() const
@@ -649,7 +662,7 @@ namespace ComSquare::PPU
 			// Not implemented
 			throw std::runtime_error("not implemented");
 		default:
-			break;
+			throw std::runtime_error("Bg mode not implemented or commented (bg nb " + std::to_string(this->_registers._bgmode.bgMode) + ")");
 		}
 	}
 
@@ -658,9 +671,7 @@ namespace ComSquare::PPU
 		if (this->_registers._t[0].raw & (1U << (bg.getBgNumber() - 1U))) {
 			Background::mergeBackgroundBuffer(this->_mainScreen, this->_mainScreenLevelMap, bg, level.x, level.y);
 		}
-		//	Utils::addBuffer(this->_mainScreen, bg.buffer);
 		if (this->_registers._t[1].raw & (1U << (bg.getBgNumber() - 1U))) {
-			//Utils::addBuffer(this->_subScreen, bg.buffer);
 			Background::mergeBackgroundBuffer(this->_subScreen, this->_subScreenLevelMap, bg, level.x, level.y);
 		}
 	}

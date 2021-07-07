@@ -127,10 +127,11 @@ namespace ComSquare::PPU
 						return;
 					}
 					pixelLevel = backgroundSrc.isPriorityPixel(i, j) ? levelHigh : levelLow;
+					auto &pixelInitialLevel = pixelDestinationLevelMap[i][j];
 
-					if (pixelLevel >= pixelDestinationLevelMap[i][j]) {
+					if (pixelLevel >= pixelInitialLevel) {
 						bufferDest[i][j] = pixel;
-						pixelDestinationLevelMap[i][j] = pixelLevel;
+						pixelInitialLevel = pixelLevel;
 					}
 					j++;
 				});

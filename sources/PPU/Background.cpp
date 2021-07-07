@@ -86,8 +86,6 @@ namespace ComSquare::PPU
 
 		tileData.raw = data;
 
-		//if (tileData.tilePriority != this->_priority)
-		//	return;
 		this->tilesPriority[indexOffset.y][indexOffset.x] = tileData.tilePriority;
 		this->_drawTileFromMemoryToTileBuffer(tileData);
 

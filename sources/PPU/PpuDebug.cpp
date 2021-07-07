@@ -3833,31 +3833,24 @@ namespace ComSquare::PPU::Utils::Debug
 		//registers tic tac toe
 		ppu._registers._bgmode.bgMode = 0;
 		ppu._backgrounds[0].setBpp(ppu.getBPP(1));
-		ppu._backgrounds[1].setBpp(ppu.getBPP(1));
-		ppu._backgrounds[2].setBpp(ppu.getBPP(2));
-		ppu._backgrounds[3].setBpp(ppu.getBPP(2));
-		ppu._backgrounds[4].setBpp(ppu.getBPP(3));
-		ppu._backgrounds[5].setBpp(ppu.getBPP(3));
-		ppu._backgrounds[6].setBpp(ppu.getBPP(4));
-		ppu._backgrounds[7].setBpp(ppu.getBPP(4));
+		ppu._backgrounds[1].setBpp(ppu.getBPP(2));
+		ppu._backgrounds[2].setBpp(ppu.getBPP(3));
+		ppu._backgrounds[3].setBpp(ppu.getBPP(4));
 
 		ppu._registers._bgmode.characterSizeBg1 = true;
 		ppu._registers._bgmode.characterSizeBg2 = true;
 		ppu._backgrounds[0].setCharacterSize(ppu.getCharacterSize(1));
-		ppu._backgrounds[1].setCharacterSize(ppu.getCharacterSize(1));
-		ppu._backgrounds[2].setCharacterSize(ppu.getCharacterSize(2));
-		ppu._backgrounds[3].setCharacterSize(ppu.getCharacterSize(2));
-		ppu._backgrounds[4].setCharacterSize(ppu.getCharacterSize(3));
-		ppu._backgrounds[5].setCharacterSize(ppu.getCharacterSize(3));
-		ppu._backgrounds[6].setCharacterSize(ppu.getCharacterSize(4));
-		ppu._backgrounds[7].setCharacterSize(ppu.getCharacterSize(4));
+		ppu._backgrounds[1].setCharacterSize(ppu.getCharacterSize(2));
+		ppu._backgrounds[2].setCharacterSize(ppu.getCharacterSize(3));
+		ppu._backgrounds[3].setCharacterSize(ppu.getCharacterSize(4));
+
 
 		ppu._registers._bgsc[0].tilemapAddress = 0x4000 >> 10U;
 		ppu._registers._bgsc[1].tilemapAddress = 0x6000 >> 10U;
 		ppu._backgrounds[0].setTileMapStartAddress(ppu.getTileMapStartAddress(1));
-		ppu._backgrounds[1].setTileMapStartAddress(ppu.getTileMapStartAddress(1));
-		ppu._backgrounds[2].setTileMapStartAddress(ppu.getTileMapStartAddress(2));
-		ppu._backgrounds[3].setTileMapStartAddress(ppu.getTileMapStartAddress(2));
+		ppu._backgrounds[1].setTileMapStartAddress(ppu.getTileMapStartAddress(2));
+		ppu._backgrounds[2].setTileMapStartAddress(ppu.getTileMapStartAddress(3));
+		ppu._backgrounds[3].setTileMapStartAddress(ppu.getTileMapStartAddress(4));
 
 		//ppu._registers._bgofs[2].raw = 0x03E0;
 		//ppu._registers._bgofs[3].raw = 0x03DF;
