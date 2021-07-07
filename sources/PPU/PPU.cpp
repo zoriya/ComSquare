@@ -32,7 +32,7 @@ namespace ComSquare::PPU
 	{
 		this->_registers._isLowByte = true;
 
-		Utils::Debug::populateEnvironment(*this, 0);
+		//Utils::Debug::populateEnvironment(*this, 0);
 	}
 
 	uint8_t PPU::read(uint24_t addr)
@@ -123,14 +123,9 @@ namespace ComSquare::PPU
 			// update background tilemap address
 			this->_backgrounds[addr - PpuRegisters::bg1sc].setTileMapStartAddress(
 				this->getTileMapStartAddress(addr - PpuRegisters::bg1sc + 1));
-			//this->_backgrounds[addr - PpuRegisters::bg1sc + 1].setTileMapStartAddress(
-			//	this->getTileMapStartAddress(addr - PpuRegisters::bg1sc + 1));
 			this->_backgrounds[addr - PpuRegisters::bg1sc].setTileMapMirroring(
 				{static_cast<bool>(this->_registers._bgsc[addr - PpuRegisters::bg1sc].tilemapHorizontalMirroring),
 				 static_cast<bool>(this->_registers._bgsc[addr - PpuRegisters::bg1sc].tilemapVerticalMirroring)});
-			//this->_backgrounds[addr - PpuRegisters::bg1sc + 1].setTileMapMirroring(
-			//	{static_cast<bool>(this->_registers._bgsc[addr - PpuRegisters::bg1sc].tilemapHorizontalMirroring),
-			//	 static_cast<bool>(this->_registers._bgsc[addr - PpuRegisters::bg1sc].tilemapVerticalMirroring)});
 			break;
 		case PpuRegisters::bg12nba:
 		case PpuRegisters::bg34nba:
