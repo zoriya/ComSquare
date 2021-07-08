@@ -6,6 +6,7 @@
 #include "SNES.hpp"
 #include "Utility/Utility.hpp"
 #include "Exceptions/InvalidAction.hpp"
+#include <QScrollBar>
 
 namespace ComSquare::Debugger
 {
@@ -26,6 +27,11 @@ namespace ComSquare::Debugger
 		this->_ui.log->horizontalHeader()->setSectionsMovable(true);
 		for (int i = 0; i < this->_model.column; i++)
 			this->_ui.log->setColumnWidth(i, this->_ui.log->width());
+
+		QMainWindow::connect(&this->_model, &BusLogModel::rowsInserted, [this] {
+			if (this->_autoScroll)
+				this->_ui.log->scrollToBottom();
+		});
 
 		QMainWindow::connect(this->_ui.fromAPU, &QCheckBox::toggled, [this](bool checked) {
 			this->_proxy.filters[0].apu = checked;
@@ -106,6 +112,10 @@ namespace ComSquare::Debugger
 		QMainWindow::connect(this->_ui.toCG, &QCheckBox::toggled, [this](bool checked) {
 			this->_proxy.filters[1].cgram = checked;
 			this->_proxy.refresh();
+		});
+
+		QMainWindow::connect(this->_ui.autoscroll, &QPushButton::pressed, [this]() {
+			this->_autoScroll = !this->_autoScroll;
 		});
 
 		QMainWindow::connect(this->_ui.clearBtn, &QPushButton::pressed, [this]() {

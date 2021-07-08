@@ -38,7 +38,9 @@ namespace ComSquare
 			return;
 		}
 
-		unsigned cycleCount = this->cpu.update(0x0C);
+		unsigned cycleCount = this->cpu.update(0xFF);
+		if (cycleCount == 0)
+			cycleCount = 0xFF;
 		this->ppu.update(cycleCount);
 		this->apu.update(cycleCount);
 	}

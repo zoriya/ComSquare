@@ -87,10 +87,10 @@ namespace ComSquare::Debugger::CPU
 	unsigned CPUDebug::update()
 	{
 		try {
-			unsigned cycles = this->_cpu.runDMA(INT_MAX);
+			unsigned cycles = 0;
 
-			if (this->_isPaused)
-				return 0xFF;
+			if (this->_isPaused || this->_cpu._isStopped)
+				return 0;
 
 			for (int i = 0; i < 0xFF; i++) {
 				auto breakpoint = std::find_if(this->breakpoints.begin(), this->breakpoints.end(), [this](auto &brk) {
@@ -104,6 +104,7 @@ namespace ComSquare::Debugger::CPU
 				}
 				this->_logInstruction();
 				cycles += this->_cpu.executeInstruction();
+				cycles += this->_cpu.runDMA(INT_MAX);
 				this->_updateRegistersPanel();
 				if (this->_isStepping) {
 					this->_isStepping = false;
@@ -115,12 +116,12 @@ namespace ComSquare::Debugger::CPU
 		} catch (const DebuggableError &e) {
 			this->pause(true);
 			CPUDebug::showError(e);
-			return 0xFF;
+			return 0;
 		} catch (const std::exception &e) {
 			std::cerr << "An error occurred: " << e.what() << std::endl;
 			QApplication::quit();
 		}
-		return 0xFF;
+		return 0;
 	}
 
 	void CPUDebug::_logInstruction()

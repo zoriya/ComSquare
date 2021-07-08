@@ -209,22 +209,16 @@ namespace ComSquare::CPU
 
 	unsigned CPU::update(unsigned maxCycles)
 	{
-		if (this->isDisabled)
-			return 0xFF;
+		if (this->isDisabled || this->_isStopped)
+			return 0;
 		unsigned cycles = this->runDMA(maxCycles);
 
-		while (cycles < maxCycles) {
-			if (this->_isStopped) {
-				cycles += 1;
-				continue;
-			}
-
+		this->_checkInterrupts();
+		while (cycles < maxCycles && !this->_isWaitingForInterrupt) {
 			this->_checkInterrupts();
-
-			if (!this->_isWaitingForInterrupt)
-				cycles += this->executeInstruction();
-			else
-				return 0xFF;
+			cycles += this->executeInstruction();
+			if (maxCycles > cycles)
+				cycles += this->runDMA(maxCycles - cycles);
 		}
 		return cycles;
 	}

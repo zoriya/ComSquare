@@ -385,6 +385,19 @@
            <item row="1" column="0">
             <widget class="QWidget" name="widget_2" native="true"/>
            </item>
+           <item row="0" column="0">
+            <widget class="QCheckBox" name="autoscroll">
+             <property name="layoutDirection">
+              <enum>Qt::LeftToRight</enum>
+             </property>
+             <property name="text">
+              <string>Autoscroll</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
           </layout>
          </widget>
         </item>

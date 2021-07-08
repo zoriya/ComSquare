@@ -118,6 +118,8 @@ namespace ComSquare::Debugger
 		BusLogModel _model;
 		//! @brief A QT proxy to filter the logs.
 		BusLoggerProxy _proxy;
+		//! @brief True if the table should autoscroll. False otherwise.
+		bool _autoScroll = true;
 	public:
 		explicit MemoryBusDebug(SNES &snes, Memory::IMemoryBus &bus);
 		MemoryBusDebug(const MemoryBusDebug &) = delete;
