@@ -395,6 +395,7 @@
    <addaction name="actionPause"/>
    <addaction name="actionNext"/>
    <addaction name="actionStep"/>
+   <addaction name="actionBreakpoint"/>
   </widget>
   <action name="actionPause">
    <property name="icon">
@@ -439,6 +440,21 @@
    </property>
    <property name="shortcut">
     <string>N</string>
+   </property>
+  </action>
+  <action name="actionBreakpoint">
+   <property name="icon">
+    <iconset resource="../resources/appResources.qrc">
+     <normaloff>:/resources/icons/breakpoint.svg</normaloff>:/resources/icons/breakpoint.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Breakpoint</string>
+   </property>
+   <property name="toolTip">
+    <string>Create a new custom breakpoint</string>
+   </property>
+   <property name="shortcut">
+    <string>B</string>
    </property>
   </action>
  </widget>

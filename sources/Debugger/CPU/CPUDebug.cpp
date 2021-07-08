@@ -6,6 +6,7 @@
 #include "SNES.hpp"
 #include "Exceptions/InvalidOpcode.hpp"
 #include "Utility/Utility.hpp"
+#include "ui/ui_conditionalBreakpoint.h"
 #include <QMessageBox>
 #include <QPainter>
 #include <QtEvents>
@@ -40,6 +41,7 @@ namespace ComSquare::Debugger::CPU
 		this->_ui.disassembly->horizontalHeader()->setStretchLastSection(true);
 		this->_ui.disassembly->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
 		this->_ui.disassembly->verticalHeader()->setHighlightSections(false);
+		this->_ui.disassembly->verticalHeader()->setContextMenuPolicy(Qt::CustomContextMenu);
 		this->_ui.disassembly->setItemDelegate(&this->_painter);
 
 		this->_ui.stackView->setModel(&this->_stackModel);
@@ -57,8 +59,18 @@ namespace ComSquare::Debugger::CPU
 		QMainWindow::connect(this->_ui.actionPause, &QAction::triggered, this, &CPUDebug::pause);
 		QMainWindow::connect(this->_ui.actionStep, &QAction::triggered, this, &CPUDebug::step);
 		QMainWindow::connect(this->_ui.actionNext, &QAction::triggered, this, &CPUDebug::next);
+		QMainWindow::connect(this->_ui.actionBreakpoint, &QAction::triggered, this, [this] {
+			this->_createConditionalBreakpoint(std::nullopt);
+		});
 		QMainWindow::connect(this->_ui.clear, &QPushButton::released, this, &CPUDebug::clearHistory);
 		QMainWindow::connect(this->_ui.disassembly->verticalHeader(), &QHeaderView::sectionClicked, this, &CPUDebug::toggleBreakpoint);
+
+		QMainWindow::connect(this->_ui.disassembly->verticalHeader(), &QHeaderView::customContextMenuRequested, [this] (const QPoint &pos){
+			int idx = this->_ui.disassembly->verticalHeader()->logicalIndexAt(pos);
+			this->_createConditionalBreakpoint(this->disassembled[idx].address);
+		});
+
+
 		this->_window->show();
 		this->_updateRegistersPanel();
 		this->_updateDisassembly(this->_cpu._registers.pac, 0);
@@ -94,7 +106,9 @@ namespace ComSquare::Debugger::CPU
 
 			for (int i = 0; i < 0xFF; i++) {
 				auto breakpoint = std::find_if(this->breakpoints.begin(), this->breakpoints.end(), [this](auto &brk) {
-					return brk.address == this->_cpu._registers.pac;
+					if (brk.condition.has_value() && !brk.condition.value()(this->_cpu))
+						return false;
+					return brk.address == this->_cpu._registers.pac || brk.address == 0;
 				});
 				if (i != 0 && breakpoint != this->breakpoints.end()) {
 					if (breakpoint->oneTime)
@@ -141,6 +155,44 @@ namespace ComSquare::Debugger::CPU
 		msg.exec();
 	}
 
+	void CPUDebug::_createConditionalBreakpoint(std::optional<uint24_t> address)
+	{
+		QDialog dialog(this->_window);
+		dialog.setWindowModality(Qt::WindowModal);
+		Ui::ConditionalBreakpoint dialogUI;
+		dialogUI.setupUi(&dialog);
+		QFont font = dialogUI.spinBox->font();
+		font.setCapitalization(QFont::AllUppercase);
+		dialogUI.spinBox->setFont(font);
+		dialogUI.spinBox->selectAll();
+		dialogUI.checkBox->setChecked(address.has_value());
+		dialogUI.spinBox->setEnabled(address.has_value());
+		QDialog::connect(dialogUI.checkBox, &QCheckBox::toggled, [&dialogUI] (bool checked) {
+			dialogUI.spinBox->setEnabled(checked);
+		});
+		if (address.has_value())
+			dialogUI.spinBox->setValue(static_cast<int>(address.value()));
+		if (dialog.exec() != QDialog::Accepted)
+			return;
+		uint24_t value = 0;
+		if (dialogUI.checkBox->isChecked())
+			value = std::strtol(dialogUI.spinBox->text().toStdString().c_str() + 1, nullptr, 16);
+		auto condition = this->_parseCondition(dialogUI.condition->text().toStdString());
+		auto existing = std::find_if(this->breakpoints.begin(), this->breakpoints.end(), [value](auto &i) {
+			return i.address == value;
+		});
+		if (existing == this->breakpoints.end() || value == 0)
+			this->breakpoints.push_back({value, false, condition});
+		else
+			existing->condition = condition;
+	}
+
+	std::optional<std::function<bool (ComSquare::CPU::CPU &)>> CPUDebug::_parseCondition(const std::string &condition) // NOLINT(readability-convert-member-functions-to-static)
+	{
+		// TODO implement this.
+		return std::nullopt;
+	}
+
 	void CPUDebug::pause(bool forcePause)
 	{
 		if (forcePause && this->_isPaused)
@@ -164,7 +216,7 @@ namespace ComSquare::Debugger::CPU
 		auto next = std::find_if(this->disassembled.begin(), this->disassembled.end(), [this](auto &i) {
 			return i.address > this->_cpu._registers.pac;
 		});
-		this->breakpoints.push_back({next->address, true});
+		this->breakpoints.push_back({next->address, true, std::nullopt});
 		this->_isPaused = false;
 	}
 
@@ -175,7 +227,7 @@ namespace ComSquare::Debugger::CPU
 			return i.address == instruction.address;
 		});
 		if (existing == this->breakpoints.end())
-			this->breakpoints.push_back({instruction.address, false});
+			this->breakpoints.push_back({instruction.address, false, std::nullopt});
 		else
 			this->breakpoints.erase(existing);
 		this->_ui.disassembly->viewport()->repaint();

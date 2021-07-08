@@ -181,9 +181,11 @@ namespace ComSquare
 		struct Breakpoint
 		{
 			//! @brief The address of the breakpoint
-			uint24_t address;
+			uint24_t address = 0;
 			//! @brief If this is true, the breakpoint will be deleted on first hit and won't be shown on the disassembly view.
-			bool oneTime;
+			bool oneTime = false;
+			//! @brief Conditional breakpoint condition. If the address is set to 0, the break address will be ignored.
+			std::optional<std::function<bool (ComSquare::CPU::CPU &)>> condition;
 		};
 
 		//! @brief Struct representing a label.
@@ -249,6 +251,15 @@ namespace ComSquare
 			                                     DisassemblyContext &ctx) const;
 			//! @brief Update the register's panel (accumulator, stack pointer...)
 			void _updateRegistersPanel();
+
+			//! @brief Open a context menu to allow one to create a conditional breakpoint.
+			//! @param address The address where the breakpoint will related to. If no address is given, the condition will be checked for any address.
+			void _createConditionalBreakpoint(std::optional<uint24_t> address);
+			//! @brief Parse a conditional breakpoint text and return the according function.
+			//! @param condition The condition as a string.
+			//! @throws If the condition is not valid.
+			//! @return The parsed condition or nullopt if the condition is empty.
+			std::optional<std::function<bool (ComSquare::CPU::CPU &)>> _parseCondition(const std::string &condition);
 
 			//! @brief Return a printable string corresponding to the value of a 8 or 16 bits immediate addressing mode.
 			//! @param dual Set this to true if the instruction take 16bits and not 8. (used for the immediate by a when the flag m is not set or the immediate by x if the flag x is not set).

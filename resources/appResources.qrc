@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="resources">
+    <file>icons/breakpoint.svg</file>
     <file>icons/continue.svg</file>
     <file>icons/step.svg</file>
     <file>Logo.png</file>

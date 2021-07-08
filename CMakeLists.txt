@@ -146,6 +146,7 @@ add_executable(comsquare
 	ui/cartridgeView.ui
 	ui/apuView.ui
 	ui/busView.ui
+	ui/conditionalBreakpoint.ui
 	resources/appResources.qrc
 	)
 target_include_directories(comsquare PUBLIC ${PROJECT_BINARY_DIR})
