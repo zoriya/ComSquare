@@ -2,7 +2,7 @@
 // Created by Melefo on 24/02/2020.
 //
 
-#include "../Models/Ints.hpp"
+#include "Models/Ints.hpp"
 #include "APU.hpp"
 
 namespace ComSquare::APU

@@ -3,17 +3,16 @@
 //
 
 #include "DSP.hpp"
-#include "../APU.hpp"
-#include "../../Exceptions/InvalidAddress.hpp"
+#include "APU/APU.hpp"
+#include "Exceptions/InvalidAddress.hpp"
 
 namespace ComSquare::APU::DSP
 {
-	DSP::DSP(Renderer::IRenderer &renderer,
-			 MemoryMap &map)
+	DSP::DSP(Renderer::IRenderer &renderer, MemoryMap &map)
 		: _state(this->_soundBuffer, this->_soundBuffer.size() / 2),
 		  _map(map),
 		  _renderer(renderer)
-	{ }
+	{}
 
 	uint8_t DSP::read(uint24_t addr) const
 	{
@@ -568,196 +567,197 @@ namespace ComSquare::APU::DSP
 			throw InvalidAddress("DSP Registers write", addr);
 		}
 	}
+
 	uint8_t DSP::_readRAM(uint24_t addr)
 	{
 		switch (addr) {
-			case 0x0000 ... 0x00EF:
-				return this->_map.Page0.read(addr);
-			case 0x0100 ... 0x01FF:
-				return this->_map.Page1.read(addr - 0x0100);
-			case 0x0200 ... 0xFFBF:
-				return this->_map.Memory.read(addr - 0x200);
-			case 0xFFC0 ... 0xFFFF:
-				return this->_map.IPL.read(addr - 0xFFC0);
-			default:
-				throw InvalidAddress("DSP read", addr);
+		case 0x0000 ... 0x00EF:
+			return this->_map.Page0.read(addr);
+		case 0x0100 ... 0x01FF:
+			return this->_map.Page1.read(addr - 0x0100);
+		case 0x0200 ... 0xFFBF:
+			return this->_map.Memory.read(addr - 0x200);
+		case 0xFFC0 ... 0xFFFF:
+			return this->_map.IPL.read(addr - 0xFFC0);
+		default:
+			throw InvalidAddress("DSP read", addr);
 		}
 	}
 
 	void DSP::_writeRAM(uint24_t addr, uint8_t data)
 	{
 		switch (addr) {
-			case 0x0000 ... 0x00EF:
-				this->_map.Page0.write(addr, data);
-				break;
-			case 0x0100 ... 0x01FF:
-				this->_map.Page1.write(addr - 0x0100, data);
-				break;
-			case 0x0200 ... 0xFFBF:
-				this->_map.Memory.write(addr - 0x200, data);
-				break;
-			case 0xFFC0 ... 0xFFFF:
-				this->_map.IPL.write(addr - 0xFFC0, data);
-				break;
-			default:
-				throw InvalidAddress("DSP write", addr);
+		case 0x0000 ... 0x00EF:
+			this->_map.Page0.write(addr, data);
+			break;
+		case 0x0100 ... 0x01FF:
+			this->_map.Page1.write(addr - 0x0100, data);
+			break;
+		case 0x0200 ... 0xFFBF:
+			this->_map.Memory.write(addr - 0x200, data);
+			break;
+		case 0xFFC0 ... 0xFFFF:
+			this->_map.IPL.write(addr - 0xFFC0, data);
+			break;
+		default:
+			throw InvalidAddress("DSP write", addr);
 		}
 	}
 
 	void DSP::update()
 	{
 		switch (this->_state.voice) {
-			case 0:
-				this->voice5(this->_voices[0]);
-				this->voice2(this->_voices[1]);
-				break;
-			case 1:
-				this->voice6(this->_voices[0]);
-				this->voice3(this->_voices[1]);
-				break;
-			case 2:
-				this->voice7(this->_voices[0]);
-				this->voice4(this->_voices[1]);
-				this->voice1(this->_voices[3]);
-				break;
-			case 3:
-				this->voice8(this->_voices[0]);
-				this->voice5(this->_voices[1]);
-				this->voice2(this->_voices[2]);
-				break;
-			case 4:
-				this->voice9(this->_voices[0]);
-				this->voice6(this->_voices[1]);
-				this->voice3(this->_voices[2]);
-				break;
-			case 5:
-				this->voice7(this->_voices[1]);
-				this->voice4(this->_voices[2]);
-				this->voice1(this->_voices[4]);
-				break;
-			case 6:
-				this->voice8(this->_voices[1]);
-				this->voice5(this->_voices[2]);
-				this->voice2(this->_voices[3]);
-				break;
-			case 7:
-				this->voice9(this->_voices[1]);
-				this->voice6(this->_voices[2]);
-				this->voice3(this->_voices[3]);
-				break;
-			case 8:
-				this->voice7(this->_voices[2]);
-				this->voice4(this->_voices[3]);
-				this->voice1(this->_voices[5]);
-				break;
-			case 9:
-				this->voice8(this->_voices[2]);
-				this->voice5(this->_voices[3]);
-				this->voice2(this->_voices[4]);
-				break;
-			case 10:
-				this->voice9(this->_voices[2]);
-				this->voice6(this->_voices[3]);
-				this->voice3(this->_voices[4]);
-				break;
-			case 11:
-				this->voice7(this->_voices[3]);
-				this->voice4(this->_voices[4]);
-				this->voice1(this->_voices[6]);
-				break;
-			case 12:
-				this->voice8(this->_voices[3]);
-				this->voice5(this->_voices[4]);
-				this->voice2(this->_voices[5]);
-				break;
-			case 13:
-				this->voice9(this->_voices[3]);
-				this->voice6(this->_voices[4]);
-				this->voice3(this->_voices[5]);
-				break;
-			case 14:
-				this->voice7(this->_voices[4]);
-				this->voice4(this->_voices[5]);
-				this->voice1(this->_voices[7]);
-				break;
-			case 15:
-				this->voice8(this->_voices[4]);
-				this->voice5(this->_voices[5]);
-				this->voice2(this->_voices[6]);
-				break;
-			case 16:
-				this->voice9(this->_voices[4]);
-				this->voice6(this->_voices[5]);
-				this->voice3(this->_voices[6]);
-				break;
-			case 17:
-				this->voice1(this->_voices[0]);
-				this->voice7(this->_voices[5]);
-				this->voice4(this->_voices[6]);
-				break;
-			case 18:
-				this->voice8(this->_voices[5]);
-				this->voice5(this->_voices[6]);
-				this->voice2(this->_voices[7]);
-				break;
-			case 19:
-				this->voice9(this->_voices[5]);
-				this->voice6(this->_voices[6]);
-				this->voice3(this->_voices[7]);
-				break;
-			case 20:
-				this->voice1(this->_voices[1]);
-				this->voice7(this->_voices[6]);
-				this->voice4(this->_voices[7]);
-				break;
-			case 21:
-				this->voice8(this->_voices[6]);
-				this->voice5(this->_voices[7]);
-				this->voice2(this->_voices[0]);
-				break;
-			case 22:
-				this->voice3a(this->_voices[0]);
-				this->voice9(this->_voices[6]);
-				this->voice6(this->_voices[7]);
-				echo22();
-				break;
-			case 23:
-				this->voice7(this->_voices[7]);
-				echo23();
-				break;
-			case 24:
-				this->voice8(this->_voices[7]);
-				echo24();
-				break;
-			case 25:
-				this->voice3b(this->_voices[0]);
-				this->voice9(this->_voices[7]);
-				echo25();
-				break;
-			case 26:
-				echo26();
-				break;
-			case 27:
-				this->misc27();
-				this->echo27();
-				break;
-			case 28:
-				this->misc28();
-				this->echo28();
-				break;
-			case 29:
-				this->misc29();
-				this->echo29();
-				break;
-			case 30:
-				this->misc30();
-				this->voice3c(this->_voices[0]);
-				this->echo30();
-				break;
-			case 31:
-				this->voice4(this->_voices[0]);
-				this->voice1(this->_voices[2]);
-				break;
+		case 0:
+			this->voice5(this->_voices[0]);
+			this->voice2(this->_voices[1]);
+			break;
+		case 1:
+			this->voice6(this->_voices[0]);
+			this->voice3(this->_voices[1]);
+			break;
+		case 2:
+			this->voice7(this->_voices[0]);
+			this->voice4(this->_voices[1]);
+			this->voice1(this->_voices[3]);
+			break;
+		case 3:
+			this->voice8(this->_voices[0]);
+			this->voice5(this->_voices[1]);
+			this->voice2(this->_voices[2]);
+			break;
+		case 4:
+			this->voice9(this->_voices[0]);
+			this->voice6(this->_voices[1]);
+			this->voice3(this->_voices[2]);
+			break;
+		case 5:
+			this->voice7(this->_voices[1]);
+			this->voice4(this->_voices[2]);
+			this->voice1(this->_voices[4]);
+			break;
+		case 6:
+			this->voice8(this->_voices[1]);
+			this->voice5(this->_voices[2]);
+			this->voice2(this->_voices[3]);
+			break;
+		case 7:
+			this->voice9(this->_voices[1]);
+			this->voice6(this->_voices[2]);
+			this->voice3(this->_voices[3]);
+			break;
+		case 8:
+			this->voice7(this->_voices[2]);
+			this->voice4(this->_voices[3]);
+			this->voice1(this->_voices[5]);
+			break;
+		case 9:
+			this->voice8(this->_voices[2]);
+			this->voice5(this->_voices[3]);
+			this->voice2(this->_voices[4]);
+			break;
+		case 10:
+			this->voice9(this->_voices[2]);
+			this->voice6(this->_voices[3]);
+			this->voice3(this->_voices[4]);
+			break;
+		case 11:
+			this->voice7(this->_voices[3]);
+			this->voice4(this->_voices[4]);
+			this->voice1(this->_voices[6]);
+			break;
+		case 12:
+			this->voice8(this->_voices[3]);
+			this->voice5(this->_voices[4]);
+			this->voice2(this->_voices[5]);
+			break;
+		case 13:
+			this->voice9(this->_voices[3]);
+			this->voice6(this->_voices[4]);
+			this->voice3(this->_voices[5]);
+			break;
+		case 14:
+			this->voice7(this->_voices[4]);
+			this->voice4(this->_voices[5]);
+			this->voice1(this->_voices[7]);
+			break;
+		case 15:
+			this->voice8(this->_voices[4]);
+			this->voice5(this->_voices[5]);
+			this->voice2(this->_voices[6]);
+			break;
+		case 16:
+			this->voice9(this->_voices[4]);
+			this->voice6(this->_voices[5]);
+			this->voice3(this->_voices[6]);
+			break;
+		case 17:
+			this->voice1(this->_voices[0]);
+			this->voice7(this->_voices[5]);
+			this->voice4(this->_voices[6]);
+			break;
+		case 18:
+			this->voice8(this->_voices[5]);
+			this->voice5(this->_voices[6]);
+			this->voice2(this->_voices[7]);
+			break;
+		case 19:
+			this->voice9(this->_voices[5]);
+			this->voice6(this->_voices[6]);
+			this->voice3(this->_voices[7]);
+			break;
+		case 20:
+			this->voice1(this->_voices[1]);
+			this->voice7(this->_voices[6]);
+			this->voice4(this->_voices[7]);
+			break;
+		case 21:
+			this->voice8(this->_voices[6]);
+			this->voice5(this->_voices[7]);
+			this->voice2(this->_voices[0]);
+			break;
+		case 22:
+			this->voice3a(this->_voices[0]);
+			this->voice9(this->_voices[6]);
+			this->voice6(this->_voices[7]);
+			echo22();
+			break;
+		case 23:
+			this->voice7(this->_voices[7]);
+			echo23();
+			break;
+		case 24:
+			this->voice8(this->_voices[7]);
+			echo24();
+			break;
+		case 25:
+			this->voice3b(this->_voices[0]);
+			this->voice9(this->_voices[7]);
+			echo25();
+			break;
+		case 26:
+			echo26();
+			break;
+		case 27:
+			this->misc27();
+			this->echo27();
+			break;
+		case 28:
+			this->misc28();
+			this->echo28();
+			break;
+		case 29:
+			this->misc29();
+			this->echo29();
+			break;
+		case 30:
+			this->misc30();
+			this->voice3c(this->_voices[0]);
+			this->echo30();
+			break;
+		case 31:
+			this->voice4(this->_voices[0]);
+			this->voice1(this->_voices[2]);
+			break;
 		}
 		this->_state.voice = (this->_state.voice + 1) % 32;
 		int32_t samples = this->getSamplesCount();

@@ -2,7 +2,7 @@
 // Created by anonymus-raccoon on 2/13/20.
 //
 
-#include "../CPU.hpp"
+#include "CPU/CPU.hpp"
 
 namespace ComSquare::CPU
 {

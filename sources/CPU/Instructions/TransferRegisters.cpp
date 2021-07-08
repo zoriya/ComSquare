@@ -3,7 +3,7 @@
 //
 
 #include <iostream>
-#include "../CPU.hpp"
+#include "CPU/CPU.hpp"
 
 namespace ComSquare::CPU
 {

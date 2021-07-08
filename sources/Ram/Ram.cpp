@@ -5,7 +5,7 @@
 #include <cstring>
 #include <utility>
 #include "Ram.hpp"
-#include "../Exceptions/InvalidAddress.hpp"
+#include "Exceptions/InvalidAddress.hpp"
 
 namespace ComSquare::Ram
 {

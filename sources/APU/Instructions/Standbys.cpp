@@ -2,7 +2,7 @@
 // Created by Melefo on 11/02/2020.
 //
 
-#include "../APU.hpp"
+#include "APU/APU.hpp"
 
 namespace ComSquare::APU
 {
