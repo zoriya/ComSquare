@@ -197,8 +197,10 @@ namespace ComSquare::Debugger
 		case 2:
 			return QString(log.accessor ? log.accessor->getName().c_str() : "Bus");
 		case 3: {
+			if (!log.accessor)
+				return QString("Open bus");
 			uint24_t addr = log.accessor->getRelativeAddress(log.addr);
-			return QString(log.accessor ? log.accessor->getValueName(addr).c_str() : "Open bus");
+			return QString(log.accessor->getValueName(addr).c_str());
 		}
 		case 4:
 			if (!log.oldData)

@@ -136,10 +136,11 @@ namespace ComSquare::Debugger
 		if (dialogUI.checkBox->isChecked()) {
 			try {
 				value = this->switchToAddrTab(value);
-			} catch (const InvalidAddress &) {
+			} catch (const InvalidAddress &ex) {
 				QMessageBox msgBox;
 				msgBox.setIcon(QMessageBox::Critical);
-				msgBox.setText("This address is not mapped. Reading it will result in OpenBus.");
+				msgBox.setWindowTitle(("Invalid address: " + Utility::to_hex(ex.getAddress())).c_str());
+				msgBox.setText(ex.getWhere().c_str());
 				msgBox.exec();
 				return;
 			}
@@ -154,7 +155,8 @@ namespace ComSquare::Debugger
 	{
 		Memory::IMemory *accessor = this->_bus.getAccessor(addr);
 		if (!accessor)
-			throw InvalidAddress("Memory viewer switch to address", addr);
+			throw InvalidAddress("This address is not mapped. Reading it will result in OpenBus.", addr);
+		uint24_t localAddr = accessor->getRelativeAddress(addr);
 		switch (accessor->getComponent()) {
 		case WRam:
 			this->_ui.tabs->setCurrentIndex(0);
@@ -166,17 +168,12 @@ namespace ComSquare::Debugger
 			this->_ui.tabs->setCurrentIndex(2);
 			break;
 		default:
-			throw InvalidAddress("Memory viewer switch to address", addr);
+			throw InvalidAddress("The viewer can't display the value " + accessor->getValueName(localAddr)
+			                     + " of " + accessor->getName(), addr);
 		}
-		addr = accessor->getRelativeAddress(addr);
-		if (addr > accessor->getSize()) {
-			QMessageBox msgBox;
-			msgBox.setIcon(QMessageBox::Critical);
-			msgBox.setText((std::string("The ") + accessor->getName() + " is too small to contain this address.").c_str());
-			msgBox.exec();
-			return 0;
-		}
-		return addr;
+		if (localAddr > accessor->getSize())
+			throw InvalidAddress("The " + accessor->getName() + " is too small to contain this address.", addr);
+		return localAddr;
 	}
 
 	void MemoryViewer::focus()

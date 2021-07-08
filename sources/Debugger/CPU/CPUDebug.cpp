@@ -120,6 +120,7 @@ namespace ComSquare::Debugger::CPU
 			std::cerr << "An error occurred: " << e.what() << std::endl;
 			QApplication::quit();
 		}
+		return 0xFF;
 	}
 
 	void CPUDebug::_logInstruction()

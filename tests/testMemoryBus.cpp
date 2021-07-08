@@ -419,3 +419,14 @@ TEST_CASE("WriteSRAM BusWrite", "[BusWrite]")
 	snes.bus.write(0x700009, 123);
 	REQUIRE(snes.sram._data[9] == 123);
 }
+
+TEST_CASE("WriteDMA BusWrite", "[BusWrite]")
+{
+	Init()
+
+	snes.bus.write(0x4372, 123);
+	REQUIRE(snes.bus.read(0x4372) == 123);
+	REQUIRE(snes.cpu._dmaChannels[7]._aAddress.bytes[0] == 123);
+	snes.bus.write(0x4373, 31);
+	REQUIRE(snes.cpu._dmaChannels[7]._aAddress.bytes[1] == 31);
+}

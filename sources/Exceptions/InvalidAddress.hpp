@@ -10,6 +10,7 @@
 #include <ios>
 #include <sstream>
 #include <string>
+#include "Utility/Utility.hpp"
 
 namespace ComSquare
 {
@@ -18,15 +19,28 @@ namespace ComSquare
 	{
 	private:
 		std::string _msg;
-
+		uint24_t _addr;
+		std::string _where;
 	public:
-		InvalidAddress(std::string where, uint24_t addr)
+
+		InvalidAddress(const std::string &where, uint24_t addr)
+			: _addr(addr),
+			  _where(where)
 		{
-			std::stringstream stream;
-			stream << "Could not read/write data at address: " << addr << " from " << where;
-			this->_msg = stream.str();
+			this->_msg = "Could not read/write data at address: " + Utility::to_hex(addr) + " from " + where;
 		}
-		const char *what() const noexcept override { return this->_msg.c_str(); }
+
+		[[nodiscard]] const char *what() const noexcept override { return this->_msg.c_str(); }
+
+		[[nodiscard]] uint24_t getAddress() const
+		{
+			return this->_addr;
+		}
+
+		[[nodiscard]] std::string getWhere() const
+		{
+			return this->_where;
+		}
 	};
 
 	//! @brief Exception thrown when trying to read/write to an invalid address in a rectangle memory region.
@@ -36,7 +50,7 @@ namespace ComSquare
 		std::string _msg;
 
 	public:
-		InvalidRectangleAddress(std::string where, int32_t addr, int16_t subaddr, int16_t start, int16_t end)
+		InvalidRectangleAddress(const std::string &where, int32_t addr, int16_t subaddr, int16_t start, int16_t end)
 		{
 			std::stringstream stream;
 			stream << "Could not read/write data at address: 0x" << std::hex << addr << " from " << where;
@@ -46,6 +60,6 @@ namespace ComSquare
 				stream << " (" << std::hex << subaddr << " > " << end << ")";
 			this->_msg = stream.str();
 		}
-		const char *what() const noexcept override { return this->_msg.c_str(); }
+		[[nodiscard]] const char *what() const noexcept override { return this->_msg.c_str(); }
 	};
 }// namespace ComSquare
