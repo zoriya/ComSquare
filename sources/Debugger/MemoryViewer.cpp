@@ -4,77 +4,71 @@
 
 #include <iostream>
 #include <cmath>
-#include <QtWidgets/QInputDialog>
 #include <QtWidgets/QSpinBox>
 #include <QMessageBox>
 #include "MemoryViewer.hpp"
-#include "../SNES.hpp"
-#include "../Memory/MemoryShadow.hpp"
-#include "../Exceptions/InvalidAddress.hpp"
-
-MemoryViewerModel::MemoryViewerModel(std::shared_ptr<Ram> memory, QObject *parent) :
-	QAbstractTableModel(parent),
-	_memory(std::move(memory))
-{ }
-
-int MemoryViewerModel::rowCount(const QModelIndex &) const
-{
-	return this->_memory->getSize() / 16u;
-}
-
-int MemoryViewerModel::columnCount(const QModelIndex &parent) const
-{
-	if (parent.row() == this->rowCount(parent) - 1)
-		return this->_memory->getSize() - (parent.row() << 8u);
-	return 16;
-}
-
-QVariant MemoryViewerModel::data(const QModelIndex &index, int role) const
-{
-	if (role == Qt::TextAlignmentRole)
-		return Qt::AlignCenter;
-	if (role != Qt::DisplayRole)
-		return QVariant();
-	char buf[3];
-	snprintf(buf, 3, "%02X", this->_memory->read((index.row() << 4u) + index.column()));
-	return QString(buf);
-}
-
-QVariant MemoryViewerModel::headerData(int section, Qt::Orientation orientation, int role) const
-{
-	if (role != Qt::DisplayRole)
-		return QVariant();
-	if (orientation == Qt::Horizontal) {
-		char buf[2];
-		snprintf(buf, 2, "%1X", section);
-		return QString(buf);
-	} else {
-		char buf[6];
-		snprintf(buf, 6, "%0*Xx", this->_headerIndentSize, section);
-		return QString(buf);
-	}
-}
-
-void MemoryViewerModel::setMemory(std::shared_ptr<Ram> memory)
-{
-	this->_memory = std::move(memory);
-	this->_headerIndentSize = this->_memory->getSize() >= 0x10000 ? 4 : 3;
-	emit this->layoutChanged();
-}
+#include "SNES.hpp"
+#include "Exceptions/InvalidAddress.hpp"
+#include "Utility/Utility.hpp"
 
 namespace ComSquare::Debugger
 {
-	MemoryViewer::MemoryViewer(ComSquare::SNES &snes, Memory::MemoryBus &bus) :
-		_window(new ClosableWindow<MemoryViewer>(*this, &MemoryViewer::disableViewer)),
-		_snes(snes),
-		_bus(bus),
-		_ui(),
-		_model(snes.wram)
-	{
-		this->_window->setContextMenuPolicy(Qt::NoContextMenu);
-		this->_window->setAttribute(Qt::WA_QuitOnClose, false);
-		this->_window->setAttribute(Qt::WA_DeleteOnClose);
+	MemoryViewerModel::MemoryViewerModel(Ram::Ram &memory, QObject *parent)
+		: QAbstractTableModel(parent),
+		  _memory(memory)
+	{}
 
+	int MemoryViewerModel::rowCount(const QModelIndex &) const
+	{
+		return static_cast<int>(this->_memory.get().getSize() / 16u);
+	}
+
+	int MemoryViewerModel::columnCount(const QModelIndex &parent) const
+	{
+		if (parent.row() == this->rowCount(parent) - 1)
+			return static_cast<int>(this->_memory.get().getSize() - (parent.row() << 8u));
+		return 16;
+	}
+
+	QVariant MemoryViewerModel::data(const QModelIndex &index, int role) const
+	{
+		if (role == Qt::TextAlignmentRole)
+			return Qt::AlignCenter;
+		if (role != Qt::DisplayRole)
+			return QVariant();
+		auto value = this->_memory.get().read((index.row() << 4u) + index.column());
+		return QString(Utility::to_hex(value, Utility::NoPrefix).c_str());
+	}
+
+	QVariant MemoryViewerModel::headerData(int section, Qt::Orientation orientation, int role) const
+	{
+		if (role != Qt::DisplayRole)
+			return QVariant();
+		if (orientation == Qt::Horizontal) {
+			char buf[2];
+			snprintf(buf, 2, "%1X", section);
+			return QString(buf);
+		} else {
+			char buf[6];
+			snprintf(buf, 6, "%0*Xx", this->_headerIndentSize, section);
+			return QString(buf);
+		}
+	}
+
+	void MemoryViewerModel::setMemory(Ram::Ram &memory)
+	{
+		this->_memory = memory;
+		this->_headerIndentSize = this->_memory.get().getSize() >= 0x10000 ? 4 : 3;
+		emit this->layoutChanged();
+	}
+
+	MemoryViewer::MemoryViewer(ComSquare::SNES &snes, Memory::MemoryBus &bus)
+		: _window(new ClosableWindow([&snes] { snes.disableRamViewer(); })),
+		  _snes(snes),
+		  _bus(bus),
+		  _ui(),
+		  _model(snes.wram)
+	{
 		this->_ui.setupUi(this->_window);
 		this->_ui.tableView->setModel(&this->_model);
 		this->_ui.tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
@@ -88,11 +82,6 @@ namespace ComSquare::Debugger
 		QMainWindow::connect(this->_ui.actionGoto_Absolute, &QAction::triggered, this, &MemoryViewer::gotoAbsoluteAddr);
 		QObject::connect(this->_ui.tabs, &QTabBar::currentChanged, this, &MemoryViewer::changeRam);
 		this->_window->show();
-	}
-
-	void MemoryViewer::disableViewer()
-	{
-		this->_snes.disableRamViewer();
 	}
 
 	void MemoryViewer::changeRam(int id)
@@ -109,13 +98,13 @@ namespace ComSquare::Debugger
 			this->_model.setMemory(this->_snes.cartridge);
 			break;
 		case 3:
-			this->_model.setMemory(this->_snes.ppu->cgram);
+			this->_model.setMemory(this->_snes.ppu.cgram);
 			break;
 		case 4:
-			this->_model.setMemory(this->_snes.ppu->vram);
+			this->_model.setMemory(this->_snes.ppu.vram);
 			break;
 		case 5:
-			this->_model.setMemory(this->_snes.ppu->oamram);
+			this->_model.setMemory(this->_snes.ppu.oamram);
 			break;
 		}
 	}
@@ -141,7 +130,6 @@ namespace ComSquare::Debugger
 		dialogUI.spinBox->setFont(font);
 		dialogUI.spinBox->selectAll();
 		dialogUI.checkBox->setChecked(isAbsolute);
-
 		if (dialog.exec() != QDialog::Accepted)
 			return;
 		long value = std::strtol(dialogUI.spinBox->text().toStdString().c_str() + 1, nullptr, 16);
@@ -164,10 +152,9 @@ namespace ComSquare::Debugger
 
 	unsigned MemoryViewer::switchToAddrTab(uint24_t addr)
 	{
-		std::shared_ptr<Memory::IMemory> accessor = this->_bus.getAccessor(addr);
+		Memory::IMemory *accessor = this->_bus.getAccessor(addr);
 		if (!accessor)
 			throw InvalidAddress("Memory viewer switch to address", addr);
-
 		switch (accessor->getComponent()) {
 		case WRam:
 			this->_ui.tabs->setCurrentIndex(0);

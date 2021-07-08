@@ -56,3 +56,8 @@ namespace ComSquare::Utility
 		return std::bitset<24>(i).to_string();
 	}
 }
+
+std::ostream &operator<<(std::ostream &os, uint8_t value)
+{
+	return os << ComSquare::Utility::to_hex(value);
+}

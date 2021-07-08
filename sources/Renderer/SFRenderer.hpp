@@ -56,7 +56,7 @@ namespace ComSquare::Renderer
 		//! @brief Playing all samples from buffer
 		//! @param samples Buffer containing samples
 		//! @param sampleCount number of samples inside buffer
-		void playAudio(std::span<int16_t> samples, uint64_t sampleCount) override;
+		void playAudio(std::span<int16_t> samples) override;
 		//! @brief Get the inputs from the Window
 		void getEvents();
 		//! @brief Use this function to create the window.

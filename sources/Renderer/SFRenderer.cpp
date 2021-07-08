@@ -2,13 +2,11 @@
 // Created by cbihan on 1/30/20.
 //
 
+#include "SNES.hpp"
 #include "SFRenderer.hpp"
-#include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
-#include "SNES.hpp"
 #include <iostream>
 
 namespace ComSquare::Renderer
@@ -29,7 +27,7 @@ namespace ComSquare::Renderer
 		if (icon.loadFromFile("resources/Logo.png"))
 			this->_window.setIcon(314, 314, icon.getPixelsPtr());
 		this->_window.setFramerateLimit(maxFPS);
-		this->setWindowName(snes.cartridge->header.gameName);
+		this->setWindowName(snes.cartridge.header.gameName);
 
 		while (!this->shouldExit) {
 			snes.update();
@@ -55,9 +53,9 @@ namespace ComSquare::Renderer
 		this->_window.display();
 	}
 
-	void SFRenderer::playAudio(std::span<int16_t> samples, uint64_t sampleCount)
+	void SFRenderer::playAudio(std::span<int16_t> samples)
 	{
-		this->_soundBuffer.loadFromSamples(samples.data(), sampleCount, 2, 32040);
+		this->_soundBuffer.loadFromSamples(samples.data(), samples.size(), 2, 32040);
 		this->_sound.play();
 	}
 

@@ -3,7 +3,7 @@
 //
 
 #include <iostream>
-#include "../CPU.hpp"
+#include "CPU/CPU.hpp"
 
 namespace ComSquare::CPU
 {
@@ -160,8 +160,8 @@ namespace ComSquare::CPU
 
 		this->_registers.dbr = destBank;
 		while (this->_registers.a != 0xFFFF) {
-			uint8_t data = this->_bus->read(srcBank << 24u  | this->_registers.x);
-			this->_bus->write(destBank << 24u | this->_registers.y, data);
+			uint8_t data = this->getBus().read(srcBank << 24u  | this->_registers.x);
+			this->getBus().write(destBank << 24u | this->_registers.y, data);
 			this->_registers.x++;
 			this->_registers.y++;
 			this->_registers.a--;
@@ -177,12 +177,18 @@ namespace ComSquare::CPU
 
 		this->_registers.dbr = destBank;
 		while (this->_registers.a != 0xFFFF) {
-			uint8_t data = this->_bus->read(srcBank << 24u  | this->_registers.x);
-			this->_bus->write(destBank << 24u | this->_registers.y, data);
+			uint8_t data = this->getBus().read(srcBank << 24u  | this->_registers.x);
+			this->getBus().write(destBank << 24u | this->_registers.y, data);
 			this->_registers.x--;
 			this->_registers.y--;
 			this->_registers.a--;
 		}
 		return 7 * length;
+	}
+
+	std::string CPU::getValueName(uint24_t) const
+	{
+		// TODO implement this method
+		return "???";
 	}
 }

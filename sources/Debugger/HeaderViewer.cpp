@@ -3,21 +3,17 @@
 //
 
 #include "HeaderViewer.hpp"
-#include "../Utility/Utility.hpp"
-#include "../SNES.hpp"
+#include "Utility/Utility.hpp"
+#include "SNES.hpp"
 
 namespace ComSquare::Debugger
 {
 	HeaderViewer::HeaderViewer(ComSquare::SNES &snes)
-		: _window(new ClosableWindow<HeaderViewer>(*this, &HeaderViewer::disableDebugger)),
-		_snes(snes),
-		_cartridge(*snes.cartridge),
-		_ui()
+		: _window(new ClosableWindow([&snes] { snes.disableHeaderViewer(); })),
+		  _snes(snes),
+		  _cartridge(snes.cartridge),
+		  _ui()
 	{
-		this->_window->setContextMenuPolicy(Qt::NoContextMenu);
-		this->_window->setAttribute(Qt::WA_QuitOnClose, false);
-		this->_window->setAttribute(Qt::WA_DeleteOnClose);
-
 		this->_ui.setupUi(this->_window);
 		this->_ui.nameLineEdit->setText(this->_cartridge.header.gameName.c_str());
 		std::string memType;
@@ -53,11 +49,6 @@ namespace ComSquare::Debugger
 		this->_ui.resetLineEditNat->setText(ComSquare::Utility::to_hex(this->_cartridge.header.nativeInterrupts.reset).c_str());
 		this->_ui.interruptRequestLineEditNat->setText(ComSquare::Utility::to_hex(this->_cartridge.header.nativeInterrupts.irq).c_str());
 		this->_window->show();
-	}
-
-	void HeaderViewer::disableDebugger()
-	{
-		this->_snes.disableHeaderViewer();
 	}
 
 	void HeaderViewer::focus()

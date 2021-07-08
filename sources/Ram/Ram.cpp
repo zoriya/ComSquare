@@ -5,46 +5,49 @@
 #include <cstring>
 #include <utility>
 #include "Ram.hpp"
-#include "../Exceptions/InvalidAddress.hpp"
+#include "Exceptions/InvalidAddress.hpp"
 
 namespace ComSquare::Ram
 {
 	Ram::Ram(size_t size, Component type, std::string ramName)
-		: _size(size),
-		_ramType(type),
-		_ramName(std::move(ramName))
+		: _data(size),
+		  _ramType(type),
+		  _ramName(std::move(ramName))
+	{ }
+
+	uint8_t &Ram::operator[](uint24_t addr)
 	{
-		if (size == 0)
-			this->_data = nullptr;
-		else {
-			this->_data = new uint8_t[size];
-			std::memset(this->_data, 0, size * sizeof(uint8_t));
-		}
+		return this->_data[addr];
 	}
 
-	Ram::~Ram()
+	const uint8_t &Ram::operator[](uint24_t addr) const
 	{
-		delete[] this->_data;
+		return this->_data[addr];
 	}
 
 	uint8_t Ram::read(uint24_t addr)
 	{
 		// TODO read/write after the size of the rom should noop or behave like a mirror. I don't really know.
-		if (addr >= this->_size)
+		if (addr >= this->_data.size())
 			throw InvalidAddress(this->getName() + " read", addr);
 		return this->_data[addr];
 	}
 
 	void Ram::write(uint24_t addr, uint8_t data)
 	{
-		if (addr >= this->_size)
+		if (addr >= this->_data.size())
 			throw InvalidAddress(this->getName() + " write", addr);
 		this->_data[addr] = data;
 	}
 
 	uint24_t Ram::getSize() const
 	{
-		return this->_size;
+		return this->_data.size();
+	}
+
+	void Ram::setSize(uint24_t size)
+	{
+		this->_data.resize(size);
 	}
 
 	std::string Ram::getName() const
@@ -57,8 +60,13 @@ namespace ComSquare::Ram
 		return this->_ramType;
 	}
 
-	uint8_t *Ram::getData() const
+	std::span<uint8_t> Ram::getData()
 	{
-		return this->_data;
+		return std::span(this->_data);
+	}
+
+	std::span<const uint8_t> Ram::getData() const
+	{
+		return std::span(this->_data);
 	}
 }

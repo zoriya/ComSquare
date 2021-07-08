@@ -2,8 +2,7 @@
 // Created by anonymus-raccoon on 3/24/20.
 //
 
-#ifndef COMSQUARE_COMPONENTS_HPP
-#define COMSQUARE_COMPONENTS_HPP
+#pragma once
 
 namespace ComSquare
 {
@@ -19,4 +18,3 @@ namespace ComSquare
 		SRam = 1u << 8u,
 	};
 }
-#endif //COMSQUARE_COMPONENTS_HPP

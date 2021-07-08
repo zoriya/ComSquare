@@ -2,13 +2,18 @@
 // Created by cbihan on 1/27/20.
 //
 
-#ifndef COMSQUARE_PPU_UTILS_HPP
-#define COMSQUARE_PPU_UTILS_HPP
+#pragma once
 
 #include <stdint-gcc.h>
 #include <cstddef>
+#include <memory>
 #include <array>
 #include "Models/Vector2.hpp"
+
+namespace ComSquare::PPU
+{
+	class PPU;
+}
 
 namespace ComSquare::PPU::Utils
 {
@@ -72,8 +77,4 @@ namespace ComSquare::PPU::Utils
 		std::reverse(array.begin() + offset.x, array.begin() + offset.x + size.x);
 	}
 
-	int *get_dump_vram();
-	int *get_dump_cgram();
-
 }
-#endif //COMSQUARE_PPU_UTILS_HPP

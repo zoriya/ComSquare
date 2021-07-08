@@ -2,15 +2,15 @@
 // Created by anonymus-raccoon on 2/5/20.
 //
 
-#ifndef COMSQUARE_NORENDERER_HPP
-#define COMSQUARE_NORENDERER_HPP
+#pragma once
 
 #include "IRenderer.hpp"
 
 namespace ComSquare::Renderer
 {
 	//! @brief A renderer that discard everything you give. (Used for tests).
-	class NoRenderer : public IRenderer {
+	class NoRenderer : public IRenderer
+	{
 	public:
 		//! @brief Set a new name to the window, if there is already a name it will be overwrite.
 		//! @param newWindowName new title for the window.
@@ -25,9 +25,7 @@ namespace ComSquare::Renderer
 		//! @brief Playing all samples from buffer
 		//! @param samples Buffer containing samples
 		//! @param sampleCount number of samples inside buffer
-		void playAudio(std::span<int16_t> samples, uint64_t sampleCount) override;
-		//! @brief Get the inputs from the Window
-		void getEvents();
+		void playAudio(std::span<int16_t> samples) override;
 		//! @brief Use this function to create the window.
 		//! @param maxFPS The number of FPS you aim to run on.
 		void createWindow(SNES &snes, int maxFPS) override;
@@ -41,5 +39,3 @@ namespace ComSquare::Renderer
 		~NoRenderer() = default;
 	};
 }
-
-#endif //COMSQUARE_NORENDERER_HPP

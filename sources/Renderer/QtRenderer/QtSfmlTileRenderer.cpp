@@ -15,7 +15,7 @@ namespace ComSquare::Renderer
 		// todo the size of the sfml renderwindow should fill the parent
 	}
 
-	void QtSFMLTileRenderer::_onUpdate()
+	void QtSFMLTileRenderer::onUpdate()
 	{
 		this->_window.clear(sf::Color::Black);
 		for (unsigned long i = 0; i < this->buffer.size(); i++) {

@@ -3,7 +3,7 @@
 //
 
 #include "DSP.hpp"
-#include "../APU.hpp"
+#include "APU/APU.hpp"
 #include <algorithm>
 
 namespace ComSquare::APU::DSP

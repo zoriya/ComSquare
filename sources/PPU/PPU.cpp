@@ -5,17 +5,19 @@
 #include <iostream>
 #include <bitset>
 #include "PPU.hpp"
-#include "Exceptions/NotImplementedException.hpp"
 #include "Exceptions/InvalidAddress.hpp"
-#include "Ram/Ram.hpp"
 #include "Models/Vector2.hpp"
+
+namespace ComSquare::PPU::Utils::Debug {
+	void populateEnvironment(PPU &ppu, int dumpNumber);
+}
 
 namespace ComSquare::PPU
 {
 	PPU::PPU(Renderer::IRenderer &renderer):
-		vram(new Ram::Ram(VramSize, ComSquare::VRam, "VRAM")),
-		oamram(new Ram::Ram(OAMRamSize, ComSquare::OAMRam, "OAMRAM")),
-		cgram(new Ram::Ram(CGRamSize, ComSquare::CGRam, "CGRAM")),
+		vram(VramSize, ComSquare::VRam, "VRAM"),
+		oamram(OAMRamSize, ComSquare::OAMRam, "OAMRAM"),
+		cgram(CGRamSize, ComSquare::CGRam, "CGRAM"),
 		_renderer(renderer),
 		_backgrounds{
 			Background(*this, 1, false),
@@ -32,173 +34,7 @@ namespace ComSquare::PPU
 	{
 		this->_registers._isLowByte = true;
 
-		//colors for the cgram
-		this->cgram->write(2, 0xE0);
-		this->cgram->write(3, 0x7F);
-		this->cgram->write(4, 0x1F); // 0x1F
-		this->cgram->write(6, 0xFF);
-		this->cgram->write(7, 0x03);
-		this->cgram->write(66, 0xE0);
-		this->cgram->write(67, 0x7F);
-
-		//tiles
-		int vram_test[] = {
-			00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,
-0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,
-00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xff,0xff,0xff,0xff,
-00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xff,0xff,0xff,0xff,
-03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0xff,0xff,0xff,0xff,
-0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xff,0xff,0xff,0xff,
-00,0xc0,0x00,0xe0,0x00,0x70,0x00,0x38,0x00,0x1c,0x00,0x0e,0x00,0x07,0x00,0x03,
-00,0x03,0x00,0x07,0x00,0x0e,0x00,0x1c,0x00,0x38,0x00,0x70,0x00,0xe0,0x00,0xc0,
-00,0x07,0x00,0x0f,0x00,0x18,0x00,0x30,0x00,0x60,0x00,0xc0,0x00,0xc0,0x00,0xc0,
-00,0xe0,0x00,0xf0,0x00,0x18,0x00,0x0c,0x00,0x06,0x00,0x03,0x00,0x03,0x00,0x03,
-0xfc,0x00,0xf8,0x00,0xf0,0x00,0xe0,0x00,0xc0,0x00,0x80,0x00,0x00,0x00,0x00,0x00,
-0x3f,0x00,0x1f,0x00,0x0f,0x00,0x07,0x00,0x03,0x00,0x01,0x00,0x00,0x00,0x00,0x00,
-00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,
-0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,
-0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-0xff,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-0xff,0xff,0xff,0xff,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,0x03,
-0xff,0xff,0xff,0xff,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,0xc0,
-00,0x03,0x00,0x07,0x00,0x0e,0x00,0x1c,0x00,0x38,0x00,0x70,0x00,0xe0,0x00,0xc0,
-00,0xc0,0x00,0xe0,0x00,0x70,0x00,0x38,0x00,0x1c,0x00,0x0e,0x00,0x07,0x00,0x03,
-00,0xc0,0x00,0xc0,0x00,0xc0,0x00,0x60,0x00,0x30,0x00,0x18,0x00,0x0f,0x00,0x07,
-00,0x03,0x00,0x03,0x00,0x03,0x00,0x06,0x00,0x0c,0x00,0x18,0x00,0xf0,0x00,0xe0,
-00,0x00,0x00,0x00,0x80,0x00,0xc0,0x00,0xe0,0x00,0xf0,0x00,0xf8,0x00,0xfc,0x00,
-00,0x00,0x00,0x00,0x01,0x00,0x03,0x00,0x07,0x00,0x0f,00,0x1f,00,0x3f,00, -1
-		};
-	/*	int *cgram_test = Utils::get_dump_cgram();
-		for (int i = 0; cgram_test[i] != -1; i++) {
-			this->cgram->write(i, cgram_test[i]);
-		} */
-
-		//int *vram_test = Utils::get_dump_vram();
-		for (int i = 0; vram_test[i] != -1; i++) {
-			this->vram->write(i, vram_test[i]);
-		}
-		int vram_test_2[] = {8, 00, 02, 00, 0x0A, 00, 02, 00, 0x0A, 00, 00, 00, 00, 00, 00, -1};
-		for (int i = 0; vram_test_2[i] != -1; i++) {
-			this->vram->write(i + 0x8000, vram_test_2[i]);
-		}
-		int vram_test_3[] = {8, 00, 02, 00, 0x8, 00, 02, 00, 0x8, 00, 00, 00, 00, 00, 00, -1};
-		for (int i = 0; vram_test_3[i] != -1; i++) {
-			this->vram->write(i + 0x8080, vram_test_3[i]);
-		}
-		int vram_test_4[] = {8, 00, 02, 00, 0x0A, 00, 02, 00, 0x0A, 00, 00, 00, 00, 00, 00, -1};
-		for (int i = 0; vram_test_4[i] != -1; i++) {
-			this->vram->write(i + 0x8100, vram_test_4[i]);
-		}
-		this->vram->write(0x8040, 04);
-		this->vram->write(0x8042, 06);
-		this->vram->write(0x8044, 04);
-		this->vram->write(0x8046, 06);
-		this->vram->write(0x8048, 04);
-
-		this->vram->write(0x80C0, 04);
-		this->vram->write(0x80C2, 06);
-		this->vram->write(0x80C4, 04);
-		this->vram->write(0x80C6, 06);
-		this->vram->write(0x80C8, 04);
-
-		this->vram->write(0xC000, 0x0C);
-
-		//registers tic tac toe
-		this->_registers._bgmode.bgMode = 0;
-		this->_backgrounds[0].setBpp(this->getBPP(1));
-		this->_backgrounds[1].setBpp(this->getBPP(1));
-		this->_backgrounds[2].setBpp(this->getBPP(2));
-		this->_backgrounds[3].setBpp(this->getBPP(2));
-		this->_backgrounds[4].setBpp(this->getBPP(3));
-		this->_backgrounds[5].setBpp(this->getBPP(3));
-		this->_backgrounds[6].setBpp(this->getBPP(4));
-		this->_backgrounds[7].setBpp(this->getBPP(4));
-
-		this->_registers._bgmode.characterSizeBg1 = true;
-		this->_registers._bgmode.characterSizeBg2 = true;
-		this->_backgrounds[0].setCharacterSize(this->getCharacterSize(1));
-		this->_backgrounds[1].setCharacterSize(this->getCharacterSize(1));
-		this->_backgrounds[2].setCharacterSize(this->getCharacterSize(2));
-		this->_backgrounds[3].setCharacterSize(this->getCharacterSize(2));
-		this->_backgrounds[4].setCharacterSize(this->getCharacterSize(3));
-		this->_backgrounds[5].setCharacterSize(this->getCharacterSize(3));
-		this->_backgrounds[6].setCharacterSize(this->getCharacterSize(4));
-		this->_backgrounds[7].setCharacterSize(this->getCharacterSize(4));
-
-		this->_registers._bgsc[0].tilemapAddress = 0x4000 >> 10U;
-		this->_registers._bgsc[1].tilemapAddress = 0x6000 >> 10U;
-		this->_backgrounds[0].setTileMapStartAddress(this->getTileMapStartAddress(1));
-		this->_backgrounds[1].setTileMapStartAddress(this->getTileMapStartAddress(1));
-		this->_backgrounds[2].setTileMapStartAddress(this->getTileMapStartAddress(2));
-		this->_backgrounds[3].setTileMapStartAddress(this->getTileMapStartAddress(2));
-
-		//this->_registers._bgofs[2].raw = 0x03E0;
-		//this->_registers._bgofs[3].raw = 0x03DF;
-		this->_registers._t[0].enableWindowDisplayBg1 = true;
-		this->_registers._t[0].enableWindowDisplayBg2 = true;
-/*
-
-		//registers aladin
-
-		this->_registers._bgmode.bgMode = 1;
-		this->_backgrounds[0].setBpp(this->getBPP(1));
-		this->_backgrounds[1].setBpp(this->getBPP(1));
-		this->_backgrounds[2].setBpp(this->getBPP(2));
-		this->_backgrounds[3].setBpp(this->getBPP(2));
-		this->_backgrounds[4].setBpp(this->getBPP(3));
-		this->_backgrounds[5].setBpp(this->getBPP(3));
-		//this->_registers._bgmode.characterSizeBg1 = false;
-		//this->_registers._bgmode.characterSizeBg2 = false;
-		this->_registers._bgmode.mode1Bg3PriorityBit = true;
-		this->_backgrounds[0].setCharacterSize(this->getCharacterSize(1));
-		this->_backgrounds[1].setCharacterSize(this->getCharacterSize(1));
-		this->_backgrounds[2].setCharacterSize(this->getCharacterSize(2));
-		this->_backgrounds[3].setCharacterSize(this->getCharacterSize(2));
-
-		this->_registers._bgsc[0].tilemapAddress = 0x4800U >> 10U; // 0x4800
-		this->_registers._bgsc[0].tilemapHorizontalMirroring = 1;
-		this->_registers._bgsc[1].tilemapAddress = 0x4000U >> 10U; // 0x4000
-		this->_registers._bgsc[1].tilemapHorizontalMirroring = 1;
-		this->_registers._bgsc[2].tilemapAddress = 0x5C00U >> 10U;
-		this->_backgrounds[0].setTileMapStartAddress(this->getTileMapStartAddress(1));
-		this->_backgrounds[0].setTilemaps(this->getBackgroundSize(1));
-		this->_backgrounds[1].setTileMapStartAddress(this->getTileMapStartAddress(1));
-		this->_backgrounds[1].setTilemaps(this->getBackgroundSize(1));
-		this->_backgrounds[2].setTileMapStartAddress(this->getTileMapStartAddress(2));
-		this->_backgrounds[2].setTilemaps(this->getBackgroundSize(2));
-		this->_backgrounds[3].setTileMapStartAddress(this->getTileMapStartAddress(2));
-		this->_backgrounds[3].setTilemaps(this->getBackgroundSize(2));
-		this->_backgrounds[4].setTileMapStartAddress(this->getTileMapStartAddress(3));
-		this->_backgrounds[5].setTileMapStartAddress(this->getTileMapStartAddress(3));
-
-		//registres bgnba
-		//this->_registers._bgnba[0].baseAddressBg1a3 = 0x5;
-		//this->_registers._bgnba[0].baseAddressBg2a4 = 0x5;
-		this->_registers._bgnba[1].baseAddressBg1a3 = 0x5;
-
-		//this->_backgrounds[0].setTilesetAddress(this->getTilesetAddress(1));
-		//this->_backgrounds[1].setTilesetAddress(this->getTilesetAddress(1));
-		//this->_backgrounds[2].setTilesetAddress(this->getTilesetAddress(2));
-		//this->_backgrounds[3].setTilesetAddress(this->getTilesetAddress(2));
-		this->_backgrounds[4].setTilesetAddress(this->getTilesetAddress(3));
-		this->_backgrounds[5].setTilesetAddress(this->getTilesetAddress(3));
-
-		this->_registers._vmain.incrementMode = true;
-		this->_registers._vmain.incrementAmount = 1;
-
-		this->_registers._vmdata.vmdata = 0x1AF0;
-
-		this->_registers._t[0].enableWindowDisplayBg1 = true;
-		this->_registers._t[0].enableWindowDisplayBg2 = true;
-		this->_registers._t[0].enableWindowDisplayBg3 = true;
-*/
-
+		//Utils::Debug::populateEnvironment(*this, 0);
 	}
 
 	uint8_t PPU::read(uint24_t addr)
@@ -234,7 +70,7 @@ namespace ComSquare::PPU
 			return returnValue;
 		}
 		case PpuRegisters::cgdataread: {
-			return this->cgram->read(this->_registers._cgadd++);
+			return this->cgram.read(this->_registers._cgadd++);
 		}
 		case PpuRegisters::ophct:
 		case PpuRegisters::opvct:
@@ -267,7 +103,7 @@ namespace ComSquare::PPU
 			//throw InvalidAddress("oamdata", addr);
 			//std::cout << "oamdata" << std::endl;
 			// the oamAddress have to be calculated if fblank or not (not implemented)
-			oamram->write(this->_registers._oamadd.oamAddress, this->_registers._oamdata);
+			oamram.write(this->_registers._oamadd.oamAddress, this->_registers._oamdata);
 			this->_registers._oamadd.oamAddress++;
 			break;
 		case PpuRegisters::bgmode:
@@ -285,12 +121,18 @@ namespace ComSquare::PPU
 		case PpuRegisters::bg2sc:
 		case PpuRegisters::bg3sc:
 		case PpuRegisters::bg4sc:
-			this->_registers._bgsc[addr - 0x07].raw = data;
+			this->_registers._bgsc[addr - PpuRegisters::bg1sc].raw = data;
 			// update background tilemap address
-			this->_backgrounds[addr - 0x07].setTileMapStartAddress(this->getTileMapStartAddress(addr - 0x07 + 1));
-			this->_backgrounds[addr - 0x07 + 1].setTileMapStartAddress(this->getTileMapStartAddress(addr - 0x07 + 1));
-			this->_backgrounds[addr - 0x07].setTilemaps({this->_registers._bgsc[addr - 0x07].tilemapHorizontalMirroring, this->_registers._bgsc[addr - 0x07].tilemapVerticalMirroring});
-			this->_backgrounds[addr - 0x07 + 1].setTilemaps({this->_registers._bgsc[addr - 0x07].tilemapHorizontalMirroring, this->_registers._bgsc[addr - 0x07].tilemapVerticalMirroring});
+			this->_backgrounds[addr - PpuRegisters::bg1sc].setTileMapStartAddress(
+				this->getTileMapStartAddress(addr - PpuRegisters::bg1sc + 1));
+			this->_backgrounds[addr - PpuRegisters::bg1sc + 1].setTileMapStartAddress(
+				this->getTileMapStartAddress(addr - PpuRegisters::bg1sc + 1));
+			this->_backgrounds[addr - PpuRegisters::bg1sc].setTilemaps(
+				{static_cast<bool>(this->_registers._bgsc[addr - PpuRegisters::bg1sc].tilemapHorizontalMirroring),
+				 static_cast<bool>(this->_registers._bgsc[addr - PpuRegisters::bg1sc].tilemapVerticalMirroring)});
+			this->_backgrounds[addr - PpuRegisters::bg1sc + 1].setTilemaps(
+				{static_cast<bool>(this->_registers._bgsc[addr - PpuRegisters::bg1sc].tilemapHorizontalMirroring),
+				 static_cast<bool>(this->_registers._bgsc[addr - PpuRegisters::bg1sc].tilemapVerticalMirroring)});
 			break;
 		case PpuRegisters::bg12nba:
 		case PpuRegisters::bg34nba:
@@ -344,7 +186,7 @@ namespace ComSquare::PPU
 			//std::cout << "vmdatal" << std::endl;
 			if (!this->_registers._inidisp.fblank) {
 				this->_registers._vmdata.vmdatal = data;
-				this->vram->write(this->getVramAddress(), data);
+				this->vram.write(this->getVramAddress(), data);
 			}
 			if (!this->_registers._vmain.incrementMode)
 				this->_registers._vmadd.vmadd += this->_registers._incrementAmount;
@@ -353,7 +195,7 @@ namespace ComSquare::PPU
 			//std::cout << "vmdatah" << std::endl;
 			if (!this->_registers._inidisp.fblank) {
 				this->_registers._vmdata.vmdatah = data;
-				this->vram->write(this->getVramAddress() + 1, data);
+				this->vram.write(this->getVramAddress() + 1, data);
 			}
 			if (this->_registers._vmain.incrementMode)
 				this->_registers._vmadd.vmadd += this->_registers._incrementAmount;
@@ -381,9 +223,9 @@ namespace ComSquare::PPU
 			}
 			else {
 				this->_registers._cgdata.cgdatah = data;
-				this->cgram->write(this->_registers._cgadd, this->_registers._cgdata.cgdatal);
+				this->cgram.write(this->_registers._cgadd, this->_registers._cgdata.cgdatal);
 				this->_registers._cgadd++;
-				this->cgram->write(this->_registers._cgadd, this->_registers._cgdata.cgdatah);
+				this->cgram.write(this->_registers._cgadd, this->_registers._cgdata.cgdatah);
 				this->_registers._cgadd++;
 			}
 			this->_registers._isLowByte = !this->_registers._isLowByte;
@@ -464,7 +306,6 @@ namespace ComSquare::PPU
 	void PPU::update(unsigned cycles)
 	{
 		(void)cycles;
-
 
 		this->renderMainAndSubScreen();
 		this->add_buffer(this->_screen, this->_subScreen);
@@ -629,14 +470,9 @@ namespace ComSquare::PPU
 		return Ppu;
 	}
 
-	bool PPU::isDebugger() const
-	{
-		return false;
-	}
-
 	uint16_t PPU::cgramRead(uint16_t addr)
 	{
-		return this->cgram->read(addr);
+		return this->cgram.read(addr);
 	}
 
 	int PPU::getBPP(int bgNumber) const
@@ -697,12 +533,12 @@ namespace ComSquare::PPU
 		return baseAddress;
 	}
 
-	Vector2<int> PPU::getBackgroundSize(int bgNumber) const
+	Vector2<bool> PPU::getBackgroundMirroring(int bgNumber) const
 	{
-		Vector2<int> backgroundSize(0,0);
+		Vector2<bool> backgroundSize(false, false);
 
-		backgroundSize.y = (this->_registers._bgsc[bgNumber - 1].tilemapVerticalMirroring) ? 2 : 1;
-		backgroundSize.x = (this->_registers._bgsc[bgNumber - 1].tilemapHorizontalMirroring) ? 2 : 1;
+		backgroundSize.y = this->_registers._bgsc[bgNumber - 1].tilemapVerticalMirroring;
+		backgroundSize.x = this->_registers._bgsc[bgNumber - 1].tilemapHorizontalMirroring;
 		return backgroundSize;
 	}
 
@@ -710,14 +546,14 @@ namespace ComSquare::PPU
 	{
 		uint16_t colorPalette;
 		// should only render backgrounds needed (depending of th bgMode)
-		//int i = 0;
+		int i = 0;
 		for (auto &_background : this->_backgrounds) {
-			//i++;
+			i++;
 			_background.renderBackground();
 		}
 		// TODO make a function getDefaultBgColor
-		colorPalette = this->cgram->read(0);
-		colorPalette += this->cgram->read(1) << 8U;
+		colorPalette = this->cgram.read(0);
+		colorPalette += this->cgram.read(1) << 8U;
 
 		uint32_t color = Utils::getRealColor(colorPalette);
 		for (auto &row : this->_subScreen)
@@ -825,8 +661,8 @@ namespace ComSquare::PPU
 
 	void PPU::updateVramReadBuffer()
 	{
-		this->_vramReadBuffer = this->vram->read(this->getVramAddress());
-		this->_vramReadBuffer += this->vram->read(this->getVramAddress() + 1) << 8;
+		this->_vramReadBuffer = this->vram.read(this->getVramAddress());
+		this->_vramReadBuffer += this->vram.read(this->getVramAddress() + 1) << 8;
 	}
 
 	Vector2<int> PPU::getBgScroll(int bgNumber) const

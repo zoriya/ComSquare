@@ -17,10 +17,10 @@ namespace ComSquare::Renderer
 		std::array<std::array<uint32_t, 1024>, 1024> buffer;
 
 		//! @brief Function called to update this widget.
-		void _onUpdate() override;
+		void onUpdate() override;
 
 		//! @brief ctor
-		explicit QtSFMLTileRenderer(QWidget* parent, int frameRate = 0);
+		explicit QtSFMLTileRenderer(QWidget* parent, int frameRate = 60);
 		//! @brief copy ctor
 		QtSFMLTileRenderer(const QtSFMLTileRenderer &) = delete;
 		//! @brief default ctor

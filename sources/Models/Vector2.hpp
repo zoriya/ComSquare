@@ -2,8 +2,7 @@
 // Created by cbihan on 5/13/20.
 //
 
-#ifndef COMSQUARE_VECTOR2_HPP
-#define COMSQUARE_VECTOR2_HPP
+#pragma once
 
 #include <ostream>
 #include <SFML/System/Vector2.hpp>
@@ -18,13 +17,16 @@ namespace ComSquare
 		T y;
 
 		Vector2()
-			: x(0), y(0) {}
+			: x(0), y(0)
+		{}
 
 		Vector2(T _x, T _y)
-			: x(_x), y(_y) {}
+			: x(_x), y(_y)
+		{}
 
-		Vector2(sf::Vector2<T> v)
-			: x(v.x), y(v.y) {}
+		Vector2(sf::Vector2<T> v) // NOLINT(google-explicit-constructor)
+			: x(v.x), y(v.y)
+		{}
 
 		template<typename T2>
 		Vector2<T> &operator+=(const Vector2<T2> &vec)
@@ -46,6 +48,12 @@ namespace ComSquare
 			this->x -= vec.x;
 			this->y -= vec.y;
 			return *this;
+		}
+
+		template<typename T2>
+		Vector2<T> operator-(const Vector2<T2> &vec) const
+		{
+			return Vector2<T>(this->x - vec.x, this->y - vec.y);
 		}
 
 		template<typename T2>
@@ -98,7 +106,9 @@ namespace ComSquare
 	};
 
 	typedef Vector2<float> Vector2f;
+
 	typedef Vector2<unsigned> Vector2u;
+
 	typedef Vector2<int> Vector2i;
 }
 
@@ -108,5 +118,3 @@ std::ostream &operator<<(std::ostream &s, const ComSquare::Vector2<T> &v)
 	s << v.x << " " << v.y;
 	return s;
 }
-
-#endif //COMSQUARE_VECTOR2_HPP
