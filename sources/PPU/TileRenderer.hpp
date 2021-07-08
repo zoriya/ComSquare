@@ -31,9 +31,9 @@ namespace ComSquare::PPU
 		//! @brief Set the bpp to render graphics
 		void setBpp(int bpp);
 		//! @brief Get the current bpp
-		int getBpp() const;
+		[[nodiscard]] int getBpp() const;
 		//! @brief Get the index of the current palette used
-		int getPaletteIndex() const;
+		[[nodiscard]] int getPaletteIndex() const;
 		//! @brief Get the color pixel reference from the tile address and pixelIndex
 		//! @param tileAddress The starting address of the tile
 		//! @param pixelIndex The index of the pixel (0 - 255)
@@ -50,6 +50,8 @@ namespace ComSquare::PPU
 		//! @warning Values are CGRAM colors use PPU::getRealColor function to get the actual real color
 		std::vector<uint16_t> getPalette(int nbPalette);
 		//! @brief read the 2bpp value for a pixel (used multple times for 4bpp and 8bpp)
+		//! @param tileRowAddress Address where the read is done. Usage: Address of the tile row to render
+		//! @param pixelIndex The offset form tileRowAddress, Usage: the pixel to read
 		uint8_t read2BPPValue(uint16_t tileRowAddress, uint8_t pixelIndex);
 		//! @brief render the tile (8x8) at the tileAddress
 		//! @param tileAddress The address of the tile to render

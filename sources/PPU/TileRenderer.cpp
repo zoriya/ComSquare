@@ -65,7 +65,6 @@ namespace ComSquare::PPU
 
 	uint8_t TileRenderer::read2BPPValue(uint16_t tileRowAddress, uint8_t pixelIndex)
 	{
-		// TODO unit test this
 		size_t size = this->_ram.getSize();
 		uint8_t highByte = this->_ram.read(tileRowAddress % size);
 		uint8_t lowByte = this->_ram.read((tileRowAddress + 1) % size);

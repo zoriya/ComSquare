@@ -185,6 +185,7 @@ add_executable(unit_tests EXCLUDE_FROM_ALL
 	tests/CPU/testDMA.cpp
 	tests/CPU/testAddressingMode.cpp
 	tests/testMemoryBus.cpp
+	tests/PPU/testTileRenderer.cpp
 	)
 target_include_directories(unit_tests PUBLIC tests)
 target_compile_definitions(unit_tests PUBLIC TESTS)
