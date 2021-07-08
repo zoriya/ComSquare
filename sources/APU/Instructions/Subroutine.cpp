@@ -2,8 +2,8 @@
 // Created by Melefo on 21/02/2020.
 //
 
-#include "../APU.hpp"
-#include "../../Utility/Utility.hpp"
+#include "APU/APU.hpp"
+#include "Utility/Utility.hpp"
 
 namespace ComSquare::APU
 {

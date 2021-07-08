@@ -3,8 +3,8 @@
 //
 
 #include <iostream>
-#include "../../Models/Ints.hpp"
-#include "../CPU.hpp"
+#include "Models/Ints.hpp"
+#include "CPU/CPU.hpp"
 
 namespace ComSquare::CPU
 {

@@ -270,6 +270,8 @@ namespace ComSquare::APU::DSP
 			1299, 1300, 1300, 1301, 1302, 1302, 1303, 1303, 1303, 1304, 1304, 1304, 1304, 1304, 1305, 1305
 		};
 
+		//! @brief Buffer containing samples to be played
+		std::array<int16_t, 0x10000> _soundBuffer = {};
 		//! @brief 8x voices of sample used to make sound
 		std::array<Voice, 8> _voices {};
 		Master _master {};
@@ -330,8 +332,6 @@ namespace ComSquare::APU::DSP
 
 		//! @brief Renderer used to play sounds
 		Renderer::IRenderer &_renderer;
-		//! @brief Buffer containing samples to be played
-		std::array<int16_t, 0x10000> _soundBuffer = {};
 
 		//! @brief Read inside APU RAM
 		uint8_t _readRAM(uint24_t addr);

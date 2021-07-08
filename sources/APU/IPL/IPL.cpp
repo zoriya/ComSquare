@@ -3,8 +3,7 @@
 //
 
 #include "IPL.hpp"
-
-#include "../../Exceptions/InvalidAddress.hpp"
+#include "Exceptions/InvalidAddress.hpp"
 #include <utility>
 
 namespace ComSquare::APU::IPL

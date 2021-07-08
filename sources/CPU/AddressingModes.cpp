@@ -2,7 +2,7 @@
 // Created by anonymus-raccoon on 3/20/20.
 //
 
-#include "../Models/Ints.hpp"
+#include "Models/Ints.hpp"
 #include "CPU.hpp"
 
 namespace ComSquare::CPU
