@@ -68,6 +68,28 @@ namespace ComSquare::CPU
 		}
 	}
 
+	std::string DMA::getValueName(uint8_t addr) const
+	{
+		switch (addr) {
+		case 0x0:
+			return "Control register";
+		case 0x1:
+			return "Port";
+		case 0x2:
+			return "A address (page low)";
+		case 0x3:
+			return "A address (page high)";
+		case 0x4:
+			return "A address (bank)";
+		case 0x5:
+			return "Count (low)";
+		case 0x6:
+			return "Count (high)";
+		default:
+			throw InvalidAddress("DMA get value name", addr);
+		}
+	}
+
 	unsigned DMA::_writeOneByte(uint24_t aAddress, uint24_t bAddress)
 	{
 		// Address $2180 refers to the WRam data register.

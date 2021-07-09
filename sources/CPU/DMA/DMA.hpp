@@ -118,6 +118,10 @@ namespace ComSquare::CPU
 		//! @param data The data to write.
 		void write(uint8_t addr, uint8_t data);
 
+		//! @brief Get the name of the data at the address
+		//! @param addr The address (in local space)
+		[[nodiscard]] std::string getValueName(uint8_t addr) const;
+
 		//! @brief Run the DMA for x cycles
 		//! @param cycles The maximum number of cycles this DMA should run.
 		//! @return the number of cycles taken

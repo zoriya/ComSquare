@@ -202,6 +202,78 @@ namespace ComSquare::CPU
 		}
 	}
 
+	std::string CPU::getValueName(uint24_t addr) const
+	{
+		switch (addr) {
+		case 0x0:
+			return "Interrupt Enable Register";
+		case 0x1:
+			return "IO Port Write Register";
+		case 0x2:
+			return "Multiplicand Register A";
+		case 0x3:
+			return "Multiplicand Register B";
+		case 0x4:
+			return "Divisor & Dividend Registers (A - Low)";
+		case 0x5:
+			return "Divisor & Dividend Registers (A - High)";
+		case 0x6:
+			return "Divisor & Dividend Registers (B)";
+		case 0x7:
+			return "IRQ Timer Registers (Horizontal - Low)";
+		case 0x8:
+			return "IRQ Timer Registers (Horizontal - High)";
+		case 0x9:
+			return "IRQ Timer Registers (Vertical - Low)";
+		case 0xA:
+			return "IRQ Timer Registers (Vertical - High)";
+		case 0xB:
+			return "DMA enabled";
+		case 0xC:
+			return "HDMA Enable Register";
+		case 0xD:
+			return "ROM Speed Register";
+		case 0x10:
+			return "Interrupt Flag Registers";
+		case 0x11:
+			return "Interrupt Flag Registers - TimeUp";
+		case 0x12:
+			return "PPU Status Register";
+		case 0x13:
+			return "IO Port Read Register";
+		case 0x14:
+			return "Divide Result Registers - LOW";
+		case 0x15:
+			return "Divide Result Registers - HIGH";
+		case 0x16:
+			return "Multiplication Result Registers - LOW";
+		case 0x17:
+			return "Multiplication Result Registers (can sometimes be used as divide result register) - HIGH";
+		case 0x18:
+			return "Controller Port Data Registers (Pad 1 - Low)";
+		case 0x19:
+			return "Controller Port Data Registers (Pad 1 - High)";
+		case 0x1A:
+			return "Controller Port Data Registers (Pad 2 - Low)";
+		case 0x1B:
+			return "Controller Port Data Registers (Pad 2 - High)";
+		case 0x1C:
+			return "Controller Port Data Registers (Pad 3 - Low)";
+		case 0x1D:
+			return "Controller Port Data Registers (Pad 3 - High)";
+		case 0x1E:
+			return "Controller Port Data Registers (Pad 4 - Low)";
+		case 0x1F:
+			return "Controller Port Data Registers (Pad 4 - High)";
+		case 0x100 ... 0x180: {
+			unsigned dmaIndex = (addr - 0x100) >> 4u;
+			return "DMA " + std::to_string(dmaIndex) + ": " + this->_dmaChannels[dmaIndex].getValueName(addr & 0xF);
+		}
+		default:
+			throw InvalidAddress("CPU Internal Registers get value name", addr + this->_start);
+		}
+	}
+
 	uint24_t CPU::getSize() const
 	{
 		return 0x180;

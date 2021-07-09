@@ -18,6 +18,7 @@ void usage(char *bin)
 		<< "\t-h, --help:      \tDisplay this help message and exit." << std::endl
 #ifdef DEBUGGER_ENABLED
 		<< "\t-c, --cpu:       \tEnable the debugger of the CPU." << std::endl
+		<< "\t-a, --apu:       \tEnable the debugger of the APU." << std::endl
 		<< "\t-m, --memory:    \tEnable the memory viewer panel." << std::endl
 		<< "\t-H, --header:    \tShow the header of the cartridge." << std::endl
 		<< "\t-b, --bus:       \tShow the memory bus's log." << std::endl
@@ -55,9 +56,6 @@ void parseArguments(int argc, char **argv, SNES &snes)
 			break;
 
 		switch (c) {
-		case 0:
-			usage(argv[0]);
-			exit(2);
 		case 'h':
 			usage(argv[0]);
 			exit(0);
@@ -85,6 +83,7 @@ void parseArguments(int argc, char **argv, SNES &snes)
 			break;
 #endif
 		default:
+			usage(argv[0]);
 			exit(2);
 		}
 	}

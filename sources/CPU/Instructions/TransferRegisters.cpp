@@ -185,10 +185,4 @@ namespace ComSquare::CPU
 		}
 		return 7 * length;
 	}
-
-	std::string CPU::getValueName(uint24_t) const
-	{
-		// TODO implement this method
-		return "???";
-	}
 }
