@@ -117,7 +117,7 @@ TEST_CASE("getPixelReferenceFromTileRow 4bpp", "[PPU][TileRenderer]")
 		i += 2;
 	}
 }
-/*
+
 TEST_CASE("getPixelReferenceFromTileRow 8bpp", "[PPU][TileRenderer]")
 {
 	ComSquare::Ram::Ram vram(100, static_cast<ComSquare::Component>(0), "vramTest");
@@ -127,14 +127,10 @@ TEST_CASE("getPixelReferenceFromTileRow 8bpp", "[PPU][TileRenderer]")
 	tileRenderer.setBpp(8);
 
 	std::vector<std::string> vramValues {
-		"0022222223230000",
-		"2211422141112400",
-		"2311121212122400",
-		"0024252525250000",
-		"0000003300000000",
-		"3532003100313500",
-		"0034333133340000",
-		"0000353636000000",
+		"0C7C5CA0C0BC3C001010964038282018",
+		"0000020002007C000000820044003800",
+		"007C44927C82007C1010D6D67C7C3838",
+		"00002800000000000000000000000000"
 	};
 
 	uint8_t value;
@@ -170,4 +166,4 @@ TEST_CASE("getPixelReferenceFromTileRow 8bpp", "[PPU][TileRenderer]")
 		j = 0;
 		i += 2;
 	}
-}*/
+}
