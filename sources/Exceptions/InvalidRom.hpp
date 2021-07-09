@@ -2,23 +2,21 @@
 // Created by anonymus-raccoon on 1/28/20.
 //
 
-#ifndef COMSQUARE_INVALIDROM_HPP
-#define COMSQUARE_INVALIDROM_HPP
+#pragma once
 
 #include <exception>
 #include <string>
+#include <utility>
 #include "DebuggableError.hpp"
 
 namespace ComSquare
 {
 	//! @brief Exception thrown when someone tries to load an invalid rom.
-	class InvalidRomException : public DebuggableError {
-	private:
-		std::string _msg;
+	class InvalidRomException : public DebuggableError
+	{
 	public:
-		explicit InvalidRomException(const std::string &msg) : _msg(msg) {}
-		const char *what() const noexcept override { return this->_msg.c_str(); }
+		explicit InvalidRomException(std::string msg)
+			: DebuggableError(std::move(msg))
+		{}
 	};
 }
-
-#endif //COMSQUARE_INVALIDROM_HPP

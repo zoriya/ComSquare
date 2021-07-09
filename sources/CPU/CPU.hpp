@@ -649,6 +649,8 @@ namespace ComSquare::CPU
 
 		//! @brief True if you want to disable updates of this CPU.
 		bool isDisabled = false;
+		//! @brief True if something request a break after the end of the current instruction. Used for read/write breakpoints or in code breakpoints.
+		std::optional<DebuggableError> breakRequest = std::nullopt;
 
 #ifdef DEBUGGER_ENABLED
 		friend Debugger::CPU::CPUDebug;

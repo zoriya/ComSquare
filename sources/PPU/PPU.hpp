@@ -14,7 +14,9 @@
 #include "PPUUtils.hpp"
 
 #ifdef DEBUGGER_ENABLED
+
 #include "Debugger/TileViewer/RAMTileRenderer.hpp"
+
 #endif
 
 #define FALLTHROUGH __attribute__((fallthrough));
@@ -27,13 +29,16 @@ namespace ComSquare::PPU::Utils
 namespace ComSquare::PPU
 {
 	static constexpr uint32_t VramSize = 65536;
+
 	static constexpr uint32_t CGRamSize = 512;
+
 	static constexpr uint32_t OAMRamSize = 544;
 
-
 	class Background;
+
 	//! @brief Enum to access more easily the ppu background array
-	enum BgName {
+	enum BgName
+	{
 		bg1NoPriority = 0,
 		bg1Priority,
 		bg2NoPriority,
@@ -44,7 +49,8 @@ namespace ComSquare::PPU
 		bg4Priority
 	};
 
-	enum PpuRegisters {
+	enum PpuRegisters
+	{
 		//! @brief INIDISP Register (F-blank and Brightness)
 		inidisp = 0x00,
 		//! @brief OBSEL Register (Object Size and Character Address)
@@ -179,10 +185,13 @@ namespace ComSquare::PPU
 		stat78 = 0x3F
 	};
 
-	struct Registers {
+	struct Registers
+	{
 		//! @brief INIDISP Register (F-blank and Brightness)
-		union {
-			struct {
+		union
+		{
+			struct
+			{
 				//! @brief Store the brightness value (F = max, 0 = off)
 				uint8_t brightness: 4;
 				uint8_t _: 3;
@@ -192,8 +201,10 @@ namespace ComSquare::PPU
 			uint8_t raw = 0;
 		} _inidisp;
 		//! @brief OBSEL Register (Object Size and Character Address)
-		union {
-			struct {
+		union
+		{
+			struct
+			{
 				//! @brief Stores the location of the first sprite table
 				uint8_t nameBaseSelect: 3;
 				//! @brief Stores the offset of the second sprite table
@@ -204,15 +215,18 @@ namespace ComSquare::PPU
 			uint8_t raw = 0;
 		} _obsel;
 		//! @brief OAMADD Register (OAM Address and Obj Priority)
-		union {
-			struct {
+		union
+		{
+			struct
+			{
 				//! @brief Stores the address to write with OAMDATA register
 				uint16_t oamAddress: 9;
 				uint16_t _: 6;
 				//! @brief When Obj Priority activation bit is set, an Obj other than Sprite 0 may be given priority
 				uint16_t objPriorityActivationBit: 1;
 			};
-			struct {
+			struct
+			{
 				//! @brief Stores the data written on the OAMADDL register
 				uint16_t oamaddl: 8;
 				//! @brief Stores the data written on the OAMADDH register
@@ -223,8 +237,10 @@ namespace ComSquare::PPU
 		//! @brief OAMDATA Register (Data for OAM write)
 		uint8_t _oamdata = 0;
 		//! @brief BGMODE Register (OAM Address and Obj Priority)
-		union {
-			struct {
+		union
+		{
+			struct
+			{
 				//! @brief Stores the current BG Mode (0 - 7)
 				uint8_t bgMode: 3;
 				//! @brief When Mode 1 BG3 priority bit is set the BG3 is draw
@@ -241,8 +257,10 @@ namespace ComSquare::PPU
 			uint8_t raw = 0;
 		} _bgmode;
 		//! @brief MOSAIC Register (Screen Pixelation)
-		union {
-			struct {
+		union
+		{
+			struct
+			{
 				//! @brief Apply mosaic to the BG1
 				uint8_t affectBg1: 1;
 				//! @brief Apply mosaic to the BG2
@@ -257,8 +275,10 @@ namespace ComSquare::PPU
 			uint8_t raw = 0;
 		} _mosaic;
 		//! @brief BGSC Registers (BG Tilemap Address and Size)
-		union {
-			struct {
+		union
+		{
+			struct
+			{
 				//! @brief When tilemap horizontal mirroring bit is set the tilemap is mirrored horizontally
 				uint8_t tilemapHorizontalMirroring: 1;
 				//! @brief When tilemap vertically mirroring bit is set the tilemap is mirrored vertically
@@ -269,8 +289,10 @@ namespace ComSquare::PPU
 			uint8_t raw = 0;
 		} _bgsc[4];
 		//! @brief BGNBA Registers (BG1/2/3/4 Chr Address)
-		union {
-			struct {
+		union
+		{
+			struct
+			{
 				//! @brief The address let us know where to search for BG1/3 characters
 				uint8_t baseAddressBg1a3: 4;
 				//! @brief The address let us know where to search for BG2/4 characters
@@ -279,28 +301,34 @@ namespace ComSquare::PPU
 			uint8_t raw = 0;
 		} _bgnba[2];
 		//! @brief BGXXOFS Register (BG1/2/3/4 Horizontal and Vertical Scrolls)
-		union {
-			struct {
+		union
+		{
+			struct
+			{
 				uint16_t offsetBg: 10;
-				uint16_t _ : 6;
+				uint16_t _: 6;
 			};
 			uint16_t raw = 0;
 		} _bgofs[8];
 		//! @brief M7HOFS Register (Mode 7 BG Horizontal Scroll)
 		//! @brief M7VOFS Register (Mode 7 BG Vertical Scroll)
-		union {
-			struct {
-				uint16_t offsetBg : 13;
-				uint16_t _ : 3;
+		union
+		{
+			struct
+			{
+				uint16_t offsetBg: 13;
+				uint16_t _: 3;
 			};
 			uint16_t raw = 0;
 		} _m7ofs[2];
 		//! @brief VMAIN Register (Video Port Control)
-		union {
-			struct {
+		union
+		{
+			struct
+			{
 				uint8_t incrementAmount: 2;
 				uint8_t addressRemapping: 2;
-				uint8_t _ : 3;
+				uint8_t _: 3;
 				uint8_t incrementMode: 1;
 			};
 			uint8_t raw = 0;
@@ -308,24 +336,30 @@ namespace ComSquare::PPU
 		//! @brief Store the real value of the increment Amount (1, 32, 128) instead of 0,1 or 2
 		uint8_t _incrementAmount = 1;
 		//! @brief VMADD Register (VRAM Address)
-		union {
-			struct {
+		union
+		{
+			struct
+			{
 				uint16_t vmaddl: 8;
 				uint16_t vmaddh: 8;
 			};
 			uint16_t vmadd = 0;
 		} _vmadd;
 		//! @brief VMDATA Register (VRAM Data Write)
-		union {
-			struct {
+		union
+		{
+			struct
+			{
 				uint16_t vmdatal: 8;
 				uint16_t vmdatah: 8;
 			};
 			uint16_t vmdata = 0;
 		} _vmdata;
 		//! @brief TODO M7SEL Register (Mode 7 Settings)
-		union {
-			struct {
+		union
+		{
+			struct
+			{
 				uint8_t horizontalMirroring: 1;
 				uint8_t verticalMirroring: 1;
 				uint8_t _: 4;
@@ -335,8 +369,10 @@ namespace ComSquare::PPU
 			uint8_t raw = 0;
 		} _m7sel;
 		//! @brief M7A M7B M7C M7C registers, M7A and M7B are also used with ($2134/6) (multiplactions registers)
-		union {
-			struct {
+		union
+		{
+			struct
+			{
 				uint16_t m7l: 8;
 				uint16_t m7h: 8;
 			};
@@ -345,16 +381,20 @@ namespace ComSquare::PPU
 		// <to work>
 
 		//! @brief M7X Register (Mode 7 Center X)
-		union { // Not sure if it is done correctly
-			struct {
+		union
+		{ // Not sure if it is done correctly
+			struct
+			{
 				uint16_t _: 3;
 				uint16_t value: 13;
 			};
 			uint16_t raw = 0;
 		} _m7x;
 		//! @brief M7Y Register (Mode 7 Center Y)
-		union { // Not sure if it is done correctly
-			struct {
+		union
+		{ // Not sure if it is done correctly
+			struct
+			{
 				uint16_t _: 3;
 				uint16_t value: 13;
 			};
@@ -363,14 +403,17 @@ namespace ComSquare::PPU
 		//! @brief CGADD Register (CGRAM Address)
 		uint8_t _cgadd = 0;
 		//! @brief CGDATA Register (CGRAM Data write)
-		union {
-			struct {
+		union
+		{
+			struct
+			{
 				uint16_t red: 5;
 				uint16_t green: 5;
 				uint16_t blue: 5;
 				uint16_t _: 1;
 			};
-			struct {
+			struct
+			{
 				uint16_t cgdatal: 8;
 				uint16_t cgdatah: 8;
 			};
@@ -380,8 +423,10 @@ namespace ComSquare::PPU
 		//! @info This bool is set to True when writing to $2121 (CGADD)
 		bool _isLowByte = false;
 		//! @brief W12SEL - W34SEL Registers (Window Mask Settings for BGs) and WOBJSEL Register (Window Mask Settings for OBJ and Color Window)
-		union {
-			struct {
+		union
+		{
+			struct
+			{
 				uint8_t enableWindow2ForBg2Bg4Color: 1;
 				uint8_t window2InversionForBg2Bg4Color: 1;
 				uint8_t enableWindow1ForBg2Bg4Color: 1;
@@ -399,8 +444,10 @@ namespace ComSquare::PPU
 		//! @brief WH3 Register (Window 2 Right Position)
 		uint8_t _wh[4] = {0};
 		//! @brief WBGLOG Register (Window mask logic for BGs)
-		union {
-			struct {
+		union
+		{
+			struct
+			{
 				uint8_t maskLogicBg4: 2;
 				uint8_t maskLogicBg3: 2;
 				uint8_t maskLogicBg2: 2;
@@ -409,8 +456,10 @@ namespace ComSquare::PPU
 			uint8_t raw = 0;
 		} _wbglog;
 		//! @brief WOBJLOG Register (Window mask logic for OBJs and Color Window)
-		union {
-			struct {
+		union
+		{
+			struct
+			{
 				uint8_t maskLogicObj: 2;
 				uint8_t maskLogicColor: 2;
 				uint8_t _: 4;
@@ -418,8 +467,10 @@ namespace ComSquare::PPU
 			uint8_t raw = 0;
 		} _wobjlog;
 		//! @brief TM - TS Registers (Main & Sub Screen Designation)
-		union {
-			struct {
+		union
+		{
+			struct
+			{
 				uint8_t enableWindowDisplayBg1: 1;
 				uint8_t enableWindowDisplayBg2: 1;
 				uint8_t enableWindowDisplayBg3: 1;
@@ -430,8 +481,10 @@ namespace ComSquare::PPU
 			uint8_t raw = 0;
 		} _t[2];
 		//! @brief TMW - TSW Registers (Window Mask Designation for the Main/Sub Screen)
-		union {
-			struct {
+		union
+		{
+			struct
+			{
 				uint8_t enableWindowMaskingBg1: 1;
 				uint8_t enableWindowMaskingBg2: 1;
 				uint8_t enableWindowMaskingBg3: 1;
@@ -442,8 +495,10 @@ namespace ComSquare::PPU
 			uint8_t raw = 0;
 		} _tw[2];
 		//! @brief CGWSEL Register (Color Addition Select)
-		union {
-			struct {
+		union
+		{
+			struct
+			{
 				uint8_t directColorMode: 1;
 				uint8_t addSubscreen: 1;
 				uint8_t _: 2;
@@ -453,8 +508,10 @@ namespace ComSquare::PPU
 			uint8_t raw = 0;
 		} _cgwsel;
 		//! @brief CGADSUB Register (Color Math designation)
-		union {
-			struct {
+		union
+		{
+			struct
+			{
 				uint8_t enableColorMathBg1: 1;
 				uint8_t enableColorMathBg2: 1;
 				uint8_t enableColorMathBg3: 1;
@@ -467,8 +524,10 @@ namespace ComSquare::PPU
 			uint8_t raw = 0;
 		} _cgadsub;
 		//! @brief COLDATA Register (Fixed Color Data)
-		union {
-			struct {
+		union
+		{
+			struct
+			{
 				uint8_t colorIntensity: 5;
 				uint8_t red: 1;
 				uint8_t green: 1;
@@ -477,8 +536,10 @@ namespace ComSquare::PPU
 			uint8_t raw = 0;
 		} _coldata;
 		//! @brief SETINI Register (Screen Mode/Video Select)
-		union {
-			struct {
+		union
+		{
+			struct
+			{
 				uint8_t screenInterlace: 1;
 				uint8_t objInterlace: 1;
 				uint8_t overscanMode: 1;
@@ -493,8 +554,10 @@ namespace ComSquare::PPU
 		// <READ registers>
 
 		//! @brief MPYL - MPYM - MPYH Registers (Multiplication Result)
-		union {
-			struct {
+		union
+		{
+			struct
+			{
 				uint32_t mpyl: 8;
 				uint32_t mpym: 8;
 				uint32_t mpyh: 8;
@@ -507,32 +570,40 @@ namespace ComSquare::PPU
 		//! @brief OAMDATAREAD - Data for OAM read
 		uint8_t _oamdataread = 0;
 		//! @brief VMDATALREAD/VMDATAHREAD - VRAM Data Read low/high byte
-		union {
-			struct {
+		union
+		{
+			struct
+			{
 				uint16_t vmDataLRead: 8;
 				uint16_t vmDataHRead: 8;
 			};
 			uint16_t raw = 0;
 		} _vmdataread;
 		//! @brief CGRAM Data read
-		union {
-			struct {
+		union
+		{
+			struct
+			{
 				uint16_t cgDataLRead: 8;
 				uint16_t cgDataHRead: 8;
 			};
 			uint16_t raw = 0;
 		} _cgdataread;
 		//! @brief OPHCT/OPVCT - Horizontal/Vertical Scanline Location
-		union {
-			struct {
+		union
+		{
+			struct
+			{
 				uint16_t opct: 9;
 				uint16_t _: 7;
 			};
 			uint16_t raw = 0;
 		} _opct;
 		//! @brief STAT77 - PPU Status Flag and Version
-		union {
-			struct {
+		union
+		{
+			struct
+			{
 				uint8_t chipVersionNumber: 4;
 				uint8_t _: 1;
 				uint8_t modeSelect: 1;
@@ -542,8 +613,10 @@ namespace ComSquare::PPU
 			uint8_t raw = 0;
 		} _stat77;
 		//! @brief STAT78 - PPU Status Flag and Version
-		union {
-			struct {
+		union
+		{
+			struct
+			{
 				uint8_t chipVersionNumber: 4;
 				uint8_t mode: 1;
 				uint8_t _: 1;
@@ -555,7 +628,8 @@ namespace ComSquare::PPU
 	};
 
 	//! @brief The class containing all the registers of the PPU
-	class PPU : public Memory::AMemory {
+	class PPU : public Memory::AMemory
+	{
 	public:
 		//! @brief Rams
 		Ram::Ram vram;
@@ -563,7 +637,7 @@ namespace ComSquare::PPU
 		Ram::Ram cgram;
 	private:
 		//! @brief Init ppuRegisters
-		Registers _registers{};
+		Registers _registers { };
 		Renderer::IRenderer &_renderer;
 		//! @brief Backgrounds buffers
 		Background _backgrounds[8];
@@ -572,11 +646,11 @@ namespace ComSquare::PPU
 		//! @brief Sub Screen buffer
 		std::array<std::array<uint32_t, 1024>, 1024> _subScreen;
 		//! @brief Final Screen buffer
-		std::array<std::array<uint32_t, 1024>, 1024> _screen;
+		std::array<std::array<uint32_t, 1024>, 1024> _screen { };
 		//! @brief Used for vram read registers (0x2139 - 0x213A)
 		uint16_t _vramReadBuffer = 0;
 		//! @brief Struct that contain all necessary vars for the use of the registers
-		struct Utils::PpuState _ppuState;
+		struct Utils::PpuState _ppuState { };
 
 	public:
 
@@ -624,20 +698,22 @@ namespace ComSquare::PPU
 		[[nodiscard]] Vector2<bool> getBackgroundMirroring(int bgNumber) const;
 		//! @brief Render the Main and sub screen correctly
 		void renderMainAndSubScreen();
+
 		//! @brief Add a bg buffer to another buffer
-		template <std::size_t DEST_SIZE_X, std::size_t DEST_SIZE_Y, std::size_t SRC_SIZE_X, std::size_t SRC_SIZE_Y>
+		template<std::size_t DEST_SIZE_X, std::size_t DEST_SIZE_Y, std::size_t SRC_SIZE_X, std::size_t SRC_SIZE_Y>
 		void add_buffer(std::array<std::array<uint32_t, DEST_SIZE_Y>, DEST_SIZE_X> &bufferDest,
-		                     const std::array<std::array<uint32_t, SRC_SIZE_Y>, SRC_SIZE_X> &bufferSrc,
-		                     const Vector2<int> &offset = {0, 0})
+		                const std::array<std::array<uint32_t, SRC_SIZE_Y>, SRC_SIZE_X> &bufferSrc,
+		                const Vector2<int> &offset = {0, 0})
 		{
 			// TODO use std::ranges
 			for (unsigned long i = 0; i < bufferSrc.size(); i++) {
 				for (unsigned long j = 0; j < bufferSrc[i].size(); j++) {
 					if (bufferSrc[i][j] > 0xFF) // 0xFF correspond to a black pixel with full brightness
-						bufferDest[i + offset.x ][j + offset.y] = bufferSrc[i][j];
+						bufferDest[i + offset.x][j + offset.y] = bufferSrc[i][j];
 				}
 			}
 		}
+
 		//! @brief Add a bg to the sub and/or main screen
 		void addToMainSubScreen(Background &bg);
 		//! @brief Get the current background Mode
@@ -649,12 +725,12 @@ namespace ComSquare::PPU
 		//! @brief Allow to look the value of each write register (used by Register debugger)
 		[[nodiscard]] const Registers &getWriteRegisters() const;
 
-		template <std::size_t SRC_SIZE_Y, std::size_t SRC_SIZE_X>
+		template<std::size_t SRC_SIZE_Y, std::size_t SRC_SIZE_X>
 		void add_buffer(const std::array<std::array<uint32_t, SRC_SIZE_Y>, SRC_SIZE_X> &buffer,
 		                const Vector2<int> &offset = {0, 0})
 		{
 			for (auto &i : this->_screen)
-					i.fill(0XFF);
+				i.fill(0XFF);
 			for (unsigned long i = 0; i < buffer.size(); i++) {
 				for (unsigned long j = 0; j < buffer[i].size(); j++) {
 					if (buffer[i][j] > 0xFF) // 0xFF correspond to a black pixel with full brightness

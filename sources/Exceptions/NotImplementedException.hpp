@@ -2,8 +2,7 @@
 // Created by anonymus-raccoon on 1/27/20.
 //
 
-#ifndef COMSQUARE_NOTIMPLEMENTEDEXCEPTION_HPP
-#define COMSQUARE_NOTIMPLEMENTEDEXCEPTION_HPP
+#pragma once
 
 #include <exception>
 
@@ -13,8 +12,7 @@ namespace ComSquare
 	class NotImplementedException : public std::exception {
 	public:
 		explicit NotImplementedException() = default;
-		const char *what() const noexcept override { return "Not implemented yet."; }
+
+		[[nodiscard]] const char *what() const noexcept override { return "Not implemented yet."; }
 	};
 }
-
-#endif //COMSQUARE_NOTIMPLEMENTEDEXCEPTION_HPP

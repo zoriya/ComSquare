@@ -8,5 +8,18 @@
 
 namespace ComSquare
 {
-	class DebuggableError : public std::exception {};
+	class DebuggableError : public std::exception
+	{
+	protected:
+		std::string _msg;
+	public:
+		explicit DebuggableError(std::string msg)
+			: _msg(std::move(msg))
+		{}
+
+		[[nodiscard]] const char *what() const noexcept override
+		{
+			return this->_msg.c_str();
+		}
+	};
 }

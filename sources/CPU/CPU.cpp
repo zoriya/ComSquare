@@ -286,7 +286,7 @@ namespace ComSquare::CPU
 		unsigned cycles = this->runDMA(maxCycles);
 
 		this->_checkInterrupts();
-		while (cycles < maxCycles && !this->_isWaitingForInterrupt) {
+		while (cycles < maxCycles && !this->_isWaitingForInterrupt && !this->breakRequest) {
 			this->_checkInterrupts();
 			cycles += this->executeInstruction();
 			if (maxCycles > cycles)

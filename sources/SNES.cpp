@@ -43,6 +43,8 @@ namespace ComSquare
 			cycleCount = 0xFF;
 		this->ppu.update(cycleCount);
 		this->apu.update(cycleCount);
+		if (this->cpu.breakRequest.has_value())
+			this->enableCPUDebuggingWithError(this->cpu.breakRequest.value());
 	}
 
 	void SNES::loadRom(const std::string &path)
@@ -62,6 +64,7 @@ namespace ComSquare
 	{
 		this->enableCPUDebugging(true);
 		this->_cpuDebugger->showError(exception);
+		this->cpu.breakRequest = std::nullopt;
 	}
 
 	void SNES::enableCPUDebugging(bool pause)

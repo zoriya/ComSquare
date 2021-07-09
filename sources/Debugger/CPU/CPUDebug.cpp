@@ -150,7 +150,7 @@ namespace ComSquare::Debugger::CPU
 	{
 		QMessageBox msg;
 		msg.setIcon(QMessageBox::Critical);
-		msg.setText("Invalid rom action");
+		msg.setText("CPU paused");
 		msg.setInformativeText(error.what());
 		msg.exec();
 	}

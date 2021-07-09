@@ -8,29 +8,30 @@
 #include "Exceptions/InvalidAddress.hpp"
 #include "Models/Vector2.hpp"
 
-namespace ComSquare::PPU::Utils::Debug {
+namespace ComSquare::PPU::Utils::Debug
+{
 	void populateEnvironment(PPU &ppu, int dumpNumber);
 }
 
 namespace ComSquare::PPU
 {
-	PPU::PPU(Renderer::IRenderer &renderer):
-		vram(VramSize, ComSquare::VRam, "VRAM"),
-		oamram(OAMRamSize, ComSquare::OAMRam, "OAMRAM"),
-		cgram(CGRamSize, ComSquare::CGRam, "CGRAM"),
-		_renderer(renderer),
-		_backgrounds{
-			Background(*this, 1, false),
-			Background(*this, 1, true),
-			Background(*this, 2, false),
-			Background(*this, 2, true),
-			Background(*this, 3, false),
-			Background(*this, 3, true),
-			Background(*this, 4, false),
-			Background(*this, 4, true)
-		},
-		_mainScreen({{{0}}}),
-		_subScreen({{{0}}})
+	PPU::PPU(Renderer::IRenderer &renderer)
+		: vram(VramSize, ComSquare::VRam, "VRAM"),
+		  oamram(OAMRamSize, ComSquare::OAMRam, "OAMRAM"),
+		  cgram(CGRamSize, ComSquare::CGRam, "CGRAM"),
+		  _renderer(renderer),
+		  _backgrounds {
+			  Background(*this, 1, false),
+			  Background(*this, 1, true),
+			  Background(*this, 2, false),
+			  Background(*this, 2, true),
+			  Background(*this, 3, false),
+			  Background(*this, 3, true),
+			  Background(*this, 4, false),
+			  Background(*this, 4, true)
+		  },
+		  _mainScreen({{{0}}}),
+		  _subScreen({{{0}}})
 	{
 		this->_registers._isLowByte = true;
 
@@ -39,10 +40,9 @@ namespace ComSquare::PPU
 
 	uint8_t PPU::read(uint24_t addr)
 	{
-		//return 0;
 		switch (addr) {
 		case PpuRegisters::mpyl:
-			return  this->_registers._mpy.mpyl;
+			return this->_registers._mpy.mpyl;
 		case PpuRegisters::mpym:
 			return this->_registers._mpy.mpym;
 		case PpuRegisters::mpyh:
@@ -79,12 +79,11 @@ namespace ComSquare::PPU
 			return 0;
 		default:
 			throw InvalidAddress("PPU Internal Registers read ", addr + this->_start);
- 		}
+		}
 	}
 
 	void PPU::write(uint24_t addr, uint8_t data)
 	{
-		//return;
 		switch (addr) {
 		case PpuRegisters::inidisp:
 			this->_registers._inidisp.raw = data;
@@ -128,11 +127,15 @@ namespace ComSquare::PPU
 			this->_backgrounds[addr - PpuRegisters::bg1sc + 1].setTileMapStartAddress(
 				this->getTileMapStartAddress(addr - PpuRegisters::bg1sc + 1));
 			this->_backgrounds[addr - PpuRegisters::bg1sc].setTilemaps(
-				{static_cast<bool>(this->_registers._bgsc[addr - PpuRegisters::bg1sc].tilemapHorizontalMirroring),
-				 static_cast<bool>(this->_registers._bgsc[addr - PpuRegisters::bg1sc].tilemapVerticalMirroring)});
+				{
+					static_cast<bool>(this->_registers._bgsc[addr - PpuRegisters::bg1sc].tilemapHorizontalMirroring),
+					static_cast<bool>(this->_registers._bgsc[addr - PpuRegisters::bg1sc].tilemapVerticalMirroring)
+				});
 			this->_backgrounds[addr - PpuRegisters::bg1sc + 1].setTilemaps(
-				{static_cast<bool>(this->_registers._bgsc[addr - PpuRegisters::bg1sc].tilemapHorizontalMirroring),
-				 static_cast<bool>(this->_registers._bgsc[addr - PpuRegisters::bg1sc].tilemapVerticalMirroring)});
+				{
+					static_cast<bool>(this->_registers._bgsc[addr - PpuRegisters::bg1sc].tilemapHorizontalMirroring),
+					static_cast<bool>(this->_registers._bgsc[addr - PpuRegisters::bg1sc].tilemapVerticalMirroring)
+				});
 			break;
 		case PpuRegisters::bg12nba:
 		case PpuRegisters::bg34nba:
@@ -145,7 +148,9 @@ namespace ComSquare::PPU
 		case PpuRegisters::bg2hofs:
 		case PpuRegisters::bg3hofs:
 		case PpuRegisters::bg4hofs:
-			this->_registers._bgofs[addr - PpuRegisters::bg1hofs].raw = ((data << 8) | (this->_ppuState.hvSharedScrollPrevValue & ~7) | (this->_ppuState.hScrollPrevValue & 7)) & 0x3FF;
+			this->_registers._bgofs[addr - PpuRegisters::bg1hofs].raw =
+				((data << 8) | (this->_ppuState.hvSharedScrollPrevValue & ~7) | (this->_ppuState.hScrollPrevValue & 7))
+					& 0x3FF;
 			this->_ppuState.hScrollPrevValue = data;
 			this->_ppuState.hvSharedScrollPrevValue = data;
 			break;
@@ -156,7 +161,8 @@ namespace ComSquare::PPU
 		case PpuRegisters::bg2vofs:
 		case PpuRegisters::bg3vofs:
 		case PpuRegisters::bg4vofs:
-			this->_registers._bgofs[addr - PpuRegisters::bg1hofs].raw = ((data << 8) | this->_ppuState.hvSharedScrollPrevValue) & 0x3FF;
+			this->_registers._bgofs[addr - PpuRegisters::bg1hofs].raw =
+				((data << 8) | this->_ppuState.hvSharedScrollPrevValue) & 0x3FF;
 			this->_ppuState.hvSharedScrollPrevValue = data;
 			break;
 		case PpuRegisters::vmain:
@@ -182,21 +188,18 @@ namespace ComSquare::PPU
 			this->updateVramReadBuffer();
 			break;
 		case PpuRegisters::vmdatal:
-			//throw InvalidAddress("vmdata", addr);
-			//std::cout << "vmdatal" << std::endl;
-			if (!this->_registers._inidisp.fblank) {
+//			if (!this->_registers._inidisp.fblank) {
 				this->_registers._vmdata.vmdatal = data;
 				this->vram.write(this->getVramAddress(), data);
-			}
+//			}
 			if (!this->_registers._vmain.incrementMode)
 				this->_registers._vmadd.vmadd += this->_registers._incrementAmount;
 			break;
 		case PpuRegisters::vmdatah:
-			//std::cout << "vmdatah" << std::endl;
-			if (!this->_registers._inidisp.fblank) {
+//			if (!this->_registers._inidisp.fblank) {
 				this->_registers._vmdata.vmdatah = data;
 				this->vram.write(this->getVramAddress() + 1, data);
-			}
+//			}
 			if (this->_registers._vmain.incrementMode)
 				this->_registers._vmadd.vmadd += this->_registers._incrementAmount;
 			break;
@@ -207,7 +210,8 @@ namespace ComSquare::PPU
 		case PpuRegisters::m7b:
 		case PpuRegisters::m7c:
 		case PpuRegisters::m7d:
-			this->_registers._m7[addr - PpuRegisters::m7a].m7 = (this->_registers._m7[addr - PpuRegisters::m7a].m7 << 8U) | data;
+			this->_registers._m7[addr - PpuRegisters::m7a].m7 =
+				(this->_registers._m7[addr - PpuRegisters::m7a].m7 << 8U) | data;
 			break;
 		case PpuRegisters::m7x:
 		case PpuRegisters::m7y:
@@ -220,8 +224,7 @@ namespace ComSquare::PPU
 		case PpuRegisters::cgdata:
 			if (this->_registers._isLowByte) {
 				this->_registers._cgdata.cgdatal = data;
-			}
-			else {
+			} else {
 				this->_registers._cgdata.cgdatah = data;
 				this->cgram.write(this->_registers._cgadd, this->_registers._cgdata.cgdatal);
 				this->_registers._cgadd++;
@@ -273,7 +276,7 @@ namespace ComSquare::PPU
 		case PpuRegisters::setini:
 			this->_registers._setini.raw = data;
 			break;
-		//TODO adding the rest of the registers. oaf !
+			//TODO adding the rest of the registers. oaf !
 		case PpuRegisters::stat77: // some roms write here but it is useless
 			break;
 		default:
@@ -386,17 +389,17 @@ namespace ComSquare::PPU
 			return "VMDATAH";
 		case PpuRegisters::m7sel:
 			return "M7SEL";
-		case PpuRegisters ::m7a:
+		case PpuRegisters::m7a:
 			return "M7A";
-		case PpuRegisters ::m7b:
+		case PpuRegisters::m7b:
 			return "M7B";
-		case PpuRegisters ::m7c:
+		case PpuRegisters::m7c:
 			return "M7C";
-		case PpuRegisters ::m7d:
+		case PpuRegisters::m7d:
 			return "M7D";
-		case PpuRegisters ::m7x:
+		case PpuRegisters::m7x:
 			return "M7X";
-		case PpuRegisters ::m7y:
+		case PpuRegisters::m7y:
 			return "M7Y";
 		case PpuRegisters::cgadd:
 			return "CGADD";
@@ -667,7 +670,8 @@ namespace ComSquare::PPU
 
 	Vector2<int> PPU::getBgScroll(int bgNumber) const
 	{
-		return Vector2<int>(this->_registers._bgofs[(bgNumber - 1) * 2].offsetBg, this->_registers._bgofs[(bgNumber - 1) * 2 + 1].offsetBg);
+		return Vector2<int>(this->_registers._bgofs[(bgNumber - 1) * 2].offsetBg,
+		                    this->_registers._bgofs[(bgNumber - 1) * 2 + 1].offsetBg);
 	}
 
 	const Registers &PPU::getWriteRegisters() const
