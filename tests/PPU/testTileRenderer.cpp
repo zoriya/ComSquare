@@ -160,7 +160,6 @@ TEST_CASE("getPixelReferenceFromTileRow 8bpp", "[PPU][TileRenderer]")
 	int j = 0;
 	for (const auto &row : correctValues) {
 		for (const auto &refValue : row) {
-			std::cout << i << ' ' << j << std::endl;
 			CHECK(tileRenderer.getPixelReferenceFromTileRow(i, j++) == refValue);
 		}
 		j = 0;
