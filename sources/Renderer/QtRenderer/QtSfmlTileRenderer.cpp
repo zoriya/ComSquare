@@ -17,12 +17,10 @@ namespace ComSquare::Renderer
 
 	void QtSFMLTileRenderer::onUpdate()
 	{
-		this->_window.clear(sf::Color::Black);
 		for (unsigned long i = 0; i < this->buffer.size(); i++) {
 			for (unsigned long j = 0; j < this->buffer[i].size(); j++) {
 				this->putPixel(j, i, this->buffer[i][j]);
 			}
 		}
-		this->drawScreen();
 	}
 }

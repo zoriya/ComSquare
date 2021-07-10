@@ -47,6 +47,7 @@ namespace ComSquare::Renderer
 
 	void SFRenderer::drawScreen()
 	{
+		this->_window.clear();
 		this->_texture.update(reinterpret_cast<sf::Uint8 *>(this->_pixelBuffer));
 		this->_sprite.setTexture(this->_texture);
 		this->_window.draw(this->_sprite);

@@ -2,8 +2,7 @@
 // Created by cbihan on 1/30/20.
 //
 
-#ifndef COMSQUARE_SFRENDERER_HPP
-#define COMSQUARE_SFRENDERER_HPP
+#pragma once
 
 #include "IRenderer.hpp"
 #include <SFML/Graphics.hpp>
@@ -14,16 +13,24 @@
 
 namespace ComSquare::Renderer
 {
-	class InvalidPixelPosition : public std::exception {
+	class InvalidPixelPosition : public std::exception
+	{
 	private:
 		std::string _msg;
 	public:
 		explicit InvalidPixelPosition(const std::string &name, unsigned int x, unsigned int width)
-			: _msg("Trying to place a pixel at an invalid " + name + " (" + std::to_string(x) + ">=" + std::to_string(width) + ")") {}
-		const char *what() const noexcept override { return this->_msg.c_str(); }
+			: _msg("Trying to place a pixel at an invalid " + name
+				+ " (" + std::to_string(x) + ">=" + std::to_string(width)+ ")")
+		{}
+
+		[[nodiscard]] const char *what() const noexcept override
+		{
+			return this->_msg.c_str();
+		}
 	};
 
-	class SFRenderer : public IRenderer {
+	class SFRenderer : public IRenderer
+	{
 	protected:
 		//! @brief The Renderer for the window.
 		sf::RenderWindow _window;
@@ -72,5 +79,3 @@ namespace ComSquare::Renderer
 		~SFRenderer();
 	};
 }
-
-#endif //COMSQUARE_SFRENDERER_HPP

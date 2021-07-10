@@ -22,13 +22,16 @@ namespace ComSquare::Renderer
 {
 	QtSFML::QtSFML(QWidget *parentWidget)
 		: _window(parentWidget),
-		_sfWidget(nullptr)
-	{
-	}
+		  _sfWidget(nullptr)
+	{}
 
 	void QtSFML::createWindow(SNES &snes, int maxFPS)
 	{
-		this->_sfWidget = new QtFullSFML(snes, this->_window, QPoint(0, 0), QSize(this->_window->width(), this->_window->height()), maxFPS);
+		this->_sfWidget = new QtFullSFML(snes,
+		                                 this->_window,
+		                                 QPoint(0, 0),
+		                                 QSize(this->_window->width(), this->_window->height()),
+		                                 maxFPS);
 	}
 
 	void QtSFML::putPixel(unsigned y, unsigned x, uint32_t rgba)
@@ -48,10 +51,10 @@ namespace ComSquare::Renderer
 		this->_window->setWindowTitle((newWindowName + " - ComSquare").c_str());
 	}
 
-	QtFullSFML::QtFullSFML(SNES &snes, QWidget *parent, const QPoint &position, const QSize &size, int frameRate) :
-		QtWidgetSFML(parent, position, size, frameRate),
-		_snes(snes)
-	{ }
+	QtFullSFML::QtFullSFML(SNES &snes, QWidget *parent, const QPoint &position, const QSize &size, int frameRate)
+		: QtWidgetSFML(parent, position, QSize(1024, 1024), frameRate),
+		  _snes(snes)
+	{}
 
 	void QtFullSFML::onUpdate()
 	{
@@ -72,8 +75,9 @@ namespace ComSquare::Renderer
 
 	void QtFullSFML::openRom()
 	{
-		auto rom = QFileDialog::getOpenFileName(nullptr, tr("Open a ROM"), QDir::homePath(),
-												tr("Rom files (*.sfc, *.smc);;Audio rom files (*.spc);;All files (*)"));
+		auto rom = QFileDialog::getOpenFileName(nullptr, tr("Open a ROM"),
+		                                        QDir::homePath(),
+		                                        tr("Rom files (*.sfc, *.smc);;Audio rom files (*.spc);;All files (*)"));
 		if (!rom.isEmpty())
 			this->_snes.loadRom(rom.toStdString());
 	}
@@ -84,6 +88,7 @@ namespace ComSquare::Renderer
 	}
 
 #ifdef DEBUGGER_ENABLED
+
 	void QtFullSFML::enableDebugCPU()
 	{
 		this->_snes.enableCPUDebugging();
@@ -123,6 +128,7 @@ namespace ComSquare::Renderer
 	{
 		this->_snes.enableTileViewer();
 	}
+
 #endif
 
 	QtSFMLWindow::QtSFMLWindow(int height, int width)

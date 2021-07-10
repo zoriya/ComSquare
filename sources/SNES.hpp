@@ -52,6 +52,9 @@ namespace ComSquare
 		std::optional<Debugger::TileViewer> _tileViewer;
 #endif
 	public:
+		//! @brief The renderer used to display pixels and play sounds.
+		Renderer::IRenderer &renderer;
+
 		//! @brief The memory bus that map addresses to components.
 		Memory::MemoryBus bus;
 
@@ -69,12 +72,12 @@ namespace ComSquare
 		APU::APU apu;
 
 		//! @brief Create all the components using a common memory bus for all of them.
-		//! @param renderer The renderer to use.
-		explicit SNES(Renderer::IRenderer &renderer);
+		//! @param render The render to use.
+		explicit SNES(Renderer::IRenderer &render);
 		//! @brief Create all the components using a common memory bus for all of them and load a rom
 		//! @param ramPath The rom to load.
-		//! @param renderer The renderer to use.
-		SNES(const std::string &ramPath, Renderer::IRenderer &renderer);
+		//! @param render The render to use.
+		SNES(const std::string &ramPath, Renderer::IRenderer &render);
 		//! @brief A SNES is not copyable.
 		SNES(const SNES &) = delete;
 		//! @brief A SNES can't be assigned

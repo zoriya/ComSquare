@@ -7,24 +7,26 @@
 
 namespace ComSquare
 {
-	SNES::SNES(Renderer::IRenderer &renderer)
-	    : bus(),
+	SNES::SNES(Renderer::IRenderer &render)
+	    : renderer(render),
+	      bus(),
 	      cartridge(),
 	      wram(16384, WRam, "WRam"),
 	      sram(0, SRam, "SRam"),
 	      cpu(this->bus, cartridge.header),
-	      ppu(renderer),
-	      apu(renderer)
+	      ppu(render),
+	      apu(render)
 	{}
 
-	SNES::SNES(const std::string &romPath, Renderer::IRenderer &renderer)
-	    : bus(),
+	SNES::SNES(const std::string &romPath, Renderer::IRenderer &render)
+	    : renderer(render),
+	      bus(),
 	      cartridge(romPath),
 	      wram(16384, WRam, "WRam"),
 	      sram(this->cartridge.header.sramSize, SRam, "SRam"),
 	      cpu(this->bus, cartridge.header),
-	      ppu(renderer),
-	      apu(renderer)
+	      ppu(render),
+	      apu(render)
 	{
 		this->bus.mapComponents(*this);
 		if (this->cartridge.getType() == Cartridge::Audio)
@@ -56,6 +58,7 @@ namespace ComSquare
 		this->apu.reset();
 		if (this->cartridge.getType() == Cartridge::Audio)
 			this->apu.loadFromSPC(this->cartridge);
+		this->renderer.setWindowName(this->cartridge.header.gameName);
 	}
 
 #ifdef DEBUGGER_ENABLED
