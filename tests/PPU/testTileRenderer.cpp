@@ -527,3 +527,50 @@ TEST_CASE("getPalette 8bpp", "[PPU][TileRenderer]")
 		i = 0;
 	}
 }
+
+TEST_CASE("render 2bpp", "[PPU][TileRenderer]")
+{
+	ComSquare::Ram::Ram vram(100, static_cast<ComSquare::Component>(0), "vramTest");
+	ComSquare::Ram::Ram cgram(512, static_cast<ComSquare::Component>(0), "cgramTest");
+	ComSquare::PPU::TileRenderer tileRenderer(vram, cgram);
+
+	tileRenderer.setBpp(2);
+	tileRenderer.setPaletteIndex(1);
+
+	std::vector<std::string> vramValues {
+		"7C00BA7C827C7C00",
+		"1000D6007C003800"
+	};
+
+	std::vector<int> cgramValues = {
+		0xCE, 0x69, 0xDF, 0x63, 0xDE, 0x16, 0x8B, 0x00,
+		0x00, 0x00, 0xBF, 0x67, 0x98, 0x42, 0x0E, 0x15
+	};
+	//{0x3600, 0x67bf, 0x4298, 0x150e},
+//		0 FFEFCE  C6A584 734229
+	uint32_t correctValues[8][8] = {
+		{0x00000000, 0xFFEFCEFF, 0xFFEFCEFF, 0xFFEFCEFF, 0xFFEFCEFF, 0xFFEFCEFF, 0x00000000, 0x00000000},
+		{0xFFEFCEFF, 0xC6A584FF, 0x734229FF, 0x734229FF, 0x734229FF, 0xC6A584FF, 0xFFEFCEFF, 0x00000000},
+		{0xFFEFCEFF, 0xC6A584FF, 0xC6A584FF, 0xC6A584FF, 0xC6A584FF, 0xC6A584FF, 0xFFEFCEFF, 0x00000000},
+		{0x00000000, 0xFFEFCEFF, 0xFFEFCEFF, 0xFFEFCEFF, 0xFFEFCEFF, 0xFFEFCEFF, 0x00000000, 0x00000000},
+		{0x00000000, 0x00000000, 0x00000000, 0xFFEFCEFF, 0x00000000, 0x00000000, 0x00000000, 0x00000000},
+		{0xFFEFCEFF, 0xFFEFCEFF, 0x00000000, 0xFFEFCEFF, 0x00000000, 0xFFEFCEFF, 0xFFEFCEFF, 0x00000000},
+		{0x00000000, 0xFFEFCEFF, 0xFFEFCEFF, 0xFFEFCEFF, 0xFFEFCEFF, 0xFFEFCEFF, 0x00000000, 0x00000000},
+		{0x00000000, 0x00000000, 0xFFEFCEFF, 0xFFEFCEFF, 0xFFEFCEFF, 0x00000000, 0x00000000, 0x00000000}
+	};
+
+	fillRAM(vramValues, vram);
+	fillRAM(cgramValues, cgram);
+
+	tileRenderer.render(0);
+
+	int i = 0;
+	int j = 0;
+	for (const auto &row : tileRenderer.buffer) {
+		for (const auto &pixel : row) {
+			CHECK(correctValues[i][j++] == pixel);
+		}
+		j = 0;
+		i++;
+	}
+}

@@ -18,8 +18,8 @@ namespace ComSquare::PPU
 namespace ComSquare::PPU::Utils
 {
 
-	//! @brief Transform SNES color code BGR to uint32_t RGB
-	uint32_t getRealColor(uint16_t color);
+	//! @brief Transform SNES color code BGR to uint32_t RGBA
+	uint32_t getRealColor(uint16_t cgramColor);
 	//! @brief Used to parse easily VRAM Tile information
 	union TileData {
 		struct {

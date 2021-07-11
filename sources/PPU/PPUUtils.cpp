@@ -7,16 +7,17 @@
 namespace ComSquare::PPU::Utils
 {
 
-	uint32_t getRealColor(uint16_t color)
+	uint8_t To8Bit(int color)
 	{
-		uint8_t blue = (color & 0x7D00U) >> 10U;
-		uint8_t green = (color & 0x03E0U) >> 5U;
-		uint8_t red = (color & 0x001FU);
-		uint32_t pixelTmp = 0xFF;
+		return (uint)((color << 3) + (color >> 2));
+	}
 
-		pixelTmp += (red * 255U / 31U) << 24U;
-		pixelTmp += (green * 255U / 31U) << 16U;
-		pixelTmp += (blue * 255U / 31U) << 8U;
-		return pixelTmp;
+	uint32_t getRealColor(uint16_t cgramColor)
+	{
+		uint b = To8Bit(cgramColor >> 10);
+		uint g = To8Bit((cgramColor >> 5) & 0x1F);
+		uint r = To8Bit(cgramColor & 0x1F);
+
+		return (0x000000FF | (r << 24) | (g << 16) | (b << 8));
 	}
 }
