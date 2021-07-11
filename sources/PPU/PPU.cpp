@@ -559,7 +559,7 @@ namespace ComSquare::PPU
 		colorPalette = this->cgram.read(0);
 		colorPalette += this->cgram.read(1) << 8U;
 
-		uint32_t color = Utils::getRealColor(colorPalette);
+		uint32_t color = Utils::CGRAMColorToRGBA(colorPalette);
 		for (auto &row : this->_subScreen)
 			row.fill(color);
 		for (auto &row : this->_mainScreenLevelMap)

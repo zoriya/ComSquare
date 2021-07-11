@@ -49,7 +49,7 @@ namespace ComSquare::PPU
 		//! @param nbPalette The index of the palette wanted
 		//! @return The array of color of the palette
 		//! @note The return and argument depends on the current bpp
-		//! @warning Values are CGRAM colors use PPU::getRealColor function to get the actual real color
+		//! @warning Values are CGRAM colors use PPU::CGRAMColorToRGBA function to get the actual real color
 		std::vector<uint16_t> getPalette(int nbPalette);
 		//! @brief read the 2bpp value for a pixel (used multple times for 4bpp and 8bpp)
 		//! @param tileRowAddress Address where the read is done. Usage: Address of the tile row to render

@@ -46,7 +46,7 @@ namespace ComSquare::Debugger
 		uint8_t blue = (cgramValue & 0x7D00U) >> 10U;
 		uint8_t green = (cgramValue & 0x03E0U) >> 5U;
 		uint8_t red = (cgramValue & 0x001FU);
-		uint32_t hexColorValue = PPU::Utils::getRealColor(cgramValue);
+		uint32_t hexColorValue = PPU::Utils::CGRAMColorToRGBA(cgramValue);
 
 		this->_ui.indexLineEdit->setText(std::to_string(addr / 2).c_str());
 		this->_ui.valueLineEdit->setText(Utility::to_hex(cgramValue).c_str());
@@ -90,7 +90,7 @@ namespace ComSquare::Debugger
 		uint16_t cgramAddress = idDisplayTile / 8 * 16 + (idDisplayTile % 8 * 2);
 		uint16_t addressValue = this->_ppu.cgramRead(cgramAddress);
 		addressValue += this->_ppu.cgramRead(cgramAddress + 1) << 8U;
-		uint32_t color = PPU::Utils::getRealColor(addressValue);
+		uint32_t color = PPU::Utils::CGRAMColorToRGBA(addressValue);
 
 		return QColor(static_cast<int>((color & 0xFF000000) >> 24),
 		              static_cast<int>((color & 0x00FF0000) >> 16),

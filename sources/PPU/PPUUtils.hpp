@@ -17,9 +17,14 @@ namespace ComSquare::PPU
 
 namespace ComSquare::PPU::Utils
 {
-
+	//! @brief Transform CGRAM color data to 8bits
+	//! @note Used with b, g and r values
+	//! @return The 8 bit value of the color
+	inline uint8_t to8Bit(int color);
 	//! @brief Transform SNES color code BGR to uint32_t RGBA
-	uint32_t getRealColor(uint16_t cgramColor);
+	//! @param CGRAMColor The color of the CGRAM
+	//! @return The CGRAM color to RGBA format
+	uint32_t CGRAMColorToRGBA(uint16_t CGRAMColor);
 	//! @brief Used to parse easily VRAM Tile information
 	union TileData {
 		struct {

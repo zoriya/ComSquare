@@ -7,9 +7,11 @@
 #include <span>
 #include <vector>
 #include <catch2/catch_test_macros.hpp>
+#include <iomanip>
 #include "PPU/TileRenderer.hpp"
 #include "Ram/Ram.hpp"
 #include "PPU/Tile.hpp"
+#include "PPU/PPUUtils.hpp"
 
 void fillRAM(const std::vector<std::string> &values, ComSquare::Ram::Ram &ram)
 {
@@ -562,6 +564,134 @@ TEST_CASE("render 2bpp", "[PPU][TileRenderer]")
 	fillRAM(vramValues, vram);
 	fillRAM(cgramValues, cgram);
 
+	tileRenderer.render(0);
+
+	int i = 0;
+	int j = 0;
+	for (const auto &row : tileRenderer.buffer) {
+		for (const auto &pixel : row) {
+			CHECK(correctValues[i][j++] == pixel);
+		}
+		j = 0;
+		i++;
+	}
+}
+
+TEST_CASE("render 4bpp", "[PPU][TileRenderer]")
+{
+	ComSquare::Ram::Ram vram(100, static_cast<ComSquare::Component>(0), "vramTest");
+	ComSquare::Ram::Ram cgram(512, static_cast<ComSquare::Component>(0), "cgramTest");
+	ComSquare::PPU::TileRenderer tileRenderer(vram, cgram);
+
+	tileRenderer.setBpp(4);
+	tileRenderer.setPaletteIndex(0);
+
+	std::vector<std::string> vramValues {
+		"7C7C82EE82FE7C7C",
+		"0000D68254443838",
+		"7C00AA1082007C00",
+		"1000540038000000"
+	};
+
+	std::vector<int> cgramValues = {
+		0x00, 0x00,
+		0x00, 0x00,
+		0xFF, 0x7F,
+		0x21, 0x0E,
+		0xE2, 0x0E,
+		0xE3, 0x0F,
+		0x79, 0x0C,
+		0xFD, 0x11,
+		0x9F, 0x07,
+		0xBF, 0x4B,
+		0xDD, 0x01,
+		0xCB, 0x0C,
+		0x00, 0x00,
+		0xDF, 0x55,
+		0x3C, 0x0C,
+		0x8B, 0x10,
+		0xCE, 0x69,
+		0x95, 0x7A
+	};
+
+	uint32_t correctValues[8][8] = {
+		{0x00000000, 0xef7b21ff, 0xef7b21ff, 0xef7b21ff, 0xef7b21ff, 0xef7b21ff, 0x00000000, 0x00000000},
+		{0xef7b21ff, 0xffffffff, 0xce1818ff, 0xffe708ff, 0xce1818ff, 0xffffffff, 0xef7b21ff, 0x00000000},
+		{0xef7b21ff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0xef7b21ff, 0x00000000},
+		{0x00000000, 0xef7b21ff, 0xef7b21ff, 0xef7b21ff, 0xef7b21ff, 0xef7b21ff, 0x00000000, 0x00000000},
+		{0x00000000, 0x00000000, 0x00000000, 0x10bd18ff, 0x00000000, 0x00000000, 0x00000000, 0x00000000},
+		{0x088c18ff, 0x18ff18ff, 0x00000000, 0x18ff18ff, 0x00000000, 0x18ff18ff, 0x088c18ff, 0x00000000},
+		{0x00000000, 0x088c18ff, 0x10bd18ff, 0x18ff18ff, 0x10bd18ff, 0x088c18ff, 0x00000000, 0x00000000},
+		{0x00000000, 0x00000000, 0x088c18ff, 0x088c18ff, 0x088c18ff, 0x00000000, 0x00000000, 0x00000000}
+	};
+
+	fillRAM(vramValues, vram);
+	fillRAM(cgramValues, cgram);
+
+	tileRenderer.render(0);
+
+	int i = 0;
+	int j = 0;
+	for (const auto &row : tileRenderer.buffer) {
+		for (const auto &pixel : row) {
+			CHECK(correctValues[i][j++] == pixel);
+		}
+		j = 0;
+		i++;
+	}
+}
+
+TEST_CASE("render 8bpp", "[PPU][TileRenderer]")
+{
+	ComSquare::Ram::Ram vram(100, static_cast<ComSquare::Component>(0), "vramTest");
+	ComSquare::Ram::Ram cgram(512, static_cast<ComSquare::Component>(0), "cgramTest");
+	ComSquare::PPU::TileRenderer tileRenderer(vram, cgram);
+
+	tileRenderer.setBpp(8);
+	tileRenderer.setPaletteIndex(0);
+
+	std::vector<std::string> vramValues{
+		"0C7C5CA0C0BC3C001010964038282018",
+		"0000020002007C000000820044003800",
+		"007C44927C82007C1010D6D67C7C3838",
+		"00002800000000000000000000000000"
+	};
+
+	uint8_t correctReferences[8][8] = {
+		{0x00, 0x22, 0x22, 0x22, 0x23, 0x23, 0x00, 0x00},
+		{0x22, 0x11, 0x42, 0x21, 0x41, 0x11, 0x24, 0x00},
+		{0x23, 0x11, 0x12, 0x12, 0x12, 0x12, 0x24, 0x00},
+		{0x00, 0x24, 0x25, 0x25, 0x25, 0x25, 0x00, 0x00},
+		{0x00, 0x00, 0x00, 0x33, 0x00, 0x00, 0x00, 0x00},
+		{0x35, 0x32, 0x00, 0x31, 0x00, 0x31, 0x35, 0x00},
+		{0x00, 0x34, 0x33, 0x31, 0x33, 0x34, 0x00, 0x00},
+		{0x00, 0x00, 0x35, 0x36, 0x36, 0x00, 0x00, 0x00},
+	};
+
+	for (int i = 0; i < 512; i++) {
+		cgram.write(i, std::rand());
+	}
+
+	uint32_t correctValues[8][8] = {{0}};
+
+	int k = 0;
+	int l = 0;
+	for (const auto &row : correctReferences) {
+		for (const auto &reference : row) {
+			if (reference == 0) {
+				l++;
+				continue;
+			}
+			correctValues[k][l++] = ComSquare::PPU::Utils::CGRAMColorToRGBA(
+				cgram.read(reference * 2)
+				| (cgram.read((reference * 2) + 1) << 8)
+			);
+		}
+		l = 0;
+		k++;
+	}
+
+	fillRAM(vramValues, vram);
 	tileRenderer.render(0);
 
 	int i = 0;

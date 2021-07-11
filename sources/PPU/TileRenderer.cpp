@@ -29,7 +29,7 @@ namespace ComSquare::PPU
 		for (auto &row : this->buffer) {
 			for (auto &pixel : row) {
 				uint8_t pixelReference = this->getPixelReferenceFromTile(tileAddress, it++);
-				pixel = pixelReference ? Utils::getRealColor(palette[pixelReference]) : 0;
+				pixel = pixelReference ? Utils::CGRAMColorToRGBA(palette[pixelReference]) : 0;
 			}
 		}
 	}
