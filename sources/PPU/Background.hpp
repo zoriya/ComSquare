@@ -110,12 +110,11 @@ namespace ComSquare::PPU
 
 
 		//! @brief Add a bg buffer to another buffer
-		template <std::size_t DEST_SIZE_X, std::size_t DEST_SIZE_Y>
+		template <int levelLow, int levelHigh, std::size_t DEST_SIZE_X, std::size_t DEST_SIZE_Y>
 		static void mergeBackgroundBuffer(std::array<std::array<uint32_t, DEST_SIZE_Y>, DEST_SIZE_X> &bufferDest,
 		                                  std::array<std::array<unsigned char, DEST_SIZE_Y>, DEST_SIZE_X> &pixelDestinationLevelMap,
-		                                  const Background &backgroundSrc,
-		                                  int levelLow,
-		                                  int levelHigh)
+		                                  const Background &backgroundSrc
+		                                  )
 		{
 			int i = 0;
 			int j = 0;

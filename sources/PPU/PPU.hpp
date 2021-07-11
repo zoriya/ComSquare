@@ -624,7 +624,16 @@ namespace ComSquare::PPU
 		//! @brief Render the Main and sub screen correctly
 		void renderMainAndSubScreen();
 		//! @brief Add a bg to the sub and/or main screen
-		void addToMainSubScreen(Background &bg, const Vector2<int> &level);
+		template<int levelLow, int levelHigh>
+		void addToMainSubScreen(Background &bg)
+		{
+			if (this->_registers._t[0].raw & (1U << (bg.getBgNumber() - 1U))) {
+				Background::mergeBackgroundBuffer<levelLow, levelHigh>(this->_mainScreen, this->_mainScreenLevelMap, bg);
+			}
+			if (this->_registers._t[1].raw & (1U << (bg.getBgNumber() - 1U))) {
+				Background::mergeBackgroundBuffer<levelLow, levelHigh>(this->_subScreen, this->_subScreenLevelMap, bg);
+			}
+		}
 		//! @brief Get the current background Mode
 		[[nodiscard]] int getBgMode() const;
 		//! @brief update the Vram buffer

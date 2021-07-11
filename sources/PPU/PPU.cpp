@@ -6,6 +6,7 @@
 #include <bitset>
 #include "PPU.hpp"
 #include "Exceptions/InvalidAddress.hpp"
+#include "PPU/Background.hpp"
 #include "Models/Vector2.hpp"
 
 namespace ComSquare::PPU::Utils::Debug {
@@ -570,27 +571,30 @@ namespace ComSquare::PPU
 		// the starting palette index isn't implemented
 		switch (this->_registers._bgmode.bgMode) {
 		case 0:
-			this->addToMainSubScreen(this->_backgrounds[BgName::bg4NoPriority], {0, 15});
-			this->addToMainSubScreen(this->_backgrounds[BgName::bg3NoPriority], {10, 16});
+			this->addToMainSubScreen<0, 15>(this->_backgrounds[BgName::bg4NoPriority]);
+			this->addToMainSubScreen<10, 16>(this->_backgrounds[BgName::bg3NoPriority]);
 			//sprites  priority 0
 		//	this->addToMainSubScreen(this->_backgrounds[BgName::bg4Priority]);
 		//	this->addToMainSubScreen(this->_backgrounds[BgName::bg3Priority]);
 			//sprites priority 1
-			this->addToMainSubScreen(this->_backgrounds[BgName::bg2NoPriority], {20, 35});
-			this->addToMainSubScreen(this->_backgrounds[BgName::bg1NoPriority], {30, 36});
+			this->addToMainSubScreen<20, 35>(this->_backgrounds[BgName::bg2NoPriority]);
+			this->addToMainSubScreen<30, 36>(this->_backgrounds[BgName::bg1NoPriority]);
 			//sprites priority 2
 		//	this->addToMainSubScreen(this->_backgrounds[BgName::bg2Priority]);
 		//	this->addToMainSubScreen(this->_backgrounds[BgName::bg1Priority]);
 			//sprites priority 3
 			break;
 		case 1:
-			this->addToMainSubScreen(this->_backgrounds[BgName::bg3NoPriority], {0, this->_registers._bgmode.mode1Bg3PriorityBit ? 30 : 5});
+			if (!this->_registers._bgmode.mode1Bg3PriorityBit)
+				this->addToMainSubScreen<0, 5>(this->_backgrounds[BgName::bg3NoPriority]);
+			else
+				this->addToMainSubScreen<0, 30>(this->_backgrounds[BgName::bg3NoPriority]);
 			//sprites priority 0
 		//	if (!this->_registers._bgmode.mode1Bg3PriorityBit)
 		//		this->addToMainSubScreen(this->_backgrounds[BgName::bg3Priority]);
 			//sprites priority 1
-			this->addToMainSubScreen(this->_backgrounds[BgName::bg2NoPriority], {10, 25});
-			this->addToMainSubScreen(this->_backgrounds[BgName::bg1NoPriority], {20, 26});
+			this->addToMainSubScreen<10, 25>(this->_backgrounds[BgName::bg2NoPriority]);
+			this->addToMainSubScreen<20, 26>(this->_backgrounds[BgName::bg1NoPriority]);
 			//sprites priority 2
 		//	this->addToMainSubScreen(this->_backgrounds[BgName::bg2Priority]);
 		//	this->addToMainSubScreen(this->_backgrounds[BgName::bg1Priority]);
@@ -651,16 +655,6 @@ namespace ComSquare::PPU
 			throw std::runtime_error("not implemented");
 		default:
 			throw std::runtime_error("Bg mode not implemented or commented (bg nb " + std::to_string(this->_registers._bgmode.bgMode) + ")");
-		}
-	}
-
-	void PPU::addToMainSubScreen(Background &bg, const Vector2<int> &level)
-	{
-		if (this->_registers._t[0].raw & (1U << (bg.getBgNumber() - 1U))) {
-			Background::mergeBackgroundBuffer(this->_mainScreen, this->_mainScreenLevelMap, bg, level.x, level.y);
-		}
-		if (this->_registers._t[1].raw & (1U << (bg.getBgNumber() - 1U))) {
-			Background::mergeBackgroundBuffer(this->_subScreen, this->_subScreenLevelMap, bg, level.x, level.y);
 		}
 	}
 

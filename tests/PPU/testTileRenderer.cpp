@@ -646,6 +646,7 @@ TEST_CASE("render 8bpp", "[PPU][TileRenderer]")
 	ComSquare::Ram::Ram vram(100, static_cast<ComSquare::Component>(0), "vramTest");
 	ComSquare::Ram::Ram cgram(512, static_cast<ComSquare::Component>(0), "cgramTest");
 	ComSquare::PPU::TileRenderer tileRenderer(vram, cgram);
+	std::srand(std::time(nullptr));
 
 	tileRenderer.setBpp(8);
 	tileRenderer.setPaletteIndex(0);
