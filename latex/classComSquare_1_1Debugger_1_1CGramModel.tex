@@ -1,0 +1,178 @@
+\hypertarget{classComSquare_1_1Debugger_1_1CGramModel}{}\doxysection{Com\+Square\+::Debugger\+::C\+Gram\+Model Class Reference}
+\label{classComSquare_1_1Debugger_1_1CGramModel}\index{ComSquare::Debugger::CGramModel@{ComSquare::Debugger::CGramModel}}
+
+
+The qt model that bind the logs to the view.  
+
+
+
+
+{\ttfamily \#include $<$C\+Gram\+Debug.\+hpp$>$}
+
+
+
+Inheritance diagram for Com\+Square\+::Debugger\+::C\+Gram\+Model\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=206pt]{classComSquare_1_1Debugger_1_1CGramModel__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Com\+Square\+::Debugger\+::C\+Gram\+Model\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classComSquare_1_1Debugger_1_1CGramModel__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classComSquare_1_1Debugger_1_1CGramModel_afd1c039ea6aac3675d21cfaf13b08490}{C\+Gram\+Model}} (\mbox{\hyperlink{classComSquare_1_1PPU_1_1PPU}{Com\+Square\+::\+P\+P\+U\+::\+P\+PU}} \&ppu)
+\item 
+\mbox{\hyperlink{classComSquare_1_1Debugger_1_1CGramModel_af5377c4254b30cc50caa25d674df76b7}{C\+Gram\+Model}} (const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CGramModel}{C\+Gram\+Model}} \&)=delete
+\item 
+const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CGramModel}{C\+Gram\+Model}} \& \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CGramModel_abe367ce6a32307c0e48ee41b461be6b5}{operator=}} (const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CGramModel}{C\+Gram\+Model}} \&)=delete
+\item 
+\mbox{\hyperlink{classComSquare_1_1Debugger_1_1CGramModel_ad3e478bb74f99d2fcae6c768663dda85}{$\sim$\+C\+Gram\+Model}} () override=default
+\item 
+int \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CGramModel_ae249f85052c6510e38b2b0eded9417e3}{row\+Count}} (const Q\+Model\+Index \&parent) const override
+\begin{DoxyCompactList}\small\item\em The number of row the table has. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CGramModel_a05c2993fcff3c428a81b5c4e48913bac}{column\+Count}} (const Q\+Model\+Index \&parent) const override
+\begin{DoxyCompactList}\small\item\em The number of column the table has. \end{DoxyCompactList}\item 
+Q\+Variant \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CGramModel_a053920f8657bbe14d8b701e7cfab5871}{data}} (const Q\+Model\+Index \&index, int role) const override
+\begin{DoxyCompactList}\small\item\em Return a data representing the table cell. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const int \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CGramModel_a93d90e60b475edc5f0cbbf11480a017f}{column}} = 16
+\begin{DoxyCompactList}\small\item\em The number of columns. \end{DoxyCompactList}\item 
+const int \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CGramModel_a37fe304fb9a72e99b7d972bc1a29ee87}{rows}} = 16
+\begin{DoxyCompactList}\small\item\em The number of rows. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CGramModel_abca2700c3f40914ff18911e90ff46220}{x}}
+\item 
+int \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CGramModel_ae8fe14b41e341706a7dd46357159e5f6}{y}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classComSquare_1_1PPU_1_1PPU}{Com\+Square\+::\+P\+P\+U\+::\+P\+PU}} \& \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CGramModel_a9b882025917886d4328b6356288b426a}{\+\_\+ppu}}
+\begin{DoxyCompactList}\small\item\em The ppu to log the cgram. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The qt model that bind the logs to the view. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CGramModel_afd1c039ea6aac3675d21cfaf13b08490}\label{classComSquare_1_1Debugger_1_1CGramModel_afd1c039ea6aac3675d21cfaf13b08490}} 
+\index{ComSquare::Debugger::CGramModel@{ComSquare::Debugger::CGramModel}!CGramModel@{CGramModel}}
+\index{CGramModel@{CGramModel}!ComSquare::Debugger::CGramModel@{ComSquare::Debugger::CGramModel}}
+\doxysubsubsection{\texorpdfstring{CGramModel()}{CGramModel()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Com\+Square\+::\+Debugger\+::\+C\+Gram\+Model\+::\+C\+Gram\+Model (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classComSquare_1_1PPU_1_1PPU}{Com\+Square\+::\+P\+P\+U\+::\+P\+PU}} \&}]{ppu }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CGramModel_af5377c4254b30cc50caa25d674df76b7}\label{classComSquare_1_1Debugger_1_1CGramModel_af5377c4254b30cc50caa25d674df76b7}} 
+\index{ComSquare::Debugger::CGramModel@{ComSquare::Debugger::CGramModel}!CGramModel@{CGramModel}}
+\index{CGramModel@{CGramModel}!ComSquare::Debugger::CGramModel@{ComSquare::Debugger::CGramModel}}
+\doxysubsubsection{\texorpdfstring{CGramModel()}{CGramModel()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Com\+Square\+::\+Debugger\+::\+C\+Gram\+Model\+::\+C\+Gram\+Model (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CGramModel}{C\+Gram\+Model}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CGramModel_ad3e478bb74f99d2fcae6c768663dda85}\label{classComSquare_1_1Debugger_1_1CGramModel_ad3e478bb74f99d2fcae6c768663dda85}} 
+\index{ComSquare::Debugger::CGramModel@{ComSquare::Debugger::CGramModel}!````~CGramModel@{$\sim$CGramModel}}
+\index{````~CGramModel@{$\sim$CGramModel}!ComSquare::Debugger::CGramModel@{ComSquare::Debugger::CGramModel}}
+\doxysubsubsection{\texorpdfstring{$\sim$CGramModel()}{~CGramModel()}}
+{\footnotesize\ttfamily Com\+Square\+::\+Debugger\+::\+C\+Gram\+Model\+::$\sim$\+C\+Gram\+Model (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [default]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CGramModel_a05c2993fcff3c428a81b5c4e48913bac}\label{classComSquare_1_1Debugger_1_1CGramModel_a05c2993fcff3c428a81b5c4e48913bac}} 
+\index{ComSquare::Debugger::CGramModel@{ComSquare::Debugger::CGramModel}!columnCount@{columnCount}}
+\index{columnCount@{columnCount}!ComSquare::Debugger::CGramModel@{ComSquare::Debugger::CGramModel}}
+\doxysubsubsection{\texorpdfstring{columnCount()}{columnCount()}}
+{\footnotesize\ttfamily int Com\+Square\+::\+Debugger\+::\+C\+Gram\+Model\+::column\+Count (\begin{DoxyParamCaption}\item[{const Q\+Model\+Index \&}]{parent }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+The number of column the table has. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CGramModel_a053920f8657bbe14d8b701e7cfab5871}\label{classComSquare_1_1Debugger_1_1CGramModel_a053920f8657bbe14d8b701e7cfab5871}} 
+\index{ComSquare::Debugger::CGramModel@{ComSquare::Debugger::CGramModel}!data@{data}}
+\index{data@{data}!ComSquare::Debugger::CGramModel@{ComSquare::Debugger::CGramModel}}
+\doxysubsubsection{\texorpdfstring{data()}{data()}}
+{\footnotesize\ttfamily Q\+Variant Com\+Square\+::\+Debugger\+::\+C\+Gram\+Model\+::data (\begin{DoxyParamCaption}\item[{const Q\+Model\+Index \&}]{index,  }\item[{int}]{role }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+Return a data representing the table cell. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CGramModel_abe367ce6a32307c0e48ee41b461be6b5}\label{classComSquare_1_1Debugger_1_1CGramModel_abe367ce6a32307c0e48ee41b461be6b5}} 
+\index{ComSquare::Debugger::CGramModel@{ComSquare::Debugger::CGramModel}!operator=@{operator=}}
+\index{operator=@{operator=}!ComSquare::Debugger::CGramModel@{ComSquare::Debugger::CGramModel}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CGramModel}{C\+Gram\+Model}}\& Com\+Square\+::\+Debugger\+::\+C\+Gram\+Model\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CGramModel}{C\+Gram\+Model}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CGramModel_ae249f85052c6510e38b2b0eded9417e3}\label{classComSquare_1_1Debugger_1_1CGramModel_ae249f85052c6510e38b2b0eded9417e3}} 
+\index{ComSquare::Debugger::CGramModel@{ComSquare::Debugger::CGramModel}!rowCount@{rowCount}}
+\index{rowCount@{rowCount}!ComSquare::Debugger::CGramModel@{ComSquare::Debugger::CGramModel}}
+\doxysubsubsection{\texorpdfstring{rowCount()}{rowCount()}}
+{\footnotesize\ttfamily int Com\+Square\+::\+Debugger\+::\+C\+Gram\+Model\+::row\+Count (\begin{DoxyParamCaption}\item[{const Q\+Model\+Index \&}]{parent }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+The number of row the table has. 
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CGramModel_a9b882025917886d4328b6356288b426a}\label{classComSquare_1_1Debugger_1_1CGramModel_a9b882025917886d4328b6356288b426a}} 
+\index{ComSquare::Debugger::CGramModel@{ComSquare::Debugger::CGramModel}!\_ppu@{\_ppu}}
+\index{\_ppu@{\_ppu}!ComSquare::Debugger::CGramModel@{ComSquare::Debugger::CGramModel}}
+\doxysubsubsection{\texorpdfstring{\_ppu}{\_ppu}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1PPU_1_1PPU}{Com\+Square\+::\+P\+P\+U\+::\+P\+PU}}\& Com\+Square\+::\+Debugger\+::\+C\+Gram\+Model\+::\+\_\+ppu\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The ppu to log the cgram. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CGramModel_a93d90e60b475edc5f0cbbf11480a017f}\label{classComSquare_1_1Debugger_1_1CGramModel_a93d90e60b475edc5f0cbbf11480a017f}} 
+\index{ComSquare::Debugger::CGramModel@{ComSquare::Debugger::CGramModel}!column@{column}}
+\index{column@{column}!ComSquare::Debugger::CGramModel@{ComSquare::Debugger::CGramModel}}
+\doxysubsubsection{\texorpdfstring{column}{column}}
+{\footnotesize\ttfamily const int Com\+Square\+::\+Debugger\+::\+C\+Gram\+Model\+::column = 16}
+
+
+
+The number of columns. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CGramModel_a37fe304fb9a72e99b7d972bc1a29ee87}\label{classComSquare_1_1Debugger_1_1CGramModel_a37fe304fb9a72e99b7d972bc1a29ee87}} 
+\index{ComSquare::Debugger::CGramModel@{ComSquare::Debugger::CGramModel}!rows@{rows}}
+\index{rows@{rows}!ComSquare::Debugger::CGramModel@{ComSquare::Debugger::CGramModel}}
+\doxysubsubsection{\texorpdfstring{rows}{rows}}
+{\footnotesize\ttfamily const int Com\+Square\+::\+Debugger\+::\+C\+Gram\+Model\+::rows = 16}
+
+
+
+The number of rows. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CGramModel_abca2700c3f40914ff18911e90ff46220}\label{classComSquare_1_1Debugger_1_1CGramModel_abca2700c3f40914ff18911e90ff46220}} 
+\index{ComSquare::Debugger::CGramModel@{ComSquare::Debugger::CGramModel}!x@{x}}
+\index{x@{x}!ComSquare::Debugger::CGramModel@{ComSquare::Debugger::CGramModel}}
+\doxysubsubsection{\texorpdfstring{x}{x}}
+{\footnotesize\ttfamily int Com\+Square\+::\+Debugger\+::\+C\+Gram\+Model\+::x}
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CGramModel_ae8fe14b41e341706a7dd46357159e5f6}\label{classComSquare_1_1Debugger_1_1CGramModel_ae8fe14b41e341706a7dd46357159e5f6}} 
+\index{ComSquare::Debugger::CGramModel@{ComSquare::Debugger::CGramModel}!y@{y}}
+\index{y@{y}!ComSquare::Debugger::CGramModel@{ComSquare::Debugger::CGramModel}}
+\doxysubsubsection{\texorpdfstring{y}{y}}
+{\footnotesize\ttfamily int Com\+Square\+::\+Debugger\+::\+C\+Gram\+Model\+::y}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+sources/\+Debugger/\mbox{\hyperlink{CGramDebug_8hpp}{C\+Gram\+Debug.\+hpp}}\item 
+sources/\+Debugger/\mbox{\hyperlink{CGramDebug_8cpp}{C\+Gram\+Debug.\+cpp}}\end{DoxyCompactItemize}

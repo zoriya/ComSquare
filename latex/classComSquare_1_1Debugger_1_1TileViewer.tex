@@ -1,0 +1,330 @@
+\hypertarget{classComSquare_1_1Debugger_1_1TileViewer}{}\doxysection{Com\+Square\+::Debugger\+::Tile\+Viewer Class Reference}
+\label{classComSquare_1_1Debugger_1_1TileViewer}\index{ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}}
+
+
+window that allow the user to view all data going through the memory bus.  
+
+
+
+
+{\ttfamily \#include $<$Tile\+Viewer.\+hpp$>$}
+
+
+
+Inheritance diagram for Com\+Square\+::Debugger\+::Tile\+Viewer\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=220pt]{classComSquare_1_1Debugger_1_1TileViewer__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Com\+Square\+::Debugger\+::Tile\+Viewer\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classComSquare_1_1Debugger_1_1TileViewer__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classComSquare_1_1Debugger_1_1TileViewer_ab0e33561305c07927e197b839f4e4484}{Tile\+Viewer}} (\mbox{\hyperlink{classComSquare_1_1SNES}{S\+N\+ES}} \&snes, \mbox{\hyperlink{classComSquare_1_1PPU_1_1PPU}{Com\+Square\+::\+P\+P\+U\+::\+P\+PU}} \&ppu)
+\begin{DoxyCompactList}\small\item\em ctor \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1Debugger_1_1TileViewer_a59d594cc26d4c2b16deeff6b178ec6bd}{Tile\+Viewer}} (const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1TileViewer}{Tile\+Viewer}} \&)=delete
+\begin{DoxyCompactList}\small\item\em copy ctor \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1Debugger_1_1TileViewer_ac2255f598036f63b93bf542bf3cc7b23}{$\sim$\+Tile\+Viewer}} () override=default
+\begin{DoxyCompactList}\small\item\em dtor \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1Debugger_1_1TileViewer}{Tile\+Viewer}} \& \mbox{\hyperlink{classComSquare_1_1Debugger_1_1TileViewer_a72728b5f6732f53f234dfe1aac5ead53}{operator=}} (const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1TileViewer}{Tile\+Viewer}} \&)=delete
+\begin{DoxyCompactList}\small\item\em assignment operator \end{DoxyCompactList}\item 
+uint16\+\_\+t \mbox{\hyperlink{classComSquare_1_1Debugger_1_1TileViewer_afc8d418fe81cefe8d6a5f2c8bad8a3cc}{read}} (uint8\+\_\+t addr)
+\begin{DoxyCompactList}\small\item\em Read data at the C\+G\+R\+AM address send it to the debugger. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSquare_1_1Debugger_1_1TileViewer_a1984038d8a6c543392dc42e97add23ba}{focus}} ()
+\begin{DoxyCompactList}\small\item\em Focus the debugger\textquotesingle{}s window. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSquare_1_1Debugger_1_1TileViewer_afb3ef8801378ebaa4db78242cfae005e}{set\+Palette\+Index}} (int palette\+Index)
+\begin{DoxyCompactList}\small\item\em Set the palette to use for render (index of palette) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSquare_1_1Debugger_1_1TileViewer_aca320901b74f8d5f984b99f5c6353ee3}{set\+Bpp}} (int bpp)
+\begin{DoxyCompactList}\small\item\em Set the bpp to render graphics. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSquare_1_1Debugger_1_1TileViewer_af3c9744dece3630426a5529f4d4d8d18}{set\+Nb\+Columns}} (int nb\+Columns)
+\begin{DoxyCompactList}\small\item\em Set the number of maximum columns. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSquare_1_1Debugger_1_1TileViewer_a5324b474562c17231f11dfdf9d1c2c14}{set\+Render\+Size}} (int size)
+\begin{DoxyCompactList}\small\item\em Set the size of ram to render. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSquare_1_1Debugger_1_1TileViewer_abb2ef1b9e26ab32bb85a06a6d1210f49}{set\+Ram\+Offset}} (int offset)
+\begin{DoxyCompactList}\small\item\em Set the ram offset. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classComSquare_1_1Debugger_1_1TileViewer_aa648b05cbc56050aa33c14cf819cde8c}{get\+Bpp}} () const
+\begin{DoxyCompactList}\small\item\em Get the current bpp. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classComSquare_1_1Debugger_1_1TileViewer_aaa3bac9b572f5c67dddf65f1d6f61aab}{get\+Palette\+Index}} () const
+\begin{DoxyCompactList}\small\item\em Get the index of the current palette used. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classComSquare_1_1Debugger_1_1TileViewer_ac11b22abf647fae5c40a0f57b8cf58f2}{get\+Nb\+Columns}} () const
+\begin{DoxyCompactList}\small\item\em Get the numbr of maximum tile columns to render. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSquare_1_1Debugger_1_1TileViewer_a7b4079af7b2e495f22457c6466043ab5}{internal\+Update}} ()
+\begin{DoxyCompactList}\small\item\em Update the tile renderer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classComSquare_1_1Debugger_1_1TileViewer_a87369e8595194d9f9a67c8d9a3605ba4}{\+\_\+bpp\+Change\+U\+I\+Handler}} (int index)
+\begin{DoxyCompactList}\small\item\em Change the bpp from the index given by the ui (QT combo box) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classComSquare_1_1Debugger_1_1ClosableWindow}{Closable\+Window}} $\ast$ \mbox{\hyperlink{classComSquare_1_1Debugger_1_1TileViewer_a7fc6b63eac07a80198fcc930e7ed9121}{\+\_\+window}}
+\begin{DoxyCompactList}\small\item\em The QT window for this debugger. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1SNES}{S\+N\+ES}} \& \mbox{\hyperlink{classComSquare_1_1Debugger_1_1TileViewer_a38e44c93232e4f833218c5683b12fad8}{\+\_\+snes}}
+\begin{DoxyCompactList}\small\item\em A reference to the snes (to disable the debugger). \end{DoxyCompactList}\item 
+Ui\+::\+Tile\+Viewer \mbox{\hyperlink{classComSquare_1_1Debugger_1_1TileViewer_af3e644fb157110f995d041619a02f395}{\+\_\+ui}}
+\begin{DoxyCompactList}\small\item\em A widget that contain the whole UI. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1PPU_1_1PPU}{Com\+Square\+::\+P\+P\+U\+::\+P\+PU}} \& \mbox{\hyperlink{classComSquare_1_1Debugger_1_1TileViewer_a4353f8f908154e7d33fbe37632969c66}{\+\_\+ppu}}
+\begin{DoxyCompactList}\small\item\em A reference to the ppu. \end{DoxyCompactList}\item 
+std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classComSquare_1_1Renderer_1_1QtSFMLTileRenderer}{Renderer\+::\+Qt\+S\+F\+M\+L\+Tile\+Renderer}} $>$ \mbox{\hyperlink{classComSquare_1_1Debugger_1_1TileViewer_a75248d159cdc070e1a04489dff3670d3}{\+\_\+sf\+Widget}}
+\begin{DoxyCompactList}\small\item\em the window \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1Debugger_1_1RAMTileRenderer}{R\+A\+M\+Tile\+Renderer}} \mbox{\hyperlink{classComSquare_1_1Debugger_1_1TileViewer_a347d60917d804698b17b4686572c4a17}{\+\_\+ram\+Tile\+Renderer}}
+\begin{DoxyCompactList}\small\item\em The ram tile renderer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+window that allow the user to view all data going through the memory bus. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1TileViewer_ab0e33561305c07927e197b839f4e4484}\label{classComSquare_1_1Debugger_1_1TileViewer_ab0e33561305c07927e197b839f4e4484}} 
+\index{ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}!TileViewer@{TileViewer}}
+\index{TileViewer@{TileViewer}!ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}}
+\doxysubsubsection{\texorpdfstring{TileViewer()}{TileViewer()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Com\+Square\+::\+Debugger\+::\+Tile\+Viewer\+::\+Tile\+Viewer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classComSquare_1_1SNES}{S\+N\+ES}} \&}]{snes,  }\item[{\mbox{\hyperlink{classComSquare_1_1PPU_1_1PPU}{Com\+Square\+::\+P\+P\+U\+::\+P\+PU}} \&}]{ppu }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+ctor 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1TileViewer_a59d594cc26d4c2b16deeff6b178ec6bd}\label{classComSquare_1_1Debugger_1_1TileViewer_a59d594cc26d4c2b16deeff6b178ec6bd}} 
+\index{ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}!TileViewer@{TileViewer}}
+\index{TileViewer@{TileViewer}!ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}}
+\doxysubsubsection{\texorpdfstring{TileViewer()}{TileViewer()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Com\+Square\+::\+Debugger\+::\+Tile\+Viewer\+::\+Tile\+Viewer (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1TileViewer}{Tile\+Viewer}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+
+
+copy ctor 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1TileViewer_ac2255f598036f63b93bf542bf3cc7b23}\label{classComSquare_1_1Debugger_1_1TileViewer_ac2255f598036f63b93bf542bf3cc7b23}} 
+\index{ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}!````~TileViewer@{$\sim$TileViewer}}
+\index{````~TileViewer@{$\sim$TileViewer}!ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}}
+\doxysubsubsection{\texorpdfstring{$\sim$TileViewer()}{~TileViewer()}}
+{\footnotesize\ttfamily Com\+Square\+::\+Debugger\+::\+Tile\+Viewer\+::$\sim$\+Tile\+Viewer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [default]}}
+
+
+
+dtor 
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1TileViewer_a87369e8595194d9f9a67c8d9a3605ba4}\label{classComSquare_1_1Debugger_1_1TileViewer_a87369e8595194d9f9a67c8d9a3605ba4}} 
+\index{ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}!\_bppChangeUIHandler@{\_bppChangeUIHandler}}
+\index{\_bppChangeUIHandler@{\_bppChangeUIHandler}!ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}}
+\doxysubsubsection{\texorpdfstring{\_bppChangeUIHandler()}{\_bppChangeUIHandler()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+Debugger\+::\+Tile\+Viewer\+::\+\_\+bpp\+Change\+U\+I\+Handler (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Change the bpp from the index given by the ui (QT combo box) 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1TileViewer_a1984038d8a6c543392dc42e97add23ba}\label{classComSquare_1_1Debugger_1_1TileViewer_a1984038d8a6c543392dc42e97add23ba}} 
+\index{ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}!focus@{focus}}
+\index{focus@{focus}!ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}}
+\doxysubsubsection{\texorpdfstring{focus()}{focus()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+Debugger\+::\+Tile\+Viewer\+::focus (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Focus the debugger\textquotesingle{}s window. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1TileViewer_aa648b05cbc56050aa33c14cf819cde8c}\label{classComSquare_1_1Debugger_1_1TileViewer_aa648b05cbc56050aa33c14cf819cde8c}} 
+\index{ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}!getBpp@{getBpp}}
+\index{getBpp@{getBpp}!ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}}
+\doxysubsubsection{\texorpdfstring{getBpp()}{getBpp()}}
+{\footnotesize\ttfamily int Com\+Square\+::\+Debugger\+::\+Tile\+Viewer\+::get\+Bpp (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the current bpp. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1TileViewer_ac11b22abf647fae5c40a0f57b8cf58f2}\label{classComSquare_1_1Debugger_1_1TileViewer_ac11b22abf647fae5c40a0f57b8cf58f2}} 
+\index{ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}!getNbColumns@{getNbColumns}}
+\index{getNbColumns@{getNbColumns}!ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}}
+\doxysubsubsection{\texorpdfstring{getNbColumns()}{getNbColumns()}}
+{\footnotesize\ttfamily int Com\+Square\+::\+Debugger\+::\+Tile\+Viewer\+::get\+Nb\+Columns (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the numbr of maximum tile columns to render. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1TileViewer_aaa3bac9b572f5c67dddf65f1d6f61aab}\label{classComSquare_1_1Debugger_1_1TileViewer_aaa3bac9b572f5c67dddf65f1d6f61aab}} 
+\index{ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}!getPaletteIndex@{getPaletteIndex}}
+\index{getPaletteIndex@{getPaletteIndex}!ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}}
+\doxysubsubsection{\texorpdfstring{getPaletteIndex()}{getPaletteIndex()}}
+{\footnotesize\ttfamily int Com\+Square\+::\+Debugger\+::\+Tile\+Viewer\+::get\+Palette\+Index (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the index of the current palette used. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1TileViewer_a7b4079af7b2e495f22457c6466043ab5}\label{classComSquare_1_1Debugger_1_1TileViewer_a7b4079af7b2e495f22457c6466043ab5}} 
+\index{ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}!internalUpdate@{internalUpdate}}
+\index{internalUpdate@{internalUpdate}!ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}}
+\doxysubsubsection{\texorpdfstring{internalUpdate()}{internalUpdate()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+Debugger\+::\+Tile\+Viewer\+::internal\+Update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Update the tile renderer. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1TileViewer_a72728b5f6732f53f234dfe1aac5ead53}\label{classComSquare_1_1Debugger_1_1TileViewer_a72728b5f6732f53f234dfe1aac5ead53}} 
+\index{ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}!operator=@{operator=}}
+\index{operator=@{operator=}!ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1Debugger_1_1TileViewer}{Tile\+Viewer}}\& Com\+Square\+::\+Debugger\+::\+Tile\+Viewer\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1TileViewer}{Tile\+Viewer}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+
+
+assignment operator 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1TileViewer_afc8d418fe81cefe8d6a5f2c8bad8a3cc}\label{classComSquare_1_1Debugger_1_1TileViewer_afc8d418fe81cefe8d6a5f2c8bad8a3cc}} 
+\index{ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}!read@{read}}
+\index{read@{read}!ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}}
+\doxysubsubsection{\texorpdfstring{read()}{read()}}
+{\footnotesize\ttfamily uint16\+\_\+t Com\+Square\+::\+Debugger\+::\+Tile\+Viewer\+::read (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{addr }\end{DoxyParamCaption})}
+
+
+
+Read data at the C\+G\+R\+AM address send it to the debugger. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em addr} & The address to read from. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The color value in B\+GR, looks like this xbbbbbgggggrrrrr. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1TileViewer_aca320901b74f8d5f984b99f5c6353ee3}\label{classComSquare_1_1Debugger_1_1TileViewer_aca320901b74f8d5f984b99f5c6353ee3}} 
+\index{ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}!setBpp@{setBpp}}
+\index{setBpp@{setBpp}!ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}}
+\doxysubsubsection{\texorpdfstring{setBpp()}{setBpp()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+Debugger\+::\+Tile\+Viewer\+::set\+Bpp (\begin{DoxyParamCaption}\item[{int}]{bpp }\end{DoxyParamCaption})}
+
+
+
+Set the bpp to render graphics. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1TileViewer_af3c9744dece3630426a5529f4d4d8d18}\label{classComSquare_1_1Debugger_1_1TileViewer_af3c9744dece3630426a5529f4d4d8d18}} 
+\index{ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}!setNbColumns@{setNbColumns}}
+\index{setNbColumns@{setNbColumns}!ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}}
+\doxysubsubsection{\texorpdfstring{setNbColumns()}{setNbColumns()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+Debugger\+::\+Tile\+Viewer\+::set\+Nb\+Columns (\begin{DoxyParamCaption}\item[{int}]{nb\+Columns }\end{DoxyParamCaption})}
+
+
+
+Set the number of maximum columns. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1TileViewer_afb3ef8801378ebaa4db78242cfae005e}\label{classComSquare_1_1Debugger_1_1TileViewer_afb3ef8801378ebaa4db78242cfae005e}} 
+\index{ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}!setPaletteIndex@{setPaletteIndex}}
+\index{setPaletteIndex@{setPaletteIndex}!ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}}
+\doxysubsubsection{\texorpdfstring{setPaletteIndex()}{setPaletteIndex()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+Debugger\+::\+Tile\+Viewer\+::set\+Palette\+Index (\begin{DoxyParamCaption}\item[{int}]{palette\+Index }\end{DoxyParamCaption})}
+
+
+
+Set the palette to use for render (index of palette) 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1TileViewer_abb2ef1b9e26ab32bb85a06a6d1210f49}\label{classComSquare_1_1Debugger_1_1TileViewer_abb2ef1b9e26ab32bb85a06a6d1210f49}} 
+\index{ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}!setRamOffset@{setRamOffset}}
+\index{setRamOffset@{setRamOffset}!ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}}
+\doxysubsubsection{\texorpdfstring{setRamOffset()}{setRamOffset()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+Debugger\+::\+Tile\+Viewer\+::set\+Ram\+Offset (\begin{DoxyParamCaption}\item[{int}]{offset }\end{DoxyParamCaption})}
+
+
+
+Set the ram offset. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1TileViewer_a5324b474562c17231f11dfdf9d1c2c14}\label{classComSquare_1_1Debugger_1_1TileViewer_a5324b474562c17231f11dfdf9d1c2c14}} 
+\index{ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}!setRenderSize@{setRenderSize}}
+\index{setRenderSize@{setRenderSize}!ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}}
+\doxysubsubsection{\texorpdfstring{setRenderSize()}{setRenderSize()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+Debugger\+::\+Tile\+Viewer\+::set\+Render\+Size (\begin{DoxyParamCaption}\item[{int}]{size }\end{DoxyParamCaption})}
+
+
+
+Set the size of ram to render. 
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1TileViewer_a4353f8f908154e7d33fbe37632969c66}\label{classComSquare_1_1Debugger_1_1TileViewer_a4353f8f908154e7d33fbe37632969c66}} 
+\index{ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}!\_ppu@{\_ppu}}
+\index{\_ppu@{\_ppu}!ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}}
+\doxysubsubsection{\texorpdfstring{\_ppu}{\_ppu}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1PPU_1_1PPU}{Com\+Square\+::\+P\+P\+U\+::\+P\+PU}}\& Com\+Square\+::\+Debugger\+::\+Tile\+Viewer\+::\+\_\+ppu\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+A reference to the ppu. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1TileViewer_a347d60917d804698b17b4686572c4a17}\label{classComSquare_1_1Debugger_1_1TileViewer_a347d60917d804698b17b4686572c4a17}} 
+\index{ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}!\_ramTileRenderer@{\_ramTileRenderer}}
+\index{\_ramTileRenderer@{\_ramTileRenderer}!ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}}
+\doxysubsubsection{\texorpdfstring{\_ramTileRenderer}{\_ramTileRenderer}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1Debugger_1_1RAMTileRenderer}{R\+A\+M\+Tile\+Renderer}} Com\+Square\+::\+Debugger\+::\+Tile\+Viewer\+::\+\_\+ram\+Tile\+Renderer\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The ram tile renderer. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1TileViewer_a75248d159cdc070e1a04489dff3670d3}\label{classComSquare_1_1Debugger_1_1TileViewer_a75248d159cdc070e1a04489dff3670d3}} 
+\index{ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}!\_sfWidget@{\_sfWidget}}
+\index{\_sfWidget@{\_sfWidget}!ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}}
+\doxysubsubsection{\texorpdfstring{\_sfWidget}{\_sfWidget}}
+{\footnotesize\ttfamily std\+::unique\+\_\+ptr$<$\mbox{\hyperlink{classComSquare_1_1Renderer_1_1QtSFMLTileRenderer}{Renderer\+::\+Qt\+S\+F\+M\+L\+Tile\+Renderer}}$>$ Com\+Square\+::\+Debugger\+::\+Tile\+Viewer\+::\+\_\+sf\+Widget\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+the window 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1TileViewer_a38e44c93232e4f833218c5683b12fad8}\label{classComSquare_1_1Debugger_1_1TileViewer_a38e44c93232e4f833218c5683b12fad8}} 
+\index{ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}!\_snes@{\_snes}}
+\index{\_snes@{\_snes}!ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}}
+\doxysubsubsection{\texorpdfstring{\_snes}{\_snes}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1SNES}{S\+N\+ES}}\& Com\+Square\+::\+Debugger\+::\+Tile\+Viewer\+::\+\_\+snes\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+A reference to the snes (to disable the debugger). 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1TileViewer_af3e644fb157110f995d041619a02f395}\label{classComSquare_1_1Debugger_1_1TileViewer_af3e644fb157110f995d041619a02f395}} 
+\index{ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}!\_ui@{\_ui}}
+\index{\_ui@{\_ui}!ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}}
+\doxysubsubsection{\texorpdfstring{\_ui}{\_ui}}
+{\footnotesize\ttfamily Ui\+::\+Tile\+Viewer Com\+Square\+::\+Debugger\+::\+Tile\+Viewer\+::\+\_\+ui\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+A widget that contain the whole UI. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1TileViewer_a7fc6b63eac07a80198fcc930e7ed9121}\label{classComSquare_1_1Debugger_1_1TileViewer_a7fc6b63eac07a80198fcc930e7ed9121}} 
+\index{ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}!\_window@{\_window}}
+\index{\_window@{\_window}!ComSquare::Debugger::TileViewer@{ComSquare::Debugger::TileViewer}}
+\doxysubsubsection{\texorpdfstring{\_window}{\_window}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1Debugger_1_1ClosableWindow}{Closable\+Window}}$\ast$ Com\+Square\+::\+Debugger\+::\+Tile\+Viewer\+::\+\_\+window\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The QT window for this debugger. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+sources/\+Debugger/\+Tile\+Viewer/\mbox{\hyperlink{TileViewer_8hpp}{Tile\+Viewer.\+hpp}}\item 
+sources/\+Debugger/\+Tile\+Viewer/\mbox{\hyperlink{TileViewer_8cpp}{Tile\+Viewer.\+cpp}}\end{DoxyCompactItemize}

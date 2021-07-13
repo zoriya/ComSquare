@@ -1,0 +1,49 @@
+<map id="ComSquare::Debugger::CPU::RowPainter" name="ComSquare::Debugger::CPU::RowPainter">
+<area shape="rect" id="node1" title="The qt class that highlight breakpoints and the PC&#39;s position." alt="" coords="273,2483,441,2634"/>
+<area shape="rect" id="node3" href="$classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug.html" title="A window that show registers and the disassembly of a CPU." alt="" coords="719,2733,930,3309"/>
+<area shape="rect" id="node2" title=" " alt="" coords="46,2065,209,2142"/>
+<area shape="rect" id="node46" href="$classComSquare_1_1Debugger_1_1CPU_1_1StackModel.html" title="The qt model that show the stack." alt="" coords="741,3372,909,3567"/>
+<area shape="rect" id="node47" href="$classComSquare_1_1Debugger_1_1CPU_1_1DisassemblyModel.html" title="The qt model that show the disassembly." alt="" coords="1231,3372,1421,3567"/>
+<area shape="rect" id="node4" title=" " alt="" coords="657,2520,731,2597"/>
+<area shape="rect" id="node5" href="$classComSquare_1_1SNES.html" title="Container of all the components of the SNES." alt="" coords="755,2476,894,2641"/>
+<area shape="rect" id="node6" href="$classComSquare_1_1Ram_1_1Ram.html" title=" " alt="" coords="959,508,1133,805"/>
+<area shape="rect" id="node11" href="$classComSquare_1_1Cartridge_1_1Cartridge.html" title="Contains the rom&#39;s memory/instructions." alt="" coords="619,1925,787,2281"/>
+<area shape="rect" id="node17" href="$structComSquare_1_1APU_1_1MemoryMap.html" title=" " alt="" coords="2132,985,2355,1107"/>
+<area shape="rect" id="node29" href="$classComSquare_1_1PPU_1_1PPU.html" title="The class containing all the registers of the PPU." alt="" coords="1393,897,1571,1195"/>
+<area shape="rect" id="node30" href="$classComSquare_1_1PPU_1_1Background.html" title=" " alt="" coords="2034,1272,2253,1760"/>
+<area shape="rect" id="node31" href="$classComSquare_1_1PPU_1_1TileRenderer.html" title=" " alt="" coords="1118,897,1369,1195"/>
+<area shape="rect" id="node7" href="$classComSquare_1_1Memory_1_1ARectangleMemory.html" title="Base memory class to map non continuous rectangle to the memory. (A rectangle that spam across more t..." alt="" coords="1063,264,1250,459"/>
+<area shape="rect" id="node8" href="$classComSquare_1_1Memory_1_1IMemory.html" title="Common interface implemented by all components mapping memory." alt="" coords="1171,5,1345,215"/>
+<area shape="rect" id="node15" href="$classComSquare_1_1Memory_1_1AMemory.html" title="Abstract class representing a continuous block of memory." alt="" coords="1535,286,1709,437"/>
+<area shape="rect" id="node9" href="$classComSquare_1_1Memory_1_1MemoryBus.html" title="The memory bus is the component responsible of mapping addresses to components address and transmitti..." alt="" coords="374,1962,545,2245"/>
+<area shape="rect" id="node10" href="$classComSquare_1_1Memory_1_1IMemoryBus.html" title="The memory bus is the component responsible of mapping addresses to components address and transmitti..." alt="" coords="129,1433,296,1599"/>
+<area shape="rect" id="node12" href="$structComSquare_1_1Cartridge_1_1Header.html" title=" " alt="" coords="639,1345,834,1687"/>
+<area shape="rect" id="node37" href="$classComSquare_1_1CPU_1_1CPU.html" title="The main CPU." alt="" coords="938,1823,1181,2384"/>
+<area shape="rect" id="node13" href="$structComSquare_1_1Cartridge_1_1InterruptVectors.html" title=" " alt="" coords="654,927,819,1165"/>
+<area shape="rect" id="node14" href="$classComSquare_1_1APU_1_1APU.html" title=" " alt="" coords="1823,1881,2005,2325"/>
+<area shape="rect" id="node18" href="$classComSquare_1_1APU_1_1IPL_1_1IPL.html" title=" " alt="" coords="2605,515,2791,798"/>
+<area shape="rect" id="node16" href="$structComSquare_1_1APU_1_1InternalRegisters.html" title=" " alt="" coords="1819,1397,2009,1635"/>
+<area shape="rect" id="node19" href="$classComSquare_1_1APU_1_1DSP_1_1DSP.html" title=" " alt="" coords="2685,1294,2885,1738"/>
+<area shape="rect" id="node20" href="$structComSquare_1_1APU_1_1DSP_1_1Timer.html" title=" " alt="" coords="3488,993,3655,1099"/>
+<area shape="rect" id="node21" href="$structComSquare_1_1APU_1_1DSP_1_1State.html" title="Current state of the DSP." alt="" coords="3679,978,3845,1114"/>
+<area shape="rect" id="node22" href="$classComSquare_1_1Renderer_1_1IRenderer.html" title=" " alt="" coords="1975,581,2139,732"/>
+<area shape="rect" id="node23" href="$structComSquare_1_1APU_1_1DSP_1_1Master.html" title=" " alt="" coords="2379,971,2545,1121"/>
+<area shape="rect" id="node24" href="$structComSquare_1_1APU_1_1DSP_1_1Echo.html" title=" " alt="" coords="2569,897,2736,1195"/>
+<area shape="rect" id="node25" href="$structComSquare_1_1APU_1_1DSP_1_1BRR.html" title=" " alt="" coords="2881,963,3083,1129"/>
+<area shape="rect" id="node26" href="$structComSquare_1_1APU_1_1DSP_1_1Latch.html" title=" " alt="" coords="3107,971,3273,1121"/>
+<area shape="rect" id="node27" href="$structComSquare_1_1APU_1_1DSP_1_1Noise.html" title=" " alt="" coords="3297,993,3464,1099"/>
+<area shape="rect" id="node28" href="$structComSquare_1_1APU_1_1Registers.html" title=" " alt="" coords="2909,1375,3111,1657"/>
+<area shape="rect" id="node32" href="$classComSquare_1_1Vector2.html" title=" " alt="" coords="1595,897,1750,1195"/>
+<area shape="rect" id="node33" href="$classComSquare_1_1Vector2.html" title=" " alt="" coords="1774,897,1929,1195"/>
+<area shape="rect" id="node34" href="$classComSquare_1_1Vector2.html" title=" " alt="" coords="1953,897,2107,1195"/>
+<area shape="rect" id="node35" href="$structComSquare_1_1PPU_1_1Registers.html" title=" " alt="" coords="1163,545,1363,769"/>
+<area shape="rect" id="node36" href="$structComSquare_1_1PPU_1_1Utils_1_1PpuState.html" title="Struct to save all specific variables needed for the registers (prev values for example)" alt="" coords="1387,603,1585,710"/>
+<area shape="rect" id="node38" href="$classComSquare_1_1Callback.html" title="A callback where you can subscribe to and emit it." alt="" coords="1185,1411,1347,1621"/>
+<area shape="rect" id="node39" href="$structComSquare_1_1CPU_1_1Instruction.html" title="Struct containing basic information about instructions." alt="" coords="1371,1448,1580,1584"/>
+<area shape="rect" id="node40" href="$structComSquare_1_1CPU_1_1InternalRegisters.html" title="Struct containing internal registers of the CPU." alt="" coords="1604,1397,1795,1635"/>
+<area shape="rect" id="node41" href="$structComSquare_1_1CPU_1_1Registers.html" title="Struct containing registers for the main CPU." alt="" coords="960,1404,1161,1628"/>
+<area shape="rect" id="node42" href="$classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel.html" title="The qt model that show the history." alt="" coords="1006,2447,1174,2671"/>
+<area shape="rect" id="node43" title=" " alt="" coords="2030,2065,2190,2142"/>
+<area shape="rect" id="node44" href="$classComSquare_1_1Debugger_1_1ClosableWindow.html" title=" " alt="" coords="465,2483,633,2634"/>
+<area shape="rect" id="node45" title=" " alt="" coords="233,2065,349,2142"/>
+</map>

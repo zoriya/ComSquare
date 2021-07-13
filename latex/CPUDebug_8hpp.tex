@@ -1,0 +1,70 @@
+\hypertarget{CPUDebug_8hpp}{}\doxysection{sources/\+Debugger/\+C\+P\+U/\+C\+P\+U\+Debug.hpp File Reference}
+\label{CPUDebug_8hpp}\index{sources/Debugger/CPU/CPUDebug.hpp@{sources/Debugger/CPU/CPUDebug.hpp}}
+{\ttfamily \#include \char`\"{}Debugger/\+Closable\+Window.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Exceptions/\+Debuggable\+Error.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}ui/ui\+\_\+cpu\+View.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Models/\+Ints.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Memory/\+Memory\+Bus.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}C\+P\+U/\+Instruction.\+hpp\char`\"{}}\newline
+{\ttfamily \#include $<$Qt\+Widgets/\+Q\+Styled\+Item\+Delegate$>$}\newline
+{\ttfamily \#include $<$filesystem$>$}\newline
+{\ttfamily \#include $<$optional$>$}\newline
+{\ttfamily \#include $<$Q\+Timer$>$}\newline
+Include dependency graph for C\+P\+U\+Debug.\+hpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{CPUDebug_8hpp__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{CPUDebug_8hpp__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structComSquare_1_1Debugger_1_1CPU_1_1ExecutedInstruction}{Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+Executed\+Instruction}}
+\begin{DoxyCompactList}\small\item\em An instruction that has already been executed. Used for the history viewer. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1StackModel}{Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+Stack\+Model}}
+\begin{DoxyCompactList}\small\item\em The qt model that show the stack. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel}{Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+History\+Model}}
+\begin{DoxyCompactList}\small\item\em The qt model that show the history. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1DisassemblyModel}{Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+Disassembly\+Model}}
+\begin{DoxyCompactList}\small\item\em The qt model that show the disassembly. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1RowPainter}{Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+Row\+Painter}}
+\begin{DoxyCompactList}\small\item\em The qt class that highlight breakpoints and the PC\textquotesingle{}s position. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structComSquare_1_1Debugger_1_1CPU_1_1DisassemblyContext}{Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+Disassembly\+Context}}
+\begin{DoxyCompactList}\small\item\em Struct used to emulate the state of the processor during the disassembly since instructions take a different amount of space depending on some flags. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structComSquare_1_1Debugger_1_1CPU_1_1DisassembledInstruction}{Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+Disassembled\+Instruction}}
+\begin{DoxyCompactList}\small\item\em Struct representing an instruction in an human readable way (created by disassembling the rom). \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structComSquare_1_1Debugger_1_1CPU_1_1Breakpoint}{Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+Breakpoint}}
+\begin{DoxyCompactList}\small\item\em Struct representing a breakpoint set by the user or by the app. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structComSquare_1_1Debugger_1_1CPU_1_1Label}{Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+Label}}
+\begin{DoxyCompactList}\small\item\em Struct representing a label. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug}{Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug}}
+\begin{DoxyCompactList}\small\item\em A window that show registers and the disassembly of a \mbox{\hyperlink{namespaceComSquare_1_1Debugger_1_1CPU}{C\+PU}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \mbox{\hyperlink{namespaceComSquare}{Com\+Square}}
+\item 
+ \mbox{\hyperlink{namespaceComSquare_1_1CPU}{Com\+Square\+::\+C\+PU}}
+\item 
+ \mbox{\hyperlink{namespaceComSquare_1_1Debugger}{Com\+Square\+::\+Debugger}}
+\item 
+ \mbox{\hyperlink{namespaceComSquare_1_1Debugger_1_1CPU}{Com\+Square\+::\+Debugger\+::\+C\+PU}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{namespaceComSquare_1_1Debugger_1_1CPU_a336499f4cb938a2886898457828f77e0}{Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+Trust\+Level}} \{ \mbox{\hyperlink{namespaceComSquare_1_1Debugger_1_1CPU_a336499f4cb938a2886898457828f77e0ae54fbc88e1bb6c784dcc03988a621a40}{Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+Safe}}, 
+\mbox{\hyperlink{namespaceComSquare_1_1Debugger_1_1CPU_a336499f4cb938a2886898457828f77e0ab920838d7ddce28cfd68282b67b6c0e7}{Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+Unsafe}}, 
+\mbox{\hyperlink{namespaceComSquare_1_1Debugger_1_1CPU_a336499f4cb938a2886898457828f77e0a53ee0a5bf55975562d6ce1fac4720eeb}{Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+Compromised}}
+ \}
+\end{DoxyCompactItemize}

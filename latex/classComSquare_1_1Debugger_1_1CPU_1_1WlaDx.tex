@@ -1,0 +1,120 @@
+\hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1WlaDx}{}\doxysection{Com\+Square\+::Debugger\+::C\+PU\+::Wla\+Dx Class Reference}
+\label{classComSquare_1_1Debugger_1_1CPU_1_1WlaDx}\index{ComSquare::Debugger::CPU::WlaDx@{ComSquare::Debugger::CPU::WlaDx}}
+
+
+Class to parse W\+L\+A-\/\+DX symbol files.  
+
+
+
+
+{\ttfamily \#include $<$Wla\+Dx.\+hpp$>$}
+
+
+
+Collaboration diagram for Com\+Square\+::Debugger\+::C\+PU\+::Wla\+Dx\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=206pt]{classComSquare_1_1Debugger_1_1CPU_1_1WlaDx__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static std\+::vector$<$ \mbox{\hyperlink{structComSquare_1_1Debugger_1_1CPU_1_1Label}{Label}} $>$ \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1WlaDx_a2022d318bbb47768ce5f8f7f3e056975}{parse}} (std\+::ifstream \&symbol\+File)
+\begin{DoxyCompactList}\small\item\em Parse the whole file. \end{DoxyCompactList}\item 
+static std\+::string \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1WlaDx_a1501ed862cc0c5fb47fe654d56c7a741}{\+\_\+parse\+Labels}} (std\+::map$<$ std\+::string, \mbox{\hyperlink{structComSquare_1_1Debugger_1_1CPU_1_1Label}{Label}} $>$ \&labels, std\+::ifstream \&symbol\+File)
+\begin{DoxyCompactList}\small\item\em Parse labels name \& addresses (the \mbox{[}labels\mbox{]} section) \end{DoxyCompactList}\item 
+static std\+::string \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1WlaDx_a25ffa95555de366bf565a0a567105459}{\+\_\+parse\+Definitions}} (std\+::map$<$ std\+::string, \mbox{\hyperlink{structComSquare_1_1Debugger_1_1CPU_1_1Label}{Label}} $>$ \&labels, std\+::ifstream \&symbol\+File)
+\begin{DoxyCompactList}\small\item\em Parse definitions (and size of labels) (the \mbox{[}definitions\mbox{]} section) \end{DoxyCompactList}\item 
+static std\+::string \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1WlaDx_a42e49db03ae19bf2fc8be14f1f6e6173}{\+\_\+clean\+Line}} (std\+::string line)
+\begin{DoxyCompactList}\small\item\em Remove comments, indentation \& trailing spaces from a line. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class to parse W\+L\+A-\/\+DX symbol files. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1WlaDx_a42e49db03ae19bf2fc8be14f1f6e6173}\label{classComSquare_1_1Debugger_1_1CPU_1_1WlaDx_a42e49db03ae19bf2fc8be14f1f6e6173}} 
+\index{ComSquare::Debugger::CPU::WlaDx@{ComSquare::Debugger::CPU::WlaDx}!\_cleanLine@{\_cleanLine}}
+\index{\_cleanLine@{\_cleanLine}!ComSquare::Debugger::CPU::WlaDx@{ComSquare::Debugger::CPU::WlaDx}}
+\doxysubsubsection{\texorpdfstring{\_cleanLine()}{\_cleanLine()}}
+{\footnotesize\ttfamily std\+::string Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+Wla\+Dx\+::\+\_\+clean\+Line (\begin{DoxyParamCaption}\item[{std\+::string}]{line }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Remove comments, indentation \& trailing spaces from a line. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em line} & The line to clean \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The line cleaned up. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1WlaDx_a25ffa95555de366bf565a0a567105459}\label{classComSquare_1_1Debugger_1_1CPU_1_1WlaDx_a25ffa95555de366bf565a0a567105459}} 
+\index{ComSquare::Debugger::CPU::WlaDx@{ComSquare::Debugger::CPU::WlaDx}!\_parseDefinitions@{\_parseDefinitions}}
+\index{\_parseDefinitions@{\_parseDefinitions}!ComSquare::Debugger::CPU::WlaDx@{ComSquare::Debugger::CPU::WlaDx}}
+\doxysubsubsection{\texorpdfstring{\_parseDefinitions()}{\_parseDefinitions()}}
+{\footnotesize\ttfamily std\+::string Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+Wla\+Dx\+::\+\_\+parse\+Definitions (\begin{DoxyParamCaption}\item[{std\+::map$<$ std\+::string, \mbox{\hyperlink{structComSquare_1_1Debugger_1_1CPU_1_1Label}{Label}} $>$ \&}]{labels,  }\item[{std\+::ifstream \&}]{symbol\+File }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Parse definitions (and size of labels) (the \mbox{[}definitions\mbox{]} section) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em labels} & An list of labels. If one is already defined, the size will be set. \\
+\hline
+{\em symbol\+File} & The file to parse, opened and seeked to the line just after the \mbox{[}definitions\mbox{]} line. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The line after the definitions section (the first line that doesn\textquotesingle{}t match the section\textquotesingle{}s regex). 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1WlaDx_a1501ed862cc0c5fb47fe654d56c7a741}\label{classComSquare_1_1Debugger_1_1CPU_1_1WlaDx_a1501ed862cc0c5fb47fe654d56c7a741}} 
+\index{ComSquare::Debugger::CPU::WlaDx@{ComSquare::Debugger::CPU::WlaDx}!\_parseLabels@{\_parseLabels}}
+\index{\_parseLabels@{\_parseLabels}!ComSquare::Debugger::CPU::WlaDx@{ComSquare::Debugger::CPU::WlaDx}}
+\doxysubsubsection{\texorpdfstring{\_parseLabels()}{\_parseLabels()}}
+{\footnotesize\ttfamily std\+::string Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+Wla\+Dx\+::\+\_\+parse\+Labels (\begin{DoxyParamCaption}\item[{std\+::map$<$ std\+::string, \mbox{\hyperlink{structComSquare_1_1Debugger_1_1CPU_1_1Label}{Label}} $>$ \&}]{labels,  }\item[{std\+::ifstream \&}]{symbol\+File }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Parse labels name \& addresses (the \mbox{[}labels\mbox{]} section) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em labels} & An list of labels. If one is already defined, the address will be set. \\
+\hline
+{\em symbol\+File} & The file to parse, opened and seeked to the line just after the \mbox{[}labels\mbox{]} line. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The line after the label section (the first line that doesn\textquotesingle{}t match the section\textquotesingle{}s regex). 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1WlaDx_a2022d318bbb47768ce5f8f7f3e056975}\label{classComSquare_1_1Debugger_1_1CPU_1_1WlaDx_a2022d318bbb47768ce5f8f7f3e056975}} 
+\index{ComSquare::Debugger::CPU::WlaDx@{ComSquare::Debugger::CPU::WlaDx}!parse@{parse}}
+\index{parse@{parse}!ComSquare::Debugger::CPU::WlaDx@{ComSquare::Debugger::CPU::WlaDx}}
+\doxysubsubsection{\texorpdfstring{parse()}{parse()}}
+{\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{structComSquare_1_1Debugger_1_1CPU_1_1Label}{Label}} $>$ Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+Wla\+Dx\+::parse (\begin{DoxyParamCaption}\item[{std\+::ifstream \&}]{symbol\+File }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Parse the whole file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em symbol\+File} & The file to parse (opened but not seeked) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The list of symbol found. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+sources/\+Debugger/\+C\+P\+U/\+Symbol\+Loaders/\mbox{\hyperlink{WlaDx_8hpp}{Wla\+Dx.\+hpp}}\item 
+sources/\+Debugger/\+C\+P\+U/\+Symbol\+Loaders/\mbox{\hyperlink{WlaDx_8cpp}{Wla\+Dx.\+cpp}}\end{DoxyCompactItemize}

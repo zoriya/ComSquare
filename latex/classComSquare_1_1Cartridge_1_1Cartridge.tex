@@ -1,0 +1,392 @@
+\hypertarget{classComSquare_1_1Cartridge_1_1Cartridge}{}\doxysection{Com\+Square\+::Cartridge\+::Cartridge Class Reference}
+\label{classComSquare_1_1Cartridge_1_1Cartridge}\index{ComSquare::Cartridge::Cartridge@{ComSquare::Cartridge::Cartridge}}
+
+
+Contains the rom\textquotesingle{}s memory/instructions.  
+
+
+
+
+{\ttfamily \#include $<$Cartridge.\+hpp$>$}
+
+
+
+Inheritance diagram for Com\+Square\+::Cartridge\+::Cartridge\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classComSquare_1_1Cartridge_1_1Cartridge__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Com\+Square\+::Cartridge\+::Cartridge\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classComSquare_1_1Cartridge_1_1Cartridge__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classComSquare_1_1Cartridge_1_1Cartridge_a3cc41a4d62e006abc4a437de0a6ac49a}{Cartridge}} ()
+\begin{DoxyCompactList}\small\item\em A default constructor that doesn\textquotesingle{}t load anything. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1Cartridge_1_1Cartridge_ad84333cbf5cd4f265a1b9b78a39215a7}{Cartridge}} (const std\+::string \&rom\+Path)
+\begin{DoxyCompactList}\small\item\em Load a rom from it\textquotesingle{}s path. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1Cartridge_1_1Cartridge_abcc71509d15d39691a71af38e60d757a}{Cartridge}} (const \mbox{\hyperlink{classComSquare_1_1Cartridge_1_1Cartridge}{Cartridge}} \&)=delete
+\begin{DoxyCompactList}\small\item\em The cartridge can\textquotesingle{}t be copied. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1Cartridge_1_1Cartridge}{Cartridge}} \& \mbox{\hyperlink{classComSquare_1_1Cartridge_1_1Cartridge_a8feefb29cae675afa8bcceca22ed7536}{operator=}} (const \mbox{\hyperlink{classComSquare_1_1Cartridge_1_1Cartridge}{Cartridge}} \&)=delete
+\begin{DoxyCompactList}\small\item\em The cartridge can\textquotesingle{}t be assigned. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1Cartridge_1_1Cartridge_a3d9aa80562f608bb9daa33700bfe9899}{$\sim$\+Cartridge}} () override=default
+\begin{DoxyCompactList}\small\item\em Destructor that free the cartridge data. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespaceComSquare_1_1Cartridge_a9f7c1ab5add21ef146acb1edc05aa5fb}{Cartridge\+Type}} \mbox{\hyperlink{classComSquare_1_1Cartridge_1_1Cartridge_ae90b6fe4f39d4bb5d17bb6c8d5d56eed}{get\+Type}} ()
+\begin{DoxyCompactList}\small\item\em Return current type of the cartridge. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{classComSquare_1_1Cartridge_1_1Cartridge_a765f900de75ab1af9595221e754d93c7}{read}} (\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} addr) override
+\begin{DoxyCompactList}\small\item\em Read from the rom. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSquare_1_1Cartridge_1_1Cartridge_aa30c32b23035b94f67063e06ab5759bc}{write}} (\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} addr, uint8\+\_\+t data) override
+\begin{DoxyCompactList}\small\item\em Write data to the rom. \end{DoxyCompactList}\item 
+std\+::filesystem\+::path \mbox{\hyperlink{classComSquare_1_1Cartridge_1_1Cartridge_a032d13ae6651e9bcb434422f31bdcd80}{get\+Rom\+Path}} () const
+\begin{DoxyCompactList}\small\item\em The path of the rom file. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} \mbox{\hyperlink{classComSquare_1_1Cartridge_1_1Cartridge_ad033c3f0cb15f5b6124dcb8ba18e95b0}{get\+Size}} () const override
+\begin{DoxyCompactList}\small\item\em Get the size of the rom in bytes (without the smc header). \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSquare_1_1Cartridge_1_1Cartridge_a19204a6bc37cdeb98d0173302f94d760}{load\+Rom}} (const std\+::string \&path)
+\begin{DoxyCompactList}\small\item\em Load the rom at the given path. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structComSquare_1_1Cartridge_1_1Header}{Header}} \mbox{\hyperlink{classComSquare_1_1Cartridge_1_1Cartridge_a93c463170a03e3bb59a50ba78b2c60a1}{header}}
+\begin{DoxyCompactList}\small\item\em The header of the cartridge. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{classComSquare_1_1Cartridge_1_1Cartridge_a1dbd870d1ad8bfe25426cc7fd263deab}{\+\_\+load\+Header}} ()
+\begin{DoxyCompactList}\small\item\em Set the public variable header by parsing the header in the R\+OM. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classComSquare_1_1Cartridge_1_1Cartridge_a8443e9b50e8d0ae1ac9e749042ed231f}{\+\_\+is\+S\+P\+C\+File}} ()
+\begin{DoxyCompactList}\small\item\em Check if the cartridge is not a game but a S\+PC audio dump. \end{DoxyCompactList}\item 
+uint32\+\_\+t \mbox{\hyperlink{classComSquare_1_1Cartridge_1_1Cartridge_abfbecf451634e5699593ac9fea940356}{\+\_\+get\+Header\+Address}} ()
+\begin{DoxyCompactList}\small\item\em Get the address of the header. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structComSquare_1_1Cartridge_1_1Header}{Header}} \mbox{\hyperlink{classComSquare_1_1Cartridge_1_1Cartridge_a669043a0708921bed0bc18c37abb1c96}{\+\_\+map\+Header}} (uint32\+\_\+t header\+Address)
+\begin{DoxyCompactList}\small\item\em Parse the memory to get a readable header. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static size\+\_\+t \mbox{\hyperlink{classComSquare_1_1Cartridge_1_1Cartridge_a2312babcc070998f38da5a90e4c3bb7b}{get\+Rom\+Size}} (const std\+::string \&rom\+Path)
+\begin{DoxyCompactList}\small\item\em Get the size of a rom from it\textquotesingle{}s path. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::string \mbox{\hyperlink{classComSquare_1_1Cartridge_1_1Cartridge_ab30a61526b165b80c2953a86c59754eb}{\+\_\+rom\+Path}}
+\begin{DoxyCompactList}\small\item\em The path of the currently loaded rom. \end{DoxyCompactList}\item 
+uint16\+\_\+t \mbox{\hyperlink{classComSquare_1_1Cartridge_1_1Cartridge_a564eb98c035530b5f0efbe6c5a269377}{\+\_\+rom\+Start}} = 0
+\begin{DoxyCompactList}\small\item\em Sometime the rom\textquotesingle{}s data has an offset for a S\+MC header. This value indicate the start of the real rom discarding this header. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespaceComSquare_1_1Cartridge_a9f7c1ab5add21ef146acb1edc05aa5fb}{Cartridge\+Type}} \mbox{\hyperlink{classComSquare_1_1Cartridge_1_1Cartridge_a3f7ad9feebdf5f0d9c6113be6b7cb860}{\+\_\+type}} = \mbox{\hyperlink{namespaceComSquare_1_1Cartridge_a9f7c1ab5add21ef146acb1edc05aa5fbaec6411672e2aa9b8bb91d5a5f83a4997}{Game}}
+\begin{DoxyCompactList}\small\item\em Current type of the cartridge. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr std\+::string\+\_\+view \mbox{\hyperlink{classComSquare_1_1Cartridge_1_1Cartridge_a20665de00ff90e80588bc84c80a364c7}{\+\_\+magic\+S\+PC}} = \char`\"{}S\+N\+ES-\/S\+P\+C700 Sound File Data v0.\+30\char`\"{}
+\begin{DoxyCompactList}\small\item\em Magic \mbox{\hyperlink{structComSquare_1_1Cartridge_1_1Header}{Header}} string of a S\+PC Rom. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Contains the rom\textquotesingle{}s memory/instructions. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classComSquare_1_1Cartridge_1_1Cartridge_a3cc41a4d62e006abc4a437de0a6ac49a}\label{classComSquare_1_1Cartridge_1_1Cartridge_a3cc41a4d62e006abc4a437de0a6ac49a}} 
+\index{ComSquare::Cartridge::Cartridge@{ComSquare::Cartridge::Cartridge}!Cartridge@{Cartridge}}
+\index{Cartridge@{Cartridge}!ComSquare::Cartridge::Cartridge@{ComSquare::Cartridge::Cartridge}}
+\doxysubsubsection{\texorpdfstring{Cartridge()}{Cartridge()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily Com\+Square\+::\+Cartridge\+::\+Cartridge\+::\+Cartridge (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+A default constructor that doesn\textquotesingle{}t load anything. 
+
+\mbox{\Hypertarget{classComSquare_1_1Cartridge_1_1Cartridge_ad84333cbf5cd4f265a1b9b78a39215a7}\label{classComSquare_1_1Cartridge_1_1Cartridge_ad84333cbf5cd4f265a1b9b78a39215a7}} 
+\index{ComSquare::Cartridge::Cartridge@{ComSquare::Cartridge::Cartridge}!Cartridge@{Cartridge}}
+\index{Cartridge@{Cartridge}!ComSquare::Cartridge::Cartridge@{ComSquare::Cartridge::Cartridge}}
+\doxysubsubsection{\texorpdfstring{Cartridge()}{Cartridge()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily Com\+Square\+::\+Cartridge\+::\+Cartridge\+::\+Cartridge (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{rom\+Path }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Load a rom from it\textquotesingle{}s path. 
+
+\mbox{\Hypertarget{classComSquare_1_1Cartridge_1_1Cartridge_abcc71509d15d39691a71af38e60d757a}\label{classComSquare_1_1Cartridge_1_1Cartridge_abcc71509d15d39691a71af38e60d757a}} 
+\index{ComSquare::Cartridge::Cartridge@{ComSquare::Cartridge::Cartridge}!Cartridge@{Cartridge}}
+\index{Cartridge@{Cartridge}!ComSquare::Cartridge::Cartridge@{ComSquare::Cartridge::Cartridge}}
+\doxysubsubsection{\texorpdfstring{Cartridge()}{Cartridge()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily Com\+Square\+::\+Cartridge\+::\+Cartridge\+::\+Cartridge (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classComSquare_1_1Cartridge_1_1Cartridge}{Cartridge}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+
+
+The cartridge can\textquotesingle{}t be copied. 
+
+\mbox{\Hypertarget{classComSquare_1_1Cartridge_1_1Cartridge_a3d9aa80562f608bb9daa33700bfe9899}\label{classComSquare_1_1Cartridge_1_1Cartridge_a3d9aa80562f608bb9daa33700bfe9899}} 
+\index{ComSquare::Cartridge::Cartridge@{ComSquare::Cartridge::Cartridge}!````~Cartridge@{$\sim$Cartridge}}
+\index{````~Cartridge@{$\sim$Cartridge}!ComSquare::Cartridge::Cartridge@{ComSquare::Cartridge::Cartridge}}
+\doxysubsubsection{\texorpdfstring{$\sim$Cartridge()}{~Cartridge()}}
+{\footnotesize\ttfamily Com\+Square\+::\+Cartridge\+::\+Cartridge\+::$\sim$\+Cartridge (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [default]}}
+
+
+
+Destructor that free the cartridge data. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classComSquare_1_1Cartridge_1_1Cartridge_abfbecf451634e5699593ac9fea940356}\label{classComSquare_1_1Cartridge_1_1Cartridge_abfbecf451634e5699593ac9fea940356}} 
+\index{ComSquare::Cartridge::Cartridge@{ComSquare::Cartridge::Cartridge}!\_getHeaderAddress@{\_getHeaderAddress}}
+\index{\_getHeaderAddress@{\_getHeaderAddress}!ComSquare::Cartridge::Cartridge@{ComSquare::Cartridge::Cartridge}}
+\doxysubsubsection{\texorpdfstring{\_getHeaderAddress()}{\_getHeaderAddress()}}
+{\footnotesize\ttfamily uint32\+\_\+t Com\+Square\+::\+Cartridge\+::\+Cartridge\+::\+\_\+get\+Header\+Address (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Get the address of the header. 
+
+\begin{DoxyReturn}{Returns}
+The address of this cartridge header. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classComSquare_1_1Cartridge_1_1Cartridge_a8443e9b50e8d0ae1ac9e749042ed231f}\label{classComSquare_1_1Cartridge_1_1Cartridge_a8443e9b50e8d0ae1ac9e749042ed231f}} 
+\index{ComSquare::Cartridge::Cartridge@{ComSquare::Cartridge::Cartridge}!\_isSPCFile@{\_isSPCFile}}
+\index{\_isSPCFile@{\_isSPCFile}!ComSquare::Cartridge::Cartridge@{ComSquare::Cartridge::Cartridge}}
+\doxysubsubsection{\texorpdfstring{\_isSPCFile()}{\_isSPCFile()}}
+{\footnotesize\ttfamily bool Com\+Square\+::\+Cartridge\+::\+Cartridge\+::\+\_\+is\+S\+P\+C\+File (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Check if the cartridge is not a game but a S\+PC audio dump. 
+
+\mbox{\Hypertarget{classComSquare_1_1Cartridge_1_1Cartridge_a1dbd870d1ad8bfe25426cc7fd263deab}\label{classComSquare_1_1Cartridge_1_1Cartridge_a1dbd870d1ad8bfe25426cc7fd263deab}} 
+\index{ComSquare::Cartridge::Cartridge@{ComSquare::Cartridge::Cartridge}!\_loadHeader@{\_loadHeader}}
+\index{\_loadHeader@{\_loadHeader}!ComSquare::Cartridge::Cartridge@{ComSquare::Cartridge::Cartridge}}
+\doxysubsubsection{\texorpdfstring{\_loadHeader()}{\_loadHeader()}}
+{\footnotesize\ttfamily bool Com\+Square\+::\+Cartridge\+::\+Cartridge\+::\+\_\+load\+Header (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Set the public variable header by parsing the header in the R\+OM. 
+
+\begin{DoxyReturn}{Returns}
+True if this cartridge has a S\+CM header, false otherwise. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classComSquare_1_1Cartridge_1_1Cartridge_a669043a0708921bed0bc18c37abb1c96}\label{classComSquare_1_1Cartridge_1_1Cartridge_a669043a0708921bed0bc18c37abb1c96}} 
+\index{ComSquare::Cartridge::Cartridge@{ComSquare::Cartridge::Cartridge}!\_mapHeader@{\_mapHeader}}
+\index{\_mapHeader@{\_mapHeader}!ComSquare::Cartridge::Cartridge@{ComSquare::Cartridge::Cartridge}}
+\doxysubsubsection{\texorpdfstring{\_mapHeader()}{\_mapHeader()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structComSquare_1_1Cartridge_1_1Header}{Header}} Com\+Square\+::\+Cartridge\+::\+Cartridge\+::\+\_\+map\+Header (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{header\+Address }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Parse the memory to get a readable header. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em header\+Address} & The address you want to parse. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A header struct representing the data at the memory address you passed. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classComSquare_1_1Cartridge_1_1Cartridge_a032d13ae6651e9bcb434422f31bdcd80}\label{classComSquare_1_1Cartridge_1_1Cartridge_a032d13ae6651e9bcb434422f31bdcd80}} 
+\index{ComSquare::Cartridge::Cartridge@{ComSquare::Cartridge::Cartridge}!getRomPath@{getRomPath}}
+\index{getRomPath@{getRomPath}!ComSquare::Cartridge::Cartridge@{ComSquare::Cartridge::Cartridge}}
+\doxysubsubsection{\texorpdfstring{getRomPath()}{getRomPath()}}
+{\footnotesize\ttfamily std\+::filesystem\+::path Com\+Square\+::\+Cartridge\+::\+Cartridge\+::get\+Rom\+Path (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+The path of the rom file. 
+
+\begin{DoxyReturn}{Returns}
+The path of the currently loaded rom file. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classComSquare_1_1Cartridge_1_1Cartridge_a2312babcc070998f38da5a90e4c3bb7b}\label{classComSquare_1_1Cartridge_1_1Cartridge_a2312babcc070998f38da5a90e4c3bb7b}} 
+\index{ComSquare::Cartridge::Cartridge@{ComSquare::Cartridge::Cartridge}!getRomSize@{getRomSize}}
+\index{getRomSize@{getRomSize}!ComSquare::Cartridge::Cartridge@{ComSquare::Cartridge::Cartridge}}
+\doxysubsubsection{\texorpdfstring{getRomSize()}{getRomSize()}}
+{\footnotesize\ttfamily size\+\_\+t Com\+Square\+::\+Cartridge\+::\+Cartridge\+::get\+Rom\+Size (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{rom\+Path }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Get the size of a rom from it\textquotesingle{}s path. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rom\+Path} & The path of the rom to get info from. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The size of the rom. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classComSquare_1_1Cartridge_1_1Cartridge_ad033c3f0cb15f5b6124dcb8ba18e95b0}\label{classComSquare_1_1Cartridge_1_1Cartridge_ad033c3f0cb15f5b6124dcb8ba18e95b0}} 
+\index{ComSquare::Cartridge::Cartridge@{ComSquare::Cartridge::Cartridge}!getSize@{getSize}}
+\index{getSize@{getSize}!ComSquare::Cartridge::Cartridge@{ComSquare::Cartridge::Cartridge}}
+\doxysubsubsection{\texorpdfstring{getSize()}{getSize()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} Com\+Square\+::\+Cartridge\+::\+Cartridge\+::get\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Get the size of the rom in bytes (without the smc header). 
+
+
+
+Implements \mbox{\hyperlink{classComSquare_1_1Memory_1_1IMemory_a1072ab44e7389913ff67cb77ff118c8b}{Com\+Square\+::\+Memory\+::\+I\+Memory}}.
+
+\mbox{\Hypertarget{classComSquare_1_1Cartridge_1_1Cartridge_ae90b6fe4f39d4bb5d17bb6c8d5d56eed}\label{classComSquare_1_1Cartridge_1_1Cartridge_ae90b6fe4f39d4bb5d17bb6c8d5d56eed}} 
+\index{ComSquare::Cartridge::Cartridge@{ComSquare::Cartridge::Cartridge}!getType@{getType}}
+\index{getType@{getType}!ComSquare::Cartridge::Cartridge@{ComSquare::Cartridge::Cartridge}}
+\doxysubsubsection{\texorpdfstring{getType()}{getType()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespaceComSquare_1_1Cartridge_a9f7c1ab5add21ef146acb1edc05aa5fb}{Cartridge\+Type}} Com\+Square\+::\+Cartridge\+::\+Cartridge\+::get\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Return current type of the cartridge. 
+
+\mbox{\Hypertarget{classComSquare_1_1Cartridge_1_1Cartridge_a19204a6bc37cdeb98d0173302f94d760}\label{classComSquare_1_1Cartridge_1_1Cartridge_a19204a6bc37cdeb98d0173302f94d760}} 
+\index{ComSquare::Cartridge::Cartridge@{ComSquare::Cartridge::Cartridge}!loadRom@{loadRom}}
+\index{loadRom@{loadRom}!ComSquare::Cartridge::Cartridge@{ComSquare::Cartridge::Cartridge}}
+\doxysubsubsection{\texorpdfstring{loadRom()}{loadRom()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+Cartridge\+::\+Cartridge\+::load\+Rom (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{path }\end{DoxyParamCaption})}
+
+
+
+Load the rom at the given path. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rom} & The path of the rom. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \mbox{\hyperlink{classComSquare_1_1InvalidRomException}{Invalid\+Rom\+Exception}}} & If the rom is invalid, this exception is thrown. \\
+\hline
+\end{DoxyExceptions}
+\mbox{\Hypertarget{classComSquare_1_1Cartridge_1_1Cartridge_a8feefb29cae675afa8bcceca22ed7536}\label{classComSquare_1_1Cartridge_1_1Cartridge_a8feefb29cae675afa8bcceca22ed7536}} 
+\index{ComSquare::Cartridge::Cartridge@{ComSquare::Cartridge::Cartridge}!operator=@{operator=}}
+\index{operator=@{operator=}!ComSquare::Cartridge::Cartridge@{ComSquare::Cartridge::Cartridge}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1Cartridge_1_1Cartridge}{Cartridge}}\& Com\+Square\+::\+Cartridge\+::\+Cartridge\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classComSquare_1_1Cartridge_1_1Cartridge}{Cartridge}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+
+
+The cartridge can\textquotesingle{}t be assigned. 
+
+\mbox{\Hypertarget{classComSquare_1_1Cartridge_1_1Cartridge_a765f900de75ab1af9595221e754d93c7}\label{classComSquare_1_1Cartridge_1_1Cartridge_a765f900de75ab1af9595221e754d93c7}} 
+\index{ComSquare::Cartridge::Cartridge@{ComSquare::Cartridge::Cartridge}!read@{read}}
+\index{read@{read}!ComSquare::Cartridge::Cartridge@{ComSquare::Cartridge::Cartridge}}
+\doxysubsubsection{\texorpdfstring{read()}{read()}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+Cartridge\+::\+Cartridge\+::read (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}}}]{addr }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Read from the rom. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em addr} & The address to read from. The address 0x0 should refer to the first byte of the rom\textquotesingle{}s memory. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \mbox{\hyperlink{classComSquare_1_1InvalidAddress}{Invalid\+Address}}} & will be thrown if the address is more than the size of the rom\textquotesingle{}s memory. \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyReturn}{Returns}
+Return the data at the address. 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{classComSquare_1_1Memory_1_1IMemory_a8459ed12c4172ee29ecdc84330f99ff7}{Com\+Square\+::\+Memory\+::\+I\+Memory}}.
+
+\mbox{\Hypertarget{classComSquare_1_1Cartridge_1_1Cartridge_aa30c32b23035b94f67063e06ab5759bc}\label{classComSquare_1_1Cartridge_1_1Cartridge_aa30c32b23035b94f67063e06ab5759bc}} 
+\index{ComSquare::Cartridge::Cartridge@{ComSquare::Cartridge::Cartridge}!write@{write}}
+\index{write@{write}!ComSquare::Cartridge::Cartridge@{ComSquare::Cartridge::Cartridge}}
+\doxysubsubsection{\texorpdfstring{write()}{write()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+Cartridge\+::\+Cartridge\+::write (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}}}]{addr,  }\item[{uint8\+\_\+t}]{data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Write data to the rom. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em addr} & The address to write to. The address 0x0 should refer to the first byte of the rom\textquotesingle{}s memory. \\
+\hline
+{\em data} & The data to write. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \mbox{\hyperlink{classComSquare_1_1InvalidAddress}{Invalid\+Address}}} & will be thrown if the address is more than the size of the rom\textquotesingle{}s memory. \\
+\hline
+\end{DoxyExceptions}
+
+
+Implements \mbox{\hyperlink{classComSquare_1_1Memory_1_1IMemory_a449bc89798a0b86028bb0413106514d9}{Com\+Square\+::\+Memory\+::\+I\+Memory}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classComSquare_1_1Cartridge_1_1Cartridge_a20665de00ff90e80588bc84c80a364c7}\label{classComSquare_1_1Cartridge_1_1Cartridge_a20665de00ff90e80588bc84c80a364c7}} 
+\index{ComSquare::Cartridge::Cartridge@{ComSquare::Cartridge::Cartridge}!\_magicSPC@{\_magicSPC}}
+\index{\_magicSPC@{\_magicSPC}!ComSquare::Cartridge::Cartridge@{ComSquare::Cartridge::Cartridge}}
+\doxysubsubsection{\texorpdfstring{\_magicSPC}{\_magicSPC}}
+{\footnotesize\ttfamily constexpr std\+::string\+\_\+view Com\+Square\+::\+Cartridge\+::\+Cartridge\+::\+\_\+magic\+S\+PC = \char`\"{}S\+N\+ES-\/S\+P\+C700 Sound File Data v0.\+30\char`\"{}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}, {\ttfamily [private]}}
+
+
+
+Magic \mbox{\hyperlink{structComSquare_1_1Cartridge_1_1Header}{Header}} string of a S\+PC Rom. 
+
+\mbox{\Hypertarget{classComSquare_1_1Cartridge_1_1Cartridge_ab30a61526b165b80c2953a86c59754eb}\label{classComSquare_1_1Cartridge_1_1Cartridge_ab30a61526b165b80c2953a86c59754eb}} 
+\index{ComSquare::Cartridge::Cartridge@{ComSquare::Cartridge::Cartridge}!\_romPath@{\_romPath}}
+\index{\_romPath@{\_romPath}!ComSquare::Cartridge::Cartridge@{ComSquare::Cartridge::Cartridge}}
+\doxysubsubsection{\texorpdfstring{\_romPath}{\_romPath}}
+{\footnotesize\ttfamily std\+::string Com\+Square\+::\+Cartridge\+::\+Cartridge\+::\+\_\+rom\+Path\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The path of the currently loaded rom. 
+
+\mbox{\Hypertarget{classComSquare_1_1Cartridge_1_1Cartridge_a564eb98c035530b5f0efbe6c5a269377}\label{classComSquare_1_1Cartridge_1_1Cartridge_a564eb98c035530b5f0efbe6c5a269377}} 
+\index{ComSquare::Cartridge::Cartridge@{ComSquare::Cartridge::Cartridge}!\_romStart@{\_romStart}}
+\index{\_romStart@{\_romStart}!ComSquare::Cartridge::Cartridge@{ComSquare::Cartridge::Cartridge}}
+\doxysubsubsection{\texorpdfstring{\_romStart}{\_romStart}}
+{\footnotesize\ttfamily uint16\+\_\+t Com\+Square\+::\+Cartridge\+::\+Cartridge\+::\+\_\+rom\+Start = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Sometime the rom\textquotesingle{}s data has an offset for a S\+MC header. This value indicate the start of the real rom discarding this header. 
+
+\mbox{\Hypertarget{classComSquare_1_1Cartridge_1_1Cartridge_a3f7ad9feebdf5f0d9c6113be6b7cb860}\label{classComSquare_1_1Cartridge_1_1Cartridge_a3f7ad9feebdf5f0d9c6113be6b7cb860}} 
+\index{ComSquare::Cartridge::Cartridge@{ComSquare::Cartridge::Cartridge}!\_type@{\_type}}
+\index{\_type@{\_type}!ComSquare::Cartridge::Cartridge@{ComSquare::Cartridge::Cartridge}}
+\doxysubsubsection{\texorpdfstring{\_type}{\_type}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespaceComSquare_1_1Cartridge_a9f7c1ab5add21ef146acb1edc05aa5fb}{Cartridge\+Type}} Com\+Square\+::\+Cartridge\+::\+Cartridge\+::\+\_\+type = \mbox{\hyperlink{namespaceComSquare_1_1Cartridge_a9f7c1ab5add21ef146acb1edc05aa5fbaec6411672e2aa9b8bb91d5a5f83a4997}{Game}}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Current type of the cartridge. 
+
+\mbox{\Hypertarget{classComSquare_1_1Cartridge_1_1Cartridge_a93c463170a03e3bb59a50ba78b2c60a1}\label{classComSquare_1_1Cartridge_1_1Cartridge_a93c463170a03e3bb59a50ba78b2c60a1}} 
+\index{ComSquare::Cartridge::Cartridge@{ComSquare::Cartridge::Cartridge}!header@{header}}
+\index{header@{header}!ComSquare::Cartridge::Cartridge@{ComSquare::Cartridge::Cartridge}}
+\doxysubsubsection{\texorpdfstring{header}{header}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structComSquare_1_1Cartridge_1_1Header}{Header}} Com\+Square\+::\+Cartridge\+::\+Cartridge\+::header}
+
+
+
+The header of the cartridge. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+sources/\+Cartridge/\mbox{\hyperlink{Cartridge_8hpp}{Cartridge.\+hpp}}\item 
+sources/\+Cartridge/\mbox{\hyperlink{Cartridge_8cpp}{Cartridge.\+cpp}}\end{DoxyCompactItemize}

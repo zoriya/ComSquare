@@ -1,0 +1,7 @@
+<map id="ComSquare::Debugger::BusLoggerProxy" name="ComSquare::Debugger::BusLoggerProxy">
+<area shape="rect" id="node1" title="A class to filter logs from the memory bus&#39;s debugger." alt="" coords="197,448,365,613"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,220,173,297"/>
+<area shape="rect" id="node3" href="$classComSquare_1_1Debugger_1_1BusLogModel.html" title="The qt model that bind the logs to the view." alt="" coords="197,132,365,385"/>
+<area shape="rect" id="node4" title=" " alt="" coords="201,5,361,83"/>
+<area shape="rect" id="node5" href="$structComSquare_1_1Debugger_1_1BusLoggerFilters.html" title="The struct representing filters of the memory bus&#39;s logger." alt="" coords="389,154,557,363"/>
+</map>

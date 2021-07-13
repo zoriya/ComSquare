@@ -1,0 +1,187 @@
+\hypertarget{classComSquare_1_1Memory_1_1IMemoryBus}{}\doxysection{Com\+Square\+::Memory\+::I\+Memory\+Bus Class Reference}
+\label{classComSquare_1_1Memory_1_1IMemoryBus}\index{ComSquare::Memory::IMemoryBus@{ComSquare::Memory::IMemoryBus}}
+
+
+The memory bus is the component responsible of mapping addresses to components address and transmitting the data.  
+
+
+
+
+{\ttfamily \#include $<$I\+Memory\+Bus.\+hpp$>$}
+
+
+
+Inheritance diagram for Com\+Square\+::Memory\+::I\+Memory\+Bus\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classComSquare_1_1Memory_1_1IMemoryBus__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Com\+Square\+::Memory\+::I\+Memory\+Bus\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=205pt]{classComSquare_1_1Memory_1_1IMemoryBus__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{classComSquare_1_1Memory_1_1IMemoryBus_a5538f7e281f45053245a4036473a5e46}{$\sim$\+I\+Memory\+Bus}} ()=default
+\begin{DoxyCompactList}\small\item\em A virtual default destructor. \end{DoxyCompactList}\item 
+virtual uint8\+\_\+t \mbox{\hyperlink{classComSquare_1_1Memory_1_1IMemoryBus_a560cf44b01d039ac4e13762e2abf46b1}{read}} (\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} addr)=0
+\begin{DoxyCompactList}\small\item\em Read data at a global address. This form allow read to be silenced. \end{DoxyCompactList}\item 
+virtual std\+::optional$<$ uint8\+\_\+t $>$ \mbox{\hyperlink{classComSquare_1_1Memory_1_1IMemoryBus_a715161996b7842c55c0be82d3cd22572}{peek}} (\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} addr)=0
+\begin{DoxyCompactList}\small\item\em This as the same purpose as a read but it does not change the open bus and won\textquotesingle{}t throw an exception. \end{DoxyCompactList}\item 
+virtual uint8\+\_\+t \mbox{\hyperlink{classComSquare_1_1Memory_1_1IMemoryBus_a474f556b1f4ef4af276217a489031775}{peek\+\_\+v}} (\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} addr)=0
+\begin{DoxyCompactList}\small\item\em This as the same purpose as a read but it does not change the open bus and won\textquotesingle{}t throw an exception. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classComSquare_1_1Memory_1_1IMemoryBus_a393b05cf83c6dc1ee6c0cad9648cb31b}{write}} (\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} addr, uint8\+\_\+t data)=0
+\begin{DoxyCompactList}\small\item\em Write a data to a global address. \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{classComSquare_1_1Memory_1_1IMemory}{I\+Memory}} $\ast$ \mbox{\hyperlink{classComSquare_1_1Memory_1_1IMemoryBus_ad0ab5473f22b232b701a7fc101f4489b}{get\+Accessor}} (\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} addr)=0
+\begin{DoxyCompactList}\small\item\em Helper function to get the components that is responsible of read/write at an address. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The memory bus is the component responsible of mapping addresses to components address and transmitting the data. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classComSquare_1_1Memory_1_1IMemoryBus_a5538f7e281f45053245a4036473a5e46}\label{classComSquare_1_1Memory_1_1IMemoryBus_a5538f7e281f45053245a4036473a5e46}} 
+\index{ComSquare::Memory::IMemoryBus@{ComSquare::Memory::IMemoryBus}!````~IMemoryBus@{$\sim$IMemoryBus}}
+\index{````~IMemoryBus@{$\sim$IMemoryBus}!ComSquare::Memory::IMemoryBus@{ComSquare::Memory::IMemoryBus}}
+\doxysubsubsection{\texorpdfstring{$\sim$IMemoryBus()}{~IMemoryBus()}}
+{\footnotesize\ttfamily virtual Com\+Square\+::\+Memory\+::\+I\+Memory\+Bus\+::$\sim$\+I\+Memory\+Bus (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+A virtual default destructor. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classComSquare_1_1Memory_1_1IMemoryBus_ad0ab5473f22b232b701a7fc101f4489b}\label{classComSquare_1_1Memory_1_1IMemoryBus_ad0ab5473f22b232b701a7fc101f4489b}} 
+\index{ComSquare::Memory::IMemoryBus@{ComSquare::Memory::IMemoryBus}!getAccessor@{getAccessor}}
+\index{getAccessor@{getAccessor}!ComSquare::Memory::IMemoryBus@{ComSquare::Memory::IMemoryBus}}
+\doxysubsubsection{\texorpdfstring{getAccessor()}{getAccessor()}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{classComSquare_1_1Memory_1_1IMemory}{I\+Memory}}$\ast$ Com\+Square\+::\+Memory\+::\+I\+Memory\+Bus\+::get\+Accessor (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}}}]{addr }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Helper function to get the components that is responsible of read/write at an address. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em addr} & The address you want to look for. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The components responsible for the address param or nullptr if none was found. 
+\end{DoxyReturn}
+
+
+Implemented in \mbox{\hyperlink{classComSquare_1_1Debugger_1_1MemoryBusDebug_a4b082fcada287cf8cd0a58dc1447412e}{Com\+Square\+::\+Debugger\+::\+Memory\+Bus\+Debug}}, and \mbox{\hyperlink{classComSquare_1_1Memory_1_1MemoryBus_acd9f28fab89e9c3b46571f049f37a0c3}{Com\+Square\+::\+Memory\+::\+Memory\+Bus}}.
+
+\mbox{\Hypertarget{classComSquare_1_1Memory_1_1IMemoryBus_a715161996b7842c55c0be82d3cd22572}\label{classComSquare_1_1Memory_1_1IMemoryBus_a715161996b7842c55c0be82d3cd22572}} 
+\index{ComSquare::Memory::IMemoryBus@{ComSquare::Memory::IMemoryBus}!peek@{peek}}
+\index{peek@{peek}!ComSquare::Memory::IMemoryBus@{ComSquare::Memory::IMemoryBus}}
+\doxysubsubsection{\texorpdfstring{peek()}{peek()}}
+{\footnotesize\ttfamily virtual std\+::optional$<$uint8\+\_\+t$>$ Com\+Square\+::\+Memory\+::\+I\+Memory\+Bus\+::peek (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}}}]{addr }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+This as the same purpose as a read but it does not change the open bus and won\textquotesingle{}t throw an exception. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em addr} & The address to read from. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The value that the component returned for this address. If the address was mapped to ram, it simply returned the value. If the address was mapped to a register the component returned the register. 
+\end{DoxyReturn}
+
+
+Implemented in \mbox{\hyperlink{classComSquare_1_1Debugger_1_1MemoryBusDebug_a884781dd68300d7cf32468fbe1fc1acd}{Com\+Square\+::\+Debugger\+::\+Memory\+Bus\+Debug}}, and \mbox{\hyperlink{classComSquare_1_1Memory_1_1MemoryBus_abd086c2053ce7432256e2b79949d46df}{Com\+Square\+::\+Memory\+::\+Memory\+Bus}}.
+
+\mbox{\Hypertarget{classComSquare_1_1Memory_1_1IMemoryBus_a474f556b1f4ef4af276217a489031775}\label{classComSquare_1_1Memory_1_1IMemoryBus_a474f556b1f4ef4af276217a489031775}} 
+\index{ComSquare::Memory::IMemoryBus@{ComSquare::Memory::IMemoryBus}!peek\_v@{peek\_v}}
+\index{peek\_v@{peek\_v}!ComSquare::Memory::IMemoryBus@{ComSquare::Memory::IMemoryBus}}
+\doxysubsubsection{\texorpdfstring{peek\_v()}{peek\_v()}}
+{\footnotesize\ttfamily virtual uint8\+\_\+t Com\+Square\+::\+Memory\+::\+I\+Memory\+Bus\+::peek\+\_\+v (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}}}]{addr }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+This as the same purpose as a read but it does not change the open bus and won\textquotesingle{}t throw an exception. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em addr} & The address to read from. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The value that the component returned for this address. If the address was mapped to ram, it simply returned the value. If the address was mapped to a register the component returned the register. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+If the value address is not mapped, 0 is returned instead of nullopt. 
+\end{DoxyNote}
+
+
+Implemented in \mbox{\hyperlink{classComSquare_1_1Debugger_1_1MemoryBusDebug_adbf4a8e7f30de8496a37696270aa9515}{Com\+Square\+::\+Debugger\+::\+Memory\+Bus\+Debug}}, and \mbox{\hyperlink{classComSquare_1_1Memory_1_1MemoryBus_ab8e47918f6eccef0aeee50cd7b77eaec}{Com\+Square\+::\+Memory\+::\+Memory\+Bus}}.
+
+\mbox{\Hypertarget{classComSquare_1_1Memory_1_1IMemoryBus_a560cf44b01d039ac4e13762e2abf46b1}\label{classComSquare_1_1Memory_1_1IMemoryBus_a560cf44b01d039ac4e13762e2abf46b1}} 
+\index{ComSquare::Memory::IMemoryBus@{ComSquare::Memory::IMemoryBus}!read@{read}}
+\index{read@{read}!ComSquare::Memory::IMemoryBus@{ComSquare::Memory::IMemoryBus}}
+\doxysubsubsection{\texorpdfstring{read()}{read()}}
+{\footnotesize\ttfamily virtual uint8\+\_\+t Com\+Square\+::\+Memory\+::\+I\+Memory\+Bus\+::read (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}}}]{addr }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Read data at a global address. This form allow read to be silenced. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em addr} & The address to read from. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \mbox{\hyperlink{classComSquare_1_1InvalidAddress}{Invalid\+Address}}} & If the address is not mapped to the bus, this exception is thrown. \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyReturn}{Returns}
+The value that the component returned for this address. If the address was mapped to ram, it simply returned the value. If the address was mapped to a register the component returned the register. 
+\end{DoxyReturn}
+
+
+Implemented in \mbox{\hyperlink{classComSquare_1_1Debugger_1_1MemoryBusDebug_aac4caac70c61e9dca7237669490c2505}{Com\+Square\+::\+Debugger\+::\+Memory\+Bus\+Debug}}, and \mbox{\hyperlink{classComSquare_1_1Memory_1_1MemoryBus_a8d2c99fb0e1f2dafd48180ea66fd1c7a}{Com\+Square\+::\+Memory\+::\+Memory\+Bus}}.
+
+\mbox{\Hypertarget{classComSquare_1_1Memory_1_1IMemoryBus_a393b05cf83c6dc1ee6c0cad9648cb31b}\label{classComSquare_1_1Memory_1_1IMemoryBus_a393b05cf83c6dc1ee6c0cad9648cb31b}} 
+\index{ComSquare::Memory::IMemoryBus@{ComSquare::Memory::IMemoryBus}!write@{write}}
+\index{write@{write}!ComSquare::Memory::IMemoryBus@{ComSquare::Memory::IMemoryBus}}
+\doxysubsubsection{\texorpdfstring{write()}{write()}}
+{\footnotesize\ttfamily virtual void Com\+Square\+::\+Memory\+::\+I\+Memory\+Bus\+::write (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}}}]{addr,  }\item[{uint8\+\_\+t}]{data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Write a data to a global address. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em addr} & The address to write to. \\
+\hline
+{\em data} & The data to write. \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \mbox{\hyperlink{classComSquare_1_1Debugger_1_1MemoryBusDebug_a768c48fdb11d35c051b690f9c7478b2d}{Com\+Square\+::\+Debugger\+::\+Memory\+Bus\+Debug}}, and \mbox{\hyperlink{classComSquare_1_1Memory_1_1MemoryBus_aa3ba7681ed7bf83fa66c8994a57dc0dd}{Com\+Square\+::\+Memory\+::\+Memory\+Bus}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+sources/\+Memory/\mbox{\hyperlink{IMemoryBus_8hpp}{I\+Memory\+Bus.\+hpp}}\end{DoxyCompactItemize}

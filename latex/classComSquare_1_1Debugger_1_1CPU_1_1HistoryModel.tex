@@ -1,0 +1,167 @@
+\hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel}{}\doxysection{Com\+Square\+::Debugger\+::C\+PU\+::History\+Model Class Reference}
+\label{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel}\index{ComSquare::Debugger::CPU::HistoryModel@{ComSquare::Debugger::CPU::HistoryModel}}
+
+
+The qt model that show the history.  
+
+
+
+
+{\ttfamily \#include $<$C\+P\+U\+Debug.\+hpp$>$}
+
+
+
+Inheritance diagram for Com\+Square\+::Debugger\+::C\+PU\+::History\+Model\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=206pt]{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Com\+Square\+::Debugger\+::C\+PU\+::History\+Model\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=206pt]{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel_a4d84983b9e5a591cb0a6d43c5dc6962b}{History\+Model}} ()
+\item 
+\mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel_a569284083e3a0adf35f44fd68d2a0557}{History\+Model}} (const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel}{History\+Model}} \&)=delete
+\item 
+const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel}{History\+Model}} \& \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel_a24039c757c82c816c8657434e50cee23}{operator=}} (const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel}{History\+Model}} \&)=delete
+\item 
+\mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel_a8d2d34615dc1db1769a56b19c33db449}{$\sim$\+History\+Model}} () override=default
+\item 
+void \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel_a88c29d61e3d22aff0b956e8c08214bf8}{log}} (const \mbox{\hyperlink{structComSquare_1_1Debugger_1_1CPU_1_1ExecutedInstruction}{Executed\+Instruction}} \&)
+\begin{DoxyCompactList}\small\item\em Log a new instruction. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel_a6ef4beed9b2a9c55bbd9fd4cec890d54}{clear}} ()
+\begin{DoxyCompactList}\small\item\em Remove every instructions of the history. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel_a1de8c04d0a96d565522ea3cf5f3c5676}{row\+Count}} (const Q\+Model\+Index \&parent) const override
+\begin{DoxyCompactList}\small\item\em The number of row the table has. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel_a606604f45ec367fd3cd6f872e2ddfe95}{column\+Count}} (const Q\+Model\+Index \&parent) const override
+\begin{DoxyCompactList}\small\item\em The number of column the table has. \end{DoxyCompactList}\item 
+Q\+Variant \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel_ad90c54432fea8a4c41e2489646f76637}{data}} (const Q\+Model\+Index \&index, int role) const override
+\begin{DoxyCompactList}\small\item\em Return a data representing the table cell. \end{DoxyCompactList}\item 
+Q\+Variant \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel_a414ed60b94edb33d82c30589853d052d}{header\+Data}} (int section, Qt\+::\+Orientation orientation, int role) const override
+\begin{DoxyCompactList}\small\item\em Override the headers to use hex values. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{structComSquare_1_1Debugger_1_1CPU_1_1ExecutedInstruction}{Executed\+Instruction}} $>$ \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel_a25f4a9773631c091025599fdb379ef9e}{\+\_\+instructions}} = \{\}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The qt model that show the history. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel_a4d84983b9e5a591cb0a6d43c5dc6962b}\label{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel_a4d84983b9e5a591cb0a6d43c5dc6962b}} 
+\index{ComSquare::Debugger::CPU::HistoryModel@{ComSquare::Debugger::CPU::HistoryModel}!HistoryModel@{HistoryModel}}
+\index{HistoryModel@{HistoryModel}!ComSquare::Debugger::CPU::HistoryModel@{ComSquare::Debugger::CPU::HistoryModel}}
+\doxysubsubsection{\texorpdfstring{HistoryModel()}{HistoryModel()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+History\+Model\+::\+History\+Model (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel_a569284083e3a0adf35f44fd68d2a0557}\label{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel_a569284083e3a0adf35f44fd68d2a0557}} 
+\index{ComSquare::Debugger::CPU::HistoryModel@{ComSquare::Debugger::CPU::HistoryModel}!HistoryModel@{HistoryModel}}
+\index{HistoryModel@{HistoryModel}!ComSquare::Debugger::CPU::HistoryModel@{ComSquare::Debugger::CPU::HistoryModel}}
+\doxysubsubsection{\texorpdfstring{HistoryModel()}{HistoryModel()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+History\+Model\+::\+History\+Model (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel}{History\+Model}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel_a8d2d34615dc1db1769a56b19c33db449}\label{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel_a8d2d34615dc1db1769a56b19c33db449}} 
+\index{ComSquare::Debugger::CPU::HistoryModel@{ComSquare::Debugger::CPU::HistoryModel}!````~HistoryModel@{$\sim$HistoryModel}}
+\index{````~HistoryModel@{$\sim$HistoryModel}!ComSquare::Debugger::CPU::HistoryModel@{ComSquare::Debugger::CPU::HistoryModel}}
+\doxysubsubsection{\texorpdfstring{$\sim$HistoryModel()}{~HistoryModel()}}
+{\footnotesize\ttfamily Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+History\+Model\+::$\sim$\+History\+Model (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [default]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel_a6ef4beed9b2a9c55bbd9fd4cec890d54}\label{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel_a6ef4beed9b2a9c55bbd9fd4cec890d54}} 
+\index{ComSquare::Debugger::CPU::HistoryModel@{ComSquare::Debugger::CPU::HistoryModel}!clear@{clear}}
+\index{clear@{clear}!ComSquare::Debugger::CPU::HistoryModel@{ComSquare::Debugger::CPU::HistoryModel}}
+\doxysubsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+History\+Model\+::clear (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Remove every instructions of the history. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel_a606604f45ec367fd3cd6f872e2ddfe95}\label{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel_a606604f45ec367fd3cd6f872e2ddfe95}} 
+\index{ComSquare::Debugger::CPU::HistoryModel@{ComSquare::Debugger::CPU::HistoryModel}!columnCount@{columnCount}}
+\index{columnCount@{columnCount}!ComSquare::Debugger::CPU::HistoryModel@{ComSquare::Debugger::CPU::HistoryModel}}
+\doxysubsubsection{\texorpdfstring{columnCount()}{columnCount()}}
+{\footnotesize\ttfamily int Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+History\+Model\+::column\+Count (\begin{DoxyParamCaption}\item[{const Q\+Model\+Index \&}]{parent }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+The number of column the table has. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel_ad90c54432fea8a4c41e2489646f76637}\label{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel_ad90c54432fea8a4c41e2489646f76637}} 
+\index{ComSquare::Debugger::CPU::HistoryModel@{ComSquare::Debugger::CPU::HistoryModel}!data@{data}}
+\index{data@{data}!ComSquare::Debugger::CPU::HistoryModel@{ComSquare::Debugger::CPU::HistoryModel}}
+\doxysubsubsection{\texorpdfstring{data()}{data()}}
+{\footnotesize\ttfamily Q\+Variant Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+History\+Model\+::data (\begin{DoxyParamCaption}\item[{const Q\+Model\+Index \&}]{index,  }\item[{int}]{role }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+Return a data representing the table cell. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel_a414ed60b94edb33d82c30589853d052d}\label{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel_a414ed60b94edb33d82c30589853d052d}} 
+\index{ComSquare::Debugger::CPU::HistoryModel@{ComSquare::Debugger::CPU::HistoryModel}!headerData@{headerData}}
+\index{headerData@{headerData}!ComSquare::Debugger::CPU::HistoryModel@{ComSquare::Debugger::CPU::HistoryModel}}
+\doxysubsubsection{\texorpdfstring{headerData()}{headerData()}}
+{\footnotesize\ttfamily Q\+Variant Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+History\+Model\+::header\+Data (\begin{DoxyParamCaption}\item[{int}]{section,  }\item[{Qt\+::\+Orientation}]{orientation,  }\item[{int}]{role }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+Override the headers to use hex values. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel_a88c29d61e3d22aff0b956e8c08214bf8}\label{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel_a88c29d61e3d22aff0b956e8c08214bf8}} 
+\index{ComSquare::Debugger::CPU::HistoryModel@{ComSquare::Debugger::CPU::HistoryModel}!log@{log}}
+\index{log@{log}!ComSquare::Debugger::CPU::HistoryModel@{ComSquare::Debugger::CPU::HistoryModel}}
+\doxysubsubsection{\texorpdfstring{log()}{log()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+History\+Model\+::log (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structComSquare_1_1Debugger_1_1CPU_1_1ExecutedInstruction}{Executed\+Instruction}} \&}]{instruction }\end{DoxyParamCaption})}
+
+
+
+Log a new instruction. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel_a24039c757c82c816c8657434e50cee23}\label{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel_a24039c757c82c816c8657434e50cee23}} 
+\index{ComSquare::Debugger::CPU::HistoryModel@{ComSquare::Debugger::CPU::HistoryModel}!operator=@{operator=}}
+\index{operator=@{operator=}!ComSquare::Debugger::CPU::HistoryModel@{ComSquare::Debugger::CPU::HistoryModel}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel}{History\+Model}}\& Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+History\+Model\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel}{History\+Model}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel_a1de8c04d0a96d565522ea3cf5f3c5676}\label{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel_a1de8c04d0a96d565522ea3cf5f3c5676}} 
+\index{ComSquare::Debugger::CPU::HistoryModel@{ComSquare::Debugger::CPU::HistoryModel}!rowCount@{rowCount}}
+\index{rowCount@{rowCount}!ComSquare::Debugger::CPU::HistoryModel@{ComSquare::Debugger::CPU::HistoryModel}}
+\doxysubsubsection{\texorpdfstring{rowCount()}{rowCount()}}
+{\footnotesize\ttfamily int Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+History\+Model\+::row\+Count (\begin{DoxyParamCaption}\item[{const Q\+Model\+Index \&}]{parent }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+The number of row the table has. 
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel_a25f4a9773631c091025599fdb379ef9e}\label{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel_a25f4a9773631c091025599fdb379ef9e}} 
+\index{ComSquare::Debugger::CPU::HistoryModel@{ComSquare::Debugger::CPU::HistoryModel}!\_instructions@{\_instructions}}
+\index{\_instructions@{\_instructions}!ComSquare::Debugger::CPU::HistoryModel@{ComSquare::Debugger::CPU::HistoryModel}}
+\doxysubsubsection{\texorpdfstring{\_instructions}{\_instructions}}
+{\footnotesize\ttfamily std\+::vector$<$\mbox{\hyperlink{structComSquare_1_1Debugger_1_1CPU_1_1ExecutedInstruction}{Executed\+Instruction}}$>$ Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+History\+Model\+::\+\_\+instructions = \{\}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+sources/\+Debugger/\+C\+P\+U/\mbox{\hyperlink{CPUDebug_8hpp}{C\+P\+U\+Debug.\+hpp}}\item 
+sources/\+Debugger/\+C\+P\+U/\mbox{\hyperlink{CPUDebug_8cpp}{C\+P\+U\+Debug.\+cpp}}\end{DoxyCompactItemize}

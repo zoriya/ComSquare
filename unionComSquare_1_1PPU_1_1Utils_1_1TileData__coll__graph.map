@@ -1,0 +1,3 @@
+<map id="ComSquare::PPU::Utils::TileData" name="ComSquare::PPU::Utils::TileData">
+<area shape="rect" id="node1" title="Used to parse easily VRAM Tile information." alt="" coords="5,5,175,200"/>
+</map>

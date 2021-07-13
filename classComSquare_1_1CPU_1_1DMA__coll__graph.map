@@ -1,0 +1,4 @@
+<map id="ComSquare::CPU::DMA" name="ComSquare::CPU::DMA">
+<area shape="rect" id="node1" title="Class handling all DMA/HDMA transfers (Direct Memory Access or H&#45;Blank Direct Memory Access)" alt="" coords="5,233,176,677"/>
+<area shape="rect" id="node2" href="$classComSquare_1_1Memory_1_1IMemoryBus.html" title="The memory bus is the component responsible of mapping addresses to components address and transmitti..." alt="" coords="7,5,174,171"/>
+</map>

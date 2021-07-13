@@ -1,0 +1,11 @@
+<map id="ComSquare::CPU::CPU" name="ComSquare::CPU::CPU">
+<area shape="rect" id="node1" title="The main CPU." alt="" coords="517,725,759,1287"/>
+<area shape="rect" id="node2" href="$classComSquare_1_1Memory_1_1AMemory.html" title="Abstract class representing a continuous block of memory." alt="" coords="5,417,180,567"/>
+<area shape="rect" id="node3" href="$classComSquare_1_1Memory_1_1IMemory.html" title="Common interface implemented by all components mapping memory." alt="" coords="5,20,180,229"/>
+<area shape="rect" id="node4" href="$classComSquare_1_1Callback.html" title="A callback where you can subscribe to and emit it." alt="" coords="204,387,365,597"/>
+<area shape="rect" id="node5" href="$structComSquare_1_1Cartridge_1_1Header.html" title=" " alt="" coords="390,321,585,663"/>
+<area shape="rect" id="node6" href="$structComSquare_1_1Cartridge_1_1InterruptVectors.html" title=" " alt="" coords="405,5,570,244"/>
+<area shape="rect" id="node7" href="$structComSquare_1_1CPU_1_1Instruction.html" title="Struct containing basic information about instructions." alt="" coords="609,424,819,560"/>
+<area shape="rect" id="node8" href="$structComSquare_1_1CPU_1_1InternalRegisters.html" title="Struct containing internal registers of the CPU." alt="" coords="843,373,1033,611"/>
+<area shape="rect" id="node9" href="$structComSquare_1_1CPU_1_1Registers.html" title="Struct containing registers for the main CPU." alt="" coords="1057,380,1259,604"/>
+</map>

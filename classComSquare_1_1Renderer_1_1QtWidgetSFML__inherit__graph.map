@@ -1,0 +1,8 @@
+<map id="ComSquare::Renderer::QtWidgetSFML" name="ComSquare::Renderer::QtWidgetSFML">
+<area shape="rect" id="node1" title="A widget that you can put inside a QT application that render using the SFML." alt="" coords="105,579,269,803"/>
+<area shape="rect" id="node5" href="$classComSquare_1_1Renderer_1_1QtFullSFML.html" title="The SFML window that manage the update." alt="" coords="5,851,169,1031"/>
+<area shape="rect" id="node6" href="$classComSquare_1_1Renderer_1_1QtSFMLTileRenderer.html" title=" " alt="" coords="193,865,384,1016"/>
+<area shape="rect" id="node2" title=" " alt="" coords="76,329,155,406"/>
+<area shape="rect" id="node3" href="$classComSquare_1_1Renderer_1_1SFRenderer.html" title=" " alt="" coords="179,204,343,531"/>
+<area shape="rect" id="node4" href="$classComSquare_1_1Renderer_1_1IRenderer.html" title=" " alt="" coords="179,5,343,156"/>
+</map>

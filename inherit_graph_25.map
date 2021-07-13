@@ -1,0 +1,10 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" title=" " alt="" coords="5,209,165,235"/>
+<area shape="rect" id="node2" href="$classComSquare_1_1Debugger_1_1BusLogModel.html" title="The qt model that bind the logs to the view." alt="" coords="224,5,392,47"/>
+<area shape="rect" id="node3" href="$classComSquare_1_1Debugger_1_1CGramModel.html" title="The qt model that bind the logs to the view." alt="" coords="224,71,392,112"/>
+<area shape="rect" id="node4" href="$classComSquare_1_1Debugger_1_1CPU_1_1DisassemblyModel.html" title="The qt model that show the disassembly." alt="" coords="213,136,403,177"/>
+<area shape="rect" id="node5" href="$classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel.html" title="The qt model that show the history." alt="" coords="224,201,392,243"/>
+<area shape="rect" id="node6" href="$classComSquare_1_1Debugger_1_1CPU_1_1StackModel.html" title="The qt model that show the stack." alt="" coords="224,267,392,308"/>
+<area shape="rect" id="node7" href="$classComSquare_1_1Debugger_1_1MemoryViewerModel.html" title="The qt model that bind the ram to the view." alt="" coords="223,332,393,373"/>
+<area shape="rect" id="node8" href="$classComSquare_1_1Debugger_1_1RegistersViewerModel.html" title=" " alt="" coords="220,397,396,439"/>
+</map>

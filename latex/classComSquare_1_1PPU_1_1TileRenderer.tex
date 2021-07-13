@@ -1,0 +1,316 @@
+\hypertarget{classComSquare_1_1PPU_1_1TileRenderer}{}\doxysection{Com\+Square\+::P\+PU\+::Tile\+Renderer Class Reference}
+\label{classComSquare_1_1PPU_1_1TileRenderer}\index{ComSquare::PPU::TileRenderer@{ComSquare::PPU::TileRenderer}}
+
+
+{\ttfamily \#include $<$Tile\+Renderer.\+hpp$>$}
+
+
+
+Collaboration diagram for Com\+Square\+::P\+PU\+::Tile\+Renderer\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classComSquare_1_1PPU_1_1TileRenderer__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classComSquare_1_1PPU_1_1TileRenderer_adf5049b7b40c4b96700e24864326f951}{set\+Palette\+Index}} (int palette\+Index)
+\begin{DoxyCompactList}\small\item\em Set the palette to use for render (index of palette) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSquare_1_1PPU_1_1TileRenderer_aca91ac9ac3b1dc3cb0549018dfe28d48}{set\+Bpp}} (int bpp)
+\begin{DoxyCompactList}\small\item\em Set the bpp to render graphics. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classComSquare_1_1PPU_1_1TileRenderer_ab0f6764ac171190eaaa5366fd271a85e}{get\+Bpp}} () const
+\begin{DoxyCompactList}\small\item\em Get the current bpp. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classComSquare_1_1PPU_1_1TileRenderer_aaff14ae8f6b97b429a95ae5c38704b99}{get\+Palette\+Index}} () const
+\begin{DoxyCompactList}\small\item\em Get the index of the current palette used. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{classComSquare_1_1PPU_1_1TileRenderer_a99e6d5fc0697f982e9af9c1f70fe79ab}{get\+Pixel\+Reference\+From\+Tile}} (uint16\+\_\+t tile\+Address, uint8\+\_\+t pixel\+Index)
+\begin{DoxyCompactList}\small\item\em Get the color pixel reference from the tile address and pixel\+Index. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{classComSquare_1_1PPU_1_1TileRenderer_a70c3dac78b84b4f94e8ff349c0a929e1}{get\+Pixel\+Reference\+From\+Tile\+Row}} (uint16\+\_\+t tile\+Row\+Address, uint8\+\_\+t pixel\+Index)
+\begin{DoxyCompactList}\small\item\em Get the color reference of a pixel from the address of the row. \end{DoxyCompactList}\item 
+std\+::vector$<$ uint16\+\_\+t $>$ \mbox{\hyperlink{classComSquare_1_1PPU_1_1TileRenderer_a39e7226eeeb3346d6a040a14ce17f3f8}{get\+Palette}} (int nb\+Palette)
+\begin{DoxyCompactList}\small\item\em Gives the actual selected palette with all of it\textquotesingle{}s colors. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{classComSquare_1_1PPU_1_1TileRenderer_a4aa1530994bdec0ff7bbe9b6d45d1814}{read2\+B\+P\+P\+Value}} (uint16\+\_\+t tile\+Row\+Address, uint8\+\_\+t pixel\+Index)
+\begin{DoxyCompactList}\small\item\em read the 2bpp value for a pixel (used multple times for 4bpp and 8bpp) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSquare_1_1PPU_1_1TileRenderer_a6458f422bfedc2969c36518136dbe6cf}{render}} (uint16\+\_\+t tile\+Address)
+\begin{DoxyCompactList}\small\item\em render the tile (8x8) at the tile\+Address \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1PPU_1_1TileRenderer_a8f1a45b6a8f6d4cb85c00ea566259fcd}{Tile\+Renderer}} (\mbox{\hyperlink{classComSquare_1_1Ram_1_1Ram}{Ram\+::\+Ram}} \&vram, \mbox{\hyperlink{classComSquare_1_1Ram_1_1Ram}{Ram\+::\+Ram}} \&cgram)
+\item 
+\mbox{\hyperlink{classComSquare_1_1PPU_1_1TileRenderer_af3b441752835313aa5302310db8a4e0c}{Tile\+Renderer}} (const \mbox{\hyperlink{classComSquare_1_1PPU_1_1TileRenderer}{Tile\+Renderer}} \&)=default
+\begin{DoxyCompactList}\small\item\em A tile renderer is copy constructable. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1PPU_1_1TileRenderer_a3a6d0ed9b3d1e3dda95e04d64121f8ab}{$\sim$\+Tile\+Renderer}} ()=default
+\begin{DoxyCompactList}\small\item\em A default destructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1PPU_1_1TileRenderer}{Tile\+Renderer}} \& \mbox{\hyperlink{classComSquare_1_1PPU_1_1TileRenderer_a26749b5e436bef6dab100887ef1281ac}{operator=}} (const \mbox{\hyperlink{classComSquare_1_1PPU_1_1TileRenderer}{Tile\+Renderer}} \&)=delete
+\begin{DoxyCompactList}\small\item\em A tile render is not assignable. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::array$<$ std\+::array$<$ uint32\+\_\+t, 8 $>$, 8 $>$ \mbox{\hyperlink{classComSquare_1_1PPU_1_1TileRenderer_a6f882f901ad458ff37f8a4bebc8c9c3e}{buffer}}
+\begin{DoxyCompactList}\small\item\em internal buffer max rendered tiles are 16x16 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classComSquare_1_1Ram_1_1Ram}{Ram\+::\+Ram}} \& \mbox{\hyperlink{classComSquare_1_1PPU_1_1TileRenderer_a41d9e33a710da74b973de4b908511fda}{\+\_\+ram}}
+\begin{DoxyCompactList}\small\item\em ram to render \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1Ram_1_1Ram}{Ram\+::\+Ram}} \& \mbox{\hyperlink{classComSquare_1_1PPU_1_1TileRenderer_a01e39081ac3f7ea00ad0d1b48d891f6f}{\+\_\+cgram}}
+\begin{DoxyCompactList}\small\item\em cgram to access the colors \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classComSquare_1_1PPU_1_1TileRenderer_a999599f2ceea7d93612db8f33c78be69}{\+\_\+bpp}}
+\begin{DoxyCompactList}\small\item\em The bpp to use while rendering. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classComSquare_1_1PPU_1_1TileRenderer_ac0f4a7c5536bcfe4cda98aa066cf8108}{\+\_\+palette\+Index}}
+\begin{DoxyCompactList}\small\item\em The palette number to use while rendering. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr int \mbox{\hyperlink{classComSquare_1_1PPU_1_1TileRenderer_ae2c0fa88624968ec1852a43fa9f7b7e4}{Tile\+Byte\+Size\+Row}} = 16
+\begin{DoxyCompactList}\small\item\em The byte size offset for 1 row in V\+R\+AM. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1TileRenderer_a8f1a45b6a8f6d4cb85c00ea566259fcd}\label{classComSquare_1_1PPU_1_1TileRenderer_a8f1a45b6a8f6d4cb85c00ea566259fcd}} 
+\index{ComSquare::PPU::TileRenderer@{ComSquare::PPU::TileRenderer}!TileRenderer@{TileRenderer}}
+\index{TileRenderer@{TileRenderer}!ComSquare::PPU::TileRenderer@{ComSquare::PPU::TileRenderer}}
+\doxysubsubsection{\texorpdfstring{TileRenderer()}{TileRenderer()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Com\+Square\+::\+P\+P\+U\+::\+Tile\+Renderer\+::\+Tile\+Renderer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classComSquare_1_1Ram_1_1Ram}{Ram\+::\+Ram}} \&}]{vram,  }\item[{\mbox{\hyperlink{classComSquare_1_1Ram_1_1Ram}{Ram\+::\+Ram}} \&}]{cgram }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1TileRenderer_af3b441752835313aa5302310db8a4e0c}\label{classComSquare_1_1PPU_1_1TileRenderer_af3b441752835313aa5302310db8a4e0c}} 
+\index{ComSquare::PPU::TileRenderer@{ComSquare::PPU::TileRenderer}!TileRenderer@{TileRenderer}}
+\index{TileRenderer@{TileRenderer}!ComSquare::PPU::TileRenderer@{ComSquare::PPU::TileRenderer}}
+\doxysubsubsection{\texorpdfstring{TileRenderer()}{TileRenderer()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Com\+Square\+::\+P\+P\+U\+::\+Tile\+Renderer\+::\+Tile\+Renderer (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classComSquare_1_1PPU_1_1TileRenderer}{Tile\+Renderer}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+A tile renderer is copy constructable. 
+
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1TileRenderer_a3a6d0ed9b3d1e3dda95e04d64121f8ab}\label{classComSquare_1_1PPU_1_1TileRenderer_a3a6d0ed9b3d1e3dda95e04d64121f8ab}} 
+\index{ComSquare::PPU::TileRenderer@{ComSquare::PPU::TileRenderer}!````~TileRenderer@{$\sim$TileRenderer}}
+\index{````~TileRenderer@{$\sim$TileRenderer}!ComSquare::PPU::TileRenderer@{ComSquare::PPU::TileRenderer}}
+\doxysubsubsection{\texorpdfstring{$\sim$TileRenderer()}{~TileRenderer()}}
+{\footnotesize\ttfamily Com\+Square\+::\+P\+P\+U\+::\+Tile\+Renderer\+::$\sim$\+Tile\+Renderer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+A default destructor. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1TileRenderer_ab0f6764ac171190eaaa5366fd271a85e}\label{classComSquare_1_1PPU_1_1TileRenderer_ab0f6764ac171190eaaa5366fd271a85e}} 
+\index{ComSquare::PPU::TileRenderer@{ComSquare::PPU::TileRenderer}!getBpp@{getBpp}}
+\index{getBpp@{getBpp}!ComSquare::PPU::TileRenderer@{ComSquare::PPU::TileRenderer}}
+\doxysubsubsection{\texorpdfstring{getBpp()}{getBpp()}}
+{\footnotesize\ttfamily int Com\+Square\+::\+P\+P\+U\+::\+Tile\+Renderer\+::get\+Bpp (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the current bpp. 
+
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1TileRenderer_a39e7226eeeb3346d6a040a14ce17f3f8}\label{classComSquare_1_1PPU_1_1TileRenderer_a39e7226eeeb3346d6a040a14ce17f3f8}} 
+\index{ComSquare::PPU::TileRenderer@{ComSquare::PPU::TileRenderer}!getPalette@{getPalette}}
+\index{getPalette@{getPalette}!ComSquare::PPU::TileRenderer@{ComSquare::PPU::TileRenderer}}
+\doxysubsubsection{\texorpdfstring{getPalette()}{getPalette()}}
+{\footnotesize\ttfamily std\+::vector$<$ uint16\+\_\+t $>$ Com\+Square\+::\+P\+P\+U\+::\+Tile\+Renderer\+::get\+Palette (\begin{DoxyParamCaption}\item[{int}]{nb\+Palette }\end{DoxyParamCaption})}
+
+
+
+Gives the actual selected palette with all of it\textquotesingle{}s colors. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nb\+Palette} & The index of the palette wanted \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The array of color of the palette 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+The return and argument depends on the current bpp 
+\end{DoxyNote}
+\begin{DoxyWarning}{Warning}
+Values are C\+G\+R\+AM colors use P\+P\+U\+::\+C\+G\+R\+A\+M\+Color\+To\+R\+G\+BA function to get the actual real color 
+\end{DoxyWarning}
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1TileRenderer_aaff14ae8f6b97b429a95ae5c38704b99}\label{classComSquare_1_1PPU_1_1TileRenderer_aaff14ae8f6b97b429a95ae5c38704b99}} 
+\index{ComSquare::PPU::TileRenderer@{ComSquare::PPU::TileRenderer}!getPaletteIndex@{getPaletteIndex}}
+\index{getPaletteIndex@{getPaletteIndex}!ComSquare::PPU::TileRenderer@{ComSquare::PPU::TileRenderer}}
+\doxysubsubsection{\texorpdfstring{getPaletteIndex()}{getPaletteIndex()}}
+{\footnotesize\ttfamily int Com\+Square\+::\+P\+P\+U\+::\+Tile\+Renderer\+::get\+Palette\+Index (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the index of the current palette used. 
+
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1TileRenderer_a99e6d5fc0697f982e9af9c1f70fe79ab}\label{classComSquare_1_1PPU_1_1TileRenderer_a99e6d5fc0697f982e9af9c1f70fe79ab}} 
+\index{ComSquare::PPU::TileRenderer@{ComSquare::PPU::TileRenderer}!getPixelReferenceFromTile@{getPixelReferenceFromTile}}
+\index{getPixelReferenceFromTile@{getPixelReferenceFromTile}!ComSquare::PPU::TileRenderer@{ComSquare::PPU::TileRenderer}}
+\doxysubsubsection{\texorpdfstring{getPixelReferenceFromTile()}{getPixelReferenceFromTile()}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Tile\+Renderer\+::get\+Pixel\+Reference\+From\+Tile (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{tile\+Address,  }\item[{uint8\+\_\+t}]{pixel\+Index }\end{DoxyParamCaption})}
+
+
+
+Get the color pixel reference from the tile address and pixel\+Index. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em tile\+Address} & The starting address of the tile \\
+\hline
+{\em pixel\+Index} & The index of the pixel (0 -\/ 255) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The color reference 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+This function is wrapper of get\+Pixel\+Reference\+From\+Tile\+Row 
+\end{DoxyNote}
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1TileRenderer_a70c3dac78b84b4f94e8ff349c0a929e1}\label{classComSquare_1_1PPU_1_1TileRenderer_a70c3dac78b84b4f94e8ff349c0a929e1}} 
+\index{ComSquare::PPU::TileRenderer@{ComSquare::PPU::TileRenderer}!getPixelReferenceFromTileRow@{getPixelReferenceFromTileRow}}
+\index{getPixelReferenceFromTileRow@{getPixelReferenceFromTileRow}!ComSquare::PPU::TileRenderer@{ComSquare::PPU::TileRenderer}}
+\doxysubsubsection{\texorpdfstring{getPixelReferenceFromTileRow()}{getPixelReferenceFromTileRow()}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Tile\+Renderer\+::get\+Pixel\+Reference\+From\+Tile\+Row (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{tile\+Row\+Address,  }\item[{uint8\+\_\+t}]{pixel\+Index }\end{DoxyParamCaption})}
+
+
+
+Get the color reference of a pixel from the address of the row. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em tile\+Row\+Address} & The address of the line of pixel \\
+\hline
+{\em pixel\+Index} & The index of the pixel (0 -\/ 7) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The color Reference 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1TileRenderer_a26749b5e436bef6dab100887ef1281ac}\label{classComSquare_1_1PPU_1_1TileRenderer_a26749b5e436bef6dab100887ef1281ac}} 
+\index{ComSquare::PPU::TileRenderer@{ComSquare::PPU::TileRenderer}!operator=@{operator=}}
+\index{operator=@{operator=}!ComSquare::PPU::TileRenderer@{ComSquare::PPU::TileRenderer}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1PPU_1_1TileRenderer}{Tile\+Renderer}}\& Com\+Square\+::\+P\+P\+U\+::\+Tile\+Renderer\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classComSquare_1_1PPU_1_1TileRenderer}{Tile\+Renderer}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+
+
+A tile render is not assignable. 
+
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1TileRenderer_a4aa1530994bdec0ff7bbe9b6d45d1814}\label{classComSquare_1_1PPU_1_1TileRenderer_a4aa1530994bdec0ff7bbe9b6d45d1814}} 
+\index{ComSquare::PPU::TileRenderer@{ComSquare::PPU::TileRenderer}!read2BPPValue@{read2BPPValue}}
+\index{read2BPPValue@{read2BPPValue}!ComSquare::PPU::TileRenderer@{ComSquare::PPU::TileRenderer}}
+\doxysubsubsection{\texorpdfstring{read2BPPValue()}{read2BPPValue()}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Tile\+Renderer\+::read2\+B\+P\+P\+Value (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{tile\+Row\+Address,  }\item[{uint8\+\_\+t}]{pixel\+Index }\end{DoxyParamCaption})}
+
+
+
+read the 2bpp value for a pixel (used multple times for 4bpp and 8bpp) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em tile\+Row\+Address} & Address where the read is done. Usage\+: Address of the tile row to render \\
+\hline
+{\em pixel\+Index} & The offset form tile\+Row\+Address, Usage\+: the pixel to read \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1TileRenderer_a6458f422bfedc2969c36518136dbe6cf}\label{classComSquare_1_1PPU_1_1TileRenderer_a6458f422bfedc2969c36518136dbe6cf}} 
+\index{ComSquare::PPU::TileRenderer@{ComSquare::PPU::TileRenderer}!render@{render}}
+\index{render@{render}!ComSquare::PPU::TileRenderer@{ComSquare::PPU::TileRenderer}}
+\doxysubsubsection{\texorpdfstring{render()}{render()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+P\+P\+U\+::\+Tile\+Renderer\+::render (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{tile\+Address }\end{DoxyParamCaption})}
+
+
+
+render the tile (8x8) at the tile\+Address 
+
+
+\begin{DoxyParams}{Parameters}
+{\em tile\+Address} & The address of the tile to render \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1TileRenderer_aca91ac9ac3b1dc3cb0549018dfe28d48}\label{classComSquare_1_1PPU_1_1TileRenderer_aca91ac9ac3b1dc3cb0549018dfe28d48}} 
+\index{ComSquare::PPU::TileRenderer@{ComSquare::PPU::TileRenderer}!setBpp@{setBpp}}
+\index{setBpp@{setBpp}!ComSquare::PPU::TileRenderer@{ComSquare::PPU::TileRenderer}}
+\doxysubsubsection{\texorpdfstring{setBpp()}{setBpp()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+P\+P\+U\+::\+Tile\+Renderer\+::set\+Bpp (\begin{DoxyParamCaption}\item[{int}]{bpp }\end{DoxyParamCaption})}
+
+
+
+Set the bpp to render graphics. 
+
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1TileRenderer_adf5049b7b40c4b96700e24864326f951}\label{classComSquare_1_1PPU_1_1TileRenderer_adf5049b7b40c4b96700e24864326f951}} 
+\index{ComSquare::PPU::TileRenderer@{ComSquare::PPU::TileRenderer}!setPaletteIndex@{setPaletteIndex}}
+\index{setPaletteIndex@{setPaletteIndex}!ComSquare::PPU::TileRenderer@{ComSquare::PPU::TileRenderer}}
+\doxysubsubsection{\texorpdfstring{setPaletteIndex()}{setPaletteIndex()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+P\+P\+U\+::\+Tile\+Renderer\+::set\+Palette\+Index (\begin{DoxyParamCaption}\item[{int}]{palette\+Index }\end{DoxyParamCaption})}
+
+
+
+Set the palette to use for render (index of palette) 
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1TileRenderer_a999599f2ceea7d93612db8f33c78be69}\label{classComSquare_1_1PPU_1_1TileRenderer_a999599f2ceea7d93612db8f33c78be69}} 
+\index{ComSquare::PPU::TileRenderer@{ComSquare::PPU::TileRenderer}!\_bpp@{\_bpp}}
+\index{\_bpp@{\_bpp}!ComSquare::PPU::TileRenderer@{ComSquare::PPU::TileRenderer}}
+\doxysubsubsection{\texorpdfstring{\_bpp}{\_bpp}}
+{\footnotesize\ttfamily int Com\+Square\+::\+P\+P\+U\+::\+Tile\+Renderer\+::\+\_\+bpp\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The bpp to use while rendering. 
+
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1TileRenderer_a01e39081ac3f7ea00ad0d1b48d891f6f}\label{classComSquare_1_1PPU_1_1TileRenderer_a01e39081ac3f7ea00ad0d1b48d891f6f}} 
+\index{ComSquare::PPU::TileRenderer@{ComSquare::PPU::TileRenderer}!\_cgram@{\_cgram}}
+\index{\_cgram@{\_cgram}!ComSquare::PPU::TileRenderer@{ComSquare::PPU::TileRenderer}}
+\doxysubsubsection{\texorpdfstring{\_cgram}{\_cgram}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1Ram_1_1Ram}{Ram\+::\+Ram}}\& Com\+Square\+::\+P\+P\+U\+::\+Tile\+Renderer\+::\+\_\+cgram\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+cgram to access the colors 
+
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1TileRenderer_ac0f4a7c5536bcfe4cda98aa066cf8108}\label{classComSquare_1_1PPU_1_1TileRenderer_ac0f4a7c5536bcfe4cda98aa066cf8108}} 
+\index{ComSquare::PPU::TileRenderer@{ComSquare::PPU::TileRenderer}!\_paletteIndex@{\_paletteIndex}}
+\index{\_paletteIndex@{\_paletteIndex}!ComSquare::PPU::TileRenderer@{ComSquare::PPU::TileRenderer}}
+\doxysubsubsection{\texorpdfstring{\_paletteIndex}{\_paletteIndex}}
+{\footnotesize\ttfamily int Com\+Square\+::\+P\+P\+U\+::\+Tile\+Renderer\+::\+\_\+palette\+Index\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The palette number to use while rendering. 
+
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1TileRenderer_a41d9e33a710da74b973de4b908511fda}\label{classComSquare_1_1PPU_1_1TileRenderer_a41d9e33a710da74b973de4b908511fda}} 
+\index{ComSquare::PPU::TileRenderer@{ComSquare::PPU::TileRenderer}!\_ram@{\_ram}}
+\index{\_ram@{\_ram}!ComSquare::PPU::TileRenderer@{ComSquare::PPU::TileRenderer}}
+\doxysubsubsection{\texorpdfstring{\_ram}{\_ram}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1Ram_1_1Ram}{Ram\+::\+Ram}}\& Com\+Square\+::\+P\+P\+U\+::\+Tile\+Renderer\+::\+\_\+ram\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+ram to render 
+
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1TileRenderer_a6f882f901ad458ff37f8a4bebc8c9c3e}\label{classComSquare_1_1PPU_1_1TileRenderer_a6f882f901ad458ff37f8a4bebc8c9c3e}} 
+\index{ComSquare::PPU::TileRenderer@{ComSquare::PPU::TileRenderer}!buffer@{buffer}}
+\index{buffer@{buffer}!ComSquare::PPU::TileRenderer@{ComSquare::PPU::TileRenderer}}
+\doxysubsubsection{\texorpdfstring{buffer}{buffer}}
+{\footnotesize\ttfamily std\+::array$<$std\+::array$<$uint32\+\_\+t, 8$>$, 8$>$ Com\+Square\+::\+P\+P\+U\+::\+Tile\+Renderer\+::buffer}
+
+
+
+internal buffer max rendered tiles are 16x16 
+
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1TileRenderer_ae2c0fa88624968ec1852a43fa9f7b7e4}\label{classComSquare_1_1PPU_1_1TileRenderer_ae2c0fa88624968ec1852a43fa9f7b7e4}} 
+\index{ComSquare::PPU::TileRenderer@{ComSquare::PPU::TileRenderer}!TileByteSizeRow@{TileByteSizeRow}}
+\index{TileByteSizeRow@{TileByteSizeRow}!ComSquare::PPU::TileRenderer@{ComSquare::PPU::TileRenderer}}
+\doxysubsubsection{\texorpdfstring{TileByteSizeRow}{TileByteSizeRow}}
+{\footnotesize\ttfamily constexpr int Com\+Square\+::\+P\+P\+U\+::\+Tile\+Renderer\+::\+Tile\+Byte\+Size\+Row = 16\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}, {\ttfamily [private]}}
+
+
+
+The byte size offset for 1 row in V\+R\+AM. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+sources/\+P\+P\+U/\mbox{\hyperlink{TileRenderer_8hpp}{Tile\+Renderer.\+hpp}}\item 
+sources/\+P\+P\+U/\mbox{\hyperlink{TileRenderer_8cpp}{Tile\+Renderer.\+cpp}}\end{DoxyCompactItemize}

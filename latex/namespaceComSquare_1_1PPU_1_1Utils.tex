@@ -1,0 +1,98 @@
+\hypertarget{namespaceComSquare_1_1PPU_1_1Utils}{}\doxysection{Com\+Square\+::P\+PU\+::Utils Namespace Reference}
+\label{namespaceComSquare_1_1PPU_1_1Utils}\index{ComSquare::PPU::Utils@{ComSquare::PPU::Utils}}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \mbox{\hyperlink{namespaceComSquare_1_1PPU_1_1Utils_1_1Debug}{Debug}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structComSquare_1_1PPU_1_1Utils_1_1PpuState}{Ppu\+State}}
+\begin{DoxyCompactList}\small\item\em Struct to save all specific variables needed for the registers (prev values for example) \end{DoxyCompactList}\item 
+union \mbox{\hyperlink{unionComSquare_1_1PPU_1_1Utils_1_1TileData}{Tile\+Data}}
+\begin{DoxyCompactList}\small\item\em Used to parse easily V\+R\+AM \mbox{\hyperlink{structComSquare_1_1PPU_1_1Tile}{Tile}} information. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{namespaceComSquare_1_1PPU_1_1Utils_ae40d346ff69ddc1dda0311063f13faaf}{C\+G\+R\+A\+M\+Color\+To\+R\+G\+BA}} (uint16\+\_\+t C\+G\+R\+A\+M\+Color)
+\begin{DoxyCompactList}\small\item\em Transform \mbox{\hyperlink{classComSquare_1_1SNES}{S\+N\+ES}} color code B\+GR to uint32\+\_\+t R\+G\+BA. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{namespaceComSquare_1_1PPU_1_1Utils_a6d9f11a94e8c285d763cb3d645cdf7ab}{to8\+Bit}} (int color)
+\begin{DoxyCompactList}\small\item\em Transform C\+G\+R\+AM color data to 8bits. \end{DoxyCompactList}\item 
+{\footnotesize template$<$std\+::size\+\_\+t D\+E\+S\+T\+\_\+\+S\+I\+Z\+E\+\_\+Y, std\+::size\+\_\+t D\+E\+S\+T\+\_\+\+S\+I\+Z\+E\+\_\+X, std\+::size\+\_\+t S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+Y, std\+::size\+\_\+t S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+X$>$ }\\void \mbox{\hyperlink{namespaceComSquare_1_1PPU_1_1Utils_ab8433fbb6853a1572324872fcc87645d}{merge2\+D\+Array}} (std\+::array$<$ std\+::array$<$ uint32\+\_\+t, D\+E\+S\+T\+\_\+\+S\+I\+Z\+E\+\_\+X $>$, D\+E\+S\+T\+\_\+\+S\+I\+Z\+E\+\_\+Y $>$ \&buffer\+Dest, const std\+::array$<$ std\+::array$<$ uint32\+\_\+t, S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+X $>$, S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+Y $>$ \&buffer\+Src, const \mbox{\hyperlink{classComSquare_1_1Vector2}{Vector2}}$<$ int $>$ \&offset)
+\item 
+{\footnotesize template$<$std\+::size\+\_\+t S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+Y, std\+::size\+\_\+t S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+X$>$ }\\void \mbox{\hyperlink{namespaceComSquare_1_1PPU_1_1Utils_aa9f0f7bcd7b66678d8f1f4bc998b85ed}{V\+Flip\+Array}} (std\+::array$<$ std\+::array$<$ uint32\+\_\+t, S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+X $>$, S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+Y $>$ \&array, const \mbox{\hyperlink{classComSquare_1_1Vector2}{Vector2}}$<$ int $>$ \&size, const \mbox{\hyperlink{classComSquare_1_1Vector2}{Vector2}}$<$ int $>$ \&offset=\{0, 0\})
+\item 
+{\footnotesize template$<$std\+::size\+\_\+t S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+Y, std\+::size\+\_\+t S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+X$>$ }\\void \mbox{\hyperlink{namespaceComSquare_1_1PPU_1_1Utils_ade119279ac84cc0ddddf09be79cb0f40}{H\+Flip\+Array}} (std\+::array$<$ std\+::array$<$ uint32\+\_\+t, S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+X $>$, S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+Y $>$ \&array, const \mbox{\hyperlink{classComSquare_1_1Vector2}{Vector2}}$<$ int $>$ \&size, const \mbox{\hyperlink{classComSquare_1_1Vector2}{Vector2}}$<$ int $>$ \&offset=\{0, 0\})
+\item 
+{\footnotesize template$<$std\+::size\+\_\+t D\+E\+S\+T\+\_\+\+S\+I\+Z\+E\+\_\+X, std\+::size\+\_\+t D\+E\+S\+T\+\_\+\+S\+I\+Z\+E\+\_\+Y, std\+::size\+\_\+t S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+X, std\+::size\+\_\+t S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+Y$>$ }\\static void \mbox{\hyperlink{namespaceComSquare_1_1PPU_1_1Utils_a386d2ada25c22bad204ced30b5f20ff0}{add\+Buffer}} (std\+::array$<$ std\+::array$<$ uint32\+\_\+t, D\+E\+S\+T\+\_\+\+S\+I\+Z\+E\+\_\+Y $>$, D\+E\+S\+T\+\_\+\+S\+I\+Z\+E\+\_\+X $>$ \&buffer\+Dest, const std\+::array$<$ std\+::array$<$ uint32\+\_\+t, S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+Y $>$, S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+X $>$ \&buffer\+Src)
+\begin{DoxyCompactList}\small\item\em Add a bg buffer to another buffer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespaceComSquare_1_1PPU_1_1Utils_a386d2ada25c22bad204ced30b5f20ff0}\label{namespaceComSquare_1_1PPU_1_1Utils_a386d2ada25c22bad204ced30b5f20ff0}} 
+\index{ComSquare::PPU::Utils@{ComSquare::PPU::Utils}!addBuffer@{addBuffer}}
+\index{addBuffer@{addBuffer}!ComSquare::PPU::Utils@{ComSquare::PPU::Utils}}
+\doxysubsubsection{\texorpdfstring{addBuffer()}{addBuffer()}}
+{\footnotesize\ttfamily template$<$std\+::size\+\_\+t D\+E\+S\+T\+\_\+\+S\+I\+Z\+E\+\_\+X, std\+::size\+\_\+t D\+E\+S\+T\+\_\+\+S\+I\+Z\+E\+\_\+Y, std\+::size\+\_\+t S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+X, std\+::size\+\_\+t S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+Y$>$ \\
+static void Com\+Square\+::\+P\+P\+U\+::\+Utils\+::add\+Buffer (\begin{DoxyParamCaption}\item[{std\+::array$<$ std\+::array$<$ uint32\+\_\+t, D\+E\+S\+T\+\_\+\+S\+I\+Z\+E\+\_\+Y $>$, D\+E\+S\+T\+\_\+\+S\+I\+Z\+E\+\_\+X $>$ \&}]{buffer\+Dest,  }\item[{const std\+::array$<$ std\+::array$<$ uint32\+\_\+t, S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+Y $>$, S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+X $>$ \&}]{buffer\+Src }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Add a bg buffer to another buffer. 
+
+\mbox{\Hypertarget{namespaceComSquare_1_1PPU_1_1Utils_ae40d346ff69ddc1dda0311063f13faaf}\label{namespaceComSquare_1_1PPU_1_1Utils_ae40d346ff69ddc1dda0311063f13faaf}} 
+\index{ComSquare::PPU::Utils@{ComSquare::PPU::Utils}!CGRAMColorToRGBA@{CGRAMColorToRGBA}}
+\index{CGRAMColorToRGBA@{CGRAMColorToRGBA}!ComSquare::PPU::Utils@{ComSquare::PPU::Utils}}
+\doxysubsubsection{\texorpdfstring{CGRAMColorToRGBA()}{CGRAMColorToRGBA()}}
+{\footnotesize\ttfamily uint32\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Utils\+::\+C\+G\+R\+A\+M\+Color\+To\+R\+G\+BA (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{C\+G\+R\+A\+M\+Color }\end{DoxyParamCaption})}
+
+
+
+Transform \mbox{\hyperlink{classComSquare_1_1SNES}{S\+N\+ES}} color code B\+GR to uint32\+\_\+t R\+G\+BA. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em C\+G\+R\+A\+M\+Color} & The color of the C\+G\+R\+AM \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The C\+G\+R\+AM color to R\+G\+BA format 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceComSquare_1_1PPU_1_1Utils_ade119279ac84cc0ddddf09be79cb0f40}\label{namespaceComSquare_1_1PPU_1_1Utils_ade119279ac84cc0ddddf09be79cb0f40}} 
+\index{ComSquare::PPU::Utils@{ComSquare::PPU::Utils}!HFlipArray@{HFlipArray}}
+\index{HFlipArray@{HFlipArray}!ComSquare::PPU::Utils@{ComSquare::PPU::Utils}}
+\doxysubsubsection{\texorpdfstring{HFlipArray()}{HFlipArray()}}
+{\footnotesize\ttfamily template$<$std\+::size\+\_\+t S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+Y, std\+::size\+\_\+t S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+X$>$ \\
+void Com\+Square\+::\+P\+P\+U\+::\+Utils\+::\+H\+Flip\+Array (\begin{DoxyParamCaption}\item[{std\+::array$<$ std\+::array$<$ uint32\+\_\+t, S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+X $>$, S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+Y $>$ \&}]{array,  }\item[{const \mbox{\hyperlink{classComSquare_1_1Vector2}{Vector2}}$<$ int $>$ \&}]{size,  }\item[{const \mbox{\hyperlink{classComSquare_1_1Vector2}{Vector2}}$<$ int $>$ \&}]{offset = {\ttfamily \{0,~0\}} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{namespaceComSquare_1_1PPU_1_1Utils_ab8433fbb6853a1572324872fcc87645d}\label{namespaceComSquare_1_1PPU_1_1Utils_ab8433fbb6853a1572324872fcc87645d}} 
+\index{ComSquare::PPU::Utils@{ComSquare::PPU::Utils}!merge2DArray@{merge2DArray}}
+\index{merge2DArray@{merge2DArray}!ComSquare::PPU::Utils@{ComSquare::PPU::Utils}}
+\doxysubsubsection{\texorpdfstring{merge2DArray()}{merge2DArray()}}
+{\footnotesize\ttfamily template$<$std\+::size\+\_\+t D\+E\+S\+T\+\_\+\+S\+I\+Z\+E\+\_\+Y, std\+::size\+\_\+t D\+E\+S\+T\+\_\+\+S\+I\+Z\+E\+\_\+X, std\+::size\+\_\+t S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+Y, std\+::size\+\_\+t S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+X$>$ \\
+void Com\+Square\+::\+P\+P\+U\+::\+Utils\+::merge2\+D\+Array (\begin{DoxyParamCaption}\item[{std\+::array$<$ std\+::array$<$ uint32\+\_\+t, D\+E\+S\+T\+\_\+\+S\+I\+Z\+E\+\_\+X $>$, D\+E\+S\+T\+\_\+\+S\+I\+Z\+E\+\_\+Y $>$ \&}]{buffer\+Dest,  }\item[{const std\+::array$<$ std\+::array$<$ uint32\+\_\+t, S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+X $>$, S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+Y $>$ \&}]{buffer\+Src,  }\item[{const \mbox{\hyperlink{classComSquare_1_1Vector2}{Vector2}}$<$ int $>$ \&}]{offset }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{namespaceComSquare_1_1PPU_1_1Utils_a6d9f11a94e8c285d763cb3d645cdf7ab}\label{namespaceComSquare_1_1PPU_1_1Utils_a6d9f11a94e8c285d763cb3d645cdf7ab}} 
+\index{ComSquare::PPU::Utils@{ComSquare::PPU::Utils}!to8Bit@{to8Bit}}
+\index{to8Bit@{to8Bit}!ComSquare::PPU::Utils@{ComSquare::PPU::Utils}}
+\doxysubsubsection{\texorpdfstring{to8Bit()}{to8Bit()}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Utils\+::to8\+Bit (\begin{DoxyParamCaption}\item[{int}]{color }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Transform C\+G\+R\+AM color data to 8bits. 
+
+\begin{DoxyNote}{Note}
+Used with b, g and r values 
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+The 8 bit value of the color 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceComSquare_1_1PPU_1_1Utils_aa9f0f7bcd7b66678d8f1f4bc998b85ed}\label{namespaceComSquare_1_1PPU_1_1Utils_aa9f0f7bcd7b66678d8f1f4bc998b85ed}} 
+\index{ComSquare::PPU::Utils@{ComSquare::PPU::Utils}!VFlipArray@{VFlipArray}}
+\index{VFlipArray@{VFlipArray}!ComSquare::PPU::Utils@{ComSquare::PPU::Utils}}
+\doxysubsubsection{\texorpdfstring{VFlipArray()}{VFlipArray()}}
+{\footnotesize\ttfamily template$<$std\+::size\+\_\+t S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+Y, std\+::size\+\_\+t S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+X$>$ \\
+void Com\+Square\+::\+P\+P\+U\+::\+Utils\+::\+V\+Flip\+Array (\begin{DoxyParamCaption}\item[{std\+::array$<$ std\+::array$<$ uint32\+\_\+t, S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+X $>$, S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+Y $>$ \&}]{array,  }\item[{const \mbox{\hyperlink{classComSquare_1_1Vector2}{Vector2}}$<$ int $>$ \&}]{size,  }\item[{const \mbox{\hyperlink{classComSquare_1_1Vector2}{Vector2}}$<$ int $>$ \&}]{offset = {\ttfamily \{0,~0\}} }\end{DoxyParamCaption})}
+

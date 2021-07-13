@@ -1,0 +1,767 @@
+\hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug}{}\doxysection{Com\+Square\+::Debugger\+::C\+PU\+::C\+P\+U\+Debug Class Reference}
+\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug}\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+
+
+A window that show registers and the disassembly of a \mbox{\hyperlink{namespaceComSquare_1_1Debugger_1_1CPU}{C\+PU}}.  
+
+
+
+
+{\ttfamily \#include $<$C\+P\+U\+Debug.\+hpp$>$}
+
+
+
+Inheritance diagram for Com\+Square\+::Debugger\+::C\+PU\+::C\+P\+U\+Debug\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Com\+Square\+::Debugger\+::C\+PU\+::C\+P\+U\+Debug\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+unsigned \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_abb4003623dd97c3d47e531a10ef204f6}{update}} ()
+\begin{DoxyCompactList}\small\item\em Update the current debugger and the underlying \mbox{\hyperlink{namespaceComSquare_1_1Debugger_1_1CPU}{C\+PU}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a1ab6696284e112fb39ec340d77030368}{pause}} (bool force\+Pause=false)
+\begin{DoxyCompactList}\small\item\em Pause/\+Resume the \mbox{\hyperlink{namespaceComSquare_1_1Debugger_1_1CPU}{C\+PU}}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a5ea5061ea8dacb3a173b8f53f49db86e}{step}} ()
+\begin{DoxyCompactList}\small\item\em Step -\/ Execute a single instruction. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a82286b4c19bab0eaca8f852a3cc424b6}{next}} ()
+\begin{DoxyCompactList}\small\item\em Next -\/ Continue running instructions until the next line is reached. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a93f68429ce5e2cb2cca8c69aaf72a6c7}{clear\+History}} ()
+\begin{DoxyCompactList}\small\item\em Clear the history panel. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_ae85c97b5f55665792b2dd5503f777a3f}{toggle\+Breakpoint}} (int logical\+Index)
+\begin{DoxyCompactList}\small\item\em Called when the user clicks on a section header. It enable/disable a breakpoint for this address. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_aa153d5a9f9ef54e8f37ebc0173edff8e}{get\+Proceeded\+Parameters}} () const
+\begin{DoxyCompactList}\small\item\em Get a string representing the actual value of the arguments of the next instruction to execute. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a5029bb8d2cec01ab2c189b7161afc6bd}{get\+PC}} () const
+\begin{DoxyCompactList}\small\item\em Return the current program counter of this \mbox{\hyperlink{namespaceComSquare_1_1Debugger_1_1CPU}{C\+PU}}. \end{DoxyCompactList}\item 
+uint16\+\_\+t \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a67b0b4a3055b4dbaa3ecee5eaffa6f7d}{get\+Stack\+Pointer}} () const
+\begin{DoxyCompactList}\small\item\em Return the current stack pointer. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_aff43adf99b9f2befcfdd65c280b876c9}{C\+P\+U\+Debug}} (\mbox{\hyperlink{classComSquare_1_1CPU_1_1CPU}{Com\+Square\+::\+C\+P\+U\+::\+C\+PU}} \&cpu, \mbox{\hyperlink{classComSquare_1_1SNES}{S\+N\+ES}} \&snes)
+\begin{DoxyCompactList}\small\item\em Convert a basic \mbox{\hyperlink{namespaceComSquare_1_1Debugger_1_1CPU}{C\+PU}} to a debugging \mbox{\hyperlink{namespaceComSquare_1_1Debugger_1_1CPU}{C\+PU}}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_ab5055c0c31f6d3fa365766130ae661dc}{C\+P\+U\+Debug}} (const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug}{C\+P\+U\+Debug}} \&)=delete
+\item 
+\mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug}{C\+P\+U\+Debug}} \& \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_aef5e31c44789fe89339b03954173dbd7}{operator=}} (const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug}{C\+P\+U\+Debug}} \&)=delete
+\item 
+\mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a171d55f8550235f2c56106af9d6b563b}{$\sim$\+C\+P\+U\+Debug}} () override
+\item 
+void \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_af4533a802855cc14a8d24173cc087c75}{focus}} ()
+\begin{DoxyCompactList}\small\item\em Focus the debugger\textquotesingle{}s window. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_aa87262dd2af6c371114660ac10a32572}{show\+Error}} (const \mbox{\hyperlink{classComSquare_1_1DebuggableError}{Debuggable\+Error}} \&error)
+\begin{DoxyCompactList}\small\item\em Show an error dialog related to an exception. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{structComSquare_1_1Debugger_1_1CPU_1_1DisassembledInstruction}{Disassembled\+Instruction}} $>$ \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a8b23ffaa1eae7da82549cf01667dd976}{disassembled}}
+\begin{DoxyCompactList}\small\item\em The list of disassembled instructions to show on the debugger. \end{DoxyCompactList}\item 
+std\+::vector$<$ \mbox{\hyperlink{structComSquare_1_1Debugger_1_1CPU_1_1Breakpoint}{Breakpoint}} $>$ \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a62d20b4d88226aaeaf135fbb79f69f1b}{breakpoints}}
+\begin{DoxyCompactList}\small\item\em The list of breakpoints the user has set. \end{DoxyCompactList}\item 
+uint16\+\_\+t \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_ad4e517805f35f29635ea761f6d9b3c8f}{initial\+Stack\+Pointer}}
+\begin{DoxyCompactList}\small\item\em The stack pointer before the execution of any instructions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_aedebe6538c520f6cf9faf724c36e6632}{\+\_\+load\+Labels}} (std\+::filesystem\+::path rom\+Path)
+\begin{DoxyCompactList}\small\item\em Load labels from a symbol file. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a356de2baf5e36459c7aa6879f33e78a3}{\+\_\+log\+Instruction}} ()
+\begin{DoxyCompactList}\small\item\em Add the instruction under the PC to the history log. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structComSquare_1_1Debugger_1_1CPU_1_1DisassemblyContext}{Disassembly\+Context}} \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_ab8439bc748386655afb3c014650b7bfa}{\+\_\+get\+Disassembly\+Context}} ()
+\begin{DoxyCompactList}\small\item\em Return a disassembly context representing the current state of the processor. \end{DoxyCompactList}\item 
+std\+::vector$<$ \mbox{\hyperlink{structComSquare_1_1Debugger_1_1CPU_1_1DisassembledInstruction}{Disassembled\+Instruction}} $>$ \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a65f4e08dfecac05308ad818a3223c4c2}{\+\_\+disassemble}} (\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} start\+Addr, \mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} size, \mbox{\hyperlink{structComSquare_1_1Debugger_1_1CPU_1_1DisassemblyContext}{Disassembly\+Context}} \&ctx)
+\begin{DoxyCompactList}\small\item\em Disassemble part of the memory (using the bus) and parse it to a map of address and disassembled instruction. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a62eb37e2de853e81027c4419b58814fb}{\+\_\+update\+Disassembly}} (\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} start, \mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} refresh\+Size=0x\+FF)
+\begin{DoxyCompactList}\small\item\em Update disassembly with the new state of the processor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structComSquare_1_1Debugger_1_1CPU_1_1DisassembledInstruction}{Disassembled\+Instruction}} \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a2657f3a548d354e37e99977f1de1e559}{\+\_\+parse\+Instruction}} (\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} pc, \mbox{\hyperlink{structComSquare_1_1Debugger_1_1CPU_1_1DisassemblyContext}{Disassembly\+Context}} \&ctx) const
+\begin{DoxyCompactList}\small\item\em Parse the instruction at the program counter given to have human readable information. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a196ec28a7a2574f5589d3f05822546d0}{\+\_\+get\+Instruction\+Parameter}} (const \mbox{\hyperlink{structComSquare_1_1CPU_1_1Instruction}{Com\+Square\+::\+C\+P\+U\+::\+Instruction}} \&instruction, \mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} pc, \mbox{\hyperlink{structComSquare_1_1Debugger_1_1CPU_1_1DisassemblyContext}{Disassembly\+Context}} \&ctx) const
+\begin{DoxyCompactList}\small\item\em Get the parameter of the instruction as an hexadecimal string. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a47a9e7edc7c8a58df6f5f372c1d85c90}{\+\_\+update\+Registers\+Panel}} ()
+\begin{DoxyCompactList}\small\item\em Update the register\textquotesingle{}s panel (accumulator, stack pointer...) \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_aa74fc2d7218b6d7f344ebb7bd87169ae}{\+\_\+get\+Immediate\+Value}} (\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} pc, bool dual) const
+\begin{DoxyCompactList}\small\item\em Return a printable string corresponding to the value of a 8 or 16 bits immediate addressing mode. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a6bfd3d4b5f3631f6b205c8dd8fb0a7a1}{\+\_\+get\+Absolute\+Value}} (\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} pc) const
+\begin{DoxyCompactList}\small\item\em Return a printable string corresponding to the value of an absolute addressing mode. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_ae7d06bfd47bca49697ac72e65fb3c8d6}{\+\_\+get\+Absolute\+Long\+Value}} (\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} pc) const
+\begin{DoxyCompactList}\small\item\em Return a printable string corresponding to the value of an absolute long addressing mode. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a9a4c93be5466609c881cd8c751ff83df}{\+\_\+get\+Direct\+Value}} (\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} pc) const
+\begin{DoxyCompactList}\small\item\em Return a printable string corresponding to the value of a direct addressing mode. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a38c86e0a76cd902d1bd69f6773ed859b}{\+\_\+get\+Direct\+Indirect\+Value}} (\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} pc) const
+\begin{DoxyCompactList}\small\item\em Return a printable string corresponding to the value of a direct indirect addressing mode. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_acb6ca24bb291f0b5f92c79fa46f4ddf0}{\+\_\+get\+Direct\+Indirect\+Long\+Value}} (\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} pc) const
+\begin{DoxyCompactList}\small\item\em Return a printable string corresponding to the value of a direct indirect long addressing mode. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_ab4114352aa9cb27c555d4438c3ae0a7a}{\+\_\+get\+Absolute\+Index\+By\+X\+Value}} (\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} pc) const
+\begin{DoxyCompactList}\small\item\em Return a printable string corresponding to the value of a absolute indexed by x addressing mode. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a722b541407b8bd65ecdb86ceb22d3ccd}{\+\_\+get\+Absolute\+Index\+By\+X\+Long\+Value}} (\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} pc) const
+\begin{DoxyCompactList}\small\item\em Return a printable string corresponding to the value of a absolute indexed by x long addressing mode. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a16c0aa85b92c41060a124e9985485084}{\+\_\+get\+Absolute\+Index\+By\+Y\+Value}} (\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} pc) const
+\begin{DoxyCompactList}\small\item\em Return a printable string corresponding to the value of a absolute indexed by y addressing mode. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a87a10430e94cf47395e89b26061453d3}{\+\_\+get\+Direct\+Indexed\+By\+X\+Value}} (\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} pc) const
+\begin{DoxyCompactList}\small\item\em Return a printable string corresponding to the value of a direct index by x addressing mode. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a0eb7e30e0bc455a73cf57af8563df68c}{\+\_\+get\+Direct\+Indexed\+By\+Y\+Value}} (\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} pc) const
+\begin{DoxyCompactList}\small\item\em Return a printable string corresponding to the value of a direct index by y addressing mode. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a025e7d49c361e9a23c6752c2ecce8e63}{\+\_\+get\+Direct\+Indexed\+By\+X\+Indirect\+Value}} (\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} pc) const
+\begin{DoxyCompactList}\small\item\em Return a printable string corresponding to the value of a direct indirect index by x addressing mode. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_ac96061d08f4e748a702c42d679328fce}{\+\_\+get\+Direct\+Indirect\+Indexed\+By\+Y\+Value}} (\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} pc) const
+\begin{DoxyCompactList}\small\item\em Return a printable string corresponding to the value of a direct indirect index by y addressing mode. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a6479a305d8eea44d850b1bec692f53ad}{\+\_\+get\+Direct\+Indirect\+Indexed\+By\+Y\+Long\+Value}} (\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} pc) const
+\begin{DoxyCompactList}\small\item\em Return a printable string corresponding to the value of a direct indirect index by y long addressing mode. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a17971519f02d87d55fca44f9aabc84b7}{\+\_\+get\+Stack\+Relative\+Value}} (\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} pc) const
+\begin{DoxyCompactList}\small\item\em Return a printable string corresponding to the value of a stack relative addressing mode. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a37fcc706c09fcc93634f13e392f25fe3}{\+\_\+get\+Stack\+Relative\+Indirect\+Indexed\+By\+Y\+Value}} (\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} pc) const
+\begin{DoxyCompactList}\small\item\em Return a printable string corresponding to the value of a stack relative indirect indexed by y addressing mode. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a0bed18dcce6e28ea832f9353672ff86b}{\+\_\+get\+Absolute\+Indirect\+Value}} (\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} pc) const
+\begin{DoxyCompactList}\small\item\em Return a printable string corresponding to the value of a absolute indirect addressing mode. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a466b6c860910650a814dfb25e653e5f3}{\+\_\+get\+Absolute\+Indirect\+Indexed\+By\+X\+Value}} (\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} pc) const
+\begin{DoxyCompactList}\small\item\em Return a printable string corresponding to the value of a absolute indirect indexed by x addressing mode. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_ab98cea1e0f846a0b99bda094a0569071}{\+\_\+get\+Absolute\+Indirect\+Long\+Value}} (\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} pc) const
+\begin{DoxyCompactList}\small\item\em Return a printable string corresponding to the value of a absolute indirect long addressing mode. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classComSquare_1_1CPU_1_1CPU}{Com\+Square\+::\+C\+P\+U\+::\+C\+PU}} \& \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a7e71058ad35adefcad649c00618b9731}{\+\_\+cpu}}
+\begin{DoxyCompactList}\small\item\em The basic \mbox{\hyperlink{namespaceComSquare_1_1Debugger_1_1CPU}{C\+PU}} to debug. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1Debugger_1_1ClosableWindow}{Closable\+Window}} $\ast$ \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a18d390b0cf8a069374f2113ee314d8b5}{\+\_\+window}}
+\begin{DoxyCompactList}\small\item\em The QT window for this debugger. \end{DoxyCompactList}\item 
+Q\+Timer \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a5937dba8d36551733bed00d45ff46afd}{\+\_\+timer}}
+\begin{DoxyCompactList}\small\item\em Internal timer used for update intervals. \end{DoxyCompactList}\item 
+Ui\+::\+C\+P\+U\+View \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a0b7a6ba40fbee668b41d1f926e5b7511}{\+\_\+ui}}
+\begin{DoxyCompactList}\small\item\em A widget that contain the whole UI. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1DisassemblyModel}{Disassembly\+Model}} \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a2043ff9d6f4b4e40d57d7375954cba49}{\+\_\+model}}
+\begin{DoxyCompactList}\small\item\em The disassembly viewer\textquotesingle{}s model. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1RowPainter}{Row\+Painter}} \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_add751a9a7c80369ccccb64decda16389}{\+\_\+painter}}
+\begin{DoxyCompactList}\small\item\em A custom painter that highlight breakpoints and the PC\textquotesingle{}s position. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1StackModel}{Stack\+Model}} \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_aa3576b85cee1da72b5a999d012e225f6}{\+\_\+stack\+Model}}
+\begin{DoxyCompactList}\small\item\em The stack viewer\textquotesingle{}s model. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel}{History\+Model}} \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a2595c0b3c00fe2424722278e550c23fb}{\+\_\+history\+Model}}
+\begin{DoxyCompactList}\small\item\em The history model. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a2458909fe4ac8be7bd37b12dde692b3d}{\+\_\+is\+Paused}} = true
+\begin{DoxyCompactList}\small\item\em If this is set to true, the execution of the \mbox{\hyperlink{namespaceComSquare_1_1Debugger_1_1CPU}{C\+PU}} will be paused. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_aa2e2ca2603014d308f0a60d0ac6f2078}{\+\_\+is\+Stepping}} = false
+\begin{DoxyCompactList}\small\item\em If this is set to true, the \mbox{\hyperlink{namespaceComSquare_1_1Debugger_1_1CPU}{C\+PU}} will execute one instruction and pause itself. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1SNES}{S\+N\+ES}} \& \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_abc842d3145eac8bb05bb32a3e3df4e10}{\+\_\+snes}}
+\begin{DoxyCompactList}\small\item\em A reference to the snes (to disable the debugger). \end{DoxyCompactList}\item 
+std\+::vector$<$ \mbox{\hyperlink{structComSquare_1_1Debugger_1_1CPU_1_1Label}{Label}} $>$ \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a176b13502ba4e62b0633c8d0ffeebba3}{\+\_\+labels}}
+\begin{DoxyCompactList}\small\item\em A list of labels and their size. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_ab2d9e8732c1c77a80832b54fb2a054ff}{\+\_\+callback}}
+\begin{DoxyCompactList}\small\item\em The callback ID for the on reset of the \mbox{\hyperlink{namespaceComSquare_1_1Debugger_1_1CPU}{C\+PU}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A window that show registers and the disassembly of a \mbox{\hyperlink{namespaceComSquare_1_1Debugger_1_1CPU}{C\+PU}}. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_aff43adf99b9f2befcfdd65c280b876c9}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_aff43adf99b9f2befcfdd65c280b876c9}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!CPUDebug@{CPUDebug}}
+\index{CPUDebug@{CPUDebug}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{CPUDebug()}{CPUDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::\+C\+P\+U\+Debug (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classComSquare_1_1CPU_1_1CPU}{Com\+Square\+::\+C\+P\+U\+::\+C\+PU}} \&}]{cpu,  }\item[{\mbox{\hyperlink{classComSquare_1_1SNES}{S\+N\+ES}} \&}]{snes }\end{DoxyParamCaption})}
+
+
+
+Convert a basic \mbox{\hyperlink{namespaceComSquare_1_1Debugger_1_1CPU}{C\+PU}} to a debugging \mbox{\hyperlink{namespaceComSquare_1_1Debugger_1_1CPU}{C\+PU}}. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_ab5055c0c31f6d3fa365766130ae661dc}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_ab5055c0c31f6d3fa365766130ae661dc}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!CPUDebug@{CPUDebug}}
+\index{CPUDebug@{CPUDebug}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{CPUDebug()}{CPUDebug()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::\+C\+P\+U\+Debug (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug}{C\+P\+U\+Debug}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a171d55f8550235f2c56106af9d6b563b}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a171d55f8550235f2c56106af9d6b563b}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!````~CPUDebug@{$\sim$CPUDebug}}
+\index{````~CPUDebug@{$\sim$CPUDebug}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{$\sim$CPUDebug()}{~CPUDebug()}}
+{\footnotesize\ttfamily Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::$\sim$\+C\+P\+U\+Debug (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a65f4e08dfecac05308ad818a3223c4c2}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a65f4e08dfecac05308ad818a3223c4c2}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!\_disassemble@{\_disassemble}}
+\index{\_disassemble@{\_disassemble}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{\_disassemble()}{\_disassemble()}}
+{\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{structComSquare_1_1Debugger_1_1CPU_1_1DisassembledInstruction}{Disassembled\+Instruction}} $>$ Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::\+\_\+disassemble (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}}}]{start\+Addr,  }\item[{\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}}}]{size,  }\item[{\mbox{\hyperlink{structComSquare_1_1Debugger_1_1CPU_1_1DisassemblyContext}{Disassembly\+Context}} \&}]{ctx }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Disassemble part of the memory (using the bus) and parse it to a map of address and disassembled instruction. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ctx} & The initial context of the processor before the disassembly begin. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a722b541407b8bd65ecdb86ceb22d3ccd}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a722b541407b8bd65ecdb86ceb22d3ccd}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!\_getAbsoluteIndexByXLongValue@{\_getAbsoluteIndexByXLongValue}}
+\index{\_getAbsoluteIndexByXLongValue@{\_getAbsoluteIndexByXLongValue}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{\_getAbsoluteIndexByXLongValue()}{\_getAbsoluteIndexByXLongValue()}}
+{\footnotesize\ttfamily std\+::string Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::\+\_\+get\+Absolute\+Index\+By\+X\+Long\+Value (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}}}]{pc }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Return a printable string corresponding to the value of a absolute indexed by x long addressing mode. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_ab4114352aa9cb27c555d4438c3ae0a7a}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_ab4114352aa9cb27c555d4438c3ae0a7a}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!\_getAbsoluteIndexByXValue@{\_getAbsoluteIndexByXValue}}
+\index{\_getAbsoluteIndexByXValue@{\_getAbsoluteIndexByXValue}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{\_getAbsoluteIndexByXValue()}{\_getAbsoluteIndexByXValue()}}
+{\footnotesize\ttfamily std\+::string Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::\+\_\+get\+Absolute\+Index\+By\+X\+Value (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}}}]{pc }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Return a printable string corresponding to the value of a absolute indexed by x addressing mode. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a16c0aa85b92c41060a124e9985485084}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a16c0aa85b92c41060a124e9985485084}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!\_getAbsoluteIndexByYValue@{\_getAbsoluteIndexByYValue}}
+\index{\_getAbsoluteIndexByYValue@{\_getAbsoluteIndexByYValue}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{\_getAbsoluteIndexByYValue()}{\_getAbsoluteIndexByYValue()}}
+{\footnotesize\ttfamily std\+::string Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::\+\_\+get\+Absolute\+Index\+By\+Y\+Value (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}}}]{pc }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Return a printable string corresponding to the value of a absolute indexed by y addressing mode. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a466b6c860910650a814dfb25e653e5f3}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a466b6c860910650a814dfb25e653e5f3}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!\_getAbsoluteIndirectIndexedByXValue@{\_getAbsoluteIndirectIndexedByXValue}}
+\index{\_getAbsoluteIndirectIndexedByXValue@{\_getAbsoluteIndirectIndexedByXValue}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{\_getAbsoluteIndirectIndexedByXValue()}{\_getAbsoluteIndirectIndexedByXValue()}}
+{\footnotesize\ttfamily std\+::string Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::\+\_\+get\+Absolute\+Indirect\+Indexed\+By\+X\+Value (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}}}]{pc }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Return a printable string corresponding to the value of a absolute indirect indexed by x addressing mode. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_ab98cea1e0f846a0b99bda094a0569071}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_ab98cea1e0f846a0b99bda094a0569071}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!\_getAbsoluteIndirectLongValue@{\_getAbsoluteIndirectLongValue}}
+\index{\_getAbsoluteIndirectLongValue@{\_getAbsoluteIndirectLongValue}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{\_getAbsoluteIndirectLongValue()}{\_getAbsoluteIndirectLongValue()}}
+{\footnotesize\ttfamily std\+::string Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::\+\_\+get\+Absolute\+Indirect\+Long\+Value (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}}}]{pc }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Return a printable string corresponding to the value of a absolute indirect long addressing mode. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a0bed18dcce6e28ea832f9353672ff86b}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a0bed18dcce6e28ea832f9353672ff86b}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!\_getAbsoluteIndirectValue@{\_getAbsoluteIndirectValue}}
+\index{\_getAbsoluteIndirectValue@{\_getAbsoluteIndirectValue}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{\_getAbsoluteIndirectValue()}{\_getAbsoluteIndirectValue()}}
+{\footnotesize\ttfamily std\+::string Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::\+\_\+get\+Absolute\+Indirect\+Value (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}}}]{pc }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Return a printable string corresponding to the value of a absolute indirect addressing mode. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_ae7d06bfd47bca49697ac72e65fb3c8d6}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_ae7d06bfd47bca49697ac72e65fb3c8d6}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!\_getAbsoluteLongValue@{\_getAbsoluteLongValue}}
+\index{\_getAbsoluteLongValue@{\_getAbsoluteLongValue}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{\_getAbsoluteLongValue()}{\_getAbsoluteLongValue()}}
+{\footnotesize\ttfamily std\+::string Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::\+\_\+get\+Absolute\+Long\+Value (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}}}]{pc }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Return a printable string corresponding to the value of an absolute long addressing mode. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a6bfd3d4b5f3631f6b205c8dd8fb0a7a1}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a6bfd3d4b5f3631f6b205c8dd8fb0a7a1}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!\_getAbsoluteValue@{\_getAbsoluteValue}}
+\index{\_getAbsoluteValue@{\_getAbsoluteValue}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{\_getAbsoluteValue()}{\_getAbsoluteValue()}}
+{\footnotesize\ttfamily std\+::string Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::\+\_\+get\+Absolute\+Value (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}}}]{pc }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Return a printable string corresponding to the value of an absolute addressing mode. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a025e7d49c361e9a23c6752c2ecce8e63}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a025e7d49c361e9a23c6752c2ecce8e63}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!\_getDirectIndexedByXIndirectValue@{\_getDirectIndexedByXIndirectValue}}
+\index{\_getDirectIndexedByXIndirectValue@{\_getDirectIndexedByXIndirectValue}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{\_getDirectIndexedByXIndirectValue()}{\_getDirectIndexedByXIndirectValue()}}
+{\footnotesize\ttfamily std\+::string Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::\+\_\+get\+Direct\+Indexed\+By\+X\+Indirect\+Value (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}}}]{pc }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Return a printable string corresponding to the value of a direct indirect index by x addressing mode. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a87a10430e94cf47395e89b26061453d3}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a87a10430e94cf47395e89b26061453d3}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!\_getDirectIndexedByXValue@{\_getDirectIndexedByXValue}}
+\index{\_getDirectIndexedByXValue@{\_getDirectIndexedByXValue}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{\_getDirectIndexedByXValue()}{\_getDirectIndexedByXValue()}}
+{\footnotesize\ttfamily std\+::string Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::\+\_\+get\+Direct\+Indexed\+By\+X\+Value (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}}}]{pc }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Return a printable string corresponding to the value of a direct index by x addressing mode. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a0eb7e30e0bc455a73cf57af8563df68c}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a0eb7e30e0bc455a73cf57af8563df68c}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!\_getDirectIndexedByYValue@{\_getDirectIndexedByYValue}}
+\index{\_getDirectIndexedByYValue@{\_getDirectIndexedByYValue}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{\_getDirectIndexedByYValue()}{\_getDirectIndexedByYValue()}}
+{\footnotesize\ttfamily std\+::string Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::\+\_\+get\+Direct\+Indexed\+By\+Y\+Value (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}}}]{pc }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Return a printable string corresponding to the value of a direct index by y addressing mode. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a6479a305d8eea44d850b1bec692f53ad}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a6479a305d8eea44d850b1bec692f53ad}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!\_getDirectIndirectIndexedByYLongValue@{\_getDirectIndirectIndexedByYLongValue}}
+\index{\_getDirectIndirectIndexedByYLongValue@{\_getDirectIndirectIndexedByYLongValue}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{\_getDirectIndirectIndexedByYLongValue()}{\_getDirectIndirectIndexedByYLongValue()}}
+{\footnotesize\ttfamily std\+::string Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::\+\_\+get\+Direct\+Indirect\+Indexed\+By\+Y\+Long\+Value (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}}}]{pc }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Return a printable string corresponding to the value of a direct indirect index by y long addressing mode. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_ac96061d08f4e748a702c42d679328fce}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_ac96061d08f4e748a702c42d679328fce}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!\_getDirectIndirectIndexedByYValue@{\_getDirectIndirectIndexedByYValue}}
+\index{\_getDirectIndirectIndexedByYValue@{\_getDirectIndirectIndexedByYValue}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{\_getDirectIndirectIndexedByYValue()}{\_getDirectIndirectIndexedByYValue()}}
+{\footnotesize\ttfamily std\+::string Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::\+\_\+get\+Direct\+Indirect\+Indexed\+By\+Y\+Value (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}}}]{pc }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Return a printable string corresponding to the value of a direct indirect index by y addressing mode. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_acb6ca24bb291f0b5f92c79fa46f4ddf0}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_acb6ca24bb291f0b5f92c79fa46f4ddf0}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!\_getDirectIndirectLongValue@{\_getDirectIndirectLongValue}}
+\index{\_getDirectIndirectLongValue@{\_getDirectIndirectLongValue}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{\_getDirectIndirectLongValue()}{\_getDirectIndirectLongValue()}}
+{\footnotesize\ttfamily std\+::string Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::\+\_\+get\+Direct\+Indirect\+Long\+Value (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}}}]{pc }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Return a printable string corresponding to the value of a direct indirect long addressing mode. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a38c86e0a76cd902d1bd69f6773ed859b}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a38c86e0a76cd902d1bd69f6773ed859b}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!\_getDirectIndirectValue@{\_getDirectIndirectValue}}
+\index{\_getDirectIndirectValue@{\_getDirectIndirectValue}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{\_getDirectIndirectValue()}{\_getDirectIndirectValue()}}
+{\footnotesize\ttfamily std\+::string Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::\+\_\+get\+Direct\+Indirect\+Value (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}}}]{pc }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Return a printable string corresponding to the value of a direct indirect addressing mode. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a9a4c93be5466609c881cd8c751ff83df}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a9a4c93be5466609c881cd8c751ff83df}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!\_getDirectValue@{\_getDirectValue}}
+\index{\_getDirectValue@{\_getDirectValue}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{\_getDirectValue()}{\_getDirectValue()}}
+{\footnotesize\ttfamily std\+::string Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::\+\_\+get\+Direct\+Value (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}}}]{pc }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Return a printable string corresponding to the value of a direct addressing mode. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_ab8439bc748386655afb3c014650b7bfa}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_ab8439bc748386655afb3c014650b7bfa}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!\_getDisassemblyContext@{\_getDisassemblyContext}}
+\index{\_getDisassemblyContext@{\_getDisassemblyContext}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{\_getDisassemblyContext()}{\_getDisassemblyContext()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structComSquare_1_1Debugger_1_1CPU_1_1DisassemblyContext}{Disassembly\+Context}} Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::\+\_\+get\+Disassembly\+Context (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Return a disassembly context representing the current state of the processor. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_aa74fc2d7218b6d7f344ebb7bd87169ae}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_aa74fc2d7218b6d7f344ebb7bd87169ae}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!\_getImmediateValue@{\_getImmediateValue}}
+\index{\_getImmediateValue@{\_getImmediateValue}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{\_getImmediateValue()}{\_getImmediateValue()}}
+{\footnotesize\ttfamily std\+::string Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::\+\_\+get\+Immediate\+Value (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}}}]{pc,  }\item[{bool}]{dual }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Return a printable string corresponding to the value of a 8 or 16 bits immediate addressing mode. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dual} & Set this to true if the instruction take 16bits and not 8. (used for the immediate by a when the flag m is not set or the immediate by x if the flag x is not set). \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a196ec28a7a2574f5589d3f05822546d0}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a196ec28a7a2574f5589d3f05822546d0}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!\_getInstructionParameter@{\_getInstructionParameter}}
+\index{\_getInstructionParameter@{\_getInstructionParameter}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{\_getInstructionParameter()}{\_getInstructionParameter()}}
+{\footnotesize\ttfamily std\+::string Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::\+\_\+get\+Instruction\+Parameter (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structComSquare_1_1CPU_1_1Instruction}{Com\+Square\+::\+C\+P\+U\+::\+Instruction}} \&}]{instruction,  }\item[{\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}}}]{pc,  }\item[{\mbox{\hyperlink{structComSquare_1_1Debugger_1_1CPU_1_1DisassemblyContext}{Disassembly\+Context}} \&}]{ctx }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Get the parameter of the instruction as an hexadecimal string. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a37fcc706c09fcc93634f13e392f25fe3}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a37fcc706c09fcc93634f13e392f25fe3}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!\_getStackRelativeIndirectIndexedByYValue@{\_getStackRelativeIndirectIndexedByYValue}}
+\index{\_getStackRelativeIndirectIndexedByYValue@{\_getStackRelativeIndirectIndexedByYValue}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{\_getStackRelativeIndirectIndexedByYValue()}{\_getStackRelativeIndirectIndexedByYValue()}}
+{\footnotesize\ttfamily std\+::string Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::\+\_\+get\+Stack\+Relative\+Indirect\+Indexed\+By\+Y\+Value (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}}}]{pc }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Return a printable string corresponding to the value of a stack relative indirect indexed by y addressing mode. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a17971519f02d87d55fca44f9aabc84b7}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a17971519f02d87d55fca44f9aabc84b7}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!\_getStackRelativeValue@{\_getStackRelativeValue}}
+\index{\_getStackRelativeValue@{\_getStackRelativeValue}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{\_getStackRelativeValue()}{\_getStackRelativeValue()}}
+{\footnotesize\ttfamily std\+::string Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::\+\_\+get\+Stack\+Relative\+Value (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}}}]{pc }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Return a printable string corresponding to the value of a stack relative addressing mode. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_aedebe6538c520f6cf9faf724c36e6632}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_aedebe6538c520f6cf9faf724c36e6632}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!\_loadLabels@{\_loadLabels}}
+\index{\_loadLabels@{\_loadLabels}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{\_loadLabels()}{\_loadLabels()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::\+\_\+load\+Labels (\begin{DoxyParamCaption}\item[{std\+::filesystem\+::path}]{rom\+Path }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Load labels from a symbol file. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a356de2baf5e36459c7aa6879f33e78a3}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a356de2baf5e36459c7aa6879f33e78a3}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!\_logInstruction@{\_logInstruction}}
+\index{\_logInstruction@{\_logInstruction}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{\_logInstruction()}{\_logInstruction()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::\+\_\+log\+Instruction (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Add the instruction under the PC to the history log. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a2657f3a548d354e37e99977f1de1e559}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a2657f3a548d354e37e99977f1de1e559}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!\_parseInstruction@{\_parseInstruction}}
+\index{\_parseInstruction@{\_parseInstruction}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{\_parseInstruction()}{\_parseInstruction()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structComSquare_1_1Debugger_1_1CPU_1_1DisassembledInstruction}{Disassembled\+Instruction}} Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::\+\_\+parse\+Instruction (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}}}]{pc,  }\item[{\mbox{\hyperlink{structComSquare_1_1Debugger_1_1CPU_1_1DisassemblyContext}{Disassembly\+Context}} \&}]{ctx }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Parse the instruction at the program counter given to have human readable information. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a62eb37e2de853e81027c4419b58814fb}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a62eb37e2de853e81027c4419b58814fb}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!\_updateDisassembly@{\_updateDisassembly}}
+\index{\_updateDisassembly@{\_updateDisassembly}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{\_updateDisassembly()}{\_updateDisassembly()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::\+\_\+update\+Disassembly (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}}}]{start,  }\item[{\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}}}]{refresh\+Size = {\ttfamily 0xFF} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Update disassembly with the new state of the processor. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a47a9e7edc7c8a58df6f5f372c1d85c90}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a47a9e7edc7c8a58df6f5f372c1d85c90}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!\_updateRegistersPanel@{\_updateRegistersPanel}}
+\index{\_updateRegistersPanel@{\_updateRegistersPanel}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{\_updateRegistersPanel()}{\_updateRegistersPanel()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::\+\_\+update\+Registers\+Panel (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Update the register\textquotesingle{}s panel (accumulator, stack pointer...) 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a93f68429ce5e2cb2cca8c69aaf72a6c7}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a93f68429ce5e2cb2cca8c69aaf72a6c7}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!clearHistory@{clearHistory}}
+\index{clearHistory@{clearHistory}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{clearHistory()}{clearHistory()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::clear\+History (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Clear the history panel. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_af4533a802855cc14a8d24173cc087c75}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_af4533a802855cc14a8d24173cc087c75}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!focus@{focus}}
+\index{focus@{focus}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{focus()}{focus()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::focus (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Focus the debugger\textquotesingle{}s window. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a5029bb8d2cec01ab2c189b7161afc6bd}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a5029bb8d2cec01ab2c189b7161afc6bd}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!getPC@{getPC}}
+\index{getPC@{getPC}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{getPC()}{getPC()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::get\+PC (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Return the current program counter of this \mbox{\hyperlink{namespaceComSquare_1_1Debugger_1_1CPU}{C\+PU}}. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_aa153d5a9f9ef54e8f37ebc0173edff8e}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_aa153d5a9f9ef54e8f37ebc0173edff8e}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!getProceededParameters@{getProceededParameters}}
+\index{getProceededParameters@{getProceededParameters}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{getProceededParameters()}{getProceededParameters()}}
+{\footnotesize\ttfamily std\+::string Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::get\+Proceeded\+Parameters (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get a string representing the actual value of the arguments of the next instruction to execute. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a67b0b4a3055b4dbaa3ecee5eaffa6f7d}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a67b0b4a3055b4dbaa3ecee5eaffa6f7d}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!getStackPointer@{getStackPointer}}
+\index{getStackPointer@{getStackPointer}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{getStackPointer()}{getStackPointer()}}
+{\footnotesize\ttfamily uint16\+\_\+t Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::get\+Stack\+Pointer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Return the current stack pointer. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a82286b4c19bab0eaca8f852a3cc424b6}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a82286b4c19bab0eaca8f852a3cc424b6}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!next@{next}}
+\index{next@{next}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{next()}{next()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::next (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Next -\/ Continue running instructions until the next line is reached. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_aef5e31c44789fe89339b03954173dbd7}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_aef5e31c44789fe89339b03954173dbd7}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!operator=@{operator=}}
+\index{operator=@{operator=}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug}{C\+P\+U\+Debug}}\& Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug}{C\+P\+U\+Debug}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a1ab6696284e112fb39ec340d77030368}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a1ab6696284e112fb39ec340d77030368}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!pause@{pause}}
+\index{pause@{pause}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{pause()}{pause()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::pause (\begin{DoxyParamCaption}\item[{bool}]{force\+Pause = {\ttfamily false} }\end{DoxyParamCaption})}
+
+
+
+Pause/\+Resume the \mbox{\hyperlink{namespaceComSquare_1_1Debugger_1_1CPU}{C\+PU}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em force\+Pause} & True if you want to set the set the state of the \mbox{\hyperlink{namespaceComSquare_1_1Debugger_1_1CPU}{C\+PU}} to paused. False if you want to toggle the pause status. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_aa87262dd2af6c371114660ac10a32572}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_aa87262dd2af6c371114660ac10a32572}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!showError@{showError}}
+\index{showError@{showError}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{showError()}{showError()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::show\+Error (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classComSquare_1_1DebuggableError}{Debuggable\+Error}} \&}]{error }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Show an error dialog related to an exception. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a5ea5061ea8dacb3a173b8f53f49db86e}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a5ea5061ea8dacb3a173b8f53f49db86e}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!step@{step}}
+\index{step@{step}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{step()}{step()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::step (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Step -\/ Execute a single instruction. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_ae85c97b5f55665792b2dd5503f777a3f}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_ae85c97b5f55665792b2dd5503f777a3f}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!toggleBreakpoint@{toggleBreakpoint}}
+\index{toggleBreakpoint@{toggleBreakpoint}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{toggleBreakpoint()}{toggleBreakpoint()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::toggle\+Breakpoint (\begin{DoxyParamCaption}\item[{int}]{logical\+Index }\end{DoxyParamCaption})}
+
+
+
+Called when the user clicks on a section header. It enable/disable a breakpoint for this address. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_abb4003623dd97c3d47e531a10ef204f6}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_abb4003623dd97c3d47e531a10ef204f6}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!update@{update}}
+\index{update@{update}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{update}{update}}
+{\footnotesize\ttfamily unsigned Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+
+Update the current debugger and the underlying \mbox{\hyperlink{namespaceComSquare_1_1Debugger_1_1CPU}{C\+PU}}. 
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_ab2d9e8732c1c77a80832b54fb2a054ff}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_ab2d9e8732c1c77a80832b54fb2a054ff}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!\_callback@{\_callback}}
+\index{\_callback@{\_callback}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{\_callback}{\_callback}}
+{\footnotesize\ttfamily int Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::\+\_\+callback\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The callback ID for the on reset of the \mbox{\hyperlink{namespaceComSquare_1_1Debugger_1_1CPU}{C\+PU}}. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a7e71058ad35adefcad649c00618b9731}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a7e71058ad35adefcad649c00618b9731}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!\_cpu@{\_cpu}}
+\index{\_cpu@{\_cpu}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{\_cpu}{\_cpu}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1CPU_1_1CPU}{Com\+Square\+::\+C\+P\+U\+::\+C\+PU}}\& Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::\+\_\+cpu\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The basic \mbox{\hyperlink{namespaceComSquare_1_1Debugger_1_1CPU}{C\+PU}} to debug. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a2595c0b3c00fe2424722278e550c23fb}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a2595c0b3c00fe2424722278e550c23fb}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!\_historyModel@{\_historyModel}}
+\index{\_historyModel@{\_historyModel}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{\_historyModel}{\_historyModel}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel}{History\+Model}} Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::\+\_\+history\+Model\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The history model. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a2458909fe4ac8be7bd37b12dde692b3d}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a2458909fe4ac8be7bd37b12dde692b3d}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!\_isPaused@{\_isPaused}}
+\index{\_isPaused@{\_isPaused}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{\_isPaused}{\_isPaused}}
+{\footnotesize\ttfamily bool Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::\+\_\+is\+Paused = true\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+If this is set to true, the execution of the \mbox{\hyperlink{namespaceComSquare_1_1Debugger_1_1CPU}{C\+PU}} will be paused. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_aa2e2ca2603014d308f0a60d0ac6f2078}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_aa2e2ca2603014d308f0a60d0ac6f2078}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!\_isStepping@{\_isStepping}}
+\index{\_isStepping@{\_isStepping}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{\_isStepping}{\_isStepping}}
+{\footnotesize\ttfamily bool Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::\+\_\+is\+Stepping = false\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+If this is set to true, the \mbox{\hyperlink{namespaceComSquare_1_1Debugger_1_1CPU}{C\+PU}} will execute one instruction and pause itself. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a176b13502ba4e62b0633c8d0ffeebba3}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a176b13502ba4e62b0633c8d0ffeebba3}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!\_labels@{\_labels}}
+\index{\_labels@{\_labels}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{\_labels}{\_labels}}
+{\footnotesize\ttfamily std\+::vector$<$\mbox{\hyperlink{structComSquare_1_1Debugger_1_1CPU_1_1Label}{Label}}$>$ Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::\+\_\+labels\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+A list of labels and their size. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a2043ff9d6f4b4e40d57d7375954cba49}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a2043ff9d6f4b4e40d57d7375954cba49}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!\_model@{\_model}}
+\index{\_model@{\_model}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{\_model}{\_model}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1DisassemblyModel}{Disassembly\+Model}} Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::\+\_\+model\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The disassembly viewer\textquotesingle{}s model. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_add751a9a7c80369ccccb64decda16389}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_add751a9a7c80369ccccb64decda16389}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!\_painter@{\_painter}}
+\index{\_painter@{\_painter}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{\_painter}{\_painter}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1RowPainter}{Row\+Painter}} Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::\+\_\+painter\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+A custom painter that highlight breakpoints and the PC\textquotesingle{}s position. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_abc842d3145eac8bb05bb32a3e3df4e10}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_abc842d3145eac8bb05bb32a3e3df4e10}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!\_snes@{\_snes}}
+\index{\_snes@{\_snes}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{\_snes}{\_snes}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1SNES}{S\+N\+ES}}\& Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::\+\_\+snes\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+A reference to the snes (to disable the debugger). 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_aa3576b85cee1da72b5a999d012e225f6}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_aa3576b85cee1da72b5a999d012e225f6}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!\_stackModel@{\_stackModel}}
+\index{\_stackModel@{\_stackModel}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{\_stackModel}{\_stackModel}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1StackModel}{Stack\+Model}} Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::\+\_\+stack\+Model\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The stack viewer\textquotesingle{}s model. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a5937dba8d36551733bed00d45ff46afd}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a5937dba8d36551733bed00d45ff46afd}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!\_timer@{\_timer}}
+\index{\_timer@{\_timer}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{\_timer}{\_timer}}
+{\footnotesize\ttfamily Q\+Timer Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::\+\_\+timer\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Internal timer used for update intervals. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a0b7a6ba40fbee668b41d1f926e5b7511}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a0b7a6ba40fbee668b41d1f926e5b7511}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!\_ui@{\_ui}}
+\index{\_ui@{\_ui}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{\_ui}{\_ui}}
+{\footnotesize\ttfamily Ui\+::\+C\+P\+U\+View Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::\+\_\+ui\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+A widget that contain the whole UI. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a18d390b0cf8a069374f2113ee314d8b5}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a18d390b0cf8a069374f2113ee314d8b5}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!\_window@{\_window}}
+\index{\_window@{\_window}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{\_window}{\_window}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1Debugger_1_1ClosableWindow}{Closable\+Window}}$\ast$ Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::\+\_\+window\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The QT window for this debugger. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a62d20b4d88226aaeaf135fbb79f69f1b}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a62d20b4d88226aaeaf135fbb79f69f1b}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!breakpoints@{breakpoints}}
+\index{breakpoints@{breakpoints}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{breakpoints}{breakpoints}}
+{\footnotesize\ttfamily std\+::vector$<$\mbox{\hyperlink{structComSquare_1_1Debugger_1_1CPU_1_1Breakpoint}{Breakpoint}}$>$ Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::breakpoints}
+
+
+
+The list of breakpoints the user has set. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a8b23ffaa1eae7da82549cf01667dd976}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_a8b23ffaa1eae7da82549cf01667dd976}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!disassembled@{disassembled}}
+\index{disassembled@{disassembled}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{disassembled}{disassembled}}
+{\footnotesize\ttfamily std\+::vector$<$\mbox{\hyperlink{structComSquare_1_1Debugger_1_1CPU_1_1DisassembledInstruction}{Disassembled\+Instruction}}$>$ Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::disassembled}
+
+
+
+The list of disassembled instructions to show on the debugger. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_ad4e517805f35f29635ea761f6d9b3c8f}\label{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug_ad4e517805f35f29635ea761f6d9b3c8f}} 
+\index{ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}!initialStackPointer@{initialStackPointer}}
+\index{initialStackPointer@{initialStackPointer}!ComSquare::Debugger::CPU::CPUDebug@{ComSquare::Debugger::CPU::CPUDebug}}
+\doxysubsubsection{\texorpdfstring{initialStackPointer}{initialStackPointer}}
+{\footnotesize\ttfamily uint16\+\_\+t Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+C\+P\+U\+Debug\+::initial\+Stack\+Pointer}
+
+
+
+The stack pointer before the execution of any instructions. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+sources/\+Debugger/\+C\+P\+U/\mbox{\hyperlink{CPUDebug_8hpp}{C\+P\+U\+Debug.\+hpp}}\item 
+sources/\+Debugger/\+C\+P\+U/\mbox{\hyperlink{CPUDebug_8cpp}{C\+P\+U\+Debug.\+cpp}}\item 
+sources/\+Debugger/\+C\+P\+U/\mbox{\hyperlink{Disassembly_8cpp}{Disassembly.\+cpp}}\end{DoxyCompactItemize}

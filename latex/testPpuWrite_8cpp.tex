@@ -1,0 +1,247 @@
+\hypertarget{testPpuWrite_8cpp}{}\doxysection{tests/\+P\+P\+U/test\+Ppu\+Write.cpp File Reference}
+\label{testPpuWrite_8cpp}\index{tests/PPU/testPpuWrite.cpp@{tests/PPU/testPpuWrite.cpp}}
+{\ttfamily \#include $<$catch2/catch\+\_\+test\+\_\+macros.\+hpp$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$bitset$>$}\newline
+{\ttfamily \#include \char`\"{}tests.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}S\+N\+E\+S.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Memory/\+Memory\+Bus.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}P\+P\+U/\+P\+P\+U.\+hpp\char`\"{}}\newline
+Include dependency graph for test\+Ppu\+Write.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{testPpuWrite_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{testPpuWrite_8cpp_a75f7693a8ae1f6a44bc52db139d9cae4}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}inidisp\+\_\+data\+\_\+full\+\_\+ones P\+P\+U\+\_\+write\char`\"{}, \char`\"{}\mbox{[}P\+P\+U\+\_\+write\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testPpuWrite_8cpp_a291bc37d1ffb128248933a9a006d2cf8}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}inidisp\+\_\+data\+\_\+full\+\_\+zeros P\+P\+U\+\_\+write\char`\"{}, \char`\"{}\mbox{[}P\+P\+U\+\_\+write\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testPpuWrite_8cpp_a3272ca0f2d3bbdaeb7b68003e53b2dc9}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}inidisp\+\_\+data\+\_\+f\+Blank\+\_\+on\+\_\+brghtness\+\_\+off P\+P\+U\+\_\+write\char`\"{}, \char`\"{}\mbox{[}P\+P\+U\+\_\+write\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testPpuWrite_8cpp_a8617dc1de868ba1134c85d478ca9de32}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}inidisp\+\_\+data\+\_\+f\+Blank\+\_\+off\+\_\+brghtness\+\_\+max P\+P\+U\+\_\+write\char`\"{}, \char`\"{}\mbox{[}P\+P\+U\+\_\+write\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testPpuWrite_8cpp_a0f7978883cf9fd7ef68aafa13f0c54c0}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}inidisp\+\_\+data\+\_\+f\+Blank\+\_\+off\+\_\+brghtness\+\_\+half P\+P\+U\+\_\+write\char`\"{}, \char`\"{}\mbox{[}P\+P\+U\+\_\+write\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testPpuWrite_8cpp_a5c9af62b91612a7408c176bb85e1763a}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}obsel\+\_\+111\+\_\+object\+\_\+size\+\_\+and\+\_\+all\+\_\+null P\+P\+U\+\_\+write\char`\"{}, \char`\"{}\mbox{[}P\+P\+U\+\_\+write\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testPpuWrite_8cpp_adff8c81b3d5356c02bfb1aee7dc77ea9}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}obsel\+\_\+data\+\_\+full P\+P\+U\+\_\+write\char`\"{}, \char`\"{}\mbox{[}P\+P\+U\+\_\+write\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testPpuWrite_8cpp_a993cb6a481e506f4da23d76988202beb}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}obsel\+\_\+data\+\_\+full\+\_\+nameselect P\+P\+U\+\_\+write\char`\"{}, \char`\"{}\mbox{[}P\+P\+U\+\_\+write\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testPpuWrite_8cpp_a89ed6bc435c1c51c6af56a8d399ba415}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}obsel\+\_\+data\+\_\+full\+\_\+baseselect\+\_\+write\char`\"{}, \char`\"{}\mbox{[}P\+P\+U\+\_\+write\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testPpuWrite_8cpp_ae25597adcd4a13d7c2550d08d16b7223}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}oamaddl\+\_\+data\+\_\+full P\+P\+U\+\_\+write\char`\"{}, \char`\"{}\mbox{[}P\+P\+U\+\_\+write\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testPpuWrite_8cpp_a9c4a58852af78f9d1baf027877f63064}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}oamaddh\+\_\+data\+\_\+full P\+P\+U\+\_\+write\char`\"{}, \char`\"{}\mbox{[}P\+P\+U\+\_\+write\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testPpuWrite_8cpp_aa35234eb865f613c7d01c462545863bc}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}oamaddlh\+\_\+data\+\_\+full P\+P\+U\+\_\+write\char`\"{}, \char`\"{}\mbox{[}P\+P\+U\+\_\+write\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testPpuWrite_8cpp_a8fe0adbbaab33842b687c1d1d6a92011}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}oamaddlh\+\_\+data\+\_\+full\+\_\+priority\+Bit\+\_\+off P\+P\+U\+\_\+write\char`\"{}, \char`\"{}\mbox{[}P\+P\+U\+\_\+write\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testPpuWrite_8cpp_aa03d9fc7fa015f40efbc133efebfa8b9}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}oamaddlh\+\_\+oam\+Adress\+\_\+11\+\_\+priority\+Bit\+\_\+on P\+P\+U\+\_\+write\char`\"{}, \char`\"{}\mbox{[}P\+P\+U\+\_\+write\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testPpuWrite_8cpp_a8092a82ac60067fb2fa8262b30bb6457}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}bgmode\+\_\+data\+\_\+full P\+P\+U\+\_\+write\char`\"{}, \char`\"{}\mbox{[}P\+P\+U\+\_\+write\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testPpuWrite_8cpp_ac41d028cc5f0a63d2be4f1f1eaf109b5}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}bgmode\+\_\+bgmode\+\_\+5\+\_\+and\+\_\+bg24\+\_\+on P\+P\+U\+\_\+write\char`\"{}, \char`\"{}\mbox{[}P\+P\+U\+\_\+write\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testPpuWrite_8cpp_af9d214bd6ae3621a0a0f38fc088b708c}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}mosaic\+\_\+data\+\_\+full P\+P\+U\+\_\+write\char`\"{}, \char`\"{}\mbox{[}P\+P\+U\+\_\+write\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testPpuWrite_8cpp_a494dafbfb19b4d6eb4b595a4bb3258d0}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}mosaic\+\_\+affectbg23\+\_\+w\+\_\+1x1\+\_\+size P\+P\+U\+\_\+write\char`\"{}, \char`\"{}\mbox{[}P\+P\+U\+\_\+write\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testPpuWrite_8cpp_a49c83a0bd792e53bba1c947fdd790377}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}mosaic\+\_\+affectbg14\+\_\+w\+\_\+2x2\+\_\+size P\+P\+U\+\_\+write\char`\"{}, \char`\"{}\mbox{[}P\+P\+U\+\_\+write\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testPpuWrite_8cpp_a1238aa606098dd9a8273c099254b21cc}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}bg1sc\+\_\+data\+\_\+full P\+P\+U\+\_\+write\char`\"{}, \char`\"{}\mbox{[}P\+P\+U\+\_\+write\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testPpuWrite_8cpp_a9195bae2fdf5f23d4fc47df1bf2b0e77}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}bg2sc\+\_\+data\+\_\+full P\+P\+U\+\_\+write\char`\"{}, \char`\"{}\mbox{[}P\+P\+U\+\_\+write\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testPpuWrite_8cpp_addce3c8afa96c430274a15478cb81e0f}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}bg3sc\+\_\+data\+\_\+full P\+P\+U\+\_\+write\char`\"{}, \char`\"{}\mbox{[}P\+P\+U\+\_\+write\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testPpuWrite_8cpp_a1fa9975d4262d98f216e06d28e92b257}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}bg4sc\+\_\+data\+\_\+full P\+P\+U\+\_\+write\char`\"{}, \char`\"{}\mbox{[}P\+P\+U\+\_\+write\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testPpuWrite_8cpp_af9fa19555e60038cbe1f3c0429cf52eb}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}bg4sc\+\_\+data\+\_\+null P\+P\+U\+\_\+write\char`\"{}, \char`\"{}\mbox{[}P\+P\+U\+\_\+write\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testPpuWrite_8cpp_a1dd3ffd4d00680ee0c29f55a214df876}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}bg4sc\+\_\+horizontal\+\_\+off\+\_\+vertical\+\_\+on\+\_\+random\+\_\+tilemap\+Adress P\+P\+U\+\_\+write\char`\"{}, \char`\"{}\mbox{[}P\+P\+U\+\_\+write\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testPpuWrite_8cpp_aff4aaf2af1fc4f14925a1f4def0aa532}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}bg12nba\+\_\+data\+\_\+full P\+P\+U\+\_\+write\char`\"{}, \char`\"{}\mbox{[}P\+P\+U\+\_\+write\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testPpuWrite_8cpp_a594166d146e9dc4d4b2ab64626f0a9ec}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}bg34nba\+\_\+data\+\_\+full P\+P\+U\+\_\+write\char`\"{}, \char`\"{}\mbox{[}P\+P\+U\+\_\+write\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testPpuWrite_8cpp_aacf5ef0fc568032d77615c8f9995c435}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}bg12nba\+\_\+data\+\_\+random\+\_\+data P\+P\+U\+\_\+write\char`\"{}, \char`\"{}\mbox{[}P\+P\+U\+\_\+write\mbox{]}\char`\"{})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{testPpuWrite_8cpp_aff4aaf2af1fc4f14925a1f4def0aa532}\label{testPpuWrite_8cpp_aff4aaf2af1fc4f14925a1f4def0aa532}} 
+\index{testPpuWrite.cpp@{testPpuWrite.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testPpuWrite.cpp@{testPpuWrite.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [1/28]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}bg12nba\+\_\+data\+\_\+full P\+P\+U\+\_\+write\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+P\+P\+U\+\_\+write\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testPpuWrite_8cpp_aacf5ef0fc568032d77615c8f9995c435}\label{testPpuWrite_8cpp_aacf5ef0fc568032d77615c8f9995c435}} 
+\index{testPpuWrite.cpp@{testPpuWrite.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testPpuWrite.cpp@{testPpuWrite.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [2/28]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}bg12nba\+\_\+data\+\_\+random\+\_\+data P\+P\+U\+\_\+write\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+P\+P\+U\+\_\+write\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testPpuWrite_8cpp_a1238aa606098dd9a8273c099254b21cc}\label{testPpuWrite_8cpp_a1238aa606098dd9a8273c099254b21cc}} 
+\index{testPpuWrite.cpp@{testPpuWrite.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testPpuWrite.cpp@{testPpuWrite.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [3/28]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}bg1sc\+\_\+data\+\_\+full P\+P\+U\+\_\+write\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+P\+P\+U\+\_\+write\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testPpuWrite_8cpp_a9195bae2fdf5f23d4fc47df1bf2b0e77}\label{testPpuWrite_8cpp_a9195bae2fdf5f23d4fc47df1bf2b0e77}} 
+\index{testPpuWrite.cpp@{testPpuWrite.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testPpuWrite.cpp@{testPpuWrite.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [4/28]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}bg2sc\+\_\+data\+\_\+full P\+P\+U\+\_\+write\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+P\+P\+U\+\_\+write\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testPpuWrite_8cpp_a594166d146e9dc4d4b2ab64626f0a9ec}\label{testPpuWrite_8cpp_a594166d146e9dc4d4b2ab64626f0a9ec}} 
+\index{testPpuWrite.cpp@{testPpuWrite.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testPpuWrite.cpp@{testPpuWrite.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [5/28]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}bg34nba\+\_\+data\+\_\+full P\+P\+U\+\_\+write\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+P\+P\+U\+\_\+write\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testPpuWrite_8cpp_addce3c8afa96c430274a15478cb81e0f}\label{testPpuWrite_8cpp_addce3c8afa96c430274a15478cb81e0f}} 
+\index{testPpuWrite.cpp@{testPpuWrite.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testPpuWrite.cpp@{testPpuWrite.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [6/28]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}bg3sc\+\_\+data\+\_\+full P\+P\+U\+\_\+write\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+P\+P\+U\+\_\+write\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testPpuWrite_8cpp_a1fa9975d4262d98f216e06d28e92b257}\label{testPpuWrite_8cpp_a1fa9975d4262d98f216e06d28e92b257}} 
+\index{testPpuWrite.cpp@{testPpuWrite.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testPpuWrite.cpp@{testPpuWrite.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [7/28]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}bg4sc\+\_\+data\+\_\+full P\+P\+U\+\_\+write\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+P\+P\+U\+\_\+write\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testPpuWrite_8cpp_af9fa19555e60038cbe1f3c0429cf52eb}\label{testPpuWrite_8cpp_af9fa19555e60038cbe1f3c0429cf52eb}} 
+\index{testPpuWrite.cpp@{testPpuWrite.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testPpuWrite.cpp@{testPpuWrite.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [8/28]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}bg4sc\+\_\+data\+\_\+null P\+P\+U\+\_\+write\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+P\+P\+U\+\_\+write\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testPpuWrite_8cpp_a1dd3ffd4d00680ee0c29f55a214df876}\label{testPpuWrite_8cpp_a1dd3ffd4d00680ee0c29f55a214df876}} 
+\index{testPpuWrite.cpp@{testPpuWrite.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testPpuWrite.cpp@{testPpuWrite.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [9/28]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}bg4sc\+\_\+horizontal\+\_\+off\+\_\+vertical\+\_\+on\+\_\+random\+\_\+tilemap\+Adress P\+P\+U\+\_\+write\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+P\+P\+U\+\_\+write\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testPpuWrite_8cpp_ac41d028cc5f0a63d2be4f1f1eaf109b5}\label{testPpuWrite_8cpp_ac41d028cc5f0a63d2be4f1f1eaf109b5}} 
+\index{testPpuWrite.cpp@{testPpuWrite.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testPpuWrite.cpp@{testPpuWrite.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [10/28]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}bgmode\+\_\+bgmode\+\_\+5\+\_\+and\+\_\+bg24\+\_\+on P\+P\+U\+\_\+write\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+P\+P\+U\+\_\+write\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testPpuWrite_8cpp_a8092a82ac60067fb2fa8262b30bb6457}\label{testPpuWrite_8cpp_a8092a82ac60067fb2fa8262b30bb6457}} 
+\index{testPpuWrite.cpp@{testPpuWrite.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testPpuWrite.cpp@{testPpuWrite.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [11/28]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}bgmode\+\_\+data\+\_\+full P\+P\+U\+\_\+write\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+P\+P\+U\+\_\+write\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testPpuWrite_8cpp_a0f7978883cf9fd7ef68aafa13f0c54c0}\label{testPpuWrite_8cpp_a0f7978883cf9fd7ef68aafa13f0c54c0}} 
+\index{testPpuWrite.cpp@{testPpuWrite.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testPpuWrite.cpp@{testPpuWrite.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [12/28]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}inidisp\+\_\+data\+\_\+f\+Blank\+\_\+off\+\_\+brghtness\+\_\+half P\+P\+U\+\_\+write\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+P\+P\+U\+\_\+write\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testPpuWrite_8cpp_a8617dc1de868ba1134c85d478ca9de32}\label{testPpuWrite_8cpp_a8617dc1de868ba1134c85d478ca9de32}} 
+\index{testPpuWrite.cpp@{testPpuWrite.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testPpuWrite.cpp@{testPpuWrite.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [13/28]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}inidisp\+\_\+data\+\_\+f\+Blank\+\_\+off\+\_\+brghtness\+\_\+max P\+P\+U\+\_\+write\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+P\+P\+U\+\_\+write\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testPpuWrite_8cpp_a3272ca0f2d3bbdaeb7b68003e53b2dc9}\label{testPpuWrite_8cpp_a3272ca0f2d3bbdaeb7b68003e53b2dc9}} 
+\index{testPpuWrite.cpp@{testPpuWrite.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testPpuWrite.cpp@{testPpuWrite.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [14/28]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}inidisp\+\_\+data\+\_\+f\+Blank\+\_\+on\+\_\+brghtness\+\_\+off P\+P\+U\+\_\+write\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+P\+P\+U\+\_\+write\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testPpuWrite_8cpp_a75f7693a8ae1f6a44bc52db139d9cae4}\label{testPpuWrite_8cpp_a75f7693a8ae1f6a44bc52db139d9cae4}} 
+\index{testPpuWrite.cpp@{testPpuWrite.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testPpuWrite.cpp@{testPpuWrite.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [15/28]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}inidisp\+\_\+data\+\_\+full\+\_\+ones P\+P\+U\+\_\+write\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+P\+P\+U\+\_\+write\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testPpuWrite_8cpp_a291bc37d1ffb128248933a9a006d2cf8}\label{testPpuWrite_8cpp_a291bc37d1ffb128248933a9a006d2cf8}} 
+\index{testPpuWrite.cpp@{testPpuWrite.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testPpuWrite.cpp@{testPpuWrite.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [16/28]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}inidisp\+\_\+data\+\_\+full\+\_\+zeros P\+P\+U\+\_\+write\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+P\+P\+U\+\_\+write\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testPpuWrite_8cpp_a49c83a0bd792e53bba1c947fdd790377}\label{testPpuWrite_8cpp_a49c83a0bd792e53bba1c947fdd790377}} 
+\index{testPpuWrite.cpp@{testPpuWrite.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testPpuWrite.cpp@{testPpuWrite.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [17/28]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}mosaic\+\_\+affectbg14\+\_\+w\+\_\+2x2\+\_\+size P\+P\+U\+\_\+write\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+P\+P\+U\+\_\+write\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testPpuWrite_8cpp_a494dafbfb19b4d6eb4b595a4bb3258d0}\label{testPpuWrite_8cpp_a494dafbfb19b4d6eb4b595a4bb3258d0}} 
+\index{testPpuWrite.cpp@{testPpuWrite.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testPpuWrite.cpp@{testPpuWrite.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [18/28]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}mosaic\+\_\+affectbg23\+\_\+w\+\_\+1x1\+\_\+size P\+P\+U\+\_\+write\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+P\+P\+U\+\_\+write\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testPpuWrite_8cpp_af9d214bd6ae3621a0a0f38fc088b708c}\label{testPpuWrite_8cpp_af9d214bd6ae3621a0a0f38fc088b708c}} 
+\index{testPpuWrite.cpp@{testPpuWrite.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testPpuWrite.cpp@{testPpuWrite.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [19/28]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}mosaic\+\_\+data\+\_\+full P\+P\+U\+\_\+write\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+P\+P\+U\+\_\+write\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testPpuWrite_8cpp_a9c4a58852af78f9d1baf027877f63064}\label{testPpuWrite_8cpp_a9c4a58852af78f9d1baf027877f63064}} 
+\index{testPpuWrite.cpp@{testPpuWrite.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testPpuWrite.cpp@{testPpuWrite.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [20/28]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}oamaddh\+\_\+data\+\_\+full P\+P\+U\+\_\+write\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+P\+P\+U\+\_\+write\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testPpuWrite_8cpp_ae25597adcd4a13d7c2550d08d16b7223}\label{testPpuWrite_8cpp_ae25597adcd4a13d7c2550d08d16b7223}} 
+\index{testPpuWrite.cpp@{testPpuWrite.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testPpuWrite.cpp@{testPpuWrite.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [21/28]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}oamaddl\+\_\+data\+\_\+full P\+P\+U\+\_\+write\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+P\+P\+U\+\_\+write\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testPpuWrite_8cpp_aa35234eb865f613c7d01c462545863bc}\label{testPpuWrite_8cpp_aa35234eb865f613c7d01c462545863bc}} 
+\index{testPpuWrite.cpp@{testPpuWrite.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testPpuWrite.cpp@{testPpuWrite.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [22/28]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}oamaddlh\+\_\+data\+\_\+full P\+P\+U\+\_\+write\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+P\+P\+U\+\_\+write\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testPpuWrite_8cpp_a8fe0adbbaab33842b687c1d1d6a92011}\label{testPpuWrite_8cpp_a8fe0adbbaab33842b687c1d1d6a92011}} 
+\index{testPpuWrite.cpp@{testPpuWrite.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testPpuWrite.cpp@{testPpuWrite.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [23/28]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}oamaddlh\+\_\+data\+\_\+full\+\_\+priority\+Bit\+\_\+off P\+P\+U\+\_\+write\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+P\+P\+U\+\_\+write\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testPpuWrite_8cpp_aa03d9fc7fa015f40efbc133efebfa8b9}\label{testPpuWrite_8cpp_aa03d9fc7fa015f40efbc133efebfa8b9}} 
+\index{testPpuWrite.cpp@{testPpuWrite.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testPpuWrite.cpp@{testPpuWrite.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [24/28]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}oamaddlh\+\_\+oam\+Adress\+\_\+11\+\_\+priority\+Bit\+\_\+on P\+P\+U\+\_\+write\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+P\+P\+U\+\_\+write\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testPpuWrite_8cpp_a5c9af62b91612a7408c176bb85e1763a}\label{testPpuWrite_8cpp_a5c9af62b91612a7408c176bb85e1763a}} 
+\index{testPpuWrite.cpp@{testPpuWrite.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testPpuWrite.cpp@{testPpuWrite.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [25/28]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}obsel\+\_\+111\+\_\+object\+\_\+size\+\_\+and\+\_\+all\+\_\+null P\+P\+U\+\_\+write\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+P\+P\+U\+\_\+write\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testPpuWrite_8cpp_adff8c81b3d5356c02bfb1aee7dc77ea9}\label{testPpuWrite_8cpp_adff8c81b3d5356c02bfb1aee7dc77ea9}} 
+\index{testPpuWrite.cpp@{testPpuWrite.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testPpuWrite.cpp@{testPpuWrite.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [26/28]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}obsel\+\_\+data\+\_\+full P\+P\+U\+\_\+write\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+P\+P\+U\+\_\+write\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testPpuWrite_8cpp_a89ed6bc435c1c51c6af56a8d399ba415}\label{testPpuWrite_8cpp_a89ed6bc435c1c51c6af56a8d399ba415}} 
+\index{testPpuWrite.cpp@{testPpuWrite.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testPpuWrite.cpp@{testPpuWrite.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [27/28]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}obsel\+\_\+data\+\_\+full\+\_\+baseselect\+\_\+write\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+P\+P\+U\+\_\+write\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testPpuWrite_8cpp_a993cb6a481e506f4da23d76988202beb}\label{testPpuWrite_8cpp_a993cb6a481e506f4da23d76988202beb}} 
+\index{testPpuWrite.cpp@{testPpuWrite.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testPpuWrite.cpp@{testPpuWrite.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [28/28]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}obsel\+\_\+data\+\_\+full\+\_\+nameselect P\+P\+U\+\_\+write\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+P\+P\+U\+\_\+write\mbox{]} }\end{DoxyParamCaption})}
+

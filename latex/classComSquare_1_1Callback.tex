@@ -1,0 +1,184 @@
+\hypertarget{classComSquare_1_1Callback}{}\doxysection{Com\+Square\+::Callback$<$ Types $>$ Class Template Reference}
+\label{classComSquare_1_1Callback}\index{ComSquare::Callback$<$ Types $>$@{ComSquare::Callback$<$ Types $>$}}
+
+
+A callback where you can subscribe to and emit it.  
+
+
+
+
+{\ttfamily \#include $<$Callback.\+hpp$>$}
+
+
+
+Collaboration diagram for Com\+Square\+::Callback$<$ Types $>$\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=201pt]{classComSquare_1_1Callback__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename Func $>$ }\\int \mbox{\hyperlink{classComSquare_1_1Callback_aa6b54f4835069d20c22b6fa1786c6a3c}{add\+Callback}} (Func callback)
+\begin{DoxyCompactList}\small\item\em Add a method to be called when this callback is invoked. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSquare_1_1Callback_aa5338ac89c68289c484b6a3e3c185963}{remove\+Callback}} (int id)
+\begin{DoxyCompactList}\small\item\em Remove a function from this callback. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSquare_1_1Callback_a5cd6dba0f0e9ea54fb993a4015985058}{operator()}} (Types ...args) const
+\item 
+\mbox{\hyperlink{classComSquare_1_1Callback_a764204f626c1699d806b6c67bb31fc39}{Callback}} ()=default
+\begin{DoxyCompactList}\small\item\em A default constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1Callback_ab233a5401d403f89ac895b1e20203b43}{Callback}} (const \mbox{\hyperlink{classComSquare_1_1Callback}{Callback}} \&)=default
+\begin{DoxyCompactList}\small\item\em A default copy constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1Callback_a2ca3e9b366d64dbfb4cb31e397f608dc}{$\sim$\+Callback}} ()=default
+\begin{DoxyCompactList}\small\item\em A default destructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1Callback}{Callback}} \& \mbox{\hyperlink{classComSquare_1_1Callback_ad5e4f33ce0525823e39310f7b1b99158}{operator=}} (const \mbox{\hyperlink{classComSquare_1_1Callback}{Callback}} \&)=default
+\begin{DoxyCompactList}\small\item\em A default assignment operator. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename Func $>$ }\\\mbox{\hyperlink{classComSquare_1_1Callback_ae591813accffdb5fd37cb4ccb673d41d}{Callback}} (Func callback)
+\begin{DoxyCompactList}\small\item\em Implicitly transform a callable into a callback. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{classComSquare_1_1Callback_a744461787dcc2e16ee74b31d810785dd}{\+\_\+next\+ID}} = 0
+\item 
+std\+::unordered\+\_\+map$<$ int, std\+::function$<$ void(Types...)$>$ $>$ \mbox{\hyperlink{classComSquare_1_1Callback_a849a860cc7d4a1ba004a1c00af0e890f}{\+\_\+functions}} = \{\}
+\begin{DoxyCompactList}\small\item\em The list of functions to call. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename ... Types$>$\newline
+class Com\+Square\+::\+Callback$<$ Types $>$}
+
+A callback where you can subscribe to and emit it. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classComSquare_1_1Callback_a764204f626c1699d806b6c67bb31fc39}\label{classComSquare_1_1Callback_a764204f626c1699d806b6c67bb31fc39}} 
+\index{ComSquare::Callback$<$ Types $>$@{ComSquare::Callback$<$ Types $>$}!Callback@{Callback}}
+\index{Callback@{Callback}!ComSquare::Callback$<$ Types $>$@{ComSquare::Callback$<$ Types $>$}}
+\doxysubsubsection{\texorpdfstring{Callback()}{Callback()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily template$<$typename ... Types$>$ \\
+\mbox{\hyperlink{classComSquare_1_1Callback}{Com\+Square\+::\+Callback}}$<$ Types $>$\+::\mbox{\hyperlink{classComSquare_1_1Callback}{Callback}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+A default constructor. 
+
+\mbox{\Hypertarget{classComSquare_1_1Callback_ab233a5401d403f89ac895b1e20203b43}\label{classComSquare_1_1Callback_ab233a5401d403f89ac895b1e20203b43}} 
+\index{ComSquare::Callback$<$ Types $>$@{ComSquare::Callback$<$ Types $>$}!Callback@{Callback}}
+\index{Callback@{Callback}!ComSquare::Callback$<$ Types $>$@{ComSquare::Callback$<$ Types $>$}}
+\doxysubsubsection{\texorpdfstring{Callback()}{Callback()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily template$<$typename ... Types$>$ \\
+\mbox{\hyperlink{classComSquare_1_1Callback}{Com\+Square\+::\+Callback}}$<$ Types $>$\+::\mbox{\hyperlink{classComSquare_1_1Callback}{Callback}} (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classComSquare_1_1Callback}{Callback}}$<$ Types $>$ \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+A default copy constructor. 
+
+\mbox{\Hypertarget{classComSquare_1_1Callback_a2ca3e9b366d64dbfb4cb31e397f608dc}\label{classComSquare_1_1Callback_a2ca3e9b366d64dbfb4cb31e397f608dc}} 
+\index{ComSquare::Callback$<$ Types $>$@{ComSquare::Callback$<$ Types $>$}!````~Callback@{$\sim$Callback}}
+\index{````~Callback@{$\sim$Callback}!ComSquare::Callback$<$ Types $>$@{ComSquare::Callback$<$ Types $>$}}
+\doxysubsubsection{\texorpdfstring{$\sim$Callback()}{~Callback()}}
+{\footnotesize\ttfamily template$<$typename ... Types$>$ \\
+\mbox{\hyperlink{classComSquare_1_1Callback}{Com\+Square\+::\+Callback}}$<$ Types $>$\+::$\sim$\mbox{\hyperlink{classComSquare_1_1Callback}{Callback}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+A default destructor. 
+
+\mbox{\Hypertarget{classComSquare_1_1Callback_ae591813accffdb5fd37cb4ccb673d41d}\label{classComSquare_1_1Callback_ae591813accffdb5fd37cb4ccb673d41d}} 
+\index{ComSquare::Callback$<$ Types $>$@{ComSquare::Callback$<$ Types $>$}!Callback@{Callback}}
+\index{Callback@{Callback}!ComSquare::Callback$<$ Types $>$@{ComSquare::Callback$<$ Types $>$}}
+\doxysubsubsection{\texorpdfstring{Callback()}{Callback()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily template$<$typename ... Types$>$ \\
+template$<$typename Func $>$ \\
+\mbox{\hyperlink{classComSquare_1_1Callback}{Com\+Square\+::\+Callback}}$<$ Types $>$\+::\mbox{\hyperlink{classComSquare_1_1Callback}{Callback}} (\begin{DoxyParamCaption}\item[{Func}]{callback }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Implicitly transform a callable into a callback. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classComSquare_1_1Callback_aa6b54f4835069d20c22b6fa1786c6a3c}\label{classComSquare_1_1Callback_aa6b54f4835069d20c22b6fa1786c6a3c}} 
+\index{ComSquare::Callback$<$ Types $>$@{ComSquare::Callback$<$ Types $>$}!addCallback@{addCallback}}
+\index{addCallback@{addCallback}!ComSquare::Callback$<$ Types $>$@{ComSquare::Callback$<$ Types $>$}}
+\doxysubsubsection{\texorpdfstring{addCallback()}{addCallback()}}
+{\footnotesize\ttfamily template$<$typename ... Types$>$ \\
+template$<$typename Func $>$ \\
+int \mbox{\hyperlink{classComSquare_1_1Callback}{Com\+Square\+::\+Callback}}$<$ Types $>$\+::add\+Callback (\begin{DoxyParamCaption}\item[{Func}]{callback }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Add a method to be called when this callback is invoked. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em callback} & The list of arguments of the callback method \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A unique ID for this callback. That can be used to remove the callback later. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classComSquare_1_1Callback_a5cd6dba0f0e9ea54fb993a4015985058}\label{classComSquare_1_1Callback_a5cd6dba0f0e9ea54fb993a4015985058}} 
+\index{ComSquare::Callback$<$ Types $>$@{ComSquare::Callback$<$ Types $>$}!operator()@{operator()}}
+\index{operator()@{operator()}!ComSquare::Callback$<$ Types $>$@{ComSquare::Callback$<$ Types $>$}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}}
+{\footnotesize\ttfamily template$<$typename ... Types$>$ \\
+void \mbox{\hyperlink{classComSquare_1_1Callback}{Com\+Square\+::\+Callback}}$<$ Types $>$\+::operator() (\begin{DoxyParamCaption}\item[{Types ...}]{args }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classComSquare_1_1Callback_ad5e4f33ce0525823e39310f7b1b99158}\label{classComSquare_1_1Callback_ad5e4f33ce0525823e39310f7b1b99158}} 
+\index{ComSquare::Callback$<$ Types $>$@{ComSquare::Callback$<$ Types $>$}!operator=@{operator=}}
+\index{operator=@{operator=}!ComSquare::Callback$<$ Types $>$@{ComSquare::Callback$<$ Types $>$}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily template$<$typename ... Types$>$ \\
+\mbox{\hyperlink{classComSquare_1_1Callback}{Callback}}\& \mbox{\hyperlink{classComSquare_1_1Callback}{Com\+Square\+::\+Callback}}$<$ Types $>$\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classComSquare_1_1Callback}{Callback}}$<$ Types $>$ \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+A default assignment operator. 
+
+\mbox{\Hypertarget{classComSquare_1_1Callback_aa5338ac89c68289c484b6a3e3c185963}\label{classComSquare_1_1Callback_aa5338ac89c68289c484b6a3e3c185963}} 
+\index{ComSquare::Callback$<$ Types $>$@{ComSquare::Callback$<$ Types $>$}!removeCallback@{removeCallback}}
+\index{removeCallback@{removeCallback}!ComSquare::Callback$<$ Types $>$@{ComSquare::Callback$<$ Types $>$}}
+\doxysubsubsection{\texorpdfstring{removeCallback()}{removeCallback()}}
+{\footnotesize\ttfamily template$<$typename ... Types$>$ \\
+void \mbox{\hyperlink{classComSquare_1_1Callback}{Com\+Square\+::\+Callback}}$<$ Types $>$\+::remove\+Callback (\begin{DoxyParamCaption}\item[{int}]{id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Remove a function from this callback. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & The ID of the function. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classComSquare_1_1Callback_a849a860cc7d4a1ba004a1c00af0e890f}\label{classComSquare_1_1Callback_a849a860cc7d4a1ba004a1c00af0e890f}} 
+\index{ComSquare::Callback$<$ Types $>$@{ComSquare::Callback$<$ Types $>$}!\_functions@{\_functions}}
+\index{\_functions@{\_functions}!ComSquare::Callback$<$ Types $>$@{ComSquare::Callback$<$ Types $>$}}
+\doxysubsubsection{\texorpdfstring{\_functions}{\_functions}}
+{\footnotesize\ttfamily template$<$typename ... Types$>$ \\
+std\+::unordered\+\_\+map$<$int, std\+::function$<$void (Types...)$>$ $>$ \mbox{\hyperlink{classComSquare_1_1Callback}{Com\+Square\+::\+Callback}}$<$ Types $>$\+::\+\_\+functions = \{\}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The list of functions to call. 
+
+\mbox{\Hypertarget{classComSquare_1_1Callback_a744461787dcc2e16ee74b31d810785dd}\label{classComSquare_1_1Callback_a744461787dcc2e16ee74b31d810785dd}} 
+\index{ComSquare::Callback$<$ Types $>$@{ComSquare::Callback$<$ Types $>$}!\_nextID@{\_nextID}}
+\index{\_nextID@{\_nextID}!ComSquare::Callback$<$ Types $>$@{ComSquare::Callback$<$ Types $>$}}
+\doxysubsubsection{\texorpdfstring{\_nextID}{\_nextID}}
+{\footnotesize\ttfamily template$<$typename ... Types$>$ \\
+int \mbox{\hyperlink{classComSquare_1_1Callback}{Com\+Square\+::\+Callback}}$<$ Types $>$\+::\+\_\+next\+ID = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+sources/\+Models/\mbox{\hyperlink{Callback_8hpp}{Callback.\+hpp}}\end{DoxyCompactItemize}

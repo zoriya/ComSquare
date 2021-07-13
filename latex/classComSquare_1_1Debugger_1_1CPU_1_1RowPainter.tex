@@ -1,0 +1,110 @@
+\hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1RowPainter}{}\doxysection{Com\+Square\+::Debugger\+::C\+PU\+::Row\+Painter Class Reference}
+\label{classComSquare_1_1Debugger_1_1CPU_1_1RowPainter}\index{ComSquare::Debugger::CPU::RowPainter@{ComSquare::Debugger::CPU::RowPainter}}
+
+
+The qt class that highlight breakpoints and the PC\textquotesingle{}s position.  
+
+
+
+
+{\ttfamily \#include $<$C\+P\+U\+Debug.\+hpp$>$}
+
+
+
+Inheritance diagram for Com\+Square\+::Debugger\+::C\+PU\+::Row\+Painter\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=206pt]{classComSquare_1_1Debugger_1_1CPU_1_1RowPainter__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Com\+Square\+::Debugger\+::C\+PU\+::Row\+Painter\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classComSquare_1_1Debugger_1_1CPU_1_1RowPainter__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1RowPainter_a2ad6d900253a7ceb8404727f46b4cbab}{Row\+Painter}} (\mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug}{C\+P\+U\+Debug}} \&cpu, Q\+Object $\ast$parent=nullptr)
+\item 
+\mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1RowPainter}{Row\+Painter}} \& \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1RowPainter_a35976e882560d48360723a4854f3f8e2}{operator=}} (const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1RowPainter}{Row\+Painter}} \&)=delete
+\item 
+\mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1RowPainter_a2eb8a054bff8ec2ce3e89468029533c9}{$\sim$\+Row\+Painter}} () override=default
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Q\+Size \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1RowPainter_adaf645314429c52488d9315c8bfa0912}{size\+Hint}} (const Q\+Style\+Option\+View\+Item \&options, const Q\+Model\+Index \&index) const override
+\item 
+void \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1RowPainter_acf70319febb1c766fdbf2bf3e32d0a28}{paint}} (Q\+Painter $\ast$painter, const Q\+Style\+Option\+View\+Item \&option, const Q\+Model\+Index \&index) const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug}{C\+P\+U\+Debug}} \& \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1RowPainter_aa1294c1dc391286bcd89be5b79cd47a4}{\+\_\+cpu}}
+\begin{DoxyCompactList}\small\item\em The \mbox{\hyperlink{namespaceComSquare_1_1Debugger_1_1CPU}{C\+PU}} to get PC and breakpoints from. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The qt class that highlight breakpoints and the PC\textquotesingle{}s position. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1RowPainter_a2ad6d900253a7ceb8404727f46b4cbab}\label{classComSquare_1_1Debugger_1_1CPU_1_1RowPainter_a2ad6d900253a7ceb8404727f46b4cbab}} 
+\index{ComSquare::Debugger::CPU::RowPainter@{ComSquare::Debugger::CPU::RowPainter}!RowPainter@{RowPainter}}
+\index{RowPainter@{RowPainter}!ComSquare::Debugger::CPU::RowPainter@{ComSquare::Debugger::CPU::RowPainter}}
+\doxysubsubsection{\texorpdfstring{RowPainter()}{RowPainter()}}
+{\footnotesize\ttfamily Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+Row\+Painter\+::\+Row\+Painter (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug}{C\+P\+U\+Debug}} \&}]{cpu,  }\item[{Q\+Object $\ast$}]{parent = {\ttfamily nullptr} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1RowPainter_a2eb8a054bff8ec2ce3e89468029533c9}\label{classComSquare_1_1Debugger_1_1CPU_1_1RowPainter_a2eb8a054bff8ec2ce3e89468029533c9}} 
+\index{ComSquare::Debugger::CPU::RowPainter@{ComSquare::Debugger::CPU::RowPainter}!````~RowPainter@{$\sim$RowPainter}}
+\index{````~RowPainter@{$\sim$RowPainter}!ComSquare::Debugger::CPU::RowPainter@{ComSquare::Debugger::CPU::RowPainter}}
+\doxysubsubsection{\texorpdfstring{$\sim$RowPainter()}{~RowPainter()}}
+{\footnotesize\ttfamily Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+Row\+Painter\+::$\sim$\+Row\+Painter (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [default]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1RowPainter_a35976e882560d48360723a4854f3f8e2}\label{classComSquare_1_1Debugger_1_1CPU_1_1RowPainter_a35976e882560d48360723a4854f3f8e2}} 
+\index{ComSquare::Debugger::CPU::RowPainter@{ComSquare::Debugger::CPU::RowPainter}!operator=@{operator=}}
+\index{operator=@{operator=}!ComSquare::Debugger::CPU::RowPainter@{ComSquare::Debugger::CPU::RowPainter}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1RowPainter}{Row\+Painter}}\& Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+Row\+Painter\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1RowPainter}{Row\+Painter}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1RowPainter_acf70319febb1c766fdbf2bf3e32d0a28}\label{classComSquare_1_1Debugger_1_1CPU_1_1RowPainter_acf70319febb1c766fdbf2bf3e32d0a28}} 
+\index{ComSquare::Debugger::CPU::RowPainter@{ComSquare::Debugger::CPU::RowPainter}!paint@{paint}}
+\index{paint@{paint}!ComSquare::Debugger::CPU::RowPainter@{ComSquare::Debugger::CPU::RowPainter}}
+\doxysubsubsection{\texorpdfstring{paint()}{paint()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+Row\+Painter\+::paint (\begin{DoxyParamCaption}\item[{Q\+Painter $\ast$}]{painter,  }\item[{const Q\+Style\+Option\+View\+Item \&}]{option,  }\item[{const Q\+Model\+Index \&}]{index }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1RowPainter_adaf645314429c52488d9315c8bfa0912}\label{classComSquare_1_1Debugger_1_1CPU_1_1RowPainter_adaf645314429c52488d9315c8bfa0912}} 
+\index{ComSquare::Debugger::CPU::RowPainter@{ComSquare::Debugger::CPU::RowPainter}!sizeHint@{sizeHint}}
+\index{sizeHint@{sizeHint}!ComSquare::Debugger::CPU::RowPainter@{ComSquare::Debugger::CPU::RowPainter}}
+\doxysubsubsection{\texorpdfstring{sizeHint()}{sizeHint()}}
+{\footnotesize\ttfamily Q\+Size Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+Row\+Painter\+::size\+Hint (\begin{DoxyParamCaption}\item[{const Q\+Style\+Option\+View\+Item \&}]{options,  }\item[{const Q\+Model\+Index \&}]{index }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1RowPainter_aa1294c1dc391286bcd89be5b79cd47a4}\label{classComSquare_1_1Debugger_1_1CPU_1_1RowPainter_aa1294c1dc391286bcd89be5b79cd47a4}} 
+\index{ComSquare::Debugger::CPU::RowPainter@{ComSquare::Debugger::CPU::RowPainter}!\_cpu@{\_cpu}}
+\index{\_cpu@{\_cpu}!ComSquare::Debugger::CPU::RowPainter@{ComSquare::Debugger::CPU::RowPainter}}
+\doxysubsubsection{\texorpdfstring{\_cpu}{\_cpu}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug}{C\+P\+U\+Debug}}\& Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+Row\+Painter\+::\+\_\+cpu\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The \mbox{\hyperlink{namespaceComSquare_1_1Debugger_1_1CPU}{C\+PU}} to get PC and breakpoints from. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+sources/\+Debugger/\+C\+P\+U/\mbox{\hyperlink{CPUDebug_8hpp}{C\+P\+U\+Debug.\+hpp}}\item 
+sources/\+Debugger/\+C\+P\+U/\mbox{\hyperlink{CPUDebug_8cpp}{C\+P\+U\+Debug.\+cpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,15 @@
+<map id="ComSquare::PPU::PPU" name="ComSquare::PPU::PPU">
+<area shape="rect" id="node1" title="The class containing all the registers of the PPU." alt="" coords="403,1047,581,1344"/>
+<area shape="rect" id="node7" href="$classComSquare_1_1PPU_1_1Background.html" title=" " alt="" coords="501,1407,720,1895"/>
+<area shape="rect" id="node2" href="$classComSquare_1_1Memory_1_1AMemory.html" title="Abstract class representing a continuous block of memory." alt="" coords="723,483,898,633"/>
+<area shape="rect" id="node3" href="$classComSquare_1_1Memory_1_1IMemory.html" title="Common interface implemented by all components mapping memory." alt="" coords="619,5,794,215"/>
+<area shape="rect" id="node5" href="$classComSquare_1_1Memory_1_1ARectangleMemory.html" title="Base memory class to map non continuous rectangle to the memory. (A rectangle that spam across more t..." alt="" coords="469,264,656,459"/>
+<area shape="rect" id="node4" href="$classComSquare_1_1Ram_1_1Ram.html" title=" " alt="" coords="5,657,179,955"/>
+<area shape="rect" id="node8" href="$classComSquare_1_1PPU_1_1TileRenderer.html" title=" " alt="" coords="128,1047,379,1344"/>
+<area shape="rect" id="node6" href="$classComSquare_1_1Renderer_1_1IRenderer.html" title=" " alt="" coords="203,731,367,881"/>
+<area shape="rect" id="node9" href="$classComSquare_1_1Vector2.html" title=" " alt="" coords="605,1047,760,1344"/>
+<area shape="rect" id="node10" href="$classComSquare_1_1Vector2.html" title=" " alt="" coords="784,1047,939,1344"/>
+<area shape="rect" id="node11" href="$classComSquare_1_1Vector2.html" title=" " alt="" coords="963,1047,1117,1344"/>
+<area shape="rect" id="node12" href="$structComSquare_1_1PPU_1_1Registers.html" title=" " alt="" coords="392,694,592,918"/>
+<area shape="rect" id="node13" href="$structComSquare_1_1PPU_1_1Utils_1_1PpuState.html" title="Struct to save all specific variables needed for the registers (prev values for example)" alt="" coords="615,753,814,859"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="ComSquare::Memory::AMemory" name="ComSquare::Memory::AMemory">
+<area shape="rect" id="node1" title="Abstract class representing a continuous block of memory." alt="" coords="457,263,632,413"/>
+<area shape="rect" id="node3" href="$classComSquare_1_1APU_1_1APU.html" title=" " alt="" coords="5,527,188,1030"/>
+<area shape="rect" id="node4" href="$classComSquare_1_1APU_1_1IPL_1_1IPL.html" title=" " alt="" coords="213,637,399,920"/>
+<area shape="rect" id="node5" href="$classComSquare_1_1CPU_1_1CPU.html" title="The main CPU." alt="" coords="423,461,666,1096"/>
+<area shape="rect" id="node6" href="$classComSquare_1_1Memory_1_1MemoryShadow.html" title=" " alt="" coords="691,659,857,898"/>
+<area shape="rect" id="node7" href="$classComSquare_1_1PPU_1_1PPU.html" title="The class containing all the registers of the PPU." alt="" coords="882,579,1061,979"/>
+<area shape="rect" id="node2" href="$classComSquare_1_1Memory_1_1IMemory.html" title="Common interface implemented by all components mapping memory." alt="" coords="457,5,632,215"/>
+</map>

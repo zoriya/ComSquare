@@ -1,0 +1,110 @@
+\hypertarget{namespaceComSquare_1_1Cartridge}{}\doxysection{Com\+Square\+::Cartridge Namespace Reference}
+\label{namespaceComSquare_1_1Cartridge}\index{ComSquare::Cartridge@{ComSquare::Cartridge}}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classComSquare_1_1Cartridge_1_1Cartridge}{Cartridge}}
+\begin{DoxyCompactList}\small\item\em Contains the rom\textquotesingle{}s memory/instructions. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structComSquare_1_1Cartridge_1_1Header}{Header}}
+\item 
+struct \mbox{\hyperlink{structComSquare_1_1Cartridge_1_1InterruptVectors}{Interrupt\+Vectors}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{namespaceComSquare_1_1Cartridge_a9f7c1ab5add21ef146acb1edc05aa5fb}{Cartridge\+Type}} \{ \mbox{\hyperlink{namespaceComSquare_1_1Cartridge_a9f7c1ab5add21ef146acb1edc05aa5fbaec6411672e2aa9b8bb91d5a5f83a4997}{Game}}, 
+\mbox{\hyperlink{namespaceComSquare_1_1Cartridge_a9f7c1ab5add21ef146acb1edc05aa5fba7cbbe7e76f2df2f21aa76f5ec89a5626}{Audio}}
+ \}
+\item 
+enum \mbox{\hyperlink{namespaceComSquare_1_1Cartridge_a61c1e80050c388d76fb687b129ed8645}{Mapping\+Mode}} \{ \newline
+\mbox{\hyperlink{namespaceComSquare_1_1Cartridge_a61c1e80050c388d76fb687b129ed8645ab06a20291b736bc664f853b77d1f3846}{Lo\+Rom}} = 1u $<$$<$ 0u, 
+\mbox{\hyperlink{namespaceComSquare_1_1Cartridge_a61c1e80050c388d76fb687b129ed8645a461b515672aec1a8463cda3e05936cdd}{Hi\+Rom}} = 1u $<$$<$ 1u, 
+\mbox{\hyperlink{namespaceComSquare_1_1Cartridge_a61c1e80050c388d76fb687b129ed8645aa80ac825c99f61aada8b3cbd04952bb6}{Slow\+Rom}} = 1u $<$$<$ 2u, 
+\mbox{\hyperlink{namespaceComSquare_1_1Cartridge_a61c1e80050c388d76fb687b129ed8645ad5867d09b7b015f54e76780ef508bd64}{Fast\+Rom}} = 1u $<$$<$ 3u, 
+\newline
+\mbox{\hyperlink{namespaceComSquare_1_1Cartridge_a61c1e80050c388d76fb687b129ed8645a48571836eb7c4372c4c5501715a8641d}{Ex\+Rom}} = 1u $<$$<$ 4u
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespaceComSquare_1_1Cartridge_a61c1e80050c388d76fb687b129ed8645}{Mapping\+Mode}} \mbox{\hyperlink{namespaceComSquare_1_1Cartridge_a6470215cb89b4e8149523fd47c4615cf}{operator$\vert$}} (const \mbox{\hyperlink{namespaceComSquare_1_1Cartridge_a61c1e80050c388d76fb687b129ed8645}{Mapping\+Mode}} \&self, const \mbox{\hyperlink{namespaceComSquare_1_1Cartridge_a61c1e80050c388d76fb687b129ed8645}{Mapping\+Mode}} \&other)
+\item 
+\mbox{\hyperlink{namespaceComSquare_1_1Cartridge_a61c1e80050c388d76fb687b129ed8645}{Mapping\+Mode}} \& \mbox{\hyperlink{namespaceComSquare_1_1Cartridge_a04c21f34328139ec19ed18bc4be85f3c}{operator$\vert$=}} (\mbox{\hyperlink{namespaceComSquare_1_1Cartridge_a61c1e80050c388d76fb687b129ed8645}{Mapping\+Mode}} \&self, const \mbox{\hyperlink{namespaceComSquare_1_1Cartridge_a61c1e80050c388d76fb687b129ed8645}{Mapping\+Mode}} \&other)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+constexpr unsigned \mbox{\hyperlink{namespaceComSquare_1_1Cartridge_a39b7bd48f096512818fb1bdb428c70ba}{Header\+Size}} = 0x40u
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{namespaceComSquare_1_1Cartridge_a9f7c1ab5add21ef146acb1edc05aa5fb}\label{namespaceComSquare_1_1Cartridge_a9f7c1ab5add21ef146acb1edc05aa5fb}} 
+\index{ComSquare::Cartridge@{ComSquare::Cartridge}!CartridgeType@{CartridgeType}}
+\index{CartridgeType@{CartridgeType}!ComSquare::Cartridge@{ComSquare::Cartridge}}
+\doxysubsubsection{\texorpdfstring{CartridgeType}{CartridgeType}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{namespaceComSquare_1_1Cartridge_a9f7c1ab5add21ef146acb1edc05aa5fb}{Com\+Square\+::\+Cartridge\+::\+Cartridge\+Type}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Game@{Game}!ComSquare::Cartridge@{ComSquare::Cartridge}}\index{ComSquare::Cartridge@{ComSquare::Cartridge}!Game@{Game}}}\mbox{\Hypertarget{namespaceComSquare_1_1Cartridge_a9f7c1ab5add21ef146acb1edc05aa5fbaec6411672e2aa9b8bb91d5a5f83a4997}\label{namespaceComSquare_1_1Cartridge_a9f7c1ab5add21ef146acb1edc05aa5fbaec6411672e2aa9b8bb91d5a5f83a4997}} 
+Game&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Audio@{Audio}!ComSquare::Cartridge@{ComSquare::Cartridge}}\index{ComSquare::Cartridge@{ComSquare::Cartridge}!Audio@{Audio}}}\mbox{\Hypertarget{namespaceComSquare_1_1Cartridge_a9f7c1ab5add21ef146acb1edc05aa5fba7cbbe7e76f2df2f21aa76f5ec89a5626}\label{namespaceComSquare_1_1Cartridge_a9f7c1ab5add21ef146acb1edc05aa5fba7cbbe7e76f2df2f21aa76f5ec89a5626}} 
+Audio&\\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{namespaceComSquare_1_1Cartridge_a61c1e80050c388d76fb687b129ed8645}\label{namespaceComSquare_1_1Cartridge_a61c1e80050c388d76fb687b129ed8645}} 
+\index{ComSquare::Cartridge@{ComSquare::Cartridge}!MappingMode@{MappingMode}}
+\index{MappingMode@{MappingMode}!ComSquare::Cartridge@{ComSquare::Cartridge}}
+\doxysubsubsection{\texorpdfstring{MappingMode}{MappingMode}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{namespaceComSquare_1_1Cartridge_a61c1e80050c388d76fb687b129ed8645}{Com\+Square\+::\+Cartridge\+::\+Mapping\+Mode}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LoRom@{LoRom}!ComSquare::Cartridge@{ComSquare::Cartridge}}\index{ComSquare::Cartridge@{ComSquare::Cartridge}!LoRom@{LoRom}}}\mbox{\Hypertarget{namespaceComSquare_1_1Cartridge_a61c1e80050c388d76fb687b129ed8645ab06a20291b736bc664f853b77d1f3846}\label{namespaceComSquare_1_1Cartridge_a61c1e80050c388d76fb687b129ed8645ab06a20291b736bc664f853b77d1f3846}} 
+Lo\+Rom&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{HiRom@{HiRom}!ComSquare::Cartridge@{ComSquare::Cartridge}}\index{ComSquare::Cartridge@{ComSquare::Cartridge}!HiRom@{HiRom}}}\mbox{\Hypertarget{namespaceComSquare_1_1Cartridge_a61c1e80050c388d76fb687b129ed8645a461b515672aec1a8463cda3e05936cdd}\label{namespaceComSquare_1_1Cartridge_a61c1e80050c388d76fb687b129ed8645a461b515672aec1a8463cda3e05936cdd}} 
+Hi\+Rom&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SlowRom@{SlowRom}!ComSquare::Cartridge@{ComSquare::Cartridge}}\index{ComSquare::Cartridge@{ComSquare::Cartridge}!SlowRom@{SlowRom}}}\mbox{\Hypertarget{namespaceComSquare_1_1Cartridge_a61c1e80050c388d76fb687b129ed8645aa80ac825c99f61aada8b3cbd04952bb6}\label{namespaceComSquare_1_1Cartridge_a61c1e80050c388d76fb687b129ed8645aa80ac825c99f61aada8b3cbd04952bb6}} 
+Slow\+Rom&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FastRom@{FastRom}!ComSquare::Cartridge@{ComSquare::Cartridge}}\index{ComSquare::Cartridge@{ComSquare::Cartridge}!FastRom@{FastRom}}}\mbox{\Hypertarget{namespaceComSquare_1_1Cartridge_a61c1e80050c388d76fb687b129ed8645ad5867d09b7b015f54e76780ef508bd64}\label{namespaceComSquare_1_1Cartridge_a61c1e80050c388d76fb687b129ed8645ad5867d09b7b015f54e76780ef508bd64}} 
+Fast\+Rom&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ExRom@{ExRom}!ComSquare::Cartridge@{ComSquare::Cartridge}}\index{ComSquare::Cartridge@{ComSquare::Cartridge}!ExRom@{ExRom}}}\mbox{\Hypertarget{namespaceComSquare_1_1Cartridge_a61c1e80050c388d76fb687b129ed8645a48571836eb7c4372c4c5501715a8641d}\label{namespaceComSquare_1_1Cartridge_a61c1e80050c388d76fb687b129ed8645a48571836eb7c4372c4c5501715a8641d}} 
+Ex\+Rom&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespaceComSquare_1_1Cartridge_a6470215cb89b4e8149523fd47c4615cf}\label{namespaceComSquare_1_1Cartridge_a6470215cb89b4e8149523fd47c4615cf}} 
+\index{ComSquare::Cartridge@{ComSquare::Cartridge}!operator\texttt{"|}@{operator\texttt{"|}}}
+\index{operator\texttt{"|}@{operator\texttt{"|}}!ComSquare::Cartridge@{ComSquare::Cartridge}}
+\doxysubsubsection{\texorpdfstring{operator\texttt{"|}()}{operator|()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespaceComSquare_1_1Cartridge_a61c1e80050c388d76fb687b129ed8645}{Mapping\+Mode}} Com\+Square\+::\+Cartridge\+::operator$\vert$ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespaceComSquare_1_1Cartridge_a61c1e80050c388d76fb687b129ed8645}{Mapping\+Mode}} \&}]{self,  }\item[{const \mbox{\hyperlink{namespaceComSquare_1_1Cartridge_a61c1e80050c388d76fb687b129ed8645}{Mapping\+Mode}} \&}]{other }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{namespaceComSquare_1_1Cartridge_a04c21f34328139ec19ed18bc4be85f3c}\label{namespaceComSquare_1_1Cartridge_a04c21f34328139ec19ed18bc4be85f3c}} 
+\index{ComSquare::Cartridge@{ComSquare::Cartridge}!operator\texttt{"|}=@{operator\texttt{"|}=}}
+\index{operator\texttt{"|}=@{operator\texttt{"|}=}!ComSquare::Cartridge@{ComSquare::Cartridge}}
+\doxysubsubsection{\texorpdfstring{operator\texttt{"|}=()}{operator|=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespaceComSquare_1_1Cartridge_a61c1e80050c388d76fb687b129ed8645}{Mapping\+Mode}} \& Com\+Square\+::\+Cartridge\+::operator$\vert$= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespaceComSquare_1_1Cartridge_a61c1e80050c388d76fb687b129ed8645}{Mapping\+Mode}} \&}]{self,  }\item[{const \mbox{\hyperlink{namespaceComSquare_1_1Cartridge_a61c1e80050c388d76fb687b129ed8645}{Mapping\+Mode}} \&}]{other }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{namespaceComSquare_1_1Cartridge_a39b7bd48f096512818fb1bdb428c70ba}\label{namespaceComSquare_1_1Cartridge_a39b7bd48f096512818fb1bdb428c70ba}} 
+\index{ComSquare::Cartridge@{ComSquare::Cartridge}!HeaderSize@{HeaderSize}}
+\index{HeaderSize@{HeaderSize}!ComSquare::Cartridge@{ComSquare::Cartridge}}
+\doxysubsubsection{\texorpdfstring{HeaderSize}{HeaderSize}}
+{\footnotesize\ttfamily constexpr unsigned Com\+Square\+::\+Cartridge\+::\+Header\+Size = 0x40u\hspace{0.3cm}{\ttfamily [constexpr]}}
+

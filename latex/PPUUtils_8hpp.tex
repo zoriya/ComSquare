@@ -1,0 +1,54 @@
+\hypertarget{PPUUtils_8hpp}{}\doxysection{sources/\+P\+P\+U/\+P\+P\+U\+Utils.hpp File Reference}
+\label{PPUUtils_8hpp}\index{sources/PPU/PPUUtils.hpp@{sources/PPU/PPUUtils.hpp}}
+{\ttfamily \#include $<$stdint-\/gcc.\+h$>$}\newline
+{\ttfamily \#include $<$cstddef$>$}\newline
+{\ttfamily \#include $<$memory$>$}\newline
+{\ttfamily \#include $<$array$>$}\newline
+{\ttfamily \#include \char`\"{}Models/\+Vector2.\+hpp\char`\"{}}\newline
+Include dependency graph for P\+P\+U\+Utils.\+hpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{PPUUtils_8hpp__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{PPUUtils_8hpp__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+union \mbox{\hyperlink{unionComSquare_1_1PPU_1_1Utils_1_1TileData}{Com\+Square\+::\+P\+P\+U\+::\+Utils\+::\+Tile\+Data}}
+\begin{DoxyCompactList}\small\item\em Used to parse easily V\+R\+AM \mbox{\hyperlink{structComSquare_1_1PPU_1_1Tile}{Tile}} information. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structComSquare_1_1PPU_1_1Utils_1_1PpuState}{Com\+Square\+::\+P\+P\+U\+::\+Utils\+::\+Ppu\+State}}
+\begin{DoxyCompactList}\small\item\em Struct to save all specific variables needed for the registers (prev values for example) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \mbox{\hyperlink{namespaceComSquare}{Com\+Square}}
+\item 
+ \mbox{\hyperlink{namespaceComSquare_1_1PPU}{Com\+Square\+::\+P\+PU}}
+\item 
+ \mbox{\hyperlink{namespaceComSquare_1_1PPU_1_1Utils}{Com\+Square\+::\+P\+P\+U\+::\+Utils}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{namespaceComSquare_1_1PPU_1_1Utils_a6d9f11a94e8c285d763cb3d645cdf7ab}{Com\+Square\+::\+P\+P\+U\+::\+Utils\+::to8\+Bit}} (int color)
+\begin{DoxyCompactList}\small\item\em Transform C\+G\+R\+AM color data to 8bits. \end{DoxyCompactList}\item 
+uint32\+\_\+t \mbox{\hyperlink{namespaceComSquare_1_1PPU_1_1Utils_ae40d346ff69ddc1dda0311063f13faaf}{Com\+Square\+::\+P\+P\+U\+::\+Utils\+::\+C\+G\+R\+A\+M\+Color\+To\+R\+G\+BA}} (uint16\+\_\+t C\+G\+R\+A\+M\+Color)
+\begin{DoxyCompactList}\small\item\em Transform \mbox{\hyperlink{classComSquare_1_1SNES}{S\+N\+ES}} color code B\+GR to uint32\+\_\+t R\+G\+BA. \end{DoxyCompactList}\item 
+{\footnotesize template$<$std\+::size\+\_\+t D\+E\+S\+T\+\_\+\+S\+I\+Z\+E\+\_\+Y, std\+::size\+\_\+t D\+E\+S\+T\+\_\+\+S\+I\+Z\+E\+\_\+X, std\+::size\+\_\+t S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+Y, std\+::size\+\_\+t S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+X$>$ }\\void \mbox{\hyperlink{namespaceComSquare_1_1PPU_1_1Utils_ab8433fbb6853a1572324872fcc87645d}{Com\+Square\+::\+P\+P\+U\+::\+Utils\+::merge2\+D\+Array}} (std\+::array$<$ std\+::array$<$ uint32\+\_\+t, D\+E\+S\+T\+\_\+\+S\+I\+Z\+E\+\_\+X $>$, D\+E\+S\+T\+\_\+\+S\+I\+Z\+E\+\_\+Y $>$ \&buffer\+Dest, const std\+::array$<$ std\+::array$<$ uint32\+\_\+t, S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+X $>$, S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+Y $>$ \&buffer\+Src, const Vector2$<$ int $>$ \&offset)
+\item 
+{\footnotesize template$<$std\+::size\+\_\+t S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+Y, std\+::size\+\_\+t S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+X$>$ }\\void \mbox{\hyperlink{namespaceComSquare_1_1PPU_1_1Utils_aa9f0f7bcd7b66678d8f1f4bc998b85ed}{Com\+Square\+::\+P\+P\+U\+::\+Utils\+::\+V\+Flip\+Array}} (std\+::array$<$ std\+::array$<$ uint32\+\_\+t, S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+X $>$, S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+Y $>$ \&array, const Vector2$<$ int $>$ \&size, const Vector2$<$ int $>$ \&offset=\{0, 0\})
+\item 
+{\footnotesize template$<$std\+::size\+\_\+t S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+Y, std\+::size\+\_\+t S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+X$>$ }\\void \mbox{\hyperlink{namespaceComSquare_1_1PPU_1_1Utils_ade119279ac84cc0ddddf09be79cb0f40}{Com\+Square\+::\+P\+P\+U\+::\+Utils\+::\+H\+Flip\+Array}} (std\+::array$<$ std\+::array$<$ uint32\+\_\+t, S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+X $>$, S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+Y $>$ \&array, const Vector2$<$ int $>$ \&size, const Vector2$<$ int $>$ \&offset=\{0, 0\})
+\item 
+{\footnotesize template$<$std\+::size\+\_\+t D\+E\+S\+T\+\_\+\+S\+I\+Z\+E\+\_\+X, std\+::size\+\_\+t D\+E\+S\+T\+\_\+\+S\+I\+Z\+E\+\_\+Y, std\+::size\+\_\+t S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+X, std\+::size\+\_\+t S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+Y$>$ }\\static void \mbox{\hyperlink{namespaceComSquare_1_1PPU_1_1Utils_a386d2ada25c22bad204ced30b5f20ff0}{Com\+Square\+::\+P\+P\+U\+::\+Utils\+::add\+Buffer}} (std\+::array$<$ std\+::array$<$ uint32\+\_\+t, D\+E\+S\+T\+\_\+\+S\+I\+Z\+E\+\_\+Y $>$, D\+E\+S\+T\+\_\+\+S\+I\+Z\+E\+\_\+X $>$ \&buffer\+Dest, const std\+::array$<$ std\+::array$<$ uint32\+\_\+t, S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+Y $>$, S\+R\+C\+\_\+\+S\+I\+Z\+E\+\_\+X $>$ \&buffer\+Src)
+\begin{DoxyCompactList}\small\item\em Add a bg buffer to another buffer. \end{DoxyCompactList}\end{DoxyCompactItemize}

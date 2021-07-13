@@ -1,0 +1,235 @@
+\hypertarget{classComSquare_1_1SNES}{}\doxysection{Com\+Square\+::S\+N\+ES Class Reference}
+\label{classComSquare_1_1SNES}\index{ComSquare::SNES@{ComSquare::SNES}}
+
+
+Container of all the components of the \mbox{\hyperlink{classComSquare_1_1SNES}{S\+N\+ES}}.  
+
+
+
+
+{\ttfamily \#include $<$S\+N\+E\+S.\+hpp$>$}
+
+
+
+Collaboration diagram for Com\+Square\+::S\+N\+ES\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classComSquare_1_1SNES__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classComSquare_1_1SNES_a19bd074baaa9d5daca451662e1e58455}{S\+N\+ES}} (\mbox{\hyperlink{classComSquare_1_1Renderer_1_1IRenderer}{Renderer\+::\+I\+Renderer}} \&renderer)
+\begin{DoxyCompactList}\small\item\em Create all the components using a common memory bus for all of them. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1SNES_afc5a9e799a562e15a98758d036acbfe5}{S\+N\+ES}} (const std\+::string \&ram\+Path, \mbox{\hyperlink{classComSquare_1_1Renderer_1_1IRenderer}{Renderer\+::\+I\+Renderer}} \&renderer)
+\begin{DoxyCompactList}\small\item\em Create all the components using a common memory bus for all of them and load a rom. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1SNES_aba16d3bab5c1940703d0340b33b136be}{S\+N\+ES}} (const \mbox{\hyperlink{classComSquare_1_1SNES}{S\+N\+ES}} \&)=delete
+\begin{DoxyCompactList}\small\item\em A \mbox{\hyperlink{classComSquare_1_1SNES}{S\+N\+ES}} is not copyable. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1SNES}{S\+N\+ES}} \& \mbox{\hyperlink{classComSquare_1_1SNES_a4b1a5934c6ceacc1b8ff616fc38dffe1}{operator=}} (const \mbox{\hyperlink{classComSquare_1_1SNES}{S\+N\+ES}} \&)=delete
+\begin{DoxyCompactList}\small\item\em A \mbox{\hyperlink{classComSquare_1_1SNES}{S\+N\+ES}} can\textquotesingle{}t be assigned. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1SNES_a0dc138029f9cfb48ed915b6f18c5bed9}{$\sim$\+S\+N\+ES}} ()=default
+\begin{DoxyCompactList}\small\item\em A default destructor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSquare_1_1SNES_af4e957c79c78384de75d474649e6085e}{update}} ()
+\begin{DoxyCompactList}\small\item\em Call this function to update all the components. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSquare_1_1SNES_a91065a5f3d8eb2c6e851664a79b36358}{load\+Rom}} (const std\+::string \&path)
+\begin{DoxyCompactList}\small\item\em Load the rom at the given path. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classComSquare_1_1Memory_1_1MemoryBus}{Memory\+::\+Memory\+Bus}} \mbox{\hyperlink{classComSquare_1_1SNES_ad5104b936d433809ee12fae4c3107be2}{bus}}
+\begin{DoxyCompactList}\small\item\em The memory bus that map addresses to components. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1Cartridge_1_1Cartridge}{Cartridge\+::\+Cartridge}} \mbox{\hyperlink{classComSquare_1_1SNES_a95f573e9fe21966f1502eeb924592e3a}{cartridge}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{namespaceComSquare_1_1Cartridge}{Cartridge}} containing instructions (R\+OM). \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1Ram_1_1Ram}{Ram\+::\+Ram}} \mbox{\hyperlink{classComSquare_1_1SNES_ac9fb24ae8f20645e2a1b620c916f60cd}{wram}}
+\begin{DoxyCompactList}\small\item\em Work \mbox{\hyperlink{namespaceComSquare_1_1Ram}{Ram}} shared by all the components. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1Ram_1_1Ram}{Ram\+::\+Ram}} \mbox{\hyperlink{classComSquare_1_1SNES_a9590d9c4137245a063610986c1cb9a51}{sram}}
+\begin{DoxyCompactList}\small\item\em Save \mbox{\hyperlink{namespaceComSquare_1_1Ram}{Ram}} residing inside the \mbox{\hyperlink{namespaceComSquare_1_1Cartridge}{Cartridge}} in a real \mbox{\hyperlink{classComSquare_1_1SNES}{S\+N\+ES}}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1CPU_1_1CPU}{C\+P\+U\+::\+C\+PU}} \mbox{\hyperlink{classComSquare_1_1SNES_aff55148cc1bfd0b1340585ae2efccb36}{cpu}}
+\begin{DoxyCompactList}\small\item\em Central Processing Unit of the \mbox{\hyperlink{classComSquare_1_1SNES}{S\+N\+ES}}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1PPU_1_1PPU}{P\+P\+U\+::\+P\+PU}} \mbox{\hyperlink{classComSquare_1_1SNES_a87bb2fd5541aac124c39e971ed64aa99}{ppu}}
+\begin{DoxyCompactList}\small\item\em Picture Processing Unit of the \mbox{\hyperlink{classComSquare_1_1SNES}{S\+N\+ES}}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1APU_1_1APU}{A\+P\+U\+::\+A\+PU}} \mbox{\hyperlink{classComSquare_1_1SNES_a966e334e0bb8af2e16c9c18227aa34e6}{apu}}
+\begin{DoxyCompactList}\small\item\em Audio Processing Unit if the \mbox{\hyperlink{classComSquare_1_1SNES}{S\+N\+ES}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Container of all the components of the \mbox{\hyperlink{classComSquare_1_1SNES}{S\+N\+ES}}. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classComSquare_1_1SNES_a19bd074baaa9d5daca451662e1e58455}\label{classComSquare_1_1SNES_a19bd074baaa9d5daca451662e1e58455}} 
+\index{ComSquare::SNES@{ComSquare::SNES}!SNES@{SNES}}
+\index{SNES@{SNES}!ComSquare::SNES@{ComSquare::SNES}}
+\doxysubsubsection{\texorpdfstring{SNES()}{SNES()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily Com\+Square\+::\+S\+N\+E\+S\+::\+S\+N\+ES (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classComSquare_1_1Renderer_1_1IRenderer}{Renderer\+::\+I\+Renderer}} \&}]{renderer }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Create all the components using a common memory bus for all of them. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em renderer} & The renderer to use. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classComSquare_1_1SNES_afc5a9e799a562e15a98758d036acbfe5}\label{classComSquare_1_1SNES_afc5a9e799a562e15a98758d036acbfe5}} 
+\index{ComSquare::SNES@{ComSquare::SNES}!SNES@{SNES}}
+\index{SNES@{SNES}!ComSquare::SNES@{ComSquare::SNES}}
+\doxysubsubsection{\texorpdfstring{SNES()}{SNES()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily Com\+Square\+::\+S\+N\+E\+S\+::\+S\+N\+ES (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{ram\+Path,  }\item[{\mbox{\hyperlink{classComSquare_1_1Renderer_1_1IRenderer}{Renderer\+::\+I\+Renderer}} \&}]{renderer }\end{DoxyParamCaption})}
+
+
+
+Create all the components using a common memory bus for all of them and load a rom. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ram\+Path} & The rom to load. \\
+\hline
+{\em renderer} & The renderer to use. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classComSquare_1_1SNES_aba16d3bab5c1940703d0340b33b136be}\label{classComSquare_1_1SNES_aba16d3bab5c1940703d0340b33b136be}} 
+\index{ComSquare::SNES@{ComSquare::SNES}!SNES@{SNES}}
+\index{SNES@{SNES}!ComSquare::SNES@{ComSquare::SNES}}
+\doxysubsubsection{\texorpdfstring{SNES()}{SNES()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily Com\+Square\+::\+S\+N\+E\+S\+::\+S\+N\+ES (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classComSquare_1_1SNES}{S\+N\+ES}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+
+
+A \mbox{\hyperlink{classComSquare_1_1SNES}{S\+N\+ES}} is not copyable. 
+
+\mbox{\Hypertarget{classComSquare_1_1SNES_a0dc138029f9cfb48ed915b6f18c5bed9}\label{classComSquare_1_1SNES_a0dc138029f9cfb48ed915b6f18c5bed9}} 
+\index{ComSquare::SNES@{ComSquare::SNES}!````~SNES@{$\sim$SNES}}
+\index{````~SNES@{$\sim$SNES}!ComSquare::SNES@{ComSquare::SNES}}
+\doxysubsubsection{\texorpdfstring{$\sim$SNES()}{~SNES()}}
+{\footnotesize\ttfamily Com\+Square\+::\+S\+N\+E\+S\+::$\sim$\+S\+N\+ES (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+A default destructor. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classComSquare_1_1SNES_a91065a5f3d8eb2c6e851664a79b36358}\label{classComSquare_1_1SNES_a91065a5f3d8eb2c6e851664a79b36358}} 
+\index{ComSquare::SNES@{ComSquare::SNES}!loadRom@{loadRom}}
+\index{loadRom@{loadRom}!ComSquare::SNES@{ComSquare::SNES}}
+\doxysubsubsection{\texorpdfstring{loadRom()}{loadRom()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+S\+N\+E\+S\+::load\+Rom (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{path }\end{DoxyParamCaption})}
+
+
+
+Load the rom at the given path. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rom} & The path of the rom. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \mbox{\hyperlink{classComSquare_1_1InvalidRomException}{Invalid\+Rom\+Exception}}} & If the rom is invalid, this exception is thrown. \\
+\hline
+\end{DoxyExceptions}
+\mbox{\Hypertarget{classComSquare_1_1SNES_a4b1a5934c6ceacc1b8ff616fc38dffe1}\label{classComSquare_1_1SNES_a4b1a5934c6ceacc1b8ff616fc38dffe1}} 
+\index{ComSquare::SNES@{ComSquare::SNES}!operator=@{operator=}}
+\index{operator=@{operator=}!ComSquare::SNES@{ComSquare::SNES}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1SNES}{S\+N\+ES}}\& Com\+Square\+::\+S\+N\+E\+S\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classComSquare_1_1SNES}{S\+N\+ES}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+
+
+A \mbox{\hyperlink{classComSquare_1_1SNES}{S\+N\+ES}} can\textquotesingle{}t be assigned. 
+
+\mbox{\Hypertarget{classComSquare_1_1SNES_af4e957c79c78384de75d474649e6085e}\label{classComSquare_1_1SNES_af4e957c79c78384de75d474649e6085e}} 
+\index{ComSquare::SNES@{ComSquare::SNES}!update@{update}}
+\index{update@{update}!ComSquare::SNES@{ComSquare::SNES}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+S\+N\+E\+S\+::update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Call this function to update all the components. 
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classComSquare_1_1SNES_a966e334e0bb8af2e16c9c18227aa34e6}\label{classComSquare_1_1SNES_a966e334e0bb8af2e16c9c18227aa34e6}} 
+\index{ComSquare::SNES@{ComSquare::SNES}!apu@{apu}}
+\index{apu@{apu}!ComSquare::SNES@{ComSquare::SNES}}
+\doxysubsubsection{\texorpdfstring{apu}{apu}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1APU_1_1APU}{A\+P\+U\+::\+A\+PU}} Com\+Square\+::\+S\+N\+E\+S\+::apu}
+
+
+
+Audio Processing Unit if the \mbox{\hyperlink{classComSquare_1_1SNES}{S\+N\+ES}}. 
+
+\mbox{\Hypertarget{classComSquare_1_1SNES_ad5104b936d433809ee12fae4c3107be2}\label{classComSquare_1_1SNES_ad5104b936d433809ee12fae4c3107be2}} 
+\index{ComSquare::SNES@{ComSquare::SNES}!bus@{bus}}
+\index{bus@{bus}!ComSquare::SNES@{ComSquare::SNES}}
+\doxysubsubsection{\texorpdfstring{bus}{bus}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1Memory_1_1MemoryBus}{Memory\+::\+Memory\+Bus}} Com\+Square\+::\+S\+N\+E\+S\+::bus}
+
+
+
+The memory bus that map addresses to components. 
+
+\mbox{\Hypertarget{classComSquare_1_1SNES_a95f573e9fe21966f1502eeb924592e3a}\label{classComSquare_1_1SNES_a95f573e9fe21966f1502eeb924592e3a}} 
+\index{ComSquare::SNES@{ComSquare::SNES}!cartridge@{cartridge}}
+\index{cartridge@{cartridge}!ComSquare::SNES@{ComSquare::SNES}}
+\doxysubsubsection{\texorpdfstring{cartridge}{cartridge}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1Cartridge_1_1Cartridge}{Cartridge\+::\+Cartridge}} Com\+Square\+::\+S\+N\+E\+S\+::cartridge}
+
+
+
+\mbox{\hyperlink{namespaceComSquare_1_1Cartridge}{Cartridge}} containing instructions (R\+OM). 
+
+\mbox{\Hypertarget{classComSquare_1_1SNES_aff55148cc1bfd0b1340585ae2efccb36}\label{classComSquare_1_1SNES_aff55148cc1bfd0b1340585ae2efccb36}} 
+\index{ComSquare::SNES@{ComSquare::SNES}!cpu@{cpu}}
+\index{cpu@{cpu}!ComSquare::SNES@{ComSquare::SNES}}
+\doxysubsubsection{\texorpdfstring{cpu}{cpu}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1CPU_1_1CPU}{C\+P\+U\+::\+C\+PU}} Com\+Square\+::\+S\+N\+E\+S\+::cpu}
+
+
+
+Central Processing Unit of the \mbox{\hyperlink{classComSquare_1_1SNES}{S\+N\+ES}}. 
+
+\mbox{\Hypertarget{classComSquare_1_1SNES_a87bb2fd5541aac124c39e971ed64aa99}\label{classComSquare_1_1SNES_a87bb2fd5541aac124c39e971ed64aa99}} 
+\index{ComSquare::SNES@{ComSquare::SNES}!ppu@{ppu}}
+\index{ppu@{ppu}!ComSquare::SNES@{ComSquare::SNES}}
+\doxysubsubsection{\texorpdfstring{ppu}{ppu}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1PPU_1_1PPU}{P\+P\+U\+::\+P\+PU}} Com\+Square\+::\+S\+N\+E\+S\+::ppu}
+
+
+
+Picture Processing Unit of the \mbox{\hyperlink{classComSquare_1_1SNES}{S\+N\+ES}}. 
+
+\mbox{\Hypertarget{classComSquare_1_1SNES_a9590d9c4137245a063610986c1cb9a51}\label{classComSquare_1_1SNES_a9590d9c4137245a063610986c1cb9a51}} 
+\index{ComSquare::SNES@{ComSquare::SNES}!sram@{sram}}
+\index{sram@{sram}!ComSquare::SNES@{ComSquare::SNES}}
+\doxysubsubsection{\texorpdfstring{sram}{sram}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1Ram_1_1Ram}{Ram\+::\+Ram}} Com\+Square\+::\+S\+N\+E\+S\+::sram}
+
+
+
+Save \mbox{\hyperlink{namespaceComSquare_1_1Ram}{Ram}} residing inside the \mbox{\hyperlink{namespaceComSquare_1_1Cartridge}{Cartridge}} in a real \mbox{\hyperlink{classComSquare_1_1SNES}{S\+N\+ES}}. 
+
+\mbox{\Hypertarget{classComSquare_1_1SNES_ac9fb24ae8f20645e2a1b620c916f60cd}\label{classComSquare_1_1SNES_ac9fb24ae8f20645e2a1b620c916f60cd}} 
+\index{ComSquare::SNES@{ComSquare::SNES}!wram@{wram}}
+\index{wram@{wram}!ComSquare::SNES@{ComSquare::SNES}}
+\doxysubsubsection{\texorpdfstring{wram}{wram}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1Ram_1_1Ram}{Ram\+::\+Ram}} Com\+Square\+::\+S\+N\+E\+S\+::wram}
+
+
+
+Work \mbox{\hyperlink{namespaceComSquare_1_1Ram}{Ram}} shared by all the components. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+sources/\mbox{\hyperlink{SNES_8hpp}{S\+N\+E\+S.\+hpp}}\item 
+sources/\mbox{\hyperlink{SNES_8cpp}{S\+N\+E\+S.\+cpp}}\end{DoxyCompactItemize}

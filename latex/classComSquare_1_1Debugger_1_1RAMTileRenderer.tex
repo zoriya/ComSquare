@@ -1,0 +1,280 @@
+\hypertarget{classComSquare_1_1Debugger_1_1RAMTileRenderer}{}\doxysection{Com\+Square\+::Debugger\+::R\+A\+M\+Tile\+Renderer Class Reference}
+\label{classComSquare_1_1Debugger_1_1RAMTileRenderer}\index{ComSquare::Debugger::RAMTileRenderer@{ComSquare::Debugger::RAMTileRenderer}}
+
+
+{\ttfamily \#include $<$R\+A\+M\+Tile\+Renderer.\+hpp$>$}
+
+
+
+Collaboration diagram for Com\+Square\+::Debugger\+::R\+A\+M\+Tile\+Renderer\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classComSquare_1_1Debugger_1_1RAMTileRenderer__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classComSquare_1_1Debugger_1_1RAMTileRenderer_a0e8729571f754395ae9e244a6cd95bbf}{set\+Palette\+Index}} (int palette\+Index)
+\begin{DoxyCompactList}\small\item\em Set the palette to use for render (index of palette) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSquare_1_1Debugger_1_1RAMTileRenderer_ae2ca4eb38a9fc8d3808d68de8613e86f}{set\+Bpp}} (int bpp)
+\begin{DoxyCompactList}\small\item\em Set the bpp to render graphics. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSquare_1_1Debugger_1_1RAMTileRenderer_a80826c07b338613d7c9b7f23c4ece683}{set\+Nb\+Columns}} (int nb\+Columns)
+\begin{DoxyCompactList}\small\item\em Set the number of maximum columns. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSquare_1_1Debugger_1_1RAMTileRenderer_aa02fd3b4e5116cd05c312bb144e4b2b0}{set\+Render\+Size}} (int size)
+\begin{DoxyCompactList}\small\item\em Set the size of ram to render. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSquare_1_1Debugger_1_1RAMTileRenderer_a3d4f7d80e213092981939e8d1ccc7a7c}{set\+Ram\+Offset}} (int offset)
+\begin{DoxyCompactList}\small\item\em Set the ram offset. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classComSquare_1_1Debugger_1_1RAMTileRenderer_a0f4e156fa63c5053d66f61531290f68d}{get\+Bpp}} () const
+\begin{DoxyCompactList}\small\item\em Get the current bpp. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classComSquare_1_1Debugger_1_1RAMTileRenderer_ab5d4206f2e1c002113887d693676fef4}{get\+Palette\+Index}} () const
+\begin{DoxyCompactList}\small\item\em Get the index of the current palette used. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classComSquare_1_1Debugger_1_1RAMTileRenderer_acb7a07345fb5c604e92ec721afe898ae}{get\+Nb\+Columns}} () const
+\begin{DoxyCompactList}\small\item\em Get the numbr of maximum tile columns to render. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSquare_1_1Debugger_1_1RAMTileRenderer_a10786bfe35f64234f7ab2eb2a0527ab4}{render}} ()
+\begin{DoxyCompactList}\small\item\em render the selected ram \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1Debugger_1_1RAMTileRenderer_a0232e684fb26db4d811e06b46848b000}{R\+A\+M\+Tile\+Renderer}} (\mbox{\hyperlink{classComSquare_1_1Ram_1_1Ram}{Ram\+::\+Ram}} \&ram, \mbox{\hyperlink{classComSquare_1_1Ram_1_1Ram}{Ram\+::\+Ram}} \&cgram)
+\begin{DoxyCompactList}\small\item\em ctor \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1Debugger_1_1RAMTileRenderer_a228d6e8517cbddcc0a5d19f9d85b0dcf}{R\+A\+M\+Tile\+Renderer}} (const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1RAMTileRenderer}{R\+A\+M\+Tile\+Renderer}} \&)=default
+\begin{DoxyCompactList}\small\item\em copy ctor \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1Debugger_1_1RAMTileRenderer_a479d86863c082bade68fafe2b01827e4}{$\sim$\+R\+A\+M\+Tile\+Renderer}} ()=default
+\begin{DoxyCompactList}\small\item\em dtor \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1Debugger_1_1RAMTileRenderer}{R\+A\+M\+Tile\+Renderer}} \& \mbox{\hyperlink{classComSquare_1_1Debugger_1_1RAMTileRenderer_aff41676ace95c1fbd06f06d211dc7c08}{operator=}} (const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1RAMTileRenderer}{R\+A\+M\+Tile\+Renderer}} \&)=delete
+\begin{DoxyCompactList}\small\item\em A R\+A\+M\+Tile\+Render is not assignable. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::array$<$ std\+::array$<$ uint32\+\_\+t, 1024 $>$, 1024 $>$ \mbox{\hyperlink{classComSquare_1_1Debugger_1_1RAMTileRenderer_a48b2fbbcf15d0e515b448648bec268b0}{buffer}}
+\begin{DoxyCompactList}\small\item\em internal buffer \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classComSquare_1_1Ram_1_1Ram}{Ram\+::\+Ram}} \& \mbox{\hyperlink{classComSquare_1_1Debugger_1_1RAMTileRenderer_ab3e15ddd8d9ad1853c0b953d2141ca42}{\+\_\+ram}}
+\begin{DoxyCompactList}\small\item\em ram to render \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classComSquare_1_1Debugger_1_1RAMTileRenderer_acb98096659379bd2a7d1eceb667a4d2d}{\+\_\+render\+Size}}
+\begin{DoxyCompactList}\small\item\em The size to render in the ram. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classComSquare_1_1Debugger_1_1RAMTileRenderer_a4acfafd83b1fef3dd9da2e535c8e7856}{\+\_\+nb\+Columns}}
+\begin{DoxyCompactList}\small\item\em The number of tile columns to display. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classComSquare_1_1Debugger_1_1RAMTileRenderer_acfb7ccba3c8ba031e9b8f295ae3a3af1}{\+\_\+ram\+Offset}}
+\begin{DoxyCompactList}\small\item\em Bytes to skip from the start of the ram. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classComSquare_1_1Debugger_1_1RAMTileRenderer_a7f537b91706d812324960f3f90676776}{\+\_\+bpp}}
+\begin{DoxyCompactList}\small\item\em The actual bpp to render. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1PPU_1_1TileRenderer}{P\+P\+U\+::\+Tile\+Renderer}} \mbox{\hyperlink{classComSquare_1_1Debugger_1_1RAMTileRenderer_aa6724bf284573b7e5c57da182296eb0e}{\+\_\+tile\+Renderer}}
+\begin{DoxyCompactList}\small\item\em The class tha actually render the tile. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1RAMTileRenderer_a0232e684fb26db4d811e06b46848b000}\label{classComSquare_1_1Debugger_1_1RAMTileRenderer_a0232e684fb26db4d811e06b46848b000}} 
+\index{ComSquare::Debugger::RAMTileRenderer@{ComSquare::Debugger::RAMTileRenderer}!RAMTileRenderer@{RAMTileRenderer}}
+\index{RAMTileRenderer@{RAMTileRenderer}!ComSquare::Debugger::RAMTileRenderer@{ComSquare::Debugger::RAMTileRenderer}}
+\doxysubsubsection{\texorpdfstring{RAMTileRenderer()}{RAMTileRenderer()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Com\+Square\+::\+Debugger\+::\+R\+A\+M\+Tile\+Renderer\+::\+R\+A\+M\+Tile\+Renderer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classComSquare_1_1Ram_1_1Ram}{Ram\+::\+Ram}} \&}]{ram,  }\item[{\mbox{\hyperlink{classComSquare_1_1Ram_1_1Ram}{Ram\+::\+Ram}} \&}]{cgram }\end{DoxyParamCaption})}
+
+
+
+ctor 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1RAMTileRenderer_a228d6e8517cbddcc0a5d19f9d85b0dcf}\label{classComSquare_1_1Debugger_1_1RAMTileRenderer_a228d6e8517cbddcc0a5d19f9d85b0dcf}} 
+\index{ComSquare::Debugger::RAMTileRenderer@{ComSquare::Debugger::RAMTileRenderer}!RAMTileRenderer@{RAMTileRenderer}}
+\index{RAMTileRenderer@{RAMTileRenderer}!ComSquare::Debugger::RAMTileRenderer@{ComSquare::Debugger::RAMTileRenderer}}
+\doxysubsubsection{\texorpdfstring{RAMTileRenderer()}{RAMTileRenderer()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Com\+Square\+::\+Debugger\+::\+R\+A\+M\+Tile\+Renderer\+::\+R\+A\+M\+Tile\+Renderer (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1RAMTileRenderer}{R\+A\+M\+Tile\+Renderer}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+copy ctor 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1RAMTileRenderer_a479d86863c082bade68fafe2b01827e4}\label{classComSquare_1_1Debugger_1_1RAMTileRenderer_a479d86863c082bade68fafe2b01827e4}} 
+\index{ComSquare::Debugger::RAMTileRenderer@{ComSquare::Debugger::RAMTileRenderer}!````~RAMTileRenderer@{$\sim$RAMTileRenderer}}
+\index{````~RAMTileRenderer@{$\sim$RAMTileRenderer}!ComSquare::Debugger::RAMTileRenderer@{ComSquare::Debugger::RAMTileRenderer}}
+\doxysubsubsection{\texorpdfstring{$\sim$RAMTileRenderer()}{~RAMTileRenderer()}}
+{\footnotesize\ttfamily Com\+Square\+::\+Debugger\+::\+R\+A\+M\+Tile\+Renderer\+::$\sim$\+R\+A\+M\+Tile\+Renderer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+dtor 
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1RAMTileRenderer_a0f4e156fa63c5053d66f61531290f68d}\label{classComSquare_1_1Debugger_1_1RAMTileRenderer_a0f4e156fa63c5053d66f61531290f68d}} 
+\index{ComSquare::Debugger::RAMTileRenderer@{ComSquare::Debugger::RAMTileRenderer}!getBpp@{getBpp}}
+\index{getBpp@{getBpp}!ComSquare::Debugger::RAMTileRenderer@{ComSquare::Debugger::RAMTileRenderer}}
+\doxysubsubsection{\texorpdfstring{getBpp()}{getBpp()}}
+{\footnotesize\ttfamily int Com\+Square\+::\+Debugger\+::\+R\+A\+M\+Tile\+Renderer\+::get\+Bpp (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the current bpp. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1RAMTileRenderer_acb7a07345fb5c604e92ec721afe898ae}\label{classComSquare_1_1Debugger_1_1RAMTileRenderer_acb7a07345fb5c604e92ec721afe898ae}} 
+\index{ComSquare::Debugger::RAMTileRenderer@{ComSquare::Debugger::RAMTileRenderer}!getNbColumns@{getNbColumns}}
+\index{getNbColumns@{getNbColumns}!ComSquare::Debugger::RAMTileRenderer@{ComSquare::Debugger::RAMTileRenderer}}
+\doxysubsubsection{\texorpdfstring{getNbColumns()}{getNbColumns()}}
+{\footnotesize\ttfamily int Com\+Square\+::\+Debugger\+::\+R\+A\+M\+Tile\+Renderer\+::get\+Nb\+Columns (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the numbr of maximum tile columns to render. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1RAMTileRenderer_ab5d4206f2e1c002113887d693676fef4}\label{classComSquare_1_1Debugger_1_1RAMTileRenderer_ab5d4206f2e1c002113887d693676fef4}} 
+\index{ComSquare::Debugger::RAMTileRenderer@{ComSquare::Debugger::RAMTileRenderer}!getPaletteIndex@{getPaletteIndex}}
+\index{getPaletteIndex@{getPaletteIndex}!ComSquare::Debugger::RAMTileRenderer@{ComSquare::Debugger::RAMTileRenderer}}
+\doxysubsubsection{\texorpdfstring{getPaletteIndex()}{getPaletteIndex()}}
+{\footnotesize\ttfamily int Com\+Square\+::\+Debugger\+::\+R\+A\+M\+Tile\+Renderer\+::get\+Palette\+Index (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the index of the current palette used. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1RAMTileRenderer_aff41676ace95c1fbd06f06d211dc7c08}\label{classComSquare_1_1Debugger_1_1RAMTileRenderer_aff41676ace95c1fbd06f06d211dc7c08}} 
+\index{ComSquare::Debugger::RAMTileRenderer@{ComSquare::Debugger::RAMTileRenderer}!operator=@{operator=}}
+\index{operator=@{operator=}!ComSquare::Debugger::RAMTileRenderer@{ComSquare::Debugger::RAMTileRenderer}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1Debugger_1_1RAMTileRenderer}{R\+A\+M\+Tile\+Renderer}}\& Com\+Square\+::\+Debugger\+::\+R\+A\+M\+Tile\+Renderer\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1RAMTileRenderer}{R\+A\+M\+Tile\+Renderer}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+
+
+A R\+A\+M\+Tile\+Render is not assignable. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1RAMTileRenderer_a10786bfe35f64234f7ab2eb2a0527ab4}\label{classComSquare_1_1Debugger_1_1RAMTileRenderer_a10786bfe35f64234f7ab2eb2a0527ab4}} 
+\index{ComSquare::Debugger::RAMTileRenderer@{ComSquare::Debugger::RAMTileRenderer}!render@{render}}
+\index{render@{render}!ComSquare::Debugger::RAMTileRenderer@{ComSquare::Debugger::RAMTileRenderer}}
+\doxysubsubsection{\texorpdfstring{render()}{render()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+Debugger\+::\+R\+A\+M\+Tile\+Renderer\+::render (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+render the selected ram 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1RAMTileRenderer_ae2ca4eb38a9fc8d3808d68de8613e86f}\label{classComSquare_1_1Debugger_1_1RAMTileRenderer_ae2ca4eb38a9fc8d3808d68de8613e86f}} 
+\index{ComSquare::Debugger::RAMTileRenderer@{ComSquare::Debugger::RAMTileRenderer}!setBpp@{setBpp}}
+\index{setBpp@{setBpp}!ComSquare::Debugger::RAMTileRenderer@{ComSquare::Debugger::RAMTileRenderer}}
+\doxysubsubsection{\texorpdfstring{setBpp()}{setBpp()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+Debugger\+::\+R\+A\+M\+Tile\+Renderer\+::set\+Bpp (\begin{DoxyParamCaption}\item[{int}]{bpp }\end{DoxyParamCaption})}
+
+
+
+Set the bpp to render graphics. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1RAMTileRenderer_a80826c07b338613d7c9b7f23c4ece683}\label{classComSquare_1_1Debugger_1_1RAMTileRenderer_a80826c07b338613d7c9b7f23c4ece683}} 
+\index{ComSquare::Debugger::RAMTileRenderer@{ComSquare::Debugger::RAMTileRenderer}!setNbColumns@{setNbColumns}}
+\index{setNbColumns@{setNbColumns}!ComSquare::Debugger::RAMTileRenderer@{ComSquare::Debugger::RAMTileRenderer}}
+\doxysubsubsection{\texorpdfstring{setNbColumns()}{setNbColumns()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+Debugger\+::\+R\+A\+M\+Tile\+Renderer\+::set\+Nb\+Columns (\begin{DoxyParamCaption}\item[{int}]{nb\+Columns }\end{DoxyParamCaption})}
+
+
+
+Set the number of maximum columns. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1RAMTileRenderer_a0e8729571f754395ae9e244a6cd95bbf}\label{classComSquare_1_1Debugger_1_1RAMTileRenderer_a0e8729571f754395ae9e244a6cd95bbf}} 
+\index{ComSquare::Debugger::RAMTileRenderer@{ComSquare::Debugger::RAMTileRenderer}!setPaletteIndex@{setPaletteIndex}}
+\index{setPaletteIndex@{setPaletteIndex}!ComSquare::Debugger::RAMTileRenderer@{ComSquare::Debugger::RAMTileRenderer}}
+\doxysubsubsection{\texorpdfstring{setPaletteIndex()}{setPaletteIndex()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+Debugger\+::\+R\+A\+M\+Tile\+Renderer\+::set\+Palette\+Index (\begin{DoxyParamCaption}\item[{int}]{palette\+Index }\end{DoxyParamCaption})}
+
+
+
+Set the palette to use for render (index of palette) 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1RAMTileRenderer_a3d4f7d80e213092981939e8d1ccc7a7c}\label{classComSquare_1_1Debugger_1_1RAMTileRenderer_a3d4f7d80e213092981939e8d1ccc7a7c}} 
+\index{ComSquare::Debugger::RAMTileRenderer@{ComSquare::Debugger::RAMTileRenderer}!setRamOffset@{setRamOffset}}
+\index{setRamOffset@{setRamOffset}!ComSquare::Debugger::RAMTileRenderer@{ComSquare::Debugger::RAMTileRenderer}}
+\doxysubsubsection{\texorpdfstring{setRamOffset()}{setRamOffset()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+Debugger\+::\+R\+A\+M\+Tile\+Renderer\+::set\+Ram\+Offset (\begin{DoxyParamCaption}\item[{int}]{offset }\end{DoxyParamCaption})}
+
+
+
+Set the ram offset. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1RAMTileRenderer_aa02fd3b4e5116cd05c312bb144e4b2b0}\label{classComSquare_1_1Debugger_1_1RAMTileRenderer_aa02fd3b4e5116cd05c312bb144e4b2b0}} 
+\index{ComSquare::Debugger::RAMTileRenderer@{ComSquare::Debugger::RAMTileRenderer}!setRenderSize@{setRenderSize}}
+\index{setRenderSize@{setRenderSize}!ComSquare::Debugger::RAMTileRenderer@{ComSquare::Debugger::RAMTileRenderer}}
+\doxysubsubsection{\texorpdfstring{setRenderSize()}{setRenderSize()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+Debugger\+::\+R\+A\+M\+Tile\+Renderer\+::set\+Render\+Size (\begin{DoxyParamCaption}\item[{int}]{size }\end{DoxyParamCaption})}
+
+
+
+Set the size of ram to render. 
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1RAMTileRenderer_a7f537b91706d812324960f3f90676776}\label{classComSquare_1_1Debugger_1_1RAMTileRenderer_a7f537b91706d812324960f3f90676776}} 
+\index{ComSquare::Debugger::RAMTileRenderer@{ComSquare::Debugger::RAMTileRenderer}!\_bpp@{\_bpp}}
+\index{\_bpp@{\_bpp}!ComSquare::Debugger::RAMTileRenderer@{ComSquare::Debugger::RAMTileRenderer}}
+\doxysubsubsection{\texorpdfstring{\_bpp}{\_bpp}}
+{\footnotesize\ttfamily int Com\+Square\+::\+Debugger\+::\+R\+A\+M\+Tile\+Renderer\+::\+\_\+bpp\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The actual bpp to render. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1RAMTileRenderer_a4acfafd83b1fef3dd9da2e535c8e7856}\label{classComSquare_1_1Debugger_1_1RAMTileRenderer_a4acfafd83b1fef3dd9da2e535c8e7856}} 
+\index{ComSquare::Debugger::RAMTileRenderer@{ComSquare::Debugger::RAMTileRenderer}!\_nbColumns@{\_nbColumns}}
+\index{\_nbColumns@{\_nbColumns}!ComSquare::Debugger::RAMTileRenderer@{ComSquare::Debugger::RAMTileRenderer}}
+\doxysubsubsection{\texorpdfstring{\_nbColumns}{\_nbColumns}}
+{\footnotesize\ttfamily int Com\+Square\+::\+Debugger\+::\+R\+A\+M\+Tile\+Renderer\+::\+\_\+nb\+Columns\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The number of tile columns to display. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1RAMTileRenderer_ab3e15ddd8d9ad1853c0b953d2141ca42}\label{classComSquare_1_1Debugger_1_1RAMTileRenderer_ab3e15ddd8d9ad1853c0b953d2141ca42}} 
+\index{ComSquare::Debugger::RAMTileRenderer@{ComSquare::Debugger::RAMTileRenderer}!\_ram@{\_ram}}
+\index{\_ram@{\_ram}!ComSquare::Debugger::RAMTileRenderer@{ComSquare::Debugger::RAMTileRenderer}}
+\doxysubsubsection{\texorpdfstring{\_ram}{\_ram}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1Ram_1_1Ram}{Ram\+::\+Ram}}\& Com\+Square\+::\+Debugger\+::\+R\+A\+M\+Tile\+Renderer\+::\+\_\+ram\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+ram to render 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1RAMTileRenderer_acfb7ccba3c8ba031e9b8f295ae3a3af1}\label{classComSquare_1_1Debugger_1_1RAMTileRenderer_acfb7ccba3c8ba031e9b8f295ae3a3af1}} 
+\index{ComSquare::Debugger::RAMTileRenderer@{ComSquare::Debugger::RAMTileRenderer}!\_ramOffset@{\_ramOffset}}
+\index{\_ramOffset@{\_ramOffset}!ComSquare::Debugger::RAMTileRenderer@{ComSquare::Debugger::RAMTileRenderer}}
+\doxysubsubsection{\texorpdfstring{\_ramOffset}{\_ramOffset}}
+{\footnotesize\ttfamily int Com\+Square\+::\+Debugger\+::\+R\+A\+M\+Tile\+Renderer\+::\+\_\+ram\+Offset\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Bytes to skip from the start of the ram. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1RAMTileRenderer_acb98096659379bd2a7d1eceb667a4d2d}\label{classComSquare_1_1Debugger_1_1RAMTileRenderer_acb98096659379bd2a7d1eceb667a4d2d}} 
+\index{ComSquare::Debugger::RAMTileRenderer@{ComSquare::Debugger::RAMTileRenderer}!\_renderSize@{\_renderSize}}
+\index{\_renderSize@{\_renderSize}!ComSquare::Debugger::RAMTileRenderer@{ComSquare::Debugger::RAMTileRenderer}}
+\doxysubsubsection{\texorpdfstring{\_renderSize}{\_renderSize}}
+{\footnotesize\ttfamily int Com\+Square\+::\+Debugger\+::\+R\+A\+M\+Tile\+Renderer\+::\+\_\+render\+Size\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The size to render in the ram. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1RAMTileRenderer_aa6724bf284573b7e5c57da182296eb0e}\label{classComSquare_1_1Debugger_1_1RAMTileRenderer_aa6724bf284573b7e5c57da182296eb0e}} 
+\index{ComSquare::Debugger::RAMTileRenderer@{ComSquare::Debugger::RAMTileRenderer}!\_tileRenderer@{\_tileRenderer}}
+\index{\_tileRenderer@{\_tileRenderer}!ComSquare::Debugger::RAMTileRenderer@{ComSquare::Debugger::RAMTileRenderer}}
+\doxysubsubsection{\texorpdfstring{\_tileRenderer}{\_tileRenderer}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1PPU_1_1TileRenderer}{P\+P\+U\+::\+Tile\+Renderer}} Com\+Square\+::\+Debugger\+::\+R\+A\+M\+Tile\+Renderer\+::\+\_\+tile\+Renderer\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The class tha actually render the tile. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1RAMTileRenderer_a48b2fbbcf15d0e515b448648bec268b0}\label{classComSquare_1_1Debugger_1_1RAMTileRenderer_a48b2fbbcf15d0e515b448648bec268b0}} 
+\index{ComSquare::Debugger::RAMTileRenderer@{ComSquare::Debugger::RAMTileRenderer}!buffer@{buffer}}
+\index{buffer@{buffer}!ComSquare::Debugger::RAMTileRenderer@{ComSquare::Debugger::RAMTileRenderer}}
+\doxysubsubsection{\texorpdfstring{buffer}{buffer}}
+{\footnotesize\ttfamily std\+::array$<$std\+::array$<$uint32\+\_\+t, 1024$>$, 1024$>$ Com\+Square\+::\+Debugger\+::\+R\+A\+M\+Tile\+Renderer\+::buffer}
+
+
+
+internal buffer 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+sources/\+Debugger/\+Tile\+Viewer/\mbox{\hyperlink{RAMTileRenderer_8hpp}{R\+A\+M\+Tile\+Renderer.\+hpp}}\item 
+sources/\+Debugger/\+Tile\+Viewer/\mbox{\hyperlink{RAMTileRenderer_8cpp}{R\+A\+M\+Tile\+Renderer.\+cpp}}\end{DoxyCompactItemize}

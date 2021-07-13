@@ -1,0 +1,58 @@
+\hypertarget{namespaceComSquare_1_1Debugger_1_1CPU}{}\doxysection{Com\+Square\+::Debugger\+::C\+PU Namespace Reference}
+\label{namespaceComSquare_1_1Debugger_1_1CPU}\index{ComSquare::Debugger::CPU@{ComSquare::Debugger::CPU}}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structComSquare_1_1Debugger_1_1CPU_1_1Breakpoint}{Breakpoint}}
+\begin{DoxyCompactList}\small\item\em Struct representing a breakpoint set by the user or by the app. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug}{C\+P\+U\+Debug}}
+\begin{DoxyCompactList}\small\item\em A window that show registers and the disassembly of a \mbox{\hyperlink{namespaceComSquare_1_1Debugger_1_1CPU}{C\+PU}}. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structComSquare_1_1Debugger_1_1CPU_1_1DisassembledInstruction}{Disassembled\+Instruction}}
+\begin{DoxyCompactList}\small\item\em Struct representing an instruction in an human readable way (created by disassembling the rom). \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structComSquare_1_1Debugger_1_1CPU_1_1DisassemblyContext}{Disassembly\+Context}}
+\begin{DoxyCompactList}\small\item\em Struct used to emulate the state of the processor during the disassembly since instructions take a different amount of space depending on some flags. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1DisassemblyModel}{Disassembly\+Model}}
+\begin{DoxyCompactList}\small\item\em The qt model that show the disassembly. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structComSquare_1_1Debugger_1_1CPU_1_1ExecutedInstruction}{Executed\+Instruction}}
+\begin{DoxyCompactList}\small\item\em An instruction that has already been executed. Used for the history viewer. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1HistoryModel}{History\+Model}}
+\begin{DoxyCompactList}\small\item\em The qt model that show the history. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structComSquare_1_1Debugger_1_1CPU_1_1Label}{Label}}
+\begin{DoxyCompactList}\small\item\em Struct representing a label. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1RowPainter}{Row\+Painter}}
+\begin{DoxyCompactList}\small\item\em The qt class that highlight breakpoints and the PC\textquotesingle{}s position. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1StackModel}{Stack\+Model}}
+\begin{DoxyCompactList}\small\item\em The qt model that show the stack. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1WlaDx}{Wla\+Dx}}
+\begin{DoxyCompactList}\small\item\em Class to parse W\+L\+A-\/\+DX symbol files. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{namespaceComSquare_1_1Debugger_1_1CPU_a336499f4cb938a2886898457828f77e0}{Trust\+Level}} \{ \mbox{\hyperlink{namespaceComSquare_1_1Debugger_1_1CPU_a336499f4cb938a2886898457828f77e0ae54fbc88e1bb6c784dcc03988a621a40}{Safe}}, 
+\mbox{\hyperlink{namespaceComSquare_1_1Debugger_1_1CPU_a336499f4cb938a2886898457828f77e0ab920838d7ddce28cfd68282b67b6c0e7}{Unsafe}}, 
+\mbox{\hyperlink{namespaceComSquare_1_1Debugger_1_1CPU_a336499f4cb938a2886898457828f77e0a53ee0a5bf55975562d6ce1fac4720eeb}{Compromised}}
+ \}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{namespaceComSquare_1_1Debugger_1_1CPU_a336499f4cb938a2886898457828f77e0}\label{namespaceComSquare_1_1Debugger_1_1CPU_a336499f4cb938a2886898457828f77e0}} 
+\index{ComSquare::Debugger::CPU@{ComSquare::Debugger::CPU}!TrustLevel@{TrustLevel}}
+\index{TrustLevel@{TrustLevel}!ComSquare::Debugger::CPU@{ComSquare::Debugger::CPU}}
+\doxysubsubsection{\texorpdfstring{TrustLevel}{TrustLevel}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{namespaceComSquare_1_1Debugger_1_1CPU_a336499f4cb938a2886898457828f77e0}{Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+Trust\+Level}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Safe@{Safe}!ComSquare::Debugger::CPU@{ComSquare::Debugger::CPU}}\index{ComSquare::Debugger::CPU@{ComSquare::Debugger::CPU}!Safe@{Safe}}}\mbox{\Hypertarget{namespaceComSquare_1_1Debugger_1_1CPU_a336499f4cb938a2886898457828f77e0ae54fbc88e1bb6c784dcc03988a621a40}\label{namespaceComSquare_1_1Debugger_1_1CPU_a336499f4cb938a2886898457828f77e0ae54fbc88e1bb6c784dcc03988a621a40}} 
+Safe&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Unsafe@{Unsafe}!ComSquare::Debugger::CPU@{ComSquare::Debugger::CPU}}\index{ComSquare::Debugger::CPU@{ComSquare::Debugger::CPU}!Unsafe@{Unsafe}}}\mbox{\Hypertarget{namespaceComSquare_1_1Debugger_1_1CPU_a336499f4cb938a2886898457828f77e0ab920838d7ddce28cfd68282b67b6c0e7}\label{namespaceComSquare_1_1Debugger_1_1CPU_a336499f4cb938a2886898457828f77e0ab920838d7ddce28cfd68282b67b6c0e7}} 
+Unsafe&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Compromised@{Compromised}!ComSquare::Debugger::CPU@{ComSquare::Debugger::CPU}}\index{ComSquare::Debugger::CPU@{ComSquare::Debugger::CPU}!Compromised@{Compromised}}}\mbox{\Hypertarget{namespaceComSquare_1_1Debugger_1_1CPU_a336499f4cb938a2886898457828f77e0a53ee0a5bf55975562d6ce1fac4720eeb}\label{namespaceComSquare_1_1Debugger_1_1CPU_a336499f4cb938a2886898457828f77e0a53ee0a5bf55975562d6ce1fac4720eeb}} 
+Compromised&\\
+\hline
+
+\end{DoxyEnumFields}

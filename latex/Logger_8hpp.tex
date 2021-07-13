@@ -1,0 +1,57 @@
+\hypertarget{Logger_8hpp}{}\doxysection{sources/\+Models/\+Logger.hpp File Reference}
+\label{Logger_8hpp}\index{sources/Models/Logger.hpp@{sources/Models/Logger.hpp}}
+{\ttfamily \#include $<$iostream$>$}\newline
+Include dependency graph for Logger.\+hpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=229pt]{Logger_8hpp__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{Logger_8hpp__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \mbox{\hyperlink{namespaceComSquare}{Com\+Square}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{Logger_8hpp_a2a4a157ca5beb61c0b620ec1122075bc}{log\+Msg}}(level,  message)
+\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{namespaceComSquare_ac57c2a5c9b132475a848a4c03ef93821}{Com\+Square\+::\+Log\+Level}} \{ \mbox{\hyperlink{namespaceComSquare_ac57c2a5c9b132475a848a4c03ef93821a4ea295ceea00a5c9d6e31b19294a6e2d}{Com\+Square\+::\+I\+N\+FO}}, 
+\mbox{\hyperlink{namespaceComSquare_ac57c2a5c9b132475a848a4c03ef93821a18509e2e2714ab483d0f1598c516f056}{Com\+Square\+::\+W\+A\+R\+N\+I\+NG}}, 
+\mbox{\hyperlink{namespaceComSquare_ac57c2a5c9b132475a848a4c03ef93821a59b1aee854f5419abc17c49097560b19}{Com\+Square\+::\+E\+R\+R\+OR}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+constexpr Log\+Level \mbox{\hyperlink{namespaceComSquare_a476b883698c48cb2cd47a3a9be4fd803}{Com\+Square\+::\+Global\+Level}} = I\+N\+FO
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{Logger_8hpp_a2a4a157ca5beb61c0b620ec1122075bc}\label{Logger_8hpp_a2a4a157ca5beb61c0b620ec1122075bc}} 
+\index{Logger.hpp@{Logger.hpp}!logMsg@{logMsg}}
+\index{logMsg@{logMsg}!Logger.hpp@{Logger.hpp}}
+\doxysubsubsection{\texorpdfstring{logMsg}{logMsg}}
+{\footnotesize\ttfamily \#define log\+Msg(\begin{DoxyParamCaption}\item[{}]{level,  }\item[{}]{message }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{    \textcolor{keywordflow}{if} constexpr((level) >= \mbox{\hyperlink{namespaceComSquare_a476b883698c48cb2cd47a3a9be4fd803}{GlobalLevel}}) \(\backslash\)}
+\DoxyCodeLine{        std::cout << message << std::endl}
+
+\end{DoxyCode}

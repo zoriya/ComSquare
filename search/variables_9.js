@@ -1,0 +1,19 @@
+var searchData=
+[
+  ['i_2468',['i',['../structComSquare_1_1APU_1_1InternalRegisters.html#add5f1c0a0074e3baaec75b199fb9fe54',1,'ComSquare::APU::InternalRegisters::i()'],['../structComSquare_1_1CPU_1_1Registers.html#a5fe99bb2f46f69de3a0dd7356e0218e8',1,'ComSquare::CPU::Registers::i()']]],
+  ['increment_2469',['increment',['../classComSquare_1_1CPU_1_1DMA.html#addb890a9a0331e2c00e291a93346801e',1,'ComSquare::CPU::DMA']]],
+  ['incrementamount_2470',['incrementAmount',['../structComSquare_1_1PPU_1_1Registers.html#a464025a32d7db6ba316c952760ef0953',1,'ComSquare::PPU::Registers']]],
+  ['incrementmode_2471',['incrementMode',['../structComSquare_1_1PPU_1_1Registers.html#ad42827f9daed59a559c2dfdec78028ab',1,'ComSquare::PPU::Registers']]],
+  ['initialstackpointer_2472',['initialStackPointer',['../classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug.html#ad4e517805f35f29635ea761f6d9b3c8f',1,'ComSquare::Debugger::CPU::CPUDebug']]],
+  ['input_2473',['input',['../structComSquare_1_1APU_1_1DSP_1_1Echo.html#ac3cca30414a511efba4823aecc1fa4d7',1,'ComSquare::APU::DSP::Echo']]],
+  ['instructions_2474',['instructions',['../classComSquare_1_1CPU_1_1CPU.html#afe70164debc171bb4c454836bd7a4048',1,'ComSquare::CPU::CPU']]],
+  ['interlacefield_2475',['interlaceField',['../structComSquare_1_1PPU_1_1Registers.html#a680c9f1488be01354f1401d6dd59304f',1,'ComSquare::PPU::Registers']]],
+  ['ipl_2476',['IPL',['../structComSquare_1_1APU_1_1MemoryMap.html#a00198560e61ef965889f1bb1040b6952',1,'ComSquare::APU::MemoryMap']]],
+  ['irq_2477',['irq',['../structComSquare_1_1Cartridge_1_1InterruptVectors.html#ae9cdcd6ebefea6af55258fef69dbc81a',1,'ComSquare::Cartridge::InterruptVectors']]],
+  ['irq8_2478',['irq8',['../structComSquare_1_1Cartridge_1_1InterruptVectors.html#a4cef3761e5a08db1398f258d22c9d1c9',1,'ComSquare::Cartridge::InterruptVectors']]],
+  ['isabortrequested_2479',['IsAbortRequested',['../classComSquare_1_1CPU_1_1CPU.html#a891c21555fbce93807088f4cfbffa4b6',1,'ComSquare::CPU::CPU']]],
+  ['isdisabled_2480',['isDisabled',['../classComSquare_1_1APU_1_1APU.html#a4cd102fc92b79b75700cd71b5649fb52',1,'ComSquare::APU::APU::isDisabled()'],['../classComSquare_1_1CPU_1_1CPU.html#a5332788152d43c0a9c86e7f2fff68662',1,'ComSquare::CPU::CPU::isDisabled()']]],
+  ['isemulationmode_2481',['isEmulationMode',['../structComSquare_1_1Debugger_1_1CPU_1_1DisassemblyContext.html#a085931d94c666bf8c68d447ade90ba07',1,'ComSquare::Debugger::CPU::DisassemblyContext']]],
+  ['isirqrequested_2482',['IsIRQRequested',['../classComSquare_1_1CPU_1_1CPU.html#abca2e6b626337d000a5213fa2cb9e5e2',1,'ComSquare::CPU::CPU']]],
+  ['isnmirequested_2483',['IsNMIRequested',['../classComSquare_1_1CPU_1_1CPU.html#a5b0847e910a9431c98dd1c53c518ba76',1,'ComSquare::CPU::CPU']]]
+];

@@ -1,0 +1,293 @@
+\hypertarget{testTransfers_8cpp}{}\doxysection{tests/\+C\+P\+U/test\+Transfers.cpp File Reference}
+\label{testTransfers_8cpp}\index{tests/CPU/testTransfers.cpp@{tests/CPU/testTransfers.cpp}}
+{\ttfamily \#include $<$catch2/catch\+\_\+test\+\_\+macros.\+hpp$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$bitset$>$}\newline
+{\ttfamily \#include \char`\"{}../tests.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../sources/\+S\+N\+E\+S.\+hpp\char`\"{}}\newline
+Include dependency graph for test\+Transfers.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{testTransfers_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{testTransfers_8cpp_aff5011a2fec46645d59b3882243620a2}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}16bits\+To16\+Bits T\+AX\char`\"{}, \char`\"{}\mbox{[}T\+AX\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testTransfers_8cpp_acfabd60a2e376bbd9b115d7fe323ec61}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}16bits\+To8\+Bits T\+AX\char`\"{}, \char`\"{}\mbox{[}T\+AX\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testTransfers_8cpp_a2ed86309b6556d4d38eaa1732c76c840}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}8bits\+To16\+Bits T\+AX\char`\"{}, \char`\"{}\mbox{[}T\+AX\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testTransfers_8cpp_a320e30fc8711e608f3b357b661fadf20}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}8bits\+To8\+Bits T\+AX\char`\"{}, \char`\"{}\mbox{[}T\+AX\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testTransfers_8cpp_abd2d992a4ad86f74899f09295aa8417a}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}16bits\+To16\+Bits T\+AY\char`\"{}, \char`\"{}\mbox{[}T\+AY\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testTransfers_8cpp_ad5d4376c530cdc4d173d76564a485fd8}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}16bits\+To8\+Bits T\+AY\char`\"{}, \char`\"{}\mbox{[}T\+AY\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testTransfers_8cpp_ac608824b116b819d53c18e0cdae39b8b}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}8bits\+To16\+Bits T\+AY\char`\"{}, \char`\"{}\mbox{[}T\+AY\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testTransfers_8cpp_a90fc80b3768bcf28b28c6419c36ca9ac}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}8bits\+To8\+Bits T\+AY\char`\"{}, \char`\"{}\mbox{[}T\+AY\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testTransfers_8cpp_ae5e3647d1c138eb56bb4aa397ab42d97}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}16bits\+Index T\+XS\char`\"{}, \char`\"{}\mbox{[}T\+XS\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testTransfers_8cpp_a661ec8c4f03221ed2c8c7a499f676250}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}8bits\+Index T\+XS\char`\"{}, \char`\"{}\mbox{[}T\+XS\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testTransfers_8cpp_a9e552fcc02cacd8a6104d72f09501715}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}emulation\+Mode T\+CD\char`\"{}, \char`\"{}\mbox{[}T\+CD\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testTransfers_8cpp_a3191fec66152710ad7b57c474403f382}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}zero T\+CD\char`\"{}, \char`\"{}\mbox{[}T\+CD\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testTransfers_8cpp_a97fd7fd05db7114e1ae056813cb2e59d}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}emulation\+Mode T\+CS\char`\"{}, \char`\"{}\mbox{[}T\+CS\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testTransfers_8cpp_acf175917a7b4cc9e9ba58bfc24fc1627}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}native T\+CS\char`\"{}, \char`\"{}\mbox{[}T\+CS\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testTransfers_8cpp_a0c19bb9c1ddef0d8565a79179629dc69}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}emulation\+Mode T\+DC\char`\"{}, \char`\"{}\mbox{[}T\+DC\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testTransfers_8cpp_a34ce30f959d85cfd71ce78351b29c3ae}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}zero T\+DC\char`\"{}, \char`\"{}\mbox{[}T\+DC\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testTransfers_8cpp_a325a67c6c758123634eeb60cbcc6ce89}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}emulation\+Mode T\+SC\char`\"{}, \char`\"{}\mbox{[}T\+SC\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testTransfers_8cpp_a43fe6e3b2c1f77b7920560d27041643a}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}zero T\+SC\char`\"{}, \char`\"{}\mbox{[}T\+SC\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testTransfers_8cpp_a3ef43effe0e8aa4064709e99525af208}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}emulation\+Mode T\+SX\char`\"{}, \char`\"{}\mbox{[}T\+SX\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testTransfers_8cpp_a30864661fb0b15a16713a707f667e747}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}native T\+SX\char`\"{}, \char`\"{}\mbox{[}T\+SX\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testTransfers_8cpp_ab104e773b14b565a9eaab65a477e11f0}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}double8bits T\+XA\char`\"{}, \char`\"{}\mbox{[}T\+XA\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testTransfers_8cpp_a2ee08730536c21b51829e47d7adb7b5b}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}index8bits T\+XA\char`\"{}, \char`\"{}\mbox{[}T\+XA\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testTransfers_8cpp_a898f665e261e168ecfc8f343bfb4ae3b}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}accumulator8bits T\+XA\char`\"{}, \char`\"{}\mbox{[}T\+XA\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testTransfers_8cpp_a12c97da1858c974945f6e808fda70075}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}double16bits T\+XA\char`\"{}, \char`\"{}\mbox{[}T\+XA\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testTransfers_8cpp_afc34e79f93333d10c8d3734de6c7fb2a}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}double8bits T\+YA\char`\"{}, \char`\"{}\mbox{[}T\+YA\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testTransfers_8cpp_adf780068650511209d4cd1b93d4fced3}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}index8bits T\+YA\char`\"{}, \char`\"{}\mbox{[}T\+YA\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testTransfers_8cpp_ab91acd055e145f39ccc17949f5c3dc37}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}accumulator8bits T\+YA\char`\"{}, \char`\"{}\mbox{[}T\+YA\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testTransfers_8cpp_ac45bc5ae53fb86b55c7a4ab7254c117e}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}double16bits T\+YA\char`\"{}, \char`\"{}\mbox{[}T\+YA\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testTransfers_8cpp_ab5729c4b51e5aebec2de7972d9a032aa}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}emulation\+Mode T\+XY\char`\"{}, \char`\"{}\mbox{[}T\+XY\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testTransfers_8cpp_a47dd855fe002fc2466e6ca69170bc8c4}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}native\+Mode T\+XY\char`\"{}, \char`\"{}\mbox{[}T\+XY\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testTransfers_8cpp_a9ae127829477d1a67b5dc448c10aeaa8}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}emulation\+Mode T\+YX\char`\"{}, \char`\"{}\mbox{[}T\+YX\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testTransfers_8cpp_a143e2a88c1edebf9b723e15ccc9fc396}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}native\+Mode T\+YX\char`\"{}, \char`\"{}\mbox{[}T\+YX\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testTransfers_8cpp_a280ed9880b25f7223134cd3b677fb3fa}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}hard\+Case M\+VN\char`\"{}, \char`\"{}\mbox{[}M\+VN\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testTransfers_8cpp_a66eedf7a8b0eb489d873d88805d083be}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}hard\+Case M\+VP\char`\"{}, \char`\"{}\mbox{[}M\+VP\mbox{]}\char`\"{})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{testTransfers_8cpp_ae5e3647d1c138eb56bb4aa397ab42d97}\label{testTransfers_8cpp_ae5e3647d1c138eb56bb4aa397ab42d97}} 
+\index{testTransfers.cpp@{testTransfers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testTransfers.cpp@{testTransfers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [1/34]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}16bits\+Index T\+XS\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+T\+X\+S\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testTransfers_8cpp_aff5011a2fec46645d59b3882243620a2}\label{testTransfers_8cpp_aff5011a2fec46645d59b3882243620a2}} 
+\index{testTransfers.cpp@{testTransfers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testTransfers.cpp@{testTransfers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [2/34]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}16bits\+To16\+Bits T\+AX\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+T\+A\+X\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testTransfers_8cpp_abd2d992a4ad86f74899f09295aa8417a}\label{testTransfers_8cpp_abd2d992a4ad86f74899f09295aa8417a}} 
+\index{testTransfers.cpp@{testTransfers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testTransfers.cpp@{testTransfers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [3/34]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}16bits\+To16\+Bits T\+AY\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+T\+A\+Y\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testTransfers_8cpp_acfabd60a2e376bbd9b115d7fe323ec61}\label{testTransfers_8cpp_acfabd60a2e376bbd9b115d7fe323ec61}} 
+\index{testTransfers.cpp@{testTransfers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testTransfers.cpp@{testTransfers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [4/34]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}16bits\+To8\+Bits T\+AX\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+T\+A\+X\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testTransfers_8cpp_ad5d4376c530cdc4d173d76564a485fd8}\label{testTransfers_8cpp_ad5d4376c530cdc4d173d76564a485fd8}} 
+\index{testTransfers.cpp@{testTransfers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testTransfers.cpp@{testTransfers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [5/34]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}16bits\+To8\+Bits T\+AY\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+T\+A\+Y\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testTransfers_8cpp_a661ec8c4f03221ed2c8c7a499f676250}\label{testTransfers_8cpp_a661ec8c4f03221ed2c8c7a499f676250}} 
+\index{testTransfers.cpp@{testTransfers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testTransfers.cpp@{testTransfers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [6/34]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}8bits\+Index T\+XS\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+T\+X\+S\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testTransfers_8cpp_a2ed86309b6556d4d38eaa1732c76c840}\label{testTransfers_8cpp_a2ed86309b6556d4d38eaa1732c76c840}} 
+\index{testTransfers.cpp@{testTransfers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testTransfers.cpp@{testTransfers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [7/34]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}8bits\+To16\+Bits T\+AX\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+T\+A\+X\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testTransfers_8cpp_ac608824b116b819d53c18e0cdae39b8b}\label{testTransfers_8cpp_ac608824b116b819d53c18e0cdae39b8b}} 
+\index{testTransfers.cpp@{testTransfers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testTransfers.cpp@{testTransfers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [8/34]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}8bits\+To16\+Bits T\+AY\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+T\+A\+Y\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testTransfers_8cpp_a320e30fc8711e608f3b357b661fadf20}\label{testTransfers_8cpp_a320e30fc8711e608f3b357b661fadf20}} 
+\index{testTransfers.cpp@{testTransfers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testTransfers.cpp@{testTransfers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [9/34]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}8bits\+To8\+Bits T\+AX\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+T\+A\+X\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testTransfers_8cpp_a90fc80b3768bcf28b28c6419c36ca9ac}\label{testTransfers_8cpp_a90fc80b3768bcf28b28c6419c36ca9ac}} 
+\index{testTransfers.cpp@{testTransfers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testTransfers.cpp@{testTransfers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [10/34]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}8bits\+To8\+Bits T\+AY\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+T\+A\+Y\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testTransfers_8cpp_a898f665e261e168ecfc8f343bfb4ae3b}\label{testTransfers_8cpp_a898f665e261e168ecfc8f343bfb4ae3b}} 
+\index{testTransfers.cpp@{testTransfers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testTransfers.cpp@{testTransfers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [11/34]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}accumulator8bits T\+XA\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+T\+X\+A\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testTransfers_8cpp_ab91acd055e145f39ccc17949f5c3dc37}\label{testTransfers_8cpp_ab91acd055e145f39ccc17949f5c3dc37}} 
+\index{testTransfers.cpp@{testTransfers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testTransfers.cpp@{testTransfers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [12/34]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}accumulator8bits T\+YA\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+T\+Y\+A\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testTransfers_8cpp_a12c97da1858c974945f6e808fda70075}\label{testTransfers_8cpp_a12c97da1858c974945f6e808fda70075}} 
+\index{testTransfers.cpp@{testTransfers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testTransfers.cpp@{testTransfers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [13/34]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}double16bits T\+XA\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+T\+X\+A\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testTransfers_8cpp_ac45bc5ae53fb86b55c7a4ab7254c117e}\label{testTransfers_8cpp_ac45bc5ae53fb86b55c7a4ab7254c117e}} 
+\index{testTransfers.cpp@{testTransfers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testTransfers.cpp@{testTransfers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [14/34]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}double16bits T\+YA\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+T\+Y\+A\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testTransfers_8cpp_ab104e773b14b565a9eaab65a477e11f0}\label{testTransfers_8cpp_ab104e773b14b565a9eaab65a477e11f0}} 
+\index{testTransfers.cpp@{testTransfers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testTransfers.cpp@{testTransfers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [15/34]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}double8bits T\+XA\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+T\+X\+A\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testTransfers_8cpp_afc34e79f93333d10c8d3734de6c7fb2a}\label{testTransfers_8cpp_afc34e79f93333d10c8d3734de6c7fb2a}} 
+\index{testTransfers.cpp@{testTransfers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testTransfers.cpp@{testTransfers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [16/34]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}double8bits T\+YA\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+T\+Y\+A\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testTransfers_8cpp_a9e552fcc02cacd8a6104d72f09501715}\label{testTransfers_8cpp_a9e552fcc02cacd8a6104d72f09501715}} 
+\index{testTransfers.cpp@{testTransfers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testTransfers.cpp@{testTransfers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [17/34]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}emulation\+Mode T\+CD\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+T\+C\+D\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testTransfers_8cpp_a97fd7fd05db7114e1ae056813cb2e59d}\label{testTransfers_8cpp_a97fd7fd05db7114e1ae056813cb2e59d}} 
+\index{testTransfers.cpp@{testTransfers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testTransfers.cpp@{testTransfers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [18/34]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}emulation\+Mode T\+CS\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+T\+C\+S\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testTransfers_8cpp_a0c19bb9c1ddef0d8565a79179629dc69}\label{testTransfers_8cpp_a0c19bb9c1ddef0d8565a79179629dc69}} 
+\index{testTransfers.cpp@{testTransfers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testTransfers.cpp@{testTransfers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [19/34]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}emulation\+Mode T\+DC\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+T\+D\+C\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testTransfers_8cpp_a325a67c6c758123634eeb60cbcc6ce89}\label{testTransfers_8cpp_a325a67c6c758123634eeb60cbcc6ce89}} 
+\index{testTransfers.cpp@{testTransfers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testTransfers.cpp@{testTransfers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [20/34]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}emulation\+Mode T\+SC\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+T\+S\+C\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testTransfers_8cpp_a3ef43effe0e8aa4064709e99525af208}\label{testTransfers_8cpp_a3ef43effe0e8aa4064709e99525af208}} 
+\index{testTransfers.cpp@{testTransfers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testTransfers.cpp@{testTransfers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [21/34]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}emulation\+Mode T\+SX\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+T\+S\+X\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testTransfers_8cpp_ab5729c4b51e5aebec2de7972d9a032aa}\label{testTransfers_8cpp_ab5729c4b51e5aebec2de7972d9a032aa}} 
+\index{testTransfers.cpp@{testTransfers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testTransfers.cpp@{testTransfers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [22/34]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}emulation\+Mode T\+XY\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+T\+X\+Y\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testTransfers_8cpp_a9ae127829477d1a67b5dc448c10aeaa8}\label{testTransfers_8cpp_a9ae127829477d1a67b5dc448c10aeaa8}} 
+\index{testTransfers.cpp@{testTransfers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testTransfers.cpp@{testTransfers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [23/34]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}emulation\+Mode T\+YX\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+T\+Y\+X\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testTransfers_8cpp_a280ed9880b25f7223134cd3b677fb3fa}\label{testTransfers_8cpp_a280ed9880b25f7223134cd3b677fb3fa}} 
+\index{testTransfers.cpp@{testTransfers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testTransfers.cpp@{testTransfers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [24/34]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}hard\+Case M\+VN\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+M\+V\+N\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testTransfers_8cpp_a66eedf7a8b0eb489d873d88805d083be}\label{testTransfers_8cpp_a66eedf7a8b0eb489d873d88805d083be}} 
+\index{testTransfers.cpp@{testTransfers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testTransfers.cpp@{testTransfers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [25/34]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}hard\+Case M\+VP\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+M\+V\+P\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testTransfers_8cpp_a2ee08730536c21b51829e47d7adb7b5b}\label{testTransfers_8cpp_a2ee08730536c21b51829e47d7adb7b5b}} 
+\index{testTransfers.cpp@{testTransfers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testTransfers.cpp@{testTransfers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [26/34]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}index8bits T\+XA\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+T\+X\+A\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testTransfers_8cpp_adf780068650511209d4cd1b93d4fced3}\label{testTransfers_8cpp_adf780068650511209d4cd1b93d4fced3}} 
+\index{testTransfers.cpp@{testTransfers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testTransfers.cpp@{testTransfers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [27/34]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}index8bits T\+YA\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+T\+Y\+A\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testTransfers_8cpp_acf175917a7b4cc9e9ba58bfc24fc1627}\label{testTransfers_8cpp_acf175917a7b4cc9e9ba58bfc24fc1627}} 
+\index{testTransfers.cpp@{testTransfers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testTransfers.cpp@{testTransfers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [28/34]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}native T\+CS\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+T\+C\+S\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testTransfers_8cpp_a30864661fb0b15a16713a707f667e747}\label{testTransfers_8cpp_a30864661fb0b15a16713a707f667e747}} 
+\index{testTransfers.cpp@{testTransfers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testTransfers.cpp@{testTransfers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [29/34]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}native T\+SX\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+T\+S\+X\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testTransfers_8cpp_a47dd855fe002fc2466e6ca69170bc8c4}\label{testTransfers_8cpp_a47dd855fe002fc2466e6ca69170bc8c4}} 
+\index{testTransfers.cpp@{testTransfers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testTransfers.cpp@{testTransfers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [30/34]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}native\+Mode T\+XY\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+T\+X\+Y\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testTransfers_8cpp_a143e2a88c1edebf9b723e15ccc9fc396}\label{testTransfers_8cpp_a143e2a88c1edebf9b723e15ccc9fc396}} 
+\index{testTransfers.cpp@{testTransfers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testTransfers.cpp@{testTransfers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [31/34]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}native\+Mode T\+YX\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+T\+Y\+X\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testTransfers_8cpp_a3191fec66152710ad7b57c474403f382}\label{testTransfers_8cpp_a3191fec66152710ad7b57c474403f382}} 
+\index{testTransfers.cpp@{testTransfers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testTransfers.cpp@{testTransfers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [32/34]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}zero T\+CD\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+T\+C\+D\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testTransfers_8cpp_a34ce30f959d85cfd71ce78351b29c3ae}\label{testTransfers_8cpp_a34ce30f959d85cfd71ce78351b29c3ae}} 
+\index{testTransfers.cpp@{testTransfers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testTransfers.cpp@{testTransfers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [33/34]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}zero T\+DC\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+T\+D\+C\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testTransfers_8cpp_a43fe6e3b2c1f77b7920560d27041643a}\label{testTransfers_8cpp_a43fe6e3b2c1f77b7920560d27041643a}} 
+\index{testTransfers.cpp@{testTransfers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testTransfers.cpp@{testTransfers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [34/34]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}zero T\+SC\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+T\+S\+C\mbox{]} }\end{DoxyParamCaption})}
+

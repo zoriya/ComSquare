@@ -1,0 +1,1669 @@
+\hypertarget{structComSquare_1_1PPU_1_1Registers}{}\doxysection{Com\+Square\+::P\+PU\+::Registers Struct Reference}
+\label{structComSquare_1_1PPU_1_1Registers}\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+
+
+{\ttfamily \#include $<$P\+P\+U\+Registers.\+hpp$>$}
+
+
+
+Collaboration diagram for Com\+Square\+::P\+PU\+::Registers\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=230pt]{structComSquare_1_1PPU_1_1Registers__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a2df6d5af08d0d520e2b609a3ea961795}{brightness}}: 4\\
+\>\>\>{\em Store the brightness value (F = max, 0 = off) }\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_af9f76cbf24da9bfb18007980f6885a22}{\_}}: 3\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_ad89d3bd45e7ecb530a3fb0cbfff40417}{fblank}}: 1\\
+\>\>\>{\em Store the FBlank status. }\\
+\>\} \\
+\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_aaa5d608216594d1f98aaafbf58b3e833}{raw}} = 0\\
+\} \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_ac67cd910fc21a57d0bdc558fab532d9a}{\_inidisp}}\\
+
+\end{tabbing}\begin{DoxyCompactList}\small\item\em I\+N\+I\+D\+I\+SP Register (F-\/blank and Brightness) \end{DoxyCompactList}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a561096b359b6094f5e5b3c48819b3888}{nameBaseSelect}}: 3\\
+\>\>\>{\em Stores the location of the first sprite table. }\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_aead7494c465a052b2b24bddf83c47675}{nameSelect}}: 2\\
+\>\>\>{\em Stores the offset of the second sprite table. }\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_ad26cc7129a7c1b350326ef585605cb54}{objectSize}}: 3\\
+\>\>\>{\em Stores the resolution preset of the sprites. }\\
+\>\} \\
+\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_aaa5d608216594d1f98aaafbf58b3e833}{raw}} = 0\\
+\} \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a82f7635f455d9441141150fb3e26dbe3}{\_obsel}}\\
+
+\end{tabbing}\begin{DoxyCompactList}\small\item\em O\+B\+S\+EL Register (Object Size and Character Address) \end{DoxyCompactList}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>uint16\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a7955a9651995c15fbde9b4361191e5bf}{oamAddress}}: 9\\
+\>\>\>{\em Stores the address to write with OAMDATA register. }\\
+\>\>uint16\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a2e44ddb33fdf5347e9ce679891af04f8}{\_}}: 6\\
+\>\>uint16\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a35009b9e24b063764f9dc4cca0e51011}{objPriorityActivationBit}}: 1\\
+\>\>\>{\em When Obj Priority activation bit is set, an Obj other than Sprite 0 may be given priority. }\\
+\>\} \\
+\>struct \{\\
+\>\>uint16\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_ab7ba4f2ed59176ee7791770d360fd2aa}{oamaddl}}: 8\\
+\>\>\>{\em Stores the data written on the OAMADDL register. }\\
+\>\>uint16\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a63d526c1eba8929a80aa7fa1373c8547}{oamaddh}}: 8\\
+\>\>\>{\em Stores the data written on the OAMADDH register. }\\
+\>\} \\
+\>uint16\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a651e268a38e31c64e4614912a955ed66}{raw}} = 0\\
+\} \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a5e1d13d88abd586149140e288278c536}{\_oamadd}}\\
+
+\end{tabbing}\begin{DoxyCompactList}\small\item\em O\+A\+M\+A\+DD Register (O\+AM Address and Obj Priority) \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_abed70ecb8186b9003a9d3d476d8e2fa8}{\+\_\+oamdata}} = 0
+\begin{DoxyCompactList}\small\item\em O\+A\+M\+D\+A\+TA Register (Data for O\+AM write) \end{DoxyCompactList}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a50fdf9fe1db885ac251328a50035dc2e}{bgMode}}: 3\\
+\>\>\>{\em Stores the current BG Mode (0 -\/ 7) }\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_ae9d7960df19fe4c36ff5063f8e070b16}{mode1Bg3PriorityBit}}: 1\\
+\>\>\>{\em When Mode 1 BG3 priority bit is set the BG3 is draw. }\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_af4b684bda280e2791e76f44ac532754f}{characterSizeBg1}}: 1\\
+\>\>\>{\em When The bit is set character size will 16x16 otherwise it is 8x8. }\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_aa1eeeb3466a059dee7b1b2ed84e1f532}{characterSizeBg2}}: 1\\
+\>\>\>{\em When The bit is set character size will 16x16 otherwise it is 8x8. }\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_adb049de5dc113835849d8d149a5e096b}{characterSizeBg3}}: 1\\
+\>\>\>{\em When The bit is set character size will 16x16 otherwise it is 8x8. }\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_ad1cda1f1afa1b46c73bd199a224371e7}{characterSizeBg4}}: 1\\
+\>\>\>{\em When The bit is set character size will 16x16 otherwise it is 8x8. }\\
+\>\} \\
+\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_aaa5d608216594d1f98aaafbf58b3e833}{raw}} = 0\\
+\} \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a5fd0bb187eb58a1da95226bed2f508f9}{\_bgmode}}\\
+
+\end{tabbing}\begin{DoxyCompactList}\small\item\em B\+G\+M\+O\+DE Register (O\+AM Address and Obj Priority) \end{DoxyCompactList}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_aa4598d67e60597498a219bd1a75735a0}{affectBg1}}: 1\\
+\>\>\>{\em Apply mosaic to the BG1. }\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a38b1b1b06596ceb4f38fc50800d2f42e}{affectBg2}}: 1\\
+\>\>\>{\em Apply mosaic to the BG2. }\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a82e9eba095ecdbbf9dbf6529e1b9ebb2}{affectBg3}}: 1\\
+\>\>\>{\em Apply mosaic to the BG3. }\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_ac97d3ff70ab283133e2dce7aa99933f7}{affectBg4}}: 1\\
+\>\>\>{\em Apply mosaic to the BG4. }\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_ace2de357dacc308ed259f420fe8e533a}{pixelSize}}: 4\\
+\>\>\>{\em Stores the pixel size (0 = 1x1, F = 16x16) }\\
+\>\} \\
+\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_aaa5d608216594d1f98aaafbf58b3e833}{raw}} = 0\\
+\} \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a3225d80c284e363210ab44934529ab38}{\_mosaic}}\\
+
+\end{tabbing}\begin{DoxyCompactList}\small\item\em M\+O\+S\+A\+IC Register (Screen Pixelation) \end{DoxyCompactList}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a96350282b0226c820ba05aa484ed7fae}{tilemapHorizontalMirroring}}: 1\\
+\>\>\>{\em When tilemap horizontal mirroring bit is set the tilemap is mirrored horizontally. }\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a2b0afd7d52d53395c017675eb6b953e7}{tilemapVerticalMirroring}}: 1\\
+\>\>\>{\em When tilemap vertically mirroring bit is set the tilemap is mirrored vertically. }\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_af7a860159be173bde3e045442d2ccdb2}{tilemapAddress}}: 6\\
+\>\>\>{\em Address of the tilemap Address (0, 0) }\\
+\>\} \\
+\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_aaa5d608216594d1f98aaafbf58b3e833}{raw}} = 0\\
+\} \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a64f118e52d6b97784ed5bd6a0582a241}{\_bgsc}} \mbox{[}4\mbox{]}\\
+
+\end{tabbing}\begin{DoxyCompactList}\small\item\em B\+G\+SC \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers}{Registers}} (BG Tilemap Address and Size) \end{DoxyCompactList}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a7b644810f5fe504f7614fb6421b307cd}{baseAddressBg1a3}}: 4\\
+\>\>\>{\em The address let us know where to search for BG1/3 characters. }\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_ac0d11e9b26c5b788e5a669b5d8eb4bd6}{baseAddressBg2a4}}: 4\\
+\>\>\>{\em The address let us know where to search for BG2/4 characters. }\\
+\>\} \\
+\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_aaa5d608216594d1f98aaafbf58b3e833}{raw}} = 0\\
+\} \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a2034b7ce9333c00a5846c486cc17af9b}{\_bgnba}} \mbox{[}2\mbox{]}\\
+
+\end{tabbing}\begin{DoxyCompactList}\small\item\em B\+G\+N\+BA \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers}{Registers}} (B\+G1/2/3/4 Chr Address) \end{DoxyCompactList}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>uint16\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a80ea6c5bdf71038e00352f0cae6c7641}{offsetBg}}: 10\\
+\>\>uint16\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a2e44ddb33fdf5347e9ce679891af04f8}{\_}}: 6\\
+\>\} \\
+\>uint16\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a651e268a38e31c64e4614912a955ed66}{raw}} = 0\\
+\} \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a89f60c954d08a376ebe56f7e57fe26ff}{\_bgofs}} \mbox{[}8\mbox{]}\\
+
+\end{tabbing}\begin{DoxyCompactList}\small\item\em B\+G\+X\+X\+O\+FS Register (B\+G1/2/3/4 Horizontal and Vertical Scrolls) \end{DoxyCompactList}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>uint16\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a80ea6c5bdf71038e00352f0cae6c7641}{offsetBg}}: 13\\
+\>\>uint16\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a2e44ddb33fdf5347e9ce679891af04f8}{\_}}: 3\\
+\>\} \\
+\>uint16\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a651e268a38e31c64e4614912a955ed66}{raw}} = 0\\
+\} \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a0c4fa4de3f6d73e1e93e78fa6ffa8997}{\_m7ofs}} \mbox{[}2\mbox{]}\\
+
+\end{tabbing}\begin{DoxyCompactList}\small\item\em M7\+H\+O\+FS Register (Mode 7 BG Horizontal Scroll) \end{DoxyCompactList}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a464025a32d7db6ba316c952760ef0953}{incrementAmount}}: 2\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a71e8c668881575afb79b6251e784e685}{addressRemapping}}: 2\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_af9f76cbf24da9bfb18007980f6885a22}{\_}}: 3\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_ad42827f9daed59a559c2dfdec78028ab}{incrementMode}}: 1\\
+\>\} \\
+\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_aaa5d608216594d1f98aaafbf58b3e833}{raw}} = 0\\
+\} \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a33779e4b34f15bceca07b47d61dfb01d}{\_vmain}}\\
+
+\end{tabbing}\begin{DoxyCompactList}\small\item\em V\+M\+A\+IN Register (Video Port Control) \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_ab78e70fa0a6fd8bcb21f6c04ea209974}{\+\_\+increment\+Amount}} = 1
+\begin{DoxyCompactList}\small\item\em Store the real value of the increment Amount (1, 32, 128) instead of 0,1 or 2. \end{DoxyCompactList}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>uint16\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a75c439475d71f9e80a65209f6f6b1bc7}{vmaddl}}: 8\\
+\>\>uint16\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a8002d327d32ac9bd2c7fde4be00949ca}{vmaddh}}: 8\\
+\>\} \\
+\>uint16\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_aee2c041d0167c86d937d22f47de90df2}{vmadd}} = 0\\
+\} \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a909cdcbe7a4c9d1f60ef522e58584752}{\_vmadd}}\\
+
+\end{tabbing}\begin{DoxyCompactList}\small\item\em V\+M\+A\+DD Register (V\+R\+AM Address) \end{DoxyCompactList}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>uint16\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_abeef5d306b323eaf47313b96e10f58d3}{vmdatal}}: 8\\
+\>\>uint16\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_ae360576d7854878a113453649a516fc9}{vmdatah}}: 8\\
+\>\} \\
+\>uint16\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_ac6801f09fe08aca780553c4a66f98956}{vmdata}} = 0\\
+\} \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a54826503a6094109031aececc441e16a}{\_vmdata}}\\
+
+\end{tabbing}\begin{DoxyCompactList}\small\item\em V\+M\+D\+A\+TA Register (V\+R\+AM Data Write) \end{DoxyCompactList}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a88cfbd00dc66e2a6ea0a2e9b3fcf2266}{horizontalMirroring}}: 1\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_ac9d2e14fa93d1fc7d951de7f815100cc}{verticalMirroring}}: 1\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_af9f76cbf24da9bfb18007980f6885a22}{\_}}: 4\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_acd0478e00927c4aea6279482a626e1d1}{emptySpaceFill}}: 1\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a8beb0fe593cab00da8e1a47e5134961d}{playingFieldSize}}: 1\\
+\>\} \\
+\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_aaa5d608216594d1f98aaafbf58b3e833}{raw}} = 0\\
+\} \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a6103db3612e2194aca0ed524034bd4e9}{\_m7sel}}\\
+
+\end{tabbing}\begin{DoxyCompactList}\small\item\em T\+O\+DO M7\+S\+EL Register (Mode 7 Settings) \end{DoxyCompactList}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>uint16\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_aea68c6166b98677a5a70684f1cb81166}{m7l}}: 8\\
+\>\>uint16\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a818c39961f3b01c5546d30cba8e50368}{m7h}}: 8\\
+\>\} \\
+\>uint16\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_af0ba6a13f4181103565f43f8cb8acec3}{m7}} = 0\\
+\} \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_aa936ee05cfafb5c19ee8e55ed5e6923a}{\_m7}} \mbox{[}4\mbox{]}\\
+
+\end{tabbing}\begin{DoxyCompactList}\small\item\em M7A M7B M7C M7C registers, M7A and M7B are also used with (\$2134/6) (multiplactions registers) \end{DoxyCompactList}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>uint16\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a2e44ddb33fdf5347e9ce679891af04f8}{\_}}: 3\\
+\>\>uint16\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a481699c30871d4cfc1859b62942914a9}{value}}: 13\\
+\>\} \\
+\>uint16\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a651e268a38e31c64e4614912a955ed66}{raw}} = 0\\
+\} \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_ae658ee66a7320b087f907321c436c1e9}{\_m7x}}\\
+
+\end{tabbing}\begin{DoxyCompactList}\small\item\em M7X Register (Mode 7 Center X) \end{DoxyCompactList}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>uint16\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a2e44ddb33fdf5347e9ce679891af04f8}{\_}}: 3\\
+\>\>uint16\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a481699c30871d4cfc1859b62942914a9}{value}}: 13\\
+\>\} \\
+\>uint16\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a651e268a38e31c64e4614912a955ed66}{raw}} = 0\\
+\} \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_af761bc419ab57d13dbe0f58e36a63220}{\_m7y}}\\
+
+\end{tabbing}\begin{DoxyCompactList}\small\item\em M7Y Register (Mode 7 Center Y) \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_ad40111dfed28a0e8818cf16253747298}{\+\_\+cgadd}} = 0
+\begin{DoxyCompactList}\small\item\em C\+G\+A\+DD Register (C\+G\+R\+AM Address) \end{DoxyCompactList}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>uint16\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a902013ea2fc06f43b77d8ccb819fcadf}{red}}: 5\\
+\>\>uint16\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a539fb661fee833f017f7fc36e021ff9d}{green}}: 5\\
+\>\>uint16\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_afe364c46dc88f23c6af8707768c65660}{blue}}: 5\\
+\>\>uint16\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a2e44ddb33fdf5347e9ce679891af04f8}{\_}}: 1\\
+\>\} \\
+\>struct \{\\
+\>\>uint16\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_aae4d66764cd79b4ea939667e9075cbff}{cgdatal}}: 8\\
+\>\>uint16\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a31437ba5b964f0b41ad3a6764246fb58}{cgdatah}}: 8\\
+\>\} \\
+\>uint16\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a651e268a38e31c64e4614912a955ed66}{raw}} = 0\\
+\} \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a329f1e4cdff133c835569d960c3b96e2}{\_cgdata}}\\
+
+\end{tabbing}\begin{DoxyCompactList}\small\item\em C\+G\+D\+A\+TA Register (C\+G\+R\+AM Data write) \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_aee26a1e67aec78b66f7df8aa996515b6}{\+\_\+is\+Low\+Byte}} = false
+\begin{DoxyCompactList}\small\item\em This bool is used for writing either the low byte of the data (first call) or the high byte of the data (second call) @info This bool is set to True when writing to \$2121 (C\+G\+A\+DD) \end{DoxyCompactList}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a4b112644685f4058ed435e1f6ce8a8dc}{enableWindow2ForBg2Bg4Color}}: 1\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_ab4de8f92af0463b73c9d75860061990c}{window2InversionForBg2Bg4Color}}: 1\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_abd894c88efa76d52e522577fe04dd888}{enableWindow1ForBg2Bg4Color}}: 1\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a75557a2942b8f09194797d0bc0d83916}{window1InversionForBg2Bg4Color}}: 1\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a20c4a039cd0952d3e7a5c22f49c5d5a1}{enableWindow2ForBg1Bg3Obj}}: 1\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a4df4921f88cdfca968398f43cdb84303}{window2InversionForBg1Bg3Obj}}: 1\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a3f4c3293cd8d15f6fe485062b00f48e7}{enableWindow1ForBg1Bg3Obj}}: 1\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a286dc725cb71ae3693e8b8ea36fb2101}{window1InversionForBg1Bg3Obj}}: 1\\
+\>\} \\
+\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_aaa5d608216594d1f98aaafbf58b3e833}{raw}} = 0\\
+\} \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a821d1000ff70531d80fc606fed325e6f}{\_wsel}} \mbox{[}3\mbox{]}\\
+
+\end{tabbing}\begin{DoxyCompactList}\small\item\em W12\+S\+EL -\/ W34\+S\+EL \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers}{Registers}} (Window Mask Settings for B\+Gs) and W\+O\+B\+J\+S\+EL Register (Window Mask Settings for O\+BJ and Color Window) \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a4d7e5b0c5bae62cdc21b7418888dc291}{\+\_\+wh}} \mbox{[}4\mbox{]} = \{0\}
+\begin{DoxyCompactList}\small\item\em W\+H0 Register (Window 1 Left Position) \end{DoxyCompactList}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_affd4e80506de879131efa4f0989c88aa}{maskLogicBg4}}: 2\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a9bcc31343c419e9d4b290dc114a24112}{maskLogicBg3}}: 2\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a1402a603129762f0d48a15e303f6c42c}{maskLogicBg2}}: 2\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a1dbed656115f82bf336b1d26f788fecc}{maskLogicBg1}}: 2\\
+\>\} \\
+\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_aaa5d608216594d1f98aaafbf58b3e833}{raw}} = 0\\
+\} \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_aa26dee0345ce8394ff54e27343f21665}{\_wbglog}}\\
+
+\end{tabbing}\begin{DoxyCompactList}\small\item\em W\+B\+G\+L\+OG Register (Window mask logic for B\+Gs) \end{DoxyCompactList}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_af4a1dec58667f29261559b875f9ec210}{maskLogicObj}}: 2\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_abede9927875dda8b9ade8e826563ccc1}{maskLogicColor}}: 2\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_af9f76cbf24da9bfb18007980f6885a22}{\_}}: 4\\
+\>\} \\
+\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_aaa5d608216594d1f98aaafbf58b3e833}{raw}} = 0\\
+\} \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_ab76b23df7edb96f6bd48a3e7f779d626}{\_wobjlog}}\\
+
+\end{tabbing}\begin{DoxyCompactList}\small\item\em W\+O\+B\+J\+L\+OG Register (Window mask logic for O\+B\+Js and Color Window) \end{DoxyCompactList}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a5102d50821d14f4f2a285bf5435914b9}{enableWindowDisplayBg1}}: 1\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a0cec78847e904f51d438c3e2c96729e9}{enableWindowDisplayBg2}}: 1\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a6ccc76345e5853a278d2c2cc70909c56}{enableWindowDisplayBg3}}: 1\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a282ac41ca9e413fee47d5da222eab462}{enableWindowDisplayBg4}}: 1\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_ad544a6d71cd22b17e1eac10488387173}{enableWindowDisplayObj}}: 1\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_af9f76cbf24da9bfb18007980f6885a22}{\_}}: 3\\
+\>\} \\
+\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_aaa5d608216594d1f98aaafbf58b3e833}{raw}} = 0\\
+\} \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_ac59c1107ddbd18303dbc4dbb35525a59}{\_t}} \mbox{[}2\mbox{]}\\
+
+\end{tabbing}\begin{DoxyCompactList}\small\item\em TM -\/ TS \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers}{Registers}} (Main \& Sub Screen Designation) \end{DoxyCompactList}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a1b85b42a6ee9ed12e94fd09b609ea982}{enableWindowMaskingBg1}}: 1\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_abf025a4ef5d95000511c31d6b39a6407}{enableWindowMaskingBg2}}: 1\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_aa7e556af4086001d82fbb909dbcfecb9}{enableWindowMaskingBg3}}: 1\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a7f104fef32c29bb81fba2d3f44a903f5}{enableWindowMaskingBg4}}: 1\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_ab89a8403bf195ffebd822492f145ad6e}{enableWindowMaskingObj}}: 1\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_af9f76cbf24da9bfb18007980f6885a22}{\_}}: 3\\
+\>\} \\
+\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_aaa5d608216594d1f98aaafbf58b3e833}{raw}} = 0\\
+\} \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a524471facdfbc5a43e045f637b5215ea}{\_tw}} \mbox{[}2\mbox{]}\\
+
+\end{tabbing}\begin{DoxyCompactList}\small\item\em T\+MW -\/ T\+SW \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers}{Registers}} (Window Mask Designation for the Main/\+Sub Screen) \end{DoxyCompactList}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_ade23606929b865b5272a57dfef664e7f}{directColorMode}}: 1\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_afe1188bf79dd8eb3a7559a0757fdc08a}{addSubscreen}}: 1\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_af9f76cbf24da9bfb18007980f6885a22}{\_}}: 2\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_ae78cfbd1e53387f28be4df2d7aeb60ed}{preventColorMath}}: 2\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a471460c4c29059fac483c2d41910e9be}{clipColorToBlackBeforeMath}}: 2\\
+\>\} \\
+\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_aaa5d608216594d1f98aaafbf58b3e833}{raw}} = 0\\
+\} \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a3bd6d90f1fdc56795c5594906de5c1fe}{\_cgwsel}}\\
+
+\end{tabbing}\begin{DoxyCompactList}\small\item\em C\+G\+W\+S\+EL Register (Color Addition Select) \end{DoxyCompactList}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a2b0f80230b96e050189bdad2f1e26fef}{enableColorMathBg1}}: 1\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a2a49033719582b30263e87c6fb31e566}{enableColorMathBg2}}: 1\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a448a4b6684c42599b0d3226f5b88a9da}{enableColorMathBg3}}: 1\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_ac6677e90bc8f49278caa07efe5682d73}{enableColorMathBg4}}: 1\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a4d576479f6076b2e434a51a09e9ff445}{enableColorMathObj}}: 1\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a57d6cc854e05dceb3b7c48513fbbc2df}{enableColorMathBackdrop}}: 1\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_ac6aea8a13a4bd167e45f4ef2e12d2c67}{halfColorMath}}: 1\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a73833d8e7c2778298b82864312c14e5a}{addSubtractSelect}}: 1\\
+\>\} \\
+\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_aaa5d608216594d1f98aaafbf58b3e833}{raw}} = 0\\
+\} \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_aca396ad0306293a0fffea294fd74b8b8}{\_cgadsub}}\\
+
+\end{tabbing}\begin{DoxyCompactList}\small\item\em C\+G\+A\+D\+S\+UB Register (Color Math designation) \end{DoxyCompactList}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a224792538991c243b18e9fb045f98251}{colorIntensity}}: 5\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a47c788ef2b03906af6df76dc323a0174}{red}}: 1\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a6892877859f8937811269e1407833d25}{green}}: 1\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a7a0a070cf39c32850092bac961c73a7d}{blue}}: 1\\
+\>\} \\
+\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_aaa5d608216594d1f98aaafbf58b3e833}{raw}} = 0\\
+\} \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_abd1a6ed0b8c0862feede841668d7eeab}{\_coldata}}\\
+
+\end{tabbing}\begin{DoxyCompactList}\small\item\em C\+O\+L\+D\+A\+TA Register (Fixed Color Data) \end{DoxyCompactList}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a5a6532d38bad97f056a3c77cd8c748bf}{screenInterlace}}: 1\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a6d099497848016487ea7de8a58183b2d}{objInterlace}}: 1\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a6ed760cfa9f9f48b3a9cad3ee5a7f4c2}{overscanMode}}: 1\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a768758573d93b6881eb7de51d388098b}{enablePseudoHiresMode}}: 1\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_af9f76cbf24da9bfb18007980f6885a22}{\_}}: 2\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a8451a17bc23d24fa5da09a4ff7f2241e}{mode7ExtBg}}: 1\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_adcc70a1e884428261356e26097ce7ab1}{externalSync}}: 1\\
+\>\} \\
+\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_aaa5d608216594d1f98aaafbf58b3e833}{raw}} = 0\\
+\} \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_af18e066cdddf6e420236e2bb0fe8ccf4}{\_setini}}\\
+
+\end{tabbing}\begin{DoxyCompactList}\small\item\em S\+E\+T\+I\+NI Register (Screen Mode/\+Video Select) \end{DoxyCompactList}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>uint32\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_ab145a7fb3ce4dce4a10905078f8d1768}{mpyl}}: 8\\
+\>\>uint32\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_aee338776bb9d71eb191e618b63b00155}{mpym}}: 8\\
+\>\>uint32\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_ad649f649bf92205fc837e6fc5669e12c}{mpyh}}: 8\\
+\>\>uint32\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a9df1445d4c716a81f4b0e7a074e9ed02}{\_}}: 8\\
+\>\} \\
+\>uint32\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_ad7e4f10bf2d94a2a8835e876c4b16f58}{mpy}} = 0\\
+\} \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_acb98c668987133b44295f0a1e40243f4}{\_mpy}}\\
+
+\end{tabbing}\begin{DoxyCompactList}\small\item\em M\+P\+YL -\/ M\+P\+YM -\/ M\+P\+YH \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers}{Registers}} (Multiplication Result) \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a30529f7f5885fc8fdd8f2056209d918c}{\+\_\+slhv}} = 0
+\begin{DoxyCompactList}\small\item\em S\+L\+HV -\/ Software Latch for H/V Counter. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_ac07d496bd1f40dd72836adc2260e8032}{\+\_\+oamdataread}} = 0
+\begin{DoxyCompactList}\small\item\em O\+A\+M\+D\+A\+T\+A\+R\+E\+AD -\/ Data for O\+AM read. \end{DoxyCompactList}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>uint16\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_ab71233b18471fa0c799cb4052fd513b8}{vmDataLRead}}: 8\\
+\>\>uint16\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a820fb72888c7a6796c2e37e050147601}{vmDataHRead}}: 8\\
+\>\} \\
+\>uint16\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a651e268a38e31c64e4614912a955ed66}{raw}} = 0\\
+\} \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a34b40b495a327b7806938f69c117b261}{\_vmdataread}}\\
+
+\end{tabbing}\begin{DoxyCompactList}\small\item\em V\+M\+D\+A\+T\+A\+L\+R\+E\+A\+D/\+V\+M\+D\+A\+T\+A\+H\+R\+E\+AD -\/ V\+R\+AM Data Read low/high byte. \end{DoxyCompactList}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>uint16\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a6682d3265c3c12ae36c958ad5a14b9b8}{cgDataLRead}}: 8\\
+\>\>uint16\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_ae296b072ec248c308819499ab916ea17}{cgDataHRead}}: 8\\
+\>\} \\
+\>uint16\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a651e268a38e31c64e4614912a955ed66}{raw}} = 0\\
+\} \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a5d8b733482eb090005d7d1a67c886887}{\_cgdataread}}\\
+
+\end{tabbing}\begin{DoxyCompactList}\small\item\em C\+G\+R\+AM Data read. \end{DoxyCompactList}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>uint16\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a8db03038a50d72d4af9a120c57cd1a36}{opct}}: 9\\
+\>\>uint16\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a2e44ddb33fdf5347e9ce679891af04f8}{\_}}: 7\\
+\>\} \\
+\>uint16\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a651e268a38e31c64e4614912a955ed66}{raw}} = 0\\
+\} \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_afd672c6ca08ac7084194009307dabedf}{\_opct}}\\
+
+\end{tabbing}\begin{DoxyCompactList}\small\item\em O\+P\+H\+C\+T/\+O\+P\+V\+CT -\/ Horizontal/\+Vertical Scanline Location. \end{DoxyCompactList}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a92b6bc07c3fd5640acb4998d873e7d9f}{chipVersionNumber}}: 4\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_af9f76cbf24da9bfb18007980f6885a22}{\_}}: 1\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_ae06c08799600513066849ea1ce0c02e5}{modeSelect}}: 1\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a3240199b75a6d7727fce2be66e613503}{rangeOverFlag}}: 1\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a4474ff6e9cf8bfe1cb0afd54d636a1af}{timeOverFlag}}: 1\\
+\>\} \\
+\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_aaa5d608216594d1f98aaafbf58b3e833}{raw}} = 0\\
+\} \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a14c7fbe7f7c0ce3a21936da5d965ca3b}{\_stat77}}\\
+
+\end{tabbing}\begin{DoxyCompactList}\small\item\em S\+T\+A\+T77 -\/ \mbox{\hyperlink{classComSquare_1_1PPU_1_1PPU}{P\+PU}} Status Flag and Version. \end{DoxyCompactList}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a92b6bc07c3fd5640acb4998d873e7d9f}{chipVersionNumber}}: 4\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_abd23578cd08e6eafb20666f2cfa5f4c5}{mode}}: 1\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_af9f76cbf24da9bfb18007980f6885a22}{\_}}: 1\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_aa2fba453911fc8dbf83c06814e30bd5f}{externalLatchFlag}}: 1\\
+\>\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a680c9f1488be01354f1401d6dd59304f}{interlaceField}}: 1\\
+\>\} \\
+\>uint8\_t \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_aaa5d608216594d1f98aaafbf58b3e833}{raw}} = 0\\
+\} \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers_a5d20dbf8ef7110f2a2c546cb6c486768}{\_stat78}}\\
+
+\end{tabbing}\begin{DoxyCompactList}\small\item\em S\+T\+A\+T78 -\/ \mbox{\hyperlink{classComSquare_1_1PPU_1_1PPU}{P\+PU}} Status Flag and Version. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_af9f76cbf24da9bfb18007980f6885a22}\label{structComSquare_1_1PPU_1_1Registers_af9f76cbf24da9bfb18007980f6885a22}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!\_@{\_}}
+\index{\_@{\_}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{\_}{\_}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::\+\_\+}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a2e44ddb33fdf5347e9ce679891af04f8}\label{structComSquare_1_1PPU_1_1Registers_a2e44ddb33fdf5347e9ce679891af04f8}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!\_@{\_}}
+\index{\_@{\_}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{\_}{\_}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily uint16\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::\+\_\+}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a9df1445d4c716a81f4b0e7a074e9ed02}\label{structComSquare_1_1PPU_1_1Registers_a9df1445d4c716a81f4b0e7a074e9ed02}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!\_@{\_}}
+\index{\_@{\_}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{\_}{\_}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily uint32\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::\+\_\+}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a5fd0bb187eb58a1da95226bed2f508f9}\label{structComSquare_1_1PPU_1_1Registers_a5fd0bb187eb58a1da95226bed2f508f9}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!\_bgmode@{\_bgmode}}
+\index{\_bgmode@{\_bgmode}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{\_bgmode}{\_bgmode}}
+{\footnotesize\ttfamily union \{ ... \}  Com\+Square\+::\+P\+P\+U\+::\+Registers\+::\+\_\+bgmode}
+
+
+
+B\+G\+M\+O\+DE Register (O\+AM Address and Obj Priority) 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a2034b7ce9333c00a5846c486cc17af9b}\label{structComSquare_1_1PPU_1_1Registers_a2034b7ce9333c00a5846c486cc17af9b}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!\_bgnba@{\_bgnba}}
+\index{\_bgnba@{\_bgnba}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{\_bgnba}{\_bgnba}}
+{\footnotesize\ttfamily union \{ ... \}  Com\+Square\+::\+P\+P\+U\+::\+Registers\+::\+\_\+bgnba\mbox{[}2\mbox{]}}
+
+
+
+B\+G\+N\+BA \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers}{Registers}} (B\+G1/2/3/4 Chr Address) 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a89f60c954d08a376ebe56f7e57fe26ff}\label{structComSquare_1_1PPU_1_1Registers_a89f60c954d08a376ebe56f7e57fe26ff}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!\_bgofs@{\_bgofs}}
+\index{\_bgofs@{\_bgofs}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{\_bgofs}{\_bgofs}}
+{\footnotesize\ttfamily union \{ ... \}  Com\+Square\+::\+P\+P\+U\+::\+Registers\+::\+\_\+bgofs\mbox{[}8\mbox{]}}
+
+
+
+B\+G\+X\+X\+O\+FS Register (B\+G1/2/3/4 Horizontal and Vertical Scrolls) 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a64f118e52d6b97784ed5bd6a0582a241}\label{structComSquare_1_1PPU_1_1Registers_a64f118e52d6b97784ed5bd6a0582a241}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!\_bgsc@{\_bgsc}}
+\index{\_bgsc@{\_bgsc}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{\_bgsc}{\_bgsc}}
+{\footnotesize\ttfamily union \{ ... \}  Com\+Square\+::\+P\+P\+U\+::\+Registers\+::\+\_\+bgsc\mbox{[}4\mbox{]}}
+
+
+
+B\+G\+SC \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers}{Registers}} (BG Tilemap Address and Size) 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_ad40111dfed28a0e8818cf16253747298}\label{structComSquare_1_1PPU_1_1Registers_ad40111dfed28a0e8818cf16253747298}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!\_cgadd@{\_cgadd}}
+\index{\_cgadd@{\_cgadd}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{\_cgadd}{\_cgadd}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::\+\_\+cgadd = 0}
+
+
+
+C\+G\+A\+DD Register (C\+G\+R\+AM Address) 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_aca396ad0306293a0fffea294fd74b8b8}\label{structComSquare_1_1PPU_1_1Registers_aca396ad0306293a0fffea294fd74b8b8}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!\_cgadsub@{\_cgadsub}}
+\index{\_cgadsub@{\_cgadsub}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{\_cgadsub}{\_cgadsub}}
+{\footnotesize\ttfamily union \{ ... \}  Com\+Square\+::\+P\+P\+U\+::\+Registers\+::\+\_\+cgadsub}
+
+
+
+C\+G\+A\+D\+S\+UB Register (Color Math designation) 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a329f1e4cdff133c835569d960c3b96e2}\label{structComSquare_1_1PPU_1_1Registers_a329f1e4cdff133c835569d960c3b96e2}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!\_cgdata@{\_cgdata}}
+\index{\_cgdata@{\_cgdata}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{\_cgdata}{\_cgdata}}
+{\footnotesize\ttfamily union \{ ... \}  Com\+Square\+::\+P\+P\+U\+::\+Registers\+::\+\_\+cgdata}
+
+
+
+C\+G\+D\+A\+TA Register (C\+G\+R\+AM Data write) 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a5d8b733482eb090005d7d1a67c886887}\label{structComSquare_1_1PPU_1_1Registers_a5d8b733482eb090005d7d1a67c886887}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!\_cgdataread@{\_cgdataread}}
+\index{\_cgdataread@{\_cgdataread}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{\_cgdataread}{\_cgdataread}}
+{\footnotesize\ttfamily union \{ ... \}  Com\+Square\+::\+P\+P\+U\+::\+Registers\+::\+\_\+cgdataread}
+
+
+
+C\+G\+R\+AM Data read. 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a3bd6d90f1fdc56795c5594906de5c1fe}\label{structComSquare_1_1PPU_1_1Registers_a3bd6d90f1fdc56795c5594906de5c1fe}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!\_cgwsel@{\_cgwsel}}
+\index{\_cgwsel@{\_cgwsel}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{\_cgwsel}{\_cgwsel}}
+{\footnotesize\ttfamily union \{ ... \}  Com\+Square\+::\+P\+P\+U\+::\+Registers\+::\+\_\+cgwsel}
+
+
+
+C\+G\+W\+S\+EL Register (Color Addition Select) 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_abd1a6ed0b8c0862feede841668d7eeab}\label{structComSquare_1_1PPU_1_1Registers_abd1a6ed0b8c0862feede841668d7eeab}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!\_coldata@{\_coldata}}
+\index{\_coldata@{\_coldata}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{\_coldata}{\_coldata}}
+{\footnotesize\ttfamily union \{ ... \}  Com\+Square\+::\+P\+P\+U\+::\+Registers\+::\+\_\+coldata}
+
+
+
+C\+O\+L\+D\+A\+TA Register (Fixed Color Data) 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_ab78e70fa0a6fd8bcb21f6c04ea209974}\label{structComSquare_1_1PPU_1_1Registers_ab78e70fa0a6fd8bcb21f6c04ea209974}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!\_incrementAmount@{\_incrementAmount}}
+\index{\_incrementAmount@{\_incrementAmount}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{\_incrementAmount}{\_incrementAmount}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::\+\_\+increment\+Amount = 1}
+
+
+
+Store the real value of the increment Amount (1, 32, 128) instead of 0,1 or 2. 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_ac67cd910fc21a57d0bdc558fab532d9a}\label{structComSquare_1_1PPU_1_1Registers_ac67cd910fc21a57d0bdc558fab532d9a}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!\_inidisp@{\_inidisp}}
+\index{\_inidisp@{\_inidisp}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{\_inidisp}{\_inidisp}}
+{\footnotesize\ttfamily union \{ ... \}  Com\+Square\+::\+P\+P\+U\+::\+Registers\+::\+\_\+inidisp}
+
+
+
+I\+N\+I\+D\+I\+SP Register (F-\/blank and Brightness) 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_aee26a1e67aec78b66f7df8aa996515b6}\label{structComSquare_1_1PPU_1_1Registers_aee26a1e67aec78b66f7df8aa996515b6}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!\_isLowByte@{\_isLowByte}}
+\index{\_isLowByte@{\_isLowByte}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{\_isLowByte}{\_isLowByte}}
+{\footnotesize\ttfamily bool Com\+Square\+::\+P\+P\+U\+::\+Registers\+::\+\_\+is\+Low\+Byte = false}
+
+
+
+This bool is used for writing either the low byte of the data (first call) or the high byte of the data (second call) @info This bool is set to True when writing to \$2121 (C\+G\+A\+DD) 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_aa936ee05cfafb5c19ee8e55ed5e6923a}\label{structComSquare_1_1PPU_1_1Registers_aa936ee05cfafb5c19ee8e55ed5e6923a}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!\_m7@{\_m7}}
+\index{\_m7@{\_m7}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{\_m7}{\_m7}}
+{\footnotesize\ttfamily union \{ ... \}  Com\+Square\+::\+P\+P\+U\+::\+Registers\+::\+\_\+m7\mbox{[}4\mbox{]}}
+
+
+
+M7A M7B M7C M7C registers, M7A and M7B are also used with (\$2134/6) (multiplactions registers) 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a0c4fa4de3f6d73e1e93e78fa6ffa8997}\label{structComSquare_1_1PPU_1_1Registers_a0c4fa4de3f6d73e1e93e78fa6ffa8997}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!\_m7ofs@{\_m7ofs}}
+\index{\_m7ofs@{\_m7ofs}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{\_m7ofs}{\_m7ofs}}
+{\footnotesize\ttfamily union \{ ... \}  Com\+Square\+::\+P\+P\+U\+::\+Registers\+::\+\_\+m7ofs\mbox{[}2\mbox{]}}
+
+
+
+M7\+H\+O\+FS Register (Mode 7 BG Horizontal Scroll) 
+
+M7\+V\+O\+FS Register (Mode 7 BG Vertical Scroll) \mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a6103db3612e2194aca0ed524034bd4e9}\label{structComSquare_1_1PPU_1_1Registers_a6103db3612e2194aca0ed524034bd4e9}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!\_m7sel@{\_m7sel}}
+\index{\_m7sel@{\_m7sel}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{\_m7sel}{\_m7sel}}
+{\footnotesize\ttfamily union \{ ... \}  Com\+Square\+::\+P\+P\+U\+::\+Registers\+::\+\_\+m7sel}
+
+
+
+T\+O\+DO M7\+S\+EL Register (Mode 7 Settings) 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_ae658ee66a7320b087f907321c436c1e9}\label{structComSquare_1_1PPU_1_1Registers_ae658ee66a7320b087f907321c436c1e9}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!\_m7x@{\_m7x}}
+\index{\_m7x@{\_m7x}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{\_m7x}{\_m7x}}
+{\footnotesize\ttfamily union \{ ... \}  Com\+Square\+::\+P\+P\+U\+::\+Registers\+::\+\_\+m7x}
+
+
+
+M7X Register (Mode 7 Center X) 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_af761bc419ab57d13dbe0f58e36a63220}\label{structComSquare_1_1PPU_1_1Registers_af761bc419ab57d13dbe0f58e36a63220}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!\_m7y@{\_m7y}}
+\index{\_m7y@{\_m7y}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{\_m7y}{\_m7y}}
+{\footnotesize\ttfamily union \{ ... \}  Com\+Square\+::\+P\+P\+U\+::\+Registers\+::\+\_\+m7y}
+
+
+
+M7Y Register (Mode 7 Center Y) 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a3225d80c284e363210ab44934529ab38}\label{structComSquare_1_1PPU_1_1Registers_a3225d80c284e363210ab44934529ab38}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!\_mosaic@{\_mosaic}}
+\index{\_mosaic@{\_mosaic}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{\_mosaic}{\_mosaic}}
+{\footnotesize\ttfamily union \{ ... \}  Com\+Square\+::\+P\+P\+U\+::\+Registers\+::\+\_\+mosaic}
+
+
+
+M\+O\+S\+A\+IC Register (Screen Pixelation) 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_acb98c668987133b44295f0a1e40243f4}\label{structComSquare_1_1PPU_1_1Registers_acb98c668987133b44295f0a1e40243f4}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!\_mpy@{\_mpy}}
+\index{\_mpy@{\_mpy}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{\_mpy}{\_mpy}}
+{\footnotesize\ttfamily union \{ ... \}  Com\+Square\+::\+P\+P\+U\+::\+Registers\+::\+\_\+mpy}
+
+
+
+M\+P\+YL -\/ M\+P\+YM -\/ M\+P\+YH \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers}{Registers}} (Multiplication Result) 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a5e1d13d88abd586149140e288278c536}\label{structComSquare_1_1PPU_1_1Registers_a5e1d13d88abd586149140e288278c536}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!\_oamadd@{\_oamadd}}
+\index{\_oamadd@{\_oamadd}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{\_oamadd}{\_oamadd}}
+{\footnotesize\ttfamily union \{ ... \}  Com\+Square\+::\+P\+P\+U\+::\+Registers\+::\+\_\+oamadd}
+
+
+
+O\+A\+M\+A\+DD Register (O\+AM Address and Obj Priority) 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_abed70ecb8186b9003a9d3d476d8e2fa8}\label{structComSquare_1_1PPU_1_1Registers_abed70ecb8186b9003a9d3d476d8e2fa8}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!\_oamdata@{\_oamdata}}
+\index{\_oamdata@{\_oamdata}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{\_oamdata}{\_oamdata}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::\+\_\+oamdata = 0}
+
+
+
+O\+A\+M\+D\+A\+TA Register (Data for O\+AM write) 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_ac07d496bd1f40dd72836adc2260e8032}\label{structComSquare_1_1PPU_1_1Registers_ac07d496bd1f40dd72836adc2260e8032}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!\_oamdataread@{\_oamdataread}}
+\index{\_oamdataread@{\_oamdataread}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{\_oamdataread}{\_oamdataread}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::\+\_\+oamdataread = 0}
+
+
+
+O\+A\+M\+D\+A\+T\+A\+R\+E\+AD -\/ Data for O\+AM read. 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a82f7635f455d9441141150fb3e26dbe3}\label{structComSquare_1_1PPU_1_1Registers_a82f7635f455d9441141150fb3e26dbe3}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!\_obsel@{\_obsel}}
+\index{\_obsel@{\_obsel}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{\_obsel}{\_obsel}}
+{\footnotesize\ttfamily union \{ ... \}  Com\+Square\+::\+P\+P\+U\+::\+Registers\+::\+\_\+obsel}
+
+
+
+O\+B\+S\+EL Register (Object Size and Character Address) 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_afd672c6ca08ac7084194009307dabedf}\label{structComSquare_1_1PPU_1_1Registers_afd672c6ca08ac7084194009307dabedf}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!\_opct@{\_opct}}
+\index{\_opct@{\_opct}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{\_opct}{\_opct}}
+{\footnotesize\ttfamily union \{ ... \}  Com\+Square\+::\+P\+P\+U\+::\+Registers\+::\+\_\+opct}
+
+
+
+O\+P\+H\+C\+T/\+O\+P\+V\+CT -\/ Horizontal/\+Vertical Scanline Location. 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_af18e066cdddf6e420236e2bb0fe8ccf4}\label{structComSquare_1_1PPU_1_1Registers_af18e066cdddf6e420236e2bb0fe8ccf4}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!\_setini@{\_setini}}
+\index{\_setini@{\_setini}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{\_setini}{\_setini}}
+{\footnotesize\ttfamily union \{ ... \}  Com\+Square\+::\+P\+P\+U\+::\+Registers\+::\+\_\+setini}
+
+
+
+S\+E\+T\+I\+NI Register (Screen Mode/\+Video Select) 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a30529f7f5885fc8fdd8f2056209d918c}\label{structComSquare_1_1PPU_1_1Registers_a30529f7f5885fc8fdd8f2056209d918c}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!\_slhv@{\_slhv}}
+\index{\_slhv@{\_slhv}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{\_slhv}{\_slhv}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::\+\_\+slhv = 0}
+
+
+
+S\+L\+HV -\/ Software Latch for H/V Counter. 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a14c7fbe7f7c0ce3a21936da5d965ca3b}\label{structComSquare_1_1PPU_1_1Registers_a14c7fbe7f7c0ce3a21936da5d965ca3b}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!\_stat77@{\_stat77}}
+\index{\_stat77@{\_stat77}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{\_stat77}{\_stat77}}
+{\footnotesize\ttfamily union \{ ... \}  Com\+Square\+::\+P\+P\+U\+::\+Registers\+::\+\_\+stat77}
+
+
+
+S\+T\+A\+T77 -\/ \mbox{\hyperlink{classComSquare_1_1PPU_1_1PPU}{P\+PU}} Status Flag and Version. 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a5d20dbf8ef7110f2a2c546cb6c486768}\label{structComSquare_1_1PPU_1_1Registers_a5d20dbf8ef7110f2a2c546cb6c486768}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!\_stat78@{\_stat78}}
+\index{\_stat78@{\_stat78}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{\_stat78}{\_stat78}}
+{\footnotesize\ttfamily union \{ ... \}  Com\+Square\+::\+P\+P\+U\+::\+Registers\+::\+\_\+stat78}
+
+
+
+S\+T\+A\+T78 -\/ \mbox{\hyperlink{classComSquare_1_1PPU_1_1PPU}{P\+PU}} Status Flag and Version. 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_ac59c1107ddbd18303dbc4dbb35525a59}\label{structComSquare_1_1PPU_1_1Registers_ac59c1107ddbd18303dbc4dbb35525a59}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!\_t@{\_t}}
+\index{\_t@{\_t}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{\_t}{\_t}}
+{\footnotesize\ttfamily union \{ ... \}  Com\+Square\+::\+P\+P\+U\+::\+Registers\+::\+\_\+t\mbox{[}2\mbox{]}}
+
+
+
+TM -\/ TS \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers}{Registers}} (Main \& Sub Screen Designation) 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a524471facdfbc5a43e045f637b5215ea}\label{structComSquare_1_1PPU_1_1Registers_a524471facdfbc5a43e045f637b5215ea}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!\_tw@{\_tw}}
+\index{\_tw@{\_tw}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{\_tw}{\_tw}}
+{\footnotesize\ttfamily union \{ ... \}  Com\+Square\+::\+P\+P\+U\+::\+Registers\+::\+\_\+tw\mbox{[}2\mbox{]}}
+
+
+
+T\+MW -\/ T\+SW \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers}{Registers}} (Window Mask Designation for the Main/\+Sub Screen) 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a909cdcbe7a4c9d1f60ef522e58584752}\label{structComSquare_1_1PPU_1_1Registers_a909cdcbe7a4c9d1f60ef522e58584752}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!\_vmadd@{\_vmadd}}
+\index{\_vmadd@{\_vmadd}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{\_vmadd}{\_vmadd}}
+{\footnotesize\ttfamily union \{ ... \}  Com\+Square\+::\+P\+P\+U\+::\+Registers\+::\+\_\+vmadd}
+
+
+
+V\+M\+A\+DD Register (V\+R\+AM Address) 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a33779e4b34f15bceca07b47d61dfb01d}\label{structComSquare_1_1PPU_1_1Registers_a33779e4b34f15bceca07b47d61dfb01d}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!\_vmain@{\_vmain}}
+\index{\_vmain@{\_vmain}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{\_vmain}{\_vmain}}
+{\footnotesize\ttfamily union \{ ... \}  Com\+Square\+::\+P\+P\+U\+::\+Registers\+::\+\_\+vmain}
+
+
+
+V\+M\+A\+IN Register (Video Port Control) 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a54826503a6094109031aececc441e16a}\label{structComSquare_1_1PPU_1_1Registers_a54826503a6094109031aececc441e16a}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!\_vmdata@{\_vmdata}}
+\index{\_vmdata@{\_vmdata}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{\_vmdata}{\_vmdata}}
+{\footnotesize\ttfamily union \{ ... \}  Com\+Square\+::\+P\+P\+U\+::\+Registers\+::\+\_\+vmdata}
+
+
+
+V\+M\+D\+A\+TA Register (V\+R\+AM Data Write) 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a34b40b495a327b7806938f69c117b261}\label{structComSquare_1_1PPU_1_1Registers_a34b40b495a327b7806938f69c117b261}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!\_vmdataread@{\_vmdataread}}
+\index{\_vmdataread@{\_vmdataread}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{\_vmdataread}{\_vmdataread}}
+{\footnotesize\ttfamily union \{ ... \}  Com\+Square\+::\+P\+P\+U\+::\+Registers\+::\+\_\+vmdataread}
+
+
+
+V\+M\+D\+A\+T\+A\+L\+R\+E\+A\+D/\+V\+M\+D\+A\+T\+A\+H\+R\+E\+AD -\/ V\+R\+AM Data Read low/high byte. 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_aa26dee0345ce8394ff54e27343f21665}\label{structComSquare_1_1PPU_1_1Registers_aa26dee0345ce8394ff54e27343f21665}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!\_wbglog@{\_wbglog}}
+\index{\_wbglog@{\_wbglog}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{\_wbglog}{\_wbglog}}
+{\footnotesize\ttfamily union \{ ... \}  Com\+Square\+::\+P\+P\+U\+::\+Registers\+::\+\_\+wbglog}
+
+
+
+W\+B\+G\+L\+OG Register (Window mask logic for B\+Gs) 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a4d7e5b0c5bae62cdc21b7418888dc291}\label{structComSquare_1_1PPU_1_1Registers_a4d7e5b0c5bae62cdc21b7418888dc291}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!\_wh@{\_wh}}
+\index{\_wh@{\_wh}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{\_wh}{\_wh}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::\+\_\+wh\mbox{[}4\mbox{]} = \{0\}}
+
+
+
+W\+H0 Register (Window 1 Left Position) 
+
+W\+H1 Register (Window 1 Right Position)
+
+W\+H2 Register (Window 2 Left Position)
+
+W\+H3 Register (Window 2 Right Position) \mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_ab76b23df7edb96f6bd48a3e7f779d626}\label{structComSquare_1_1PPU_1_1Registers_ab76b23df7edb96f6bd48a3e7f779d626}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!\_wobjlog@{\_wobjlog}}
+\index{\_wobjlog@{\_wobjlog}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{\_wobjlog}{\_wobjlog}}
+{\footnotesize\ttfamily union \{ ... \}  Com\+Square\+::\+P\+P\+U\+::\+Registers\+::\+\_\+wobjlog}
+
+
+
+W\+O\+B\+J\+L\+OG Register (Window mask logic for O\+B\+Js and Color Window) 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a821d1000ff70531d80fc606fed325e6f}\label{structComSquare_1_1PPU_1_1Registers_a821d1000ff70531d80fc606fed325e6f}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!\_wsel@{\_wsel}}
+\index{\_wsel@{\_wsel}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{\_wsel}{\_wsel}}
+{\footnotesize\ttfamily union \{ ... \}  Com\+Square\+::\+P\+P\+U\+::\+Registers\+::\+\_\+wsel\mbox{[}3\mbox{]}}
+
+
+
+W12\+S\+EL -\/ W34\+S\+EL \mbox{\hyperlink{structComSquare_1_1PPU_1_1Registers}{Registers}} (Window Mask Settings for B\+Gs) and W\+O\+B\+J\+S\+EL Register (Window Mask Settings for O\+BJ and Color Window) 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a71e8c668881575afb79b6251e784e685}\label{structComSquare_1_1PPU_1_1Registers_a71e8c668881575afb79b6251e784e685}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!addressRemapping@{addressRemapping}}
+\index{addressRemapping@{addressRemapping}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{addressRemapping}{addressRemapping}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::address\+Remapping}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_afe1188bf79dd8eb3a7559a0757fdc08a}\label{structComSquare_1_1PPU_1_1Registers_afe1188bf79dd8eb3a7559a0757fdc08a}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!addSubscreen@{addSubscreen}}
+\index{addSubscreen@{addSubscreen}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{addSubscreen}{addSubscreen}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::add\+Subscreen}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a73833d8e7c2778298b82864312c14e5a}\label{structComSquare_1_1PPU_1_1Registers_a73833d8e7c2778298b82864312c14e5a}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!addSubtractSelect@{addSubtractSelect}}
+\index{addSubtractSelect@{addSubtractSelect}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{addSubtractSelect}{addSubtractSelect}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::add\+Subtract\+Select}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_aa4598d67e60597498a219bd1a75735a0}\label{structComSquare_1_1PPU_1_1Registers_aa4598d67e60597498a219bd1a75735a0}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!affectBg1@{affectBg1}}
+\index{affectBg1@{affectBg1}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{affectBg1}{affectBg1}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::affect\+Bg1}
+
+
+
+Apply mosaic to the B\+G1. 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a38b1b1b06596ceb4f38fc50800d2f42e}\label{structComSquare_1_1PPU_1_1Registers_a38b1b1b06596ceb4f38fc50800d2f42e}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!affectBg2@{affectBg2}}
+\index{affectBg2@{affectBg2}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{affectBg2}{affectBg2}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::affect\+Bg2}
+
+
+
+Apply mosaic to the B\+G2. 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a82e9eba095ecdbbf9dbf6529e1b9ebb2}\label{structComSquare_1_1PPU_1_1Registers_a82e9eba095ecdbbf9dbf6529e1b9ebb2}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!affectBg3@{affectBg3}}
+\index{affectBg3@{affectBg3}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{affectBg3}{affectBg3}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::affect\+Bg3}
+
+
+
+Apply mosaic to the B\+G3. 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_ac97d3ff70ab283133e2dce7aa99933f7}\label{structComSquare_1_1PPU_1_1Registers_ac97d3ff70ab283133e2dce7aa99933f7}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!affectBg4@{affectBg4}}
+\index{affectBg4@{affectBg4}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{affectBg4}{affectBg4}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::affect\+Bg4}
+
+
+
+Apply mosaic to the B\+G4. 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a7b644810f5fe504f7614fb6421b307cd}\label{structComSquare_1_1PPU_1_1Registers_a7b644810f5fe504f7614fb6421b307cd}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!baseAddressBg1a3@{baseAddressBg1a3}}
+\index{baseAddressBg1a3@{baseAddressBg1a3}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{baseAddressBg1a3}{baseAddressBg1a3}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::base\+Address\+Bg1a3}
+
+
+
+The address let us know where to search for B\+G1/3 characters. 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_ac0d11e9b26c5b788e5a669b5d8eb4bd6}\label{structComSquare_1_1PPU_1_1Registers_ac0d11e9b26c5b788e5a669b5d8eb4bd6}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!baseAddressBg2a4@{baseAddressBg2a4}}
+\index{baseAddressBg2a4@{baseAddressBg2a4}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{baseAddressBg2a4}{baseAddressBg2a4}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::base\+Address\+Bg2a4}
+
+
+
+The address let us know where to search for B\+G2/4 characters. 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a50fdf9fe1db885ac251328a50035dc2e}\label{structComSquare_1_1PPU_1_1Registers_a50fdf9fe1db885ac251328a50035dc2e}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!bgMode@{bgMode}}
+\index{bgMode@{bgMode}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{bgMode}{bgMode}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::bg\+Mode}
+
+
+
+Stores the current BG Mode (0 -\/ 7) 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_afe364c46dc88f23c6af8707768c65660}\label{structComSquare_1_1PPU_1_1Registers_afe364c46dc88f23c6af8707768c65660}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!blue@{blue}}
+\index{blue@{blue}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{blue}{blue}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily uint16\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::blue}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a7a0a070cf39c32850092bac961c73a7d}\label{structComSquare_1_1PPU_1_1Registers_a7a0a070cf39c32850092bac961c73a7d}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!blue@{blue}}
+\index{blue@{blue}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{blue}{blue}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::blue}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a2df6d5af08d0d520e2b609a3ea961795}\label{structComSquare_1_1PPU_1_1Registers_a2df6d5af08d0d520e2b609a3ea961795}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!brightness@{brightness}}
+\index{brightness@{brightness}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{brightness}{brightness}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::brightness}
+
+
+
+Store the brightness value (F = max, 0 = off) 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a31437ba5b964f0b41ad3a6764246fb58}\label{structComSquare_1_1PPU_1_1Registers_a31437ba5b964f0b41ad3a6764246fb58}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!cgdatah@{cgdatah}}
+\index{cgdatah@{cgdatah}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{cgdatah}{cgdatah}}
+{\footnotesize\ttfamily uint16\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::cgdatah}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_ae296b072ec248c308819499ab916ea17}\label{structComSquare_1_1PPU_1_1Registers_ae296b072ec248c308819499ab916ea17}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!cgDataHRead@{cgDataHRead}}
+\index{cgDataHRead@{cgDataHRead}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{cgDataHRead}{cgDataHRead}}
+{\footnotesize\ttfamily uint16\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::cg\+Data\+H\+Read}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_aae4d66764cd79b4ea939667e9075cbff}\label{structComSquare_1_1PPU_1_1Registers_aae4d66764cd79b4ea939667e9075cbff}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!cgdatal@{cgdatal}}
+\index{cgdatal@{cgdatal}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{cgdatal}{cgdatal}}
+{\footnotesize\ttfamily uint16\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::cgdatal}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a6682d3265c3c12ae36c958ad5a14b9b8}\label{structComSquare_1_1PPU_1_1Registers_a6682d3265c3c12ae36c958ad5a14b9b8}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!cgDataLRead@{cgDataLRead}}
+\index{cgDataLRead@{cgDataLRead}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{cgDataLRead}{cgDataLRead}}
+{\footnotesize\ttfamily uint16\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::cg\+Data\+L\+Read}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_af4b684bda280e2791e76f44ac532754f}\label{structComSquare_1_1PPU_1_1Registers_af4b684bda280e2791e76f44ac532754f}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!characterSizeBg1@{characterSizeBg1}}
+\index{characterSizeBg1@{characterSizeBg1}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{characterSizeBg1}{characterSizeBg1}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::character\+Size\+Bg1}
+
+
+
+When The bit is set character size will 16x16 otherwise it is 8x8. 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_aa1eeeb3466a059dee7b1b2ed84e1f532}\label{structComSquare_1_1PPU_1_1Registers_aa1eeeb3466a059dee7b1b2ed84e1f532}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!characterSizeBg2@{characterSizeBg2}}
+\index{characterSizeBg2@{characterSizeBg2}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{characterSizeBg2}{characterSizeBg2}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::character\+Size\+Bg2}
+
+
+
+When The bit is set character size will 16x16 otherwise it is 8x8. 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_adb049de5dc113835849d8d149a5e096b}\label{structComSquare_1_1PPU_1_1Registers_adb049de5dc113835849d8d149a5e096b}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!characterSizeBg3@{characterSizeBg3}}
+\index{characterSizeBg3@{characterSizeBg3}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{characterSizeBg3}{characterSizeBg3}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::character\+Size\+Bg3}
+
+
+
+When The bit is set character size will 16x16 otherwise it is 8x8. 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_ad1cda1f1afa1b46c73bd199a224371e7}\label{structComSquare_1_1PPU_1_1Registers_ad1cda1f1afa1b46c73bd199a224371e7}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!characterSizeBg4@{characterSizeBg4}}
+\index{characterSizeBg4@{characterSizeBg4}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{characterSizeBg4}{characterSizeBg4}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::character\+Size\+Bg4}
+
+
+
+When The bit is set character size will 16x16 otherwise it is 8x8. 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a92b6bc07c3fd5640acb4998d873e7d9f}\label{structComSquare_1_1PPU_1_1Registers_a92b6bc07c3fd5640acb4998d873e7d9f}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!chipVersionNumber@{chipVersionNumber}}
+\index{chipVersionNumber@{chipVersionNumber}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{chipVersionNumber}{chipVersionNumber}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::chip\+Version\+Number}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a471460c4c29059fac483c2d41910e9be}\label{structComSquare_1_1PPU_1_1Registers_a471460c4c29059fac483c2d41910e9be}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!clipColorToBlackBeforeMath@{clipColorToBlackBeforeMath}}
+\index{clipColorToBlackBeforeMath@{clipColorToBlackBeforeMath}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{clipColorToBlackBeforeMath}{clipColorToBlackBeforeMath}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::clip\+Color\+To\+Black\+Before\+Math}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a224792538991c243b18e9fb045f98251}\label{structComSquare_1_1PPU_1_1Registers_a224792538991c243b18e9fb045f98251}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!colorIntensity@{colorIntensity}}
+\index{colorIntensity@{colorIntensity}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{colorIntensity}{colorIntensity}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::color\+Intensity}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_ade23606929b865b5272a57dfef664e7f}\label{structComSquare_1_1PPU_1_1Registers_ade23606929b865b5272a57dfef664e7f}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!directColorMode@{directColorMode}}
+\index{directColorMode@{directColorMode}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{directColorMode}{directColorMode}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::direct\+Color\+Mode}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_acd0478e00927c4aea6279482a626e1d1}\label{structComSquare_1_1PPU_1_1Registers_acd0478e00927c4aea6279482a626e1d1}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!emptySpaceFill@{emptySpaceFill}}
+\index{emptySpaceFill@{emptySpaceFill}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{emptySpaceFill}{emptySpaceFill}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::empty\+Space\+Fill}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a57d6cc854e05dceb3b7c48513fbbc2df}\label{structComSquare_1_1PPU_1_1Registers_a57d6cc854e05dceb3b7c48513fbbc2df}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!enableColorMathBackdrop@{enableColorMathBackdrop}}
+\index{enableColorMathBackdrop@{enableColorMathBackdrop}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{enableColorMathBackdrop}{enableColorMathBackdrop}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::enable\+Color\+Math\+Backdrop}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a2b0f80230b96e050189bdad2f1e26fef}\label{structComSquare_1_1PPU_1_1Registers_a2b0f80230b96e050189bdad2f1e26fef}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!enableColorMathBg1@{enableColorMathBg1}}
+\index{enableColorMathBg1@{enableColorMathBg1}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{enableColorMathBg1}{enableColorMathBg1}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::enable\+Color\+Math\+Bg1}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a2a49033719582b30263e87c6fb31e566}\label{structComSquare_1_1PPU_1_1Registers_a2a49033719582b30263e87c6fb31e566}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!enableColorMathBg2@{enableColorMathBg2}}
+\index{enableColorMathBg2@{enableColorMathBg2}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{enableColorMathBg2}{enableColorMathBg2}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::enable\+Color\+Math\+Bg2}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a448a4b6684c42599b0d3226f5b88a9da}\label{structComSquare_1_1PPU_1_1Registers_a448a4b6684c42599b0d3226f5b88a9da}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!enableColorMathBg3@{enableColorMathBg3}}
+\index{enableColorMathBg3@{enableColorMathBg3}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{enableColorMathBg3}{enableColorMathBg3}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::enable\+Color\+Math\+Bg3}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_ac6677e90bc8f49278caa07efe5682d73}\label{structComSquare_1_1PPU_1_1Registers_ac6677e90bc8f49278caa07efe5682d73}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!enableColorMathBg4@{enableColorMathBg4}}
+\index{enableColorMathBg4@{enableColorMathBg4}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{enableColorMathBg4}{enableColorMathBg4}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::enable\+Color\+Math\+Bg4}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a4d576479f6076b2e434a51a09e9ff445}\label{structComSquare_1_1PPU_1_1Registers_a4d576479f6076b2e434a51a09e9ff445}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!enableColorMathObj@{enableColorMathObj}}
+\index{enableColorMathObj@{enableColorMathObj}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{enableColorMathObj}{enableColorMathObj}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::enable\+Color\+Math\+Obj}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a768758573d93b6881eb7de51d388098b}\label{structComSquare_1_1PPU_1_1Registers_a768758573d93b6881eb7de51d388098b}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!enablePseudoHiresMode@{enablePseudoHiresMode}}
+\index{enablePseudoHiresMode@{enablePseudoHiresMode}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{enablePseudoHiresMode}{enablePseudoHiresMode}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::enable\+Pseudo\+Hires\+Mode}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a3f4c3293cd8d15f6fe485062b00f48e7}\label{structComSquare_1_1PPU_1_1Registers_a3f4c3293cd8d15f6fe485062b00f48e7}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!enableWindow1ForBg1Bg3Obj@{enableWindow1ForBg1Bg3Obj}}
+\index{enableWindow1ForBg1Bg3Obj@{enableWindow1ForBg1Bg3Obj}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{enableWindow1ForBg1Bg3Obj}{enableWindow1ForBg1Bg3Obj}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::enable\+Window1\+For\+Bg1\+Bg3\+Obj}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_abd894c88efa76d52e522577fe04dd888}\label{structComSquare_1_1PPU_1_1Registers_abd894c88efa76d52e522577fe04dd888}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!enableWindow1ForBg2Bg4Color@{enableWindow1ForBg2Bg4Color}}
+\index{enableWindow1ForBg2Bg4Color@{enableWindow1ForBg2Bg4Color}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{enableWindow1ForBg2Bg4Color}{enableWindow1ForBg2Bg4Color}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::enable\+Window1\+For\+Bg2\+Bg4\+Color}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a20c4a039cd0952d3e7a5c22f49c5d5a1}\label{structComSquare_1_1PPU_1_1Registers_a20c4a039cd0952d3e7a5c22f49c5d5a1}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!enableWindow2ForBg1Bg3Obj@{enableWindow2ForBg1Bg3Obj}}
+\index{enableWindow2ForBg1Bg3Obj@{enableWindow2ForBg1Bg3Obj}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{enableWindow2ForBg1Bg3Obj}{enableWindow2ForBg1Bg3Obj}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::enable\+Window2\+For\+Bg1\+Bg3\+Obj}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a4b112644685f4058ed435e1f6ce8a8dc}\label{structComSquare_1_1PPU_1_1Registers_a4b112644685f4058ed435e1f6ce8a8dc}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!enableWindow2ForBg2Bg4Color@{enableWindow2ForBg2Bg4Color}}
+\index{enableWindow2ForBg2Bg4Color@{enableWindow2ForBg2Bg4Color}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{enableWindow2ForBg2Bg4Color}{enableWindow2ForBg2Bg4Color}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::enable\+Window2\+For\+Bg2\+Bg4\+Color}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a5102d50821d14f4f2a285bf5435914b9}\label{structComSquare_1_1PPU_1_1Registers_a5102d50821d14f4f2a285bf5435914b9}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!enableWindowDisplayBg1@{enableWindowDisplayBg1}}
+\index{enableWindowDisplayBg1@{enableWindowDisplayBg1}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{enableWindowDisplayBg1}{enableWindowDisplayBg1}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::enable\+Window\+Display\+Bg1}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a0cec78847e904f51d438c3e2c96729e9}\label{structComSquare_1_1PPU_1_1Registers_a0cec78847e904f51d438c3e2c96729e9}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!enableWindowDisplayBg2@{enableWindowDisplayBg2}}
+\index{enableWindowDisplayBg2@{enableWindowDisplayBg2}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{enableWindowDisplayBg2}{enableWindowDisplayBg2}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::enable\+Window\+Display\+Bg2}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a6ccc76345e5853a278d2c2cc70909c56}\label{structComSquare_1_1PPU_1_1Registers_a6ccc76345e5853a278d2c2cc70909c56}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!enableWindowDisplayBg3@{enableWindowDisplayBg3}}
+\index{enableWindowDisplayBg3@{enableWindowDisplayBg3}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{enableWindowDisplayBg3}{enableWindowDisplayBg3}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::enable\+Window\+Display\+Bg3}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a282ac41ca9e413fee47d5da222eab462}\label{structComSquare_1_1PPU_1_1Registers_a282ac41ca9e413fee47d5da222eab462}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!enableWindowDisplayBg4@{enableWindowDisplayBg4}}
+\index{enableWindowDisplayBg4@{enableWindowDisplayBg4}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{enableWindowDisplayBg4}{enableWindowDisplayBg4}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::enable\+Window\+Display\+Bg4}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_ad544a6d71cd22b17e1eac10488387173}\label{structComSquare_1_1PPU_1_1Registers_ad544a6d71cd22b17e1eac10488387173}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!enableWindowDisplayObj@{enableWindowDisplayObj}}
+\index{enableWindowDisplayObj@{enableWindowDisplayObj}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{enableWindowDisplayObj}{enableWindowDisplayObj}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::enable\+Window\+Display\+Obj}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a1b85b42a6ee9ed12e94fd09b609ea982}\label{structComSquare_1_1PPU_1_1Registers_a1b85b42a6ee9ed12e94fd09b609ea982}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!enableWindowMaskingBg1@{enableWindowMaskingBg1}}
+\index{enableWindowMaskingBg1@{enableWindowMaskingBg1}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{enableWindowMaskingBg1}{enableWindowMaskingBg1}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::enable\+Window\+Masking\+Bg1}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_abf025a4ef5d95000511c31d6b39a6407}\label{structComSquare_1_1PPU_1_1Registers_abf025a4ef5d95000511c31d6b39a6407}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!enableWindowMaskingBg2@{enableWindowMaskingBg2}}
+\index{enableWindowMaskingBg2@{enableWindowMaskingBg2}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{enableWindowMaskingBg2}{enableWindowMaskingBg2}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::enable\+Window\+Masking\+Bg2}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_aa7e556af4086001d82fbb909dbcfecb9}\label{structComSquare_1_1PPU_1_1Registers_aa7e556af4086001d82fbb909dbcfecb9}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!enableWindowMaskingBg3@{enableWindowMaskingBg3}}
+\index{enableWindowMaskingBg3@{enableWindowMaskingBg3}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{enableWindowMaskingBg3}{enableWindowMaskingBg3}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::enable\+Window\+Masking\+Bg3}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a7f104fef32c29bb81fba2d3f44a903f5}\label{structComSquare_1_1PPU_1_1Registers_a7f104fef32c29bb81fba2d3f44a903f5}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!enableWindowMaskingBg4@{enableWindowMaskingBg4}}
+\index{enableWindowMaskingBg4@{enableWindowMaskingBg4}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{enableWindowMaskingBg4}{enableWindowMaskingBg4}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::enable\+Window\+Masking\+Bg4}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_ab89a8403bf195ffebd822492f145ad6e}\label{structComSquare_1_1PPU_1_1Registers_ab89a8403bf195ffebd822492f145ad6e}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!enableWindowMaskingObj@{enableWindowMaskingObj}}
+\index{enableWindowMaskingObj@{enableWindowMaskingObj}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{enableWindowMaskingObj}{enableWindowMaskingObj}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::enable\+Window\+Masking\+Obj}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_aa2fba453911fc8dbf83c06814e30bd5f}\label{structComSquare_1_1PPU_1_1Registers_aa2fba453911fc8dbf83c06814e30bd5f}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!externalLatchFlag@{externalLatchFlag}}
+\index{externalLatchFlag@{externalLatchFlag}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{externalLatchFlag}{externalLatchFlag}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::external\+Latch\+Flag}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_adcc70a1e884428261356e26097ce7ab1}\label{structComSquare_1_1PPU_1_1Registers_adcc70a1e884428261356e26097ce7ab1}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!externalSync@{externalSync}}
+\index{externalSync@{externalSync}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{externalSync}{externalSync}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::external\+Sync}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_ad89d3bd45e7ecb530a3fb0cbfff40417}\label{structComSquare_1_1PPU_1_1Registers_ad89d3bd45e7ecb530a3fb0cbfff40417}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!fblank@{fblank}}
+\index{fblank@{fblank}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{fblank}{fblank}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::fblank}
+
+
+
+Store the F\+Blank status. 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a539fb661fee833f017f7fc36e021ff9d}\label{structComSquare_1_1PPU_1_1Registers_a539fb661fee833f017f7fc36e021ff9d}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!green@{green}}
+\index{green@{green}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{green}{green}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily uint16\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::green}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a6892877859f8937811269e1407833d25}\label{structComSquare_1_1PPU_1_1Registers_a6892877859f8937811269e1407833d25}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!green@{green}}
+\index{green@{green}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{green}{green}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::green}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_ac6aea8a13a4bd167e45f4ef2e12d2c67}\label{structComSquare_1_1PPU_1_1Registers_ac6aea8a13a4bd167e45f4ef2e12d2c67}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!halfColorMath@{halfColorMath}}
+\index{halfColorMath@{halfColorMath}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{halfColorMath}{halfColorMath}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::half\+Color\+Math}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a88cfbd00dc66e2a6ea0a2e9b3fcf2266}\label{structComSquare_1_1PPU_1_1Registers_a88cfbd00dc66e2a6ea0a2e9b3fcf2266}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!horizontalMirroring@{horizontalMirroring}}
+\index{horizontalMirroring@{horizontalMirroring}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{horizontalMirroring}{horizontalMirroring}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::horizontal\+Mirroring}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a464025a32d7db6ba316c952760ef0953}\label{structComSquare_1_1PPU_1_1Registers_a464025a32d7db6ba316c952760ef0953}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!incrementAmount@{incrementAmount}}
+\index{incrementAmount@{incrementAmount}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{incrementAmount}{incrementAmount}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::increment\+Amount}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_ad42827f9daed59a559c2dfdec78028ab}\label{structComSquare_1_1PPU_1_1Registers_ad42827f9daed59a559c2dfdec78028ab}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!incrementMode@{incrementMode}}
+\index{incrementMode@{incrementMode}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{incrementMode}{incrementMode}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::increment\+Mode}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a680c9f1488be01354f1401d6dd59304f}\label{structComSquare_1_1PPU_1_1Registers_a680c9f1488be01354f1401d6dd59304f}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!interlaceField@{interlaceField}}
+\index{interlaceField@{interlaceField}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{interlaceField}{interlaceField}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::interlace\+Field}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_af0ba6a13f4181103565f43f8cb8acec3}\label{structComSquare_1_1PPU_1_1Registers_af0ba6a13f4181103565f43f8cb8acec3}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!m7@{m7}}
+\index{m7@{m7}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{m7}{m7}}
+{\footnotesize\ttfamily uint16\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::m7 = 0}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a818c39961f3b01c5546d30cba8e50368}\label{structComSquare_1_1PPU_1_1Registers_a818c39961f3b01c5546d30cba8e50368}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!m7h@{m7h}}
+\index{m7h@{m7h}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{m7h}{m7h}}
+{\footnotesize\ttfamily uint16\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::m7h}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_aea68c6166b98677a5a70684f1cb81166}\label{structComSquare_1_1PPU_1_1Registers_aea68c6166b98677a5a70684f1cb81166}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!m7l@{m7l}}
+\index{m7l@{m7l}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{m7l}{m7l}}
+{\footnotesize\ttfamily uint16\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::m7l}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a1dbed656115f82bf336b1d26f788fecc}\label{structComSquare_1_1PPU_1_1Registers_a1dbed656115f82bf336b1d26f788fecc}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!maskLogicBg1@{maskLogicBg1}}
+\index{maskLogicBg1@{maskLogicBg1}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{maskLogicBg1}{maskLogicBg1}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::mask\+Logic\+Bg1}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a1402a603129762f0d48a15e303f6c42c}\label{structComSquare_1_1PPU_1_1Registers_a1402a603129762f0d48a15e303f6c42c}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!maskLogicBg2@{maskLogicBg2}}
+\index{maskLogicBg2@{maskLogicBg2}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{maskLogicBg2}{maskLogicBg2}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::mask\+Logic\+Bg2}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a9bcc31343c419e9d4b290dc114a24112}\label{structComSquare_1_1PPU_1_1Registers_a9bcc31343c419e9d4b290dc114a24112}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!maskLogicBg3@{maskLogicBg3}}
+\index{maskLogicBg3@{maskLogicBg3}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{maskLogicBg3}{maskLogicBg3}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::mask\+Logic\+Bg3}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_affd4e80506de879131efa4f0989c88aa}\label{structComSquare_1_1PPU_1_1Registers_affd4e80506de879131efa4f0989c88aa}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!maskLogicBg4@{maskLogicBg4}}
+\index{maskLogicBg4@{maskLogicBg4}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{maskLogicBg4}{maskLogicBg4}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::mask\+Logic\+Bg4}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_abede9927875dda8b9ade8e826563ccc1}\label{structComSquare_1_1PPU_1_1Registers_abede9927875dda8b9ade8e826563ccc1}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!maskLogicColor@{maskLogicColor}}
+\index{maskLogicColor@{maskLogicColor}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{maskLogicColor}{maskLogicColor}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::mask\+Logic\+Color}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_af4a1dec58667f29261559b875f9ec210}\label{structComSquare_1_1PPU_1_1Registers_af4a1dec58667f29261559b875f9ec210}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!maskLogicObj@{maskLogicObj}}
+\index{maskLogicObj@{maskLogicObj}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{maskLogicObj}{maskLogicObj}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::mask\+Logic\+Obj}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_abd23578cd08e6eafb20666f2cfa5f4c5}\label{structComSquare_1_1PPU_1_1Registers_abd23578cd08e6eafb20666f2cfa5f4c5}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!mode@{mode}}
+\index{mode@{mode}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{mode}{mode}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::mode}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_ae9d7960df19fe4c36ff5063f8e070b16}\label{structComSquare_1_1PPU_1_1Registers_ae9d7960df19fe4c36ff5063f8e070b16}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!mode1Bg3PriorityBit@{mode1Bg3PriorityBit}}
+\index{mode1Bg3PriorityBit@{mode1Bg3PriorityBit}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{mode1Bg3PriorityBit}{mode1Bg3PriorityBit}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::mode1\+Bg3\+Priority\+Bit}
+
+
+
+When Mode 1 B\+G3 priority bit is set the B\+G3 is draw. 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a8451a17bc23d24fa5da09a4ff7f2241e}\label{structComSquare_1_1PPU_1_1Registers_a8451a17bc23d24fa5da09a4ff7f2241e}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!mode7ExtBg@{mode7ExtBg}}
+\index{mode7ExtBg@{mode7ExtBg}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{mode7ExtBg}{mode7ExtBg}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::mode7\+Ext\+Bg}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_ae06c08799600513066849ea1ce0c02e5}\label{structComSquare_1_1PPU_1_1Registers_ae06c08799600513066849ea1ce0c02e5}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!modeSelect@{modeSelect}}
+\index{modeSelect@{modeSelect}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{modeSelect}{modeSelect}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::mode\+Select}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_ad7e4f10bf2d94a2a8835e876c4b16f58}\label{structComSquare_1_1PPU_1_1Registers_ad7e4f10bf2d94a2a8835e876c4b16f58}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!mpy@{mpy}}
+\index{mpy@{mpy}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{mpy}{mpy}}
+{\footnotesize\ttfamily uint32\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::mpy = 0}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_ad649f649bf92205fc837e6fc5669e12c}\label{structComSquare_1_1PPU_1_1Registers_ad649f649bf92205fc837e6fc5669e12c}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!mpyh@{mpyh}}
+\index{mpyh@{mpyh}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{mpyh}{mpyh}}
+{\footnotesize\ttfamily uint32\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::mpyh}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_ab145a7fb3ce4dce4a10905078f8d1768}\label{structComSquare_1_1PPU_1_1Registers_ab145a7fb3ce4dce4a10905078f8d1768}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!mpyl@{mpyl}}
+\index{mpyl@{mpyl}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{mpyl}{mpyl}}
+{\footnotesize\ttfamily uint32\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::mpyl}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_aee338776bb9d71eb191e618b63b00155}\label{structComSquare_1_1PPU_1_1Registers_aee338776bb9d71eb191e618b63b00155}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!mpym@{mpym}}
+\index{mpym@{mpym}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{mpym}{mpym}}
+{\footnotesize\ttfamily uint32\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::mpym}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a561096b359b6094f5e5b3c48819b3888}\label{structComSquare_1_1PPU_1_1Registers_a561096b359b6094f5e5b3c48819b3888}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!nameBaseSelect@{nameBaseSelect}}
+\index{nameBaseSelect@{nameBaseSelect}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{nameBaseSelect}{nameBaseSelect}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::name\+Base\+Select}
+
+
+
+Stores the location of the first sprite table. 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_aead7494c465a052b2b24bddf83c47675}\label{structComSquare_1_1PPU_1_1Registers_aead7494c465a052b2b24bddf83c47675}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!nameSelect@{nameSelect}}
+\index{nameSelect@{nameSelect}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{nameSelect}{nameSelect}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::name\+Select}
+
+
+
+Stores the offset of the second sprite table. 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a63d526c1eba8929a80aa7fa1373c8547}\label{structComSquare_1_1PPU_1_1Registers_a63d526c1eba8929a80aa7fa1373c8547}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!oamaddh@{oamaddh}}
+\index{oamaddh@{oamaddh}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{oamaddh}{oamaddh}}
+{\footnotesize\ttfamily uint16\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::oamaddh}
+
+
+
+Stores the data written on the O\+A\+M\+A\+D\+DH register. 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_ab7ba4f2ed59176ee7791770d360fd2aa}\label{structComSquare_1_1PPU_1_1Registers_ab7ba4f2ed59176ee7791770d360fd2aa}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!oamaddl@{oamaddl}}
+\index{oamaddl@{oamaddl}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{oamaddl}{oamaddl}}
+{\footnotesize\ttfamily uint16\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::oamaddl}
+
+
+
+Stores the data written on the O\+A\+M\+A\+D\+DL register. 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a7955a9651995c15fbde9b4361191e5bf}\label{structComSquare_1_1PPU_1_1Registers_a7955a9651995c15fbde9b4361191e5bf}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!oamAddress@{oamAddress}}
+\index{oamAddress@{oamAddress}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{oamAddress}{oamAddress}}
+{\footnotesize\ttfamily uint16\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::oam\+Address}
+
+
+
+Stores the address to write with O\+A\+M\+D\+A\+TA register. 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_ad26cc7129a7c1b350326ef585605cb54}\label{structComSquare_1_1PPU_1_1Registers_ad26cc7129a7c1b350326ef585605cb54}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!objectSize@{objectSize}}
+\index{objectSize@{objectSize}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{objectSize}{objectSize}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::object\+Size}
+
+
+
+Stores the resolution preset of the sprites. 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a6d099497848016487ea7de8a58183b2d}\label{structComSquare_1_1PPU_1_1Registers_a6d099497848016487ea7de8a58183b2d}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!objInterlace@{objInterlace}}
+\index{objInterlace@{objInterlace}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{objInterlace}{objInterlace}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::obj\+Interlace}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a35009b9e24b063764f9dc4cca0e51011}\label{structComSquare_1_1PPU_1_1Registers_a35009b9e24b063764f9dc4cca0e51011}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!objPriorityActivationBit@{objPriorityActivationBit}}
+\index{objPriorityActivationBit@{objPriorityActivationBit}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{objPriorityActivationBit}{objPriorityActivationBit}}
+{\footnotesize\ttfamily uint16\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::obj\+Priority\+Activation\+Bit}
+
+
+
+When Obj Priority activation bit is set, an Obj other than Sprite 0 may be given priority. 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a80ea6c5bdf71038e00352f0cae6c7641}\label{structComSquare_1_1PPU_1_1Registers_a80ea6c5bdf71038e00352f0cae6c7641}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!offsetBg@{offsetBg}}
+\index{offsetBg@{offsetBg}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{offsetBg}{offsetBg}}
+{\footnotesize\ttfamily uint16\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::offset\+Bg}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a8db03038a50d72d4af9a120c57cd1a36}\label{structComSquare_1_1PPU_1_1Registers_a8db03038a50d72d4af9a120c57cd1a36}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!opct@{opct}}
+\index{opct@{opct}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{opct}{opct}}
+{\footnotesize\ttfamily uint16\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::opct}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a6ed760cfa9f9f48b3a9cad3ee5a7f4c2}\label{structComSquare_1_1PPU_1_1Registers_a6ed760cfa9f9f48b3a9cad3ee5a7f4c2}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!overscanMode@{overscanMode}}
+\index{overscanMode@{overscanMode}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{overscanMode}{overscanMode}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::overscan\+Mode}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_ace2de357dacc308ed259f420fe8e533a}\label{structComSquare_1_1PPU_1_1Registers_ace2de357dacc308ed259f420fe8e533a}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!pixelSize@{pixelSize}}
+\index{pixelSize@{pixelSize}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{pixelSize}{pixelSize}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::pixel\+Size}
+
+
+
+Stores the pixel size (0 = 1x1, F = 16x16) 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a8beb0fe593cab00da8e1a47e5134961d}\label{structComSquare_1_1PPU_1_1Registers_a8beb0fe593cab00da8e1a47e5134961d}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!playingFieldSize@{playingFieldSize}}
+\index{playingFieldSize@{playingFieldSize}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{playingFieldSize}{playingFieldSize}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::playing\+Field\+Size}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_ae78cfbd1e53387f28be4df2d7aeb60ed}\label{structComSquare_1_1PPU_1_1Registers_ae78cfbd1e53387f28be4df2d7aeb60ed}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!preventColorMath@{preventColorMath}}
+\index{preventColorMath@{preventColorMath}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{preventColorMath}{preventColorMath}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::prevent\+Color\+Math}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a3240199b75a6d7727fce2be66e613503}\label{structComSquare_1_1PPU_1_1Registers_a3240199b75a6d7727fce2be66e613503}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!rangeOverFlag@{rangeOverFlag}}
+\index{rangeOverFlag@{rangeOverFlag}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{rangeOverFlag}{rangeOverFlag}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::range\+Over\+Flag}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_aaa5d608216594d1f98aaafbf58b3e833}\label{structComSquare_1_1PPU_1_1Registers_aaa5d608216594d1f98aaafbf58b3e833}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!raw@{raw}}
+\index{raw@{raw}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{raw}{raw}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::raw = 0}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a651e268a38e31c64e4614912a955ed66}\label{structComSquare_1_1PPU_1_1Registers_a651e268a38e31c64e4614912a955ed66}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!raw@{raw}}
+\index{raw@{raw}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{raw}{raw}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily uint16\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::raw = 0}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a902013ea2fc06f43b77d8ccb819fcadf}\label{structComSquare_1_1PPU_1_1Registers_a902013ea2fc06f43b77d8ccb819fcadf}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!red@{red}}
+\index{red@{red}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{red}{red}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily uint16\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::red}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a47c788ef2b03906af6df76dc323a0174}\label{structComSquare_1_1PPU_1_1Registers_a47c788ef2b03906af6df76dc323a0174}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!red@{red}}
+\index{red@{red}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{red}{red}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::red}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a5a6532d38bad97f056a3c77cd8c748bf}\label{structComSquare_1_1PPU_1_1Registers_a5a6532d38bad97f056a3c77cd8c748bf}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!screenInterlace@{screenInterlace}}
+\index{screenInterlace@{screenInterlace}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{screenInterlace}{screenInterlace}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::screen\+Interlace}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_af7a860159be173bde3e045442d2ccdb2}\label{structComSquare_1_1PPU_1_1Registers_af7a860159be173bde3e045442d2ccdb2}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!tilemapAddress@{tilemapAddress}}
+\index{tilemapAddress@{tilemapAddress}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{tilemapAddress}{tilemapAddress}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::tilemap\+Address}
+
+
+
+Address of the tilemap Address (0, 0) 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a96350282b0226c820ba05aa484ed7fae}\label{structComSquare_1_1PPU_1_1Registers_a96350282b0226c820ba05aa484ed7fae}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!tilemapHorizontalMirroring@{tilemapHorizontalMirroring}}
+\index{tilemapHorizontalMirroring@{tilemapHorizontalMirroring}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{tilemapHorizontalMirroring}{tilemapHorizontalMirroring}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::tilemap\+Horizontal\+Mirroring}
+
+
+
+When tilemap horizontal mirroring bit is set the tilemap is mirrored horizontally. 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a2b0afd7d52d53395c017675eb6b953e7}\label{structComSquare_1_1PPU_1_1Registers_a2b0afd7d52d53395c017675eb6b953e7}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!tilemapVerticalMirroring@{tilemapVerticalMirroring}}
+\index{tilemapVerticalMirroring@{tilemapVerticalMirroring}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{tilemapVerticalMirroring}{tilemapVerticalMirroring}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::tilemap\+Vertical\+Mirroring}
+
+
+
+When tilemap vertically mirroring bit is set the tilemap is mirrored vertically. 
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a4474ff6e9cf8bfe1cb0afd54d636a1af}\label{structComSquare_1_1PPU_1_1Registers_a4474ff6e9cf8bfe1cb0afd54d636a1af}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!timeOverFlag@{timeOverFlag}}
+\index{timeOverFlag@{timeOverFlag}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{timeOverFlag}{timeOverFlag}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::time\+Over\+Flag}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a481699c30871d4cfc1859b62942914a9}\label{structComSquare_1_1PPU_1_1Registers_a481699c30871d4cfc1859b62942914a9}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!value@{value}}
+\index{value@{value}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{value}{value}}
+{\footnotesize\ttfamily uint16\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::value}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_ac9d2e14fa93d1fc7d951de7f815100cc}\label{structComSquare_1_1PPU_1_1Registers_ac9d2e14fa93d1fc7d951de7f815100cc}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!verticalMirroring@{verticalMirroring}}
+\index{verticalMirroring@{verticalMirroring}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{verticalMirroring}{verticalMirroring}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::vertical\+Mirroring}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_aee2c041d0167c86d937d22f47de90df2}\label{structComSquare_1_1PPU_1_1Registers_aee2c041d0167c86d937d22f47de90df2}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!vmadd@{vmadd}}
+\index{vmadd@{vmadd}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{vmadd}{vmadd}}
+{\footnotesize\ttfamily uint16\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::vmadd = 0}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a8002d327d32ac9bd2c7fde4be00949ca}\label{structComSquare_1_1PPU_1_1Registers_a8002d327d32ac9bd2c7fde4be00949ca}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!vmaddh@{vmaddh}}
+\index{vmaddh@{vmaddh}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{vmaddh}{vmaddh}}
+{\footnotesize\ttfamily uint16\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::vmaddh}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a75c439475d71f9e80a65209f6f6b1bc7}\label{structComSquare_1_1PPU_1_1Registers_a75c439475d71f9e80a65209f6f6b1bc7}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!vmaddl@{vmaddl}}
+\index{vmaddl@{vmaddl}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{vmaddl}{vmaddl}}
+{\footnotesize\ttfamily uint16\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::vmaddl}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_ac6801f09fe08aca780553c4a66f98956}\label{structComSquare_1_1PPU_1_1Registers_ac6801f09fe08aca780553c4a66f98956}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!vmdata@{vmdata}}
+\index{vmdata@{vmdata}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{vmdata}{vmdata}}
+{\footnotesize\ttfamily uint16\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::vmdata = 0}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_ae360576d7854878a113453649a516fc9}\label{structComSquare_1_1PPU_1_1Registers_ae360576d7854878a113453649a516fc9}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!vmdatah@{vmdatah}}
+\index{vmdatah@{vmdatah}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{vmdatah}{vmdatah}}
+{\footnotesize\ttfamily uint16\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::vmdatah}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a820fb72888c7a6796c2e37e050147601}\label{structComSquare_1_1PPU_1_1Registers_a820fb72888c7a6796c2e37e050147601}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!vmDataHRead@{vmDataHRead}}
+\index{vmDataHRead@{vmDataHRead}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{vmDataHRead}{vmDataHRead}}
+{\footnotesize\ttfamily uint16\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::vm\+Data\+H\+Read}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_abeef5d306b323eaf47313b96e10f58d3}\label{structComSquare_1_1PPU_1_1Registers_abeef5d306b323eaf47313b96e10f58d3}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!vmdatal@{vmdatal}}
+\index{vmdatal@{vmdatal}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{vmdatal}{vmdatal}}
+{\footnotesize\ttfamily uint16\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::vmdatal}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_ab71233b18471fa0c799cb4052fd513b8}\label{structComSquare_1_1PPU_1_1Registers_ab71233b18471fa0c799cb4052fd513b8}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!vmDataLRead@{vmDataLRead}}
+\index{vmDataLRead@{vmDataLRead}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{vmDataLRead}{vmDataLRead}}
+{\footnotesize\ttfamily uint16\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::vm\+Data\+L\+Read}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a286dc725cb71ae3693e8b8ea36fb2101}\label{structComSquare_1_1PPU_1_1Registers_a286dc725cb71ae3693e8b8ea36fb2101}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!window1InversionForBg1Bg3Obj@{window1InversionForBg1Bg3Obj}}
+\index{window1InversionForBg1Bg3Obj@{window1InversionForBg1Bg3Obj}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{window1InversionForBg1Bg3Obj}{window1InversionForBg1Bg3Obj}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::window1\+Inversion\+For\+Bg1\+Bg3\+Obj}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a75557a2942b8f09194797d0bc0d83916}\label{structComSquare_1_1PPU_1_1Registers_a75557a2942b8f09194797d0bc0d83916}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!window1InversionForBg2Bg4Color@{window1InversionForBg2Bg4Color}}
+\index{window1InversionForBg2Bg4Color@{window1InversionForBg2Bg4Color}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{window1InversionForBg2Bg4Color}{window1InversionForBg2Bg4Color}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::window1\+Inversion\+For\+Bg2\+Bg4\+Color}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_a4df4921f88cdfca968398f43cdb84303}\label{structComSquare_1_1PPU_1_1Registers_a4df4921f88cdfca968398f43cdb84303}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!window2InversionForBg1Bg3Obj@{window2InversionForBg1Bg3Obj}}
+\index{window2InversionForBg1Bg3Obj@{window2InversionForBg1Bg3Obj}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{window2InversionForBg1Bg3Obj}{window2InversionForBg1Bg3Obj}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::window2\+Inversion\+For\+Bg1\+Bg3\+Obj}
+
+\mbox{\Hypertarget{structComSquare_1_1PPU_1_1Registers_ab4de8f92af0463b73c9d75860061990c}\label{structComSquare_1_1PPU_1_1Registers_ab4de8f92af0463b73c9d75860061990c}} 
+\index{ComSquare::PPU::Registers@{ComSquare::PPU::Registers}!window2InversionForBg2Bg4Color@{window2InversionForBg2Bg4Color}}
+\index{window2InversionForBg2Bg4Color@{window2InversionForBg2Bg4Color}!ComSquare::PPU::Registers@{ComSquare::PPU::Registers}}
+\doxysubsubsection{\texorpdfstring{window2InversionForBg2Bg4Color}{window2InversionForBg2Bg4Color}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Registers\+::window2\+Inversion\+For\+Bg2\+Bg4\+Color}
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+sources/\+P\+P\+U/\mbox{\hyperlink{PPURegisters_8hpp}{P\+P\+U\+Registers.\+hpp}}\end{DoxyCompactItemize}

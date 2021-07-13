@@ -1,0 +1,545 @@
+\hypertarget{classComSquare_1_1PPU_1_1Background}{}\doxysection{Com\+Square\+::P\+PU\+::Background Class Reference}
+\label{classComSquare_1_1PPU_1_1Background}\index{ComSquare::PPU::Background@{ComSquare::PPU::Background}}
+
+
+{\ttfamily \#include $<$Background.\+hpp$>$}
+
+
+
+Collaboration diagram for Com\+Square\+::P\+PU\+::Background\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classComSquare_1_1PPU_1_1Background__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background_a9dea6472f63a10d256cc9ec7019f5ada}{is\+Priority\+Pixel}} (int x, int y) const
+\begin{DoxyCompactList}\small\item\em Tells if a pixel has high priority. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background_acb580c6b43203bf22cb33843b4ae71c5}{render\+Background}} ()
+\begin{DoxyCompactList}\small\item\em Render a background on his internal buffer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background_a09ef67d83a602a46b5f29e2163e550e2}{set\+Tile\+Map\+Start\+Address}} (uint16\+\_\+t address)
+\begin{DoxyCompactList}\small\item\em Set the tile\+Map start address. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background_ad67e49715d3e9b9a3efe3597e311ebe4}{set\+Character\+Size}} (\mbox{\hyperlink{classComSquare_1_1Vector2}{Vector2}}$<$ int $>$ size)
+\begin{DoxyCompactList}\small\item\em Set the character Size. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background_a01109a9510970e10efe598cee3b3bf87}{set\+Tileset\+Address}} (uint16\+\_\+t address)
+\begin{DoxyCompactList}\small\item\em Set the tileset address of the background. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background_ad8cafd31589068c91f5eff593e996088}{set\+Bpp}} (int bpp)
+\begin{DoxyCompactList}\small\item\em Set the bpp (bits per pixels) of the \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background}{Background}} @info The bpp can be 2, 4 or 8 (7 can be possible when Bg\+Mode is 7) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background_aae8bbccf1019bbeae08f6786a0ee66f1}{set\+Tile\+Map\+Mirroring}} (\mbox{\hyperlink{classComSquare_1_1Vector2}{Vector2}}$<$ bool $>$ tile\+Maps)
+\begin{DoxyCompactList}\small\item\em setter for private variable \+\_\+tile\+Maps \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background_a1b4fa72ca4ed04e1e202eba59239cf7e}{get\+Bg\+Number}} () const
+\begin{DoxyCompactList}\small\item\em Get the Back\+Ground Number. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1PPU_1_1Background_ac3c06cbbf07910d105ee062772593beb}{Background}} (\mbox{\hyperlink{classComSquare_1_1PPU_1_1PPU}{P\+PU}} \&\mbox{\hyperlink{classComSquare_1_1PPU_1_1Background_a185d675924a39865a5d5b848f91eda7a}{\+\_\+ppu}}, int background\+Number)
+\begin{DoxyCompactList}\small\item\em ctor \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1PPU_1_1Background_a49a8fc7697cb52fa8bdc3830dee3a655}{Background}} (const \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background}{Background}} \&)=default
+\begin{DoxyCompactList}\small\item\em Default copy ctor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1PPU_1_1Background_a5eb43b7fdee5cfa0a394cbf9c1d28c0e}{$\sim$\+Background}} ()=default
+\begin{DoxyCompactList}\small\item\em Default destructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1PPU_1_1Background}{Background}} \& \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background_a67d74cbe9d31e8361bf13f74cfd69a02}{operator=}} (const \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background}{Background}} \&)=delete
+\begin{DoxyCompactList}\small\item\em Delete assignment operator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$int level\+Low, int level\+High, std\+::size\+\_\+t D\+E\+S\+T\+\_\+\+S\+I\+Z\+E\+\_\+X, std\+::size\+\_\+t D\+E\+S\+T\+\_\+\+S\+I\+Z\+E\+\_\+Y$>$ }\\static void \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background_a23cb0aa1111c675aafa8a843a86a1206}{merge\+Background\+Buffer}} (std\+::array$<$ std\+::array$<$ uint32\+\_\+t, D\+E\+S\+T\+\_\+\+S\+I\+Z\+E\+\_\+Y $>$, D\+E\+S\+T\+\_\+\+S\+I\+Z\+E\+\_\+X $>$ \&buffer\+Dest, std\+::array$<$ std\+::array$<$ unsigned char, D\+E\+S\+T\+\_\+\+S\+I\+Z\+E\+\_\+Y $>$, D\+E\+S\+T\+\_\+\+S\+I\+Z\+E\+\_\+X $>$ \&pixel\+Destination\+Level\+Map, const \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background}{Background}} \&background\+Src)
+\begin{DoxyCompactList}\small\item\em Add a bg buffer to another buffer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classComSquare_1_1Vector2}{Vector2}}$<$ unsigned $>$ \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background_a507a41d8091918f3b740388b35fda93f}{background\+Size}}
+\begin{DoxyCompactList}\small\item\em The size of the background (x, y) \end{DoxyCompactList}\item 
+std\+::array$<$ std\+::array$<$ uint32\+\_\+t, 1024 $>$, 1024 $>$ \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background_aff367bd4aa0f79058e6394008823a41a}{buffer}}
+\begin{DoxyCompactList}\small\item\em The output buffer (pixels are written on it) \end{DoxyCompactList}\item 
+std\+::array$<$ std\+::array$<$ bool, 64 $>$, 64 $>$ \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background_a24d26aec086d56d7d9dec8bbc5b0e913}{tiles\+Priority}}
+\begin{DoxyCompactList}\small\item\em The buffer of tile priority level. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background_a0a01178de92dfb4c6291e903b84d70a2}{\+\_\+draw\+Tile}} (uint16\+\_\+t data, \mbox{\hyperlink{classComSquare_1_1Vector2}{Vector2}}$<$ int $>$ index\+Offset)
+\begin{DoxyCompactList}\small\item\em Draw a tile on the screen at x y pos. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background_af9de907c53563d22abe3c004e1a34af7}{\+\_\+draw\+Tile\+From\+Memory\+To\+Tile\+Buffer}} (const union \mbox{\hyperlink{unionComSquare_1_1PPU_1_1Utils_1_1TileData}{Utils\+::\+Tile\+Data}} \&tile\+Data)
+\begin{DoxyCompactList}\small\item\em Draw the tile to the tile Buffer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background_a99e2259a77a2413ea949e47dd6bb7203}{\+\_\+draw\+Basic\+Tile\+Map}} (uint16\+\_\+t base\+Address, \mbox{\hyperlink{classComSquare_1_1Vector2}{Vector2}}$<$ int $>$ offset)
+\begin{DoxyCompactList}\small\item\em draw a tile\+Map 32x32 starting at base\+Address \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classComSquare_1_1PPU_1_1PPU}{P\+PU}} \& \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background_a185d675924a39865a5d5b848f91eda7a}{\+\_\+ppu}}
+\begin{DoxyCompactList}\small\item\em the ppu used to get registers values (ex\+: bg scroll) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1Vector2}{Vector2}}$<$ bool $>$ \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background_a3e2d7e4ff5db53114588c2467ed162fb}{\+\_\+tile\+Map\+Mirroring}}
+\begin{DoxyCompactList}\small\item\em The tilemap configuration nb of tile\+Map vertically and horizontally. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1Vector2}{Vector2}}$<$ int $>$ \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background_abf5dd5d5dfdc1888708afafb87ea68f6}{\+\_\+character\+Nb\+Pixels}}
+\begin{DoxyCompactList}\small\item\em The number of pixels of a character (x\+: width, y\+: height) \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background_a1cbec0b01168afb9df3a214b3eda93b7}{\+\_\+bpp}}
+\begin{DoxyCompactList}\small\item\em The number of bits per pixels to currently look for each pixel. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background_ab98fb05cdac5566fb2f375d45928b5c1}{\+\_\+direct\+Color}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{classComSquare_1_1PPU_1_1PPU}{P\+PU}} official direct color mode. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background_af44abd6b1c7a00efc7fdee4ae3e0e363}{\+\_\+high\+Res}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{classComSquare_1_1PPU_1_1PPU}{P\+PU}} offical high\+Res mode. \end{DoxyCompactList}\item 
+uint16\+\_\+t \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background_a86104c70c40ea5d2f2bb435546f0e7b2}{\+\_\+tile\+Map\+Start\+Address}}
+\begin{DoxyCompactList}\small\item\em The first address of the tilemap data. \end{DoxyCompactList}\item 
+uint16\+\_\+t \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background_ab91bfe5a53076666eaa2f2d79d323313}{\+\_\+tileset\+Address}}
+\begin{DoxyCompactList}\small\item\em The first address for tileset data. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background_a3e0c647f9bf829189e919e40e85fda56}{\+\_\+bg\+Number}}
+\begin{DoxyCompactList}\small\item\em The bg number (used to get the corresponding scroll) \end{DoxyCompactList}\item 
+std\+::array$<$ std\+::array$<$ uint32\+\_\+t, 16 $>$, 16 $>$ \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background_a0a5ee21c8aca531438502db7f5839ef4}{\+\_\+tile\+Buffer}}
+\begin{DoxyCompactList}\small\item\em Buffer if we have tiles that are more than 8x8. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1Ram_1_1Ram}{Ram\+::\+Ram}} \& \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background_a0fc71a4b6a2187a8df05fd347c97062e}{\+\_\+vram}}
+\begin{DoxyCompactList}\small\item\em the access to vram \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1Ram_1_1Ram}{Ram\+::\+Ram}} \& \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background_ab931f1d7750b9b037b1c7d994b0accc8}{\+\_\+cgram}}
+\begin{DoxyCompactList}\small\item\em The access to cgram. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1PPU_1_1TileRenderer}{Tile\+Renderer}} \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background_ad322902a76c56f9823265d5e78d81929}{\+\_\+tile\+Renderer}}
+\begin{DoxyCompactList}\small\item\em Class that actually render a tile. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr int \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background_a2698487d815aca1465358fee94d30260}{Nb\+Character\+Width}} = 32
+\begin{DoxyCompactList}\small\item\em The number of character a Tile\+Map has in width. \end{DoxyCompactList}\item 
+static constexpr int \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background_af09bc06e1e0fa841b3a3ff83f58274fd}{Nb\+Character\+Height}} = 32
+\begin{DoxyCompactList}\small\item\em The number of character a Tile\+Map has in height. \end{DoxyCompactList}\item 
+static constexpr unsigned \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background_aadb6e59076c9bc2a3c3313e9ccccd53a}{Nb\+Tile\+Per\+Row}} = 16
+\begin{DoxyCompactList}\small\item\em The number of rows in one line of V\+R\+AM. \end{DoxyCompactList}\item 
+static constexpr unsigned short \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background_ac31f9e7ff169d6e694d5a2b2b944dcc1}{Tile\+Map\+Byte\+Size}} = 0x800
+\begin{DoxyCompactList}\small\item\em The size of a Tile\+Map in memory. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1Background_ac3c06cbbf07910d105ee062772593beb}\label{classComSquare_1_1PPU_1_1Background_ac3c06cbbf07910d105ee062772593beb}} 
+\index{ComSquare::PPU::Background@{ComSquare::PPU::Background}!Background@{Background}}
+\index{Background@{Background}!ComSquare::PPU::Background@{ComSquare::PPU::Background}}
+\doxysubsubsection{\texorpdfstring{Background()}{Background()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Com\+Square\+::\+P\+P\+U\+::\+Background\+::\+Background (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classComSquare_1_1PPU_1_1PPU}{P\+PU}} \&}]{\+\_\+ppu,  }\item[{int}]{background\+Number }\end{DoxyParamCaption})}
+
+
+
+ctor 
+
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1Background_a49a8fc7697cb52fa8bdc3830dee3a655}\label{classComSquare_1_1PPU_1_1Background_a49a8fc7697cb52fa8bdc3830dee3a655}} 
+\index{ComSquare::PPU::Background@{ComSquare::PPU::Background}!Background@{Background}}
+\index{Background@{Background}!ComSquare::PPU::Background@{ComSquare::PPU::Background}}
+\doxysubsubsection{\texorpdfstring{Background()}{Background()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Com\+Square\+::\+P\+P\+U\+::\+Background\+::\+Background (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background}{Background}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+Default copy ctor. 
+
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1Background_a5eb43b7fdee5cfa0a394cbf9c1d28c0e}\label{classComSquare_1_1PPU_1_1Background_a5eb43b7fdee5cfa0a394cbf9c1d28c0e}} 
+\index{ComSquare::PPU::Background@{ComSquare::PPU::Background}!````~Background@{$\sim$Background}}
+\index{````~Background@{$\sim$Background}!ComSquare::PPU::Background@{ComSquare::PPU::Background}}
+\doxysubsubsection{\texorpdfstring{$\sim$Background()}{~Background()}}
+{\footnotesize\ttfamily Com\+Square\+::\+P\+P\+U\+::\+Background\+::$\sim$\+Background (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+Default destructor. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1Background_a99e2259a77a2413ea949e47dd6bb7203}\label{classComSquare_1_1PPU_1_1Background_a99e2259a77a2413ea949e47dd6bb7203}} 
+\index{ComSquare::PPU::Background@{ComSquare::PPU::Background}!\_drawBasicTileMap@{\_drawBasicTileMap}}
+\index{\_drawBasicTileMap@{\_drawBasicTileMap}!ComSquare::PPU::Background@{ComSquare::PPU::Background}}
+\doxysubsubsection{\texorpdfstring{\_drawBasicTileMap()}{\_drawBasicTileMap()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+P\+P\+U\+::\+Background\+::\+\_\+draw\+Basic\+Tile\+Map (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{base\+Address,  }\item[{\mbox{\hyperlink{classComSquare_1_1Vector2}{Vector2}}$<$ int $>$}]{offset }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+draw a tile\+Map 32x32 starting at base\+Address 
+
+
+\begin{DoxyParams}{Parameters}
+{\em base\+Address} & The starting address of the tile\+Map \\
+\hline
+{\em offset} & The offset of the tile map (ranging from 0 to 1) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1Background_a0a01178de92dfb4c6291e903b84d70a2}\label{classComSquare_1_1PPU_1_1Background_a0a01178de92dfb4c6291e903b84d70a2}} 
+\index{ComSquare::PPU::Background@{ComSquare::PPU::Background}!\_drawTile@{\_drawTile}}
+\index{\_drawTile@{\_drawTile}!ComSquare::PPU::Background@{ComSquare::PPU::Background}}
+\doxysubsubsection{\texorpdfstring{\_drawTile()}{\_drawTile()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+P\+P\+U\+::\+Background\+::\+\_\+draw\+Tile (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{data,  }\item[{\mbox{\hyperlink{classComSquare_1_1Vector2}{Vector2}}$<$ int $>$}]{index\+Offset }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Draw a tile on the screen at x y pos. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & The V\+R\+AM value to be interpreted as a \mbox{\hyperlink{unionComSquare_1_1PPU_1_1Utils_1_1TileData}{Utils\+::\+Tile\+Data}} \\
+\hline
+{\em index\+Offset} & The index offset of the \mbox{\hyperlink{structComSquare_1_1PPU_1_1Tile}{Tile}} (ranging from 0 to 63) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1Background_af9de907c53563d22abe3c004e1a34af7}\label{classComSquare_1_1PPU_1_1Background_af9de907c53563d22abe3c004e1a34af7}} 
+\index{ComSquare::PPU::Background@{ComSquare::PPU::Background}!\_drawTileFromMemoryToTileBuffer@{\_drawTileFromMemoryToTileBuffer}}
+\index{\_drawTileFromMemoryToTileBuffer@{\_drawTileFromMemoryToTileBuffer}!ComSquare::PPU::Background@{ComSquare::PPU::Background}}
+\doxysubsubsection{\texorpdfstring{\_drawTileFromMemoryToTileBuffer()}{\_drawTileFromMemoryToTileBuffer()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+P\+P\+U\+::\+Background\+::\+\_\+draw\+Tile\+From\+Memory\+To\+Tile\+Buffer (\begin{DoxyParamCaption}\item[{const union \mbox{\hyperlink{unionComSquare_1_1PPU_1_1Utils_1_1TileData}{Utils\+::\+Tile\+Data}} \&}]{tile\+Data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Draw the tile to the tile Buffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em tile\+Data} & The tile data to use to render the tile \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1Background_a1b4fa72ca4ed04e1e202eba59239cf7e}\label{classComSquare_1_1PPU_1_1Background_a1b4fa72ca4ed04e1e202eba59239cf7e}} 
+\index{ComSquare::PPU::Background@{ComSquare::PPU::Background}!getBgNumber@{getBgNumber}}
+\index{getBgNumber@{getBgNumber}!ComSquare::PPU::Background@{ComSquare::PPU::Background}}
+\doxysubsubsection{\texorpdfstring{getBgNumber()}{getBgNumber()}}
+{\footnotesize\ttfamily int Com\+Square\+::\+P\+P\+U\+::\+Background\+::get\+Bg\+Number (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the Back\+Ground Number. 
+
+\begin{DoxyReturn}{Returns}
+the current \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background}{Background}} number 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1Background_a9dea6472f63a10d256cc9ec7019f5ada}\label{classComSquare_1_1PPU_1_1Background_a9dea6472f63a10d256cc9ec7019f5ada}} 
+\index{ComSquare::PPU::Background@{ComSquare::PPU::Background}!isPriorityPixel@{isPriorityPixel}}
+\index{isPriorityPixel@{isPriorityPixel}!ComSquare::PPU::Background@{ComSquare::PPU::Background}}
+\doxysubsubsection{\texorpdfstring{isPriorityPixel()}{isPriorityPixel()}}
+{\footnotesize\ttfamily bool Com\+Square\+::\+P\+P\+U\+::\+Background\+::is\+Priority\+Pixel (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y }\end{DoxyParamCaption}) const}
+
+
+
+Tells if a pixel has high priority. 
+
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1Background_a23cb0aa1111c675aafa8a843a86a1206}\label{classComSquare_1_1PPU_1_1Background_a23cb0aa1111c675aafa8a843a86a1206}} 
+\index{ComSquare::PPU::Background@{ComSquare::PPU::Background}!mergeBackgroundBuffer@{mergeBackgroundBuffer}}
+\index{mergeBackgroundBuffer@{mergeBackgroundBuffer}!ComSquare::PPU::Background@{ComSquare::PPU::Background}}
+\doxysubsubsection{\texorpdfstring{mergeBackgroundBuffer()}{mergeBackgroundBuffer()}}
+{\footnotesize\ttfamily template$<$int level\+Low, int level\+High, std\+::size\+\_\+t D\+E\+S\+T\+\_\+\+S\+I\+Z\+E\+\_\+X, std\+::size\+\_\+t D\+E\+S\+T\+\_\+\+S\+I\+Z\+E\+\_\+Y$>$ \\
+static void Com\+Square\+::\+P\+P\+U\+::\+Background\+::merge\+Background\+Buffer (\begin{DoxyParamCaption}\item[{std\+::array$<$ std\+::array$<$ uint32\+\_\+t, D\+E\+S\+T\+\_\+\+S\+I\+Z\+E\+\_\+Y $>$, D\+E\+S\+T\+\_\+\+S\+I\+Z\+E\+\_\+X $>$ \&}]{buffer\+Dest,  }\item[{std\+::array$<$ std\+::array$<$ unsigned char, D\+E\+S\+T\+\_\+\+S\+I\+Z\+E\+\_\+Y $>$, D\+E\+S\+T\+\_\+\+S\+I\+Z\+E\+\_\+X $>$ \&}]{pixel\+Destination\+Level\+Map,  }\item[{const \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background}{Background}} \&}]{background\+Src }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Add a bg buffer to another buffer. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em level\+Low} & The priority of a low priority pixel (working like z-\/index C\+SS property) \\
+\hline
+{\em level\+High} & The priority of a high priority pixel (working like z-\/index C\+SS property) \\
+\hline
+{\em D\+E\+S\+T\+\_\+\+S\+I\+Z\+E\+\_\+X} & The Horizontal array size \\
+\hline
+{\em D\+E\+S\+T\+\_\+\+S\+I\+Z\+E\+\_\+Y} & The Vertical array size \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em buffer\+Dest} & The destination buffer (buffer that will be written on) \\
+\hline
+{\em pixel\+Destination\+Level\+Map} & The destination buffer level map to use as reference and will be updated if a pixel has an higher level than the actual one \\
+\hline
+{\em background\+Src} & The \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background}{Background}} to use as a source \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1Background_a67d74cbe9d31e8361bf13f74cfd69a02}\label{classComSquare_1_1PPU_1_1Background_a67d74cbe9d31e8361bf13f74cfd69a02}} 
+\index{ComSquare::PPU::Background@{ComSquare::PPU::Background}!operator=@{operator=}}
+\index{operator=@{operator=}!ComSquare::PPU::Background@{ComSquare::PPU::Background}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background}{Background}}\& Com\+Square\+::\+P\+P\+U\+::\+Background\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background}{Background}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+
+
+Delete assignment operator. 
+
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1Background_acb580c6b43203bf22cb33843b4ae71c5}\label{classComSquare_1_1PPU_1_1Background_acb580c6b43203bf22cb33843b4ae71c5}} 
+\index{ComSquare::PPU::Background@{ComSquare::PPU::Background}!renderBackground@{renderBackground}}
+\index{renderBackground@{renderBackground}!ComSquare::PPU::Background@{ComSquare::PPU::Background}}
+\doxysubsubsection{\texorpdfstring{renderBackground()}{renderBackground()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+P\+P\+U\+::\+Background\+::render\+Background (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Render a background on his internal buffer. 
+
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1Background_ad8cafd31589068c91f5eff593e996088}\label{classComSquare_1_1PPU_1_1Background_ad8cafd31589068c91f5eff593e996088}} 
+\index{ComSquare::PPU::Background@{ComSquare::PPU::Background}!setBpp@{setBpp}}
+\index{setBpp@{setBpp}!ComSquare::PPU::Background@{ComSquare::PPU::Background}}
+\doxysubsubsection{\texorpdfstring{setBpp()}{setBpp()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+P\+P\+U\+::\+Background\+::set\+Bpp (\begin{DoxyParamCaption}\item[{int}]{bpp }\end{DoxyParamCaption})}
+
+
+
+Set the bpp (bits per pixels) of the \mbox{\hyperlink{classComSquare_1_1PPU_1_1Background}{Background}} @info The bpp can be 2, 4 or 8 (7 can be possible when Bg\+Mode is 7) 
+
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1Background_ad67e49715d3e9b9a3efe3597e311ebe4}\label{classComSquare_1_1PPU_1_1Background_ad67e49715d3e9b9a3efe3597e311ebe4}} 
+\index{ComSquare::PPU::Background@{ComSquare::PPU::Background}!setCharacterSize@{setCharacterSize}}
+\index{setCharacterSize@{setCharacterSize}!ComSquare::PPU::Background@{ComSquare::PPU::Background}}
+\doxysubsubsection{\texorpdfstring{setCharacterSize()}{setCharacterSize()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+P\+P\+U\+::\+Background\+::set\+Character\+Size (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classComSquare_1_1Vector2}{Vector2}}$<$ int $>$}]{size }\end{DoxyParamCaption})}
+
+
+
+Set the character Size. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em size} & The character size (8x8, 16x16, 16x8, 8x16) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1Background_aae8bbccf1019bbeae08f6786a0ee66f1}\label{classComSquare_1_1PPU_1_1Background_aae8bbccf1019bbeae08f6786a0ee66f1}} 
+\index{ComSquare::PPU::Background@{ComSquare::PPU::Background}!setTileMapMirroring@{setTileMapMirroring}}
+\index{setTileMapMirroring@{setTileMapMirroring}!ComSquare::PPU::Background@{ComSquare::PPU::Background}}
+\doxysubsubsection{\texorpdfstring{setTileMapMirroring()}{setTileMapMirroring()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+P\+P\+U\+::\+Background\+::set\+Tile\+Map\+Mirroring (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classComSquare_1_1Vector2}{Vector2}}$<$ bool $>$}]{tile\+Maps }\end{DoxyParamCaption})}
+
+
+
+setter for private variable \+\_\+tile\+Maps 
+
+
+\begin{DoxyParams}{Parameters}
+{\em tile\+Maps} & The tile\+Maps to set \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1Background_a09ef67d83a602a46b5f29e2163e550e2}\label{classComSquare_1_1PPU_1_1Background_a09ef67d83a602a46b5f29e2163e550e2}} 
+\index{ComSquare::PPU::Background@{ComSquare::PPU::Background}!setTileMapStartAddress@{setTileMapStartAddress}}
+\index{setTileMapStartAddress@{setTileMapStartAddress}!ComSquare::PPU::Background@{ComSquare::PPU::Background}}
+\doxysubsubsection{\texorpdfstring{setTileMapStartAddress()}{setTileMapStartAddress()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+P\+P\+U\+::\+Background\+::set\+Tile\+Map\+Start\+Address (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{address }\end{DoxyParamCaption})}
+
+
+
+Set the tile\+Map start address. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em address} & Tile\+Map start address \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1Background_a01109a9510970e10efe598cee3b3bf87}\label{classComSquare_1_1PPU_1_1Background_a01109a9510970e10efe598cee3b3bf87}} 
+\index{ComSquare::PPU::Background@{ComSquare::PPU::Background}!setTilesetAddress@{setTilesetAddress}}
+\index{setTilesetAddress@{setTilesetAddress}!ComSquare::PPU::Background@{ComSquare::PPU::Background}}
+\doxysubsubsection{\texorpdfstring{setTilesetAddress()}{setTilesetAddress()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+P\+P\+U\+::\+Background\+::set\+Tileset\+Address (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{address }\end{DoxyParamCaption})}
+
+
+
+Set the tileset address of the background. 
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1Background_a3e0c647f9bf829189e919e40e85fda56}\label{classComSquare_1_1PPU_1_1Background_a3e0c647f9bf829189e919e40e85fda56}} 
+\index{ComSquare::PPU::Background@{ComSquare::PPU::Background}!\_bgNumber@{\_bgNumber}}
+\index{\_bgNumber@{\_bgNumber}!ComSquare::PPU::Background@{ComSquare::PPU::Background}}
+\doxysubsubsection{\texorpdfstring{\_bgNumber}{\_bgNumber}}
+{\footnotesize\ttfamily int Com\+Square\+::\+P\+P\+U\+::\+Background\+::\+\_\+bg\+Number\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The bg number (used to get the corresponding scroll) 
+
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1Background_a1cbec0b01168afb9df3a214b3eda93b7}\label{classComSquare_1_1PPU_1_1Background_a1cbec0b01168afb9df3a214b3eda93b7}} 
+\index{ComSquare::PPU::Background@{ComSquare::PPU::Background}!\_bpp@{\_bpp}}
+\index{\_bpp@{\_bpp}!ComSquare::PPU::Background@{ComSquare::PPU::Background}}
+\doxysubsubsection{\texorpdfstring{\_bpp}{\_bpp}}
+{\footnotesize\ttfamily int Com\+Square\+::\+P\+P\+U\+::\+Background\+::\+\_\+bpp\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The number of bits per pixels to currently look for each pixel. 
+
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1Background_ab931f1d7750b9b037b1c7d994b0accc8}\label{classComSquare_1_1PPU_1_1Background_ab931f1d7750b9b037b1c7d994b0accc8}} 
+\index{ComSquare::PPU::Background@{ComSquare::PPU::Background}!\_cgram@{\_cgram}}
+\index{\_cgram@{\_cgram}!ComSquare::PPU::Background@{ComSquare::PPU::Background}}
+\doxysubsubsection{\texorpdfstring{\_cgram}{\_cgram}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1Ram_1_1Ram}{Ram\+::\+Ram}}\& Com\+Square\+::\+P\+P\+U\+::\+Background\+::\+\_\+cgram\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The access to cgram. 
+
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1Background_abf5dd5d5dfdc1888708afafb87ea68f6}\label{classComSquare_1_1PPU_1_1Background_abf5dd5d5dfdc1888708afafb87ea68f6}} 
+\index{ComSquare::PPU::Background@{ComSquare::PPU::Background}!\_characterNbPixels@{\_characterNbPixels}}
+\index{\_characterNbPixels@{\_characterNbPixels}!ComSquare::PPU::Background@{ComSquare::PPU::Background}}
+\doxysubsubsection{\texorpdfstring{\_characterNbPixels}{\_characterNbPixels}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1Vector2}{Vector2}}$<$int$>$ Com\+Square\+::\+P\+P\+U\+::\+Background\+::\+\_\+character\+Nb\+Pixels\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The number of pixels of a character (x\+: width, y\+: height) 
+
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1Background_ab98fb05cdac5566fb2f375d45928b5c1}\label{classComSquare_1_1PPU_1_1Background_ab98fb05cdac5566fb2f375d45928b5c1}} 
+\index{ComSquare::PPU::Background@{ComSquare::PPU::Background}!\_directColor@{\_directColor}}
+\index{\_directColor@{\_directColor}!ComSquare::PPU::Background@{ComSquare::PPU::Background}}
+\doxysubsubsection{\texorpdfstring{\_directColor}{\_directColor}}
+{\footnotesize\ttfamily bool Com\+Square\+::\+P\+P\+U\+::\+Background\+::\+\_\+direct\+Color\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+\mbox{\hyperlink{classComSquare_1_1PPU_1_1PPU}{P\+PU}} official direct color mode. 
+
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1Background_af44abd6b1c7a00efc7fdee4ae3e0e363}\label{classComSquare_1_1PPU_1_1Background_af44abd6b1c7a00efc7fdee4ae3e0e363}} 
+\index{ComSquare::PPU::Background@{ComSquare::PPU::Background}!\_highRes@{\_highRes}}
+\index{\_highRes@{\_highRes}!ComSquare::PPU::Background@{ComSquare::PPU::Background}}
+\doxysubsubsection{\texorpdfstring{\_highRes}{\_highRes}}
+{\footnotesize\ttfamily bool Com\+Square\+::\+P\+P\+U\+::\+Background\+::\+\_\+high\+Res\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+\mbox{\hyperlink{classComSquare_1_1PPU_1_1PPU}{P\+PU}} offical high\+Res mode. 
+
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1Background_a185d675924a39865a5d5b848f91eda7a}\label{classComSquare_1_1PPU_1_1Background_a185d675924a39865a5d5b848f91eda7a}} 
+\index{ComSquare::PPU::Background@{ComSquare::PPU::Background}!\_ppu@{\_ppu}}
+\index{\_ppu@{\_ppu}!ComSquare::PPU::Background@{ComSquare::PPU::Background}}
+\doxysubsubsection{\texorpdfstring{\_ppu}{\_ppu}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1PPU_1_1PPU}{P\+PU}}\& Com\+Square\+::\+P\+P\+U\+::\+Background\+::\+\_\+ppu\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+the ppu used to get registers values (ex\+: bg scroll) 
+
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1Background_a0a5ee21c8aca531438502db7f5839ef4}\label{classComSquare_1_1PPU_1_1Background_a0a5ee21c8aca531438502db7f5839ef4}} 
+\index{ComSquare::PPU::Background@{ComSquare::PPU::Background}!\_tileBuffer@{\_tileBuffer}}
+\index{\_tileBuffer@{\_tileBuffer}!ComSquare::PPU::Background@{ComSquare::PPU::Background}}
+\doxysubsubsection{\texorpdfstring{\_tileBuffer}{\_tileBuffer}}
+{\footnotesize\ttfamily std\+::array$<$std\+::array$<$uint32\+\_\+t, 16$>$, 16$>$ Com\+Square\+::\+P\+P\+U\+::\+Background\+::\+\_\+tile\+Buffer\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Buffer if we have tiles that are more than 8x8. 
+
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1Background_a3e2d7e4ff5db53114588c2467ed162fb}\label{classComSquare_1_1PPU_1_1Background_a3e2d7e4ff5db53114588c2467ed162fb}} 
+\index{ComSquare::PPU::Background@{ComSquare::PPU::Background}!\_tileMapMirroring@{\_tileMapMirroring}}
+\index{\_tileMapMirroring@{\_tileMapMirroring}!ComSquare::PPU::Background@{ComSquare::PPU::Background}}
+\doxysubsubsection{\texorpdfstring{\_tileMapMirroring}{\_tileMapMirroring}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1Vector2}{Vector2}}$<$bool$>$ Com\+Square\+::\+P\+P\+U\+::\+Background\+::\+\_\+tile\+Map\+Mirroring\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The tilemap configuration nb of tile\+Map vertically and horizontally. 
+
+\begin{DoxyNote}{Note}
+members are set to true if the tilemap is expended in their direction 
+\end{DoxyNote}
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1Background_a86104c70c40ea5d2f2bb435546f0e7b2}\label{classComSquare_1_1PPU_1_1Background_a86104c70c40ea5d2f2bb435546f0e7b2}} 
+\index{ComSquare::PPU::Background@{ComSquare::PPU::Background}!\_tileMapStartAddress@{\_tileMapStartAddress}}
+\index{\_tileMapStartAddress@{\_tileMapStartAddress}!ComSquare::PPU::Background@{ComSquare::PPU::Background}}
+\doxysubsubsection{\texorpdfstring{\_tileMapStartAddress}{\_tileMapStartAddress}}
+{\footnotesize\ttfamily uint16\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Background\+::\+\_\+tile\+Map\+Start\+Address\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The first address of the tilemap data. 
+
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1Background_ad322902a76c56f9823265d5e78d81929}\label{classComSquare_1_1PPU_1_1Background_ad322902a76c56f9823265d5e78d81929}} 
+\index{ComSquare::PPU::Background@{ComSquare::PPU::Background}!\_tileRenderer@{\_tileRenderer}}
+\index{\_tileRenderer@{\_tileRenderer}!ComSquare::PPU::Background@{ComSquare::PPU::Background}}
+\doxysubsubsection{\texorpdfstring{\_tileRenderer}{\_tileRenderer}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1PPU_1_1TileRenderer}{Tile\+Renderer}} Com\+Square\+::\+P\+P\+U\+::\+Background\+::\+\_\+tile\+Renderer\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Class that actually render a tile. 
+
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1Background_ab91bfe5a53076666eaa2f2d79d323313}\label{classComSquare_1_1PPU_1_1Background_ab91bfe5a53076666eaa2f2d79d323313}} 
+\index{ComSquare::PPU::Background@{ComSquare::PPU::Background}!\_tilesetAddress@{\_tilesetAddress}}
+\index{\_tilesetAddress@{\_tilesetAddress}!ComSquare::PPU::Background@{ComSquare::PPU::Background}}
+\doxysubsubsection{\texorpdfstring{\_tilesetAddress}{\_tilesetAddress}}
+{\footnotesize\ttfamily uint16\+\_\+t Com\+Square\+::\+P\+P\+U\+::\+Background\+::\+\_\+tileset\+Address\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The first address for tileset data. 
+
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1Background_a0fc71a4b6a2187a8df05fd347c97062e}\label{classComSquare_1_1PPU_1_1Background_a0fc71a4b6a2187a8df05fd347c97062e}} 
+\index{ComSquare::PPU::Background@{ComSquare::PPU::Background}!\_vram@{\_vram}}
+\index{\_vram@{\_vram}!ComSquare::PPU::Background@{ComSquare::PPU::Background}}
+\doxysubsubsection{\texorpdfstring{\_vram}{\_vram}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1Ram_1_1Ram}{Ram\+::\+Ram}}\& Com\+Square\+::\+P\+P\+U\+::\+Background\+::\+\_\+vram\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+the access to vram 
+
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1Background_a507a41d8091918f3b740388b35fda93f}\label{classComSquare_1_1PPU_1_1Background_a507a41d8091918f3b740388b35fda93f}} 
+\index{ComSquare::PPU::Background@{ComSquare::PPU::Background}!backgroundSize@{backgroundSize}}
+\index{backgroundSize@{backgroundSize}!ComSquare::PPU::Background@{ComSquare::PPU::Background}}
+\doxysubsubsection{\texorpdfstring{backgroundSize}{backgroundSize}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1Vector2}{Vector2}}$<$unsigned$>$ Com\+Square\+::\+P\+P\+U\+::\+Background\+::background\+Size}
+
+
+
+The size of the background (x, y) 
+
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1Background_aff367bd4aa0f79058e6394008823a41a}\label{classComSquare_1_1PPU_1_1Background_aff367bd4aa0f79058e6394008823a41a}} 
+\index{ComSquare::PPU::Background@{ComSquare::PPU::Background}!buffer@{buffer}}
+\index{buffer@{buffer}!ComSquare::PPU::Background@{ComSquare::PPU::Background}}
+\doxysubsubsection{\texorpdfstring{buffer}{buffer}}
+{\footnotesize\ttfamily std\+::array$<$std\+::array$<$uint32\+\_\+t, 1024$>$, 1024$>$ Com\+Square\+::\+P\+P\+U\+::\+Background\+::buffer}
+
+
+
+The output buffer (pixels are written on it) 
+
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1Background_af09bc06e1e0fa841b3a3ff83f58274fd}\label{classComSquare_1_1PPU_1_1Background_af09bc06e1e0fa841b3a3ff83f58274fd}} 
+\index{ComSquare::PPU::Background@{ComSquare::PPU::Background}!NbCharacterHeight@{NbCharacterHeight}}
+\index{NbCharacterHeight@{NbCharacterHeight}!ComSquare::PPU::Background@{ComSquare::PPU::Background}}
+\doxysubsubsection{\texorpdfstring{NbCharacterHeight}{NbCharacterHeight}}
+{\footnotesize\ttfamily constexpr int Com\+Square\+::\+P\+P\+U\+::\+Background\+::\+Nb\+Character\+Height = 32\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}, {\ttfamily [private]}}
+
+
+
+The number of character a Tile\+Map has in height. 
+
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1Background_a2698487d815aca1465358fee94d30260}\label{classComSquare_1_1PPU_1_1Background_a2698487d815aca1465358fee94d30260}} 
+\index{ComSquare::PPU::Background@{ComSquare::PPU::Background}!NbCharacterWidth@{NbCharacterWidth}}
+\index{NbCharacterWidth@{NbCharacterWidth}!ComSquare::PPU::Background@{ComSquare::PPU::Background}}
+\doxysubsubsection{\texorpdfstring{NbCharacterWidth}{NbCharacterWidth}}
+{\footnotesize\ttfamily constexpr int Com\+Square\+::\+P\+P\+U\+::\+Background\+::\+Nb\+Character\+Width = 32\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}, {\ttfamily [private]}}
+
+
+
+The number of character a Tile\+Map has in width. 
+
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1Background_aadb6e59076c9bc2a3c3313e9ccccd53a}\label{classComSquare_1_1PPU_1_1Background_aadb6e59076c9bc2a3c3313e9ccccd53a}} 
+\index{ComSquare::PPU::Background@{ComSquare::PPU::Background}!NbTilePerRow@{NbTilePerRow}}
+\index{NbTilePerRow@{NbTilePerRow}!ComSquare::PPU::Background@{ComSquare::PPU::Background}}
+\doxysubsubsection{\texorpdfstring{NbTilePerRow}{NbTilePerRow}}
+{\footnotesize\ttfamily constexpr unsigned Com\+Square\+::\+P\+P\+U\+::\+Background\+::\+Nb\+Tile\+Per\+Row = 16\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}, {\ttfamily [private]}}
+
+
+
+The number of rows in one line of V\+R\+AM. 
+
+\begin{DoxyNote}{Note}
+If you\textquotesingle{}re lost by this description, open a tile viewer in an emulator, and set the number of tiles in width to 16 graphics 
+\end{DoxyNote}
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1Background_ac31f9e7ff169d6e694d5a2b2b944dcc1}\label{classComSquare_1_1PPU_1_1Background_ac31f9e7ff169d6e694d5a2b2b944dcc1}} 
+\index{ComSquare::PPU::Background@{ComSquare::PPU::Background}!TileMapByteSize@{TileMapByteSize}}
+\index{TileMapByteSize@{TileMapByteSize}!ComSquare::PPU::Background@{ComSquare::PPU::Background}}
+\doxysubsubsection{\texorpdfstring{TileMapByteSize}{TileMapByteSize}}
+{\footnotesize\ttfamily constexpr unsigned short Com\+Square\+::\+P\+P\+U\+::\+Background\+::\+Tile\+Map\+Byte\+Size = 0x800\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}, {\ttfamily [private]}}
+
+
+
+The size of a Tile\+Map in memory. 
+
+\mbox{\Hypertarget{classComSquare_1_1PPU_1_1Background_a24d26aec086d56d7d9dec8bbc5b0e913}\label{classComSquare_1_1PPU_1_1Background_a24d26aec086d56d7d9dec8bbc5b0e913}} 
+\index{ComSquare::PPU::Background@{ComSquare::PPU::Background}!tilesPriority@{tilesPriority}}
+\index{tilesPriority@{tilesPriority}!ComSquare::PPU::Background@{ComSquare::PPU::Background}}
+\doxysubsubsection{\texorpdfstring{tilesPriority}{tilesPriority}}
+{\footnotesize\ttfamily std\+::array$<$std\+::array$<$bool, 64$>$, 64$>$ Com\+Square\+::\+P\+P\+U\+::\+Background\+::tiles\+Priority}
+
+
+
+The buffer of tile priority level. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+sources/\+P\+P\+U/\mbox{\hyperlink{Background_8hpp}{Background.\+hpp}}\item 
+sources/\+P\+P\+U/\mbox{\hyperlink{Background_8cpp}{Background.\+cpp}}\end{DoxyCompactItemize}

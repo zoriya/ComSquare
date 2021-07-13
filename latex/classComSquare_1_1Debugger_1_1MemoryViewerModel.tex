@@ -1,0 +1,171 @@
+\hypertarget{classComSquare_1_1Debugger_1_1MemoryViewerModel}{}\doxysection{Com\+Square\+::Debugger\+::Memory\+Viewer\+Model Class Reference}
+\label{classComSquare_1_1Debugger_1_1MemoryViewerModel}\index{ComSquare::Debugger::MemoryViewerModel@{ComSquare::Debugger::MemoryViewerModel}}
+
+
+The qt model that bind the ram to the view.  
+
+
+
+
+{\ttfamily \#include $<$Memory\+Viewer.\+hpp$>$}
+
+
+
+Inheritance diagram for Com\+Square\+::Debugger\+::Memory\+Viewer\+Model\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=228pt]{classComSquare_1_1Debugger_1_1MemoryViewerModel__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Com\+Square\+::Debugger\+::Memory\+Viewer\+Model\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=228pt]{classComSquare_1_1Debugger_1_1MemoryViewerModel__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classComSquare_1_1Debugger_1_1MemoryViewerModel_a719a4be4538be4aabd71d636def8e8af}{set\+Memory}} (\mbox{\hyperlink{classComSquare_1_1Ram_1_1Ram}{Ram\+::\+Ram}} \&memory)
+\begin{DoxyCompactList}\small\item\em Change the ram currently watched. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1Debugger_1_1MemoryViewerModel_a56ec48034f71fcd61e1b76c9084c2b36}{Memory\+Viewer\+Model}} (\mbox{\hyperlink{classComSquare_1_1Ram_1_1Ram}{Ram\+::\+Ram}} \&memory, Q\+Object $\ast$parent=nullptr)
+\item 
+\mbox{\hyperlink{classComSquare_1_1Debugger_1_1MemoryViewerModel_a812c2d6e5d53c94d66ac45d729bf4a48}{Memory\+Viewer\+Model}} (const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1MemoryViewerModel}{Memory\+Viewer\+Model}} \&)=delete
+\item 
+const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1MemoryViewerModel}{Memory\+Viewer\+Model}} \& \mbox{\hyperlink{classComSquare_1_1Debugger_1_1MemoryViewerModel_aa537cc150f4201c746e38fd751ad772c}{operator=}} (const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1MemoryViewerModel}{Memory\+Viewer\+Model}} \&)=delete
+\item 
+\mbox{\hyperlink{classComSquare_1_1Debugger_1_1MemoryViewerModel_a67cf4317ae84d95b252f9d4cf255d4e4}{$\sim$\+Memory\+Viewer\+Model}} () override=default
+\item 
+int \mbox{\hyperlink{classComSquare_1_1Debugger_1_1MemoryViewerModel_abe0f6c6fc1e92ccaee4aed0ddd9627e2}{row\+Count}} (const Q\+Model\+Index \&parent) const override
+\begin{DoxyCompactList}\small\item\em The number of row the table has. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classComSquare_1_1Debugger_1_1MemoryViewerModel_a29876f45d06d71db28601652974e7a57}{column\+Count}} (const Q\+Model\+Index \&parent) const override
+\begin{DoxyCompactList}\small\item\em The number of column the table has. \end{DoxyCompactList}\item 
+Q\+Variant \mbox{\hyperlink{classComSquare_1_1Debugger_1_1MemoryViewerModel_a62b6d731a97ced4520473839698da2ca}{data}} (const Q\+Model\+Index \&index, int role) const override
+\begin{DoxyCompactList}\small\item\em Return a data representing the table cell. \end{DoxyCompactList}\item 
+Q\+Variant \mbox{\hyperlink{classComSquare_1_1Debugger_1_1MemoryViewerModel_a9dd22f781bd60eada73becc6a67ae411}{header\+Data}} (int section, Qt\+::\+Orientation orientation, int role) const override
+\begin{DoxyCompactList}\small\item\em Override the headers to use hex values. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::reference\+\_\+wrapper$<$ \mbox{\hyperlink{classComSquare_1_1Ram_1_1Ram}{Ram\+::\+Ram}} $>$ \mbox{\hyperlink{classComSquare_1_1Debugger_1_1MemoryViewerModel_afa3f9d4bea4aff0e58643d626dfa7ae9}{\+\_\+memory}}
+\begin{DoxyCompactList}\small\item\em The ram to watch. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classComSquare_1_1Debugger_1_1MemoryViewerModel_ac16c0e6351dbabb4cf3176b29e2fef96}{\+\_\+header\+Indent\+Size}} = 3
+\begin{DoxyCompactList}\small\item\em The number of char inside the left header number. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The qt model that bind the ram to the view. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1MemoryViewerModel_a56ec48034f71fcd61e1b76c9084c2b36}\label{classComSquare_1_1Debugger_1_1MemoryViewerModel_a56ec48034f71fcd61e1b76c9084c2b36}} 
+\index{ComSquare::Debugger::MemoryViewerModel@{ComSquare::Debugger::MemoryViewerModel}!MemoryViewerModel@{MemoryViewerModel}}
+\index{MemoryViewerModel@{MemoryViewerModel}!ComSquare::Debugger::MemoryViewerModel@{ComSquare::Debugger::MemoryViewerModel}}
+\doxysubsubsection{\texorpdfstring{MemoryViewerModel()}{MemoryViewerModel()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Com\+Square\+::\+Debugger\+::\+Memory\+Viewer\+Model\+::\+Memory\+Viewer\+Model (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classComSquare_1_1Ram_1_1Ram}{Ram\+::\+Ram}} \&}]{memory,  }\item[{Q\+Object $\ast$}]{parent = {\ttfamily nullptr} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1MemoryViewerModel_a812c2d6e5d53c94d66ac45d729bf4a48}\label{classComSquare_1_1Debugger_1_1MemoryViewerModel_a812c2d6e5d53c94d66ac45d729bf4a48}} 
+\index{ComSquare::Debugger::MemoryViewerModel@{ComSquare::Debugger::MemoryViewerModel}!MemoryViewerModel@{MemoryViewerModel}}
+\index{MemoryViewerModel@{MemoryViewerModel}!ComSquare::Debugger::MemoryViewerModel@{ComSquare::Debugger::MemoryViewerModel}}
+\doxysubsubsection{\texorpdfstring{MemoryViewerModel()}{MemoryViewerModel()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Com\+Square\+::\+Debugger\+::\+Memory\+Viewer\+Model\+::\+Memory\+Viewer\+Model (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1MemoryViewerModel}{Memory\+Viewer\+Model}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1MemoryViewerModel_a67cf4317ae84d95b252f9d4cf255d4e4}\label{classComSquare_1_1Debugger_1_1MemoryViewerModel_a67cf4317ae84d95b252f9d4cf255d4e4}} 
+\index{ComSquare::Debugger::MemoryViewerModel@{ComSquare::Debugger::MemoryViewerModel}!````~MemoryViewerModel@{$\sim$MemoryViewerModel}}
+\index{````~MemoryViewerModel@{$\sim$MemoryViewerModel}!ComSquare::Debugger::MemoryViewerModel@{ComSquare::Debugger::MemoryViewerModel}}
+\doxysubsubsection{\texorpdfstring{$\sim$MemoryViewerModel()}{~MemoryViewerModel()}}
+{\footnotesize\ttfamily Com\+Square\+::\+Debugger\+::\+Memory\+Viewer\+Model\+::$\sim$\+Memory\+Viewer\+Model (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [default]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1MemoryViewerModel_a29876f45d06d71db28601652974e7a57}\label{classComSquare_1_1Debugger_1_1MemoryViewerModel_a29876f45d06d71db28601652974e7a57}} 
+\index{ComSquare::Debugger::MemoryViewerModel@{ComSquare::Debugger::MemoryViewerModel}!columnCount@{columnCount}}
+\index{columnCount@{columnCount}!ComSquare::Debugger::MemoryViewerModel@{ComSquare::Debugger::MemoryViewerModel}}
+\doxysubsubsection{\texorpdfstring{columnCount()}{columnCount()}}
+{\footnotesize\ttfamily int Com\+Square\+::\+Debugger\+::\+Memory\+Viewer\+Model\+::column\+Count (\begin{DoxyParamCaption}\item[{const Q\+Model\+Index \&}]{parent }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+The number of column the table has. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1MemoryViewerModel_a62b6d731a97ced4520473839698da2ca}\label{classComSquare_1_1Debugger_1_1MemoryViewerModel_a62b6d731a97ced4520473839698da2ca}} 
+\index{ComSquare::Debugger::MemoryViewerModel@{ComSquare::Debugger::MemoryViewerModel}!data@{data}}
+\index{data@{data}!ComSquare::Debugger::MemoryViewerModel@{ComSquare::Debugger::MemoryViewerModel}}
+\doxysubsubsection{\texorpdfstring{data()}{data()}}
+{\footnotesize\ttfamily Q\+Variant Com\+Square\+::\+Debugger\+::\+Memory\+Viewer\+Model\+::data (\begin{DoxyParamCaption}\item[{const Q\+Model\+Index \&}]{index,  }\item[{int}]{role }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+Return a data representing the table cell. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1MemoryViewerModel_a9dd22f781bd60eada73becc6a67ae411}\label{classComSquare_1_1Debugger_1_1MemoryViewerModel_a9dd22f781bd60eada73becc6a67ae411}} 
+\index{ComSquare::Debugger::MemoryViewerModel@{ComSquare::Debugger::MemoryViewerModel}!headerData@{headerData}}
+\index{headerData@{headerData}!ComSquare::Debugger::MemoryViewerModel@{ComSquare::Debugger::MemoryViewerModel}}
+\doxysubsubsection{\texorpdfstring{headerData()}{headerData()}}
+{\footnotesize\ttfamily Q\+Variant Com\+Square\+::\+Debugger\+::\+Memory\+Viewer\+Model\+::header\+Data (\begin{DoxyParamCaption}\item[{int}]{section,  }\item[{Qt\+::\+Orientation}]{orientation,  }\item[{int}]{role }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+Override the headers to use hex values. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1MemoryViewerModel_aa537cc150f4201c746e38fd751ad772c}\label{classComSquare_1_1Debugger_1_1MemoryViewerModel_aa537cc150f4201c746e38fd751ad772c}} 
+\index{ComSquare::Debugger::MemoryViewerModel@{ComSquare::Debugger::MemoryViewerModel}!operator=@{operator=}}
+\index{operator=@{operator=}!ComSquare::Debugger::MemoryViewerModel@{ComSquare::Debugger::MemoryViewerModel}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1MemoryViewerModel}{Memory\+Viewer\+Model}}\& Com\+Square\+::\+Debugger\+::\+Memory\+Viewer\+Model\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1MemoryViewerModel}{Memory\+Viewer\+Model}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1MemoryViewerModel_abe0f6c6fc1e92ccaee4aed0ddd9627e2}\label{classComSquare_1_1Debugger_1_1MemoryViewerModel_abe0f6c6fc1e92ccaee4aed0ddd9627e2}} 
+\index{ComSquare::Debugger::MemoryViewerModel@{ComSquare::Debugger::MemoryViewerModel}!rowCount@{rowCount}}
+\index{rowCount@{rowCount}!ComSquare::Debugger::MemoryViewerModel@{ComSquare::Debugger::MemoryViewerModel}}
+\doxysubsubsection{\texorpdfstring{rowCount()}{rowCount()}}
+{\footnotesize\ttfamily int Com\+Square\+::\+Debugger\+::\+Memory\+Viewer\+Model\+::row\+Count (\begin{DoxyParamCaption}\item[{const Q\+Model\+Index \&}]{parent }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+The number of row the table has. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1MemoryViewerModel_a719a4be4538be4aabd71d636def8e8af}\label{classComSquare_1_1Debugger_1_1MemoryViewerModel_a719a4be4538be4aabd71d636def8e8af}} 
+\index{ComSquare::Debugger::MemoryViewerModel@{ComSquare::Debugger::MemoryViewerModel}!setMemory@{setMemory}}
+\index{setMemory@{setMemory}!ComSquare::Debugger::MemoryViewerModel@{ComSquare::Debugger::MemoryViewerModel}}
+\doxysubsubsection{\texorpdfstring{setMemory()}{setMemory()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+Debugger\+::\+Memory\+Viewer\+Model\+::set\+Memory (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classComSquare_1_1Ram_1_1Ram}{Ram\+::\+Ram}} \&}]{memory }\end{DoxyParamCaption})}
+
+
+
+Change the ram currently watched. 
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1MemoryViewerModel_ac16c0e6351dbabb4cf3176b29e2fef96}\label{classComSquare_1_1Debugger_1_1MemoryViewerModel_ac16c0e6351dbabb4cf3176b29e2fef96}} 
+\index{ComSquare::Debugger::MemoryViewerModel@{ComSquare::Debugger::MemoryViewerModel}!\_headerIndentSize@{\_headerIndentSize}}
+\index{\_headerIndentSize@{\_headerIndentSize}!ComSquare::Debugger::MemoryViewerModel@{ComSquare::Debugger::MemoryViewerModel}}
+\doxysubsubsection{\texorpdfstring{\_headerIndentSize}{\_headerIndentSize}}
+{\footnotesize\ttfamily int Com\+Square\+::\+Debugger\+::\+Memory\+Viewer\+Model\+::\+\_\+header\+Indent\+Size = 3\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The number of char inside the left header number. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1MemoryViewerModel_afa3f9d4bea4aff0e58643d626dfa7ae9}\label{classComSquare_1_1Debugger_1_1MemoryViewerModel_afa3f9d4bea4aff0e58643d626dfa7ae9}} 
+\index{ComSquare::Debugger::MemoryViewerModel@{ComSquare::Debugger::MemoryViewerModel}!\_memory@{\_memory}}
+\index{\_memory@{\_memory}!ComSquare::Debugger::MemoryViewerModel@{ComSquare::Debugger::MemoryViewerModel}}
+\doxysubsubsection{\texorpdfstring{\_memory}{\_memory}}
+{\footnotesize\ttfamily std\+::reference\+\_\+wrapper$<$\mbox{\hyperlink{classComSquare_1_1Ram_1_1Ram}{Ram\+::\+Ram}}$>$ Com\+Square\+::\+Debugger\+::\+Memory\+Viewer\+Model\+::\+\_\+memory\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The ram to watch. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+sources/\+Debugger/\mbox{\hyperlink{MemoryViewer_8hpp}{Memory\+Viewer.\+hpp}}\item 
+sources/\+Debugger/\mbox{\hyperlink{MemoryViewer_8cpp}{Memory\+Viewer.\+cpp}}\end{DoxyCompactItemize}

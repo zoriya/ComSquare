@@ -1,0 +1,663 @@
+\hypertarget{testAPUInstructions_8cpp}{}\doxysection{tests/\+A\+P\+U/test\+A\+P\+U\+Instructions.cpp File Reference}
+\label{testAPUInstructions_8cpp}\index{tests/APU/testAPUInstructions.cpp@{tests/APU/testAPUInstructions.cpp}}
+{\ttfamily \#include $<$catch2/catch\+\_\+test\+\_\+macros.\+hpp$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$bitset$>$}\newline
+{\ttfamily \#include \char`\"{}../tests.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../sources/\+S\+N\+E\+S.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../sources/\+A\+P\+U/\+A\+P\+U.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../sources/\+Utility/\+Utility.\+hpp\char`\"{}}\newline
+Include dependency graph for test\+A\+P\+U\+Instructions.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{testAPUInstructions_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a40c8c1c435184588c9988eeb04b13bf7}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}N\+OP Standbys\char`\"{}, \char`\"{}\mbox{[}Standbys\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a50f2e99b0498ccd7df0f219e51ce2bbc}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}S\+L\+E\+EP Standbys\char`\"{}, \char`\"{}\mbox{[}Standbys\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a22042b212cee6381a2fb000c237e83c9}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}S\+T\+OP Standbys\char`\"{}, \char`\"{}\mbox{[}Standbys\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a2b0693182ab3a49efcff0adbc70c7110}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}C\+L\+RC P\+SW\char`\"{}, \char`\"{}\mbox{[}P\+SW\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a975aabbcff35a3455209bf874c543bf3}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}S\+E\+TC P\+SW\char`\"{}, \char`\"{}\mbox{[}P\+SW\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_ab3b1b6c7233187028c3992eb707c0f3e}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}N\+O\+TC P\+SW\char`\"{}, \char`\"{}\mbox{[}P\+SW\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a1910dfedb5e896dd2270d1cb2a0d70ee}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}C\+L\+RV P\+SW\char`\"{}, \char`\"{}\mbox{[}P\+SW\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a4ff1f00ff2814af17a4723b3a6f0e72e}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}C\+L\+RP P\+SW\char`\"{}, \char`\"{}\mbox{[}P\+SW\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a0e8bff96be73187d76cb6a28b0e174ff}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}S\+E\+TP P\+SW\char`\"{}, \char`\"{}\mbox{[}P\+SW\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a0cc5a17f112397f9e921d17307217372}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}EI P\+SW\char`\"{}, \char`\"{}\mbox{[}P\+SW\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a8798da8e44af0a5cc065bbed35c323f6}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}DI P\+SW\char`\"{}, \char`\"{}\mbox{[}P\+SW\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a5b18f778b14c4389a2fa5fa516281e56}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}S\+E\+T1 Bit\char`\"{}, \char`\"{}\mbox{[}Bit\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a33975ea1d39d5f38915018e80846ce24}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}C\+L\+R1 Bit\char`\"{}, \char`\"{}\mbox{[}Bit\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a91e30e84cce0f0ea3da3185ed5c4061a}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}T\+S\+E\+T1 Bit\char`\"{}, \char`\"{}\mbox{[}Bit\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a4f196c1a2b1d354b99ebd73c01ff7248}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}T\+C\+L\+R1 Bit\char`\"{}, \char`\"{}\mbox{[}Bit\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a3109e93253c5e118bde053eca541742c}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}A\+N\+D1 Bit\char`\"{}, \char`\"{}\mbox{[}Bit\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_ac00972a869126a8bb4365c55a8d013d7}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}A\+N\+D1\+\_\+invert Bit\char`\"{}, \char`\"{}\mbox{[}Bit\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_abade1454a0527c92f2e5ccbb2b5a242b}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}O\+R1 Bit\char`\"{}, \char`\"{}\mbox{[}Bit\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a8466859be69c068de2d435efa1799a99}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}O\+R1\+\_\+invert Bit\char`\"{}, \char`\"{}\mbox{[}Bit\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a6570a41b672252973a803006492c0816}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}E\+O\+R1 Bit\char`\"{}, \char`\"{}\mbox{[}Bit\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a47607cb8b512bf758d2312017a3e958e}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}N\+O\+T1 Bit\char`\"{}, \char`\"{}\mbox{[}Bit\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a9f8ac553fb6bd1e824dcd82992586efa}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}M\+O\+V1 Bit\char`\"{}, \char`\"{}\mbox{[}Bit\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a084ef7a2264a9f267f4527741b3c673a}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}M\+O\+V1\+\_\+carry Bit\char`\"{}, \char`\"{}\mbox{[}Bit\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a5fc786ee46f54253c6ae7e4eda3134bb}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}P\+U\+SH Stack\char`\"{}, \char`\"{}\mbox{[}Stack\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_aef1678d79841b80f7d0b82b16f7d72c2}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}P\+OP Stack\char`\"{}, \char`\"{}\mbox{[}Stack\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a4d1d1dc2cc240f0e5dfa09f4d95c99d1}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}C\+A\+LL Subroutine\char`\"{}, \char`\"{}\mbox{[}Subroutine\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a54b05d61b1948b9d0e1cac9e2b9af121}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}P\+C\+A\+LL Subroutine\char`\"{}, \char`\"{}\mbox{[}Subroutine\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a3a2cd5360d4f43b7184ba96bf6ee6a5b}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}T\+C\+A\+LL Subroutine\char`\"{}, \char`\"{}\mbox{[}Subroutine\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a8050f6ee2ae12b9e9b3850210b5b6340}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}B\+RK Subroutine\char`\"{}, \char`\"{}\mbox{[}Subroutine\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_ade45ef3706365218cad64977bddfb5bf}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}R\+ET Subroutine\char`\"{}, \char`\"{}\mbox{[}Subroutine\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a03e6500392f9937d429cc5b43bdc083d}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}R\+E\+TI Subroutine\char`\"{}, \char`\"{}\mbox{[}Subroutine\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a166308166ba693555a3a22c46b4076a5}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}B\+RA Program\+Flow\char`\"{}, \char`\"{}\mbox{[}Program\+Flow\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a7a28562fae0bc545e1b27a570496fa13}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}B\+EQ Program\+Flow\char`\"{}, \char`\"{}\mbox{[}Program\+Flow\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a0d31ecc241ed88b0b4a8b5b1a48c59d0}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}B\+NE Program\+Flow\char`\"{}, \char`\"{}\mbox{[}Program\+Flow\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a16be48f772686608834965a51c63585e}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}B\+CS Program\+Flow\char`\"{}, \char`\"{}\mbox{[}Program\+Flow\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a2a827ef4df7f935c9047186470a510e4}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}B\+CC Program\+Flow\char`\"{}, \char`\"{}\mbox{[}Program\+Flow\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a36c1af352cd8ae34b8ea0fb0c085e248}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}B\+VS Program\+Flow\char`\"{}, \char`\"{}\mbox{[}Program\+Flow\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a30d7b183658a3b6ed3823edcb4c79b9d}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}B\+VC Program\+Flow\char`\"{}, \char`\"{}\mbox{[}Program\+Flow\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_af9417b2fed92476cbca5c5c3820dd5f2}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}B\+MI Program\+Flow\char`\"{}, \char`\"{}\mbox{[}Program\+Flow\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_adb895ecc70d12d458bb29c4f6e8d63e5}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}B\+PL Program\+Flow\char`\"{}, \char`\"{}\mbox{[}Program\+Flow\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a9da6fd0997da06dc2b627fa9fca7e9b5}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}B\+BS Program\+Flow\char`\"{}, \char`\"{}\mbox{[}Program\+Flow\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_ad2934fc0f0cfce13348b768f7dcbb532}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}B\+BC Program\+Flow\char`\"{}, \char`\"{}\mbox{[}Program\+Flow\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_ae268e02a54488fe73ff990ad17400abf}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}C\+B\+NE Program\+Flow\char`\"{}, \char`\"{}\mbox{[}Program\+Flow\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a8daf137df1ea096ad1024415907c650e}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}D\+B\+NZ Program\+Flow\char`\"{}, \char`\"{}\mbox{[}Program\+Flow\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_af303e37f25609827aa806fa23c841ac0}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}J\+MP Program\+Flow\char`\"{}, \char`\"{}\mbox{[}Program\+Flow\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a90e1e26fc7a649ab48335a6cce528a14}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}D\+AA Decimal\+Compensation\char`\"{}, \char`\"{}\mbox{[}Decimal\+Compensation\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_aa44a05d3eb41da8f9f884b3ea40382e6}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}D\+AS Decimal\+Compensation\char`\"{}, \char`\"{}\mbox{[}Decimal\+Compensation\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_af25a9258f3620a3d396a8acba6c9e776}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}M\+UL Multiplication\+Division\char`\"{}, \char`\"{}\mbox{[}Multiplication\+Division\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a2934086de420ab6189d218c11b28366c}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}D\+IV Multiplication\+Division\char`\"{}, \char`\"{}\mbox{[}Multiplication\+Division\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a9041d52997813d3ea5585adc35d407db}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}I\+N\+CW X\+V\+Ibit\+Arithmetic\char`\"{}, \char`\"{}\mbox{[}X\+V\+Ibit\+Arithmetic\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a53cb38a472ed88564641d0e56369f5d6}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}D\+E\+CW X\+V\+Ibit\+Arithmetic\char`\"{}, \char`\"{}\mbox{[}X\+V\+Ibit\+Arithmetic\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a655f0d01111bf226bdbaaec713d2700f}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}A\+D\+DW X\+V\+Ibit\+Arithmetic\char`\"{}, \char`\"{}\mbox{[}X\+V\+Ibit\+Arithmetic\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_af39cf64d21f0cff02308805d86d5f2e7}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}S\+U\+BW X\+V\+Ibit\+Arithmetic\char`\"{}, \char`\"{}\mbox{[}X\+V\+Ibit\+Arithmetic\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_af17c55a26b1ee9455d2845d422f6cd61}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}C\+M\+PW X\+V\+Ibit\+Arithmetic\char`\"{}, \char`\"{}\mbox{[}X\+V\+Ibit\+Arithmetic\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_ae7175182977b110c9bb5f33352757217}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}M\+O\+VW X\+V\+Ibit\+Data\+Transmission\char`\"{}, \char`\"{}\mbox{[}X\+V\+Ibit\+Data\+Transmission\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a35a5f230d4cedcbb382e055d6c55740b}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}A\+SL V\+I\+I\+Ibit\+Shift\+Rotation\char`\"{}, \char`\"{}\mbox{[}V\+I\+I\+Ibit\+Shift\+Rotation\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a8fad2dc580a0385913a63cbb781fd62b}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}L\+SR V\+I\+I\+Ibit\+Shift\+Rotation\char`\"{}, \char`\"{}\mbox{[}V\+I\+I\+Ibit\+Shift\+Rotation\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a5d0514751cf474e13667d4882af26135}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}R\+OL V\+I\+I\+Ibit\+Shift\+Rotation\char`\"{}, \char`\"{}\mbox{[}V\+I\+I\+Ibit\+Shift\+Rotation\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_adc3f8d7e8da17e2a90c06fff70a045a8}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}R\+OR V\+I\+I\+Ibit\+Shift\+Rotation\char`\"{}, \char`\"{}\mbox{[}V\+I\+I\+Ibit\+Shift\+Rotation\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a45a43b3068b232ad0609a50d4d26f913}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}X\+CN V\+I\+I\+I\+Shift\+Rotation\char`\"{}, \char`\"{}\mbox{[}V\+I\+I\+I\+Shift\+Rotation\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a28f58aa2c50987855058b6db5c5f5cdb}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}I\+NC V\+I\+I\+Ibit\+Increment\+Decrement\char`\"{}, \char`\"{}\mbox{[}V\+I\+I\+Ibit\+Increment\+Decrement\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a0a9a96d3039df6156cb293082d1ec026}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}I\+N\+Creg V\+I\+I\+Ibit\+Increment\+Decrement\char`\"{}, \char`\"{}\mbox{[}V\+I\+I\+Ibit\+Increment\+Decrement\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_afbaae5d89bd806cbbbc9c939992be80a}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}D\+EC V\+I\+I\+Ibit\+Increment\+Decrement\char`\"{}, \char`\"{}\mbox{[}V\+I\+I\+Ibit\+Increment\+Decrement\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_abfcb46416cbe098de5f7961b9024358d}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}D\+E\+Creg V\+I\+I\+Ibit\+Increment\+Decrement\char`\"{}, \char`\"{}\mbox{[}V\+I\+I\+Ibit\+Increment\+Decrement\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a57fb754870e1ef5d913181807e164ba4}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}A\+N\+Dacc V\+I\+I\+I\+Logical\char`\"{}, \char`\"{}\mbox{[}V\+I\+I\+I\+Logical\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a0d36415061175e91e11b17769218cadb}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}A\+ND V\+I\+I\+I\+Logical\char`\"{}, \char`\"{}\mbox{[}V\+I\+I\+I\+Logical\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a444f27c08b0dc2bb6ee2fd624b358521}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}O\+Racc V\+I\+I\+I\+Logical\char`\"{}, \char`\"{}\mbox{[}V\+I\+I\+I\+Logical\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a6f800f258872823b764ac0c59e03be60}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}OR V\+I\+I\+I\+Logical\char`\"{}, \char`\"{}\mbox{[}V\+I\+I\+I\+Logical\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a2ad8f72a39c5bc14aa7d4bbb39b650a4}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}E\+O\+Racc V\+I\+I\+I\+Logical\char`\"{}, \char`\"{}\mbox{[}V\+I\+I\+I\+Logical\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_ab93cbbc7af71fea9395b4081f23fea7d}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}E\+OR V\+I\+I\+I\+Logical\char`\"{}, \char`\"{}\mbox{[}V\+I\+I\+I\+Logical\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a399dfd1be42162dccf4d50aaa1a46fc2}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}A\+DC V\+I\+I\+I\+Arithmetic\char`\"{}, \char`\"{}\mbox{[}V\+I\+I\+I\+Arithmetic\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_aacae9e3d89b15e066df1b66489a8b1f3}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}A\+D\+Cacc V\+I\+I\+I\+Arithmetic\char`\"{}, \char`\"{}\mbox{[}V\+I\+I\+I\+Arithmetic\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a0e835b3c911ff5e948d054c31780d407}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}S\+BC V\+I\+I\+I\+Arithmetic\char`\"{}, \char`\"{}\mbox{[}V\+I\+I\+I\+Arithmetic\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_aa4590ddf5a7aff6336029052624ddf6b}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}S\+B\+Cacc V\+I\+I\+I\+Arithmetic\char`\"{}, \char`\"{}\mbox{[}V\+I\+I\+I\+Arithmetic\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a7a2e49f011f8aee2feda4433e048656f}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}C\+MP V\+I\+I\+I\+Arithmetic\char`\"{}, \char`\"{}\mbox{[}V\+I\+I\+I\+Arithmetic\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_aae2c089ad07103b269b445c8ebab37cc}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}C\+M\+Pacc V\+I\+I\+I\+Arithmetic\char`\"{}, \char`\"{}\mbox{[}V\+I\+I\+I\+Arithmetic\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_aa40e74b52c25d8538c7a2a0f41b33c62}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}Mov\+Reg\+To\+Reg V\+I\+I\+I\+Data\+Transmission\char`\"{}, \char`\"{}\mbox{[}V\+I\+I\+I\+Data\+Transmission\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_a1d378d8690a50f2c3c244ced817d1c2b}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}Mov\+Mem\+To\+Mem V\+I\+I\+I\+Data\+Transmission\char`\"{}, \char`\"{}\mbox{[}V\+I\+I\+I\+Data\+Transmission\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_aef956a171281233b3cd35bbc755c7b18}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}Mov\+Reg\+To\+Mem V\+I\+I\+I\+Data\+Transmission\char`\"{}, \char`\"{}\mbox{[}V\+I\+I\+I\+Data\+Transmission\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testAPUInstructions_8cpp_aef4ecbcc0932787f8c95bed4ca8c1078}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}Mov\+Mem\+To\+Reg V\+I\+I\+I\+Data\+Transmission\char`\"{}, \char`\"{}\mbox{[}V\+I\+I\+I\+Data\+Transmission\mbox{]}\char`\"{})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a399dfd1be42162dccf4d50aaa1a46fc2}\label{testAPUInstructions_8cpp_a399dfd1be42162dccf4d50aaa1a46fc2}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [1/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}A\+DC V\+I\+I\+I\+Arithmetic\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+V\+I\+I\+I\+Arithmetic\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_aacae9e3d89b15e066df1b66489a8b1f3}\label{testAPUInstructions_8cpp_aacae9e3d89b15e066df1b66489a8b1f3}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [2/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}A\+D\+Cacc V\+I\+I\+I\+Arithmetic\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+V\+I\+I\+I\+Arithmetic\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a655f0d01111bf226bdbaaec713d2700f}\label{testAPUInstructions_8cpp_a655f0d01111bf226bdbaaec713d2700f}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [3/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}A\+D\+DW X\+V\+Ibit\+Arithmetic\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+X\+V\+Ibit\+Arithmetic\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a0d36415061175e91e11b17769218cadb}\label{testAPUInstructions_8cpp_a0d36415061175e91e11b17769218cadb}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [4/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}A\+ND V\+I\+I\+I\+Logical\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+V\+I\+I\+I\+Logical\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a3109e93253c5e118bde053eca541742c}\label{testAPUInstructions_8cpp_a3109e93253c5e118bde053eca541742c}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [5/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}A\+N\+D1 Bit\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+Bit\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_ac00972a869126a8bb4365c55a8d013d7}\label{testAPUInstructions_8cpp_ac00972a869126a8bb4365c55a8d013d7}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [6/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}A\+N\+D1\+\_\+invert Bit\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+Bit\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a57fb754870e1ef5d913181807e164ba4}\label{testAPUInstructions_8cpp_a57fb754870e1ef5d913181807e164ba4}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [7/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}A\+N\+Dacc V\+I\+I\+I\+Logical\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+V\+I\+I\+I\+Logical\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a35a5f230d4cedcbb382e055d6c55740b}\label{testAPUInstructions_8cpp_a35a5f230d4cedcbb382e055d6c55740b}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [8/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}A\+SL V\+I\+I\+Ibit\+Shift\+Rotation\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+V\+I\+I\+Ibit\+Shift\+Rotation\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_ad2934fc0f0cfce13348b768f7dcbb532}\label{testAPUInstructions_8cpp_ad2934fc0f0cfce13348b768f7dcbb532}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [9/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}B\+BC Program\+Flow\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+Program\+Flow\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a9da6fd0997da06dc2b627fa9fca7e9b5}\label{testAPUInstructions_8cpp_a9da6fd0997da06dc2b627fa9fca7e9b5}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [10/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}B\+BS Program\+Flow\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+Program\+Flow\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a2a827ef4df7f935c9047186470a510e4}\label{testAPUInstructions_8cpp_a2a827ef4df7f935c9047186470a510e4}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [11/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}B\+CC Program\+Flow\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+Program\+Flow\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a16be48f772686608834965a51c63585e}\label{testAPUInstructions_8cpp_a16be48f772686608834965a51c63585e}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [12/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}B\+CS Program\+Flow\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+Program\+Flow\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a7a28562fae0bc545e1b27a570496fa13}\label{testAPUInstructions_8cpp_a7a28562fae0bc545e1b27a570496fa13}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [13/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}B\+EQ Program\+Flow\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+Program\+Flow\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_af9417b2fed92476cbca5c5c3820dd5f2}\label{testAPUInstructions_8cpp_af9417b2fed92476cbca5c5c3820dd5f2}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [14/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}B\+MI Program\+Flow\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+Program\+Flow\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a0d31ecc241ed88b0b4a8b5b1a48c59d0}\label{testAPUInstructions_8cpp_a0d31ecc241ed88b0b4a8b5b1a48c59d0}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [15/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}B\+NE Program\+Flow\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+Program\+Flow\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_adb895ecc70d12d458bb29c4f6e8d63e5}\label{testAPUInstructions_8cpp_adb895ecc70d12d458bb29c4f6e8d63e5}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [16/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}B\+PL Program\+Flow\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+Program\+Flow\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a166308166ba693555a3a22c46b4076a5}\label{testAPUInstructions_8cpp_a166308166ba693555a3a22c46b4076a5}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [17/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}B\+RA Program\+Flow\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+Program\+Flow\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a8050f6ee2ae12b9e9b3850210b5b6340}\label{testAPUInstructions_8cpp_a8050f6ee2ae12b9e9b3850210b5b6340}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [18/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}B\+RK Subroutine\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+Subroutine\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a30d7b183658a3b6ed3823edcb4c79b9d}\label{testAPUInstructions_8cpp_a30d7b183658a3b6ed3823edcb4c79b9d}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [19/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}B\+VC Program\+Flow\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+Program\+Flow\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a36c1af352cd8ae34b8ea0fb0c085e248}\label{testAPUInstructions_8cpp_a36c1af352cd8ae34b8ea0fb0c085e248}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [20/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}B\+VS Program\+Flow\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+Program\+Flow\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a4d1d1dc2cc240f0e5dfa09f4d95c99d1}\label{testAPUInstructions_8cpp_a4d1d1dc2cc240f0e5dfa09f4d95c99d1}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [21/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}C\+A\+LL Subroutine\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+Subroutine\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_ae268e02a54488fe73ff990ad17400abf}\label{testAPUInstructions_8cpp_ae268e02a54488fe73ff990ad17400abf}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [22/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}C\+B\+NE Program\+Flow\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+Program\+Flow\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a33975ea1d39d5f38915018e80846ce24}\label{testAPUInstructions_8cpp_a33975ea1d39d5f38915018e80846ce24}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [23/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}C\+L\+R1 Bit\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+Bit\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a2b0693182ab3a49efcff0adbc70c7110}\label{testAPUInstructions_8cpp_a2b0693182ab3a49efcff0adbc70c7110}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [24/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}C\+L\+RC P\+SW\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+P\+S\+W\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a4ff1f00ff2814af17a4723b3a6f0e72e}\label{testAPUInstructions_8cpp_a4ff1f00ff2814af17a4723b3a6f0e72e}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [25/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}C\+L\+RP P\+SW\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+P\+S\+W\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a1910dfedb5e896dd2270d1cb2a0d70ee}\label{testAPUInstructions_8cpp_a1910dfedb5e896dd2270d1cb2a0d70ee}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [26/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}C\+L\+RV P\+SW\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+P\+S\+W\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a7a2e49f011f8aee2feda4433e048656f}\label{testAPUInstructions_8cpp_a7a2e49f011f8aee2feda4433e048656f}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [27/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}C\+MP V\+I\+I\+I\+Arithmetic\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+V\+I\+I\+I\+Arithmetic\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_aae2c089ad07103b269b445c8ebab37cc}\label{testAPUInstructions_8cpp_aae2c089ad07103b269b445c8ebab37cc}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [28/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}C\+M\+Pacc V\+I\+I\+I\+Arithmetic\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+V\+I\+I\+I\+Arithmetic\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_af17c55a26b1ee9455d2845d422f6cd61}\label{testAPUInstructions_8cpp_af17c55a26b1ee9455d2845d422f6cd61}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [29/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}C\+M\+PW X\+V\+Ibit\+Arithmetic\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+X\+V\+Ibit\+Arithmetic\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a90e1e26fc7a649ab48335a6cce528a14}\label{testAPUInstructions_8cpp_a90e1e26fc7a649ab48335a6cce528a14}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [30/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}D\+AA Decimal\+Compensation\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+Decimal\+Compensation\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_aa44a05d3eb41da8f9f884b3ea40382e6}\label{testAPUInstructions_8cpp_aa44a05d3eb41da8f9f884b3ea40382e6}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [31/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}D\+AS Decimal\+Compensation\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+Decimal\+Compensation\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a8daf137df1ea096ad1024415907c650e}\label{testAPUInstructions_8cpp_a8daf137df1ea096ad1024415907c650e}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [32/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}D\+B\+NZ Program\+Flow\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+Program\+Flow\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_afbaae5d89bd806cbbbc9c939992be80a}\label{testAPUInstructions_8cpp_afbaae5d89bd806cbbbc9c939992be80a}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [33/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}D\+EC V\+I\+I\+Ibit\+Increment\+Decrement\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+V\+I\+I\+Ibit\+Increment\+Decrement\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_abfcb46416cbe098de5f7961b9024358d}\label{testAPUInstructions_8cpp_abfcb46416cbe098de5f7961b9024358d}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [34/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}D\+E\+Creg V\+I\+I\+Ibit\+Increment\+Decrement\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+V\+I\+I\+Ibit\+Increment\+Decrement\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a53cb38a472ed88564641d0e56369f5d6}\label{testAPUInstructions_8cpp_a53cb38a472ed88564641d0e56369f5d6}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [35/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}D\+E\+CW X\+V\+Ibit\+Arithmetic\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+X\+V\+Ibit\+Arithmetic\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a8798da8e44af0a5cc065bbed35c323f6}\label{testAPUInstructions_8cpp_a8798da8e44af0a5cc065bbed35c323f6}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [36/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}DI P\+SW\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+P\+S\+W\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a2934086de420ab6189d218c11b28366c}\label{testAPUInstructions_8cpp_a2934086de420ab6189d218c11b28366c}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [37/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}D\+IV Multiplication\+Division\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+Multiplication\+Division\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a0cc5a17f112397f9e921d17307217372}\label{testAPUInstructions_8cpp_a0cc5a17f112397f9e921d17307217372}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [38/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}EI P\+SW\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+P\+S\+W\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_ab93cbbc7af71fea9395b4081f23fea7d}\label{testAPUInstructions_8cpp_ab93cbbc7af71fea9395b4081f23fea7d}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [39/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}E\+OR V\+I\+I\+I\+Logical\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+V\+I\+I\+I\+Logical\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a6570a41b672252973a803006492c0816}\label{testAPUInstructions_8cpp_a6570a41b672252973a803006492c0816}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [40/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}E\+O\+R1 Bit\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+Bit\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a2ad8f72a39c5bc14aa7d4bbb39b650a4}\label{testAPUInstructions_8cpp_a2ad8f72a39c5bc14aa7d4bbb39b650a4}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [41/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}E\+O\+Racc V\+I\+I\+I\+Logical\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+V\+I\+I\+I\+Logical\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a28f58aa2c50987855058b6db5c5f5cdb}\label{testAPUInstructions_8cpp_a28f58aa2c50987855058b6db5c5f5cdb}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [42/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}I\+NC V\+I\+I\+Ibit\+Increment\+Decrement\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+V\+I\+I\+Ibit\+Increment\+Decrement\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a0a9a96d3039df6156cb293082d1ec026}\label{testAPUInstructions_8cpp_a0a9a96d3039df6156cb293082d1ec026}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [43/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}I\+N\+Creg V\+I\+I\+Ibit\+Increment\+Decrement\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+V\+I\+I\+Ibit\+Increment\+Decrement\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a9041d52997813d3ea5585adc35d407db}\label{testAPUInstructions_8cpp_a9041d52997813d3ea5585adc35d407db}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [44/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}I\+N\+CW X\+V\+Ibit\+Arithmetic\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+X\+V\+Ibit\+Arithmetic\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_af303e37f25609827aa806fa23c841ac0}\label{testAPUInstructions_8cpp_af303e37f25609827aa806fa23c841ac0}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [45/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}J\+MP Program\+Flow\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+Program\+Flow\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a8fad2dc580a0385913a63cbb781fd62b}\label{testAPUInstructions_8cpp_a8fad2dc580a0385913a63cbb781fd62b}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [46/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}L\+SR V\+I\+I\+Ibit\+Shift\+Rotation\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+V\+I\+I\+Ibit\+Shift\+Rotation\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a9f8ac553fb6bd1e824dcd82992586efa}\label{testAPUInstructions_8cpp_a9f8ac553fb6bd1e824dcd82992586efa}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [47/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}M\+O\+V1 Bit\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+Bit\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a084ef7a2264a9f267f4527741b3c673a}\label{testAPUInstructions_8cpp_a084ef7a2264a9f267f4527741b3c673a}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [48/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}M\+O\+V1\+\_\+carry Bit\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+Bit\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a1d378d8690a50f2c3c244ced817d1c2b}\label{testAPUInstructions_8cpp_a1d378d8690a50f2c3c244ced817d1c2b}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [49/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}Mov\+Mem\+To\+Mem V\+I\+I\+I\+Data\+Transmission\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+V\+I\+I\+I\+Data\+Transmission\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_aef4ecbcc0932787f8c95bed4ca8c1078}\label{testAPUInstructions_8cpp_aef4ecbcc0932787f8c95bed4ca8c1078}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [50/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}Mov\+Mem\+To\+Reg V\+I\+I\+I\+Data\+Transmission\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+V\+I\+I\+I\+Data\+Transmission\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_aef956a171281233b3cd35bbc755c7b18}\label{testAPUInstructions_8cpp_aef956a171281233b3cd35bbc755c7b18}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [51/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}Mov\+Reg\+To\+Mem V\+I\+I\+I\+Data\+Transmission\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+V\+I\+I\+I\+Data\+Transmission\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_aa40e74b52c25d8538c7a2a0f41b33c62}\label{testAPUInstructions_8cpp_aa40e74b52c25d8538c7a2a0f41b33c62}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [52/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}Mov\+Reg\+To\+Reg V\+I\+I\+I\+Data\+Transmission\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+V\+I\+I\+I\+Data\+Transmission\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_ae7175182977b110c9bb5f33352757217}\label{testAPUInstructions_8cpp_ae7175182977b110c9bb5f33352757217}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [53/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}M\+O\+VW X\+V\+Ibit\+Data\+Transmission\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+X\+V\+Ibit\+Data\+Transmission\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_af25a9258f3620a3d396a8acba6c9e776}\label{testAPUInstructions_8cpp_af25a9258f3620a3d396a8acba6c9e776}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [54/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}M\+UL Multiplication\+Division\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+Multiplication\+Division\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a40c8c1c435184588c9988eeb04b13bf7}\label{testAPUInstructions_8cpp_a40c8c1c435184588c9988eeb04b13bf7}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [55/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}N\+OP Standbys\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+Standbys\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a47607cb8b512bf758d2312017a3e958e}\label{testAPUInstructions_8cpp_a47607cb8b512bf758d2312017a3e958e}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [56/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}N\+O\+T1 Bit\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+Bit\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_ab3b1b6c7233187028c3992eb707c0f3e}\label{testAPUInstructions_8cpp_ab3b1b6c7233187028c3992eb707c0f3e}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [57/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}N\+O\+TC P\+SW\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+P\+S\+W\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a6f800f258872823b764ac0c59e03be60}\label{testAPUInstructions_8cpp_a6f800f258872823b764ac0c59e03be60}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [58/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}OR V\+I\+I\+I\+Logical\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+V\+I\+I\+I\+Logical\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_abade1454a0527c92f2e5ccbb2b5a242b}\label{testAPUInstructions_8cpp_abade1454a0527c92f2e5ccbb2b5a242b}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [59/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}O\+R1 Bit\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+Bit\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a8466859be69c068de2d435efa1799a99}\label{testAPUInstructions_8cpp_a8466859be69c068de2d435efa1799a99}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [60/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}O\+R1\+\_\+invert Bit\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+Bit\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a444f27c08b0dc2bb6ee2fd624b358521}\label{testAPUInstructions_8cpp_a444f27c08b0dc2bb6ee2fd624b358521}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [61/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}O\+Racc V\+I\+I\+I\+Logical\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+V\+I\+I\+I\+Logical\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a54b05d61b1948b9d0e1cac9e2b9af121}\label{testAPUInstructions_8cpp_a54b05d61b1948b9d0e1cac9e2b9af121}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [62/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}P\+C\+A\+LL Subroutine\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+Subroutine\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_aef1678d79841b80f7d0b82b16f7d72c2}\label{testAPUInstructions_8cpp_aef1678d79841b80f7d0b82b16f7d72c2}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [63/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}P\+OP Stack\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+Stack\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a5fc786ee46f54253c6ae7e4eda3134bb}\label{testAPUInstructions_8cpp_a5fc786ee46f54253c6ae7e4eda3134bb}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [64/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}P\+U\+SH Stack\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+Stack\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_ade45ef3706365218cad64977bddfb5bf}\label{testAPUInstructions_8cpp_ade45ef3706365218cad64977bddfb5bf}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [65/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}R\+ET Subroutine\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+Subroutine\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a03e6500392f9937d429cc5b43bdc083d}\label{testAPUInstructions_8cpp_a03e6500392f9937d429cc5b43bdc083d}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [66/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}R\+E\+TI Subroutine\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+Subroutine\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a5d0514751cf474e13667d4882af26135}\label{testAPUInstructions_8cpp_a5d0514751cf474e13667d4882af26135}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [67/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}R\+OL V\+I\+I\+Ibit\+Shift\+Rotation\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+V\+I\+I\+Ibit\+Shift\+Rotation\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_adc3f8d7e8da17e2a90c06fff70a045a8}\label{testAPUInstructions_8cpp_adc3f8d7e8da17e2a90c06fff70a045a8}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [68/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}R\+OR V\+I\+I\+Ibit\+Shift\+Rotation\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+V\+I\+I\+Ibit\+Shift\+Rotation\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a0e835b3c911ff5e948d054c31780d407}\label{testAPUInstructions_8cpp_a0e835b3c911ff5e948d054c31780d407}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [69/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}S\+BC V\+I\+I\+I\+Arithmetic\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+V\+I\+I\+I\+Arithmetic\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_aa4590ddf5a7aff6336029052624ddf6b}\label{testAPUInstructions_8cpp_aa4590ddf5a7aff6336029052624ddf6b}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [70/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}S\+B\+Cacc V\+I\+I\+I\+Arithmetic\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+V\+I\+I\+I\+Arithmetic\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a5b18f778b14c4389a2fa5fa516281e56}\label{testAPUInstructions_8cpp_a5b18f778b14c4389a2fa5fa516281e56}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [71/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}S\+E\+T1 Bit\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+Bit\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a975aabbcff35a3455209bf874c543bf3}\label{testAPUInstructions_8cpp_a975aabbcff35a3455209bf874c543bf3}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [72/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}S\+E\+TC P\+SW\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+P\+S\+W\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a0e8bff96be73187d76cb6a28b0e174ff}\label{testAPUInstructions_8cpp_a0e8bff96be73187d76cb6a28b0e174ff}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [73/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}S\+E\+TP P\+SW\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+P\+S\+W\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a50f2e99b0498ccd7df0f219e51ce2bbc}\label{testAPUInstructions_8cpp_a50f2e99b0498ccd7df0f219e51ce2bbc}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [74/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}S\+L\+E\+EP Standbys\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+Standbys\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a22042b212cee6381a2fb000c237e83c9}\label{testAPUInstructions_8cpp_a22042b212cee6381a2fb000c237e83c9}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [75/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}S\+T\+OP Standbys\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+Standbys\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_af39cf64d21f0cff02308805d86d5f2e7}\label{testAPUInstructions_8cpp_af39cf64d21f0cff02308805d86d5f2e7}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [76/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}S\+U\+BW X\+V\+Ibit\+Arithmetic\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+X\+V\+Ibit\+Arithmetic\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a3a2cd5360d4f43b7184ba96bf6ee6a5b}\label{testAPUInstructions_8cpp_a3a2cd5360d4f43b7184ba96bf6ee6a5b}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [77/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}T\+C\+A\+LL Subroutine\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+Subroutine\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a4f196c1a2b1d354b99ebd73c01ff7248}\label{testAPUInstructions_8cpp_a4f196c1a2b1d354b99ebd73c01ff7248}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [78/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}T\+C\+L\+R1 Bit\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+Bit\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a91e30e84cce0f0ea3da3185ed5c4061a}\label{testAPUInstructions_8cpp_a91e30e84cce0f0ea3da3185ed5c4061a}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [79/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}T\+S\+E\+T1 Bit\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+Bit\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testAPUInstructions_8cpp_a45a43b3068b232ad0609a50d4d26f913}\label{testAPUInstructions_8cpp_a45a43b3068b232ad0609a50d4d26f913}} 
+\index{testAPUInstructions.cpp@{testAPUInstructions.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testAPUInstructions.cpp@{testAPUInstructions.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [80/80]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}X\+CN V\+I\+I\+I\+Shift\+Rotation\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+V\+I\+I\+I\+Shift\+Rotation\mbox{]} }\end{DoxyParamCaption})}
+

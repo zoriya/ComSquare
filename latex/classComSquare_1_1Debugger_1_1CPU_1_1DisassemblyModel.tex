@@ -1,0 +1,143 @@
+\hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1DisassemblyModel}{}\doxysection{Com\+Square\+::Debugger\+::C\+PU\+::Disassembly\+Model Class Reference}
+\label{classComSquare_1_1Debugger_1_1CPU_1_1DisassemblyModel}\index{ComSquare::Debugger::CPU::DisassemblyModel@{ComSquare::Debugger::CPU::DisassemblyModel}}
+
+
+The qt model that show the disassembly.  
+
+
+
+
+{\ttfamily \#include $<$C\+P\+U\+Debug.\+hpp$>$}
+
+
+
+Inheritance diagram for Com\+Square\+::Debugger\+::C\+PU\+::Disassembly\+Model\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=222pt]{classComSquare_1_1Debugger_1_1CPU_1_1DisassemblyModel__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Com\+Square\+::Debugger\+::C\+PU\+::Disassembly\+Model\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classComSquare_1_1Debugger_1_1CPU_1_1DisassemblyModel__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1DisassemblyModel_a90f15ba940d10974ca1aa539086a3ede}{Disassembly\+Model}} (\mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug}{C\+P\+U\+Debug}} \&cpu)
+\item 
+\mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1DisassemblyModel_a91015d7a937284aa77b4f0755c9a4dd6}{Disassembly\+Model}} (const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1DisassemblyModel}{Disassembly\+Model}} \&)=delete
+\item 
+const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1DisassemblyModel}{Disassembly\+Model}} \& \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1DisassemblyModel_a7b450d945ef73763e4db9fa87ede3fb5}{operator=}} (const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1DisassemblyModel}{Disassembly\+Model}} \&)=delete
+\item 
+\mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1DisassemblyModel_aa23468132fdfb84f26a3a5f2f7d525b6}{$\sim$\+Disassembly\+Model}} () override=default
+\item 
+int \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1DisassemblyModel_a21624d60f19a77eba43c997a96d6b47f}{row\+Count}} (const Q\+Model\+Index \&parent) const override
+\begin{DoxyCompactList}\small\item\em The number of row the table has. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1DisassemblyModel_aa53cdb1f24a793f6567e45b1b697a2b8}{column\+Count}} (const Q\+Model\+Index \&parent) const override
+\begin{DoxyCompactList}\small\item\em The number of column the table has. \end{DoxyCompactList}\item 
+Q\+Variant \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1DisassemblyModel_a4772445bacb257b109a9fcb01ea0b475}{data}} (const Q\+Model\+Index \&index, int role) const override
+\begin{DoxyCompactList}\small\item\em Return a data representing the table cell. \end{DoxyCompactList}\item 
+Q\+Variant \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1DisassemblyModel_a31c020131d58413e1109ed4c84ebc3ca}{header\+Data}} (int section, Qt\+::\+Orientation orientation, int role) const override
+\begin{DoxyCompactList}\small\item\em Override the headers to use hex values. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug}{C\+P\+U\+Debug}} \& \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1DisassemblyModel_a44d944a0ccc6392bcf257695ecb4d954}{\+\_\+cpu}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The qt model that show the disassembly. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1DisassemblyModel_a90f15ba940d10974ca1aa539086a3ede}\label{classComSquare_1_1Debugger_1_1CPU_1_1DisassemblyModel_a90f15ba940d10974ca1aa539086a3ede}} 
+\index{ComSquare::Debugger::CPU::DisassemblyModel@{ComSquare::Debugger::CPU::DisassemblyModel}!DisassemblyModel@{DisassemblyModel}}
+\index{DisassemblyModel@{DisassemblyModel}!ComSquare::Debugger::CPU::DisassemblyModel@{ComSquare::Debugger::CPU::DisassemblyModel}}
+\doxysubsubsection{\texorpdfstring{DisassemblyModel()}{DisassemblyModel()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+Disassembly\+Model\+::\+Disassembly\+Model (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug}{C\+P\+U\+Debug}} \&}]{cpu }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1DisassemblyModel_a91015d7a937284aa77b4f0755c9a4dd6}\label{classComSquare_1_1Debugger_1_1CPU_1_1DisassemblyModel_a91015d7a937284aa77b4f0755c9a4dd6}} 
+\index{ComSquare::Debugger::CPU::DisassemblyModel@{ComSquare::Debugger::CPU::DisassemblyModel}!DisassemblyModel@{DisassemblyModel}}
+\index{DisassemblyModel@{DisassemblyModel}!ComSquare::Debugger::CPU::DisassemblyModel@{ComSquare::Debugger::CPU::DisassemblyModel}}
+\doxysubsubsection{\texorpdfstring{DisassemblyModel()}{DisassemblyModel()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+Disassembly\+Model\+::\+Disassembly\+Model (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1DisassemblyModel}{Disassembly\+Model}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1DisassemblyModel_aa23468132fdfb84f26a3a5f2f7d525b6}\label{classComSquare_1_1Debugger_1_1CPU_1_1DisassemblyModel_aa23468132fdfb84f26a3a5f2f7d525b6}} 
+\index{ComSquare::Debugger::CPU::DisassemblyModel@{ComSquare::Debugger::CPU::DisassemblyModel}!````~DisassemblyModel@{$\sim$DisassemblyModel}}
+\index{````~DisassemblyModel@{$\sim$DisassemblyModel}!ComSquare::Debugger::CPU::DisassemblyModel@{ComSquare::Debugger::CPU::DisassemblyModel}}
+\doxysubsubsection{\texorpdfstring{$\sim$DisassemblyModel()}{~DisassemblyModel()}}
+{\footnotesize\ttfamily Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+Disassembly\+Model\+::$\sim$\+Disassembly\+Model (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [default]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1DisassemblyModel_aa53cdb1f24a793f6567e45b1b697a2b8}\label{classComSquare_1_1Debugger_1_1CPU_1_1DisassemblyModel_aa53cdb1f24a793f6567e45b1b697a2b8}} 
+\index{ComSquare::Debugger::CPU::DisassemblyModel@{ComSquare::Debugger::CPU::DisassemblyModel}!columnCount@{columnCount}}
+\index{columnCount@{columnCount}!ComSquare::Debugger::CPU::DisassemblyModel@{ComSquare::Debugger::CPU::DisassemblyModel}}
+\doxysubsubsection{\texorpdfstring{columnCount()}{columnCount()}}
+{\footnotesize\ttfamily int Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+Disassembly\+Model\+::column\+Count (\begin{DoxyParamCaption}\item[{const Q\+Model\+Index \&}]{parent }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+The number of column the table has. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1DisassemblyModel_a4772445bacb257b109a9fcb01ea0b475}\label{classComSquare_1_1Debugger_1_1CPU_1_1DisassemblyModel_a4772445bacb257b109a9fcb01ea0b475}} 
+\index{ComSquare::Debugger::CPU::DisassemblyModel@{ComSquare::Debugger::CPU::DisassemblyModel}!data@{data}}
+\index{data@{data}!ComSquare::Debugger::CPU::DisassemblyModel@{ComSquare::Debugger::CPU::DisassemblyModel}}
+\doxysubsubsection{\texorpdfstring{data()}{data()}}
+{\footnotesize\ttfamily Q\+Variant Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+Disassembly\+Model\+::data (\begin{DoxyParamCaption}\item[{const Q\+Model\+Index \&}]{index,  }\item[{int}]{role }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+Return a data representing the table cell. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1DisassemblyModel_a31c020131d58413e1109ed4c84ebc3ca}\label{classComSquare_1_1Debugger_1_1CPU_1_1DisassemblyModel_a31c020131d58413e1109ed4c84ebc3ca}} 
+\index{ComSquare::Debugger::CPU::DisassemblyModel@{ComSquare::Debugger::CPU::DisassemblyModel}!headerData@{headerData}}
+\index{headerData@{headerData}!ComSquare::Debugger::CPU::DisassemblyModel@{ComSquare::Debugger::CPU::DisassemblyModel}}
+\doxysubsubsection{\texorpdfstring{headerData()}{headerData()}}
+{\footnotesize\ttfamily Q\+Variant Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+Disassembly\+Model\+::header\+Data (\begin{DoxyParamCaption}\item[{int}]{section,  }\item[{Qt\+::\+Orientation}]{orientation,  }\item[{int}]{role }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+Override the headers to use hex values. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1DisassemblyModel_a7b450d945ef73763e4db9fa87ede3fb5}\label{classComSquare_1_1Debugger_1_1CPU_1_1DisassemblyModel_a7b450d945ef73763e4db9fa87ede3fb5}} 
+\index{ComSquare::Debugger::CPU::DisassemblyModel@{ComSquare::Debugger::CPU::DisassemblyModel}!operator=@{operator=}}
+\index{operator=@{operator=}!ComSquare::Debugger::CPU::DisassemblyModel@{ComSquare::Debugger::CPU::DisassemblyModel}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1DisassemblyModel}{Disassembly\+Model}}\& Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+Disassembly\+Model\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1DisassemblyModel}{Disassembly\+Model}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1DisassemblyModel_a21624d60f19a77eba43c997a96d6b47f}\label{classComSquare_1_1Debugger_1_1CPU_1_1DisassemblyModel_a21624d60f19a77eba43c997a96d6b47f}} 
+\index{ComSquare::Debugger::CPU::DisassemblyModel@{ComSquare::Debugger::CPU::DisassemblyModel}!rowCount@{rowCount}}
+\index{rowCount@{rowCount}!ComSquare::Debugger::CPU::DisassemblyModel@{ComSquare::Debugger::CPU::DisassemblyModel}}
+\doxysubsubsection{\texorpdfstring{rowCount()}{rowCount()}}
+{\footnotesize\ttfamily int Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+Disassembly\+Model\+::row\+Count (\begin{DoxyParamCaption}\item[{const Q\+Model\+Index \&}]{parent }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+The number of row the table has. 
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1DisassemblyModel_a44d944a0ccc6392bcf257695ecb4d954}\label{classComSquare_1_1Debugger_1_1CPU_1_1DisassemblyModel_a44d944a0ccc6392bcf257695ecb4d954}} 
+\index{ComSquare::Debugger::CPU::DisassemblyModel@{ComSquare::Debugger::CPU::DisassemblyModel}!\_cpu@{\_cpu}}
+\index{\_cpu@{\_cpu}!ComSquare::Debugger::CPU::DisassemblyModel@{ComSquare::Debugger::CPU::DisassemblyModel}}
+\doxysubsubsection{\texorpdfstring{\_cpu}{\_cpu}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug}{C\+P\+U\+Debug}}\& Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+Disassembly\+Model\+::\+\_\+cpu\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+sources/\+Debugger/\+C\+P\+U/\mbox{\hyperlink{CPUDebug_8hpp}{C\+P\+U\+Debug.\+hpp}}\item 
+sources/\+Debugger/\+C\+P\+U/\mbox{\hyperlink{CPUDebug_8cpp}{C\+P\+U\+Debug.\+cpp}}\end{DoxyCompactItemize}

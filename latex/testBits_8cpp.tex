@@ -1,0 +1,221 @@
+\hypertarget{testBits_8cpp}{}\doxysection{tests/\+C\+P\+U/test\+Bits.cpp File Reference}
+\label{testBits_8cpp}\index{tests/CPU/testBits.cpp@{tests/CPU/testBits.cpp}}
+{\ttfamily \#include $<$catch2/catch\+\_\+test\+\_\+macros.\+hpp$>$}\newline
+{\ttfamily \#include $<$bitset$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include \char`\"{}../tests.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../sources/\+S\+N\+E\+S.\+hpp\char`\"{}}\newline
+Include dependency graph for test\+Bits.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{testBits_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{testBits_8cpp_ab07dc983a8ceb812005f3a00bab73368}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}emulation A\+ND\char`\"{}, \char`\"{}\mbox{[}A\+ND\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testBits_8cpp_aa04f497425c6ec7dd3584398ff31dfeb}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}native\+Negative A\+ND\char`\"{}, \char`\"{}\mbox{[}A\+ND\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testBits_8cpp_aa4fe8f7e00deb30860097deebc98bdeb}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}emulation\+Test A\+ND\char`\"{}, \char`\"{}\mbox{[}A\+ND\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testBits_8cpp_ab91e3718d98f868f717688141ab9d25a}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}emulation\+Test T\+SB\char`\"{}, \char`\"{}\mbox{[}T\+SB\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testBits_8cpp_ae64c86fe21722ee551adc79a2f19aa65}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}native\+Test T\+SB\char`\"{}, \char`\"{}\mbox{[}T\+SB\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testBits_8cpp_a2da2a93bed6721b2070d09f04f9119c9}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}immediate B\+IT\char`\"{}, \char`\"{}\mbox{[}B\+IT\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testBits_8cpp_a735fc01bee88944f9ebd200adf6e852b}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}immediate\+Zero B\+IT\char`\"{}, \char`\"{}\mbox{[}B\+IT\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testBits_8cpp_a44f9a65f492cc1d7414918510d0586cb}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}other B\+IT\char`\"{}, \char`\"{}\mbox{[}B\+IT\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testBits_8cpp_ac9b2f97f86994d797d4940ef9a431d54}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}emulation\+Test A\+SL\char`\"{}, \char`\"{}\mbox{[}A\+SL\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testBits_8cpp_a0bba3c00afef9769a72f0156395a7aba}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}native\+Test A\+SL\char`\"{}, \char`\"{}\mbox{[}A\+SL\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testBits_8cpp_a42bd8be7d089c975c455fe6c990d7149}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}accumulator A\+SL\char`\"{}, \char`\"{}\mbox{[}A\+SL\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testBits_8cpp_a03354f0884fea2d76ccd4636bb1d58f3}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}emulation\+Test L\+SR\char`\"{}, \char`\"{}\mbox{[}L\+SR\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testBits_8cpp_ae51308334eb0b1efb16a7d96ef072a1f}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}native\+Test L\+SR\char`\"{}, \char`\"{}\mbox{[}L\+SR\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testBits_8cpp_a327c05f2600abe8190fd5b97021f0c0f}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}accumulator L\+SR\char`\"{}, \char`\"{}\mbox{[}L\+SR\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testBits_8cpp_ae4aa56326b7d008e1c1a08a3c9d4ccc6}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}emulation\+Test R\+OL\char`\"{}, \char`\"{}\mbox{[}R\+OL\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testBits_8cpp_a5d4d55319907dc05e96b69d455fdf4a8}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}emulation\+Test\+With\+Carry R\+OL\char`\"{}, \char`\"{}\mbox{[}R\+OL\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testBits_8cpp_a2b55604d70ef3043a11725135c0f4ef5}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}native\+Test R\+OL\char`\"{}, \char`\"{}\mbox{[}R\+OL\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testBits_8cpp_a0c79b3db9fb0e5d5a0a872327d6f33f4}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}accumulator R\+OL\char`\"{}, \char`\"{}\mbox{[}R\+OL\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testBits_8cpp_aef55f62dbcddbf78ea404cc1480775e5}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}emulation\+Test\+Withtout\+Carry R\+OR\char`\"{}, \char`\"{}\mbox{[}R\+OR\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testBits_8cpp_a3a89d739fb368310e6074ef217a3bca0}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}emulation\+Test R\+OR\char`\"{}, \char`\"{}\mbox{[}R\+OR\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testBits_8cpp_a342952ea3ed249461eb92a75fe74cbe6}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}native\+Test R\+OR\char`\"{}, \char`\"{}\mbox{[}R\+OR\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testBits_8cpp_a752c8fdf9dd2c9899a88e1c1370ec241}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}accumulator R\+OR\char`\"{}, \char`\"{}\mbox{[}R\+OR\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testBits_8cpp_ac113e5e551d41e70ca85b1b2e0a4c07d}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}emulation\+Test T\+RB\char`\"{}, \char`\"{}\mbox{[}T\+RB\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testBits_8cpp_a3315e4184d52947ef43c2eb1786f9f17}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}native\+Test T\+RB\char`\"{}, \char`\"{}\mbox{[}T\+RB\mbox{]}\char`\"{})
+\item 
+\mbox{\hyperlink{testBits_8cpp_a1d29283b6069bad973c484e65282d59b}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}zero T\+RB\char`\"{}, \char`\"{}\mbox{[}T\+RB\mbox{]}\char`\"{})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{testBits_8cpp_a42bd8be7d089c975c455fe6c990d7149}\label{testBits_8cpp_a42bd8be7d089c975c455fe6c990d7149}} 
+\index{testBits.cpp@{testBits.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testBits.cpp@{testBits.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [1/25]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}accumulator A\+SL\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+A\+S\+L\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testBits_8cpp_a327c05f2600abe8190fd5b97021f0c0f}\label{testBits_8cpp_a327c05f2600abe8190fd5b97021f0c0f}} 
+\index{testBits.cpp@{testBits.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testBits.cpp@{testBits.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [2/25]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}accumulator L\+SR\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+L\+S\+R\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testBits_8cpp_a0c79b3db9fb0e5d5a0a872327d6f33f4}\label{testBits_8cpp_a0c79b3db9fb0e5d5a0a872327d6f33f4}} 
+\index{testBits.cpp@{testBits.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testBits.cpp@{testBits.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [3/25]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}accumulator R\+OL\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+R\+O\+L\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testBits_8cpp_a752c8fdf9dd2c9899a88e1c1370ec241}\label{testBits_8cpp_a752c8fdf9dd2c9899a88e1c1370ec241}} 
+\index{testBits.cpp@{testBits.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testBits.cpp@{testBits.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [4/25]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}accumulator R\+OR\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+R\+O\+R\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testBits_8cpp_ab07dc983a8ceb812005f3a00bab73368}\label{testBits_8cpp_ab07dc983a8ceb812005f3a00bab73368}} 
+\index{testBits.cpp@{testBits.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testBits.cpp@{testBits.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [5/25]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}emulation A\+ND\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+A\+N\+D\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testBits_8cpp_aa4fe8f7e00deb30860097deebc98bdeb}\label{testBits_8cpp_aa4fe8f7e00deb30860097deebc98bdeb}} 
+\index{testBits.cpp@{testBits.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testBits.cpp@{testBits.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [6/25]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}emulation\+Test A\+ND\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+A\+N\+D\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testBits_8cpp_ac9b2f97f86994d797d4940ef9a431d54}\label{testBits_8cpp_ac9b2f97f86994d797d4940ef9a431d54}} 
+\index{testBits.cpp@{testBits.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testBits.cpp@{testBits.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [7/25]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}emulation\+Test A\+SL\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+A\+S\+L\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testBits_8cpp_a03354f0884fea2d76ccd4636bb1d58f3}\label{testBits_8cpp_a03354f0884fea2d76ccd4636bb1d58f3}} 
+\index{testBits.cpp@{testBits.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testBits.cpp@{testBits.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [8/25]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}emulation\+Test L\+SR\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+L\+S\+R\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testBits_8cpp_ae4aa56326b7d008e1c1a08a3c9d4ccc6}\label{testBits_8cpp_ae4aa56326b7d008e1c1a08a3c9d4ccc6}} 
+\index{testBits.cpp@{testBits.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testBits.cpp@{testBits.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [9/25]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}emulation\+Test R\+OL\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+R\+O\+L\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testBits_8cpp_a3a89d739fb368310e6074ef217a3bca0}\label{testBits_8cpp_a3a89d739fb368310e6074ef217a3bca0}} 
+\index{testBits.cpp@{testBits.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testBits.cpp@{testBits.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [10/25]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}emulation\+Test R\+OR\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+R\+O\+R\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testBits_8cpp_ac113e5e551d41e70ca85b1b2e0a4c07d}\label{testBits_8cpp_ac113e5e551d41e70ca85b1b2e0a4c07d}} 
+\index{testBits.cpp@{testBits.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testBits.cpp@{testBits.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [11/25]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}emulation\+Test T\+RB\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+T\+R\+B\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testBits_8cpp_ab91e3718d98f868f717688141ab9d25a}\label{testBits_8cpp_ab91e3718d98f868f717688141ab9d25a}} 
+\index{testBits.cpp@{testBits.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testBits.cpp@{testBits.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [12/25]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}emulation\+Test T\+SB\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+T\+S\+B\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testBits_8cpp_a5d4d55319907dc05e96b69d455fdf4a8}\label{testBits_8cpp_a5d4d55319907dc05e96b69d455fdf4a8}} 
+\index{testBits.cpp@{testBits.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testBits.cpp@{testBits.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [13/25]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}emulation\+Test\+With\+Carry R\+OL\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+R\+O\+L\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testBits_8cpp_aef55f62dbcddbf78ea404cc1480775e5}\label{testBits_8cpp_aef55f62dbcddbf78ea404cc1480775e5}} 
+\index{testBits.cpp@{testBits.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testBits.cpp@{testBits.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [14/25]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}emulation\+Test\+Withtout\+Carry R\+OR\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+R\+O\+R\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testBits_8cpp_a2da2a93bed6721b2070d09f04f9119c9}\label{testBits_8cpp_a2da2a93bed6721b2070d09f04f9119c9}} 
+\index{testBits.cpp@{testBits.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testBits.cpp@{testBits.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [15/25]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}immediate B\+IT\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+B\+I\+T\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testBits_8cpp_a735fc01bee88944f9ebd200adf6e852b}\label{testBits_8cpp_a735fc01bee88944f9ebd200adf6e852b}} 
+\index{testBits.cpp@{testBits.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testBits.cpp@{testBits.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [16/25]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}immediate\+Zero B\+IT\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+B\+I\+T\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testBits_8cpp_aa04f497425c6ec7dd3584398ff31dfeb}\label{testBits_8cpp_aa04f497425c6ec7dd3584398ff31dfeb}} 
+\index{testBits.cpp@{testBits.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testBits.cpp@{testBits.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [17/25]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}native\+Negative A\+ND\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+A\+N\+D\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testBits_8cpp_a0bba3c00afef9769a72f0156395a7aba}\label{testBits_8cpp_a0bba3c00afef9769a72f0156395a7aba}} 
+\index{testBits.cpp@{testBits.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testBits.cpp@{testBits.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [18/25]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}native\+Test A\+SL\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+A\+S\+L\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testBits_8cpp_ae51308334eb0b1efb16a7d96ef072a1f}\label{testBits_8cpp_ae51308334eb0b1efb16a7d96ef072a1f}} 
+\index{testBits.cpp@{testBits.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testBits.cpp@{testBits.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [19/25]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}native\+Test L\+SR\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+L\+S\+R\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testBits_8cpp_a2b55604d70ef3043a11725135c0f4ef5}\label{testBits_8cpp_a2b55604d70ef3043a11725135c0f4ef5}} 
+\index{testBits.cpp@{testBits.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testBits.cpp@{testBits.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [20/25]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}native\+Test R\+OL\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+R\+O\+L\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testBits_8cpp_a342952ea3ed249461eb92a75fe74cbe6}\label{testBits_8cpp_a342952ea3ed249461eb92a75fe74cbe6}} 
+\index{testBits.cpp@{testBits.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testBits.cpp@{testBits.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [21/25]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}native\+Test R\+OR\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+R\+O\+R\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testBits_8cpp_a3315e4184d52947ef43c2eb1786f9f17}\label{testBits_8cpp_a3315e4184d52947ef43c2eb1786f9f17}} 
+\index{testBits.cpp@{testBits.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testBits.cpp@{testBits.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [22/25]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}native\+Test T\+RB\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+T\+R\+B\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testBits_8cpp_ae64c86fe21722ee551adc79a2f19aa65}\label{testBits_8cpp_ae64c86fe21722ee551adc79a2f19aa65}} 
+\index{testBits.cpp@{testBits.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testBits.cpp@{testBits.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [23/25]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}native\+Test T\+SB\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+T\+S\+B\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testBits_8cpp_a44f9a65f492cc1d7414918510d0586cb}\label{testBits_8cpp_a44f9a65f492cc1d7414918510d0586cb}} 
+\index{testBits.cpp@{testBits.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testBits.cpp@{testBits.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [24/25]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}other B\+IT\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+B\+I\+T\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{testBits_8cpp_a1d29283b6069bad973c484e65282d59b}\label{testBits_8cpp_a1d29283b6069bad973c484e65282d59b}} 
+\index{testBits.cpp@{testBits.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!testBits.cpp@{testBits.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [25/25]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}zero T\+RB\char`\"{}}]{,  }\item[{\char`\"{}\char`\"{}}]{\mbox{[}\+T\+R\+B\mbox{]} }\end{DoxyParamCaption})}
+

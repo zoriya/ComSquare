@@ -1,0 +1,74 @@
+\hypertarget{PPU_8hpp}{}\doxysection{sources/\+P\+P\+U/\+P\+PU.hpp File Reference}
+\label{PPU_8hpp}\index{sources/PPU/PPU.hpp@{sources/PPU/PPU.hpp}}
+{\ttfamily \#include $<$cstdint$>$}\newline
+{\ttfamily \#include \char`\"{}Memory/\+A\+Memory.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Memory/\+Memory\+Bus.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Renderer/\+I\+Renderer.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Ram/\+Ram.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Models/\+Vector2.\+hpp\char`\"{}}\newline
+{\ttfamily \#include $<$algorithm$>$}\newline
+{\ttfamily \#include \char`\"{}Background.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}P\+P\+U/\+P\+P\+U\+Utils.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}P\+P\+U/\+P\+P\+U\+Registers.\+hpp\char`\"{}}\newline
+Include dependency graph for P\+P\+U.\+hpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{PPU_8hpp__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{PPU_8hpp__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classComSquare_1_1PPU_1_1PPU}{Com\+Square\+::\+P\+P\+U\+::\+P\+PU}}
+\begin{DoxyCompactList}\small\item\em The class containing all the registers of the \mbox{\hyperlink{classComSquare_1_1PPU_1_1PPU}{P\+PU}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \mbox{\hyperlink{namespaceComSquare}{Com\+Square}}
+\item 
+ \mbox{\hyperlink{namespaceComSquare_1_1PPU}{Com\+Square\+::\+P\+PU}}
+\item 
+ \mbox{\hyperlink{namespaceComSquare_1_1PPU_1_1Utils}{Com\+Square\+::\+P\+P\+U\+::\+Utils}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{PPU_8hpp_a0cf2d82c57a09723ab59e6f4dcc45b84}{F\+A\+L\+L\+T\+H\+R\+O\+U\+GH}}~\+\_\+\+\_\+attribute\+\_\+\+\_\+((fallthrough));
+\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{namespaceComSquare_1_1PPU_abbb9c28b76bb2ed5fd79a01a5882a2ed}{Com\+Square\+::\+P\+P\+U\+::\+Bg\+Name}} \{ \mbox{\hyperlink{namespaceComSquare_1_1PPU_abbb9c28b76bb2ed5fd79a01a5882a2eda0c57e8a56d7066f126bba8111a3d531d}{Com\+Square\+::\+P\+P\+U\+::\+Background1}} = 0, 
+\mbox{\hyperlink{namespaceComSquare_1_1PPU_abbb9c28b76bb2ed5fd79a01a5882a2edafc5ae0602bcef28db940cef6ea122676}{Com\+Square\+::\+P\+P\+U\+::\+Background2}}, 
+\mbox{\hyperlink{namespaceComSquare_1_1PPU_abbb9c28b76bb2ed5fd79a01a5882a2eda01c672113c1cef0b21cea5a14496dc2a}{Com\+Square\+::\+P\+P\+U\+::\+Background3}}, 
+\mbox{\hyperlink{namespaceComSquare_1_1PPU_abbb9c28b76bb2ed5fd79a01a5882a2eda43f547df3844d7529a5ba777df5d39a1}{Com\+Square\+::\+P\+P\+U\+::\+Background4}}
+ \}
+\begin{DoxyCompactList}\small\item\em Enum to access more easily the ppu background array. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr uint32\+\_\+t \mbox{\hyperlink{namespaceComSquare_1_1PPU_a306e77b75ef8111cf90df12506928dd8}{Com\+Square\+::\+P\+P\+U\+::\+Vram\+Size}} = 65536
+\item 
+static constexpr uint32\+\_\+t \mbox{\hyperlink{namespaceComSquare_1_1PPU_ad45d76cac81d6f187ba6cf90302cbb3f}{Com\+Square\+::\+P\+P\+U\+::\+C\+G\+Ram\+Size}} = 512
+\item 
+static constexpr uint32\+\_\+t \mbox{\hyperlink{namespaceComSquare_1_1PPU_a83cde84750156e6453ddd85227ea23e2}{Com\+Square\+::\+P\+P\+U\+::\+O\+A\+M\+Ram\+Size}} = 544
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{PPU_8hpp_a0cf2d82c57a09723ab59e6f4dcc45b84}\label{PPU_8hpp_a0cf2d82c57a09723ab59e6f4dcc45b84}} 
+\index{PPU.hpp@{PPU.hpp}!FALLTHROUGH@{FALLTHROUGH}}
+\index{FALLTHROUGH@{FALLTHROUGH}!PPU.hpp@{PPU.hpp}}
+\doxysubsubsection{\texorpdfstring{FALLTHROUGH}{FALLTHROUGH}}
+{\footnotesize\ttfamily \#define F\+A\+L\+L\+T\+H\+R\+O\+U\+GH~\+\_\+\+\_\+attribute\+\_\+\+\_\+((fallthrough));}
+

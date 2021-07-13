@@ -1,0 +1,151 @@
+\hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1StackModel}{}\doxysection{Com\+Square\+::Debugger\+::C\+PU\+::Stack\+Model Class Reference}
+\label{classComSquare_1_1Debugger_1_1CPU_1_1StackModel}\index{ComSquare::Debugger::CPU::StackModel@{ComSquare::Debugger::CPU::StackModel}}
+
+
+The qt model that show the stack.  
+
+
+
+
+{\ttfamily \#include $<$C\+P\+U\+Debug.\+hpp$>$}
+
+
+
+Inheritance diagram for Com\+Square\+::Debugger\+::C\+PU\+::Stack\+Model\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=206pt]{classComSquare_1_1Debugger_1_1CPU_1_1StackModel__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Com\+Square\+::Debugger\+::C\+PU\+::Stack\+Model\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classComSquare_1_1Debugger_1_1CPU_1_1StackModel__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1StackModel_a837fff2192191a070c8e702c98eb1738}{Stack\+Model}} (\mbox{\hyperlink{classComSquare_1_1Memory_1_1IMemoryBus}{Memory\+::\+I\+Memory\+Bus}} \&bus, \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug}{C\+P\+U\+Debug}} \&cpu)
+\item 
+\mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1StackModel_a09bb7ab19d5d1fcf5d2dd898d30a59a1}{Stack\+Model}} (const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1StackModel}{Stack\+Model}} \&)=delete
+\item 
+const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1StackModel}{Stack\+Model}} \& \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1StackModel_ac064351e360a526a963b50dcfb77ab90}{operator=}} (const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1StackModel}{Stack\+Model}} \&)=delete
+\item 
+\mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1StackModel_ab1096dbc42a96088e64110eb269ad7fb}{$\sim$\+Stack\+Model}} () override=default
+\item 
+int \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1StackModel_ac7ed09a17ca73058c9817ab9665bdbf8}{row\+Count}} (const Q\+Model\+Index \&parent) const override
+\begin{DoxyCompactList}\small\item\em The number of row the table has. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1StackModel_a4c712916ecdfb1888687ba9d833fb90c}{column\+Count}} (const Q\+Model\+Index \&parent) const override
+\begin{DoxyCompactList}\small\item\em The number of column the table has. \end{DoxyCompactList}\item 
+Q\+Variant \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1StackModel_acdd9c3ec0ae0385c9c53f39899066b17}{data}} (const Q\+Model\+Index \&index, int role) const override
+\begin{DoxyCompactList}\small\item\em Return a data representing the table cell. \end{DoxyCompactList}\item 
+Q\+Variant \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1StackModel_aa56fa3fa4e90e8a0fadeab468d93961e}{header\+Data}} (int section, Qt\+::\+Orientation orientation, int role) const override
+\begin{DoxyCompactList}\small\item\em Override the headers to use hex values. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classComSquare_1_1Memory_1_1IMemoryBus}{Memory\+::\+I\+Memory\+Bus}} \& \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1StackModel_aa88ac15383b081945f86fb31ccd4f4b2}{\+\_\+bus}}
+\item 
+\mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug}{C\+P\+U\+Debug}} \& \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1StackModel_a2a5c277c828043bcb9d4fa4c01c0dd9e}{\+\_\+cpu}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The qt model that show the stack. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1StackModel_a837fff2192191a070c8e702c98eb1738}\label{classComSquare_1_1Debugger_1_1CPU_1_1StackModel_a837fff2192191a070c8e702c98eb1738}} 
+\index{ComSquare::Debugger::CPU::StackModel@{ComSquare::Debugger::CPU::StackModel}!StackModel@{StackModel}}
+\index{StackModel@{StackModel}!ComSquare::Debugger::CPU::StackModel@{ComSquare::Debugger::CPU::StackModel}}
+\doxysubsubsection{\texorpdfstring{StackModel()}{StackModel()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+Stack\+Model\+::\+Stack\+Model (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classComSquare_1_1Memory_1_1IMemoryBus}{Memory\+::\+I\+Memory\+Bus}} \&}]{bus,  }\item[{\mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug}{C\+P\+U\+Debug}} \&}]{cpu }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1StackModel_a09bb7ab19d5d1fcf5d2dd898d30a59a1}\label{classComSquare_1_1Debugger_1_1CPU_1_1StackModel_a09bb7ab19d5d1fcf5d2dd898d30a59a1}} 
+\index{ComSquare::Debugger::CPU::StackModel@{ComSquare::Debugger::CPU::StackModel}!StackModel@{StackModel}}
+\index{StackModel@{StackModel}!ComSquare::Debugger::CPU::StackModel@{ComSquare::Debugger::CPU::StackModel}}
+\doxysubsubsection{\texorpdfstring{StackModel()}{StackModel()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+Stack\+Model\+::\+Stack\+Model (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1StackModel}{Stack\+Model}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1StackModel_ab1096dbc42a96088e64110eb269ad7fb}\label{classComSquare_1_1Debugger_1_1CPU_1_1StackModel_ab1096dbc42a96088e64110eb269ad7fb}} 
+\index{ComSquare::Debugger::CPU::StackModel@{ComSquare::Debugger::CPU::StackModel}!````~StackModel@{$\sim$StackModel}}
+\index{````~StackModel@{$\sim$StackModel}!ComSquare::Debugger::CPU::StackModel@{ComSquare::Debugger::CPU::StackModel}}
+\doxysubsubsection{\texorpdfstring{$\sim$StackModel()}{~StackModel()}}
+{\footnotesize\ttfamily Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+Stack\+Model\+::$\sim$\+Stack\+Model (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [default]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1StackModel_a4c712916ecdfb1888687ba9d833fb90c}\label{classComSquare_1_1Debugger_1_1CPU_1_1StackModel_a4c712916ecdfb1888687ba9d833fb90c}} 
+\index{ComSquare::Debugger::CPU::StackModel@{ComSquare::Debugger::CPU::StackModel}!columnCount@{columnCount}}
+\index{columnCount@{columnCount}!ComSquare::Debugger::CPU::StackModel@{ComSquare::Debugger::CPU::StackModel}}
+\doxysubsubsection{\texorpdfstring{columnCount()}{columnCount()}}
+{\footnotesize\ttfamily int Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+Stack\+Model\+::column\+Count (\begin{DoxyParamCaption}\item[{const Q\+Model\+Index \&}]{parent }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+The number of column the table has. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1StackModel_acdd9c3ec0ae0385c9c53f39899066b17}\label{classComSquare_1_1Debugger_1_1CPU_1_1StackModel_acdd9c3ec0ae0385c9c53f39899066b17}} 
+\index{ComSquare::Debugger::CPU::StackModel@{ComSquare::Debugger::CPU::StackModel}!data@{data}}
+\index{data@{data}!ComSquare::Debugger::CPU::StackModel@{ComSquare::Debugger::CPU::StackModel}}
+\doxysubsubsection{\texorpdfstring{data()}{data()}}
+{\footnotesize\ttfamily Q\+Variant Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+Stack\+Model\+::data (\begin{DoxyParamCaption}\item[{const Q\+Model\+Index \&}]{index,  }\item[{int}]{role }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+Return a data representing the table cell. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1StackModel_aa56fa3fa4e90e8a0fadeab468d93961e}\label{classComSquare_1_1Debugger_1_1CPU_1_1StackModel_aa56fa3fa4e90e8a0fadeab468d93961e}} 
+\index{ComSquare::Debugger::CPU::StackModel@{ComSquare::Debugger::CPU::StackModel}!headerData@{headerData}}
+\index{headerData@{headerData}!ComSquare::Debugger::CPU::StackModel@{ComSquare::Debugger::CPU::StackModel}}
+\doxysubsubsection{\texorpdfstring{headerData()}{headerData()}}
+{\footnotesize\ttfamily Q\+Variant Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+Stack\+Model\+::header\+Data (\begin{DoxyParamCaption}\item[{int}]{section,  }\item[{Qt\+::\+Orientation}]{orientation,  }\item[{int}]{role }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+Override the headers to use hex values. 
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1StackModel_ac064351e360a526a963b50dcfb77ab90}\label{classComSquare_1_1Debugger_1_1CPU_1_1StackModel_ac064351e360a526a963b50dcfb77ab90}} 
+\index{ComSquare::Debugger::CPU::StackModel@{ComSquare::Debugger::CPU::StackModel}!operator=@{operator=}}
+\index{operator=@{operator=}!ComSquare::Debugger::CPU::StackModel@{ComSquare::Debugger::CPU::StackModel}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1StackModel}{Stack\+Model}}\& Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+Stack\+Model\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1StackModel}{Stack\+Model}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1StackModel_ac7ed09a17ca73058c9817ab9665bdbf8}\label{classComSquare_1_1Debugger_1_1CPU_1_1StackModel_ac7ed09a17ca73058c9817ab9665bdbf8}} 
+\index{ComSquare::Debugger::CPU::StackModel@{ComSquare::Debugger::CPU::StackModel}!rowCount@{rowCount}}
+\index{rowCount@{rowCount}!ComSquare::Debugger::CPU::StackModel@{ComSquare::Debugger::CPU::StackModel}}
+\doxysubsubsection{\texorpdfstring{rowCount()}{rowCount()}}
+{\footnotesize\ttfamily int Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+Stack\+Model\+::row\+Count (\begin{DoxyParamCaption}\item[{const Q\+Model\+Index \&}]{parent }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+The number of row the table has. 
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1StackModel_aa88ac15383b081945f86fb31ccd4f4b2}\label{classComSquare_1_1Debugger_1_1CPU_1_1StackModel_aa88ac15383b081945f86fb31ccd4f4b2}} 
+\index{ComSquare::Debugger::CPU::StackModel@{ComSquare::Debugger::CPU::StackModel}!\_bus@{\_bus}}
+\index{\_bus@{\_bus}!ComSquare::Debugger::CPU::StackModel@{ComSquare::Debugger::CPU::StackModel}}
+\doxysubsubsection{\texorpdfstring{\_bus}{\_bus}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1Memory_1_1IMemoryBus}{Memory\+::\+I\+Memory\+Bus}}\& Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+Stack\+Model\+::\+\_\+bus\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classComSquare_1_1Debugger_1_1CPU_1_1StackModel_a2a5c277c828043bcb9d4fa4c01c0dd9e}\label{classComSquare_1_1Debugger_1_1CPU_1_1StackModel_a2a5c277c828043bcb9d4fa4c01c0dd9e}} 
+\index{ComSquare::Debugger::CPU::StackModel@{ComSquare::Debugger::CPU::StackModel}!\_cpu@{\_cpu}}
+\index{\_cpu@{\_cpu}!ComSquare::Debugger::CPU::StackModel@{ComSquare::Debugger::CPU::StackModel}}
+\doxysubsubsection{\texorpdfstring{\_cpu}{\_cpu}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1Debugger_1_1CPU_1_1CPUDebug}{C\+P\+U\+Debug}}\& Com\+Square\+::\+Debugger\+::\+C\+P\+U\+::\+Stack\+Model\+::\+\_\+cpu\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+sources/\+Debugger/\+C\+P\+U/\mbox{\hyperlink{CPUDebug_8hpp}{C\+P\+U\+Debug.\+hpp}}\item 
+sources/\+Debugger/\+C\+P\+U/\mbox{\hyperlink{CPUDebug_8cpp}{C\+P\+U\+Debug.\+cpp}}\end{DoxyCompactItemize}

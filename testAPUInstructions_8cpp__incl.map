@@ -1,0 +1,52 @@
+<map id="tests/APU/testAPUInstructions.cpp" name="tests/APU/testAPUInstructions.cpp">
+<area shape="rect" id="node1" title=" " alt="" coords="2260,5,2504,32"/>
+<area shape="rect" id="node2" title=" " alt="" coords="531,80,750,107"/>
+<area shape="rect" id="node3" title=" " alt="" coords="2491,841,2571,868"/>
+<area shape="rect" id="node4" title=" " alt="" coords="2785,80,2843,107"/>
+<area shape="rect" id="node5" href="$tests_8hpp.html" title=" " alt="" coords="2335,80,2429,107"/>
+<area shape="rect" id="node13" href="$SNES_8hpp.html" title=" " alt="" coords="1584,155,1668,181"/>
+<area shape="rect" id="node14" href="$APU_8hpp.html" title=" " alt="" coords="1065,379,1173,405"/>
+<area shape="rect" id="node48" href="$Utility_8hpp.html" title=" " alt="" coords="2569,677,2709,719"/>
+<area shape="rect" id="node6" title=" " alt="" coords="2470,155,2537,181"/>
+<area shape="rect" id="node7" title=" " alt="" coords="329,767,406,793"/>
+<area shape="rect" id="node8" title=" " alt="" coords="1970,528,2061,555"/>
+<area shape="rect" id="node9" href="$NoRenderer_8hpp.html" title=" " alt="" coords="2470,229,2659,256"/>
+<area shape="rect" id="node10" href="$IRenderer_8hpp.html" title=" " alt="" coords="2362,528,2474,555"/>
+<area shape="rect" id="node11" title=" " alt="" coords="2085,767,2143,793"/>
+<area shape="rect" id="node12" title=" " alt="" coords="1922,603,1975,629"/>
+<area shape="rect" id="node24" href="$Ram_8hpp.html" title=" " alt="" coords="1549,528,1663,555"/>
+<area shape="rect" id="node27" href="$Cartridge_8hpp.html" title=" " alt="" coords="1387,453,1561,480"/>
+<area shape="rect" id="node29" href="$CPU_8hpp.html" title=" " alt="" coords="1152,229,1260,256"/>
+<area shape="rect" id="node30" href="$MemoryBus_8hpp.html" title=" " alt="" coords="485,379,671,405"/>
+<area shape="rect" id="node34" title=" " alt="" coords="53,528,127,555"/>
+<area shape="rect" id="node40" href="$DebuggableError_8hpp.html" title=" " alt="" coords="1664,229,1897,256"/>
+<area shape="rect" id="node42" href="$PPU_8hpp.html" title=" " alt="" coords="1875,304,1982,331"/>
+<area shape="rect" id="node15" href="$DSP_8hpp.html" title=" " alt="" coords="1157,453,1261,480"/>
+<area shape="rect" id="node18" href="$AMemory_8hpp.html" title=" " alt="" coords="944,603,1113,629"/>
+<area shape="rect" id="node26" href="$IPL_8hpp.html" title=" " alt="" coords="989,453,1081,480"/>
+<area shape="rect" id="node16" title=" " alt="" coords="715,767,782,793"/>
+<area shape="rect" id="node17" title=" " alt="" coords="1890,528,1946,555"/>
+<area shape="rect" id="node19" title=" " alt="" coords="1203,767,1265,793"/>
+<area shape="rect" id="node20" href="$Ints_8hpp.html" title=" " alt="" coords="1603,767,1729,793"/>
+<area shape="rect" id="node22" href="$Components_8hpp.html" title=" " alt="" coords="880,767,1063,793"/>
+<area shape="rect" id="node23" href="$IMemory_8hpp.html" title=" " alt="" coords="989,685,1095,711"/>
+<area shape="rect" id="node21" title=" " alt="" coords="1409,841,1491,868"/>
+<area shape="rect" id="node25" href="$ARectangleMemory_8hpp.html" title=" " alt="" coords="1189,603,1423,629"/>
+<area shape="rect" id="node28" href="$InterruptVectors_8hpp.html" title=" " alt="" coords="1373,685,1527,711"/>
+<area shape="rect" id="node35" href="$Callback_8hpp.html" title=" " alt="" coords="825,304,982,331"/>
+<area shape="rect" id="node37" href="$Instruction_8hpp.html" title=" " alt="" coords="2152,685,2271,711"/>
+<area shape="rect" id="node38" href="$DMA_8hpp.html" title=" " alt="" coords="633,304,749,331"/>
+<area shape="rect" id="node39" href="$Registers_8hpp.html" title=" " alt="" coords="1755,603,1897,629"/>
+<area shape="rect" id="node31" href="$RectangleShadow_8hpp.html" title=" " alt="" coords="405,453,570,480"/>
+<area shape="rect" id="node32" href="$MemoryShadow_8hpp.html" title=" " alt="" coords="405,528,559,555"/>
+<area shape="rect" id="node33" href="$IMemoryBus_8hpp.html" title=" " alt="" coords="96,453,228,480"/>
+<area shape="rect" id="node36" title=" " alt="" coords="747,379,833,405"/>
+<area shape="rect" id="node41" title=" " alt="" coords="1717,304,1844,331"/>
+<area shape="rect" id="node43" href="$Vector2_8hpp.html" title=" " alt="" coords="2136,528,2287,555"/>
+<area shape="rect" id="node44" title=" " alt="" coords="1714,379,1799,405"/>
+<area shape="rect" id="node45" href="$Background_8hpp.html" title=" " alt="" coords="2015,379,2141,405"/>
+<area shape="rect" id="node46" href="$PPUUtils_8hpp.html" title=" " alt="" coords="1955,453,2091,480"/>
+<area shape="rect" id="node47" href="$PPURegisters_8hpp.html" title=" " alt="" coords="1824,379,1991,405"/>
+<area shape="rect" id="node49" title=" " alt="" coords="2569,767,2611,793"/>
+<area shape="rect" id="node50" title=" " alt="" coords="2635,767,2710,793"/>
+</map>

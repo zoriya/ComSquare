@@ -1,0 +1,4 @@
+<map id="ComSquare::Debugger::CPU::CPUDebug" name="ComSquare::Debugger::CPU::CPUDebug">
+<area shape="rect" id="node1" title="A window that show registers and the disassembly of a CPU." alt="" coords="5,131,216,809"/>
+<area shape="rect" id="node2" title=" " alt="" coords="73,5,148,83"/>
+</map>

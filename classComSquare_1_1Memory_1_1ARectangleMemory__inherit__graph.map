@@ -1,0 +1,7 @@
+<map id="ComSquare::Memory::ARectangleMemory" name="ComSquare::Memory::ARectangleMemory">
+<area shape="rect" id="node1" title="Base memory class to map non continuous rectangle to the memory. (A rectangle that spam across more t..." alt="" coords="98,263,285,457"/>
+<area shape="rect" id="node3" href="$classComSquare_1_1Memory_1_1RectangleShadow.html" title=" " alt="" coords="5,520,180,788"/>
+<area shape="rect" id="node4" href="$classComSquare_1_1Ram_1_1Ram.html" title=" " alt="" coords="205,505,378,803"/>
+<area shape="rect" id="node2" href="$classComSquare_1_1Memory_1_1IMemory.html" title="Common interface implemented by all components mapping memory." alt="" coords="104,5,279,215"/>
+<area shape="rect" id="node5" href="$classComSquare_1_1Cartridge_1_1Cartridge.html" title="Contains the rom&#39;s memory/instructions." alt="" coords="207,851,375,1221"/>
+</map>

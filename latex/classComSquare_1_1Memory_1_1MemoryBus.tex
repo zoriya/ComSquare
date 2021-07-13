@@ -1,0 +1,320 @@
+\hypertarget{classComSquare_1_1Memory_1_1MemoryBus}{}\doxysection{Com\+Square\+::Memory\+::Memory\+Bus Class Reference}
+\label{classComSquare_1_1Memory_1_1MemoryBus}\index{ComSquare::Memory::MemoryBus@{ComSquare::Memory::MemoryBus}}
+
+
+The memory bus is the component responsible of mapping addresses to components address and transmitting the data.  
+
+
+
+
+{\ttfamily \#include $<$Memory\+Bus.\+hpp$>$}
+
+
+
+Inheritance diagram for Com\+Square\+::Memory\+::Memory\+Bus\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=208pt]{classComSquare_1_1Memory_1_1MemoryBus__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Com\+Square\+::Memory\+::Memory\+Bus\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=208pt]{classComSquare_1_1Memory_1_1MemoryBus__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classComSquare_1_1Memory_1_1MemoryBus_acfefb3a3faba9f85d51d4a3827f20fad}{Memory\+Bus}} ()=default
+\begin{DoxyCompactList}\small\item\em Create a new default memory bus. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1Memory_1_1MemoryBus_a2ac583b7900626055dded33a9ffe8e62}{Memory\+Bus}} (const \mbox{\hyperlink{classComSquare_1_1Memory_1_1MemoryBus}{Memory\+Bus}} \&)=default
+\begin{DoxyCompactList}\small\item\em A memory bus is copyable. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1Memory_1_1MemoryBus}{Memory\+Bus}} \& \mbox{\hyperlink{classComSquare_1_1Memory_1_1MemoryBus_a407886dc529285f1708aead47b202922}{operator=}} (const \mbox{\hyperlink{classComSquare_1_1Memory_1_1MemoryBus}{Memory\+Bus}} \&)=default
+\begin{DoxyCompactList}\small\item\em A memory bus is assignable. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1Memory_1_1MemoryBus_a08ab87359a35b85e781cbfa9a7705c21}{$\sim$\+Memory\+Bus}} () override=default
+\begin{DoxyCompactList}\small\item\em A default destructor. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{classComSquare_1_1Memory_1_1MemoryBus_a8d2c99fb0e1f2dafd48180ea66fd1c7a}{read}} (\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} addr) override
+\begin{DoxyCompactList}\small\item\em Read data at a global address. This form allow read to be silenced. \end{DoxyCompactList}\item 
+std\+::optional$<$ uint8\+\_\+t $>$ \mbox{\hyperlink{classComSquare_1_1Memory_1_1MemoryBus_abd086c2053ce7432256e2b79949d46df}{peek}} (\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} addr) override
+\begin{DoxyCompactList}\small\item\em This as the same purpose as a read but it does not change the open bus and won\textquotesingle{}t throw an exception. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{classComSquare_1_1Memory_1_1MemoryBus_ab8e47918f6eccef0aeee50cd7b77eaec}{peek\+\_\+v}} (\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} addr) override
+\begin{DoxyCompactList}\small\item\em This as the same purpose as a read but it does not change the open bus and won\textquotesingle{}t throw an exception. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSquare_1_1Memory_1_1MemoryBus_aa3ba7681ed7bf83fa66c8994a57dc0dd}{write}} (\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} addr, uint8\+\_\+t data) override
+\begin{DoxyCompactList}\small\item\em Write a data to a global address. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSquare_1_1Memory_1_1MemoryBus_a21e37ae17ad577a34af5ba49fbdf7180}{map\+Components}} (\mbox{\hyperlink{classComSquare_1_1SNES}{S\+N\+ES}} \&console)
+\begin{DoxyCompactList}\small\item\em Map components to the address space using the currently loaded cartridge to set the right mapping mode. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSquare_1_1Memory_1_1IMemory}{I\+Memory}} $\ast$ \mbox{\hyperlink{classComSquare_1_1Memory_1_1MemoryBus_acd9f28fab89e9c3b46571f049f37a0c3}{get\+Accessor}} (\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}} addr) override
+\begin{DoxyCompactList}\small\item\em Helper function to get the components that is responsible of read/write at an address. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{classComSquare_1_1Memory_1_1MemoryBus_a44706b738a5156bc5764c6f91b02b2d1}{\+\_\+open\+Bus}} = 0
+\begin{DoxyCompactList}\small\item\em The last value read via the memory bus. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classComSquare_1_1Memory_1_1MemoryBus_a16c3072d4f993d6a71f31d08e9443d7d}{\+\_\+mirror\+Components}} (\mbox{\hyperlink{classComSquare_1_1SNES}{S\+N\+ES}} \&console, unsigned i)
+\begin{DoxyCompactList}\small\item\em W\+Ram, \mbox{\hyperlink{namespaceComSquare_1_1CPU}{C\+PU}}, \mbox{\hyperlink{namespaceComSquare_1_1PPU}{P\+PU}} \& \mbox{\hyperlink{namespaceComSquare_1_1APU}{A\+PU}} registers are mirrored to all banks of Q1 \& Q3. This function is used for the mirroring. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ std\+::reference\+\_\+wrapper$<$ \mbox{\hyperlink{classComSquare_1_1Memory_1_1IMemory}{I\+Memory}} $>$ $>$ \mbox{\hyperlink{classComSquare_1_1Memory_1_1MemoryBus_a459e00b9af02fc957801e96a075cd043}{\+\_\+memory\+Accessors}}
+\begin{DoxyCompactList}\small\item\em The list of components registered inside the bus. Every components that can read/write to a public address should be in this vector. \end{DoxyCompactList}\item 
+std\+::vector$<$ \mbox{\hyperlink{classComSquare_1_1Memory_1_1MemoryShadow}{Memory\+Shadow}} $>$ \mbox{\hyperlink{classComSquare_1_1Memory_1_1MemoryBus_a448900a4e9599e6e4b1180eecf559edf}{\+\_\+shadows}} = \{\}
+\begin{DoxyCompactList}\small\item\em The list of simple memory shadows that are used to map duplicated zones of memory. \end{DoxyCompactList}\item 
+std\+::vector$<$ \mbox{\hyperlink{classComSquare_1_1Memory_1_1RectangleShadow}{Rectangle\+Shadow}} $>$ \mbox{\hyperlink{classComSquare_1_1Memory_1_1MemoryBus_a145fa3ec52b03c05ea8cbd37434cf987}{\+\_\+rectangle\+Shadows}} = \{\}
+\begin{DoxyCompactList}\small\item\em The list of rectangle memory shadows that are used to map duplicated zones of memory. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The memory bus is the component responsible of mapping addresses to components address and transmitting the data. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classComSquare_1_1Memory_1_1MemoryBus_acfefb3a3faba9f85d51d4a3827f20fad}\label{classComSquare_1_1Memory_1_1MemoryBus_acfefb3a3faba9f85d51d4a3827f20fad}} 
+\index{ComSquare::Memory::MemoryBus@{ComSquare::Memory::MemoryBus}!MemoryBus@{MemoryBus}}
+\index{MemoryBus@{MemoryBus}!ComSquare::Memory::MemoryBus@{ComSquare::Memory::MemoryBus}}
+\doxysubsubsection{\texorpdfstring{MemoryBus()}{MemoryBus()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Com\+Square\+::\+Memory\+::\+Memory\+Bus\+::\+Memory\+Bus (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+Create a new default memory bus. 
+
+\mbox{\Hypertarget{classComSquare_1_1Memory_1_1MemoryBus_a2ac583b7900626055dded33a9ffe8e62}\label{classComSquare_1_1Memory_1_1MemoryBus_a2ac583b7900626055dded33a9ffe8e62}} 
+\index{ComSquare::Memory::MemoryBus@{ComSquare::Memory::MemoryBus}!MemoryBus@{MemoryBus}}
+\index{MemoryBus@{MemoryBus}!ComSquare::Memory::MemoryBus@{ComSquare::Memory::MemoryBus}}
+\doxysubsubsection{\texorpdfstring{MemoryBus()}{MemoryBus()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Com\+Square\+::\+Memory\+::\+Memory\+Bus\+::\+Memory\+Bus (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classComSquare_1_1Memory_1_1MemoryBus}{Memory\+Bus}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+A memory bus is copyable. 
+
+\mbox{\Hypertarget{classComSquare_1_1Memory_1_1MemoryBus_a08ab87359a35b85e781cbfa9a7705c21}\label{classComSquare_1_1Memory_1_1MemoryBus_a08ab87359a35b85e781cbfa9a7705c21}} 
+\index{ComSquare::Memory::MemoryBus@{ComSquare::Memory::MemoryBus}!````~MemoryBus@{$\sim$MemoryBus}}
+\index{````~MemoryBus@{$\sim$MemoryBus}!ComSquare::Memory::MemoryBus@{ComSquare::Memory::MemoryBus}}
+\doxysubsubsection{\texorpdfstring{$\sim$MemoryBus()}{~MemoryBus()}}
+{\footnotesize\ttfamily Com\+Square\+::\+Memory\+::\+Memory\+Bus\+::$\sim$\+Memory\+Bus (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [default]}}
+
+
+
+A default destructor. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classComSquare_1_1Memory_1_1MemoryBus_a16c3072d4f993d6a71f31d08e9443d7d}\label{classComSquare_1_1Memory_1_1MemoryBus_a16c3072d4f993d6a71f31d08e9443d7d}} 
+\index{ComSquare::Memory::MemoryBus@{ComSquare::Memory::MemoryBus}!\_mirrorComponents@{\_mirrorComponents}}
+\index{\_mirrorComponents@{\_mirrorComponents}!ComSquare::Memory::MemoryBus@{ComSquare::Memory::MemoryBus}}
+\doxysubsubsection{\texorpdfstring{\_mirrorComponents()}{\_mirrorComponents()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+Memory\+::\+Memory\+Bus\+::\+\_\+mirror\+Components (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classComSquare_1_1SNES}{S\+N\+ES}} \&}]{console,  }\item[{unsigned}]{i }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+W\+Ram, \mbox{\hyperlink{namespaceComSquare_1_1CPU}{C\+PU}}, \mbox{\hyperlink{namespaceComSquare_1_1PPU}{P\+PU}} \& \mbox{\hyperlink{namespaceComSquare_1_1APU}{A\+PU}} registers are mirrored to all banks of Q1 \& Q3. This function is used for the mirroring. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em console} & All the components. \\
+\hline
+{\em i} & Base address for the mirrors. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classComSquare_1_1Memory_1_1MemoryBus_acd9f28fab89e9c3b46571f049f37a0c3}\label{classComSquare_1_1Memory_1_1MemoryBus_acd9f28fab89e9c3b46571f049f37a0c3}} 
+\index{ComSquare::Memory::MemoryBus@{ComSquare::Memory::MemoryBus}!getAccessor@{getAccessor}}
+\index{getAccessor@{getAccessor}!ComSquare::Memory::MemoryBus@{ComSquare::Memory::MemoryBus}}
+\doxysubsubsection{\texorpdfstring{getAccessor()}{getAccessor()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1Memory_1_1IMemory}{I\+Memory}} $\ast$ Com\+Square\+::\+Memory\+::\+Memory\+Bus\+::get\+Accessor (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}}}]{addr }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Helper function to get the components that is responsible of read/write at an address. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em addr} & The address you want to look for. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The components responsible for the address param or nullptr if none was found. 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{classComSquare_1_1Memory_1_1IMemoryBus_ad0ab5473f22b232b701a7fc101f4489b}{Com\+Square\+::\+Memory\+::\+I\+Memory\+Bus}}.
+
+\mbox{\Hypertarget{classComSquare_1_1Memory_1_1MemoryBus_a21e37ae17ad577a34af5ba49fbdf7180}\label{classComSquare_1_1Memory_1_1MemoryBus_a21e37ae17ad577a34af5ba49fbdf7180}} 
+\index{ComSquare::Memory::MemoryBus@{ComSquare::Memory::MemoryBus}!mapComponents@{mapComponents}}
+\index{mapComponents@{mapComponents}!ComSquare::Memory::MemoryBus@{ComSquare::Memory::MemoryBus}}
+\doxysubsubsection{\texorpdfstring{mapComponents()}{mapComponents()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+Memory\+::\+Memory\+Bus\+::map\+Components (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classComSquare_1_1SNES}{S\+N\+ES}} \&}]{console }\end{DoxyParamCaption})}
+
+
+
+Map components to the address space using the currently loaded cartridge to set the right mapping mode. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em console} & All the components. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classComSquare_1_1Memory_1_1MemoryBus_a407886dc529285f1708aead47b202922}\label{classComSquare_1_1Memory_1_1MemoryBus_a407886dc529285f1708aead47b202922}} 
+\index{ComSquare::Memory::MemoryBus@{ComSquare::Memory::MemoryBus}!operator=@{operator=}}
+\index{operator=@{operator=}!ComSquare::Memory::MemoryBus@{ComSquare::Memory::MemoryBus}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSquare_1_1Memory_1_1MemoryBus}{Memory\+Bus}}\& Com\+Square\+::\+Memory\+::\+Memory\+Bus\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classComSquare_1_1Memory_1_1MemoryBus}{Memory\+Bus}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+A memory bus is assignable. 
+
+\mbox{\Hypertarget{classComSquare_1_1Memory_1_1MemoryBus_abd086c2053ce7432256e2b79949d46df}\label{classComSquare_1_1Memory_1_1MemoryBus_abd086c2053ce7432256e2b79949d46df}} 
+\index{ComSquare::Memory::MemoryBus@{ComSquare::Memory::MemoryBus}!peek@{peek}}
+\index{peek@{peek}!ComSquare::Memory::MemoryBus@{ComSquare::Memory::MemoryBus}}
+\doxysubsubsection{\texorpdfstring{peek()}{peek()}}
+{\footnotesize\ttfamily std\+::optional$<$ uint8\+\_\+t $>$ Com\+Square\+::\+Memory\+::\+Memory\+Bus\+::peek (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}}}]{addr }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+This as the same purpose as a read but it does not change the open bus and won\textquotesingle{}t throw an exception. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em addr} & The address to read from. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The value that the component returned for this address. If the address was mapped to ram, it simply returned the value. If the address was mapped to a register the component returned the register. 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{classComSquare_1_1Memory_1_1IMemoryBus_a715161996b7842c55c0be82d3cd22572}{Com\+Square\+::\+Memory\+::\+I\+Memory\+Bus}}.
+
+\mbox{\Hypertarget{classComSquare_1_1Memory_1_1MemoryBus_ab8e47918f6eccef0aeee50cd7b77eaec}\label{classComSquare_1_1Memory_1_1MemoryBus_ab8e47918f6eccef0aeee50cd7b77eaec}} 
+\index{ComSquare::Memory::MemoryBus@{ComSquare::Memory::MemoryBus}!peek\_v@{peek\_v}}
+\index{peek\_v@{peek\_v}!ComSquare::Memory::MemoryBus@{ComSquare::Memory::MemoryBus}}
+\doxysubsubsection{\texorpdfstring{peek\_v()}{peek\_v()}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+Memory\+::\+Memory\+Bus\+::peek\+\_\+v (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}}}]{addr }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+This as the same purpose as a read but it does not change the open bus and won\textquotesingle{}t throw an exception. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em addr} & The address to read from. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The value that the component returned for this address. If the address was mapped to ram, it simply returned the value. If the address was mapped to a register the component returned the register. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+If the value address is not mapped, 0 is returned instead of nullopt. 
+\end{DoxyNote}
+
+
+Implements \mbox{\hyperlink{classComSquare_1_1Memory_1_1IMemoryBus_a474f556b1f4ef4af276217a489031775}{Com\+Square\+::\+Memory\+::\+I\+Memory\+Bus}}.
+
+\mbox{\Hypertarget{classComSquare_1_1Memory_1_1MemoryBus_a8d2c99fb0e1f2dafd48180ea66fd1c7a}\label{classComSquare_1_1Memory_1_1MemoryBus_a8d2c99fb0e1f2dafd48180ea66fd1c7a}} 
+\index{ComSquare::Memory::MemoryBus@{ComSquare::Memory::MemoryBus}!read@{read}}
+\index{read@{read}!ComSquare::Memory::MemoryBus@{ComSquare::Memory::MemoryBus}}
+\doxysubsubsection{\texorpdfstring{read()}{read()}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+Memory\+::\+Memory\+Bus\+::read (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}}}]{addr }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Read data at a global address. This form allow read to be silenced. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em addr} & The address to read from. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \mbox{\hyperlink{classComSquare_1_1InvalidAddress}{Invalid\+Address}}} & If the address is not mapped to the bus, this exception is thrown. \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyReturn}{Returns}
+The value that the component returned for this address. If the address was mapped to ram, it simply returned the value. If the address was mapped to a register the component returned the register. 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{classComSquare_1_1Memory_1_1IMemoryBus_a560cf44b01d039ac4e13762e2abf46b1}{Com\+Square\+::\+Memory\+::\+I\+Memory\+Bus}}.
+
+\mbox{\Hypertarget{classComSquare_1_1Memory_1_1MemoryBus_aa3ba7681ed7bf83fa66c8994a57dc0dd}\label{classComSquare_1_1Memory_1_1MemoryBus_aa3ba7681ed7bf83fa66c8994a57dc0dd}} 
+\index{ComSquare::Memory::MemoryBus@{ComSquare::Memory::MemoryBus}!write@{write}}
+\index{write@{write}!ComSquare::Memory::MemoryBus@{ComSquare::Memory::MemoryBus}}
+\doxysubsubsection{\texorpdfstring{write()}{write()}}
+{\footnotesize\ttfamily void Com\+Square\+::\+Memory\+::\+Memory\+Bus\+::write (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{Ints_8hpp_a89f009aaf5d1964a000f44f09fa0bcf8}{uint24\+\_\+t}}}]{addr,  }\item[{uint8\+\_\+t}]{data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Write a data to a global address. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em addr} & The address to write to. \\
+\hline
+{\em data} & The data to write. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{classComSquare_1_1Memory_1_1IMemoryBus_a393b05cf83c6dc1ee6c0cad9648cb31b}{Com\+Square\+::\+Memory\+::\+I\+Memory\+Bus}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classComSquare_1_1Memory_1_1MemoryBus_a459e00b9af02fc957801e96a075cd043}\label{classComSquare_1_1Memory_1_1MemoryBus_a459e00b9af02fc957801e96a075cd043}} 
+\index{ComSquare::Memory::MemoryBus@{ComSquare::Memory::MemoryBus}!\_memoryAccessors@{\_memoryAccessors}}
+\index{\_memoryAccessors@{\_memoryAccessors}!ComSquare::Memory::MemoryBus@{ComSquare::Memory::MemoryBus}}
+\doxysubsubsection{\texorpdfstring{\_memoryAccessors}{\_memoryAccessors}}
+{\footnotesize\ttfamily std\+::vector$<$std\+::reference\+\_\+wrapper$<$\mbox{\hyperlink{classComSquare_1_1Memory_1_1IMemory}{I\+Memory}}$>$ $>$ Com\+Square\+::\+Memory\+::\+Memory\+Bus\+::\+\_\+memory\+Accessors\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The list of components registered inside the bus. Every components that can read/write to a public address should be in this vector. 
+
+\mbox{\Hypertarget{classComSquare_1_1Memory_1_1MemoryBus_a44706b738a5156bc5764c6f91b02b2d1}\label{classComSquare_1_1Memory_1_1MemoryBus_a44706b738a5156bc5764c6f91b02b2d1}} 
+\index{ComSquare::Memory::MemoryBus@{ComSquare::Memory::MemoryBus}!\_openBus@{\_openBus}}
+\index{\_openBus@{\_openBus}!ComSquare::Memory::MemoryBus@{ComSquare::Memory::MemoryBus}}
+\doxysubsubsection{\texorpdfstring{\_openBus}{\_openBus}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Square\+::\+Memory\+::\+Memory\+Bus\+::\+\_\+open\+Bus = 0\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+The last value read via the memory bus. 
+
+\mbox{\Hypertarget{classComSquare_1_1Memory_1_1MemoryBus_a145fa3ec52b03c05ea8cbd37434cf987}\label{classComSquare_1_1Memory_1_1MemoryBus_a145fa3ec52b03c05ea8cbd37434cf987}} 
+\index{ComSquare::Memory::MemoryBus@{ComSquare::Memory::MemoryBus}!\_rectangleShadows@{\_rectangleShadows}}
+\index{\_rectangleShadows@{\_rectangleShadows}!ComSquare::Memory::MemoryBus@{ComSquare::Memory::MemoryBus}}
+\doxysubsubsection{\texorpdfstring{\_rectangleShadows}{\_rectangleShadows}}
+{\footnotesize\ttfamily std\+::vector$<$\mbox{\hyperlink{classComSquare_1_1Memory_1_1RectangleShadow}{Rectangle\+Shadow}}$>$ Com\+Square\+::\+Memory\+::\+Memory\+Bus\+::\+\_\+rectangle\+Shadows = \{\}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The list of rectangle memory shadows that are used to map duplicated zones of memory. 
+
+\mbox{\Hypertarget{classComSquare_1_1Memory_1_1MemoryBus_a448900a4e9599e6e4b1180eecf559edf}\label{classComSquare_1_1Memory_1_1MemoryBus_a448900a4e9599e6e4b1180eecf559edf}} 
+\index{ComSquare::Memory::MemoryBus@{ComSquare::Memory::MemoryBus}!\_shadows@{\_shadows}}
+\index{\_shadows@{\_shadows}!ComSquare::Memory::MemoryBus@{ComSquare::Memory::MemoryBus}}
+\doxysubsubsection{\texorpdfstring{\_shadows}{\_shadows}}
+{\footnotesize\ttfamily std\+::vector$<$\mbox{\hyperlink{classComSquare_1_1Memory_1_1MemoryShadow}{Memory\+Shadow}}$>$ Com\+Square\+::\+Memory\+::\+Memory\+Bus\+::\+\_\+shadows = \{\}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The list of simple memory shadows that are used to map duplicated zones of memory. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+sources/\+Memory/\mbox{\hyperlink{MemoryBus_8hpp}{Memory\+Bus.\+hpp}}\item 
+sources/\+Memory/\mbox{\hyperlink{MemoryBus_8cpp}{Memory\+Bus.\+cpp}}\end{DoxyCompactItemize}
