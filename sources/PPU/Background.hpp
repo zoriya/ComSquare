@@ -102,6 +102,13 @@ namespace ComSquare::PPU
 
 
 		//! @brief Add a bg buffer to another buffer
+		//! @tparam levelLow The priority of a low priority pixel (working like z-index CSS property)
+		//! @tparam levelHigh The priority of a high priority pixel (working like z-index CSS property)
+		//! @tparam DEST_SIZE_X The Horizontal array size
+		//! @tparam DEST_SIZE_Y The Vertical array size
+		//! @param bufferDest The destination buffer (buffer that will be written on)
+		//! @param pixelDestinationLevelMap The destination buffer level map to use as reference and will be updated if a pixel has an higher level than the actual one
+		//! @param backgroundSrc The Background to use as a source
 		template <int levelLow, int levelHigh, std::size_t DEST_SIZE_X, std::size_t DEST_SIZE_Y>
 		static void mergeBackgroundBuffer(std::array<std::array<uint32_t, DEST_SIZE_Y>, DEST_SIZE_X> &bufferDest,
 		                                  std::array<std::array<unsigned char, DEST_SIZE_Y>, DEST_SIZE_X> &pixelDestinationLevelMap,
