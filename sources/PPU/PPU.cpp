@@ -571,14 +571,14 @@ namespace ComSquare::PPU
 		// the starting palette index isn't implemented
 		switch (this->_registers._bgmode.bgMode) {
 		case 0:
-			this->addToMainSubScreen<0, 15>(this->_backgrounds[BgName::bg4NoPriority]);
-			this->addToMainSubScreen<10, 16>(this->_backgrounds[BgName::bg3NoPriority]);
+			this->addToMainSubScreen<0, 15>(this->_backgrounds[BgName::Background4]);
+			this->addToMainSubScreen<10, 16>(this->_backgrounds[BgName::Background3]);
 			//sprites  priority 0
 		//	this->addToMainSubScreen(this->_backgrounds[BgName::bg4Priority]);
 		//	this->addToMainSubScreen(this->_backgrounds[BgName::bg3Priority]);
 			//sprites priority 1
-			this->addToMainSubScreen<20, 35>(this->_backgrounds[BgName::bg2NoPriority]);
-			this->addToMainSubScreen<30, 36>(this->_backgrounds[BgName::bg1NoPriority]);
+			this->addToMainSubScreen<20, 35>(this->_backgrounds[BgName::Background2]);
+			this->addToMainSubScreen<30, 36>(this->_backgrounds[BgName::Background1]);
 			//sprites priority 2
 		//	this->addToMainSubScreen(this->_backgrounds[BgName::bg2Priority]);
 		//	this->addToMainSubScreen(this->_backgrounds[BgName::bg1Priority]);
@@ -586,15 +586,15 @@ namespace ComSquare::PPU
 			break;
 		case 1:
 			if (!this->_registers._bgmode.mode1Bg3PriorityBit)
-				this->addToMainSubScreen<0, 5>(this->_backgrounds[BgName::bg3NoPriority]);
+				this->addToMainSubScreen<0, 5>(this->_backgrounds[BgName::Background3]);
 			else
-				this->addToMainSubScreen<0, 30>(this->_backgrounds[BgName::bg3NoPriority]);
+				this->addToMainSubScreen<0, 30>(this->_backgrounds[BgName::Background3]);
 			//sprites priority 0
 		//	if (!this->_registers._bgmode.mode1Bg3PriorityBit)
 		//		this->addToMainSubScreen(this->_backgrounds[BgName::bg3Priority]);
 			//sprites priority 1
-			this->addToMainSubScreen<10, 25>(this->_backgrounds[BgName::bg2NoPriority]);
-			this->addToMainSubScreen<20, 26>(this->_backgrounds[BgName::bg1NoPriority]);
+			this->addToMainSubScreen<10, 25>(this->_backgrounds[BgName::Background2]);
+			this->addToMainSubScreen<20, 26>(this->_backgrounds[BgName::Background1]);
 			//sprites priority 2
 		//	this->addToMainSubScreen(this->_backgrounds[BgName::bg2Priority]);
 		//	this->addToMainSubScreen(this->_backgrounds[BgName::bg1Priority]);
