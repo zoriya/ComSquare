@@ -8,10 +8,10 @@
 #include <vector>
 #include <iostream>
 #include "Models/Vector2.hpp"
-#include "TileRenderer.hpp"
+#include "PPU/TileRenderer.hpp"
 #include "Ram/Ram.hpp"
-#include "PPU.hpp"
-#include "PPUUtils.hpp"
+#include "PPU/PPU.hpp"
+#include "PPU/PPUUtils.hpp"
 
 namespace ComSquare::PPU
 {
@@ -35,7 +35,7 @@ namespace ComSquare::PPU
 		//! @brief The tilemap configuration nb of tileMap vertically and horizontally
 		//! @note members are set to true if the tilemap is expended in their direction
 		Vector2<bool> _tileMapMirroring;
-		//! @brief The number of pixels of a character (x: height, y:width)
+		//! @brief The number of pixels of a character (x: width, y: height)
 		Vector2<int> _characterNbPixels;
 		//! @brief The number of bits per pixels to currently look for each pixel
 		int _bpp;
@@ -48,8 +48,6 @@ namespace ComSquare::PPU
 		uint16_t _tileMapStartAddress;
 		//! @brief The first address for tileset data
 		uint16_t _tilesetAddress;
-		//! @brief If pixel from this background should be treated as primarily
-		bool _priority;
 		//! @brief The bg number (used to get the corresponding scroll)
 		int _bgNumber;
 		//! @brief Buffer if we have tiles that are more than  8x8
@@ -76,11 +74,11 @@ namespace ComSquare::PPU
 		Vector2<unsigned> backgroundSize;
 		//! @brief The output buffer (pixels are written on it)
 		std::array<std::array<uint32_t, 1024>, 1024> buffer;
-
+		//! @brief The buffer of tile priority level
 		std::array<std::array<bool, 64>, 64> tilesPriority;
 
-		bool isPriorityPixel(int x, int y) const;
-
+		//! @brief Tells if a pixel has high priority
+		[[nodiscard]] bool isPriorityPixel(int x, int y) const;
 		//! @brief Render a background on his internal buffer
 		void renderBackground();
 		//! @brief Set the tileMap start address
@@ -100,13 +98,7 @@ namespace ComSquare::PPU
 
 		//! @brief Get the BackGround Number
 		//! @return the current Background number
-		int getBgNumber() const;
-		//! @brief set the Background priority
-		//! @param bgNumber the new Background priority
-		void setPriority(bool priority);
-		//! @brief Get the Background priority
-		//! @return the current Background priority
-		bool getPriority() const;
+		[[nodiscard]] int getBgNumber() const;
 
 
 		//! @brief Add a bg buffer to another buffer
@@ -141,7 +133,7 @@ namespace ComSquare::PPU
 		}
 
 		//! @brief ctor
-		Background(PPU &_ppu, int backGroundNumber, bool hasPriority);
+		Background(PPU &_ppu, int backgroundNumber);
 		//! @brief Default copy ctor
 		Background(const Background &) = default;
 		//! @brief Default destructor

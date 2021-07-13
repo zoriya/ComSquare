@@ -10,22 +10,22 @@
 
 namespace ComSquare::PPU
 {
-	Background::Background(ComSquare::PPU::PPU &ppu, int backGroundNumber, bool hasPriority)
+	Background::Background(ComSquare::PPU::PPU &ppu, int backgroundNumber)
 		: _ppu(ppu),
-		  _tileMapMirroring(ppu.getBackgroundMirroring(backGroundNumber)),
-		  _characterNbPixels(ppu.getCharacterSize(backGroundNumber)),
-		  _bpp(ppu.getBPP(backGroundNumber)),
+		  _tileMapMirroring(ppu.getBackgroundMirroring(backgroundNumber)),
+		  _characterNbPixels(ppu.getCharacterSize(backgroundNumber)),
+		  _bpp(ppu.getBPP(backgroundNumber)),
 		  _directColor(false),
 		  _highRes(false),
-		  _tileMapStartAddress(ppu.getTileMapStartAddress(backGroundNumber)),
-		  _tilesetAddress(ppu.getTilesetAddress(backGroundNumber)),
-		  _priority(hasPriority),
-		  _bgNumber(backGroundNumber),
+		  _tileMapStartAddress(ppu.getTileMapStartAddress(backgroundNumber)),
+		  _tilesetAddress(ppu.getTilesetAddress(backgroundNumber)),
+		  _bgNumber(backgroundNumber),
 		  _tileBuffer({{{0}}}),
 		  _vram(ppu.vram),
 		  _cgram(ppu.cgram),
 		  _tileRenderer(this->_vram, this->_cgram),
-		  buffer({{{0}}})
+		  buffer({{{0}}}),
+		  tilesPriority({{{false}}})
 	{}
 
 	void Background::renderBackground()
@@ -153,16 +153,6 @@ namespace ComSquare::PPU
 	int Background::getBgNumber() const
 	{
 		return this->_bgNumber;
-	}
-
-	void Background::setPriority(bool priority)
-	{
-		this->_priority = priority;
-	}
-
-	bool Background::getPriority() const
-	{
-		return this->_priority;
 	}
 
 	bool Background::isPriorityPixel(int y, int x) const

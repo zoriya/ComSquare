@@ -21,10 +21,10 @@ namespace ComSquare::PPU
 		cgram(CGRamSize, ComSquare::CGRam, "CGRAM"),
 		_renderer(renderer),
 		_backgrounds{
-			Background(*this, 1, false),
-			Background(*this, 2, false),
-			Background(*this, 3, false),
-			Background(*this, 4, false),
+			Background(*this, 1),
+			Background(*this, 2),
+			Background(*this, 3),
+			Background(*this, 4),
 		},
 		_mainScreen({{{0}}}),
 		_subScreen({{{0}}})
