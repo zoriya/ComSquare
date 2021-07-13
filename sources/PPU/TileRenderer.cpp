@@ -29,7 +29,7 @@ namespace ComSquare::PPU
 		for (auto &row : this->buffer) {
 			for (auto &pixel : row) {
 				uint8_t pixelReference = this->getPixelReferenceFromTile(tileAddress, it++);
-				pixel = pixelReference ? Utils::getRealColor(palette[pixelReference]) : 0;
+				pixel = pixelReference ? Utils::CGRAMColorToRGBA(palette[pixelReference]) : 0;
 			}
 		}
 	}
@@ -65,7 +65,6 @@ namespace ComSquare::PPU
 
 	uint8_t TileRenderer::read2BPPValue(uint16_t tileRowAddress, uint8_t pixelIndex)
 	{
-		// TODO unit test this
 		size_t size = this->_ram.getSize();
 		uint8_t highByte = this->_ram.read(tileRowAddress % size);
 		uint8_t lowByte = this->_ram.read((tileRowAddress + 1) % size);
@@ -78,13 +77,11 @@ namespace ComSquare::PPU
 	{
 		// TODO unit test this
 		uint16_t result = 0;
-		// TODO do a constexpr
-		const int TileByteSizeRow = 16;
 
 		switch (this->_bpp) {
 		case 8:
-			result += this->read2BPPValue(tileRowAddress + TileByteSizeRow * 2, pixelIndex) << 4;
 			result += this->read2BPPValue(tileRowAddress + TileByteSizeRow * 3, pixelIndex) << 6;
+			result += this->read2BPPValue(tileRowAddress + TileByteSizeRow * 2, pixelIndex) << 4;
 			FALLTHROUGH
 		case 4:
 			result += this->read2BPPValue(tileRowAddress + TileByteSizeRow, pixelIndex) << 2;

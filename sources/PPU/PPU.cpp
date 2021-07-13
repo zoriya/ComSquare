@@ -6,6 +6,7 @@
 #include <bitset>
 #include "PPU.hpp"
 #include "Exceptions/InvalidAddress.hpp"
+#include "PPU/Background.hpp"
 #include "Models/Vector2.hpp"
 
 namespace ComSquare::PPU::Utils::Debug {
@@ -20,21 +21,17 @@ namespace ComSquare::PPU
 		cgram(CGRamSize, ComSquare::CGRam, "CGRAM"),
 		_renderer(renderer),
 		_backgrounds{
-			Background(*this, 1, false),
-			Background(*this, 1, true),
-			Background(*this, 2, false),
-			Background(*this, 2, true),
-			Background(*this, 3, false),
-			Background(*this, 3, true),
-			Background(*this, 4, false),
-			Background(*this, 4, true)
+			Background(*this, 1),
+			Background(*this, 2),
+			Background(*this, 3),
+			Background(*this, 4),
 		},
 		_mainScreen({{{0}}}),
 		_subScreen({{{0}}})
 	{
 		this->_registers._isLowByte = true;
 
-		//Utils::Debug::populateEnvironment(*this, 0);
+		//Utils::Debug::populateEnvironment(*this, 1);
 	}
 
 	uint8_t PPU::read(uint24_t addr)
@@ -109,9 +106,9 @@ namespace ComSquare::PPU
 		case PpuRegisters::bgmode:
 			this->_registers._bgmode.raw = data;
 			// update backgrounds
-			for (int i = 0; i < 8; i++) {
-				this->_backgrounds[i].setBpp(this->getBPP((i / 2) + 1));
-				this->_backgrounds[i].setCharacterSize(this->getCharacterSize((i / 2) + 1));
+			for (int i = 0; i < 4; i++) {
+				this->_backgrounds[i].setBpp(this->getBPP(i + 1));
+				this->_backgrounds[i].setCharacterSize(this->getCharacterSize(i + 1));
 			}
 			break;
 		case PpuRegisters::mosaic:
@@ -125,12 +122,7 @@ namespace ComSquare::PPU
 			// update background tilemap address
 			this->_backgrounds[addr - PpuRegisters::bg1sc].setTileMapStartAddress(
 				this->getTileMapStartAddress(addr - PpuRegisters::bg1sc + 1));
-			this->_backgrounds[addr - PpuRegisters::bg1sc + 1].setTileMapStartAddress(
-				this->getTileMapStartAddress(addr - PpuRegisters::bg1sc + 1));
-			this->_backgrounds[addr - PpuRegisters::bg1sc].setTilemaps(
-				{static_cast<bool>(this->_registers._bgsc[addr - PpuRegisters::bg1sc].tilemapHorizontalMirroring),
-				 static_cast<bool>(this->_registers._bgsc[addr - PpuRegisters::bg1sc].tilemapVerticalMirroring)});
-			this->_backgrounds[addr - PpuRegisters::bg1sc + 1].setTilemaps(
+			this->_backgrounds[addr - PpuRegisters::bg1sc].setTileMapMirroring(
 				{static_cast<bool>(this->_registers._bgsc[addr - PpuRegisters::bg1sc].tilemapHorizontalMirroring),
 				 static_cast<bool>(this->_registers._bgsc[addr - PpuRegisters::bg1sc].tilemapVerticalMirroring)});
 			break;
@@ -144,8 +136,9 @@ namespace ComSquare::PPU
 			FALLTHROUGH
 		case PpuRegisters::bg2hofs:
 		case PpuRegisters::bg3hofs:
-		case PpuRegisters::bg4hofs:
-			this->_registers._bgofs[addr - PpuRegisters::bg1hofs].raw = ((data << 8) | (this->_ppuState.hvSharedScrollPrevValue & ~7) | (this->_ppuState.hScrollPrevValue & 7)) & 0x3FF;
+		case PpuRegisters::bg4hofs: this->_registers._bgofs[addr - PpuRegisters::bg1hofs].raw =
+			                            ((data << 8) | (this->_ppuState.hvSharedScrollPrevValue & ~7) |
+			                             (this->_ppuState.hScrollPrevValue & 7)) & 0x3FF;
 			this->_ppuState.hScrollPrevValue = data;
 			this->_ppuState.hvSharedScrollPrevValue = data;
 			break;
@@ -156,7 +149,7 @@ namespace ComSquare::PPU
 		case PpuRegisters::bg2vofs:
 		case PpuRegisters::bg3vofs:
 		case PpuRegisters::bg4vofs:
-			this->_registers._bgofs[addr - PpuRegisters::bg1hofs].raw = ((data << 8) | this->_ppuState.hvSharedScrollPrevValue) & 0x3FF;
+			this->_registers._bgofs[addr - PpuRegisters::bg1vofs].raw = ((data << 8) | this->_ppuState.hvSharedScrollPrevValue) & 0x3FF;
 			this->_ppuState.hvSharedScrollPrevValue = data;
 			break;
 		case PpuRegisters::vmain:
@@ -308,20 +301,36 @@ namespace ComSquare::PPU
 		(void)cycles;
 
 		this->renderMainAndSubScreen();
-		this->add_buffer(this->_screen, this->_subScreen);
-		this->add_buffer(this->_screen, this->_mainScreen);
-		//this->_backgrounds[2].renderBackground();
-		//add_buffer(this->_screen, this->_backgrounds[2].buffer);
+		Utils::addBuffer(this->_screen, this->_subScreen);
+		Utils::addBuffer(this->_screen, this->_mainScreen);
+
+		int i = 0;
+		int j = 0;
+
+		for (const auto &row : this->_screen) {
+			for (const auto &pixel : row) {
+				this->_renderer.putPixel(i, j++, pixel);
+			};
+			j = 0;
+			i++;
+		};
+
+
+		/*
+		 // loop used for debug
 		for (unsigned long i = 0; i < this->_screen.size(); i++) {
 			for (unsigned long j = 0; j < this->_screen[i].size(); j++) {
-				this->_renderer.putPixel(j, i, this->_screen[i][j]);
+				this->_renderer.putPixel(i, j, this->_screen[i][j]);
 			}
+			//if (i > 500)
+			//	break;
 		}
+		 */
 		this->_renderer.drawScreen();
-		for (auto &i : this->_mainScreen)
-			i.fill(0XFF);
-		for (auto &i : this->_subScreen)
-			i.fill(0XFF);
+		for (auto &row : this->_mainScreen)
+			row.fill(0XFF);
+		for (auto &row : this->_subScreen)
+			row.fill(0XFF);
 	}
 
 	std::string PPU::getName() const
@@ -535,62 +544,66 @@ namespace ComSquare::PPU
 
 	Vector2<bool> PPU::getBackgroundMirroring(int bgNumber) const
 	{
-		Vector2<bool> backgroundSize(false, false);
-
-		backgroundSize.y = this->_registers._bgsc[bgNumber - 1].tilemapVerticalMirroring;
-		backgroundSize.x = this->_registers._bgsc[bgNumber - 1].tilemapHorizontalMirroring;
-		return backgroundSize;
+		return {
+			static_cast<bool>(this->_registers._bgsc[bgNumber - 1].tilemapHorizontalMirroring),
+			static_cast<bool>(this->_registers._bgsc[bgNumber - 1].tilemapVerticalMirroring)
+		};
 	}
 
 	void PPU::renderMainAndSubScreen()
 	{
 		uint16_t colorPalette;
 		// should only render backgrounds needed (depending of th bgMode)
-		int i = 0;
 		for (auto &_background : this->_backgrounds) {
-			i++;
 			_background.renderBackground();
 		}
 		// TODO make a function getDefaultBgColor
 		colorPalette = this->cgram.read(0);
 		colorPalette += this->cgram.read(1) << 8U;
 
-		uint32_t color = Utils::getRealColor(colorPalette);
+		uint32_t color = Utils::CGRAMColorToRGBA(colorPalette);
 		for (auto &row : this->_subScreen)
 			row.fill(color);
+		for (auto &row : this->_mainScreenLevelMap)
+			row.fill(0);
+		for (auto &row : this->_subScreenLevelMap)
+			row.fill(0);
 		// the buffer is overwrite if necessary by a new bg so the background priority is from back to front
 		// the starting palette index isn't implemented
 		switch (this->_registers._bgmode.bgMode) {
 		case 0:
-			this->addToMainSubScreen(this->_backgrounds[BgName::bg4NoPriority]);
-			this->addToMainSubScreen(this->_backgrounds[BgName::bg3NoPriority]);
+			this->addToMainSubScreen<0, 15>(this->_backgrounds[BgName::Background4]);
+			this->addToMainSubScreen<10, 16>(this->_backgrounds[BgName::Background3]);
 			//sprites  priority 0
-			this->addToMainSubScreen(this->_backgrounds[BgName::bg4Priority]);
-			this->addToMainSubScreen(this->_backgrounds[BgName::bg3Priority]);
+		//	this->addToMainSubScreen(this->_backgrounds[BgName::bg4Priority]);
+		//	this->addToMainSubScreen(this->_backgrounds[BgName::bg3Priority]);
 			//sprites priority 1
-			this->addToMainSubScreen(this->_backgrounds[BgName::bg2NoPriority]);
-			this->addToMainSubScreen(this->_backgrounds[BgName::bg1NoPriority]);
+			this->addToMainSubScreen<20, 35>(this->_backgrounds[BgName::Background2]);
+			this->addToMainSubScreen<30, 36>(this->_backgrounds[BgName::Background1]);
 			//sprites priority 2
-			this->addToMainSubScreen(this->_backgrounds[BgName::bg2Priority]);
-			this->addToMainSubScreen(this->_backgrounds[BgName::bg1Priority]);
+		//	this->addToMainSubScreen(this->_backgrounds[BgName::bg2Priority]);
+		//	this->addToMainSubScreen(this->_backgrounds[BgName::bg1Priority]);
 			//sprites priority 3
 			break;
 		case 1:
-			this->addToMainSubScreen(this->_backgrounds[BgName::bg3NoPriority]);
-			//sprites priority 0
 			if (!this->_registers._bgmode.mode1Bg3PriorityBit)
-				this->addToMainSubScreen(this->_backgrounds[BgName::bg3Priority]);
+				this->addToMainSubScreen<0, 5>(this->_backgrounds[BgName::Background3]);
+			else
+				this->addToMainSubScreen<0, 30>(this->_backgrounds[BgName::Background3]);
+			//sprites priority 0
+		//	if (!this->_registers._bgmode.mode1Bg3PriorityBit)
+		//		this->addToMainSubScreen(this->_backgrounds[BgName::bg3Priority]);
 			//sprites priority 1
-			this->addToMainSubScreen(this->_backgrounds[BgName::bg2NoPriority]);
-			this->addToMainSubScreen(this->_backgrounds[BgName::bg1NoPriority]);
+			this->addToMainSubScreen<10, 25>(this->_backgrounds[BgName::Background2]);
+			this->addToMainSubScreen<20, 26>(this->_backgrounds[BgName::Background1]);
 			//sprites priority 2
-			this->addToMainSubScreen(this->_backgrounds[BgName::bg2Priority]);
-			this->addToMainSubScreen(this->_backgrounds[BgName::bg1Priority]);
+		//	this->addToMainSubScreen(this->_backgrounds[BgName::bg2Priority]);
+		//	this->addToMainSubScreen(this->_backgrounds[BgName::bg1Priority]);
 			//sprites priority 3
-			if (this->_registers._bgmode.mode1Bg3PriorityBit)
-				this->addToMainSubScreen(this->_backgrounds[BgName::bg3Priority]);
+		//	if (this->_registers._bgmode.mode1Bg3PriorityBit)
+		//		this->addToMainSubScreen(this->_backgrounds[BgName::bg3Priority]);
 			break;
-		case 2:
+	/*	case 2:
 			this->addToMainSubScreen(this->_backgrounds[BgName::bg2NoPriority]);
 			//sprites priority 0
 			this->addToMainSubScreen(this->_backgrounds[BgName::bg1NoPriority]);
@@ -637,21 +650,13 @@ namespace ComSquare::PPU
 			//sprites priority 2
 			this->addToMainSubScreen(this->_backgrounds[BgName::bg1Priority]);
 			//sprites priority
-			break;
+			break;*/
 		case 7:
 			// Not implemented
 			throw std::runtime_error("not implemented");
 		default:
-			break;
+			throw std::runtime_error("Bg mode not implemented or commented (bg nb " + std::to_string(this->_registers._bgmode.bgMode) + ")");
 		}
-	}
-
-	void PPU::addToMainSubScreen(Background &bg)
-	{
-		if (this->_registers._t[0].raw & (1U << (bg.getBgNumber() - 1U)))
-			this->add_buffer(this->_mainScreen, bg.buffer);
-		if (this->_registers._t[1].raw & (1U << (bg.getBgNumber() - 1U)))
-			this->add_buffer(this->_subScreen, bg.buffer);
 	}
 
 	int PPU::getBgMode() const

@@ -8,6 +8,7 @@
 #include <string>
 #include <QtWidgets/QTableWidget>
 #include "Utility/Utility.hpp"
+#include "PPU/PPUUtils.hpp"
 
 namespace ComSquare::Debugger
 {
@@ -45,16 +46,14 @@ namespace ComSquare::Debugger
 		uint8_t blue = (cgramValue & 0x7D00U) >> 10U;
 		uint8_t green = (cgramValue & 0x03E0U) >> 5U;
 		uint8_t red = (cgramValue & 0x001FU);
-		uint24_t hexColorValue = 0;
+		uint32_t hexColorValue = PPU::Utils::CGRAMColorToRGBA(cgramValue);
 
 		this->_ui.indexLineEdit->setText(std::to_string(addr / 2).c_str());
 		this->_ui.valueLineEdit->setText(Utility::to_hex(cgramValue).c_str());
 		this->_ui.rLineEdit->setText(std::to_string(red).c_str());
 		this->_ui.gLineEdit->setText(std::to_string(green).c_str());
 		this->_ui.bLineEdit->setText(std::to_string(blue).c_str());
-		hexColorValue += (red * 255U / 31U) << 16U;
-		hexColorValue += (green * 255U / 31U) << 8U;
-		hexColorValue += (blue * 255U / 31U);
+		hexColorValue >>= 8;
 		this->_ui.hexLineEdit->setText(Utility::to_hex(hexColorValue).c_str());
 	}
 
@@ -81,27 +80,20 @@ namespace ComSquare::Debugger
 
 	QVariant CGramModel::data(const QModelIndex &index, int role) const
 	{
-		u_int16_t addressValue;
-		uint8_t red;
-		uint8_t green;
-		uint8_t blue;
 
 		if (role == Qt::TextAlignmentRole)
 			return Qt::AlignCenter;
 		if (role != Qt::BackgroundRole)
 			return QVariant();
+
 		int idDisplayTile = index.row() * 16 + index.column();
 		uint16_t cgramAddress = idDisplayTile / 8 * 16 + (idDisplayTile % 8 * 2);
-		addressValue = this->_ppu.cgramRead(cgramAddress);
+		uint16_t addressValue = this->_ppu.cgramRead(cgramAddress);
 		addressValue += this->_ppu.cgramRead(cgramAddress + 1) << 8U;
+		uint32_t color = PPU::Utils::CGRAMColorToRGBA(addressValue);
 
-		blue = (addressValue & 0x7D00U) >> 10U;
-		green = (addressValue & 0x03E0U) >> 5U;
-		red = (addressValue & 0x001FU);
-
-		red = red * 255U / 31U;
-		green = green * 255U / 31U;
-		blue = blue * 255U / 31U;
-		return QColor(red, green, blue);
+		return QColor(static_cast<int>((color & 0xFF000000) >> 24),
+		              static_cast<int>((color & 0x00FF0000) >> 16),
+		              static_cast<int>((color & 0x0000FF00) >> 8));
 	}
 }

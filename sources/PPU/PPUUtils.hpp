@@ -17,11 +17,19 @@ namespace ComSquare::PPU
 
 namespace ComSquare::PPU::Utils
 {
-
-	//! @brief Transform SNES color code BGR to uint32_t RGB
-	uint32_t getRealColor(uint16_t color);
+	//! @brief Transform CGRAM color data to 8bits
+	//! @note Used with b, g and r values
+	//! @return The 8 bit value of the color
+	inline uint8_t to8Bit(int color)
+	{
+		return static_cast<uint8_t>((color << 3) + (color >> 2));
+	}
+	//! @brief Transform SNES color code BGR to uint32_t RGBA
+	//! @param CGRAMColor The color of the CGRAM
+	//! @return The CGRAM color to RGBA format
+	uint32_t CGRAMColorToRGBA(uint16_t CGRAMColor);
 	//! @brief Used to parse easily VRAM Tile information
-	union TileMapData {
+	union TileData {
 		struct {
 			//! @brief Tile X offset
 			uint16_t posX: 4;
@@ -50,12 +58,11 @@ namespace ComSquare::PPU::Utils
 	template <std::size_t DEST_SIZE_Y, std::size_t DEST_SIZE_X, std::size_t SRC_SIZE_Y, std::size_t SRC_SIZE_X>
 	void merge2DArray(std::array<std::array<uint32_t, DEST_SIZE_X>, DEST_SIZE_Y> &bufferDest,
 					  const std::array<std::array<uint32_t, SRC_SIZE_X>, SRC_SIZE_Y> &bufferSrc,
-					  const Vector2<int> &offset = {0, 0})
+					  const Vector2<int> &offset)
 	{
-		for (unsigned long i = 0; i < bufferSrc.size(); i++) {
-			for (unsigned long j = 0; j < bufferSrc[i].size(); j++) {
-				bufferDest[i + offset.y][j + offset.x] = bufferSrc[i][j];
-			}
+		int offsetY = offset.y;
+		for (auto &row : bufferSrc) {
+			std::copy(row.begin(), row.end(), bufferDest[offsetY++].begin() + offset.x);
 		}
 	}
 
@@ -77,4 +84,21 @@ namespace ComSquare::PPU::Utils
 		std::reverse(array.begin() + offset.x, array.begin() + offset.x + size.x);
 	}
 
+	//! @brief Add a bg buffer to another buffer
+	template <std::size_t DEST_SIZE_X, std::size_t DEST_SIZE_Y, std::size_t SRC_SIZE_X, std::size_t SRC_SIZE_Y>
+	static void addBuffer(std::array<std::array<uint32_t, DEST_SIZE_Y>, DEST_SIZE_X> &bufferDest,
+	               const std::array<std::array<uint32_t, SRC_SIZE_Y>, SRC_SIZE_X> &bufferSrc)
+	{
+		int i = 0;
+		int j = 0;
+		for (const auto &sourceRow : bufferSrc) {
+			for (const auto &pixel : sourceRow) {
+				if (pixel > 0xFF)
+					bufferDest[i][j] = pixel;
+				j++;
+			};
+			j = 0;
+			i++;
+		};
+	}
 }

@@ -95,7 +95,13 @@ set(SOURCES
 	sources/PPU/TileRenderer.hpp
 	sources/PPU/Tile.hpp
 	sources/CPU/Registers.hpp
-	sources/Memory/IMemoryBus.hpp sources/Models/Callback.hpp sources/Models/Logger.hpp)
+	sources/Memory/IMemoryBus.hpp
+	sources/Models/Callback.hpp
+	sources/Models/Logger.hpp
+	sources/PPU/PpuDebug.cpp
+	sources/PPU/PpuDebug.hpp
+	sources/PPU/PPURegisters.hpp
+	)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -115,8 +121,6 @@ add_executable(comsquare
 	sources/Renderer/QtRenderer/QtSfmlTileRenderer.hpp
 	sources/Renderer/QtRenderer/QtSfmlTileRenderer.cpp
 	sources/Renderer/QtRenderer/QtSfmlTileRenderer.hpp
-	sources/PPU/PpuDebug.cpp
-	sources/PPU/PpuDebug.hpp
 	sources/Debugger/ClosableWindow.hpp
 	sources/Debugger/CPU/CPUDebug.cpp
 	sources/Debugger/CPU/CPUDebug.hpp
@@ -182,6 +186,7 @@ add_executable(unit_tests EXCLUDE_FROM_ALL
 	tests/CPU/testDMA.cpp
 	tests/CPU/testAddressingMode.cpp
 	tests/testMemoryBus.cpp
+	tests/PPU/testTileRenderer.cpp
 	)
 target_include_directories(unit_tests PUBLIC tests)
 target_compile_definitions(unit_tests PUBLIC TESTS)

@@ -66,8 +66,7 @@ namespace ComSquare::Renderer
 		if (y >= this->_videoMode.height)
 			throw InvalidPixelPosition("Height", y, this->_videoMode.height);
 
-		sf::Color pixels(rgba);
-		this->_pixelBuffer[this->_videoMode.width * y + x] = pixels;
+		this->_pixelBuffer[this->_videoMode.width * y + x] = sf::Color(rgba);
 	}
 
 	void SFRenderer::getEvents()
