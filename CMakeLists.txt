@@ -100,7 +100,8 @@ set(SOURCES
 	sources/Models/Logger.hpp
 	sources/PPU/PpuDebug.cpp
 	sources/PPU/PpuDebug.hpp
-	sources/PPU/PPURegisters.hpp)
+	sources/PPU/PPURegisters.hpp
+	)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
