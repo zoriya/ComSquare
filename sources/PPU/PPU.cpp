@@ -306,13 +306,14 @@ namespace ComSquare::PPU
 
 		int i = 0;
 		int j = 0;
-		std::for_each(this->_screen.begin(), this->_screen.end(), [this, &i, &j](const auto &row) {
-			std::for_each(row.begin(), row.end(), [this, &i, &j](const auto &pixel) {
+
+		for (const auto &row : this->_screen) {
+			for (const auto &pixel : row) {
 				this->_renderer.putPixel(i, j++, pixel);
-			});
+			};
 			j = 0;
 			i++;
-		});
+		};
 
 
 		/*

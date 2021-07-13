@@ -57,9 +57,9 @@ namespace ComSquare::PPU
 		Background _backgrounds[4];
 		//! @brief Main Screen buffer
 		std::array<std::array<uint32_t, 1024>, 1024> _mainScreen;
-		std::array<std::array<unsigned char, 1024>, 1024> _mainScreenLevelMap;
+		std::array<std::array<uint8_t, 1024>, 1024> _mainScreenLevelMap;
 		//! @brief Sub Screen buffer
-		std::array<std::array<unsigned char, 1024>, 1024> _subScreenLevelMap;
+		std::array<std::array<uint8_t, 1024>, 1024> _subScreenLevelMap;
 		std::array<std::array<uint32_t, 1024>, 1024> _subScreen;
 		//! @brief Final Screen buffer
 		std::array<std::array<uint32_t, 1024>, 1024> _screen;

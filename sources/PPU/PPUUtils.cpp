@@ -7,11 +7,6 @@
 namespace ComSquare::PPU::Utils
 {
 
-	inline uint8_t to8Bit(int color)
-	{
-		return static_cast<uint8_t>((color << 3) + (color >> 2));
-	}
-
 	uint32_t CGRAMColorToRGBA(uint16_t CGRAMColor)
 	{
 		uint8_t b = to8Bit(CGRAMColor >> 10);

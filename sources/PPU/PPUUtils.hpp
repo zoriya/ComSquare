@@ -20,7 +20,10 @@ namespace ComSquare::PPU::Utils
 	//! @brief Transform CGRAM color data to 8bits
 	//! @note Used with b, g and r values
 	//! @return The 8 bit value of the color
-	inline uint8_t to8Bit(int color);
+	inline uint8_t to8Bit(int color)
+	{
+		return static_cast<uint8_t>((color << 3) + (color >> 2));
+	}
 	//! @brief Transform SNES color code BGR to uint32_t RGBA
 	//! @param CGRAMColor The color of the CGRAM
 	//! @return The CGRAM color to RGBA format
