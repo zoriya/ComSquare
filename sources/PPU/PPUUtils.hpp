@@ -88,14 +88,14 @@ namespace ComSquare::PPU::Utils
 	{
 		int i = 0;
 		int j = 0;
-		std::for_each(bufferSrc.begin(), bufferSrc.end(), [&bufferDest, &i, &j](auto &sourceRow) {
-			std::for_each(sourceRow.begin(), sourceRow.end(), [&bufferDest, &i, &j](auto &pixel) {
+		for (const auto &sourceRow : bufferSrc) {
+			for (const auto &pixel : sourceRow) {
 				if (pixel > 0xFF)
 					bufferDest[i][j] = pixel;
 				j++;
-			});
+			};
 			j = 0;
 			i++;
-		});
+		};
 	}
 }

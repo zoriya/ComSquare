@@ -111,11 +111,12 @@ namespace ComSquare::PPU
 			int i = 0;
 			int j = 0;
 			int pixelLevel;
-			std::for_each(backgroundSrc.buffer.begin(), backgroundSrc.buffer.end(), [&](auto &sourceRow) {
-				std::for_each(sourceRow.begin(), sourceRow.end(), [&](auto &pixel) {
+
+			for (const auto &sourceRow : backgroundSrc.buffer) {
+				for (const auto &pixel : sourceRow) {
 					if (pixel <= 0xFF) {
 						j++;
-						return;
+						continue;
 					}
 					pixelLevel = backgroundSrc.isPriorityPixel(i, j) ? levelHigh : levelLow;
 					auto &pixelInitialLevel = pixelDestinationLevelMap[i][j];
@@ -125,10 +126,10 @@ namespace ComSquare::PPU
 						pixelInitialLevel = pixelLevel;
 					}
 					j++;
-				});
+				};
 				j = 0;
 				i++;
-			});
+			};
 
 		}
 
