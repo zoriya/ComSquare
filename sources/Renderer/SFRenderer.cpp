@@ -88,6 +88,7 @@ namespace ComSquare::Renderer
 		if (!this->_texture.create(width, height)) {
 			throw std::runtime_error("sfml texture resize failed");
 		}
+		this->_sprite.setTexture(this->_texture);
 		delete[] this->_pixelBuffer;
 		this->_pixelBuffer = new sf::Color[height * width];
 	}
