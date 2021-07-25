@@ -55,20 +55,34 @@ namespace ComSquare::PPU::Utils
 		uint8_t hScrollPrevValue;
 	};
 
+	//! @brief Takes the bufferSrc and set the values in bufferDest starting at offset
+	//! @param bufferDest The destination buffer (the one who will be written on)
+	//! @param bufferSrc The source buffer (the one that will be copied to the bufferSrc)
+	//! @param offset The starting position to copy bufferSrc to bufferDest
+	//! @tparam DEST_SIZE_X Horizontal size of bufferDest
+	//! @tparam DEST_SIZE_Y Vertical size of bufferDest
+	//! @tparam SRC_SIZE_X Horizontal size of bufferSrc
+	//! @tparam SRC_SIZE_Y Vertical size of bufferSrc
 	template <std::size_t DEST_SIZE_Y, std::size_t DEST_SIZE_X, std::size_t SRC_SIZE_Y, std::size_t SRC_SIZE_X>
 	void merge2DArray(std::array<std::array<uint32_t, DEST_SIZE_X>, DEST_SIZE_Y> &bufferDest,
 					  const std::array<std::array<uint32_t, SRC_SIZE_X>, SRC_SIZE_Y> &bufferSrc,
 					  const Vector2<int> &offset)
 	{
 		int offsetY = offset.y;
-		for (auto &row : bufferSrc) {
+		for (const auto &row : bufferSrc) {
 			std::copy(row.begin(), row.end(), bufferDest[offsetY++].begin() + offset.x);
 		}
 	}
 
-	template <std::size_t SRC_SIZE_Y, std::size_t SRC_SIZE_X>
-	void VFlipArray(std::array<std::array<uint32_t, SRC_SIZE_X>, SRC_SIZE_Y> &array,
-					const Vector2<int> &size,
+	//! @brief Flips Vertically an 2D array
+	//! @param array The array to be flipped
+	//! @param size The maximum size you want to be split
+	//! @param offset The starting position of the flip
+	//! @tparam HORIZONTAL_SIZE The horizontal size of the array
+	//! @tparam VERTICAL_SIZE The vertical size of the array
+	template <std::size_t VERTICAL_SIZE, std::size_t HORIZONTAL_SIZE>
+	void VFlipArray(std::array<std::array<uint32_t, HORIZONTAL_SIZE>, VERTICAL_SIZE> &array,
+					const Vector2<int> &size = {HORIZONTAL_SIZE, VERTICAL_SIZE},
 					const Vector2<int> &offset = {0, 0})
 	{
 		for (int i = offset.y; i < offset.y + size.y; i++) {
@@ -76,9 +90,15 @@ namespace ComSquare::PPU::Utils
 		}
 	}
 
-	template <std::size_t SRC_SIZE_Y, std::size_t SRC_SIZE_X>
-	void HFlipArray(std::array<std::array<uint32_t, SRC_SIZE_X>, SRC_SIZE_Y> &array,
-					const Vector2<int> &size,
+	//! @brief Flips Horizontally an 2D array
+	//! @param array The array to be flipped
+	//! @param size The maximum size you want to be split
+	//! @param offset The starting position of the flip
+	//! @tparam HORIZONTAL_SIZE The horizontal size of the array
+	//! @tparam VERTICAL_SIZE The vertical size of the array
+	template <std::size_t VERTICAL_SIZE, std::size_t HORIZONTAL_SIZE>
+	void HFlipArray(std::array<std::array<uint32_t, HORIZONTAL_SIZE>, VERTICAL_SIZE> &array,
+					const Vector2<int> &size = {HORIZONTAL_SIZE, VERTICAL_SIZE},
 					const Vector2<int> &offset = {0, 0})
 	{
 		std::reverse(array.begin() + offset.x, array.begin() + offset.x + size.x);
