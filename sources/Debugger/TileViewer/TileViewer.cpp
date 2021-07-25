@@ -24,7 +24,9 @@ namespace ComSquare::Debugger
 	{
 		this->_ui.setupUi(this->_window);
 		//this->_qtSfmlRenderer(this->_ui.widget_sfml, 30);
-		this->_renderer = std::make_unique<Renderer::QtSFMLTileRenderer>(this->_ui.widget_sfml, 30);;
+		//this->_renderer = std::make_unique<Renderer::QtSFMLTileRenderer>(this->_ui.widget_sfml, 30);;
+		this->_renderer = std::make_unique<Renderer::QtSFMLTileRenderer>(this->_ui.widget_sfml, 30);
+		//this->_renderer = nullptr;
 	//	this->_sfWidget = std::make_unique<Renderer::QtSFMLTileRenderer>(this->_ui.widget_sfml);
 		QMainWindow::connect(this->_ui.NbColumns, QOverload<int>::of(&QSpinBox::valueChanged), this,
 		                     [this](int nb) -> void { this->setNbColumns(nb); });

@@ -14,7 +14,6 @@ namespace ComSquare::Renderer
 	class QtSFMLTileRenderer : public QtWidgetSFML
 	{
 	public:
-		std::array<std::array<uint32_t, 1024>, 1024> buffer;
 
 		//! @brief Function called to update this widget.
 		void onUpdate() override;
