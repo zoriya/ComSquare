@@ -36,6 +36,7 @@ namespace ComSquare::PPU
 		//! @note members are set to true if the tilemap is expended in their direction
 		Vector2<bool> _tileMapMirroring;
 		//! @brief The number of pixels of a character (x: width, y: height)
+		//! @note A character can be 8x8, 16x16, 8x16 or 16x8
 		Vector2<int> _characterNbPixels;
 		//! @brief The number of bits per pixels to currently look for each pixel
 		int _bpp;

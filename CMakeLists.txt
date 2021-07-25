@@ -186,8 +186,8 @@ add_executable(unit_tests EXCLUDE_FROM_ALL
 	tests/CPU/testDMA.cpp
 	tests/CPU/testAddressingMode.cpp
 	tests/testMemoryBus.cpp
+	tests/PPU/testPPUTilerenderer.cpp
 	tests/PPU/testPPUUtils.cpp
-	tests/PPU/testCGRAMColorToRGBA.cpp
 	)
 
 target_include_directories(unit_tests PUBLIC tests)

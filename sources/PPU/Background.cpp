@@ -2,10 +2,10 @@
 // Created by cbihan on 5/14/20.
 //
 
-#include "PPUUtils.hpp"
+#include "PPU/PPUUtils.hpp"
 #include "PPU.hpp"
-#include "Background.hpp"
-#include "Tile.hpp"
+#include "PPU/Background.hpp"
+#include "PPU/Tile.hpp"
 #include "Models/Vector2.hpp"
 
 namespace ComSquare::PPU
@@ -87,11 +87,12 @@ namespace ComSquare::PPU
 
 		// todo check why i need to invert vertical and horizontal flips
 		if (tileData.verticalFlip)
-			Utils::HFlipArray(this->_tileBuffer, {this->_characterNbPixels.x, this->_characterNbPixels.y});
+			Utils::hFlip2DBuffer(this->_tileBuffer, this->_characterNbPixels);
 		if (tileData.horizontalFlip)
-			Utils::VFlipArray(this->_tileBuffer, {this->_characterNbPixels.x, this->_characterNbPixels.y});
+			Utils::vFlip2DBuffer(this->_tileBuffer, this->_characterNbPixels);
 
-		Vector2<int> pixelPosition{indexOffset.x * this->_characterNbPixels.x, indexOffset.y * this->_characterNbPixels.y};
+		Vector2<int> pixelPosition{indexOffset.x * this->_characterNbPixels.x,
+		                           indexOffset.y * this->_characterNbPixels.y};
 		std::for_each(this->_tileBuffer.begin(), this->_tileBuffer.begin() + this->_characterNbPixels.y,
 		              [this, &pixelPosition](const auto &row) {
 			              std::move(row.begin(), row.begin() + this->_characterNbPixels.x,
@@ -114,8 +115,7 @@ namespace ComSquare::PPU
 			if (pos.x % 31 == 0 && pos.x) {
 				pos.y++;
 				pos.x = 0;
-			}
-			else {
+			} else {
 				pos.x++;
 			}
 		}
@@ -133,6 +133,12 @@ namespace ComSquare::PPU
 
 	void Background::setCharacterSize(Vector2<int> size)
 	{
+		if ((size.x != Tile::NbPixelsWidth && size.x != Tile::NbPixelsWidth * 2)
+		    || (size.y != Tile::NbPixelsHeight && size.y != Tile::NbPixelsHeight * 2)) {
+			throw std::runtime_error(
+				"Tile wrong character size (x: " + std::to_string(size.x) + ", y: " + std::to_string(size.y) + ")"
+			);
+		}
 		this->_characterNbPixels = size;
 	}
 

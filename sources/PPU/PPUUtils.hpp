@@ -7,6 +7,7 @@
 #include <stdint-gcc.h>
 #include <cstddef>
 #include <memory>
+#include <vector>
 #include <array>
 #include "Models/Vector2.hpp"
 
@@ -74,40 +75,41 @@ namespace ComSquare::PPU::Utils
 		}
 	}
 
-	//! @brief Flips Vertically an 2D array
-	//! @param array The array to be flipped
+	//! @brief Flips Vertically an 2D buffer
+	//! @param buffer The buffer to be flipped
 	//! @param size The maximum size you want to be split
 	//! @param offset The starting position of the flip
-	//! @tparam HORIZONTAL_SIZE The horizontal size of the array
-	//! @tparam VERTICAL_SIZE The vertical size of the array
+	//! @tparam HORIZONTAL_SIZE The horizontal size of the buffer
+	//! @tparam VERTICAL_SIZE The vertical size of the buffer
 	template <std::size_t VERTICAL_SIZE, std::size_t HORIZONTAL_SIZE>
-	void VFlipArray(std::array<std::array<uint32_t, HORIZONTAL_SIZE>, VERTICAL_SIZE> &array,
-					const Vector2<int> &size = {HORIZONTAL_SIZE, VERTICAL_SIZE},
-					const Vector2<int> &offset = {0, 0})
+	void vFlip2DBuffer(std::array<std::array<uint32_t, HORIZONTAL_SIZE>, VERTICAL_SIZE> &buffer,
+	                   const Vector2<int> &size = {HORIZONTAL_SIZE, VERTICAL_SIZE},
+	                   const Vector2<int> &offset = {0, 0})
 	{
 		for (int i = offset.y; i < offset.y + size.y; i++) {
-			std::reverse(array[i].begin() + offset.x, array[i].begin() + offset.x + size.x);
+			std::reverse(buffer[i].begin() + offset.x, buffer[i].begin() + offset.x + size.x);
 		}
 	}
 
-	//! @brief Flips Horizontally an 2D array
-	//! @param array The array to be flipped
+	//! @brief Flips Horizontally an 2D buffer
+	//! @param buffer The buffer to be flipped
 	//! @param size The maximum size you want to be split
 	//! @param offset The starting position of the flip
-	//! @tparam HORIZONTAL_SIZE The horizontal size of the array
-	//! @tparam VERTICAL_SIZE The vertical size of the array
-	template <std::size_t VERTICAL_SIZE, std::size_t HORIZONTAL_SIZE>
-	void HFlipArray(std::array<std::array<uint32_t, HORIZONTAL_SIZE>, VERTICAL_SIZE> &array,
-					const Vector2<int> &size = {HORIZONTAL_SIZE, VERTICAL_SIZE},
-					const Vector2<int> &offset = {0, 0})
+	//! @tparam HORIZONTAL_SIZE The horizontal size of the buffer
+	//! @tparam VERTICAL_SIZE The vertical size of the buffer
+	//! @warning This function might not behave like you think, it doesn't even look for the size.y but it's only meant to be use in the tile context
+	template<std::size_t VERTICAL_SIZE, std::size_t HORIZONTAL_SIZE>
+	void hFlip2DBuffer(std::array<std::array<uint32_t, HORIZONTAL_SIZE>, VERTICAL_SIZE> &buffer,
+	                   const Vector2<int> &size = {HORIZONTAL_SIZE, VERTICAL_SIZE},
+	                   const Vector2<int> &offset = {0, 0})
 	{
-		std::reverse(array.begin() + offset.x, array.begin() + offset.x + size.x);
+		std::reverse(buffer.begin() + offset.x, buffer.begin() + offset.x + size.x);
 	}
 
 	//! @brief Add a bg buffer to another buffer
-	template <std::size_t DEST_SIZE_X, std::size_t DEST_SIZE_Y, std::size_t SRC_SIZE_X, std::size_t SRC_SIZE_Y>
+	template<std::size_t DEST_SIZE_X, std::size_t DEST_SIZE_Y, std::size_t SRC_SIZE_X, std::size_t SRC_SIZE_Y>
 	static void addBuffer(std::array<std::array<uint32_t, DEST_SIZE_Y>, DEST_SIZE_X> &bufferDest,
-	               const std::array<std::array<uint32_t, SRC_SIZE_Y>, SRC_SIZE_X> &bufferSrc)
+	                      const std::array<std::array<uint32_t, SRC_SIZE_Y>, SRC_SIZE_X> &bufferSrc)
 	{
 		int i = 0;
 		int j = 0;
