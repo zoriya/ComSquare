@@ -2,26 +2,31 @@
 // Created by cbihan on 08/06/2021.
 //
 
-#include <iostream>
+#include "PPU/Tile.hpp"
 #include "QtSfmlTileRenderer.hpp"
+
 
 namespace ComSquare::Renderer
 {
 
 	QtSFMLTileRenderer::QtSFMLTileRenderer(QWidget *parent,
 	                                       int frameRate)
-		: QtWidgetSFML(parent, {0, 0}, {1025, 1025}, frameRate)
+		: QtWidgetSFML(parent, {0, 0}, {16 * PPU::Tile::NbPixelsWidth, 18 * PPU::Tile::NbPixelsHeight}, frameRate)
 	{
 		// todo the size of the sfml renderwindow should fill the parent
 	}
 
 	void QtSFMLTileRenderer::onUpdate()
 	{
-		this->_window.clear(sf::Color::Black);
-		for (unsigned long i = 0; i < this->buffer.size(); i++) {
-			for (unsigned long j = 0; j < this->buffer[i].size(); j++) {
-				this->putPixel(j, i, this->buffer[i][j]);
+		int i = 0;
+		int j = 0;
+		this->_renderWindow.clear(sf::Color::Black);
+		for (const auto &row : this->buffer) {
+			for (const auto &pixel : row) {
+				this->putPixel(j++, i, pixel);
 			}
+			i++;
+			j = 0;
 		}
 		this->drawScreen();
 	}

@@ -11,18 +11,21 @@
 #include <iostream>
 #include "RAMTileRenderer.hpp"
 #include "PPU/PPU.hpp"
+#include "PPU/Tile.hpp"
 
 namespace ComSquare::Debugger
 {
 	TileViewer::TileViewer(SNES &snes, ComSquare::PPU::PPU &ppu)
-		: _window(new ClosableWindow([&snes] { snes.disableTileViewer(); })),
+		:_window(new ClosableWindow([&snes] { snes.disableTileViewer(); })),
 		  _snes(snes),
 		  _ui(),
 		  _ppu(ppu),
 		  _ramTileRenderer(ppu.vram, ppu.cgram)
 	{
 		this->_ui.setupUi(this->_window);
-		this->_sfWidget = std::make_unique<Renderer::QtSFMLTileRenderer>(this->_ui.widget_sfml);
+		this->_qtSfmlRenderer(this->_ui.widget_sfml, 30);
+		this->_renderer = this->_qtSfmlRenderer;
+	//	this->_sfWidget = std::make_unique<Renderer::QtSFMLTileRenderer>(this->_ui.widget_sfml);
 		QMainWindow::connect(this->_ui.NbColumns, QOverload<int>::of(&QSpinBox::valueChanged), this,
 		                     [this](int nb) -> void { this->setNbColumns(nb); });
 		QMainWindow::connect(this->_ui.ByteSize, QOverload<int>::of(&QSpinBox::valueChanged), this,
@@ -109,7 +112,15 @@ namespace ComSquare::Debugger
 	void TileViewer::internalUpdate()
 	{
 		this->_ramTileRenderer.render();
-		this->_sfWidget->buffer = this->_ramTileRenderer.buffer;
+		int i = 0;
+		int j = 0;
+		for (const auto &row : this->_ramTileRenderer.buffer) {
+			for (const auto &pixel : row) {
+				this->_renderer.putPixel(j++, i, pixel);
+			}
+			j = 0;
+			i++;
+		}
 	}
 
 	void TileViewer::setRamOffset(int offset)

@@ -20,6 +20,11 @@ namespace ComSquare
 			//! @brief Render the buffer to the window
 			virtual void drawScreen() = 0;
 
+			//! @brief Set a size or resize the Renderer drawing size
+			//! @param height The new height of the renderer in pixels
+			//! @param width The new width of the renderer in pixels
+			virtual void setSize(unsigned width, unsigned height) = 0;
+
 			//! @brief Set a pixel to the coordinates x, y with the color rgba
 			//! @param x The x position of the window (0, 0 is the top left corner).
 			//! @param y The y position of the window (0, 0 is the top left corner).

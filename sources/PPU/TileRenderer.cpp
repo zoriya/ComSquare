@@ -75,7 +75,6 @@ namespace ComSquare::PPU
 
 	uint8_t TileRenderer::getPixelReferenceFromTileRow(uint16_t tileRowAddress, uint8_t pixelIndex)
 	{
-		// TODO unit test this
 		uint16_t result = 0;
 
 		switch (this->_bpp) {

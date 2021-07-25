@@ -29,8 +29,8 @@ namespace ComSquare::Renderer
 #ifdef Q_WS_X11
 			XFlush(QX11Info::display());
 #endif
-			this->_window.create(static_cast<sf::WindowHandle>(this->winId()));
-			this->_window.setFramerateLimit(60);
+			this->_renderWindow.create(static_cast<sf::WindowHandle>(this->winId()));
+			this->_renderWindow.setFramerateLimit(60);
 			this->_onInit();
 
 			this->_timer.setSingleShot(false);
@@ -52,4 +52,15 @@ namespace ComSquare::Renderer
 
 	void QtWidgetSFML::_onInit()
 	{}
+
+	void QtWidgetSFML::setSize(unsigned int width, unsigned int height)
+	{
+		SFRenderer::setSize(width, height);
+		QWidget::resize(static_cast<int>(width), static_cast<int>(height));
+	}
+
+	void QtWidgetSFML::onUpdate()
+	{
+		this->drawScreen();
+	}
 }

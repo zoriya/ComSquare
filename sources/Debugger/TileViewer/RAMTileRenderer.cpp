@@ -15,7 +15,7 @@ namespace ComSquare::Debugger
 		  _ramOffset(0),
 		  _bpp(2),
 		  _tileRenderer(ram, cgram),
-		  buffer({{{0}}})
+		  buffer({{0}})
 	{}
 
 	void RAMTileRenderer::render()
@@ -24,8 +24,8 @@ namespace ComSquare::Debugger
 		int bufY = 0;
 		int nbTilesDrawn = 0;
 		int resetX = bufX;
-		for (auto &i : this->buffer)
-			i.fill(0);
+		//for (auto &i : this->buffer)
+		//	i.fill(0);
 		uint24_t limit = std::fmin(this->_ram.getSize(), this->_renderSize) + this->_ramOffset;
 
 		for (uint24_t i = this->_ramOffset; i < limit; i += PPU::Tile::BaseByteSize * this->_bpp, nbTilesDrawn++) {
@@ -47,7 +47,7 @@ namespace ComSquare::Debugger
 
 			for (const auto &raw : this->_tileRenderer.buffer) {
 				for (const auto &pixel : raw) {
-					buffer[bufX++][bufY] = pixel;
+					this->buffer[bufX++][bufY] = pixel;
 				}
 				bufY++;
 				bufX = resetX;

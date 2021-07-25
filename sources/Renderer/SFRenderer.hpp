@@ -20,13 +20,13 @@ namespace ComSquare::Renderer
 	public:
 		explicit InvalidPixelPosition(const std::string &name, unsigned int x, unsigned int width)
 			: _msg("Trying to place a pixel at an invalid " + name + " (" + std::to_string(x) + ">=" + std::to_string(width) + ")") {}
-		const char *what() const noexcept override { return this->_msg.c_str(); }
+		[[nodiscard]] const char *what() const noexcept override { return this->_msg.c_str(); }
 	};
 
 	class SFRenderer : public IRenderer {
 	protected:
 		//! @brief The Renderer for the window.
-		sf::RenderWindow _window;
+		sf::RenderWindow _renderWindow;
 		//! @brief Video Mode containing the _height and _width of the window.
 		sf::VideoMode _videoMode;
 		//! @brief The image that contain all of the pixels
@@ -48,6 +48,10 @@ namespace ComSquare::Renderer
 		void setWindowName(std::string &newWindowName) override;
 		//! @brief Update the screen by printing the buffer.
 		void drawScreen() override;
+		//! @brief Set a size or resize the Renderer drawing size
+		//! @param height The new height of the renderer in pixels
+		//! @param width The new width of the renderer in pixels
+		void setSize(unsigned width, unsigned height) override;
 		//! @brief Add a pixel to the buffer to the coordinates x, y with the color rgba.
 		//! @param X horizontal index.
 		//! @param Y vertical index.

@@ -18,7 +18,12 @@ namespace ComSquare::Renderer
 		Q_OBJECT
 	public slots:
 		//! @brief Function called to update this widget.
-		virtual void onUpdate() = 0;
+		virtual void onUpdate();
+
+		//! @brief Set a size or resize the Renderer drawing size
+		//! @param height The new height of the renderer in pixels
+		//! @param width The new width of the renderer in pixels
+		void setSize(unsigned width, unsigned height) override;
 	private:
 		//! @brief Function called when this widget is created.
 		virtual void _onInit();
