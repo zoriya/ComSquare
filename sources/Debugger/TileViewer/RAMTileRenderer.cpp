@@ -18,16 +18,29 @@ namespace ComSquare::Debugger
 		  buffer({{0}})
 	{}
 
+	void prepVector(std::vector<std::vector<uint32_t>> &vector, int nbColumns)
+	{
+		std::vector<uint32_t> pixelLine(static_cast<unsigned int>(nbColumns), 0);
+		vector.reserve(8);
+		for (int i = 0; i < 8; i++) {
+			vector.push_back(pixelLine);
+		}
+	}
+
 	void RAMTileRenderer::render()
 	{
 		int bufX = 0;
 		int bufY = 0;
 		int nbTilesDrawn = 0;
 		int resetX = bufX;
+		int nbLinesDrawn = 0;
 		//for (auto &i : this->buffer)
 		//	i.fill(0);
 		uint24_t limit = std::fmin(this->_ram.getSize(), this->_renderSize) + this->_ramOffset;
+		std::vector<std::vector<uint32_t>> row;
 
+
+		prepVector(row, this->_nbColumns);
 		for (uint24_t i = this->_ramOffset; i < limit; i += PPU::Tile::BaseByteSize * this->_bpp, nbTilesDrawn++) {
 			if (bufX > 1024 || bufY > 1024)
 				break;
@@ -40,14 +53,19 @@ namespace ComSquare::Debugger
 			}
 			if (nbTilesDrawn && nbTilesDrawn % this->_nbColumns == 0) {
 				nbTilesDrawn = 0;
+				nbLinesDrawn++;
 				resetX = 0;
 				bufX = resetX;
 				bufY += PPU::Tile::NbPixelsHeight;
+				bufX = 0;
+				bufY = 0;
+				this->buffer.insert(this->buffer.end(), row.begin(), row.end());
+				prepVector(row, this->_nbColumns);
 			}
 
 			for (const auto &raw : this->_tileRenderer.buffer) {
 				for (const auto &pixel : raw) {
-					this->buffer[bufX++][bufY] = pixel;
+					row[bufX++][bufY] = pixel;
 				}
 				bufY++;
 				bufX = resetX;

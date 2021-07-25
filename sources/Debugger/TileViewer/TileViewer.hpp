@@ -34,10 +34,8 @@ namespace ComSquare::Debugger
 		//std::unique_ptr<Renderer::QtSFMLTileRenderer> _sfWidget;
 		//! @brief The ram tile renderer
 		RAMTileRenderer _ramTileRenderer;
-		//! @brief The instantiation of the renderer (should be passed via argument)
-		Renderer::QtWidgetSFML _qtSfmlRenderer;
 		//! @brief Renderer used to display tiles
-		Renderer::IRenderer &_renderer;
+		std::unique_ptr<Renderer::IRenderer> _renderer;
 		//! @brief Change the bpp from the index given by the ui (QT combo box)
 		void _bppChangeUIHandler(int index);
 

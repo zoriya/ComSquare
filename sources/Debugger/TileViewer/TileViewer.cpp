@@ -23,8 +23,8 @@ namespace ComSquare::Debugger
 		  _ramTileRenderer(ppu.vram, ppu.cgram)
 	{
 		this->_ui.setupUi(this->_window);
-		this->_qtSfmlRenderer(this->_ui.widget_sfml, 30);
-		this->_renderer = this->_qtSfmlRenderer;
+		//this->_qtSfmlRenderer(this->_ui.widget_sfml, 30);
+		this->_renderer = std::make_unique<Renderer::QtSFMLTileRenderer>(this->_ui.widget_sfml, 30);;
 	//	this->_sfWidget = std::make_unique<Renderer::QtSFMLTileRenderer>(this->_ui.widget_sfml);
 		QMainWindow::connect(this->_ui.NbColumns, QOverload<int>::of(&QSpinBox::valueChanged), this,
 		                     [this](int nb) -> void { this->setNbColumns(nb); });
@@ -116,7 +116,7 @@ namespace ComSquare::Debugger
 		int j = 0;
 		for (const auto &row : this->_ramTileRenderer.buffer) {
 			for (const auto &pixel : row) {
-				this->_renderer.putPixel(j++, i, pixel);
+				this->_renderer->putPixel(j++, i, pixel);
 			}
 			j = 0;
 			i++;

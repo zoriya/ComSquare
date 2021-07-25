@@ -65,6 +65,10 @@ namespace ComSquare::Renderer
 		//! @brief Use this function to create the window.
 		//! @param maxFPS The number of FPS you aim to run on.
 		void createWindow(SNES &snes, int maxFPS) override;
+		//! @brief Set a size or resize the Renderer drawing size
+		//! @param height The new height of the renderer in pixels
+		//! @param width The new width of the renderer in pixels
+		void setSize(unsigned width, unsigned height) override;
 		//! @brief Add a pixel to the buffer to the coordinates x, y with the color rgba.
 		//! @param X horizontal index.
 		//! @param Y vertical index.

@@ -48,6 +48,11 @@ namespace ComSquare::Renderer
 		this->_window->setWindowTitle((newWindowName + " - ComSquare").c_str());
 	}
 
+	void QtSFML::setSize(unsigned int width, unsigned int height)
+	{
+		this->_sfWidget->setSize(width, height);
+	}
+
 	QtFullSFML::QtFullSFML(SNES &snes, QWidget *parent, const QPoint &position, const QSize &size, int frameRate) :
 		QtWidgetSFML(parent, position, size, frameRate),
 		_snes(snes)
