@@ -39,7 +39,7 @@ namespace ComSquare::Debugger
 		//std::unique_ptr<Renderer::IRenderer> _renderer;
 		//! @brief Change the bpp from the index given by the ui (QT combo box)
 		void _bppChangeUIHandler(int index);
-
+		//! @brief The size of the renderer to known if resize is necessary
 		Vector2<unsigned> _currentRendererSize;
 
 	public:

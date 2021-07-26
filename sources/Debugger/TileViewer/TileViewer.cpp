@@ -114,13 +114,16 @@ namespace ComSquare::Debugger
 
 	void TileViewer::internalUpdate()
 	{
+		if (this->_ramTileRenderer.buffer.empty() || this->_ramTileRenderer.buffer.at(0).empty())
+			return;
 		this->_ramTileRenderer.render();
 		if (this->_ramTileRenderer.buffer.size() != this->_currentRendererSize.y
-			|| this->_ramTileRenderer.buffer.at(0).size() != this->_currentRendererSize.x) {
-			if (this->_ramTileRenderer.buffer.size() == 0 || this->_ramTileRenderer.buffer.at(0).size() == 0)
-				return;
-			this->_currentRendererSize = {static_cast<unsigned int>(this->_ramTileRenderer.buffer.at(0).size()), static_cast<unsigned int>(this->_ramTileRenderer.buffer.size())};
+		    || this->_ramTileRenderer.buffer.at(0).size() != this->_currentRendererSize.x) {
+
+			this->_currentRendererSize = {static_cast<unsigned int>(this->_ramTileRenderer.buffer.at(0).size()),
+			                              static_cast<unsigned int>(this->_ramTileRenderer.buffer.size())};
 			this->_renderer->setSize(this->_currentRendererSize.x, this->_currentRendererSize.y);
+			this->_ui.widget_sfml->setMinimumSize(this->_currentRendererSize.x, this->_currentRendererSize.y);
 		}
 		int i = 0;
 		int j = 0;

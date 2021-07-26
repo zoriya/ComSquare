@@ -28,7 +28,6 @@ namespace ComSquare::Debugger
 		PPU::TileRenderer _tileRenderer;
 	public:
 		//! @brief internal buffer
-		//std::array<std::array<uint32_t, 1024>, 1024> buffer;
 		std::vector<std::vector<uint32_t>> buffer;
 		//! @brief Set the palette to use for render (index of palette)
 		void setPaletteIndex(int paletteIndex);

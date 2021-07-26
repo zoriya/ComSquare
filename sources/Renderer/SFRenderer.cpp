@@ -83,6 +83,8 @@ namespace ComSquare::Renderer
 	void SFRenderer::setSize(unsigned int width, unsigned int height)
 	{
 		this->_renderWindow.setSize({width, height});
+		sf::FloatRect visibleArea(0, 0, width, height);
+		this->_renderWindow.setView(sf::View(visibleArea));
 		this->_videoMode.width = width;
 		this->_videoMode.height = height;
 		if (!this->_texture.create(width, height)) {
