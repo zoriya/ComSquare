@@ -80,7 +80,7 @@ namespace ComSquare::Renderer
 		}
 	}
 
-	void SFRenderer::setSize(unsigned int width, unsigned int height)
+	void SFRenderer::setSize(unsigned int height, unsigned int width)
 	{
 		this->_renderWindow.setSize({width, height});
 		sf::FloatRect visibleArea(0, 0, width, height);
@@ -93,5 +93,10 @@ namespace ComSquare::Renderer
 		this->_sprite.setTexture(this->_texture);
 		delete[] this->_pixelBuffer;
 		this->_pixelBuffer = new sf::Color[height * width];
+	}
+
+	void SFRenderer::setScale(float height, float width)
+	{
+		this->_sprite.setScale(width, height);
 	}
 }

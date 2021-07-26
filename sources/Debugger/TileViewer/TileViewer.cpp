@@ -21,14 +21,15 @@ namespace ComSquare::Debugger
 		  _ui(),
 		  _ppu(ppu),
 		  _ramTileRenderer(ppu.vram, ppu.cgram),
-		  _currentRendererSize(0, 0)
+		  _currentRendererSize(0, 0),
+		  _widgetScale(2, 2)
 	{
 		this->_ui.setupUi(this->_window);
 		//this->_qtSfmlRenderer(this->_ui.widget_sfml, 30);
 		//this->_renderer = std::make_unique<Renderer::QtSFMLTileRenderer>(this->_ui.widget_sfml, 30);;
 		this->_renderer = std::make_unique<Renderer::QtSFMLTileRenderer>(this->_ui.widget_sfml, 30);
 		//this->_renderer = nullptr;
-	//	this->_sfWidget = std::make_unique<Renderer::QtSFMLTileRenderer>(this->_ui.widget_sfml);
+		//	this->_sfWidget = std::make_unique<Renderer::QtSFMLTileRenderer>(this->_ui.widget_sfml);
 		QMainWindow::connect(this->_ui.NbColumns, QOverload<int>::of(&QSpinBox::valueChanged), this,
 		                     [this](int nb) -> void { this->setNbColumns(nb); });
 		QMainWindow::connect(this->_ui.ByteSize, QOverload<int>::of(&QSpinBox::valueChanged), this,
@@ -43,6 +44,7 @@ namespace ComSquare::Debugger
 		// used to setup ui restrictions
 		this->setBpp(this->getBpp());
 		this->_window->show();
+		this->_renderer->setScale(this->_widgetScale.y, this->_widgetScale.x);
 		this->internalUpdate();
 	}
 
@@ -66,18 +68,15 @@ namespace ComSquare::Debugger
 	{
 		this->_ui.PaletteIndex->setDisabled(bpp > 4);
 		switch (bpp) {
-		case 8:
-			this->_ui.PaletteIndex->setValue(0);
+		case 8: this->_ui.PaletteIndex->setValue(0);
 			break;
-		case 4:
-			this->_ui.PaletteIndex->setMaximum(15);
+		case 4: this->_ui.PaletteIndex->setMaximum(15);
 			if (this->_ui.PaletteIndex->value() > 15) {
 				this->_ui.PaletteIndex->setValue(15);
 			}
 			break;
 		case 2:
-		default:
-			bpp = 2;
+		default: bpp = 2;
 			this->_ui.PaletteIndex->setMaximum(63);
 			break;
 		}
@@ -122,8 +121,10 @@ namespace ComSquare::Debugger
 
 			this->_currentRendererSize = {static_cast<unsigned int>(this->_ramTileRenderer.buffer.at(0).size()),
 			                              static_cast<unsigned int>(this->_ramTileRenderer.buffer.size())};
-			this->_renderer->setSize(this->_currentRendererSize.x, this->_currentRendererSize.y);
-			this->_ui.widget_sfml->setMinimumSize(this->_currentRendererSize.x, this->_currentRendererSize.y);
+			this->_renderer->setSize(this->_currentRendererSize.y * this->_widgetScale.y,
+			                         this->_currentRendererSize.x * this->_widgetScale.x);
+			this->_ui.widget_sfml->setMinimumSize(this->_currentRendererSize.x * this->_widgetScale.x,
+			                                      this->_currentRendererSize.y * this->_widgetScale.y);
 		}
 		int i = 0;
 		int j = 0;
@@ -149,14 +150,10 @@ namespace ComSquare::Debugger
 	void TileViewer::_bppChangeUIHandler(int index)
 	{
 		switch (index) {
-		case 0:
-			return this->setBpp(2);
-		case 1:
-			return this->setBpp(4);
-		case 2:
-			return this->setBpp(8);
-		default:
-			throw std::runtime_error("Invalid Index");
+		case 0: return this->setBpp(2);
+		case 1: return this->setBpp(4);
+		case 2: return this->setBpp(8);
+		default: throw std::runtime_error("Invalid Index");
 		}
 	}
 }

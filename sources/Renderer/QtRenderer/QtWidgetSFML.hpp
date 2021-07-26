@@ -23,7 +23,7 @@ namespace ComSquare::Renderer
 		//! @brief Set a size or resize the Renderer drawing size
 		//! @param height The new height of the renderer in pixels
 		//! @param width The new width of the renderer in pixels
-		void setSize(unsigned width, unsigned height) override;
+		void setSize(unsigned height, unsigned width) override;
 	private:
 		//! @brief Function called when this widget is created.
 		virtual void _onInit();

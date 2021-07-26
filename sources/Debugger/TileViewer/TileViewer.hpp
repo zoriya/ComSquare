@@ -41,6 +41,8 @@ namespace ComSquare::Debugger
 		void _bppChangeUIHandler(int index);
 		//! @brief The size of the renderer to known if resize is necessary
 		Vector2<unsigned> _currentRendererSize;
+		//! @brief Factor used to "see easier the tiles in the debugger"
+		Vector2<float> _widgetScale;
 
 	public:
 		//! @brief ctor

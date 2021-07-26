@@ -53,9 +53,9 @@ namespace ComSquare::Renderer
 	void QtWidgetSFML::_onInit()
 	{}
 
-	void QtWidgetSFML::setSize(unsigned int width, unsigned int height)
+	void QtWidgetSFML::setSize(unsigned int height, unsigned int width)
 	{
-		SFRenderer::setSize(width, height);
+		SFRenderer::setSize(height, width);
 		QWidget::resize(static_cast<int>(width), static_cast<int>(height));
 	}
 

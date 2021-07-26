@@ -23,7 +23,7 @@ namespace ComSquare
 			//! @brief Set a size or resize the Renderer drawing size
 			//! @param height The new height of the renderer in pixels
 			//! @param width The new width of the renderer in pixels
-			virtual void setSize(unsigned width, unsigned height) = 0;
+			virtual void setSize(unsigned height, unsigned width) = 0;
 
 			//! @brief Add a pixel to the buffer to the coordinates x, y with the color rgba.
 			//! @param horizontalPosition horizontal index.
@@ -35,6 +35,11 @@ namespace ComSquare
 			//! @param snes The snes game object (to call the update method).
 			//! @param maxFPS The number of FPS you aim to run on.
 			virtual void createWindow(SNES &snes, int maxFPS) = 0;
+
+			//! @brief Set the scale of the renderer (it will scale all pixels)
+			//! @param width The scale factor for width
+			//! @param height The scale factor for height
+			virtual void setScale(float height, float width) = 0;
 
 			//! @brief Playing all samples from buffer
 			//! @param samples Buffer containing samples

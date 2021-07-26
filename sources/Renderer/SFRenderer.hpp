@@ -51,7 +51,11 @@ namespace ComSquare::Renderer
 		//! @brief Set a size or resize the Renderer drawing size
 		//! @param height The new height of the renderer in pixels
 		//! @param width The new width of the renderer in pixels
-		void setSize(unsigned width, unsigned height) override;
+		void setSize(unsigned height, unsigned width) override;
+		//! @brief Set the scale of the renderer (it will scale all pixels)
+		//! @param width The scale factor for width
+		//! @param height The scale factor for height
+		void setScale(float height, float width) override;
 		//! @brief Add a pixel to the buffer to the coordinates x, y with the color rgba.
 		//! @param horizontalPosition horizontal index.
 		//! @param verticalPosition vertical index.
