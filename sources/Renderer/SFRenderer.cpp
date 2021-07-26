@@ -61,10 +61,10 @@ namespace ComSquare::Renderer
 
 	void SFRenderer::putPixel(unsigned verticalPosition, unsigned horizontalPosition, uint32_t rgba)
 	{
-		if (verticalPosition >= this->_videoMode.width)
-			throw InvalidPixelPosition("Width", verticalPosition, this->_videoMode.width);
-		if (horizontalPosition >= this->_videoMode.height)
-			throw InvalidPixelPosition("Height", horizontalPosition, this->_videoMode.height);
+		if (horizontalPosition >= this->_videoMode.width)
+			throw InvalidPixelPosition("Width", horizontalPosition, this->_videoMode.width);
+		if (verticalPosition >= this->_videoMode.height)
+			throw InvalidPixelPosition("Height", verticalPosition, this->_videoMode.height);
 
 		this->_pixelBuffer[this->_videoMode.width * verticalPosition + horizontalPosition] = sf::Color(rgba);
 	}

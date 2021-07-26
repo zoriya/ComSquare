@@ -16,11 +16,12 @@
 namespace ComSquare::Debugger
 {
 	TileViewer::TileViewer(SNES &snes, ComSquare::PPU::PPU &ppu)
-		:_window(new ClosableWindow([&snes] { snes.disableTileViewer(); })),
+		: _window(new ClosableWindow([&snes] { snes.disableTileViewer(); })),
 		  _snes(snes),
 		  _ui(),
 		  _ppu(ppu),
-		  _ramTileRenderer(ppu.vram, ppu.cgram)
+		  _ramTileRenderer(ppu.vram, ppu.cgram),
+		  _currentRendererSize(0, 0)
 	{
 		this->_ui.setupUi(this->_window);
 		//this->_qtSfmlRenderer(this->_ui.widget_sfml, 30);
@@ -114,14 +115,25 @@ namespace ComSquare::Debugger
 	void TileViewer::internalUpdate()
 	{
 		this->_ramTileRenderer.render();
+		if (this->_ramTileRenderer.buffer.size() != this->_currentRendererSize.y
+			|| this->_ramTileRenderer.buffer.at(0).size() != this->_currentRendererSize.x) {
+			if (this->_ramTileRenderer.buffer.size() == 0 || this->_ramTileRenderer.buffer.at(0).size() == 0)
+				return;
+			this->_currentRendererSize = {static_cast<unsigned int>(this->_ramTileRenderer.buffer.at(0).size()), static_cast<unsigned int>(this->_ramTileRenderer.buffer.size())};
+			this->_renderer->setSize(this->_currentRendererSize.x, this->_currentRendererSize.y);
+		}
 		int i = 0;
 		int j = 0;
-		for (const auto &row : this->_ramTileRenderer.buffer) {
-			for (const auto &pixel : row) {
-				this->_renderer->putPixel(i, j++, pixel);
+		try {
+			for (const auto &row : this->_ramTileRenderer.buffer) {
+				for (const auto &pixel : row) {
+					this->_renderer->putPixel(i, j++, pixel);
+				}
+				j = 0;
+				i++;
 			}
-			j = 0;
-			i++;
+		} catch (const std::exception &e) {
+			std::cout << "cc" << std::endl;
 		}
 	}
 

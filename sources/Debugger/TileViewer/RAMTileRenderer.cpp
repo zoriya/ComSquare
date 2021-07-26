@@ -20,15 +20,9 @@ namespace ComSquare::Debugger
 
 	void prepVector(std::vector<std::vector<uint32_t>> &vector, int nbColumns)
 	{
-		std::vector<std::vector<uint32_t>> vec(1 * PPU::Tile::NbPixelsHeight, std::vector<uint32_t>(nbColumns * PPU::Tile::NbPixelsWidth, 0));
+		std::vector<std::vector<uint32_t>> vec(1 * PPU::Tile::NbPixelsHeight,
+		                                       std::vector<uint32_t>(nbColumns * PPU::Tile::NbPixelsWidth, 0));
 		vector = vec;
-		return;
-		std::vector<uint32_t> pixelLine(static_cast<unsigned int>(nbColumns), 0);
-
-		vector.reserve(8);
-		for (int i = 0; i < 8; i++) {
-			vector.push_back(pixelLine);
-		}
 	}
 
 	void RAMTileRenderer::render()

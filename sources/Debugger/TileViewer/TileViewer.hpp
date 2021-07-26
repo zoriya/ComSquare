@@ -40,6 +40,8 @@ namespace ComSquare::Debugger
 		//! @brief Change the bpp from the index given by the ui (QT combo box)
 		void _bppChangeUIHandler(int index);
 
+		Vector2<unsigned> _currentRendererSize;
+
 	public:
 		//! @brief ctor
 		explicit TileViewer(SNES &snes, ComSquare::PPU::PPU &ppu);
