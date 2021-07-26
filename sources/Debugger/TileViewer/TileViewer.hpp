@@ -30,13 +30,10 @@ namespace ComSquare::Debugger
 		Ui::TileViewer _ui;
 		//! @brief A reference to the ppu
 		ComSquare::PPU::PPU &_ppu;
-		//! @brief the window
-		//std::unique_ptr<Renderer::QtSFMLTileRenderer> _sfWidget;
 		//! @brief The ram tile renderer
 		RAMTileRenderer _ramTileRenderer;
 		//! @brief Renderer used to display tiles
 		std::unique_ptr<Renderer::QtSFMLTileRenderer> _renderer;
-		//std::unique_ptr<Renderer::IRenderer> _renderer;
 		//! @brief Change the bpp from the index given by the ui (QT combo box)
 		void _bppChangeUIHandler(int index);
 		//! @brief The size of the renderer to known if resize is necessary
