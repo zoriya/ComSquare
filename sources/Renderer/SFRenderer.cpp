@@ -59,14 +59,14 @@ namespace ComSquare::Renderer
 		this->_sound.play();
 	}
 
-	void SFRenderer::putPixel(unsigned y, unsigned x, uint32_t rgba)
+	void SFRenderer::putPixel(unsigned verticalPosition, unsigned horizontalPosition, uint32_t rgba)
 	{
-		if (x >= this->_videoMode.width)
-			throw InvalidPixelPosition("Width", x, this->_videoMode.width);
-		if (y >= this->_videoMode.height)
-			throw InvalidPixelPosition("Height", y, this->_videoMode.height);
+		if (verticalPosition >= this->_videoMode.width)
+			throw InvalidPixelPosition("Width", verticalPosition, this->_videoMode.width);
+		if (horizontalPosition >= this->_videoMode.height)
+			throw InvalidPixelPosition("Height", horizontalPosition, this->_videoMode.height);
 
-		this->_pixelBuffer[this->_videoMode.width * y + x] = sf::Color(rgba);
+		this->_pixelBuffer[this->_videoMode.width * verticalPosition + horizontalPosition] = sf::Color(rgba);
 	}
 
 	void SFRenderer::getEvents()

@@ -118,7 +118,7 @@ namespace ComSquare::Debugger
 		int j = 0;
 		for (const auto &row : this->_ramTileRenderer.buffer) {
 			for (const auto &pixel : row) {
-				this->_renderer->putPixel(j++, i, pixel);
+				this->_renderer->putPixel(i, j++, pixel);
 			}
 			j = 0;
 			i++;

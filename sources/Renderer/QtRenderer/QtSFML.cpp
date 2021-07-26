@@ -31,9 +31,9 @@ namespace ComSquare::Renderer
 		this->_sfWidget = new QtFullSFML(snes, this->_window, QPoint(0, 0), QSize(this->_window->width(), this->_window->height()), maxFPS);
 	}
 
-	void QtSFML::putPixel(unsigned y, unsigned x, uint32_t rgba)
+	void QtSFML::putPixel(unsigned verticalPosition, unsigned horizontalPosition, uint32_t rgba)
 	{
-		this->_sfWidget->putPixel(y, x, rgba);
+		this->_sfWidget->putPixel(verticalPosition, horizontalPosition, rgba);
 	}
 
 	void QtSFML::playAudio(std::span<int16_t> samples)

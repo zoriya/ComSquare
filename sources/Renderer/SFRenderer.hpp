@@ -53,10 +53,10 @@ namespace ComSquare::Renderer
 		//! @param width The new width of the renderer in pixels
 		void setSize(unsigned width, unsigned height) override;
 		//! @brief Add a pixel to the buffer to the coordinates x, y with the color rgba.
-		//! @param X horizontal index.
-		//! @param Y vertical index.
+		//! @param horizontalPosition horizontal index.
+		//! @param verticalPosition vertical index.
 		//! @param rgba The color of the pixel.
-		void putPixel(unsigned y, unsigned x, uint32_t rgba) override;
+		void putPixel(unsigned verticalPosition, unsigned horizontalPosition, uint32_t rgba) override;
 		//! @brief Playing all samples from buffer
 		//! @param samples Buffer containing samples
 		//! @param sampleCount number of samples inside buffer

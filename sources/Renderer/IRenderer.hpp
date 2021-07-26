@@ -25,11 +25,11 @@ namespace ComSquare
 			//! @param width The new width of the renderer in pixels
 			virtual void setSize(unsigned width, unsigned height) = 0;
 
-			//! @brief Set a pixel to the coordinates x, y with the color rgba
-			//! @param x The x position of the window (0, 0 is the top left corner).
-			//! @param y The y position of the window (0, 0 is the top left corner).
-			//! @param rgba The color of the pixel (red, green, blue, alpha).
-			virtual void putPixel(unsigned x, unsigned y, uint32_t rgba) = 0;
+			//! @brief Add a pixel to the buffer to the coordinates x, y with the color rgba.
+			//! @param horizontalPosition horizontal index.
+			//! @param verticalPosition vertical index.
+			//! @param rgba The color of the pixel.
+			virtual void putPixel(unsigned verticalPosition, unsigned horizontalPosition, uint32_t rgba) = 0;
 
 			//! @brief Use this function to create the window.
 			//! @param snes The snes game object (to call the update method).
